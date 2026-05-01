@@ -14,8 +14,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-technical"
-  cancel-in-progress: true
+  group: "stockcheck-pages-data-update"
+  cancel-in-progress: false
 
 jobs:
   build:

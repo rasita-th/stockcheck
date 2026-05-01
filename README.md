@@ -54,5 +54,28 @@ Alpha Vantage key handling in V2.8:
 - The browser calls Alpha Vantage directly only when the user clicks `Load consensus`.
 - The key is never written to project files.
 
+## Local testing
+
+You can still run the local Python version:
+
+```bash
+python app.py
+```
+
+Then open:
+
+```text
+http://localhost:8787
+```
+
+For static file generation locally:
+
+```bash
+python scripts/update_fundamental_data.py
+python scripts/update_technical_data.py
+```
 
 
+## V2.8.1 workflow fix
+
+Includes GitHub Actions push-conflict fixes for the static fundamental workflow. See `README_SEC_V2_8_1_WORKFLOW_PUSH_FIX.md`.
