@@ -49,20 +49,6 @@ AOT.BK
 5. Run **Update stock data and deploy GitHub Pages**.
 6. Wait until it finishes, then open the Pages URL.
 
-## Local run, optional
-
-You can still run the Python local app:
-
-```bash
-python app.py
-```
-
-Then open:
-
-```txt
-http://localhost:8787
-```
-
 ## Important note
 
 GitHub Pages is static. The webpage can only scan tickers already generated into `site/data/scanner.json` by GitHub Actions. To add a new ticker online, edit `watchlist.txt` and run the workflow again.
