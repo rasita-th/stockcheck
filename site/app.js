@@ -13,7 +13,9 @@ const marketClock = $('#market-clock');
 
 const STORAGE_KEYS = {
   screeners: 'stockTimingRadar.screeners.v3',
-  active: 'stockTimingRadar.activeSettings.v7.secV2_4_detailTabsSavedKey'
+  active: 'stockTimingRadar.activeSettings.v8.hybridStatic',
+  alphaQuota: 'stockTimingRadar.alphaVantage.quota.v1',
+  alphaCache: 'stockTimingRadar.alphaVantage.cache.v1'
 };
 
 const columnDefs = [
@@ -610,6 +612,62 @@ async function fetchJsonOrThrow(url, options = {}) {
   }
 }
 
+
+function mergeHybridStaticData(technicalData = {}, fundamentalData = {}) {
+  const fundRows = new Map((fundamentalData.rows || []).map(row => [String(row.symbol || '').toUpperCase(), row]));
+  const fundDetails = fundamentalData.fundamentals || fundamentalData.quotes || {};
+  const rows = (technicalData.rows || []).map(row => {
+    const sym = String(row.symbol || '').toUpperCase();
+    const f = fundRows.get(sym) || {};
+    return { ...row, ...f, symbol: sym || row.symbol };
+  });
+  const quotes = {};
+  Object.entries(technicalData.quotes || {}).forEach(([symRaw, quote]) => {
+    const sym = String(symRaw || quote?.symbol || quote?.latest?.symbol || '').toUpperCase();
+    const fDetail = fundDetails[sym] || {};
+    const fLatest = fDetail.latest || fundRows.get(sym) || {};
+    const fObj = fDetail.fundamental || fLatest || {};
+    quotes[sym] = {
+      ...(quote || {}),
+      latest: { ...((quote || {}).latest || {}), ...fLatest, symbol: sym || ((quote || {}).latest || {}).symbol },
+      fundamental: { ...fObj }
+    };
+  });
+  Object.entries(fundDetails).forEach(([symRaw, fDetail]) => {
+    const sym = String(symRaw || '').toUpperCase();
+    if (!sym || quotes[sym]) return;
+    const fLatest = fDetail.latest || fundRows.get(sym) || { symbol: sym };
+    quotes[sym] = { symbol: sym, latest: { ...fLatest, symbol: sym }, fundamental: fDetail.fundamental || fLatest, series: [], meta: { source: 'fundamental-only-static' } };
+  });
+  return {
+    ...technicalData,
+    rows,
+    quotes,
+    errors: [...(technicalData.errors || []), ...(fundamentalData.errors || []).map(e => ({ ...e, layer: 'fundamental' }))],
+    generatedAt: technicalData.generatedAtTechnical || technicalData.generatedAt || '',
+    generatedAtTechnical: technicalData.generatedAtTechnical || technicalData.generatedAt || '',
+    generatedAtFundamental: fundamentalData.generatedAtFundamental || fundamentalData.generatedAt || '',
+    mode: 'github-pages-hybrid-static',
+    dataLayers: { technical: true, fundamental: Boolean((fundamentalData.rows || []).length || Object.keys(fundDetails).length) }
+  };
+}
+
+async function loadHybridStaticJson(force = false) {
+  const stamp = force ? Date.now() : 'static';
+  let technicalData;
+  try {
+    technicalData = await fetchJsonOrThrow(`data/technical.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
+  } catch (err) {
+    technicalData = await fetchJsonOrThrow(`data/scanner.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
+  }
+  let fundamentalData = { rows: [], fundamentals: {}, errors: [] };
+  try {
+    fundamentalData = await fetchJsonOrThrow(`data/fundamental.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
+  } catch (_) {
+    fundamentalData = { rows: [], fundamentals: {}, errors: [{ symbol: 'FUNDAMENTAL', error: 'fundamental.json not found; run Update static fundamental data workflow.' }] };
+  }
+  return mergeHybridStaticData(technicalData, fundamentalData);
+}
 async function loadScannerJson(force = false, symbolsOverride = null) {
   const symbols = symbolsOverride || parseSymbols();
   const range = ($('#range') && $('#range').value) || '1y';
@@ -633,17 +691,17 @@ async function loadScannerJson(force = false, symbolsOverride = null) {
     return data;
   }
 
-  // GitHub Pages/static mode: keep the old behavior.
-  const url = `data/scanner.json?v=${force ? Date.now() : 'static'}`;
+  // GitHub Pages/static mode: hybrid layer.
+  // technical.json refreshes frequently; fundamental.json is static/daily.
   try {
-    const data = await fetchJsonOrThrow(url, { cache: force ? 'reload' : 'no-store' });
+    const data = await loadHybridStaticJson(force);
     data.quotes = data.quotes || {};
     state.scannerData = data;
     state.scannerKey = key;
     state.quotes = data.quotes;
     return data;
   } catch (err) {
-    throw new Error(`โหลด scanner.json ไม่สำเร็จ: ${err.message || err}`);
+    throw new Error(`โหลด static hybrid data ไม่สำเร็จ: ${err.message || err}`);
   }
 }
 
@@ -664,7 +722,7 @@ async function scan(force = false) {
     marketClock.textContent = `${state.rows.length} tickers`;
     applyFilters();
     renderErrors((data.errors || []).filter(e => wanted.has(String(e.symbol || '').toUpperCase())));
-    setStatus(`โหลดสำเร็จ ${state.rows.length} ตัว • ${data.generatedAt || ''}`);
+    setStatus(`โหลดสำเร็จ ${state.rows.length} ตัว • Technical ${data.generatedAtTechnical || data.generatedAt || ''} • Fundamental ${data.generatedAtFundamental || 'not generated yet'}`);
     if (state.rows[0]) loadSymbol(state.rows[0].symbol, false);
   } catch (err) {
     setStatus('โหลดข้อมูลไม่สำเร็จ');
@@ -682,7 +740,7 @@ async function loadSymbol(symbol, updateInput = true) {
   $('#detailTitle').textContent = `${symbol} detail`;
   $('#detailSub').textContent = isLocalPythonApi()
     ? 'กำลังโหลด chart, indicators และ SEC fundamentals จาก local Python API...'
-    : 'กำลังโหลด chart และ indicators จาก scanner.json...';
+    : 'กำลังโหลด technical.json + fundamental.json จาก GitHub Pages...';
   try {
     let data = await loadScannerJson(false, state.lastSymbols ? state.lastSymbols.split(',') : parseSymbols());
     let quote = (data.quotes || {})[symbol] || (data.quotes || {})[symbol.toUpperCase()];
@@ -697,7 +755,7 @@ async function loadSymbol(symbol, updateInput = true) {
       state.quotes = data.quotes;
     }
 
-    if (!quote) throw new Error(`${symbol}: ยังไม่มี detail ใน data/scanner.json — เพิ่มใน watchlist.txt แล้ว Run workflow ใหม่`);
+    if (!quote) throw new Error(`${symbol}: ยังไม่มี detail ใน static data — เพิ่มใน watchlist.txt แล้ว Run workflows ใหม่`);
     renderDetail(quote);
   } catch (err) {
     $('#detailSub').textContent = err.message || String(err);
@@ -911,6 +969,128 @@ function analystVisualsHtml(analyst = {}, overview = {}, currentPrice) {
     </div>`;
 }
 
+
+function utcDayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function nextUtcMidnightLocalText() {
+  const now = new Date();
+  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+  return next.toLocaleString(undefined, { hour12: false });
+}
+
+function safeNum(value) {
+  if (value === null || value === undefined || value === '' || String(value).toLowerCase() === 'none' || String(value).toLowerCase() === 'nan') return null;
+  const n = Number(String(value).replace(/,/g, ''));
+  return Number.isFinite(n) ? n : null;
+}
+
+function getAlphaQuotaLocal() {
+  const today = utcDayKey();
+  let raw = null;
+  try { raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaQuota) || 'null'); } catch (_) { raw = null; }
+  if (!raw || raw.dateUtc !== today) raw = { dateUtc: today, used: 0, calls: [] };
+  const used = Number(raw.used || 0);
+  return {
+    dateUtc: today,
+    used,
+    limit: 25,
+    remaining: Math.max(0, 25 - used),
+    resetAtLocal: nextUtcMidnightLocalText(),
+    calls: Array.isArray(raw.calls) ? raw.calls : []
+  };
+}
+
+function saveAlphaQuotaLocal(quota) {
+  try { localStorage.setItem(STORAGE_KEYS.alphaQuota, JSON.stringify({ dateUtc: quota.dateUtc, used: quota.used, calls: quota.calls || [] })); } catch (_) {}
+}
+
+function incrementAlphaQuotaLocal(symbol) {
+  const q = getAlphaQuotaLocal();
+  if (q.remaining <= 0) throw new Error('Daily Alpha Vantage limit reached in this browser. Try again after reset.');
+  q.used += 1;
+  q.remaining = Math.max(0, q.limit - q.used);
+  q.calls.push({ symbol, endpoint: 'OVERVIEW', atUtc: new Date().toISOString() });
+  saveAlphaQuotaLocal(q);
+  return q;
+}
+
+function getAlphaCacheLocal(symbol) {
+  const today = utcDayKey();
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaCache) || '{}') || {};
+    const hit = raw[String(symbol || '').toUpperCase()];
+    if (hit && hit.dateUtc === today && hit.payload) return hit.payload;
+  } catch (_) {}
+  return null;
+}
+
+function setAlphaCacheLocal(symbol, payload) {
+  const today = utcDayKey();
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaCache) || '{}') || {};
+    raw[String(symbol || '').toUpperCase()] = { dateUtc: today, payload };
+    localStorage.setItem(STORAGE_KEYS.alphaCache, JSON.stringify(raw));
+  } catch (_) {}
+}
+
+function parseAlphaOverviewClient(ticker, raw, currentPrice) {
+  if (!raw || typeof raw !== 'object') throw new Error('Alpha Vantage returned empty overview data');
+  if (raw.Note) throw new Error('Alpha Vantage provider limit reached. Try again after provider reset.');
+  if (raw.Information) throw new Error(String(raw.Information));
+  if (raw['Error Message']) throw new Error(String(raw['Error Message']));
+  if (!raw.Symbol && Object.keys(raw).length <= 2) throw new Error('Alpha Vantage returned no overview data for this ticker');
+  const target = safeNum(raw.AnalystTargetPrice);
+  const current = safeNum(currentPrice);
+  const upside = target !== null && current && current > 0 ? (target / current - 1) * 100 : null;
+  const ratingKeys = ['AnalystRatingStrongBuy', 'AnalystRatingBuy', 'AnalystRatingHold', 'AnalystRatingSell', 'AnalystRatingStrongSell'];
+  const ratings = Object.fromEntries(ratingKeys.map(k => [k, safeNum(raw[k]) === null ? null : Math.trunc(safeNum(raw[k]))]));
+  const analystCount = Object.values(ratings).filter(v => v !== null).reduce((a, b) => a + b, 0) || null;
+  let ratingScore = null;
+  if (analystCount) {
+    const weights = { AnalystRatingStrongBuy: 2, AnalystRatingBuy: 1, AnalystRatingHold: 0, AnalystRatingSell: -1, AnalystRatingStrongSell: -2 };
+    ratingScore = ratingKeys.reduce((sum, k) => sum + (ratings[k] || 0) * weights[k], 0) / analystCount;
+  }
+  return {
+    ok: true,
+    cached: false,
+    ticker: raw.Symbol || String(ticker || '').toUpperCase(),
+    name: raw.Name || null,
+    source: 'Alpha Vantage OVERVIEW direct BYOK',
+    fetchedAtUtc: new Date().toISOString(),
+    analyst: {
+      targetMeanPrice: target,
+      targetUpsidePct: upside,
+      targetAnalystCount: analystCount,
+      ratings,
+      ratingScore,
+      status: (target !== null || analystCount) ? 'Loaded' : 'No analyst target fields in OVERVIEW response'
+    },
+    overview: {
+      sector: raw.Sector || null,
+      industry: raw.Industry || null,
+      latestQuarter: raw.LatestQuarter || null,
+      marketCapitalization: safeNum(raw.MarketCapitalization),
+      epsTtm: safeNum(raw.EPS),
+      revenueTtm: safeNum(raw.RevenueTTM),
+      profitMargin: safeNum(raw.ProfitMargin),
+      returnOnEquityTtm: safeNum(raw.ReturnOnEquityTTM),
+      peRatio: safeNum(raw.PERatio),
+      pegRatio: safeNum(raw.PEGRatio),
+      beta: safeNum(raw.Beta),
+      fiftyTwoWeekHigh: safeNum(raw['52WeekHigh']),
+      fiftyTwoWeekLow: safeNum(raw['52WeekLow'])
+    }
+  };
+}
+
+async function fetchAlphaOverviewDirect(symbol, currentPrice, apiKey) {
+  const url = 'https://www.alphavantage.co/query?' + new URLSearchParams({ function: 'OVERVIEW', symbol, apikey: apiKey }).toString();
+  const raw = await fetchJsonOrThrow(url, { cache: 'no-store' });
+  return parseAlphaOverviewClient(symbol, raw, currentPrice);
+}
+
 function getStoredAlphaKey() {
   try {
     return String(localStorage.getItem(AV_API_KEY_STORAGE_KEY) || '').trim();
@@ -942,19 +1122,12 @@ function alphaQuotaText(quota) {
 
 async function fetchAlphaKeyStatus() {
   const storedKey = getStoredAlphaKey();
-  let quota = null;
-  try {
-    const payload = await fetchJsonOrThrow('/api/alpha-vantage/quota', { cache: 'no-store' });
-    quota = payload.quota || null;
-  } catch (_) {
-    quota = null;
-  }
   state.alphaKeyStatus = {
     ok: true,
     hasKey: Boolean(storedKey),
     maskedKey: storedKey ? maskApiKey(storedKey) : null,
     storage: 'browser-localStorage',
-    quota
+    quota: getAlphaQuotaLocal()
   };
   state.alphaKeyFetched = true;
   return state.alphaKeyStatus;
@@ -1002,29 +1175,32 @@ async function loadAnalystConsensus(symbol, currentPrice) {
     if (input) input.focus();
     return;
   }
+  const cached = getAlphaCacheLocal(symbol);
+  if (cached) {
+    state.analystCache[symbol] = { ...cached, cached: true, quota: getAlphaQuotaLocal() };
+    if (status) status.textContent = 'Loaded from same-day browser cache; quota not used again.';
+    if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
+    return;
+  }
   state.analystLoading[symbol] = true;
   if (btn) {
     btn.disabled = true;
     btn.textContent = 'Loading...';
   }
-  if (status) status.textContent = 'กำลังดึง Alpha Vantage OVERVIEW แบบ on-demand...';
+  if (status) status.textContent = 'กำลังดึง Alpha Vantage OVERVIEW แบบ on-demand จาก browser...';
   try {
-    const payload = await fetchJsonOrThrow('/api/analyst-consensus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      cache: 'no-store',
-      body: JSON.stringify({ symbol, currentPrice: currentPrice ?? null, apiKey })
-    });
+    const quota = incrementAlphaQuotaLocal(symbol);
+    let payload = await fetchAlphaOverviewDirect(symbol, currentPrice, apiKey);
+    payload = { ...payload, quota };
+    setAlphaCacheLocal(symbol, payload);
     state.analystCache[symbol] = payload;
-    if (payload.quota) {
-      state.alphaKeyStatus = { ...(state.alphaKeyStatus || {}), quota: payload.quota, hasKey: true, maskedKey: maskApiKey(apiKey), storage: 'browser-localStorage' };
-    }
-    if (status) status.textContent = payload.cached ? 'Loaded from same-day cache; quota not used again.' : 'Loaded from Alpha Vantage.';
+    state.alphaKeyStatus = { ...(state.alphaKeyStatus || {}), quota, hasKey: true, maskedKey: maskApiKey(apiKey), storage: 'browser-localStorage' };
+    if (status) status.textContent = 'Loaded from Alpha Vantage direct BYOK.';
   } catch (err) {
     state.analystCache[symbol] = {
       ok: false,
       error: err.message || String(err),
-      quota: state.alphaKeyStatus?.quota || null
+      quota: getAlphaQuotaLocal()
     };
   } finally {
     state.analystLoading[symbol] = false;
@@ -1053,12 +1229,12 @@ function analystTargetSectionHtml(symbol, currentPrice) {
             <button id="saveAvKeyBtn" type="button">Save locally</button>
             ${hasLocalKey ? '<button id="clearAvKeyBtn" type="button" class="secondary">Clear key</button>' : ''}
           </div>
-          <small class="detail-muted">Public-safe BYOK mode: key is stored only in this browser localStorage, sent only when you click Load, and never written to project files.</small>`;
+          <small class="detail-muted">Public-safe BYOK mode: key is stored only in this browser localStorage and sent directly to Alpha Vantage only when you click Load.</small>`;
   return `
       <section class="target-section analyst-v2-section">
         <div class="target-section-head">
           <div>
-            <h4>Analyst Consensus — Alpha Vantage V2.7 BYOK Manual Loader</h4>
+            <h4>Analyst Consensus — Alpha Vantage V2.8 BYOK Manual Loader</h4>
             <p>ส่วนนี้แยกจากตาราง SEC: scan ปกติไม่เรียก Alpha Vantage, กดดึงทีละหุ้นเท่านั้น, API key เก็บเฉพาะใน browser นี้</p>
           </div>
           <span class="mini-chip ${ok ? 'chip-good' : 'chip-muted'}">${escapeHtml(ok ? 'Loaded' : 'Manual only')}</span>
@@ -1590,7 +1766,7 @@ function updateTabs() {
   $$('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === state.activeTab));
   const note = $('#tabNote');
   if (note) note.textContent = state.activeTab === 'fundamental'
-    ? 'Fundamental tab ใช้ SEC EDGAR เป็นแกนหลัก • V2.7 Analyst Consensus ใช้ Alpha Vantage แบบ BYOK กดดึงทีละหุ้น ไม่กิน quota ตอน scan'
+    ? 'Fundamental tab ใช้ SEC EDGAR static layer • Technical refresh จาก GitHub Actions ทุก ~15 นาที • Analyst Consensus ใช้ Alpha Vantage BYOK กดดึงทีละหุ้น'
     : 'Technical indicators จาก workflow ล่าสุด';
 }
 

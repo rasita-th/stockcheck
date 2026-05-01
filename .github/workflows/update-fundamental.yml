@@ -1,29 +1,29 @@
-name: Update technical data and deploy GitHub Pages
+name: Update static fundamental data
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
   schedule:
-    # GitHub Actions schedules are UTC and may be delayed. This targets ~15-minute refreshes.
-    - cron: "*/15 * * * *"
+    # Daily refresh. UTC schedule; GitHub may delay scheduled runs under load.
+    - cron: "23 11 * * *"
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages-technical"
-  cancel-in-progress: true
+  group: "pages-fundamental"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,20 +35,34 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Generate technical data only
+      - name: Generate static fundamental data
+        env:
+          INCLUDE_FUNDAMENTALS: "1"
+          FUNDAMENTAL_SCAN_WORKERS: "4"
+          SEC_GUIDANCE_LOOKBACK_DAYS: "1460"
+          SEC_GUIDANCE_MAX_FILINGS: "40"
+          SEC_GUIDANCE_MAX_DOCUMENTS_PER_FILING: "8"
+        run: python scripts/update_fundamental_data.py
+
+      - name: Commit updated fundamental data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/fundamental.json
+          if git diff --cached --quiet; then
+            echo "No fundamental data changes to commit."
+          else
+            git commit -m "Update static fundamental data"
+            git push
+          fi
+
+      - name: Generate fresh technical data for this deploy
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
           TECHNICAL_INTERVAL: "1d"
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
-
-      - name: Ensure static fundamental layer exists
-        run: |
-          mkdir -p site/data
-          if [ ! -f site/data/fundamental.json ]; then
-            printf '%s' '{"generatedAt":"Not generated yet","generatedAtFundamental":"Not generated yet","count":0,"watchlist":[],"rows":[],"fundamentals":{},"errors":[{"symbol":"SETUP","error":"Run the Update fundamental data workflow once."}],"mode":"github-pages-hybrid-fundamental-placeholder","dataLayer":"fundamental"}' > site/data/fundamental.json
-          fi
 
       - name: Add nojekyll marker
         run: touch site/.nojekyll
