@@ -1,16 +1,3 @@
-# Stockcheck Python Local v8
-
-รันบนเครื่องด้วย Python local server:
-
-```bash
-python app.py
-```
-
-แล้วเปิด:
-
-```text
-http://localhost:8787
-```
 
 ## มีอะไรในเวอร์ชันนี้
 
