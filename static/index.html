@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Stock Timing Radar v6.6 Deploy</title>
+  <title>Stock Timing Radar v6.9 Deploy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -79,6 +79,8 @@
           <button class="control-btn" data-open-panel="filters">⚙ Filters <span class="mini-badge">27</span></button>
           <button class="control-btn" data-open-panel="columns">≡ Columns</button>
           <button class="control-btn active-sort" id="mobileSortLabel" data-open-panel="sort">Sort: EMA20 nearest</button>
+          <button class="control-btn" data-save-as-screener>＋ Save Screener</button>
+          <button class="control-btn" data-open-screener-settings>⚙ Screener</button>
         </div>
 
         <section class="mobile-watch mobile-only">
@@ -245,6 +247,36 @@
     <div class="sheet-actions"><button class="primary-btn full">Apply</button></div>
   </section>
 
+
+
+
+  <section class="bottom-sheet" id="saveScreenerSheet" aria-hidden="true" aria-label="Save as new screener">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>＋ Save as New Screener</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body screener-sheet-body">
+      <p class="helper-text">บันทึก watchlist, filters, columns และ active view ปัจจุบันเป็น screener ใหม่</p>
+      <label class="form-field"><span>Screener name</span><input id="saveScreenerName" type="text" placeholder="เช่น AI Leaders / Thai Momentum" autocomplete="off" /></label>
+      <label class="toggle-row"><span>Clone current watchlist + settings</span><input id="saveScreenerClone" type="checkbox" checked /></label>
+      <p id="saveScreenerStatus" class="bulk-import-summary" aria-live="polite"></p>
+    </div>
+    <div class="sheet-actions"><button class="secondary-btn" data-close-sheet>Cancel</button><button class="primary-btn" data-confirm-save-screener>Save Screener</button></div>
+  </section>
+
+  <section class="bottom-sheet" id="screenerSettingsSheet" aria-hidden="true" aria-label="Screener settings">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>⚙ Screener Settings</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body screener-sheet-body">
+      <p class="helper-text" id="activeScreenerLabel">Active screener: Default</p>
+      <div class="screener-action-grid">
+        <button class="secondary-btn" data-save-as-screener>＋ Save as New</button>
+        <button class="secondary-btn" data-rename-screener>Rename</button>
+        <button class="secondary-btn" data-delete-screener>Delete</button>
+        <button class="secondary-btn" data-import-screeners>Import JSON</button>
+        <button class="secondary-btn" data-export-screeners>Export JSON</button>
+      </div>
+      <p class="helper-text">Tip: บนมือถือให้ใช้ปุ่มนี้แทน long-press เพื่อลดการกดพลาด</p>
+    </div>
+  </section>
 
   <section class="bottom-sheet sort-sheet" id="sortSheet" aria-hidden="true" aria-label="Sort Scanner">
     <div class="sheet-grip"></div>

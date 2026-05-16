@@ -43,6 +43,15 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
+      - name: Refresh latest static fundamental layer from main
+        run: |
+          mkdir -p site/data
+          # A scheduled technical workflow can be queued before the slower fundamental
+          # workflow commits fresh data. Fetch the newest main here so the Pages
+          # artifact does not accidentally redeploy an old placeholder fundamental.json.
+          git fetch origin main --depth=1 || true
+          git checkout origin/main -- site/data/fundamental.json || true
+
       - name: Ensure static fundamental layer exists
         run: |
           mkdir -p site/data

@@ -2199,3 +2199,59 @@ body.memo-active .memo-page { display:block; }
     bottom: max(18px, env(safe-area-inset-bottom)) !important;
   }
 }
+
+/* v6.9 mobile screener management */
+.screener-sheet-body .form-field {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  color: var(--muted);
+  font-weight: 800;
+}
+.screener-sheet-body input[type="text"] {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(13,17,23,.7);
+  color: var(--text);
+  padding: 0 14px;
+  font: 800 16px var(--mono);
+}
+.screener-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.screener-action-grid .secondary-btn {
+  min-height: 52px;
+  justify-content: center;
+}
+@media (max-width: 767px) {
+  .portfolio-tabs {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    padding-right: 16px;
+  }
+  .portfolio-tabs .portfolio-tab {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start;
+    touch-action: pan-x pan-y;
+  }
+  .mobile-control-strip {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .mobile-control-strip .control-btn {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  #saveScreenerSheet .sheet-actions,
+  #screenerSettingsSheet .sheet-actions {
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+}

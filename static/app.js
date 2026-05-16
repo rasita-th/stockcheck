@@ -3204,3 +3204,154 @@ if (state.staticMode || isStaticDeployHost()) {
     }
   }, true);
 })();
+
+/* v6.9 mobile screener creation + fundamental deploy robustness
+   - Mobile + New uses explicit bottom sheet instead of prompt/long-press paths.
+   - Save current state as a new screener from mobile/desktop.
+   - Screener settings sheet owns rename/delete/import/export on mobile.
+   - Custom screener labels persist and all custom tabs render horizontally.
+*/
+(function v69MobileScreenerCreationFix(){
+  const BUILT_INS = new Set(["default", "momentum", "thai", "dividend", "quality"]);
+  const builtInTabs = [
+    ["default", "⭐ Default"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
+  ];
+  const isMobile = () => window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+  const slugify = (name) => String(name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9ก-๙]+/gi, "-")
+    .replace(/^-|-$/g, "") || `screener-${Date.now()}`;
+  const labelFor = (key, saved = null) => {
+    const builtin = builtInTabs.find(([k]) => k === key);
+    if (builtin) return builtin[1];
+    const rec = saved || getScreeners()[key] || {};
+    return rec.label || rec.name || `⭐ ${key.replace(/-/g, " ")}`;
+  };
+  const snapshot = (label) => ({
+    label,
+    watchlist: Array.isArray(state.watchlist) ? [...state.watchlist] : [],
+    filters: { ...state.filters },
+    columns: { ...state.columns },
+    scannerTab: state.scannerTab,
+    mobileView: state.mobileView,
+    sortKey: state.sortKey,
+    sortAsc: state.sortAsc,
+    savedAt: new Date().toISOString(),
+  });
+  const oldPersist = persistActiveScreener;
+  persistActiveScreener = function patchedPersistActiveScreener(){
+    const screeners = getScreeners();
+    const existing = screeners[state.activeScreener] || {};
+    screeners[state.activeScreener] = {
+      ...existing,
+      ...snapshot(existing.label || existing.name || labelFor(state.activeScreener, existing)),
+    };
+    setScreeners(screeners);
+  };
+  renderPortfolioTabs = function patchedRenderPortfolioTabs(){
+    const nav = document.querySelector(".portfolio-tabs");
+    if (!nav) return;
+    const saved = getScreeners();
+    const custom = Object.keys(saved)
+      .filter(k => !BUILT_INS.has(k))
+      .sort((a, b) => String(saved[a]?.savedAt || "").localeCompare(String(saved[b]?.savedAt || "")) || a.localeCompare(b))
+      .map(k => [k, labelFor(k, saved[k])]);
+    const tabs = [...builtInTabs, ...custom];
+    nav.innerHTML = tabs.map(([key, label]) => `<button type="button" role="tab" class="portfolio-tab ${key === state.activeScreener ? "active" : ""}" data-screener="${esc(key)}">${esc(label)}</button>`).join("") + `
+      <button type="button" class="portfolio-tab more-tab" data-open-screener-settings>⚙</button>
+      <button type="button" class="portfolio-tab add-tab" id="newScreenerBtn" data-save-as-screener>+ New</button>`;
+    updateScreenerSettingsLabel();
+  };
+  function updateScreenerSettingsLabel(){
+    const el = document.getElementById("activeScreenerLabel");
+    if (el) el.textContent = `Active screener: ${labelFor(state.activeScreener)}`;
+  }
+  function showSaveSheet(defaultName = ""){
+    const input = document.getElementById("saveScreenerName");
+    const status = document.getElementById("saveScreenerStatus");
+    if (input) input.value = defaultName;
+    if (status) status.textContent = "";
+    try { openSheet("saveScreenerSheet"); } catch (_) {}
+    setTimeout(() => input?.focus(), 120);
+  }
+  function saveAsNewScreener(){
+    const input = document.getElementById("saveScreenerName");
+    const clone = document.getElementById("saveScreenerClone")?.checked !== false;
+    const rawName = input?.value?.trim() || "My Screener";
+    const keyBase = slugify(rawName);
+    const screeners = getScreeners();
+    let key = keyBase;
+    let i = 2;
+    while (screeners[key] || BUILT_INS.has(key)) key = `${keyBase}-${i++}`;
+    screeners[key] = clone ? snapshot(rawName) : { ...snapshot(rawName), watchlist: [] };
+    setScreeners(screeners);
+    state.activeScreener = key;
+    if (!clone) state.watchlist = [];
+    saveSettings();
+    try { closeSheets(); } catch (_) {}
+    renderAll();
+    // Do not force a heavy scan on GitHub Pages; static data reloads when Scan is tapped.
+    const nav = document.querySelector(".portfolio-tabs");
+    const btn = nav?.querySelector(`[data-screener="${CSS.escape(key)}"]`);
+    btn?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    setLoading(false, `Saved screener: ${rawName}`);
+  }
+  newScreener = function patchedNewScreener(){
+    if (isMobile()) { showSaveSheet("My Screener"); return; }
+    const name = prompt("ตั้งชื่อ screener ใหม่", "My Screener");
+    if (!name) return;
+    const input = document.getElementById("saveScreenerName");
+    if (input) input.value = name;
+    saveAsNewScreener();
+  };
+  const oldRename = renameActiveScreener;
+  renameActiveScreener = function patchedRenameActiveScreener(){
+    const current = state.activeScreener;
+    const currentLabel = labelFor(current).replace(/^⭐\s*/, "");
+    const name = prompt("Rename screener", currentLabel);
+    if (!name) return;
+    const newKeyBase = slugify(name);
+    const screeners = getScreeners();
+    let newKey = BUILT_INS.has(current) ? `${newKeyBase}-${Date.now()}` : newKeyBase;
+    let i = 2;
+    while (newKey !== current && (screeners[newKey] || BUILT_INS.has(newKey))) newKey = `${newKeyBase}-${i++}`;
+    const existing = screeners[current] || snapshot(currentLabel);
+    screeners[newKey] = { ...existing, label: name, name, savedAt: new Date().toISOString() };
+    if (newKey !== current && !BUILT_INS.has(current)) delete screeners[current];
+    setScreeners(screeners);
+    state.activeScreener = newKey;
+    saveSettings();
+    renderAll();
+  };
+  document.addEventListener("click", function(e){
+    const target = e.target;
+    if (!target || !target.closest) return;
+    if (target.closest("[data-save-as-screener]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      showSaveSheet("");
+      return;
+    }
+    if (target.closest("[data-confirm-save-screener]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      saveAsNewScreener();
+      return;
+    }
+    if (target.closest("[data-open-screener-settings]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      updateScreenerSettingsLabel();
+      try { openSheet("screenerSettingsSheet"); } catch (_) {}
+      return;
+    }
+  }, true);
+  // Mobile: disable accidental long-press-to-delete completely.
+  document.addEventListener("pointerdown", function(e){
+    if (!isMobile()) return;
+    if (e.target?.closest?.(".portfolio-tabs")) e.stopImmediatePropagation();
+  }, true);
+  // Initial repaint with patched renderer.
+  setTimeout(() => { try { renderPortfolioTabs(); updateTabs(); } catch (_) {} }, 0);
+})();

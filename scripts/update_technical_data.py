@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -36,7 +37,8 @@ def read_watchlist() -> list[str]:
         line = raw.strip()
         if not line or line.startswith("#"):
             continue
-        for part in line.replace(";", ",").split(","):
+        # Support v1-style pasted lists: commas, semicolons, spaces, tabs, or new lines.
+        for part in re.split(r"[\s,;]+", line):
             symbol = part.strip().upper()
             if symbol and symbol not in symbols:
                 symbols.append(symbol)
