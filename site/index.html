@@ -2,567 +2,335 @@
 <html lang="th">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stock Timing Radar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Stock Timing Radar v6.6 Deploy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <div>
-      <p class="eyebrow">Growth / Quality Timing Scanner</p>
-      <h1>Stock Timing Radar</h1>
-      <p class="subtitle">หา “หุ้นดีที่พักฐานจบ” ด้วย EMA 5/20/89/200, RSI, MACD, Volume และ setup score</p>
+  <div class="app-shell" data-view="technical">
+    <header class="topbar">
+      <button class="icon-btn mobile-only" aria-label="Open menu" data-open-panel="watchlist">☰</button>
+      <div class="brand">
+        <span class="radar-logo" aria-hidden="true">◎</span>
+        <div>
+          <h1>Stock Timing Radar</h1>
+          <p>Rank stocks by distance from EMA</p>
+        </div>
+      </div>
+      <label class="search-box desktop-only" aria-label="Search symbol">
+        <span>⌕</span>
+        <input id="symbolSearch" type="search" placeholder="Search symbol..." autocomplete="off" list="symbolSuggestions" /><datalist id="symbolSuggestions"><option value="NVDA"><option value="TSLA"><option value="AAPL"><option value="META"><option value="MSFT"><option value="AMZN"><option value="PLTR"><option value="PTT.BK"></datalist>
+      </label>
+      <div class="top-actions" aria-label="Mobile actions">
+        <button class="icon-btn mobile-only" aria-label="Search">⌕</button>
+      </div>
+    </header>
+
+    <nav class="portfolio-tabs" aria-label="Saved screeners">
+      <button class="portfolio-tab active" data-screener="default">⭐ Default</button>
+      <button class="portfolio-tab" data-screener="momentum">🚀 Momentum</button>
+      <button class="portfolio-tab" data-screener="thai">🇹🇭 Thai</button>
+      <button class="portfolio-tab desktop-only" data-screener="dividend">🏦 Dividend</button>
+      <button class="portfolio-tab desktop-only" data-screener="quality">🧱 High Quality</button>
+      <button class="portfolio-tab more-tab">…</button>
+      <button class="portfolio-tab add-tab" id="newScreenerBtn">+ New</button>
+    </nav>
+
+    <main class="workspace">
+      <aside class="sidebar desktop-panel" id="watchlistPanel">
+        <section class="panel-card watchlist-card">
+          <div class="section-header">
+            <h2>Watchlist</h2>
+            <button class="ghost-btn" data-add-symbol>+ Add List</button>
+          </div>
+          <div class="market-groups" id="marketGroups"></div>
+          <div class="watchlist-list" id="desktopWatchlist"></div>
+        </section>
+
+        <section class="panel-card filter-card">
+          <div class="section-header">
+            <h2>Scan Filters</h2>
+            <span class="result-pill" id="filterResultPill">✓ 27 results</span>
+          </div>
+          <div class="filter-stack">
+            <label class="range-row">
+              <span>Score ≥</span>
+              <output id="scoreOutput">60</output>
+              <input id="scoreRange" type="range" min="0" max="100" value="60" />
+            </label>
+            <div class="segmented" role="group" aria-label="Time range" id="rangeButtons">
+              <button data-range="6mo">6M</button><button class="active" data-range="1y">1Y</button><button data-range="2y">2Y</button><button data-range="5y">5Y</button>
+            </div>
+            <label class="toggle-row"><span>Price &gt; EMA200</span><input id="filterAbove200" type="checkbox" checked /></label>
+            <label class="toggle-row"><span>EMA20 &gt; EMA89</span><input id="filterEmaStack" type="checkbox" checked /></label>
+            <label class="toggle-row"><span>RSI 45–65</span><input id="filterSweetRsi" type="checkbox" checked /></label>
+            <label class="toggle-row"><span>Volume &gt; 20MA</span><input id="filterVolume20" type="checkbox" /></label>
+            <label class="toggle-row"><span>MACD &gt; Signal</span><input id="filterMacdSignal" type="checkbox" checked /></label>
+          </div>
+          <button class="primary-btn sticky-scan" id="scanNowDesktop">◎ Scan Now</button><div class="screener-actions"><button class="ghost-btn" data-rename-screener>Rename</button><button class="ghost-btn" data-delete-screener>Delete</button><button class="ghost-btn" data-import-screeners>Import</button></div>
+        </section>
+      </aside>
+
+      <section class="content-area">
+        <div class="mobile-control-strip mobile-only">
+          <button class="control-btn" data-open-panel="filters">⚙ Filters <span class="mini-badge">27</span></button>
+          <button class="control-btn" data-open-panel="columns">≡ Columns</button>
+          <button class="control-btn active-sort" id="mobileSortLabel" data-open-panel="sort">Sort: EMA20 nearest</button>
+        </div>
+
+        <section class="mobile-watch mobile-only">
+          <div class="market-groups mobile" id="mobileMarketGroups"></div>
+          <div class="chip-row" id="mobileChipRow"></div>
+        </section>
+
+
+        <section class="alert-center panel-card" id="alertCenter" aria-live="polite">
+          <div class="alert-header">
+            <div>
+              <h2>🔔 Alert Center</h2>
+              <p id="alertSubtitle">Technical alerts update after each scan</p>
+            </div>
+            <div class="alert-header-actions">
+              <span class="alert-count-pill" id="alertCountPill">0 alerts</span>
+              <button class="ghost-btn alert-toggle-btn" data-toggle-alerts>Hide</button>
+            </div>
+          </div>
+          <div class="alert-filter-row" id="alertFilterRow">
+            <button class="active" data-alert-filter="all">All</button>
+            <button data-alert-filter="action">Actionable</button>
+            <button data-alert-filter="near">Near EMA</button>
+            <button data-alert-filter="hot">HOT</button>
+            <button data-alert-filter="risk">Risk</button>
+            <button data-alert-filter="memo">Memo</button>
+          </div>
+          <div class="alert-summary-grid" id="alertSummaryGrid"></div>
+          <div class="alert-list" id="alertList"></div>
+        </section>
+
+        <section class="scanner-panel panel-card">
+          <div class="scanner-header">
+            <div>
+              <h2>Scanner Results</h2>
+              <p id="scannerSubtitle">Default sort: Score ↓ · click EMA headers to find nearest line</p>
+            </div>
+            <div class="scanner-actions">
+              <div class="tab-switch" role="tablist" aria-label="Scanner mode">
+                <button class="active" data-tab="technical">Technical</button>
+                <button data-tab="fundamental">Fundamental</button>
+              </div>
+              <button class="control-btn desktop-only" data-open-panel="columns">≡ Columns</button>
+            </div>
+          </div>
+
+          <div class="mobile-view-toggle mobile-only" role="tablist" aria-label="Mobile scanner view">
+            <button class="active" data-mobile-view="cards">Card View</button>
+            <button data-mobile-view="table">Table View</button>
+          </div>
+          <!-- v6.0: mobile table presets removed; table view follows the active Technical/Fundamental tab and Column Manager only. -->
+
+          <div id="technicalScanner" class="scanner-mode active">
+            <div class="table-wrap desktop-only">
+              <table class="scanner-table" id="technicalTable">
+                <thead>
+                  <tr>
+                    <th data-sort="ticker">Ticker</th>
+                    <th data-sort="score">Score</th>
+                    <th>Signal</th>
+                    <th data-sort="price">Price</th>
+                    <th data-sort="ema5Pct">EMA5 / %vs</th>
+                    <th data-sort="ema20Pct" class="sorted">EMA20 / %vs ↓</th>
+                    <th data-sort="ema89Pct">EMA89 / %vs</th>
+                    <th data-sort="ema200Pct">EMA200 / %vs</th>
+                    <th data-sort="rsi">RSI</th>
+                  </tr>
+                </thead>
+                <tbody id="technicalTableBody"></tbody>
+              </table>
+            </div>
+            <div class="mobile-card-list mobile-only" id="technicalMobileCards"></div>
+            <div class="mobile-table-wrap mobile-only" id="technicalMobileTableWrap" aria-label="Technical mobile table">
+              <div class="mobile-table-hint">☝ Ticker is fixed · scroll right for EMA details →</div>
+              <table class="scanner-table mobile-freeze-table" id="technicalMobileTable">
+                <thead>
+                  <tr>
+                    <th class="sticky-col" data-sort="ticker">Ticker 🔒</th>
+                    <th data-sort="score">Score</th>
+                    <th>Signal</th>
+                    <th data-sort="price">Price</th>
+                    <th data-sort="ema20Pct">EMA20 %vs</th>
+                    <th data-sort="ema89Pct">EMA89 %vs</th>
+                    <th data-sort="ema200Pct">EMA200 %vs</th>
+                    <th data-sort="rsi">RSI</th>
+                  </tr>
+                </thead>
+                <tbody id="technicalMobileTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="fundamentalScanner" class="scanner-mode">
+            <div class="table-wrap desktop-only">
+              <table class="scanner-table fundamental-table" id="fundamentalTable">
+                <thead>
+                  <tr>
+                    <th>Ticker</th><th>Fund Score / Signal</th><th>Quarter / Period</th><th>Revenue / QoQ / YoY</th><th>Net Income / QoQ / YoY</th><th>EPS / QoQ / YoY</th><th>FCF</th><th>Margins / Debt</th><th>Guidance</th>
+                  </tr>
+                </thead>
+                <tbody id="fundamentalTableBody"></tbody>
+              </table>
+            </div>
+            <div class="mobile-card-list mobile-only" id="fundamentalMobileCards"></div>
+            <div class="mobile-table-wrap mobile-only" id="fundamentalMobileTableWrap" aria-label="Fundamental mobile table">
+              <div class="mobile-table-hint">☝ Ticker is fixed · scroll right for fundamentals →</div>
+              <table class="scanner-table mobile-freeze-table" id="fundamentalMobileTable">
+                <thead>
+                  <tr>
+                    <th class="sticky-col" data-sort="ticker">Ticker 🔒</th><th data-sort="score">Fund Score / Signal</th><th>Quarter / Period</th><th data-sort="revYoy">Revenue / QoQ / YoY</th><th>Net Income / QoQ / YoY</th><th data-sort="epsYoy">EPS / QoQ / YoY</th><th>FCF</th><th>Margins / Debt</th><th>Guidance</th>
+                  </tr>
+                </thead>
+                <tbody id="fundamentalMobileTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="detail-panel desktop-panel" id="detailPanel">
+        <section class="detail-card active" id="detailCard"></section>
+      </aside>
+    </main>
+
+    <section class="lower-grid desktop-only">
+      <article class="panel-card setup-card" id="setupSummary"></article>
+      <article class="panel-card fundamental-dashboard" id="fundamentalDashboard"></article>
+      <article class="panel-card playbook-card" id="playbookCards"></article>
+    </section>
+
+    <button class="primary-btn mobile-scan-btn mobile-only" id="mobileScanNow">◎ Scan Now</button>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+
+  <section class="bottom-sheet" id="filtersSheet" aria-hidden="true" aria-label="Scan Filters">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>🔧 Scan Filters</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body">
+      <label class="range-row"><span>Score ≥</span><output id="sheetScoreOutput">60</output><input id="sheetScoreRange" type="range" min="0" max="100" value="60" /></label>
+      <h3>Time Range</h3>
+      <div class="segmented" id="sheetRangeButtons"><button data-range="6mo">6M</button><button class="active" data-range="1y">1Y</button><button data-range="2y">2Y</button><button data-range="5y">5Y</button></div>
+      <label class="toggle-row"><span>Price &gt; EMA200</span><input id="sheetFilterAbove200" type="checkbox" checked /></label>
+      <label class="toggle-row"><span>EMA20 &gt; EMA89</span><input id="sheetFilterEmaStack" type="checkbox" checked /></label>
+      <label class="toggle-row"><span>RSI 45–65</span><input id="sheetFilterSweetRsi" type="checkbox" checked /></label>
+      <label class="toggle-row"><span>Volume &gt; 20MA</span><input id="sheetFilterVolume20" type="checkbox" /></label>
+      <label class="toggle-row"><span>MACD &gt; Signal</span><input id="sheetFilterMacdSignal" type="checkbox" checked /></label>
     </div>
-    <div class="hero-card">
-      <span class="hero-number" id="market-clock">Local MVP</span>
-      <span class="muted">Data: Yahoo chart endpoint via local backend</span>
+    <div class="sheet-actions"><button class="secondary-btn">Reset</button><button class="primary-btn">🚀 Scan Now</button></div>
+  </section>
+
+  <section class="bottom-sheet" id="columnsSheet" aria-hidden="true" aria-label="Column Manager">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>≡ Column Manager</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body">
+      <h3>Presets</h3>
+      <div class="segmented" id="columnPresetButtons">
+        <button data-column-preset="compact">Compact</button>
+        <button class="active" data-column-preset="ema">EMA Focus</button>
+        <button data-column-preset="all">All</button>
+      </div>
+      <div class="columns-grid" id="columnsGrid"></div>
     </div>
-  </header>
+    <div class="sheet-actions"><button class="primary-btn full">Apply</button></div>
+  </section>
 
-  <main class="layout">
-    <section class="panel controls">
-      <div class="field wide">
-        <label for="symbols">Watchlist</label>
-        <textarea id="symbols" rows="6" spellcheck="false">RKLB
-AMZN
-HOOD
-NVDA
-IREN
-ASTS
-OKLO
-TSLA
-GOOGL
-BMNR
-NBIS
-TEM
-MP
-IONQ
-AMD
-ORCL
-EQT
-TMDX
-EOSE
-PLTR
-UUUU
-PSIX
-CIFR
-RXRX
-JEPQ
-SYM
-TMC
-OSCR
-COPX
-RR
-ZETA
-OPEN
-COST
-BEAM
-BE
-LITE
-CRWV
-CORZ
-APLD
-SNDK
-COHR
-SEI
-TSEM
-RIOT
-KRC
-HUT
-WYFI
-BTDR
-CLSK
-BITF
-LBRT
-PUMP
-BW
-STX
-VST
-INTC
-GLXY
-AAPL
-MSFT
-AVGO
-GOOG
-META
-WMT
-ASML
-MU
-NFLX
-CSCO
-LRCX
-AMAT
-KLAC
-TXN
-ARM
-LIN
-PEP
-TMUS
-ADI
-AMGN
-ISRG
-SHOP
-GILD
-QCOM
-APP
-PANW
-MRVL
-BKNG
-PDD
-WDC
-HON
-CRWD
-CEG
-SBUX
-INTU
-VRTX
-ADBE
-CMCSA
-MAR
-SNPS
-MELI
-CDNS
-ABNB
-CSX
-MPWR
-REGN
-ADP
-ORLY
-DASH
-MNST
-MDLZ
-AEP
-ROST
-CTAS
-BKR
-WBD
-PCAR
-FTNT
-NXPI
-MSTR
-FANG
-FAST
-EA
-ADSK
-FER
-XEL
-MCHP
-EXC
-ODFL
-DDOG
-PYPL
-IDXX
-CCEP
-ALNY
-TRI
-KDP
-TTWO
-ROP
-PAYX
-AXON
-CPRT
-GEHC
-WDAY
-INSM
-CTSH
-KHC
-DXCM
-VRSK
-CHTR
-ZS
-CSGP
-ARKK
-ARKQ
-ARKW
-ARKG
-ARKF
-ARKX
-PRNT
-IZRL
-COIN
-ROKU
-CRCL
-CRSP
-TER
-KTOS
-DE
-AVAV
-TSM
-GH
-NTRA
-ILMN
-IRDM
-ACHR
-PATH
-TWLO
-RBLX
-SOFI
-XYZ
-U
-TDOC
-TWST
-TXG
-PACB
-NTLA
-EXAS
-SDGR
-VCYT
-RGNX
-EDIT
-VERV
-FATE
-DNA
-CDNA
-ABCL
-PRME
-JOBY
-TRMB
-LUNR
-SPCE
-MTLS
-DDD
-SSYS
-VLD
-NNDM
-DM
-CAMT
-CYBR
-NICE
-WIX
-GILT
-PERI
-MNDY
-FROG
-TOST
-BLSH
-Z
-ADYEY
-HIMS
-PINS
-FUTU
-NU
-AFRM
-DLO
-DOCN
-BILL
-DKNG
-9984.T
-QQQI
-SMH
-SOXX
-AIQ
-SMCI
-DELL
-VRT
-ETN
-PWR
-GEV
-MARA
-BRK-B
-AXP
-BAC
-KO
-CVX
-ABBV
-UNH
-TGT
-PL
-BKSY
-RDW
-GSAT
-SATS
-VSAT
-SPIR
-SATL
-SIDU
-TSAT
-MDA.TO
-UFO
-LMT
-NOC
-BA
-RTX
-GD
-LHX
-HWM
-TDG
-HEI
-TXT
-CW
-AIR
-ERJ
-EADSY
-GRMN
-EVTL
-EH
-DRS
-CACI
-LDOS
-SAIC
-BAH
-MRCY
-AAV.BK
-ADVANC.BK
-AEONTS.BK
-AMATA.BK
-AOT.BK
-AP.BK
-AURA.BK
-AWC.BK
-BA.BK
-BAM.BK
-BANPU.BK
-BBL.BK
-BCH.BK
-BCP.BK
-BCPG.BK
-BDMS.BK
-BEM.BK
-BGRIM.BK
-BH.BK
-BJC.BK
-BLA.BK
-BTG.BK
-BTS.BK
-CBG.BK
-CCET.BK
-CENTEL.BK
-CHG.BK
-CK.BK
-COM7.BK
-CPALL.BK
-CPF.BK
-CPN.BK
-CRC.BK
-DELTA.BK
-DOHOME.BK
-EA.BK
-EGCO.BK
-ERW.BK
-GFPT.BK
-GLOBAL.BK
-GPSC.BK
-GULF.BK
-GUNKUL.BK
-HANA.BK
-HMPRO.BK
-ICHI.BK
-IRPC.BK
-IVL.BK
-JAS.BK
-JMART.BK
-JMT.BK
-JTS.BK
-KBANK.BK
-KCE.BK
-KKP.BK
-KTB.BK
-KTC.BK
-LH.BK
-M.BK
-MEGA.BK
-MINT.BK
-MOSHI.BK
-MTC.BK
-OR.BK
-OSP.BK
-PLANB.BK
-PR9.BK
-PRM.BK
-PTG.BK
-PTT.BK
-PTTEP.BK
-PTTGC.BK
-QH.BK
-RATCH.BK
-RCL.BK
-SAWAD.BK
-SCB.BK
-SCC.BK
-SCGP.BK
-SIRI.BK
-SISB.BK
-SJWD.BK
-SPALI.BK
-SPRC.BK
-STA.BK
-STECON.BK
-STGT.BK
-TASCO.BK
-TCAP.BK
-TFG.BK
-TIDLOR.BK
-TISCO.BK
-TLI.BK
-TOA.BK
-TOP.BK
-TRUE.BK
-TTB.BK
-TU.BK
-VGI.BK
-WHA.BK</textarea>
-        <small>ใช้ Yahoo ticker format เช่น <code>PTT.BK</code>, <code>0700.HK</code>, <code>9988.HK</code>, <code>ASML</code></small>
-      </div>
 
-      <div class="field">
-        <label for="range">ช่วงข้อมูล</label>
-        <select id="range">
-          <option value="6mo">6 เดือน</option>
-          <option value="1y" selected>1 ปี</option>
-          <option value="2y">2 ปี</option>
-          <option value="5y">5 ปี</option>
-        </select>
+  <section class="bottom-sheet sort-sheet" id="sortSheet" aria-hidden="true" aria-label="Sort Scanner">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>⇅ Sort Scanner</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body">
+      <p class="helper-text">เลือกการเรียงข้อมูลบนมือถือ</p>
+      <div class="sort-list">
+        <button data-sort-pick="score" data-sort-dir="desc">Score สูงสุดก่อน</button>
+        <button data-sort-pick="ema20Pct" data-sort-dir="asc">ใกล้ EMA20 ที่สุด</button>
+        <button data-sort-pick="ema89Pct" data-sort-dir="asc">ใกล้ EMA89 ที่สุด</button>
+        <button data-sort-pick="ema200Pct" data-sort-dir="asc">ใกล้ EMA200 ที่สุด</button>
+        <button data-sort-pick="rsi" data-sort-dir="desc">RSI สูงสุดก่อน</button>
+        <button data-sort-pick="revYoy" data-sort-dir="desc">Revenue YoY สูงสุดก่อน</button>
+        <button data-sort-pick="epsYoy" data-sort-dir="desc">EPS YoY สูงสุดก่อน</button>
       </div>
+    </div>
+  </section>
 
-      <div class="field">
-        <label for="minScore">คะแนนขั้นต่ำ</label>
-        <input id="minScore" type="number" min="0" max="100" value="0" />
-      </div>
 
-      <div class="field filters">
-        <label>Filters</label>
-        <label class="check"><input type="checkbox" id="filterAbove200" /> Price &gt; EMA200</label>
-        <label class="check"><input type="checkbox" id="filterEmaStack" /> EMA20 &gt; EMA89</label>
-        <label class="check"><input type="checkbox" id="filterSweetRsi" /> RSI 45-65</label>
-      </div>
 
-      <div class="actions">
-        <button id="scanBtn">Scan Watchlist</button>
-        <button id="refreshBtn" class="secondary">Refresh</button>
-      </div>
+  <section class="bottom-sheet quick-scan-sheet" id="quickScanSheet" aria-hidden="true" aria-label="Quick Scan Symbols">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>◎ Quick Scan</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body bulk-add-body">
+      <p class="helper-text">วางลิสต์หุ้นที่อยากสแกนรอบนี้ได้เลย จะคั่นด้วยเว้นวรรค, comma หรือขึ้นบรรทัดใหม่ก็ได้</p>
+      <textarea id="quickScanInput" class="bulk-symbol-input" rows="7" placeholder="NVDA TSLA AAPL AMD AMZN
+META MSFT PLTR SOUN SEI"></textarea>
+      <p id="quickScanSummary" class="bulk-import-summary" aria-live="polite"></p>
+    </div>
+    <div class="sheet-actions quick-scan-actions">
+      <button class="secondary-btn" data-scan-current>Scan Current Watchlist</button>
+      <button class="secondary-btn" data-append-scan>Append + Scan</button>
+      <button class="secondary-btn" data-replace-scan>Replace + Scan</button>
+      <button class="primary-btn" data-scan-temp>Scan This List Only</button>
+    </div>
+  </section>
 
-      <p class="note">ตารางเรียงแบบ Last Price → EMA price → % vs EMA เป็นคู่ ๆ เพิ่ม MACD 12,26 และทุกคอลัมน์เลือกซ่อนได้จาก Column Manager</p>
-    </section>
+  <section class="bottom-sheet" id="bulkAddSheet" aria-hidden="true" aria-label="Bulk Add Symbols">
+    <div class="sheet-grip"></div>
+    <div class="sheet-header"><h2>＋ Add Watchlist Symbols</h2><button class="icon-btn" data-close-sheet>×</button></div>
+    <div class="sheet-body bulk-add-body">
+      <p class="helper-text">วางชื่อหุ้นหลายตัวพร้อมกันได้เลย — คั่นด้วยเว้นวรรค, comma หรือขึ้นบรรทัดใหม่ เช่น list แบบ v1</p>
+      <textarea id="bulkSymbolInput" class="bulk-symbol-input" rows="8" placeholder="NVDA TSLA AAPL AMD AMZN
+META MSFT PLTR SOUN SEI"></textarea>
+      <div class="bulk-example">
+        <span>ตัวอย่าง:</span>
+        <code>NVDA, TSLA, AAPL, AMD, AMZN</code>
+      </div>
+      <p id="bulkImportSummary" class="bulk-import-summary" aria-live="polite"></p>
+    </div>
+    <div class="sheet-actions bulk-actions">
+      <button class="secondary-btn" data-clear-symbols>Clear Text</button>
+      <button class="secondary-btn" data-clear-watchlist>Clear Watchlist</button>
+      <button class="secondary-btn" data-replace-symbols>Replace List</button>
+      <button class="primary-btn" data-import-symbols>＋ Append Symbols</button>
+    </div>
+  </section>
 
-    <section class="panel screener-panel">
-      <div class="panel-title-row compact-row">
-        <div>
-          <h2>Saved Screeners</h2>
-          <p>บันทึก watchlist + filters + columns ไว้ใช้ซ้ำ ไม่ต้องกรอกชื่อหุ้นใหม่ทุกครั้ง</p>
-        </div>
-        <div class="screener-status" id="screenerStatus">ยังไม่ได้บันทึก preset</div>
-      </div>
-      <div class="screener-controls">
-        <div class="field">
-          <label for="screenerName">ชื่อ Screener</label>
-          <input id="screenerName" placeholder="เช่น AI Infra, Core Quality, Crypto Miners" />
-        </div>
-        <div class="field">
-          <label for="savedScreeners">โหลด Screener</label>
-          <select id="savedScreeners">
-            <option value="">ยังไม่มี saved screener</option>
-          </select>
-        </div>
-        <div class="actions screener-actions">
-          <button id="saveScreenerBtn">Save Screener</button>
-          <button id="loadScreenerBtn" class="secondary">Load</button>
-          <button id="deleteScreenerBtn" class="danger">Delete</button>
-        </div>
-      </div>
-    </section>
+  <section class="chart-modal" id="chartModal" aria-hidden="true" hidden></section>
 
-    <section class="panel column-panel">
-      <div class="panel-title-row compact-row">
-        <div>
-          <h2>Column Manager</h2>
-          <p>ซ่อนคอลัมน์ที่ไม่ต้องการอ่านได้ทีละตัว ตารางหุ้นไม่ควรยาวเหมือน 10-K</p>
-        </div>
-        <div class="column-actions">
-          <button id="showAllColsBtn" class="secondary">Show All</button>
-          <button id="compactColsBtn" class="secondary">Compact</button>
-          <button id="emaFocusColsBtn" class="secondary">EMA Focus</button>
-        </div>
-      </div>
-      <div id="columnToggles" class="column-toggles"></div>
-    </section>
+  <section class="full-modal mobile-only" id="mobileDetailModal" aria-hidden="true">
+    <div class="modal-header"><button class="icon-btn" id="closeDetail">←</button><h2 id="mobileDetailTitle">Detail</h2><button class="icon-btn">↗</button></div>
+    <div class="modal-body" id="mobileDetailBody"></div>
+  </section>
 
-    <section class="panel summary-grid">
-      <div class="metric">
-        <span>Best Setup</span>
-        <strong id="bestSetup">-</strong>
-      </div>
-      <div class="metric">
-        <span>Buy/Watch</span>
-        <strong id="buyWatchCount">-</strong>
-      </div>
-      <div class="metric">
-        <span>Overheated</span>
-        <strong id="hotCount">-</strong>
-      </div>
-      <div class="metric">
-        <span>Last Scan</span>
-        <strong id="lastScan">-</strong>
-      </div>
-    </section>
-
-    <section class="panel table-panel">
-      <div class="panel-title-row">
-        <div>
-          <h2>Scanner</h2>
-          <p>คลิกแถวเพื่อเปิด detail chart</p>
-        </div>
-        <div id="status" class="status">พร้อมยิงเรดาร์</div>
-      </div>
-      <div class="scanner-tabs" role="tablist">
-        <button id="technicalTab" class="tab-button active" data-tab="technical">Technical</button>
-        <button id="fundamentalTab" class="tab-button" data-tab="fundamental">Fundamental</button>
-        <span id="tabNote" class="tab-note">Technical indicators จาก workflow ล่าสุด</span>
-      </div>
-      <div class="table-wrap">
-        <table id="scanTable">
-          <thead>
-            <tr id="scanHeader"></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div id="mobileCards" class="mobile-cards"></div>
-      <div id="errors" class="errors"></div>
-    </section>
-
-    <section class="panel detail-panel">
-      <div class="panel-title-row">
-        <div>
-          <h2 id="detailTitle">Detail</h2>
-          <p id="detailSub">เลือกหุ้นจากตาราง หรือ search ด้านล่าง</p>
-        </div>
-        <div class="single-search">
-          <input id="singleSymbol" placeholder="เช่น NVDA" />
-          <button id="loadSingleBtn" class="secondary">Load</button>
-        </div>
-      </div>
-
-      <div class="detail-grid">
-        <canvas id="priceChart" height="260"></canvas>
-        <div class="thesis-box">
-          <h3>Setup อ่านยังไง</h3>
-          <div id="detailSignal" class="signal-pill muted-pill">ยังไม่มีข้อมูล</div>
-          <div id="scoreBars" class="score-bars"></div>
-          <ul id="reasons"></ul>
-        </div>
-      </div>
-      <div id="fundamentalDetail" class="fundamental-detail"></div>
-    </section>
-
-    <section class="panel playbook">
-      <h2>Playbook</h2>
-      <div class="playbook-grid">
-        <div>
-          <h3>Buy Zone</h3>
-          <p>Price &gt; EMA200, EMA20 &gt; EMA89, EMA5 &gt; EMA20, RSI 45-65 และ volume ไม่แห้ง</p>
-        </div>
-        <div>
-          <h3>Watch</h3>
-          <p>Trend ดี แต่ RSI ร้อนหรือ momentum ยังไม่ confirm — รอจังหวะ ไม่ต้องรีบเป็นฮีโร่</p>
-        </div>
-        <div>
-          <h3>Avoid</h3>
-          <p>ต่ำกว่า EMA200 และ score ต่ำ คือยังเป็นสนามของ turnaround ไม่ใช่ compounding</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
+  <div id="alertToast" class="alert-toast" hidden></div>
+  <button id="alertFab" class="alert-fab mobile-only" type="button" aria-label="Open alerts" hidden>
+    <span class="alert-fab-icon">🔔</span>
+    <span class="alert-fab-badge" id="alertFabBadge">0</span>
+  </button>
+  <section id="alertMobileSheet" class="alert-mobile-sheet mobile-only" hidden aria-live="polite">
+    <div class="alert-mobile-head">
+      <div><strong>🔔 Alerts</strong><small id="alertMobileSubtitle">Tap an alert to open and clear it</small></div>
+      <button type="button" class="ghost-btn" data-close-alert-sheet>×</button>
+    </div>
+    <div class="alert-filter-row mobile-alert-filters" id="alertMobileFilters">
+      <button class="active" data-alert-filter="all">All</button>
+      <button data-alert-filter="action">Actionable</button>
+      <button data-alert-filter="near">Near EMA</button>
+      <button data-alert-filter="hot">HOT</button>
+      <button data-alert-filter="risk">Risk</button>
+      <button data-alert-filter="memo">Memo</button>
+    </div>
+    <div class="alert-mobile-list" id="alertMobileList"></div>
+    <button class="ghost-btn alert-clear-btn" type="button" data-dismiss-all-alerts>Clear all</button>
+  </section>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1048,7 +1048,8 @@ def score_setup(latest: Dict[str, Optional[float]], previous: Dict[str, Optional
     return total, label, reasons, parts
 
 
-def build_analysis(symbol: str, range_: str = "1y", interval: str = "1d") -> Dict[str, Any]:
+def build_analysis(symbol: str, range_: str = "1y", interval: str = "1d", include_fundamentals: Optional[bool] = None) -> Dict[str, Any]:
+    include_fundamentals = INCLUDE_FUNDAMENTALS if include_fundamentals is None else bool(include_fundamentals)
     payload = yahoo_chart(symbol, range_=range_, interval=interval)
     candles, meta = parse_candles(payload)
 
@@ -1142,7 +1143,7 @@ def build_analysis(symbol: str, range_: str = "1y", interval: str = "1d") -> Dic
     # V8.9 / SEC V1: use SEC EDGAR for core fundamentals.
     # Yahoo remains the price/technical source only. Analyst target is reserved for V2.
     if build_fundamental_sec_v1 is not None:
-        fundamental = build_fundamental_sec_v1(symbol, latest, include=INCLUDE_FUNDAMENTALS)
+        fundamental = build_fundamental_sec_v1(symbol, latest, include=include_fundamentals)
     else:
         fundamental = {
             "fundamentalScore": None,
@@ -1166,7 +1167,7 @@ def build_analysis(symbol: str, range_: str = "1y", interval: str = "1d") -> Dic
     }
 
 
-def scan_symbols(symbols: Iterable[str], range_: str = "1y", interval: str = "1d") -> Dict[str, Any]:
+def scan_symbols(symbols: Iterable[str], range_: str = "1y", interval: str = "1d", include_fundamentals: bool = False) -> Dict[str, Any]:
     """Scan a symbol list and return both table rows and full quote payloads.
 
     The original GitHub Pages UI expects data/scanner.json to contain:
@@ -1189,7 +1190,7 @@ def scan_symbols(symbols: Iterable[str], range_: str = "1y", interval: str = "1d
 
     def one(symbol: str) -> Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]], Optional[Dict[str, str]]]:
         try:
-            data = build_analysis(symbol, range_, interval)
+            data = build_analysis(symbol, range_, interval, include_fundamentals=include_fundamentals)
             return data["latest"], data, None
         except Exception as exc:  # noqa: BLE001
             return None, None, {"symbol": symbol, "error": str(exc) or repr(exc) or type(exc).__name__}
@@ -1580,7 +1581,8 @@ class Handler(SimpleHTTPRequestHandler):
                 symbol = (params.get("symbol") or params.get("ticker") or [""])[0]
                 range_ = (params.get("range") or ["1y"])[0]
                 interval = (params.get("interval") or ["1d"])[0]
-                payload = build_analysis(symbol, range_, interval)
+                include_fundamentals = (params.get("includeFundamentals") or ["1"])[0].lower() not in {"0", "false", "no"}
+                payload = build_analysis(symbol, range_, interval, include_fundamentals=include_fundamentals)
                 self.send_json(200, payload)
                 return
 
@@ -1589,7 +1591,8 @@ class Handler(SimpleHTTPRequestHandler):
                 symbols = [s.strip() for s in raw_symbols.replace("\n", ",").split(",")]
                 range_ = (params.get("range") or ["1y"])[0]
                 interval = (params.get("interval") or ["1d"])[0]
-                self.send_json(200, scan_symbols(symbols, range_, interval))
+                include_fundamentals = (params.get("includeFundamentals") or ["0"])[0].lower() not in {"0", "false", "no"}
+                self.send_json(200, scan_symbols(symbols, range_, interval, include_fundamentals=include_fundamentals))
                 return
 
             if path == "/api/analyst-consensus":
@@ -1620,7 +1623,7 @@ class Handler(SimpleHTTPRequestHandler):
                 symbols = [s.strip() for s in raw_symbols.replace("\n", ",").split(",")]
                 range_ = (params.get("range") or ["1y"])[0]
                 interval = (params.get("interval") or ["1d"])[0]
-                self.send_json(200, scan_symbols(symbols, range_, interval))
+                self.send_json(200, scan_symbols(symbols, range_, interval, include_fundamentals=False))
                 return
 
             return super().do_GET()

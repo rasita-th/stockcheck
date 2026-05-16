@@ -1,1832 +1,2967 @@
-const $ = (selector) => document.querySelector(selector);
-const $$ = (selector) => document.querySelectorAll(selector);
+/* Stock Timing Radar — v6.6 GitHub Deploy
+   Full v3.3 mock UI shell + original Python backend engine.
+   Backend endpoints used: /api/scan, /api/quote, /api/health; analyst view links out to Yahoo Finance
+*/
 
-const scanTable = $('#scanTable');
-const tableBody = $('#scanTable tbody');
-const tableHeader = $('#scanHeader');
-const mobileCards = $('#mobileCards');
-const statusEl = $('#status');
-const errorsEl = $('#errors');
-const scanBtn = $('#scanBtn');
-const refreshBtn = $('#refreshBtn');
-const marketClock = $('#market-clock');
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEYS = {
-  screeners: 'stockTimingRadar.screeners.v3',
-  active: 'stockTimingRadar.activeSettings.v8.hybridStatic',
-  alphaQuota: 'stockTimingRadar.alphaVantage.quota.v1',
-  alphaCache: 'stockTimingRadar.alphaVantage.cache.v1'
+const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
+const BASE_WATCHLIST = ["PUMP", "SEI", "NVDA", "TSLA", "AMD", "AAPL", "AMZN", "PLTR", "SOUN"];
+const STORAGE = {
+  watchlist: "stockTimingRadar.watchlist.v54",
+  screeners: "stockTimingRadar.screeners.v54",
+  activeScreener: "stockTimingRadar.activeScreener.v54",
+  settings: "stockTimingRadar.settings.v54",
+  alphaKey: "stockTimingRadar.alphaKey.v1",
+  priceChartMode: "stockTimingRadar.priceChartMode.v51",
+  alertSeen: "stockTimingRadar.alertSeen.v61",
+  alertDismissed: "stockTimingRadar.alertDismissed.v62",
 };
 
-const columnDefs = [
-  { key: 'symbol', label: 'Ticker', sortKey: 'symbol', align: 'left', group: 'base', defaultVisible: true },
-  { key: 'score', label: 'Score', sortKey: 'score', align: 'right', group: 'base', defaultVisible: true },
-  { key: 'signal', label: 'Signal', sortKey: 'signal', align: 'left', group: 'base', defaultVisible: true },
-  { key: 'close', label: 'Last Price', sortKey: 'close', align: 'right', group: 'price', defaultVisible: true },
-  { key: 'ema5', label: 'EMA5 Price', sortKey: 'ema5', align: 'right', group: 'ema', defaultVisible: true },
-  { key: 'pctVsEma5', label: 'vs EMA 5', sortKey: 'pctVsEma5', align: 'right', group: 'gap', defaultVisible: true },
-  { key: 'ema20', label: 'EMA20 Price', sortKey: 'ema20', align: 'right', group: 'ema', defaultVisible: true },
-  { key: 'pctVsEma20', label: 'vs EMA 20', sortKey: 'pctVsEma20', align: 'right', group: 'gap', defaultVisible: true },
-  { key: 'ema89', label: 'EMA89 Price', sortKey: 'ema89', align: 'right', group: 'ema', defaultVisible: true },
-  { key: 'pctVsEma89', label: 'vs EMA 89', sortKey: 'pctVsEma89', align: 'right', group: 'gap', defaultVisible: true },
-  { key: 'ema200', label: 'EMA200 Price', sortKey: 'ema200', align: 'right', group: 'ema', defaultVisible: true },
-  { key: 'pctVsEma200', label: 'vs EMA 200', sortKey: 'pctVsEma200', align: 'right', group: 'gap', defaultVisible: true },
-  { key: 'rsi14', label: 'RSI', sortKey: 'rsi14', align: 'right', group: 'indicator', defaultVisible: true },
-  { key: 'macd1226', label: 'MACD 12,26', sortKey: 'macd1226', align: 'right', group: 'macd', defaultVisible: true },
-  { key: 'macdSignal9', label: 'MACD Signal 9', sortKey: 'macdSignal9', align: 'right', group: 'macd', defaultVisible: false },
-  { key: 'macdHist', label: 'MACD Hist', sortKey: 'macdHist', align: 'right', group: 'macd', defaultVisible: false },
-  { key: 'volumeRatio20', label: 'Vol/20D', sortKey: 'volumeRatio20', align: 'right', group: 'indicator', defaultVisible: true },
-  { key: 'high52w', label: '52 Wks High', sortKey: 'high52w', align: 'right', group: 'range', defaultVisible: true },
-  { key: 'low52w', label: '52 Wks Low', sortKey: 'low52w', align: 'right', group: 'range', defaultVisible: true }
-];
-
-
-const fundamentalColumnDefs = [
-  { key: 'symbol', label: 'Ticker', sortKey: 'symbol', align: 'left', group: 'base', defaultVisible: true },
-  { key: 'fundamentalScore', label: 'Fund. Score', sortKey: 'fundamentalScore', align: 'right', group: 'base', defaultVisible: true },
-  { key: 'fundamentalSignal', label: 'Signal', sortKey: 'fundamentalSignal', align: 'left', group: 'base', defaultVisible: true },
-  { key: 'latestQuarter', label: 'Latest Quarter', sortKey: 'latestQuarter', align: 'left', group: 'fundamental', defaultVisible: true },
-  { key: 'earningsDate', label: 'Period End', sortKey: 'earningsDate', align: 'left', group: 'fundamental', defaultVisible: true },
-  { key: 'revenue', label: 'Revenue', sortKey: 'revenue', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'revenuePrevQuarter', label: 'Rev Prev Q', sortKey: 'revenuePrevQuarter', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'revenueYearAgo', label: 'Rev Year Ago', sortKey: 'revenueYearAgo', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'priorCompanyGuidanceRevenuePeriod', label: 'Prior Guide Period', sortKey: 'priorCompanyGuidanceRevenuePeriod', align: 'left', group: 'fundamental', defaultVisible: false },
-  { key: 'priorCompanyGuidanceRevenue', label: 'Prior Co. Guide Mid', sortKey: 'priorCompanyGuidanceRevenue', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'actualVsPriorGuidanceRevenuePct', label: 'Actual vs Prior Guide %', sortKey: 'actualVsPriorGuidanceRevenuePct', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'nextCompanyGuidanceRevenue', label: 'Next Co. Guide Mid', sortKey: 'nextCompanyGuidanceRevenue', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'nextCompanyGuidanceRevenuePeriod', label: 'Next Guide Period', sortKey: 'nextCompanyGuidanceRevenuePeriod', align: 'left', group: 'fundamental', defaultVisible: false },
-  { key: 'revenueQoQ', label: 'Rev QoQ', sortKey: 'revenueQoQ', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'revenueYoY', label: 'Rev YoY', sortKey: 'revenueYoY', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'netIncome', label: 'Net Income', sortKey: 'netIncome', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'netIncomePrevQuarter', label: 'NI Prev Q', sortKey: 'netIncomePrevQuarter', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'netIncomeYearAgo', label: 'NI Year Ago', sortKey: 'netIncomeYearAgo', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'profitQoQ', label: 'Profit QoQ', sortKey: 'profitQoQ', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'profitYoY', label: 'Profit YoY', sortKey: 'profitYoY', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'eps', label: 'EPS', sortKey: 'eps', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'epsPrevQuarter', label: 'EPS Prev Q', sortKey: 'epsPrevQuarter', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'epsYearAgo', label: 'EPS Year Ago', sortKey: 'epsYearAgo', align: 'right', group: 'fundamental', defaultVisible: false },
-  { key: 'epsQoQ', label: 'EPS QoQ', sortKey: 'epsQoQ', align: 'right', group: 'fundamental', defaultVisible: true },
-  { key: 'epsYoY', label: 'EPS YoY', sortKey: 'epsYoY', align: 'right', group: 'fundamental', defaultVisible: true }
-];
-
-const defaultFundColumns = Object.fromEntries(fundamentalColumnDefs.map(col => [col.key, col.defaultVisible]));
-
-const defaultColumns = Object.fromEntries(columnDefs.map(col => [col.key, col.defaultVisible]));
-
-const compactColumns = {
-  symbol: true,
-  score: true,
-  signal: true,
-  close: true,
-  ema5: false,
-  pctVsEma5: false,
-  ema20: true,
-  pctVsEma20: true,
-  ema89: false,
-  pctVsEma89: false,
-  ema200: true,
-  pctVsEma200: true,
-  rsi14: true,
-  macd1226: true,
-  macdSignal9: false,
-  macdHist: false,
-  volumeRatio20: true,
-  high52w: true,
-  low52w: true
+const STATIC_DATA_URLS = {
+  technical: "data/technical.json",
+  fundamental: "data/fundamental.json",
 };
 
-const emaFocusColumns = {
-  symbol: true,
-  score: true,
-  signal: false,
-  close: true,
-  ema5: true,
-  pctVsEma5: true,
-  ema20: true,
-  pctVsEma20: true,
-  ema89: true,
-  pctVsEma89: true,
-  ema200: true,
-  pctVsEma200: true,
-  rsi14: false,
-  macd1226: true,
-  macdSignal9: true,
-  macdHist: true,
-  volumeRatio20: false,
-  high52w: false,
-  low52w: false
-};
+function isStaticDeployHost() {
+  const host = window.location.hostname || "";
+  if (!host) return true;
+  if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0") return false;
+  return true;
+}
 
-const state = {
+let state = {
+  selected: "PUMP",
+  scannerTab: "technical",
+  sortKey: "score",
+  sortAsc: false,
+  fundSubTab: "earnings",
+  detailTab: "technical",
+  mobileView: "cards",
+  priceChartMode: localStorage.getItem("stockTimingRadar.priceChartMode.v51") || "line",
+  chartModalOpen: false,
+  activeScreener: "default",
+  analystLoaded: {},
+  analystPayloads: {},
+  columns: {
+    ticker: true, score: true, signal: true, price: true,
+    ema5: true, ema20: true, ema89: true, ema200: true,
+    rsi: true, macdHist: false, vol20: false, high52: false,
+    fundTicker: true, fundScore: true, fundQuarter: true,
+    fundRevenue: true, fundNetIncome: true, fundEps: true,
+    fundFcf: true, fundMargins: true, fundGuidance: false
+  },
+  lastScanAt: null,
+  watchlist: loadWatchlist(),
   rows: [],
-  filteredRows: [],
-  sortKey: 'score',
-  sortDir: 'desc',
-  lastSymbols: '',
-  columns: { ...defaultColumns },
-  fundColumns: { ...defaultFundColumns },
-  activeTab: 'technical',
-  scannerData: null,
   quotes: {},
-  currentDetail: null,
-  analystCache: {},
-  analystLoading: {},
-  alphaKeyFetched: false,
-  fundDetailTab: 'earnings'
+  errors: [],
+  lastScanSymbols: [],
+  activeMarketGroup: "ALL",
+  loading: false,
+  fundamentalLoading: false,
+  showFilteredRows: true,
+  symbolLoads: new Set(),
+  alertFilter: localStorage.getItem("stockTimingRadar.alertFilter.v61") || "all",
+  alertCollapsed: localStorage.getItem("stockTimingRadar.alertCollapsed.v61") === "1",
+  lastAlertSignature: localStorage.getItem("stockTimingRadar.alertSeen.v61") || "",
+  dismissedAlerts: new Set(JSON.parse(localStorage.getItem("stockTimingRadar.alertDismissed.v62") || "[]")),
+  alertSheetOpen: false,
+  staticMode: isStaticDeployHost(),
+  staticLoaded: false,
+  staticPayloads: { technical: null, fundamental: null },
+  staticLoadError: null,
+  filters: {
+    score: 60,
+    range: "1y",
+    above200: true,
+    emaStack: true,
+    sweetRsi: true,
+    volume20: false,
+    macdSignal: true,
+  },
 };
 
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+function loadWatchlist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE.watchlist) || "[]");
+    if (Array.isArray(saved) && saved.length) return normalizeTickers(saved);
+  } catch (_) {}
+  return [...BASE_WATCHLIST];
 }
 
-
-function renderAiReasonItem(text) {
-  const raw = String(text ?? '');
-  const parts = raw.split(/\s+[—-]\s*ที่มา:\s*/);
-  if (parts.length < 2) {
-    return `<li>${escapeHtml(raw)}</li>`;
-  }
-  const main = parts.shift();
-  const source = parts.join(' — ที่มา: ').trim();
-  return `<li>
-    <span class="ai-reason-main">${escapeHtml(main)}</span>
-    <details class="ai-source-inline">
-      <summary title="เปิดดูที่มาของข้อมูล">ที่มา</summary>
-      <div>${escapeHtml(source)}</div>
-    </details>
-  </li>`;
+function saveWatchlist() {
+  localStorage.setItem(STORAGE.watchlist, JSON.stringify(state.watchlist));
+  persistActiveScreener();
 }
 
-function formatNumber(value, digits = 2) {
-  if (value === null || value === undefined || Number.isNaN(Number(value))) return '-';
-  return Number(value).toLocaleString(undefined, { maximumFractionDigits: digits, minimumFractionDigits: digits });
+function normalizeTicker(raw) {
+  return String(raw || "")
+    .trim()
+    .replace(/^[$#]+/, "")
+    .toUpperCase();
 }
 
-function formatPct(value) {
-  if (value === null || value === undefined || Number.isNaN(Number(value))) return '-';
-  const sign = Number(value) > 0 ? '+' : '';
-  return `${sign}${formatNumber(value, 2)}%`;
+function normalizeTickers(items) {
+  return [...new Set(items.map(normalizeTicker).filter(t => /^[A-Z0-9.\-]{1,18}$/.test(t)))];
 }
 
-function formatDaysToNextQuarter(value) {
-  if (value === null || value === undefined || value === '' || Number.isNaN(Number(value))) return 'N/A';
-  const n = Math.round(Number(value));
-  if (n < 0) return `Overdue ${Math.abs(n)}d`;
-  if (n === 0) return 'Today';
-  return `${n}d`;
+function parseTickerList(rawText = "") {
+  return normalizeTickers(String(rawText).split(/[\s,;|、，]+/));
 }
 
-function clsForPct(value) {
-  if (value === null || value === undefined) return '';
-  if (value > 0) return 'good';
-  if (value < 0) return 'bad';
-  return '';
+function esc(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-function clsForRsi(value) {
-  if (value === null || value === undefined) return '';
-  if (value >= 75) return 'hot';
-  if (value >= 65) return 'warn';
-  if (value >= 45) return 'good';
-  if (value < 35) return 'bad';
-  return 'warn';
+function toNum(value) {
+  if (value === null || value === undefined || value === "" || value === "N/A") return null;
+  const n = Number(String(value).replace(/[$,%x,]/g, ""));
+  return Number.isFinite(n) ? n : null;
 }
 
-function clsForMacd(value) {
-  if (value === null || value === undefined) return '';
-  if (value > 0) return 'good';
-  if (value < 0) return 'bad';
-  return 'warn';
+function fmt(n, digits = 2) {
+  const v = toNum(n);
+  if (v === null) return "—";
+  return v.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
-function signalClass(signal = '') {
-  const text = String(signal || '');
-  if (text.includes('Fundamental Beat') || text.includes('Strong')) return 'fund-strong';
-  if (text.includes('Solid')) return 'fund-watch';
-  if (text.includes('Mixed')) return 'fund-mixed';
-  if (text.includes('WEAK') || text.includes('AVOID') || text.includes('Weak')) return 'fund-weak';
-  if (text.includes('BUY')) return 'buy';
-  if (text.includes('WATCH')) return 'watch';
-  if (text.includes('HOT')) return 'hot';
-  return 'neutral';
+function fmtCompact(n, digits = 2) {
+  const v = toNum(n);
+  if (v === null) return "—";
+  const abs = Math.abs(v);
+  if (abs >= 1e12) return `$${fmt(v / 1e12, digits)}T`;
+  if (abs >= 1e9) return `$${fmt(v / 1e9, digits)}B`;
+  if (abs >= 1e6) return `$${fmt(v / 1e6, digits)}M`;
+  return fmtMoney(v, digits);
 }
 
-function setStatus(text) {
-  statusEl.textContent = text;
+function fmtMoney(n, digits = 2) {
+  const v = toNum(n);
+  if (v === null) return "—";
+  if (Math.abs(v) < 1) return `$${v.toLocaleString("en-US", { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`;
+  return `$${v.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
 }
 
-function setScreenerStatus(text) {
-  $('#screenerStatus').textContent = text;
+function pctLabel(n, digits = 2) {
+  const v = toNum(n);
+  if (v === null) return "—";
+  const sign = v > 0 ? "+" : "";
+  return `${sign}${fmt(v, digits)}%`;
 }
 
-function parseSymbols() {
-  return $('#symbols').value
-    .replace(/\n/g, ',')
-    .split(',')
-    .map(s => s.trim().toUpperCase())
-    .filter(Boolean)
-    .filter((v, i, arr) => arr.indexOf(v) === i);
+function pctClass(n) {
+  const v = toNum(n);
+  if (v === null) return "neutral";
+  if (v < 0) return "red";
+  if (v <= 5) return "green";
+  if (v <= 15) return "yellow";
+  if (v <= 30) return "orange";
+  return "red";
 }
 
-function getActiveColumnDefs() {
-  return state.activeTab === 'fundamental' ? fundamentalColumnDefs : columnDefs;
+// Fundamental growth color logic is intentionally different from EMA distance.
+// For fundamentals, higher positive growth is good; red is reserved for negative values.
+function fundPctClass(n) {
+  const v = toNum(n);
+  if (v === null) return "neutral";
+  if (v < 0) return "red";
+  if (v === 0) return "neutral";
+  return "green";
 }
 
-function getActiveColumnState() {
-  return state.activeTab === 'fundamental' ? state.fundColumns : state.columns;
-}
-
-function sanitizeColumnState(colState, defs) {
-  const allowed = new Set(defs.map(col => col.key));
-  return Object.fromEntries(Object.entries(colState || {}).filter(([key]) => allowed.has(key)));
-}
-
-function getVisibleColumns() {
-  const defs = getActiveColumnDefs();
-  const colState = getActiveColumnState();
-  const visible = defs.filter(col => colState[col.key]);
-  if (!visible.length) return [defs[0]];
-  return visible;
-}
-
-function classForColumn(col) {
-  const classes = [];
-  if (col.align === 'right') classes.push('num');
-  if (col.group) classes.push(`col-${col.group}`);
-  return classes.join(' ');
-}
-
-function renderValue(row, col) {
-  const value = row[col.key];
-  if (value === null || value === undefined || value === '') return 'N/A';
-  if (['pctVsEma5', 'pctVsEma20', 'pctVsEma89', 'pctVsEma200', 'revenueSurprisePct', 'revenueQoQ', 'revenueYoY', 'profitSurprisePct', 'profitQoQ', 'profitYoY', 'epsSurprisePct', 'epsQoQ', 'epsYoY', 'guidanceRevenueDeltaPct', 'actualVsPriorGuidanceRevenuePct'].includes(col.key)) return formatPct(value);
-  if (col.key === 'rsi14') return formatNumber(value, 1);
-  if (col.key === 'volumeRatio20') return `${formatNumber(value, 2)}x`;
-  if (['macd1226', 'macdSignal9', 'macdHist', 'eps', 'estimatedEps', 'epsPrevQuarter', 'epsYearAgo'].includes(col.key)) return formatNumber(value, 3);
-  if (['revenue', 'revenuePrevQuarter', 'revenueYearAgo', 'estimatedRevenue', 'companyGuidanceRevenue', 'companyGuidanceRevenueLow', 'companyGuidanceRevenueHigh', 'priorCompanyGuidanceRevenue', 'priorCompanyGuidanceRevenueLow', 'priorCompanyGuidanceRevenueHigh', 'nextCompanyGuidanceRevenue', 'nextCompanyGuidanceRevenueLow', 'nextCompanyGuidanceRevenueHigh', 'netIncome', 'netIncomePrevQuarter', 'netIncomeYearAgo'].includes(col.key)) return formatBig(value);
-  if (typeof value === 'string') return escapeHtml(value);
-  return formatNumber(value);
-}
-
-function valueClass(row, col) {
-  if (['pctVsEma5', 'pctVsEma20', 'pctVsEma89', 'pctVsEma200', 'revenueSurprisePct', 'revenueQoQ', 'revenueYoY', 'profitSurprisePct', 'profitQoQ', 'profitYoY', 'epsSurprisePct', 'epsQoQ', 'epsYoY', 'guidanceRevenueDeltaPct', 'actualVsPriorGuidanceRevenuePct'].includes(col.key)) return clsForPct(row[col.key]);
-  if (col.key === 'rsi14') return clsForRsi(row.rsi14);
-  if (['macd1226', 'macdSignal9', 'macdHist'].includes(col.key)) return clsForMacd(row[col.key]);
-  return '';
-}
-
-function renderTableHeader() {
-  const visibleCols = getVisibleColumns();
-  const approxColumnWidth = state.activeTab === 'fundamental' ? 132 : 118;
-  if (scanTable) {
-    scanTable.className = state.activeTab === 'fundamental' ? 'table-fundamental' : 'table-technical';
-    scanTable.style.minWidth = `${Math.max(window.innerWidth - 72, visibleCols.length * approxColumnWidth)}px`;
-  }
-  tableHeader.innerHTML = visibleCols.map(col => {
-    const sorted = state.sortKey === (col.sortKey || col.key) ? ` <span class="sort-mark">${state.sortDir === 'asc' ? '▲' : '▼'}</span>` : '';
-    return `<th data-sort="${col.sortKey || col.key}" class="${classForColumn(col)}">${escapeHtml(col.label)}${sorted}</th>`;
-  }).join('');
-
-  tableHeader.querySelectorAll('th[data-sort]').forEach(th => {
-    th.addEventListener('click', () => {
-      const key = th.dataset.sort;
-      if (state.sortKey === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
-      else {
-        state.sortKey = key;
-        state.sortDir = key === 'symbol' || key === 'signal' ? 'asc' : 'desc';
-      }
-      applyFilters();
-      saveActiveSettings();
-    });
+function signedTextHtml(value) {
+  const raw = String(value ?? "");
+  if (!raw) return "";
+  // Color explicitly signed values only, without accidentally coloring date pieces like 2026-03-31.
+  // Supports +20.7%, -37.0%, $-18.3M, +0.780, -0.52x.
+  return esc(raw).replace(/(^|[\s(])((?:[+−-]\$?|\$[−-])\d[\d,]*(?:\.\d+)?(?:%|[KMBTx]?|x)?)/g, (full, prefix, token) => {
+    const normalized = token.replace("−", "-");
+    const isNeg = normalized.startsWith("-") || normalized.startsWith("$-");
+    const cls = isNeg ? "signed-negative" : "signed-positive";
+    return `${prefix}<span class="${cls}">${token}</span>`;
   });
 }
 
-function renderColumnToggles() {
-  const defs = getActiveColumnDefs();
-  const colState = getActiveColumnState();
-  $('#columnToggles').innerHTML = defs.map(col => {
-    const visible = Boolean(colState[col.key]);
-    return `
-      <button class="column-toggle ${visible ? 'active' : 'inactive'}" data-column="${col.key}">
-        <span>${escapeHtml(col.label)}</span>
-        <strong>${visible ? 'ON' : 'OFF'}</strong>
-      </button>`;
-  }).join('');
-
-  $('#columnToggles').querySelectorAll('button[data-column]').forEach(button => {
-    button.addEventListener('click', () => {
-      const key = button.dataset.column;
-      if (state.activeTab === 'fundamental') state.fundColumns[key] = !state.fundColumns[key];
-      else state.columns[key] = !state.columns[key];
-      renderColumnToggles();
-      applyFilters();
-      saveActiveSettings();
-    });
-  });
+function signedValueHtml(value, formatter = pctLabel) {
+  const text = formatter(value);
+  const n = toNum(value);
+  const cls = n === null ? "neutral" : n < 0 ? "signed-negative" : n > 0 ? "signed-positive" : "neutral";
+  return `<span class="${cls}">${esc(text)}</span>`;
 }
 
-function setColumns(nextColumns) {
-  if (state.activeTab === 'fundamental') state.fundColumns = { ...defaultFundColumns, ...nextColumns };
-  else state.columns = { ...defaultColumns, ...nextColumns };
-  renderColumnToggles();
-  applyFilters();
-  saveActiveSettings();
+function signalClass(signal = "") {
+  const s = String(signal || "").toUpperCase();
+  if (s.includes("HOT") || s.includes("อย่าไล่ราคา")) return "hot";
+  if (s.includes("BUY") || s.includes("STRONG")) return "buy";
+  if (s.includes("WATCH") || s.includes("SOLID") || s.includes("NEUTRAL")) return "watch";
+  if (s.includes("AVOID") || s.includes("WEAK") || s.includes("INSUFFICIENT") || s.includes("ERROR")) return "avoid";
+  if (s.includes("PENDING") || s.includes("LOADING")) return "watch";
+  return "neutral";
 }
 
-function getSettingsFromUi() {
+function shortSignal(signal = "") {
+  const s = String(signal || "").toUpperCase();
+  if (s.includes("HOT") || s.includes("อย่าไล่ราคา")) return "HOT";
+  if (s.includes("BUY") || s.includes("STRONG")) return "BUY";
+  if (s.includes("WATCH")) return "WATCH";
+  if (s.includes("AVOID") || s.includes("WEAK")) return "AVOID";
+  if (s.includes("ERROR")) return "ERROR";
+  if (s.includes("PENDING") || s.includes("LOADING")) return "PENDING";
+  if (s.includes("NEUTRAL")) return "NEUTRAL";
+  return signal || "—";
+}
+
+function signalText(signal = "") {
+  const s = shortSignal(signal);
+  if (s === "BUY") return "↗ BUY";
+  if (s === "HOT") return "HOT — อย่าไล่ราคา";
+  if (s === "WATCH") return "● WATCH";
+  if (s === "AVOID") return "↘ AVOID";
+  if (s === "ERROR") return "⚠ ERROR";
+  if (s === "PENDING") return "⏳ PENDING";
+  if (s === "NEUTRAL") return "○ NEUTRAL";
+  return esc(s);
+}
+
+function marketGroupForTicker(ticker) {
+  const t = normalizeTicker(ticker);
+  if (t.endsWith(".BK")) return "TH";
+  if (ETF_TICKERS.has(t)) return "ETF";
+  return "US";
+}
+
+function currentQuoteFor(symbol) {
+  return state.quotes[normalizeTicker(symbol)] || null;
+}
+
+
+function deriveTechnicalSignal(baseSignal, metrics = {}) {
+  const raw = String(baseSignal || "NEUTRAL").trim();
+  const upper = raw.toUpperCase();
+  // Keep hard states untouched.
+  if (upper.includes("AVOID") || upper.includes("WEAK") || upper.includes("ERROR") || upper.includes("PENDING") || upper.includes("LOADING")) return raw;
+  const rsi = toNum(metrics.rsi);
+  const ema20Pct = toNum(metrics.ema20Pct);
+  const ema89Pct = toNum(metrics.ema89Pct);
+  const ema200Pct = toNum(metrics.ema200Pct);
+  const score = toNum(metrics.score);
+  // HOT is a warning, not a bearish call: the trend may be good, but entry is chasing.
+  // Previous UI used this for names with RSI too hot / distance already stretched.
+  const hotByRsi = rsi !== null && rsi >= 70;
+  const hotByDistance = (ema20Pct !== null && ema20Pct >= 15) || (ema89Pct !== null && ema89Pct >= 25) || (ema200Pct !== null && ema200Pct >= 45);
+  if ((hotByRsi || hotByDistance) && (score === null || score >= 55)) return "HOT — อย่าไล่ราคา";
+  return raw || "NEUTRAL";
+}
+
+function mapRow(row = {}) {
+  const ticker = normalizeTicker(row.symbol || row.ticker);
+  const quote = currentQuoteFor(ticker) || {};
+  const series = Array.isArray(quote.series) ? quote.series : [];
+  const latestSeries = series[series.length - 1] || {};
+  const prevSeries = series[series.length - 2] || {};
+  const close = toNum(row.close ?? row.regularMarketPrice ?? latestSeries.close);
+  const prevClose = toNum(prevSeries.close);
+  const dayPct = close !== null && prevClose ? ((close / prevClose) - 1) * 100 : null;
+  const fundamental = quote.fundamental || {};
+  const latest = quote.latest || row;
+  const f = { ...fundamental, ...latest, ...row };
+  const revenue = row.revenue ?? f.revenue ?? f.totalRevenue ?? null;
+  const netIncome = row.netIncome ?? f.netIncome ?? f.netIncomeLoss ?? null;
+  const eps = row.eps ?? f.eps ?? f.epsDiluted ?? null;
+  const fcf = row.freeCashFlow ?? f.freeCashFlow ?? f.fcf ?? null;
+  const margin = toNum(row.netMargin ?? row.operatingMargin ?? row.grossMargin ?? row.margin ?? f.netMargin ?? f.profitMargin);
+  const debtEq = toNum(row.debtEquity ?? row.debtToEquity ?? row.debtEq ?? f.debtEquity ?? f.debtToEquity);
+  const roe = toNum(row.roe ?? row.returnOnEquity ?? f.returnOnEquityTtm ?? f.returnOnEquity);
+
   return {
-    symbolsText: $('#symbols').value,
-    range: $('#range').value,
-    minScore: $('#minScore').value,
-    filters: {
-      above200: $('#filterAbove200').checked,
-      emaStack: $('#filterEmaStack').checked,
-      sweetRsi: $('#filterSweetRsi').checked
+    raw: row,
+    quote,
+    ticker,
+    exchange: row.exchange || row.exchangeName || row.fullExchangeName || row.instrumentType || "—",
+    company: row.shortName || row.longName || row.company || row.name || row.instrumentType || ticker,
+    score: toNum(row.score) ?? 0,
+    signal: deriveTechnicalSignal(row.signal || "NEUTRAL", {
+      rsi: row.rsi14,
+      ema20Pct: row.pctVsEma20,
+      ema89Pct: row.pctVsEma89,
+      ema200Pct: row.pctVsEma200,
+      score: row.score
+    }),
+    price: close,
+    dayPct,
+    rsi: toNum(row.rsi14),
+    macd: toNum(row.macd1226),
+    signal9: toNum(row.macdSignal9),
+    macdHist: toNum(row.macdHist),
+    vol20: toNum(row.volumeRatio20),
+    ema5: toNum(row.ema5),
+    ema20: toNum(row.ema20),
+    ema89: toNum(row.ema89),
+    ema200: toNum(row.ema200),
+    ema5Pct: toNum(row.pctVsEma5),
+    ema20Pct: toNum(row.pctVsEma20),
+    ema89Pct: toNum(row.pctVsEma89),
+    ema200Pct: toNum(row.pctVsEma200),
+    high52: toNum(row.high52w),
+    isPlaceholder: false,
+    error: row.error || null,
+    low52: toNum(row.low52w),
+    pctFrom52wHigh: toNum(row.pctFrom52wHigh),
+    pe: toNum(row.peRatio ?? row.pe ?? f.peRatio),
+    ps: toNum(row.priceToSales ?? row.ps ?? f.priceToSalesRatio ?? f.ps),
+    pb: toNum(row.priceToBook ?? row.pb ?? f.priceToBookRatio ?? f.pb),
+    revYoy: toNum(row.revenueYoY ?? row.revYoy),
+    epsYoy: toNum(row.epsYoY),
+    margin,
+    debtEq,
+    roe,
+    fundamentalScore: toNum(row.fundamentalScore) ?? toNum(f.fundamentalScore),
+    fundamentalSignal: row.fundamentalSignal || f.fundamentalSignal || "—",
+    fundamentalReasons: row.fundamentalReasons || f.fundamentalReasons || [],
+    fundamentalHighlights: row.fundamentalHighlights || f.fundamentalHighlights || [],
+    fundamentalSource: row.fundamentalSource || f.fundamentalSource || "SEC EDGAR companyfacts + submissions",
+    latestQuarter: row.latestQuarter || f.latestQuarter || "—",
+    periodEnd: row.earningsDate || row.periodEnd || f.periodEnd || "—",
+    revenue,
+    revenuePrevQuarter: row.revenuePrevQuarter ?? f.revenuePrevQuarter,
+    revenueYearAgo: row.revenueYearAgo ?? f.revenueYearAgo,
+    revenueQoQ: toNum(row.revenueQoQ ?? f.revenueQoQ),
+    revenueYoY: toNum(row.revenueYoY ?? f.revenueYoY),
+    netIncome,
+    netIncomePrevQuarter: row.netIncomePrevQuarter ?? f.netIncomePrevQuarter,
+    netIncomeYearAgo: row.netIncomeYearAgo ?? f.netIncomeYearAgo,
+    profitQoQ: toNum(row.profitQoQ ?? row.netIncomeQoQ ?? f.profitQoQ),
+    profitYoY: toNum(row.profitYoY ?? row.netIncomeYoY ?? f.profitYoY),
+    eps,
+    epsPrevQuarter: row.epsPrevQuarter ?? f.epsPrevQuarter,
+    epsYearAgo: row.epsYearAgo ?? f.epsYearAgo,
+    epsQoQ: toNum(row.epsQoQ ?? f.epsQoQ),
+    fcf,
+    guidance: {
+      priorPeriod: row.priorCompanyGuidanceRevenuePeriod || f.priorCompanyGuidanceRevenuePeriod || "—",
+      priorRevenue: row.priorCompanyGuidanceRevenue || f.priorCompanyGuidanceRevenue || null,
+      priorConfidence: row.priorCompanyGuidanceRevenueConfidence || f.priorCompanyGuidanceRevenueConfidence || row.companyGuidanceRevenueConfidence || "—",
+      actualVsPrior: row.actualVsPriorGuidanceRevenuePct || f.actualVsPriorGuidanceRevenuePct || null,
+      nextPeriod: row.nextCompanyGuidanceRevenuePeriod || f.nextCompanyGuidanceRevenuePeriod || "—",
+      nextRevenue: row.nextCompanyGuidanceRevenue || f.nextCompanyGuidanceRevenue || null,
     },
-    columns: { ...state.columns },
-    fundColumns: { ...state.fundColumns },
-    activeTab: state.activeTab,
-    sortKey: state.sortKey,
-    sortDir: state.sortDir
+    reasons: row.reasons || latest.reasons || [],
+    scoreParts: row.scoreParts || latest.scoreParts || {},
   };
 }
 
-function applySettingsToUi(settings = {}) {
-  if (settings.symbolsText !== undefined) $('#symbols').value = settings.symbolsText;
-  if (settings.range !== undefined) $('#range').value = settings.range;
-  if (settings.minScore !== undefined) $('#minScore').value = settings.minScore;
-  if (settings.filters) {
-    $('#filterAbove200').checked = Boolean(settings.filters.above200);
-    $('#filterEmaStack').checked = Boolean(settings.filters.emaStack);
-    $('#filterSweetRsi').checked = Boolean(settings.filters.sweetRsi);
+function errorMapBySymbol() {
+  const out = new Map();
+  (state.errors || []).forEach(e => out.set(normalizeTicker(e.symbol), e.error || "Data unavailable"));
+  return out;
+}
+
+function rowMapBySymbol() {
+  const out = new Map();
+  (state.rows || []).forEach(row => {
+    const s = mapRow(row);
+    if (s.ticker) out.set(s.ticker, s);
+  });
+  return out;
+}
+
+function allWatchlistStocks() {
+  const rows = rowMapBySymbol();
+  const errors = errorMapBySymbol();
+  return state.watchlist.map(ticker => rows.get(ticker) || placeholderStock(ticker, errors.get(ticker)));
+}
+
+function passesFilters(s) {
+  if (!s || s.isPlaceholder || s.error) return false;
+  const f = state.filters;
+  if (state.scannerTab === "technical") {
+    if ((toNum(s.score) ?? 0) < f.score) return false;
+    if (f.above200 && !((toNum(s.ema200Pct) ?? -999) > 0)) return false;
+    if (f.emaStack && !(toNum(s.ema20) !== null && toNum(s.ema89) !== null && s.ema20 > s.ema89)) return false;
+    if (f.sweetRsi && !(toNum(s.rsi) !== null && s.rsi >= 45 && s.rsi <= 65)) return false;
+    if (f.volume20 && !((toNum(s.vol20) ?? 0) >= 1)) return false;
+    if (f.macdSignal && !(toNum(s.macd) !== null && toNum(s.signal9) !== null && s.macd > s.signal9)) return false;
+    return true;
   }
-  state.columns = { ...defaultColumns, ...sanitizeColumnState(settings.columns || {}, columnDefs) };
-  state.fundColumns = { ...defaultFundColumns, ...sanitizeColumnState(settings.fundColumns || {}, fundamentalColumnDefs) };
-  state.activeTab = settings.activeTab || 'technical';
-  updateTabs();
-  state.sortKey = settings.sortKey || (state.activeTab === 'fundamental' ? 'fundamentalScore' : 'score');
-  state.sortDir = settings.sortDir || 'desc';
-  renderColumnToggles();
-  applyFilters();
+  return (toNum(s.fundamentalScore ?? s.score) ?? 0) >= f.score;
+}
+
+function currentStocks() {
+  let stocks = allWatchlistStocks();
+  if (state.activeMarketGroup !== "ALL" && state.activeMarketGroup !== "Custom") {
+    stocks = stocks.filter(s => marketGroupForTicker(s.ticker) === state.activeMarketGroup);
+  }
+  stocks = stocks.filter(passesFilters);
+  stocks.sort((a, b) => compareValues(a, b, state.sortKey, state.sortAsc));
+  return stocks;
+}
+
+function scannerStocks() {
+  let stocks = allWatchlistStocks();
+  if (state.activeMarketGroup !== "ALL" && state.activeMarketGroup !== "Custom") {
+    stocks = stocks.filter(s => marketGroupForTicker(s.ticker) === state.activeMarketGroup);
+  }
+  stocks = stocks.map(s => ({ ...s, _filteredOut: !passesFilters(s) }));
+  stocks.sort((a, b) => {
+    if (a.isPlaceholder !== b.isPlaceholder) return a.isPlaceholder ? 1 : -1;
+    if (a._filteredOut !== b._filteredOut) return a._filteredOut ? 1 : -1;
+    return compareValues(a, b, state.sortKey, state.sortAsc);
+  });
+  return stocks;
+}
+
+function compareValues(a, b, key, asc) {
+  const av = sortValue(a, key);
+  const bv = sortValue(b, key);
+  let result;
+  if (typeof av === "string" || typeof bv === "string") result = String(av || "").localeCompare(String(bv || ""));
+  else result = (toNum(av) ?? -999999999) - (toNum(bv) ?? -999999999);
+  return asc ? result : -result;
+}
+
+function sortValue(s, key) {
+  const map = {
+    ticker: s.ticker,
+    score: state.scannerTab === "fundamental" ? (s.fundamentalScore ?? s.score) : s.score,
+    price: s.price,
+    ema5Pct: Math.abs(toNum(s.ema5Pct) ?? 999999),
+    ema20Pct: Math.abs(toNum(s.ema20Pct) ?? 999999),
+    ema89Pct: Math.abs(toNum(s.ema89Pct) ?? 999999),
+    ema200Pct: Math.abs(toNum(s.ema200Pct) ?? 999999),
+    rsi: s.rsi,
+    revYoy: s.revYoy,
+    revenueQoQ: s.revenueQoQ,
+    profitQoQ: s.profitQoQ,
+    profitYoy: s.profitYoy,
+    epsQoQ: s.epsQoQ,
+    epsYoy: s.epsYoy,
+    fcf: s.fcf,
+  };
+  return key in map ? map[key] : s[key];
+}
+
+function getSelected() {
+  const stocks = state.rows.map(mapRow);
+  return stocks.find(s => s.ticker === state.selected) || stocks[0] || placeholderStock(state.selected || state.watchlist[0] || "NVDA");
+}
+
+function placeholderStock(ticker, error = null) {
+  return {
+    ticker: normalizeTicker(ticker), exchange: "—", company: error ? error : "Waiting for scan data", score: 0, signal: error ? "ERROR" : "PENDING", price: null, dayPct: null,
+    rsi: null, macd: null, signal9: null, macdHist: null, vol20: null,
+    ema5: null, ema20: null, ema89: null, ema200: null, ema5Pct: null, ema20Pct: null, ema89Pct: null, ema200Pct: null,
+    high52: null, low52: null, revenue: null, netIncome: null, eps: null, fcf: null,
+    reasons: [], fundamentalReasons: [], fundamentalHighlights: [], fundamentalSource: "—", scoreParts: {}, guidance: {}, quote: { series: [] }, raw: {}, isPlaceholder: true, error
+  };
+}
+
+function maxDistance(stocks = currentStocks()) {
+  const values = stocks.flatMap(s => [s.ema5Pct, s.ema20Pct, s.ema89Pct, s.ema200Pct].map(v => Math.abs(toNum(v) ?? 0)));
+  return Math.max(...values, 1);
+}
+
+function barFill(value, max = maxDistance()) {
+  const v = toNum(value);
+  const width = v === null ? 0 : Math.max(3, Math.min(100, Math.abs(v) / max * 100));
+  const cls = v !== null && v < 0 ? "red-soft" : pctClass(v);
+  return `<div class="bar-track"><div class="bar-fill ${cls}" style="width:${width}%"></div></div>`;
+}
+
+function emaRows(stock, compact = false) {
+  const rows = [["EMA5", stock.ema5, stock.ema5Pct], ["EMA20", stock.ema20, stock.ema20Pct], ["EMA89", stock.ema89, stock.ema89Pct], ["EMA200", stock.ema200, stock.ema200Pct]];
+  const max = maxDistance(currentStocks());
+  return rows.map(([label, price, pct]) => `
+    <div class="${compact ? "ema-bar-row" : "distance-row"}">
+      <span>${label}</span>
+      <span>${fmtMoney(price)}</span>
+      ${barFill(pct, max)}
+      <span class="pct ${pctClass(pct)}">${pctLabel(pct)}</span>
+    </div>`).join("");
+}
+
+function groupTickers() {
+  return allWatchlistStocks();
+}
+
+function renderGroups() {
+  const counts = { ALL: state.watchlist.length, US: 0, TH: 0, ETF: 0, Custom: 0 };
+  state.watchlist.forEach(t => { counts[marketGroupForTicker(t)] += 1; });
+  counts.Custom = Math.min(4, state.watchlist.length);
+  const groups = [
+    ["ALL", "⭐ All", counts.ALL],
+    ["US", "🇺🇸 US", counts.US],
+    ["TH", "🇹🇭 TH", counts.TH],
+    ["ETF", "📦 ETF", counts.ETF],
+    ["Custom", "⭐ Custom", counts.Custom],
+  ];
+  const groupButtons = groups.map(([key, label, count]) => `<button class="market-btn ${state.activeMarketGroup === key ? "active" : ""}" data-market-group="${key}">${label} <span>${count}</span></button>`).join("");
+  ["marketGroups", "mobileMarketGroups"].forEach(id => { const el = $("#" + id); if (el) el.innerHTML = groupButtons; });
+
+  const stocks = groupTickers();
+  const mobileStocks = (state.activeMarketGroup === "ALL" || state.activeMarketGroup === "Custom") ? stocks : stocks.filter(s => marketGroupForTicker(s.ticker) === state.activeMarketGroup);
+  const chips = mobileStocks.map(s => `<button class="chip ${signalClass(s.signal)} ${s.ticker === state.selected ? "active" : ""}" data-select="${esc(s.ticker)}">${esc(s.ticker)}</button>`).join("") + `<button class="chip neutral" data-add-symbol>+ Add</button>`;
+  const mobileChipRow = $("#mobileChipRow");
+  if (mobileChipRow) mobileChipRow.innerHTML = chips;
+
+  const desktopWatchlist = $("#desktopWatchlist");
+  if (desktopWatchlist) desktopWatchlist.innerHTML = stocks.map(s => `
+    <button class="watch-row ${s.ticker === state.selected ? "active" : ""}" data-select="${esc(s.ticker)}">
+      <span class="logo-box ${signalClass(s.signal) === "buy" ? "green" : (signalClass(s.signal) === "watch" || signalClass(s.signal) === "hot") ? "orange" : signalClass(s.signal) === "avoid" ? "red" : ""}">${esc(s.ticker[0] || "?")}</span>
+      <span class="watch-name"><strong>${esc(s.ticker)}</strong><span>${esc(s.exchange || marketGroupForTicker(s.ticker))}</span></span>
+      <span class="signal-dot ${signalClass(s.signal)}">● ${esc(shortSignal(s.signal))}</span>
+    </button>`).join("");
+}
+
+function emaCell(price, pct) {
+  return `<td><span class="ema-cell"><span>${fmtMoney(price)}</span><strong class="pct ${pctClass(pct)}">${pctLabel(pct)}</strong></span></td>`;
+}
+
+function fundStackCell(rows = []) {
+  return `<td><span class="fund-stack">${rows.map(([label, value, cls = ""]) => `<span><em>${esc(label)}</em><strong class="${cls}">${value ?? "—"}</strong></span>`).join("")}</span></td>`;
+}
+
+function visibleTechnicalColumns() {
+  const defs = [
+    { key: "ticker", label: "Ticker", sort: "ticker", cell: s => `<td><strong class="num">${esc(s.ticker)}</strong><small>${esc(s.exchange || "")}</small></td>` },
+    { key: "score", label: "Score", sort: "score", cell: s => `<td class="num">${fmt(s.score, 0)}</td>` },
+    { key: "signal", label: "Signal", cell: s => `<td><span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span></td>` },
+    { key: "price", label: "Price", sort: "price", cell: s => `<td class="price">${fmtMoney(s.price)}<small class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</small></td>` },
+    { key: "ema5", label: "EMA5 / %vs", sort: "ema5Pct", cell: s => emaCell(s.ema5, s.ema5Pct) },
+    { key: "ema20", label: "EMA20 / %vs", sort: "ema20Pct", cell: s => emaCell(s.ema20, s.ema20Pct) },
+    { key: "ema89", label: "EMA89 / %vs", sort: "ema89Pct", cell: s => emaCell(s.ema89, s.ema89Pct) },
+    { key: "ema200", label: "EMA200 / %vs", sort: "ema200Pct", cell: s => emaCell(s.ema200, s.ema200Pct) },
+    { key: "rsi", label: "RSI", sort: "rsi", cell: s => `<td class="num rsi-cell">${fmt(s.rsi, 1)}</td>` },
+    { key: "macdHist", label: "MACD Hist", sort: "macdHist", cell: s => `<td class="num pct ${pctClass(s.macdHist)}">${fmt(s.macdHist, 3)}</td>` },
+    { key: "vol20", label: "Vol/20D", sort: "vol20", cell: s => `<td class="num">${s.vol20 === null ? "—" : `${fmt(s.vol20, 2)}x`}</td>` },
+    { key: "high52", label: "52W High", sort: "high52", cell: s => `<td class="price">${fmtMoney(s.high52)}</td>` },
+  ];
+  return defs.filter(c => state.columns[c.key] !== false);
+}
+
+function visibleFundamentalColumns() {
+  const defs = [
+    { key: "fundTicker", label: "Ticker", sort: "ticker", cell: s => `<td><strong class="num">${esc(s.ticker)}</strong><small>${esc(s.exchange || "")}</small></td>` },
+    { key: "fundScore", label: "Fund Score / Signal", sort: "score", cell: s => fundStackCell([["Score", fmt(s.fundamentalScore ?? s.score, 0), "num"], ["Signal", `<span class="signal-badge ${signalClass(s.fundamentalSignal || s.signal)}">${esc(shortSignal(s.fundamentalSignal || s.signal))}</span>`]]) },
+    { key: "fundQuarter", label: "Quarter / Period", cell: s => fundStackCell([["Latest", esc(s.latestQuarter || "—")], ["End", esc(s.periodEnd || "—")]]) },
+    { key: "fundRevenue", label: "Revenue / QoQ / YoY", sort: "revYoy", cell: s => fundStackCell([["Revenue", fmtCompact(s.revenue)], ["Prev Q", fmtCompact(s.revenuePrevQuarter)], ["QoQ", `<span class="pct ${fundPctClass(s.revenueQoQ)}">${pctLabel(s.revenueQoQ)}</span>`], ["YoY", `<span class="pct ${fundPctClass(s.revenueYoY)}">${pctLabel(s.revenueYoY)}</span>`]]) },
+    { key: "fundNetIncome", label: "Net Income / QoQ / YoY", cell: s => fundStackCell([["Net Inc", fmtCompact(s.netIncome)], ["Prev Q", fmtCompact(s.netIncomePrevQuarter)], ["QoQ", `<span class="pct ${fundPctClass(s.profitQoQ)}">${pctLabel(s.profitQoQ)}</span>`], ["YoY", `<span class="pct ${fundPctClass(s.profitYoY)}">${pctLabel(s.profitYoY)}</span>`]]) },
+    { key: "fundEps", label: "EPS / QoQ / YoY", sort: "epsYoy", cell: s => fundStackCell([["EPS", fmt(s.eps, 3)], ["Prev Q", fmt(s.epsPrevQuarter, 3)], ["QoQ", `<span class="pct ${fundPctClass(s.epsQoQ)}">${pctLabel(s.epsQoQ)}</span>`], ["YoY", `<span class="pct ${fundPctClass(s.epsYoy)}">${pctLabel(s.epsYoy)}</span>`]]) },
+    { key: "fundFcf", label: "FCF", cell: s => fundStackCell([["FCF", fmtCompact(s.fcf)], ["Rev YoY", `<span class="pct ${fundPctClass(s.revenueYoY)}">${pctLabel(s.revenueYoY)}</span>`]]) },
+    { key: "fundMargins", label: "Margins / Debt", cell: s => fundStackCell([["Margin", s.margin === null ? "—" : `${fmt(s.margin, 1)}%`], ["Debt/Eq", fmt(s.debtEq, 2)], ["ROE", s.roe === null ? "—" : `${fmt(s.roe, 1)}%`]]) },
+    { key: "fundGuidance", label: "Guidance", cell: s => fundStackCell([["Prior", esc(s.guidance?.priorPeriod || "—")], ["Rev Mid", fmtCompact(s.guidance?.priorRevenue)], ["Conf", esc(s.guidance?.priorConfidence || "—")]]) },
+  ];
+  return defs.filter(c => state.columns[c.key] !== false);
+}
+
+function renderTableHeader(tableId, columns) {
+  const table = $(tableId);
+  if (!table) return;
+  const row = table.querySelector("thead tr");
+  if (!row) return;
+  row.innerHTML = columns.map(c => `<th ${c.sort ? `data-sort="${c.sort}"` : ""} class="${state.sortKey === c.sort ? "sorted" : ""}">${esc(c.label)}${state.sortKey === c.sort ? (state.sortAsc ? " ↑" : " ↓") : ""}</th>`).join("");
+}
+
+function renderTechnicalTable() {
+  const body = $("#technicalTableBody");
+  if (!body) return;
+  const cols = visibleTechnicalColumns();
+  renderTableHeader("#technicalTable", cols);
+  if (state.loading) {
+    body.innerHTML = Array.from({ length: 6 }).map(() => `<tr class="skeleton-row">${cols.map(() => `<td><span class="skeleton-line"></span></td>`).join("")}</tr>`).join("");
+    return;
+  }
+  const rows = scannerStocks();
+  if (!rows.length) {
+    let hint = state.errors?.length
+      ? `Scan failed / no market data returned. First error: ${esc(state.errors[0].symbol || "")}: ${esc(state.errors[0].error || "")}`
+      : "No stocks passed filters. Try lowering score or unchecking filters.";
+    if (!state.rows.length && !state.errors?.length) hint = "No scan data loaded yet. Click Scan Now. If this stays empty, make sure you opened http://localhost:8787 from python app.py, not the static HTML file.";
+    body.innerHTML = `<tr><td colspan="${Math.max(cols.length, 1)}" class="muted-empty">${hint}</td></tr>`;
+    return;
+  }
+  body.innerHTML = rows.map(s => {
+    const extended = (toNum(s.ema89Pct) ?? 0) > 30 || (toNum(s.ema200Pct) ?? 0) > 30;
+    const rowState = s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : "";
+    return `<tr class="${s.ticker === state.selected ? "active-row" : ""} ${extended ? "extended-row" : ""} ${rowState}" data-select="${esc(s.ticker)}" title="${s.error ? esc(s.error) : s._filteredOut ? "Filtered out by current scan filters" : ""}">${cols.map(c => c.cell(s)).join("")}</tr>`;
+  }).join("");
+}
+
+function renderTechnicalMobile() {
+  const wrap = $("#technicalMobileCards");
+  if (!wrap) return;
+  const rows = scannerStocks();
+  if (!rows.length) { wrap.innerHTML = `<div class="mobile-empty">No stocks passed filters.</div>`; return; }
+  wrap.innerHTML = rows.map(s => `
+    <article class="stock-card ${s.isPlaceholder ? "pending-card" : s._filteredOut ? "filtered-card" : ""}" data-select="${esc(s.ticker)}">
+      <div class="stock-card-header">
+        <div class="stock-card-title">
+          <span class="logo-box ${signalClass(s.signal) === "buy" ? "green" : (signalClass(s.signal) === "watch" || signalClass(s.signal) === "hot") ? "orange" : signalClass(s.signal) === "avoid" ? "red" : ""}">${esc(s.ticker[0])}</span>
+          <div class="ticker-line"><strong>${esc(s.ticker)}</strong><span>${esc(s.exchange || "—")}</span></div>
+        </div>
+        <div class="card-score"><strong>${fmt(s.score, 0)}</strong><span>Score</span></div>
+      </div>
+      <div class="card-price-row"><span>${fmtMoney(s.price)}</span><span>RSI: ${fmt(s.rsi, 1)}</span><span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span></div>
+      <div class="ema-bars">${emaRows(s, true)}</div>
+    </article>`).join("");
+}
+
+function renderTechnicalMobileTable() {
+  const body = $("#technicalMobileTableBody");
+  if (!body) return;
+  const rows = scannerStocks();
+  if (!rows.length) { body.innerHTML = `<tr><td class="sticky-col">No result</td><td colspan="7">Adjust filters</td></tr>`; return; }
+  body.innerHTML = rows.map(s => `
+    <tr class="${s.ticker === state.selected ? "active-row" : ""} ${s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : ""}" data-select="${esc(s.ticker)}">
+      <td class="sticky-col"><strong class="num">${esc(s.ticker)}</strong><span>${esc(s.company || s.exchange || "")}</span></td>
+      <td class="num ${s.score >= 85 ? "score-good" : s.score >= 70 ? "score-watch" : "score-weak"}">${fmt(s.score, 0)}</td>
+      <td><span class="signal-badge ${signalClass(s.signal)}">${esc(shortSignal(s.signal))}</span></td>
+      <td class="price">${fmtMoney(s.price)}<small class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</small></td>
+      <td><strong class="pct ${pctClass(s.ema20Pct)}">${pctLabel(s.ema20Pct)}</strong><span class="dot ${pctClass(s.ema20Pct)}"></span></td>
+      <td><strong class="pct ${pctClass(s.ema89Pct)}">${pctLabel(s.ema89Pct)}</strong><span class="dot ${pctClass(s.ema89Pct)}"></span></td>
+      <td><strong class="pct ${pctClass(s.ema200Pct)}">${pctLabel(s.ema200Pct)}</strong><span class="dot ${pctClass(s.ema200Pct)}"></span></td>
+      <td class="num rsi-cell">${fmt(s.rsi, 1)}</td>
+    </tr>`).join("");
+}
+
+function renderFundamental() {
+  const rows = scannerStocks();
+  const desktop = $("#fundamentalTableBody");
+  const cols = visibleFundamentalColumns();
+  renderTableHeader("#fundamentalTable", cols);
+  if (desktop) {
+    if (state.loading || state.fundamentalLoading) {
+      desktop.innerHTML = Array.from({ length: 6 }).map(() => `<tr class="skeleton-row">${cols.map(() => `<td><span class="skeleton-line"></span><span class="skeleton-line"></span></td>`).join("")}</tr>`).join("");
+    } else {
+      desktop.innerHTML = rows.length ? rows.map(s => `
+        <tr data-select="${esc(s.ticker)}" class="${s.ticker === state.selected ? "active-row" : ""} ${s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : ""}" title="${s.error ? esc(s.error) : s._filteredOut ? "Filtered out by current scan filters" : ""}">
+          ${cols.map(c => c.cell(s)).join("")}
+        </tr>`).join("") : `<tr><td colspan="${Math.max(cols.length, 1)}" class="muted-empty">No fundamental rows. Click Fundamental to load data, or click Scan Now.</td></tr>`;
+    }
+  }
+
+  const cards = $("#fundamentalMobileCards");
+  if (cards) {
+    if (state.loading || state.fundamentalLoading) { cards.innerHTML = Array.from({ length: 4 }).map(() => `<article class="stock-card skeleton-card"><span class="skeleton-line wide"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></article>`).join(""); }
+    else cards.innerHTML = rows.map(s => `
+    <article class="stock-card ${s.isPlaceholder ? "pending-card" : s._filteredOut ? "filtered-card" : ""}" data-select="${esc(s.ticker)}">
+      <div class="stock-card-header">
+        <div class="stock-card-title"><span class="logo-box">${esc(s.ticker[0])}</span><div class="ticker-line"><strong>${esc(s.ticker)}</strong><span>${esc(s.exchange || "—")}</span></div></div>
+        <span class="signal-badge ${signalClass(s.fundamentalSignal || s.signal)}">${signalText(s.fundamentalSignal || s.signal)}</span>
+      </div>
+      <div class="fund-card-section"><h3>📅 Quarter</h3><div class="fund-grid">${miniMetric("Latest", esc(s.latestQuarter || "—"))}${miniMetric("Period End", esc(s.periodEnd || "—"))}${miniMetric("Score", fmt(s.fundamentalScore ?? s.score, 0))}</div></div>
+      <div class="fund-card-section"><h3>💰 Earnings</h3><div class="fund-grid">${miniMetric("Revenue", fmtCompact(s.revenue))}${miniMetric("Rev QoQ", pctLabel(s.revenueQoQ))}${miniMetric("Rev YoY", pctLabel(s.revenueYoY))}${miniMetric("Net Income", fmtCompact(s.netIncome))}${miniMetric("Profit QoQ", pctLabel(s.profitQoQ))}${miniMetric("Profit YoY", pctLabel(s.profitYoY))}${miniMetric("EPS", fmt(s.eps, 3))}${miniMetric("EPS QoQ", pctLabel(s.epsQoQ))}${miniMetric("EPS YoY", pctLabel(s.epsYoy))}</div></div>
+      <div class="fund-card-section"><h3>🏦 Quality</h3><div class="fund-grid">${miniMetric("FCF", fmtCompact(s.fcf))}${miniMetric("Margin", s.margin === null ? "—" : `${fmt(s.margin, 1)}%`)}${miniMetric("Debt/Eq", fmt(s.debtEq, 2))}</div></div>
+    </article>`).join("");
+  }
+}
+
+
+function cellHtmlToSticky(html) {
+  return String(html || "").replace(/^<td(\s|>)/, '<td class="sticky-col"$1');
+}
+
+function yahooQuoteSymbol(ticker) {
+  return encodeURIComponent(String(ticker || "").trim().toUpperCase());
+}
+
+function yahooAnalysisUrl(ticker) {
+  return `https://finance.yahoo.com/quote/${yahooQuoteSymbol(ticker)}/analysis/`;
+}
+
+function yahooQuoteUrl(ticker) {
+  return `https://finance.yahoo.com/quote/${yahooQuoteSymbol(ticker)}/`;
+}
+
+function updateMobileSortLabel() {
+  const label = $("#mobileSortLabel");
+  if (!label) return;
+  const names = { score: "Score", ema20Pct: "EMA20 nearest", ema89Pct: "EMA89 nearest", ema200Pct: "EMA200 nearest", rsi: "RSI", revYoy: "Rev YoY", epsYoy: "EPS YoY", ticker: "Ticker" };
+  label.textContent = `Sort: ${names[state.sortKey] || state.sortKey} ${state.sortAsc ? "↑" : "↓"}`;
+}
+
+function renderFundamentalMobileTable() {
+  const table = $("#fundamentalMobileTable");
+  const body = $("#fundamentalMobileTableBody");
+  if (!body) return;
+  if (table) table.classList.add("fundamental-mobile-table");
+  const cols = visibleFundamentalColumns();
+  if (table) {
+    const head = table.querySelector("thead tr");
+    if (head) {
+      head.innerHTML = cols.map((c, i) => `<th ${i === 0 ? 'class="sticky-col"' : ''} ${c.sort ? `data-sort="${c.sort}"` : ""}>${esc(c.label)}${state.sortKey === c.sort ? (state.sortAsc ? " ↑" : " ↓") : ""}</th>`).join("");
+    }
+  }
+  if (state.loading || state.fundamentalLoading) {
+    body.innerHTML = Array.from({ length: 5 }).map(() => `<tr class="skeleton-row"><td class="sticky-col"><span class="skeleton-line"></span></td><td colspan="${Math.max(cols.length - 1, 1)}"><span class="skeleton-line wide"></span></td></tr>`).join("");
+    return;
+  }
+  const rows = scannerStocks();
+  body.innerHTML = rows.map(s => {
+    const cells = cols.map((c, i) => i === 0 ? cellHtmlToSticky(c.cell(s)) : c.cell(s)).join("");
+    return `<tr class="${s.ticker === state.selected ? "active-row" : ""} ${s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : ""}" data-select="${esc(s.ticker)}">${cells}</tr>`;
+  }).join("");
+}
+
+function miniMetric(label, value) {
+  return `<div class="fund-mini"><span>${esc(label)}</span><strong>${value ?? "—"}</strong></div>`;
+}
+
+function renderDetail() {
+  const s = getSelected();
+  const detailTabs = `
+    <div class="detail-tabs" role="tablist" aria-label="Detail sections">
+      <button class="${state.detailTab === "technical" ? "active" : ""}" data-detail-tab="technical">Technical</button>
+      <button class="${state.detailTab === "setup" ? "active" : ""}" data-detail-tab="setup">Setup</button>
+      <button class="${state.detailTab === "fundamental" ? "active" : ""}" data-detail-tab="fundamental">Fundamental</button>
+      <button class="${state.detailTab === "playbook" ? "active" : ""}" data-detail-tab="playbook">Playbook</button>
+    </div>`;
+  const content = desktopDetailHtml(s);
+  const detailEl = $("#detailCard");
+  if (detailEl) detailEl.innerHTML = content;
+  const mobileTitle = $("#mobileDetailTitle");
+  if (mobileTitle) mobileTitle.textContent = `${s.ticker} Detail`;
+  const mobileBody = $("#mobileDetailBody");
+  if (mobileBody) mobileBody.innerHTML = `<section class="detail-card">${content}</section>`;
+  const fundDash = $("#fundamentalDashboard");
+  if (fundDash) fundDash.innerHTML = fundamentalDashboardHtml(s, false);
+  const setup = $("#setupSummary");
+  if (setup) setup.innerHTML = setupHtml(s, false);
+  const playbook = $("#playbookCards");
+  if (playbook) playbook.innerHTML = playbookHtml(false);
+  renderChartModal();
+}
+
+function desktopDetailHtml(s) {
+  return `
+    <div class="detail-header">
+      <div class="detail-identity">
+        <span class="logo-box ${signalClass(s.signal) === "buy" ? "green" : (signalClass(s.signal) === "watch" || signalClass(s.signal) === "hot") ? "orange" : signalClass(s.signal) === "avoid" ? "red" : ""}">${esc(s.ticker[0] || "?")}</span>
+        <div><h2>${esc(s.ticker)}</h2><p>${esc(s.exchange || "—")} · ${esc(s.raw.currency || "")}</p></div>
+      </div>
+      <span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)} ZONE</span>
+      <div class="detail-price">${fmtMoney(s.price)} <span class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</span></div>
+      <p class="detail-meta">Score ${fmt(s.score, 0)}/100 · RSI ${fmt(s.rsi, 1)} · MACD ${fmt(s.macd, 3)} · 52Wks ${fmtMoney(s.low52)} – ${fmtMoney(s.high52)}</p>
+      <div class="detail-load"><input value="${esc(s.ticker)}" aria-label="Load symbol" /><button class="primary-btn" data-load-symbol>Load</button></div>
+      ${detailTabs(s)}
+    </div>
+    <div class="detail-tab-content">${detailContentHtml(s)}</div>`;
+}
+
+function detailTabs(s = getSelected()) {
+  const sig = signalClass(s.signal);
+  const setupClass = sig === "buy" ? "setup-buy" : sig === "watch" ? "setup-watch" : sig === "avoid" ? "setup-avoid" : "setup-neutral";
+  return `
+    <div class="detail-tabs" role="tablist" aria-label="Detail sections">
+      <button class="${state.detailTab === "technical" ? "active" : ""}" data-detail-tab="technical">Technical</button>
+      <button class="${setupClass} ${state.detailTab === "setup" ? "active" : ""}" data-detail-tab="setup">Setup <span class="setup-tab-dot"></span></button>
+      <button class="${state.detailTab === "fundamental" ? "active" : ""}" data-detail-tab="fundamental">Fundamental</button>
+      <button class="${state.detailTab === "playbook" ? "active" : ""}" data-detail-tab="playbook">Playbook</button>
+    </div>`;
+}
+
+function desktopSnapshotHtml(s) {
+  return `
+    <div class="desktop-snapshot">
+      <div class="snapshot-top">
+        <div><span class="snapshot-kicker">Selected Stock</span><h2>${esc(s.ticker)}</h2><p>${esc(s.company || s.exchange || "")}</p></div>
+        <span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span>
+      </div>
+      <div class="snapshot-price-row"><div><strong>${fmtMoney(s.price)}</strong><span class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</span></div><div class="snapshot-load"><button class="primary-btn" data-load-symbol>Refresh</button></div></div>
+      <div class="snapshot-metrics"><div><span>Score</span><strong>${fmt(s.score, 0)}/100</strong></div><div><span>RSI</span><strong>${fmt(s.rsi, 1)}</strong></div><div><span>52W Range</span><strong>${fmtMoney(s.low52)} – ${fmtMoney(s.high52)}</strong></div></div>
+      <div class="snapshot-section"><h3>Distance from EMA</h3>${emaRows(s)}</div>
+      <div class="snapshot-section"><h3>Fundamental Snapshot</h3><div class="snapshot-fund-grid">${miniMetric("Revenue", fmtCompact(s.revenue))}${miniMetric("Net Income", fmtCompact(s.netIncome))}${miniMetric("EPS", fmt(s.eps, 3))}${miniMetric("Rev YoY", pctLabel(s.revYoy, 0))}${miniMetric("EPS YoY", pctLabel(s.epsYoy, 0))}${miniMetric("ROE", s.roe === null ? "—" : `${fmt(s.roe, 1)}%`)}</div></div>
+      <div class="snapshot-section"><h3>Playbook Highlights</h3><button class="snapshot-rule" data-detail-tab="setup">↗ Trend <span>Price/EMA stack</span></button><button class="snapshot-rule" data-detail-tab="technical">⚡ Momentum <span>RSI/MACD/Volume</span></button><button class="snapshot-rule" data-detail-tab="fundamental">📊 Fundamental <span>SEC dashboard</span></button></div>
+    </div>`;
+}
+
+function detailContentHtml(s) {
+  if (state.detailTab === "setup") return `<div class="padded-detail-section">${setupHtml(s, false)}</div>`;
+  if (state.detailTab === "fundamental") return `<div class="padded-detail-section">${fundamentalDashboardHtml(s, false)}</div>`;
+  if (state.detailTab === "playbook") return `<div class="padded-detail-section">${playbookHtml(false)}</div>`;
+  return `
+    <div class="chart-stack">
+      ${priceChartPanel(s)}
+      ${chartPanel("RSI(14)", `RSI14: ${fmt(s.rsi, 1)}`, rsiChartSvg(s))}
+      ${chartPanel("MACD(12,26,9)", `MACD: ${fmt(s.macd,3)} · Signal: ${fmt(s.signal9,3)}`, macdChartSvg(s))}
+      ${chartPanel("VOL(5,10)", `Vol/20D: ${s.vol20 === null ? "—" : `${fmt(s.vol20, 2)}x`}`, volumeChartSvg(s))}
+    </div>`;
+}
+
+function priceChartPanel(s) {
+  const mode = state.priceChartMode === "candles" ? "candles" : "line";
+  return `<section class="chart-panel price-chart-panel" data-open-chart-modal title="Click chart to expand">
+    <div class="chart-title price-chart-title">
+      <div><h3>Price / EMA</h3><span>${mode === "candles" ? "Candles" : "Close line"}, EMA5, EMA20, EMA89, EMA200</span></div>
+      <div class="chart-actions" data-chart-controls>
+        <div class="chart-mode-toggle" role="group" aria-label="Price chart mode">
+          <button type="button" class="${mode === "line" ? "active" : ""}" data-chart-mode="line">Line</button>
+          <button type="button" class="${mode === "candles" ? "active" : ""}" data-chart-mode="candles">Candles</button>
+        </div>
+        <button type="button" class="chart-expand-btn" data-open-chart-modal aria-label="Expand chart">⛶</button>
+      </div>
+    </div>
+    ${priceChartSvg(s)}
+  </section>`;
+}
+
+function chartPanel(title, subtitle, svg) {
+  return `<section class="chart-panel"><div class="chart-title"><h3>${title}</h3><span>${subtitle}</span></div>${svg}</section>`;
+}
+
+function svgLine(points, color, width = 2, dash = "") {
+  if (!points.length) return "";
+  const d = points.map((p, i) => `${i ? "L" : "M"}${p[0]},${p[1]}`).join(" ");
+  return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" ${dash ? `stroke-dasharray="${dash}"` : ""} stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+
+function scaleSeries(values, width = 300, height = 120, pad = 8, minForced = null, maxForced = null) {
+  const clean = values.map(toNum).filter(v => v !== null);
+  if (!clean.length) return [];
+  const min = minForced !== null ? minForced : Math.min(...clean);
+  const max = maxForced !== null ? maxForced : Math.max(...clean);
+  const span = max === min ? 1 : max - min;
+  const step = values.length <= 1 ? 0 : (width - pad * 2) / (values.length - 1);
+  return values.map((v, i) => {
+    const n = toNum(v);
+    if (n === null) return null;
+    return [pad + i * step, height - pad - ((n - min) / span) * (height - pad * 2)];
+  }).filter(Boolean);
+}
+
+function recentSeries(s, n = 60) {
+  const arr = s.quote?.series || [];
+  return arr.slice(Math.max(0, arr.length - n));
+}
+
+function fmtDateLabel(value) {
+  if (!value) return "";
+  const d = new Date(String(value));
+  if (Number.isNaN(d.getTime())) return String(value).slice(5, 10);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function chartAxisLabels(series) {
+  if (!series.length) return "";
+  const first = series[0]?.date;
+  const mid = series[Math.floor(series.length / 2)]?.date;
+  const last = series[series.length - 1]?.date;
+  return `<div class="chart-axis"><span>${esc(fmtDateLabel(first))}</span><span>${esc(fmtDateLabel(mid))}</span><span>${esc(fmtDateLabel(last))}</span></div>`;
+}
+
+function candleSvg(series, min, max, width = 320, height = 140, pad = 10) {
+  const span = max === min ? 1 : max - min;
+  const y = (v) => height - pad - ((toNum(v) - min) / span) * (height - pad * 2);
+  const step = series.length <= 1 ? width - pad * 2 : (width - pad * 2) / series.length;
+  const candleW = Math.max(2, Math.min(7, step * 0.52));
+  return series.map((x, i) => {
+    const o = toNum(x.open), h = toNum(x.high), l = toNum(x.low), c = toNum(x.close);
+    if ([o,h,l,c].some(v => v === null)) return "";
+    const cx = pad + i * step + step / 2;
+    const up = c >= o;
+    const color = up ? "#3fb950" : "#f85149";
+    const top = Math.min(y(o), y(c));
+    const bodyH = Math.max(1.6, Math.abs(y(o) - y(c)));
+    return `<g class="candle ${up ? "up" : "down"}"><line x1="${cx.toFixed(2)}" y1="${y(h).toFixed(2)}" x2="${cx.toFixed(2)}" y2="${y(l).toFixed(2)}" stroke="${color}" stroke-width="1.1"/><rect x="${(cx - candleW/2).toFixed(2)}" y="${top.toFixed(2)}" width="${candleW.toFixed(2)}" height="${bodyH.toFixed(2)}" rx="0.8" fill="${color}" opacity="0.9"/></g>`;
+  }).join("");
+}
+
+function priceChartSvg(s) {
+  const series = recentSeries(s, 60);
+  if (!series.length) return `<div class="chart-empty">ยังไม่มี series จริง — กด Scan Now หรือ Load ticker เพื่อดึงข้อมูลจาก backend</div>`;
+  const closes = series.map(x => x.close);
+  const ema5 = series.map(x => x.ema5);
+  const ema20 = series.map(x => x.ema20);
+  const ema89 = series.map(x => x.ema89);
+  const ema200 = series.map(x => x.ema200);
+  const all = [...closes, ...ema5, ...ema20, ...ema89, ...ema200].map(toNum).filter(v => v !== null);
+  const min = all.length ? Math.min(...all) : 0;
+  const max = all.length ? Math.max(...all) : 1;
+  const pad = (max - min) * 0.06 || 1;
+  const minBound = min - pad;
+  const maxBound = max + pad;
+  const closeLayer = state.priceChartMode === "candles"
+    ? candleSvg(series, minBound, maxBound)
+    : svgLine(scaleSeries(closes,320,140,10,minBound,maxBound), "#e6edf3", 2.4);
+  const closeLabel = state.priceChartMode === "candles" ? "Candles" : "Close";
+  return `<svg class="fake-chart" viewBox="0 0 320 140" preserveAspectRatio="none"><g class="grid-lines"><line x1="10" y1="35" x2="310" y2="35"/><line x1="10" y1="75" x2="310" y2="75"/><line x1="10" y1="115" x2="310" y2="115"/></g>${closeLayer}${svgLine(scaleSeries(ema5,320,140,10,minBound,maxBound), "#3fb950", 1.8)}${svgLine(scaleSeries(ema20,320,140,10,minBound,maxBound), "#58a6ff", 1.8)}${svgLine(scaleSeries(ema89,320,140,10,minBound,maxBound), "#e3822a", 1.8)}${svgLine(scaleSeries(ema200,320,140,10,minBound,maxBound), "#f85149", 1.8, "4 4")}</svg>${chartAxisLabels(series)}<div class="chart-legend"><span class="close">● ${closeLabel}</span><span class="green">● EMA5</span><span class="blue">● EMA20</span><span class="orange">● EMA89</span><span class="red">● EMA200</span></div>`;
+}
+
+function rsiChartSvg(s) {
+  const rawSeries = recentSeries(s, 60);
+  if (!rawSeries.length) return `<div class="chart-empty">ยังไม่มี RSI series</div>`;
+  const series = rawSeries.map(x => x.rsi14);
+  return `<svg class="fake-chart" viewBox="0 0 320 140" preserveAspectRatio="none"><g class="grid-lines"><line x1="10" y1="30" x2="310" y2="30"/><line x1="10" y1="70" x2="310" y2="70"/><line x1="10" y1="110" x2="310" y2="110"/></g><line x1="10" y1="42" x2="310" y2="42" stroke="#f85149" stroke-dasharray="4 5"/><line x1="10" y1="70" x2="310" y2="70" stroke="#8b949e" stroke-dasharray="4 5"/><line x1="10" y1="98" x2="310" y2="98" stroke="#3fb950" stroke-dasharray="4 5"/>${svgLine(scaleSeries(series,320,140,10,0,100), "#c084fc", 2.2)}</svg>${chartAxisLabels(rawSeries)}`;
+}
+
+function macdChartSvg(s) {
+  const series = recentSeries(s, 60);
+  if (!series.length) return `<div class="chart-empty">ยังไม่มี MACD series</div>`;
+  const macd = series.map(x => x.macd1226);
+  const sig = series.map(x => x.macdSignal9);
+  const hist = series.map(x => x.macdHist);
+  const vals = [...macd, ...sig, ...hist].map(toNum).filter(v => v !== null);
+  const maxAbs = Math.max(...vals.map(v => Math.abs(v)), 1);
+  const bars = hist.map(toNum).map((v, i) => {
+    if (v === null) return "";
+    const x = 10 + i * (300 / Math.max(hist.length, 1));
+    const h = Math.abs(v) / maxAbs * 45;
+    const y = v >= 0 ? 70 - h : 70;
+    return `<rect x="${x}" y="${y}" width="3" height="${h}" fill="${v >= 0 ? "#3fb950" : "#f85149"}" opacity="0.85"/>`;
+  }).join("");
+  return `<svg class="fake-chart" viewBox="0 0 320 140" preserveAspectRatio="none"><line x1="10" y1="70" x2="310" y2="70" stroke="#30363d"/>${bars}${svgLine(scaleSeries(macd,320,140,10,-maxAbs,maxAbs), "#58a6ff", 2)}${svgLine(scaleSeries(sig,320,140,10,-maxAbs,maxAbs), "#e3822a", 2)}</svg>${chartAxisLabels(series)}`;
+}
+
+function volumeChartSvg(s) {
+  const series = recentSeries(s, 60);
+  if (!series.length) return `<div class="chart-empty">ยังไม่มี Volume series</div>`;
+  const vols = series.map(x => toNum(x.volume) ?? 0);
+  const max = Math.max(...vols, 1);
+  const bars = vols.map((v, i) => {
+    const x = 10 + i * (300 / Math.max(vols.length, 1));
+    const h = (v / max) * 90;
+    return `<rect x="${x}" y="${120 - h}" width="3" height="${h}" fill="${i % 3 === 0 ? "#f85149" : "#58a6ff"}" opacity="0.75"/>`;
+  }).join("");
+  return `<svg class="fake-chart" viewBox="0 0 320 140" preserveAspectRatio="none"><g class="grid-lines"><line x1="10" y1="35" x2="310" y2="35"/><line x1="10" y1="75" x2="310" y2="75"/><line x1="10" y1="115" x2="310" y2="115"/></g>${bars}</svg>${chartAxisLabels(series)}`;
+}
+
+function setupHtml(s, wrapped = true) {
+  const parts = s.scoreParts || {};
+  const trend = toNum(parts.trend ?? parts.Trend) ?? Math.min(40, Math.round((toNum(s.score) ?? 0) * 0.40));
+  const momentum = toNum(parts.momentum ?? parts.Momentum) ?? Math.min(30, Math.round((toNum(s.score) ?? 0) * 0.30));
+  const rsi = toNum(parts.rsi ?? parts.RSI) ?? (s.rsi >= 45 && s.rsi <= 65 ? 20 : 10);
+  const volume = toNum(parts.volume ?? parts.Volume) ?? (s.vol20 >= 1 ? 10 : 5);
+  const reasons = (Array.isArray(s.reasons) && s.reasons.length ? s.reasons : [
+    s.ema200Pct > 0 ? "✅ Price above EMA200 = major trend still constructive" : "⚠️ Price below EMA200 = structure still weak",
+    s.ema20 > s.ema89 ? "✅ EMA20 > EMA89 = medium trend supports setup" : "⚠️ EMA20 below EMA89 = wait for trend repair",
+    s.rsi >= 45 && s.rsi <= 65 ? "✅ RSI 45–65 = sweet spot" : "⚠️ RSI outside sweet spot",
+    s.macd > s.signal9 ? "✅ MACD > Signal = momentum supports" : "⚠️ MACD still below signal",
+  ]).slice(0, 8);
+  const setupTone = signalClass(s.signal);
+  const html = `
+    <div class="setup-title-row"><h2>Setup อ่านยังไง</h2><span class="setup-chip ${setupTone}">${signalText(s.signal)} setup</span></div>
+    <span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)} / Trend Confirmed</span>
+    <div class="score-progress">${progress("Trend", trend, 40)}${progress("Momentum", momentum, 30)}${progress("RSI", rsi, 20)}${progress("Volume", volume, 10)}</div>
+    <ul class="signal-list">${reasons.map(r => `<li>${esc(r)}</li>`).join("")}</ul>`;
+  return wrapped ? `<article class="panel-card setup-card setup-${setupTone}">${html}</article>` : `<div class="setup-card setup-${setupTone}">${html}</div>`;
+}
+
+function progress(label, value, total) {
+  const pct = Math.max(0, Math.min(100, (toNum(value) ?? 0) / total * 100));
+  const tone = pct >= 80 ? "good" : pct >= 55 ? "watch" : "weak";
+  return `<div class="progress-row progress-${tone}"><span>${label}</span><span class="progress-track"><span class="progress-fill ${tone}" style="width:${pct}%"></span></span><strong>${fmt(value, 0)}/${total}</strong></div>`;
+}
+
+function growthBadge(value) {
+  const n = toNum(value);
+  const cls = n === null ? "badge-flat" : n < 0 ? "badge-down" : "badge-up";
+  return `<b class="${cls}">${esc(value || "—")}</b>`;
+}
+
+function metric(title, value, prev, qoq, yoy) {
+  return `<div class="metric-card"><h3>${esc(title)}</h3><strong class="metric-value">${value || "—"}</strong><div class="mini-stats"><span>Prev Q <b>${prev || "—"}</b></span><span>Estimate <b>—</b></span><span>QoQ ${growthBadge(qoq)}</span><span>YoY ${growthBadge(yoy)}</span></div></div>`;
+}
+
+function formatAiReason(item) {
+  const raw = String(item || "").trim();
+  if (!raw) return "";
+  const patterns = [" — ที่มา:", " – ที่มา:", " - ที่มา:", " — Source:", " – Source:", " - Source:"];
+  let cut = -1;
+  let token = "";
+  for (const p of patterns) {
+    const idx = raw.indexOf(p);
+    if (idx >= 0 && (cut < 0 || idx < cut)) { cut = idx; token = p; }
+  }
+  if (cut < 0) return `<span class="ai-main-text">${signedTextHtml(raw)}</span>`;
+  const main = raw.slice(0, cut).trim();
+  const source = raw.slice(cut + token.length).trim();
+  return `<span class="ai-main-text">${signedTextHtml(main)}</span><details class="source-detail"><summary>ที่มา</summary><small>${esc(source || "SEC EDGAR companyfacts")}</small></details>`;
+}
+
+function aiViewHtml(s) {
+  const reasons = Array.isArray(s.fundamentalReasons) ? s.fundamentalReasons : [];
+  const highlights = Array.isArray(s.fundamentalHighlights) ? s.fundamentalHighlights : [];
+  const fallback = [
+    `Revenue YoY: ${pctLabel(s.revenueYoY)} — ${s.revenueYoY === null ? "SEC companyfacts ยังไม่มีค่าปัจจุบันหรือค่าเทียบช่วงก่อนหน้าที่ match ได้" : "คำนวณจาก SEC companyfacts"}`,
+    `Revenue QoQ: ${pctLabel(s.revenueQoQ)} — ${s.revenueQoQ === null ? "SEC companyfacts ยังไม่มีค่าปัจจุบันหรือค่าเทียบช่วงก่อนหน้าที่ match ได้" : "คำนวณจาก SEC companyfacts"}`,
+    `EPS YoY: ${pctLabel(s.epsYoy)}${s.epsYearAgo ? ` จาก ${fmt(s.epsYearAgo, 3)} เป็น ${fmt(s.eps, 3)}` : ""}`,
+    `Net income QoQ: ${pctLabel(s.profitQoQ)}`,
+    `Free cash flow: ${fmtCompact(s.fcf)}`,
+    `Debt/Equity: ${fmt(s.debtEq, 2)}x`,
+  ];
+  const items = (reasons.length ? reasons : highlights.length ? highlights : fallback).filter(Boolean).slice(0, 10);
+  return `<div class="ai-view-card"><div class="ai-view-head"><strong>AI view</strong><span>${esc(s.fundamentalSource || "SEC EDGAR")}</span></div><ul>${items.map(x => `<li>${formatAiReason(x)}</li>`).join("")}</ul></div>`;
+}
+
+function fundamentalDashboardHtml(s, wrapped = true) {
+  const analyst = state.analystPayloads[s.ticker];
+  const earnings = `
+    <div class="metric-grid">
+      ${metric("Revenue", fmtCompact(s.revenue), fmtCompact(s.revenuePrevQuarter), pctLabel(s.revenueQoQ), pctLabel(s.revenueYoY))}
+      ${metric("Net Income", fmtCompact(s.netIncome), fmtCompact(s.netIncomePrevQuarter), pctLabel(s.profitQoQ), pctLabel(s.profitYoY))}
+      ${metric("EPS (Diluted)", fmt(s.eps, 3), fmt(s.epsPrevQuarter, 3), pctLabel(s.epsQoQ), pctLabel(s.epsYoy))}
+      ${metric("Free Cash Flow", fmtCompact(s.fcf), "—", "—", "—")}
+    </div>
+    <div class="standout-card"><strong>What stood out</strong><ul><li>Latest quarter: ${esc(s.latestQuarter || "—")}</li><li>Period end: ${esc(s.periodEnd || "—")}</li><li>Revenue YoY: ${signedValueHtml(s.revenueYoY)}</li><li>EPS YoY: ${signedValueHtml(s.epsYoy)}</li><li>Net income QoQ: ${signedValueHtml(s.profitQoQ)}</li><li>Free cash flow: ${signedTextHtml(fmtCompact(s.fcf))}</li></ul></div>
+    ${aiViewHtml(s)}`;
+  const guidance = `
+    <div class="standout-card"><strong>🟢 Guidance View</strong><ul><li>Prior Guide Period: ${esc(s.guidance.priorPeriod || "—")}</li><li>Prior Rev Guide Mid: ${fmtCompact(s.guidance.priorRevenue)}</li><li>Confidence: ${esc(s.guidance.priorConfidence || "—")}</li><li>Actual vs Prior Guide: ${signedValueHtml(s.guidance.actualVsPrior)}</li><li>Next Guide Period: ${esc(s.guidance.nextPeriod || "—")}</li><li>Next Rev Guide Mid: ${fmtCompact(s.guidance.nextRevenue)}</li></ul></div>
+    ${aiViewHtml(s)}`;
+  const analystHtml = analystLinksHtml(s);
+  const content = state.fundSubTab === "guidance" ? guidance : state.fundSubTab === "analyst" ? analystHtml : earnings;
+  const html = `
+    <h2>FUNDAMENTAL DASHBOARD</h2>
+    <p class="note">${esc(s.ticker)} dashboard · ${esc(s.fundamentalSignal || "Fundamental")}${s.fundamentalScore !== null ? ` · Score ${fmt(s.fundamentalScore, 0)}/100` : ""} · Source: SEC EDGAR companyfacts + submissions</p>
+    <div class="fund-tabs"><button class="${state.fundSubTab === "earnings" ? "active" : ""}" data-fund-tab="earnings">Earnings Snapshot</button><button class="${state.fundSubTab === "guidance" ? "active" : ""}" data-fund-tab="guidance">Company Guidance View</button><button class="${state.fundSubTab === "analyst" ? "active" : ""}" data-fund-tab="analyst">Analyst Consensus</button></div>
+    ${content}`;
+  return wrapped ? `<article class="panel-card fundamental-dashboard">${html}</article>` : html;
+}
+
+function analystLinksHtml(s) {
+  const analysisUrl = yahooAnalysisUrl(s.ticker);
+  const quoteUrl = yahooQuoteUrl(s.ticker);
+  return `<div class="standout-card yahoo-analysis-card"><strong>Yahoo Finance Analysis</strong><p class="note">ไม่ใช้ Alpha Vantage API แล้ว — กดปุ่มเพื่อเปิดหน้า Analyst Estimates / Earnings Estimates ของ Yahoo Finance โดยตรง</p>
+    <ul><li>Current Price: ${fmtMoney(s.price)}</li><li>Ticker: ${esc(s.ticker)}</li><li>Source: Yahoo Finance Analysis</li></ul>
+    <div class="link-row"><a class="external-link" href="${analysisUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Analysis ↗</a><a class="external-link secondary" href="${quoteUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Quote ↗</a></div>
+  </div>`;
+}
+
+function analystConsensusLoadedHtml(s, payload = {}) {
+  return analystLinksHtml(s);
+}
+
+function playbookHtml(wrapped = true) {
+  const html = `
+    <h2>PLAYBOOK</h2>
+    <div class="play-card buy"><h3>🟢 BUY ZONE</h3><p>Price &gt; EMA200, EMA20 &gt; EMA89, EMA5 &gt; EMA20, RSI 45–65, Volume ปกติขึ้นไป</p></div>
+    <div class="play-card watch"><h3>🟡 WATCH</h3><p>Trend ดี แต่ RSI ร้อน หรือ momentum ยังไม่ confirm → รอจังหวะ อย่ารีบ</p></div>
+    <div class="play-card avoid"><h3>🔴 AVOID</h3><p>ต่ำกว่า EMA200 และ score ต่ำ → สนามของ turnaround ไม่ใช่ compounding</p></div>`;
+  return wrapped ? `<article class="panel-card playbook-card">${html}</article>` : html;
+}
+
+function setLoading(on, text = "") {
+  state.loading = on;
+  const subtitle = $("#scannerSubtitle");
+  if (subtitle) subtitle.textContent = text || (on ? "Scanning with original Python engine…" : "Default sort: Score ↓ · click EMA headers to find nearest line");
+  ["#scanNowDesktop", "#mobileScanNow"].forEach(sel => { const b = $(sel); if (b) { b.disabled = on; b.textContent = on ? "Scanning…" : "◎ Scan Now"; } });
+}
+
+async function fetchJson(url, options = {}) {
+  const res = await fetch(url, { cache: "no-store", ...options });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${text.slice(0, 160)}`);
+  if (text.trim().startsWith("<")) throw new Error("Backend returned HTML instead of JSON. Run python app.py and open localhost:8787.");
+  return JSON.parse(text);
+}
+
+async function fetchStaticLayer(layer) {
+  const base = STATIC_DATA_URLS[layer];
+  if (!base) throw new Error(`Unknown static layer: ${layer}`);
+  const url = `${base}?v=${Date.now()}`;
+  const res = await fetch(url, { cache: "no-store" });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Static ${layer} HTTP ${res.status}: ${text.slice(0, 120)}`);
+  if (text.trim().startsWith("<")) throw new Error(`Static ${layer} returned HTML. Check GitHub Pages data files under site/data/.`);
+  return JSON.parse(text);
+}
+
+function mergeStaticPayloads(technical = {}, fundamental = {}) {
+  const techRows = Array.isArray(technical.rows) ? technical.rows : [];
+  const fundRows = Array.isArray(fundamental.rows) ? fundamental.rows : [];
+  const fundBySymbol = new Map();
+  fundRows.forEach(row => {
+    const sym = normalizeTicker(row.symbol || row.ticker);
+    if (sym) fundBySymbol.set(sym, row);
+  });
+
+  const rows = [];
+  const seen = new Set();
+  techRows.forEach(row => {
+    const sym = normalizeTicker(row.symbol || row.ticker);
+    if (!sym) return;
+    const fund = fundBySymbol.get(sym) || {};
+    rows.push({
+      ...fund,
+      ...row,
+      fundamentalScore: fund.fundamentalScore ?? row.fundamentalScore,
+      fundamentalSignal: fund.fundamentalSignal ?? row.fundamentalSignal,
+      fundamentalReasons: fund.fundamentalReasons ?? row.fundamentalReasons,
+      fundamentalHighlights: fund.fundamentalHighlights ?? row.fundamentalHighlights,
+      fundamentalSource: fund.fundamentalSource ?? row.fundamentalSource,
+      latestQuarter: fund.latestQuarter ?? row.latestQuarter,
+      earningsDate: fund.earningsDate ?? row.earningsDate,
+      revenue: fund.revenue ?? row.revenue,
+      revenuePrevQuarter: fund.revenuePrevQuarter ?? row.revenuePrevQuarter,
+      revenueQoQ: fund.revenueQoQ ?? row.revenueQoQ,
+      revenueYoY: fund.revenueYoY ?? row.revenueYoY,
+      netIncome: fund.netIncome ?? row.netIncome,
+      netIncomePrevQuarter: fund.netIncomePrevQuarter ?? row.netIncomePrevQuarter,
+      profitQoQ: fund.profitQoQ ?? row.profitQoQ,
+      profitYoY: fund.profitYoY ?? row.profitYoY,
+      eps: fund.eps ?? row.eps,
+      epsPrevQuarter: fund.epsPrevQuarter ?? row.epsPrevQuarter,
+      epsQoQ: fund.epsQoQ ?? row.epsQoQ,
+      epsYoY: fund.epsYoY ?? row.epsYoY,
+      freeCashFlow: fund.freeCashFlow ?? row.freeCashFlow,
+      grossMargin: fund.grossMargin ?? row.grossMargin,
+      operatingMargin: fund.operatingMargin ?? row.operatingMargin,
+      netMargin: fund.netMargin ?? row.netMargin,
+      debtToEquity: fund.debtToEquity ?? row.debtToEquity,
+      roe: fund.roe ?? row.roe,
+      priorCompanyGuidanceRevenuePeriod: fund.priorCompanyGuidanceRevenuePeriod ?? row.priorCompanyGuidanceRevenuePeriod,
+      priorCompanyGuidanceRevenue: fund.priorCompanyGuidanceRevenue ?? row.priorCompanyGuidanceRevenue,
+      actualVsPriorGuidanceRevenuePct: fund.actualVsPriorGuidanceRevenuePct ?? row.actualVsPriorGuidanceRevenuePct,
+      nextCompanyGuidanceRevenuePeriod: fund.nextCompanyGuidanceRevenuePeriod ?? row.nextCompanyGuidanceRevenuePeriod,
+      nextCompanyGuidanceRevenue: fund.nextCompanyGuidanceRevenue ?? row.nextCompanyGuidanceRevenue,
+    });
+    seen.add(sym);
+  });
+  fundRows.forEach(row => {
+    const sym = normalizeTicker(row.symbol || row.ticker);
+    if (sym && !seen.has(sym)) rows.push(row);
+  });
+
+  state.rows = rows;
+  state.quotes = technical.quotes || {};
+  const fundamentals = fundamental.fundamentals || {};
+  Object.entries(fundamentals).forEach(([symRaw, detail]) => {
+    const sym = normalizeTicker(symRaw);
+    const existing = state.quotes[sym] || {};
+    state.quotes[sym] = {
+      ...existing,
+      latest: { ...(existing.latest || {}), ...(detail.latest || detail.fundamental || {}) },
+      fundamental: { ...(existing.fundamental || {}), ...(detail.fundamental || detail.latest || {}) },
+    };
+  });
+
+  const generatedAt = technical.generatedAtTechnical || technical.generatedAt || fundamental.generatedAtFundamental || fundamental.generatedAt || null;
+  state.lastScanAt = generatedAt ? String(generatedAt).replace(" UTC", "") : new Date().toLocaleString();
+  state.lastScanSymbols = normalizeTickers(technical.watchlist || fundamental.watchlist || rows.map(r => r.symbol || r.ticker));
+  if ((!state.watchlist || !state.watchlist.length || state.watchlist.every(t => BASE_WATCHLIST.includes(t))) && state.lastScanSymbols.length) {
+    state.watchlist = [...state.lastScanSymbols];
+  }
+  const errs = [];
+  if (Array.isArray(technical.errors)) errs.push(...technical.errors);
+  if (Array.isArray(fundamental.errors)) errs.push(...fundamental.errors);
+  state.errors = errs;
+}
+
+async function loadStaticData(options = {}) {
+  state.staticMode = true;
+  state.staticLoadError = null;
+  setLoading(true, options.message || "Loading GitHub Pages static data…");
+  try {
+    const technical = await fetchStaticLayer("technical");
+    let fundamental = state.staticPayloads.fundamental || {};
+    try {
+      fundamental = await fetchStaticLayer("fundamental");
+    } catch (fundErr) {
+      console.warn("Fundamental static layer not available yet", fundErr);
+      fundamental = { rows: [], fundamentals: {}, errors: [{ symbol: "FUNDAMENTAL", error: "fundamental.json not generated yet" }] };
+    }
+    state.staticPayloads = { technical, fundamental };
+    mergeStaticPayloads(technical, fundamental);
+    state.staticLoaded = true;
+    state.staticLoadError = null;
+    if (!state.selected || !state.rows.some(r => normalizeTicker(r.symbol || r.ticker) === state.selected)) {
+      state.selected = normalizeTicker(state.rows[0]?.symbol || state.watchlist[0] || "NVDA");
+    }
+    setLoading(false, `Loaded static data · Technical ${technical.generatedAtTechnical || technical.generatedAt || "—"} · Fundamental ${fundamental.generatedAtFundamental || fundamental.generatedAt || "—"}`);
+    renderAll();
+  } catch (err) {
+    console.error(err);
+    state.staticLoadError = err.message || String(err);
+    state.rows = [];
+    state.errors = [{ symbol: "STATIC", error: state.staticLoadError }];
+    setLoading(false, `Static data load failed: ${state.staticLoadError}`);
+    renderAll();
+  }
+}
+async function scan(force = false, options = {}) {
+  if (state.staticMode || isStaticDeployHost()) {
+    await loadStaticData({ message: options.message || "Reloading GitHub Pages static data…" });
+    return;
+  }
+  const scanSymbols = normalizeTickers(options.symbols || state.watchlist);
+  if (!scanSymbols.length) {
+    openSheet("bulkAddSheet");
+    const summary = $("#bulkImportSummary");
+    if (summary) summary.textContent = "วาง ticker ที่ต้องการสแกนก่อน";
+    return;
+  }
+  syncFiltersFromUi();
+  state.lastScanSymbols = scanSymbols;
+  setLoading(true, options.message || `Scanning ${scanSymbols.length} tickers · ${state.filters.range}`);
+  try {
+    const params = new URLSearchParams({
+      symbols: scanSymbols.join(","),
+      range: state.filters.range,
+      interval: "1d",
+      includeFundamentals: (options.includeFundamentals ?? (state.scannerTab === "fundamental")) ? "1" : "0",
+      v: String(Date.now())
+    });
+    const data = await fetchJson(`/api/scan?${params}`);
+    state.rows = Array.isArray(data.rows) ? data.rows : [];
+    state.quotes = data.quotes || {};
+    state.errors = data.errors || [];
+    if (!state.rows.length && state.errors.length) {
+      state.rows = [];
+    }
+    state.lastScanAt = new Date().toLocaleString();
+    if (!state.selected || !state.rows.some(r => normalizeTicker(r.symbol) === state.selected)) {
+      state.selected = normalizeTicker(state.rows[0]?.symbol || state.watchlist[0]);
+    }
+    renderAll();
+    updateResultCount();
+    showAlertToastIfNeeded(force);
+    if (state.errors.length) console.warn("Scan errors", state.errors);
+    setLoading(false, `Showing ${currentStocks().length} pass filters / ${state.rows.length} loaded · ${data.generatedAt || "latest"}`);
+    renderStatus();
+  } catch (err) {
+    console.error(err);
+    state.rows = [];
+    state.errors = [{ symbol: "API", error: err.message || String(err) }];
+    setLoading(false, `Scan failed: ${err.message || err}`);
+    renderAll();
+  }
+}
+
+async function loadSymbolFromBackend(symbol, options = {}) {
+  const ticker = normalizeTicker(symbol);
+  if (!ticker) return;
+  if (state.staticMode || isStaticDeployHost()) {
+    if (!state.watchlist.includes(ticker)) {
+      state.watchlist.unshift(ticker);
+      saveWatchlist();
+    }
+    state.selected = ticker;
+    if (!state.rows.some(r => normalizeTicker(r.symbol || r.ticker) === ticker)) {
+      state.errors = [...(state.errors || []), { symbol: ticker, error: "Static deploy has no generated data for this ticker. Add it to watchlist.txt and rerun GitHub Actions." }];
+    }
+    renderAll();
+    return;
+  }
+  syncFiltersFromUi();
+  if (!options.silent) setLoading(true, `Loading ${ticker}…`);
+  try {
+    const params = new URLSearchParams({ symbol: ticker, range: state.filters.range, interval: "1d", includeFundamentals: "1", v: String(Date.now()) });
+    const data = await fetchJson(`/api/quote?${params}`);
+    const latest = data.latest || {};
+    state.quotes[ticker] = data;
+    const idx = state.rows.findIndex(r => normalizeTicker(r.symbol) === ticker);
+    if (idx >= 0) state.rows[idx] = latest;
+    else state.rows.push(latest);
+    if (!state.watchlist.includes(ticker)) {
+      state.watchlist.unshift(ticker);
+      saveWatchlist();
+    }
+    state.selected = ticker;
+    renderAll();
+    updateResultCount();
+    if (!options.silent) setLoading(false, `Loaded ${ticker}`);
+  } catch (err) {
+    console.error(err);
+    if (!options.silent) setLoading(false, `Load failed for ${ticker}: ${err.message || err}`);
+    else { state.errors = [...(state.errors || []), { symbol: ticker, error: err.message || String(err) }]; renderAll(); }
+  }
+}
+
+function hasFundamentalData(s) {
+  return [s.pe, s.ps, s.revYoy, s.epsYoy, s.margin, s.debtEq, s.roe, s.revenue, s.netIncome, s.eps].some(v => toNum(v) !== null);
+}
+
+async function ensureFundamentalData() {
+  if (state.staticMode || isStaticDeployHost()) {
+    if (!state.staticLoaded) await loadStaticData({ message: "Loading static fundamental layer…" });
+    return;
+  }
+  if (state.fundamentalLoading || state.loading) return;
+  const loaded = allWatchlistStocks().filter(s => !s.isPlaceholder);
+  const needs = !loaded.length || loaded.some(s => !hasFundamentalData(s));
+  if (!needs) return;
+  state.fundamentalLoading = true;
+  renderAll();
+  try { await scan(true, { includeFundamentals: true, message: "Loading fundamentals from backend…" }); }
+  finally { state.fundamentalLoading = false; renderAll(); }
+}
+
+async function ensureSymbolDetail(symbol, needFundamental = false) {
+  const ticker = normalizeTicker(symbol);
+  if (!ticker || state.symbolLoads.has(ticker)) return;
+  const q = state.quotes[ticker];
+  const s = (allWatchlistStocks().find(x => x.ticker === ticker) || placeholderStock(ticker));
+  const hasSeries = Array.isArray(q?.series) && q.series.length;
+  if (hasSeries && (!needFundamental || hasFundamentalData(s))) return;
+  state.symbolLoads.add(ticker);
+  try { await loadSymbolFromBackend(ticker, { silent: true }); }
+  finally { state.symbolLoads.delete(ticker); }
+}
+
+function getActiveAlphaKeyInput() {
+  const active = document.activeElement;
+  if (active && active.matches && active.matches("[data-alpha-key-input]")) return active;
+  const inputs = Array.from(document.querySelectorAll("[data-alpha-key-input]"));
+  return inputs.find(el => el.offsetParent !== null) || inputs[0] || null;
+}
+
+function setAlphaKeyStatus(message = "", tone = "neutral") {
+  $$('[data-alpha-key-status]').forEach(el => {
+    el.textContent = message;
+    el.className = `alpha-key-status ${tone}`;
+  });
+}
+
+function maskAlphaKey(key = "") {
+  const v = String(key || "").trim();
+  if (!v) return "";
+  if (v.length <= 8) return "••••";
+  return `${v.slice(0, 4)}…${v.slice(-4)}`;
+}
+
+async function saveAlphaVantageKey(showAlert = true) {
+  const input = getActiveAlphaKeyInput();
+  const key = (input?.value || localStorage.getItem(STORAGE.alphaKey) || "").trim();
+  if (!key) {
+    setAlphaKeyStatus("ใส่ Alpha Vantage API key ก่อน", "error");
+    if (input) input.focus();
+    return "";
+  }
+  localStorage.setItem(STORAGE.alphaKey, key);
+  $$('[data-alpha-key-input]').forEach(el => { if (el !== input) el.value = key; });
+  setAlphaKeyStatus(`Saved locally: ${maskAlphaKey(key)}`, "ok");
+  try {
+    await fetchJson(`/api/alpha-vantage/key`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ apiKey: key }),
+    });
+  } catch (err) {
+    console.warn("Alpha Vantage key is saved in browser localStorage; server persistence is optional", err);
+  }
+  if (showAlert) setAlphaKeyStatus(`Saved locally: ${maskAlphaKey(key)}`, "ok");
+  return key;
+}
+
+async function loadAnalystConsensus() {
+  const s = getSelected();
+  const activeInput = getActiveAlphaKeyInput();
+  const typedKey = (activeInput?.value || "").trim();
+  if (typedKey) localStorage.setItem(STORAGE.alphaKey, typedKey);
+  state.fundSubTab = "analyst";
+  state.analystPayloads[s.ticker] = { loading: true };
+  renderDetail();
+  const apiKey = typedKey || localStorage.getItem(STORAGE.alphaKey) || "";
+  if (!apiKey) {
+    state.analystPayloads[s.ticker] = { ok: false, error: "กรุณาใส่ Alpha Vantage API Key ก่อนโหลด Analyst Consensus" };
+    renderDetail();
+    setAlphaKeyStatus("กรุณาใส่ Alpha Vantage API Key ก่อนโหลด", "error");
+    return;
+  }
+  setAlphaKeyStatus("Loading Analyst Consensus…", "loading");
+  try {
+    const payload = await fetchJson(`/api/analyst-consensus`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ symbol: s.ticker, currentPrice: s.price, apiKey }),
+    });
+    state.analystPayloads[s.ticker] = payload;
+    setAlphaKeyStatus(payload && payload.ok === false ? (payload.error || "Load failed") : "Analyst Consensus loaded", payload && payload.ok === false ? "error" : "ok");
+  } catch (err) {
+    try {
+      const params = new URLSearchParams({ symbol: s.ticker, currentPrice: String(s.price || ""), apiKey });
+      state.analystPayloads[s.ticker] = await fetchJson(`/api/analyst-consensus?${params}`);
+    } catch (err2) {
+      state.analystPayloads[s.ticker] = { ok: false, error: err2.message || err.message || String(err2) };
+      setAlphaKeyStatus(err2.message || err.message || String(err2), "error");
+    }
+  }
+  renderDetail();
+}
+
+function tradingViewSymbol(ticker = state.selected) {
+  const t = normalizeTicker(ticker);
+  const s = getSelected();
+  const exchange = String(s.exchange || "").toUpperCase();
+  const prefix = exchange.includes("NY") ? "NYSE" : exchange.includes("NAS") || exchange.includes("NMS") ? "NASDAQ" : "";
+  return prefix ? `${prefix}:${t.replace(/\.BK$/, "")}` : t.replace(/\.BK$/, "SET:$&");
+}
+
+function financeLinksHtml(s = getSelected()) {
+  const ticker = encodeURIComponent(normalizeTicker(s.ticker));
+  const tv = encodeURIComponent(tradingViewSymbol(s.ticker));
+  return `<div class="chart-external-links"><a href="https://www.tradingview.com/chart/?symbol=${tv}" target="_blank" rel="noopener">TradingView ↗</a><a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" rel="noopener">Yahoo Finance ↗</a></div>`;
+}
+
+function renderChartModal() {
+  const modal = $("#chartModal");
+  if (!modal) return;
+  if (!state.chartModalOpen) {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML = "";
+    return;
+  }
+  const s = getSelected();
+  modal.hidden = false;
+  modal.setAttribute("aria-hidden", "false");
+  modal.innerHTML = `<div class="chart-modal-backdrop" data-close-chart-modal></div><div class="chart-modal-card" role="dialog" aria-modal="true" aria-label="${esc(s.ticker)} expanded chart"><header class="chart-modal-header"><div><strong>${esc(s.ticker)} Price / EMA</strong><span>${fmtMoney(s.price)} · RSI ${fmt(s.rsi, 1)}</span></div>${financeLinksHtml(s)}<button class="icon-btn" data-close-chart-modal aria-label="Close chart">×</button></header><div class="chart-modal-body">${priceChartPanel(s)}</div></div>`;
+}
+
+function openChartModal() {
+  state.chartModalOpen = true;
+  renderChartModal();
+}
+
+function closeChartModal() {
+  state.chartModalOpen = false;
+  renderChartModal();
+}
+
+function addSymbolsBulk(rawText = "", mode = "append") {
+  const tickers = parseTickerList(rawText);
+  if (!tickers.length) return { total: 0, added: [], existing: [] };
+  const before = new Set(state.watchlist);
+  if (mode === "replace") state.watchlist = [];
+  tickers.forEach(t => {
+    if (!state.watchlist.includes(t)) state.watchlist.push(t);
+    if (!state.rows.some(r => normalizeTicker(r.symbol) === t)) state.rows.push({ symbol: t, signal: "NEUTRAL", score: 0 });
+  });
+  const added = tickers.filter(t => !before.has(t));
+  const existing = tickers.filter(t => before.has(t));
+  state.selected = tickers[0];
+  saveWatchlist();
+  renderAll();
+  return { total: tickers.length, added, existing };
+}
+
+function importBulkSymbols() {
+  const input = $("#bulkSymbolInput");
+  const summary = $("#bulkImportSummary");
+  const raw = input?.value || "";
+  const mode = raw.trim().startsWith("=") ? "replace" : "append";
+  const clean = mode === "replace" ? raw.trim().slice(1) : raw;
+  const result = addSymbolsBulk(clean, mode);
+  if (!summary) return;
+  if (!result.total) {
+    summary.textContent = "ยังไม่พบ ticker ที่อ่านได้ — ลองวาง เช่น NVDA TSLA AAPL หรือแยกบรรทัดละตัว";
+    summary.classList.add("warn");
+    return;
+  }
+  summary.classList.remove("warn");
+  summary.textContent = `${mode === "replace" ? "แทนที่ list แล้ว" : "เพิ่มเข้า list แล้ว"}: เพิ่มใหม่ ${result.added.length} ตัว · มีอยู่แล้ว ${result.existing.length} ตัว · รวม ${state.watchlist.length} ตัว`;
+  if (input) input.value = "";
+  setTimeout(() => { closeSheets(); scan(); }, 350);
+}
+
+function updateResultCount() {
+  const count = currentStocks().length;
+  const total = state.lastScanSymbols.length || state.rows.length || state.watchlist.length;
+  const pill = $("#filterResultPill");
+  if (pill) pill.textContent = `✓ ${count}/${total} pass`;
+  $$(".mini-badge").forEach(el => { el.textContent = String(count); });
+}
+
+function syncFiltersFromUi(source = "desktop") {
+  const scoreEl = source === "sheet" ? $("#sheetScoreRange") : $("#scoreRange");
+  const score = Number(scoreEl?.value ?? state.filters.score);
+  state.filters.score = score;
+  state.filters.above200 = Boolean((source === "sheet" ? $("#sheetFilterAbove200") : $("#filterAbove200"))?.checked ?? state.filters.above200);
+  state.filters.emaStack = Boolean((source === "sheet" ? $("#sheetFilterEmaStack") : $("#filterEmaStack"))?.checked ?? state.filters.emaStack);
+  state.filters.sweetRsi = Boolean((source === "sheet" ? $("#sheetFilterSweetRsi") : $("#filterSweetRsi"))?.checked ?? state.filters.sweetRsi);
+  state.filters.volume20 = Boolean((source === "sheet" ? $("#sheetFilterVolume20") : $("#filterVolume20"))?.checked ?? state.filters.volume20);
+  state.filters.macdSignal = Boolean((source === "sheet" ? $("#sheetFilterMacdSignal") : $("#filterMacdSignal"))?.checked ?? state.filters.macdSignal);
+  applyFilterUi();
+  saveSettings();
+}
+
+function resetFilters() {
+  state.filters = { score: 60, range: "1y", above200: true, emaStack: true, sweetRsi: true, volume20: false, macdSignal: true };
+  applyFilterUi();
+  saveSettings();
+  renderAll();
+}
+
+function applyFilterUi() {
+  ["#scoreRange", "#sheetScoreRange"].forEach(sel => { const el = $(sel); if (el) el.value = String(state.filters.score); });
+  ["#scoreOutput", "#sheetScoreOutput"].forEach(sel => { const el = $(sel); if (el) el.value = String(state.filters.score); });
+  const map = [
+    ["#filterAbove200", "#sheetFilterAbove200", state.filters.above200],
+    ["#filterEmaStack", "#sheetFilterEmaStack", state.filters.emaStack],
+    ["#filterSweetRsi", "#sheetFilterSweetRsi", state.filters.sweetRsi],
+    ["#filterVolume20", "#sheetFilterVolume20", state.filters.volume20],
+    ["#filterMacdSignal", "#sheetFilterMacdSignal", state.filters.macdSignal],
+  ];
+  map.forEach(([a, b, val]) => { [a, b].forEach(sel => { const el = $(sel); if (el) el.checked = Boolean(val); }); });
+  ["#rangeButtons", "#sheetRangeButtons"].forEach(sel => {
+    const root = $(sel); if (!root) return;
+    $$('button[data-range]', root).forEach(btn => btn.classList.toggle("active", btn.dataset.range === state.filters.range));
+  });
+}
+
+function saveSettings() {
+  localStorage.setItem(STORAGE.settings, JSON.stringify({ filters: state.filters, scannerTab: state.scannerTab, mobileView: state.mobileView, sortKey: state.sortKey, sortAsc: state.sortAsc, columns: state.columns, activeScreener: state.activeScreener, detailTab: state.detailTab, fundSubTab: state.fundSubTab, priceChartMode: state.priceChartMode, alertFilter: state.alertFilter, alertCollapsed: state.alertCollapsed }));
+}
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE.settings) || "{}");
+    if (saved.filters) state.filters = { ...state.filters, ...saved.filters };
+    if (saved.priceChartMode) state.priceChartMode = saved.priceChartMode;
+    if (saved.scannerTab) state.scannerTab = saved.scannerTab;
+    if (saved.mobileView) state.mobileView = saved.mobileView;
+    if (saved.sortKey) state.sortKey = saved.sortKey;
+    if (typeof saved.sortAsc === "boolean") state.sortAsc = saved.sortAsc;
+    if (saved.columns) state.columns = { ...state.columns, ...saved.columns };
+    if (saved.activeScreener) state.activeScreener = saved.activeScreener;
+    if (saved.detailTab) state.detailTab = saved.detailTab;
+    if (saved.fundSubTab) state.fundSubTab = saved.fundSubTab;
+    if (saved.alertFilter) state.alertFilter = saved.alertFilter;
+    if (typeof saved.alertCollapsed === "boolean") state.alertCollapsed = saved.alertCollapsed;
+  } catch (_) {}
 }
 
 function getScreeners() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.screeners) || '{}') || {};
-  } catch (_) {
-    return {};
-  }
+  try { return JSON.parse(localStorage.getItem(STORAGE.screeners) || "{}"); } catch (_) { return {}; }
 }
-
-function setScreeners(screeners) {
-  localStorage.setItem(STORAGE_KEYS.screeners, JSON.stringify(screeners));
-}
-
-function updateSavedScreenersDropdown(selectedName = '') {
-  const select = $('#savedScreeners');
+function setScreeners(x) { localStorage.setItem(STORAGE.screeners, JSON.stringify(x)); }
+function persistActiveScreener() {
   const screeners = getScreeners();
-  const names = Object.keys(screeners).sort((a, b) => a.localeCompare(b));
-  select.innerHTML = names.length
-    ? names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('')
-    : '<option value="">ยังไม่มี saved screener</option>';
-  if (selectedName && names.includes(selectedName)) select.value = selectedName;
-}
-
-function saveActiveSettings() {
-  localStorage.setItem(STORAGE_KEYS.active, JSON.stringify(getSettingsFromUi()));
-}
-
-function restoreActiveSettings() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEYS.active);
-    if (!raw) return false;
-    applySettingsToUi(JSON.parse(raw));
-    return true;
-  } catch (_) {
-    return false;
-  }
-}
-
-function saveNamedScreener() {
-  const name = $('#screenerName').value.trim();
-  if (!name) {
-    setScreenerStatus('ใส่ชื่อ screener ก่อน เช่น AI Infra');
-    return;
-  }
-  const screeners = getScreeners();
-  screeners[name] = getSettingsFromUi();
+  screeners[state.activeScreener] = { watchlist: state.watchlist, filters: state.filters, columns: state.columns, scannerTab: state.scannerTab, mobileView: state.mobileView, sortKey: state.sortKey, sortAsc: state.sortAsc };
   setScreeners(screeners);
-  updateSavedScreenersDropdown(name);
-  setScreenerStatus(`Saved: ${name}`);
 }
-
-function loadNamedScreener() {
-  const name = $('#savedScreeners').value || $('#screenerName').value.trim();
-  const screeners = getScreeners();
-  if (!name || !screeners[name]) {
-    setScreenerStatus('ยังไม่ได้เลือก screener ที่จะโหลด');
-    return;
-  }
-  $('#screenerName').value = name;
-  applySettingsToUi(screeners[name]);
-  saveActiveSettings();
-  setScreenerStatus(`Loaded: ${name}`);
+function loadScreener(key) {
+  const defaults = {
+    default: BASE_WATCHLIST,
+    momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
+    thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
+    dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
+    quality: ["MSFT", "COST", "ASML", "LIN", "ISRG", "BKNG", "ADP", "ORLY", "INTU", "VRSK"],
+  };
+  const saved = getScreeners()[key];
+  state.activeScreener = key;
+  state.watchlist = normalizeTickers(saved?.watchlist || defaults[key] || state.watchlist);
+  if (saved?.filters) state.filters = { ...state.filters, ...saved.filters };
+  if (saved?.columns) state.columns = { ...state.columns, ...saved.columns };
+  if (saved?.scannerTab) state.scannerTab = saved.scannerTab;
+  if (saved?.mobileView) state.mobileView = saved.mobileView;
+  if (saved?.sortKey) state.sortKey = saved.sortKey;
+  if (typeof saved?.sortAsc === "boolean") state.sortAsc = saved.sortAsc;
+  state.selected = state.watchlist[0] || "NVDA";
+  saveWatchlist();
+  applyFilterUi();
+  renderAll();
   scan();
 }
 
-function deleteNamedScreener() {
-  const name = $('#savedScreeners').value || $('#screenerName').value.trim();
-  const screeners = getScreeners();
-  if (!name || !screeners[name]) {
-    setScreenerStatus('ยังไม่ได้เลือก screener ที่จะลบ');
-    return;
-  }
-  delete screeners[name];
-  setScreeners(screeners);
-  updateSavedScreenersDropdown();
-  setScreenerStatus(`Deleted: ${name}`);
+function newScreener() {
+  const name = prompt("ตั้งชื่อ screener ใหม่", "My Screener");
+  if (!name) return;
+  const key = name.toLowerCase().replace(/[^a-z0-9ก-๙]+/gi, "-").replace(/^-|-$/g, "") || `screener-${Date.now()}`;
+  state.activeScreener = key;
+  persistActiveScreener();
+  renderPortfolioTabs(name, key);
 }
 
-function quarterSortValue(value) {
-  const m = String(value || '').match(/Q([1-4])\s+(\d{4})/i);
-  if (!m) return -999999;
-  return Number(m[2]) * 4 + Number(m[1]);
-}
-
-function dateSortValue(value) {
-  const t = Date.parse(String(value || ''));
-  return Number.isFinite(t) ? t : -9999999999999;
-}
-
-function sortValueForKey(row, key) {
-  if (key === 'latestQuarter') return quarterSortValue(row.latestQuarter);
-  if (['earningsDate', 'periodEnd', 'latestFilingDate'].includes(key)) return dateSortValue(row[key]);
-  return row[key];
-}
-
-function applyFilters() {
-  const minScore = Number($('#minScore').value || 0);
-  const above200 = $('#filterAbove200').checked;
-  const emaStack = $('#filterEmaStack').checked;
-  const sweetRsi = $('#filterSweetRsi').checked;
-
-  let rows = [...state.rows];
-  if (state.activeTab === 'fundamental') {
-    rows = rows.filter(row => Number(row.fundamentalScore ?? 0) >= minScore);
-  } else {
-    rows = rows.filter(row => Number(row.score || 0) >= minScore);
-    if (above200) rows = rows.filter(row => Number(row.pctVsEma200) > 0);
-    if (emaStack) rows = rows.filter(row => Number(row.ema20) > Number(row.ema89));
-    if (sweetRsi) rows = rows.filter(row => Number(row.rsi14) >= 45 && Number(row.rsi14) <= 65);
-  }
-
-  rows.sort((a, b) => {
-    const key = state.sortKey;
-    const va = sortValueForKey(a, key);
-    const vb = sortValueForKey(b, key);
-    let result;
-    if (typeof va === 'string' || typeof vb === 'string') {
-      result = String(va || '').localeCompare(String(vb || ''));
-    } else {
-      result = Number(va ?? -999999) - Number(vb ?? -999999);
-    }
-    return state.sortDir === 'asc' ? result : -result;
-  });
-
-  state.filteredRows = rows;
-  renderTableHeader();
-  renderTable(rows);
-  renderMobileCards(rows);
-  renderSummary(rows);
-}
-
-function renderTable(rows) {
-  const visibleCols = getVisibleColumns();
-  if (!rows.length) {
-    tableBody.innerHTML = `<tr><td colspan="${visibleCols.length}" class="muted">ยังไม่มีหุ้นผ่าน filter</td></tr>`;
-    return;
-  }
-
-  tableBody.innerHTML = rows.map(row => {
-    const cells = visibleCols.map(col => renderCell(row, col)).join('');
-    return `<tr data-symbol="${escapeHtml(row.symbol)}">${cells}</tr>`;
-  }).join('');
-
-  tableBody.querySelectorAll('tr[data-symbol]').forEach(row => {
-    row.addEventListener('click', () => loadSymbol(row.dataset.symbol));
-  });
-}
-
-function renderCell(row, col) {
-  const baseClass = classForColumn(col);
-  if (col.key === 'symbol') {
-    return `<td class="${baseClass}"><strong>${escapeHtml(row.symbol)}</strong><br><span class="muted">${escapeHtml(row.exchange || '')} ${escapeHtml(row.currency || '')}</span></td>`;
-  }
-  if (col.key === 'score' || col.key === 'fundamentalScore') {
-    return `<td class="${baseClass} score">${row[col.key] ?? 'N/A'}</td>`;
-  }
-  if (col.key === 'signal' || col.key === 'fundamentalSignal') {
-    const sig = row[col.key] || 'Insufficient data';
-    return `<td class="${baseClass}"><span class="pill ${signalClass(sig)}">${escapeHtml(sig)}</span></td>`;
-  }
-  return `<td class="${baseClass} ${valueClass(row, col)}">${renderValue(row, col)}</td>`;
-}
-
-function renderMobileCards(rows) {
-  if (!mobileCards) return;
-  const visibleCols = getVisibleColumns().filter(col => !['symbol', 'score', 'signal', 'fundamentalScore', 'fundamentalSignal'].includes(col.key));
-  if (!rows.length) {
-    mobileCards.innerHTML = '<div class="mobile-empty muted">ยังไม่มีหุ้นผ่าน filter</div>';
-    return;
-  }
-  mobileCards.innerHTML = rows.map(row => {
-    const metricItems = visibleCols.map(col => `
-      <div class="mobile-metric ${col.group ? `metric-${col.group}` : ''}">
-        <span>${escapeHtml(col.label)}</span>
-        <strong class="${valueClass(row, col)}">${renderValue(row, col)}</strong>
-      </div>`).join('');
-    return `
-      <article class="stock-card" data-symbol="${escapeHtml(row.symbol)}">
-        <div class="stock-card-top">
-          <div>
-            <h3>${escapeHtml(row.symbol)}</h3>
-            <p>${escapeHtml(row.exchange || '')} ${escapeHtml(row.currency || '')}</p>
-          </div>
-          <div class="stock-card-score">
-            <span>${state.activeTab === 'fundamental' ? 'Fund. Score' : 'Score'}</span>
-            <strong>${state.activeTab === 'fundamental' ? (row.fundamentalScore ?? 'N/A') : (row.score ?? '-')}</strong>
-          </div>
-        </div>
-        <div class="stock-card-signal"><span class="pill ${signalClass(state.activeTab === 'fundamental' ? row.fundamentalSignal : row.signal)}">${escapeHtml((state.activeTab === 'fundamental' ? row.fundamentalSignal : row.signal) || '-')}</span></div>
-        <div class="mobile-metric-grid">${metricItems}</div>
-      </article>`;
-  }).join('');
-
-  mobileCards.querySelectorAll('.stock-card[data-symbol]').forEach(card => {
-    card.addEventListener('click', () => loadSymbol(card.dataset.symbol));
-  });
-}
-
-function renderSummary(rows) {
-  const best = rows[0];
-  if (state.activeTab === 'fundamental') {
-    $('#bestSetup').textContent = best ? `${best.symbol} ${best.fundamentalScore ?? 'N/A'}` : '-';
-    $('#buyWatchCount').textContent = rows.filter(r => (r.fundamentalSignal || '').includes('Strong') || (r.fundamentalSignal || '').includes('Solid')).length;
-    $('#hotCount').textContent = rows.filter(r => (r.fundamentalSignal || '').includes('Weak') || (r.fundamentalSignal || '').includes('Insufficient')).length;
-  } else {
-    $('#bestSetup').textContent = best ? `${best.symbol} ${best.score}` : '-';
-    $('#buyWatchCount').textContent = rows.filter(r => (r.signal || '').includes('BUY') || (r.signal || '').includes('WATCH')).length;
-    $('#hotCount').textContent = rows.filter(r => (r.signal || '').includes('HOT') || Number(r.rsi14) >= 75).length;
-  }
-  $('#lastScan').textContent = new Date().toLocaleTimeString();
-}
-
-function renderErrors(errors = []) {
-  if (!errors.length) {
-    errorsEl.innerHTML = '';
-    return;
-  }
-  errorsEl.innerHTML = `<strong>บางตัวดึงข้อมูลไม่ได้:</strong> ${errors.map(e => `${escapeHtml(e.symbol)}: ${escapeHtml(e.error)}`).join(' | ')}`;
-}
-
-function isLocalPythonApi() {
-  const host = window.location.hostname;
-  return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || window.location.port === '8787';
-}
-
-async function fetchJsonOrThrow(url, options = {}) {
-  const res = await fetch(url, options);
-  const raw = await res.text();
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const first = raw.trim().slice(0, 1);
-  if (first === '<') throw new Error('ได้ HTML แทน JSON');
-  try {
-    return JSON.parse(raw);
-  } catch (err) {
-    throw new Error(`JSON ไม่ถูกต้อง: ${err.message || err}`);
-  }
-}
-
-
-function mergeHybridStaticData(technicalData = {}, fundamentalData = {}) {
-  const fundRows = new Map((fundamentalData.rows || []).map(row => [String(row.symbol || '').toUpperCase(), row]));
-  const fundDetails = fundamentalData.fundamentals || fundamentalData.quotes || {};
-  const rows = (technicalData.rows || []).map(row => {
-    const sym = String(row.symbol || '').toUpperCase();
-    const f = fundRows.get(sym) || {};
-    return { ...row, ...f, symbol: sym || row.symbol };
-  });
-  const quotes = {};
-  Object.entries(technicalData.quotes || {}).forEach(([symRaw, quote]) => {
-    const sym = String(symRaw || quote?.symbol || quote?.latest?.symbol || '').toUpperCase();
-    const fDetail = fundDetails[sym] || {};
-    const fLatest = fDetail.latest || fundRows.get(sym) || {};
-    const fObj = fDetail.fundamental || fLatest || {};
-    quotes[sym] = {
-      ...(quote || {}),
-      latest: { ...((quote || {}).latest || {}), ...fLatest, symbol: sym || ((quote || {}).latest || {}).symbol },
-      fundamental: { ...fObj }
-    };
-  });
-  Object.entries(fundDetails).forEach(([symRaw, fDetail]) => {
-    const sym = String(symRaw || '').toUpperCase();
-    if (!sym || quotes[sym]) return;
-    const fLatest = fDetail.latest || fundRows.get(sym) || { symbol: sym };
-    quotes[sym] = { symbol: sym, latest: { ...fLatest, symbol: sym }, fundamental: fDetail.fundamental || fLatest, series: [], meta: { source: 'fundamental-only-static' } };
-  });
-  return {
-    ...technicalData,
-    rows,
-    quotes,
-    errors: [...(technicalData.errors || []), ...(fundamentalData.errors || []).map(e => ({ ...e, layer: 'fundamental' }))],
-    generatedAt: technicalData.generatedAtTechnical || technicalData.generatedAt || '',
-    generatedAtTechnical: technicalData.generatedAtTechnical || technicalData.generatedAt || '',
-    generatedAtFundamental: fundamentalData.generatedAtFundamental || fundamentalData.generatedAt || '',
-    mode: 'github-pages-hybrid-static',
-    dataLayers: { technical: true, fundamental: Boolean((fundamentalData.rows || []).length || Object.keys(fundDetails).length) }
-  };
-}
-
-async function loadHybridStaticJson(force = false) {
-  const stamp = force ? Date.now() : 'static';
-  let technicalData;
-  try {
-    technicalData = await fetchJsonOrThrow(`data/technical.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
-  } catch (err) {
-    technicalData = await fetchJsonOrThrow(`data/scanner.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
-  }
-  let fundamentalData = { rows: [], fundamentals: {}, errors: [] };
-  try {
-    fundamentalData = await fetchJsonOrThrow(`data/fundamental.json?v=${stamp}`, { cache: force ? 'reload' : 'no-store' });
-  } catch (_) {
-    fundamentalData = { rows: [], fundamentals: {}, errors: [{ symbol: 'FUNDAMENTAL', error: 'fundamental.json not found; run Update static fundamental data workflow.' }] };
-  }
-  return mergeHybridStaticData(technicalData, fundamentalData);
-}
-async function loadScannerJson(force = false, symbolsOverride = null) {
-  const symbols = symbolsOverride || parseSymbols();
-  const range = ($('#range') && $('#range').value) || '1y';
-  const key = `${symbols.map(s => String(s).toUpperCase()).sort().join(',')}|${range}`;
-  if (state.scannerData && state.scannerKey === key && !force) return state.scannerData;
-
-  // Local Python/IDLE mode: use the live backend instead of static scanner.json.
-  // This fixes HTTP 404 when static/data/scanner.json does not exist locally.
-  if (isLocalPythonApi()) {
-    const params = new URLSearchParams({
-      symbols: symbols.join(','),
-      range,
-      interval: '1d',
-      v: force ? String(Date.now()) : 'live'
-    });
-    const data = await fetchJsonOrThrow(`/api/scan?${params.toString()}`, { cache: 'no-store' });
-    data.quotes = data.quotes || {};
-    state.scannerData = data;
-    state.scannerKey = key;
-    state.quotes = data.quotes;
-    return data;
-  }
-
-  // GitHub Pages/static mode: hybrid layer.
-  // technical.json refreshes frequently; fundamental.json is static/daily.
-  try {
-    const data = await loadHybridStaticJson(force);
-    data.quotes = data.quotes || {};
-    state.scannerData = data;
-    state.scannerKey = key;
-    state.quotes = data.quotes;
-    return data;
-  } catch (err) {
-    throw new Error(`โหลด static hybrid data ไม่สำเร็จ: ${err.message || err}`);
-  }
-}
-
-
-async function scan(force = false) {
-  const symbols = parseSymbols();
-  if (!symbols.length) return;
-  state.lastSymbols = symbols.join(',');
-  scanBtn.disabled = true;
-  refreshBtn.disabled = true;
-  setStatus(`กำลังโหลดข้อมูล ${isLocalPythonApi() ? 'local API' : 'static'} ${symbols.length} ตัว...`);
-  errorsEl.innerHTML = '';
-  saveActiveSettings();
-  try {
-    const data = await loadScannerJson(force, symbols);
-    const wanted = new Set(symbols.map(s => s.toUpperCase()));
-    state.rows = (data.rows || []).filter(row => wanted.has(String(row.symbol || '').toUpperCase()));
-    marketClock.textContent = `${state.rows.length} tickers`;
-    applyFilters();
-    renderErrors((data.errors || []).filter(e => wanted.has(String(e.symbol || '').toUpperCase())));
-    setStatus(`โหลดสำเร็จ ${state.rows.length} ตัว • Technical ${data.generatedAtTechnical || data.generatedAt || ''} • Fundamental ${data.generatedAtFundamental || 'not generated yet'}`);
-    if (state.rows[0]) loadSymbol(state.rows[0].symbol, false);
-  } catch (err) {
-    setStatus('โหลดข้อมูลไม่สำเร็จ');
-    errorsEl.textContent = err.message || String(err);
-  } finally {
-    scanBtn.disabled = false;
-    refreshBtn.disabled = false;
-  }
-}
-
-async function loadSymbol(symbol, updateInput = true) {
-  if (!symbol) return;
-  symbol = symbol.trim().toUpperCase();
-  if (updateInput) $('#singleSymbol').value = symbol;
-  $('#detailTitle').textContent = `${symbol} detail`;
-  $('#detailSub').textContent = isLocalPythonApi()
-    ? 'กำลังโหลด chart, indicators และ SEC fundamentals จาก local Python API...'
-    : 'กำลังโหลด technical.json + fundamental.json จาก GitHub Pages...';
-  try {
-    let data = await loadScannerJson(false, state.lastSymbols ? state.lastSymbols.split(',') : parseSymbols());
-    let quote = (data.quotes || {})[symbol] || (data.quotes || {})[symbol.toUpperCase()];
-
-    // Local mode can fetch any single ticker on demand even if it was not in the current scan set.
-    if (!quote && isLocalPythonApi()) {
-      const range = ($('#range') && $('#range').value) || '1y';
-      const params = new URLSearchParams({ symbol, range, interval: '1d', v: String(Date.now()) });
-      quote = await fetchJsonOrThrow(`/api/quote?${params.toString()}`, { cache: 'no-store' });
-      data.quotes = data.quotes || {};
-      data.quotes[symbol] = quote;
-      state.quotes = data.quotes;
-    }
-
-    if (!quote) throw new Error(`${symbol}: ยังไม่มี detail ใน static data — เพิ่มใน watchlist.txt แล้ว Run workflows ใหม่`);
-    renderDetail(quote);
-  } catch (err) {
-    $('#detailSub').textContent = err.message || String(err);
-  }
-}
-
-function renderDetail(data) {
-  state.currentDetail = data;
-  const latest = data.latest;
-  $('#detailTitle').textContent = `${latest.symbol} — ${latest.close} ${latest.currency || ''}`;
-  $('#detailSub').textContent = `Score ${latest.score}/100 • RSI ${formatNumber(latest.rsi14, 1)} • MACD ${formatNumber(latest.macd1226, 3)} • ${latest.exchange || ''} • 52 Wks Low/High ${formatNumber(latest.low52w)} - ${formatNumber(latest.high52w)}`;
-  const pill = $('#detailSignal');
-  pill.textContent = latest.signal;
-  pill.className = `signal-pill ${signalClass(latest.signal)}`;
-
-  renderScoreBars(latest.scoreParts || {});
-  $('#reasons').innerHTML = (latest.reasons || []).slice(0, 9).map(r => `<li>${escapeHtml(r)}</li>`).join('');
-  drawChart(data.series || [], latest.symbol);
-  renderFundamentalDetail(data);
-}
-
-function formatBig(value) {
-  if (value === null || value === undefined || Number.isNaN(Number(value))) return 'N/A';
-  const n = Number(value);
-  if (Math.abs(n) >= 1e12) return `${formatNumber(n / 1e12, 2)}T`;
-  if (Math.abs(n) >= 1e9) return `${formatNumber(n / 1e9, 2)}B`;
-  if (Math.abs(n) >= 1e6) return `${formatNumber(n / 1e6, 2)}M`;
-  return formatNumber(n, 0);
-}
-
-function formatMetricValue(value, kind = 'money') {
-  if (kind === 'eps') return value === null || value === undefined ? 'N/A' : formatNumber(value, 3);
-  if (kind === 'days') return value === null || value === undefined ? 'N/A' : String(value);
-  if (kind === 'pct') return value === null || value === undefined ? 'N/A' : formatPct(value);
-  return formatBig(value);
-}
-
-function metricLine(label, value, kind = 'money', extraClass = '', sublabel = '') {
-  return `
-    <div class="statement-line ${extraClass}">
-      <span>${escapeHtml(label)}</span>
-      <div>
-        <strong class="${extraClass}">${escapeHtml(formatMetricValue(value, kind))}</strong>
-        ${sublabel ? `<small>${escapeHtml(sublabel)}</small>` : ''}
-      </div>
-    </div>`;
-}
-
-function statementCardHtml(title, cfg) {
-  const kind = cfg.kind || 'money';
-  return `
-    <section class="statement-card">
-      <div class="statement-card-head">
-        <h4>${escapeHtml(title)}</h4>
-        <span class="mini-chip">${escapeHtml(cfg.period || 'Latest')}</span>
-      </div>
-      <div class="statement-main">${escapeHtml(formatMetricValue(cfg.current, kind))}</div>
-      <div class="statement-lines">
-        ${metricLine('Prev Q', cfg.prev, kind, '', cfg.prevLabel || '')}
-        ${metricLine('Year Ago', cfg.yearAgo, kind, '', cfg.yearAgoLabel || '')}
-        ${metricLine('Estimate', cfg.estimate, kind, '', cfg.estimateStatus || '')}
-        ${metricLine('Surprise', cfg.surprise, 'pct', clsForPct(cfg.surprise), 'vs estimate')}
-        ${metricLine('QoQ', cfg.qoq, 'pct', clsForPct(cfg.qoq), cfg.qoqStatus || '')}
-        ${metricLine('YoY', cfg.yoy, 'pct', clsForPct(cfg.yoy), cfg.yoyStatus || '')}
-      </div>
-    </section>`;
-}
-
-
-function analystRatingsSummary(ratings = {}) {
-  const items = [
-    ['Strong Buy', ratings.AnalystRatingStrongBuy],
-    ['Buy', ratings.AnalystRatingBuy],
-    ['Hold', ratings.AnalystRatingHold],
-    ['Sell', ratings.AnalystRatingSell],
-    ['Strong Sell', ratings.AnalystRatingStrongSell],
-  ].filter(([, value]) => value !== null && value !== undefined && value !== '');
-  if (!items.length) return 'N/A';
-  return items.map(([label, value]) => `${label}: ${value}`).join(' • ');
-}
-
-
-function toFiniteNumber(value) {
-  if (value === null || value === undefined || value === '' || value === '-') return null;
-  const n = Number(value);
-  return Number.isFinite(n) ? n : null;
-}
-
-function analystRatingsBarChartHtml(ratings = {}) {
-  const rows = [
-    { label: 'Strong Buy', key: 'AnalystRatingStrongBuy', tone: 'strong-buy' },
-    { label: 'Buy', key: 'AnalystRatingBuy', tone: 'buy' },
-    { label: 'Hold', key: 'AnalystRatingHold', tone: 'hold' },
-    { label: 'Sell', key: 'AnalystRatingSell', tone: 'sell' },
-    { label: 'Strong Sell', key: 'AnalystRatingStrongSell', tone: 'strong-sell' },
-  ].map(row => ({ ...row, value: toFiniteNumber(ratings[row.key]) ?? 0 }));
-  const total = rows.reduce((sum, row) => sum + row.value, 0);
-  if (!total) {
-    return `
-      <div class="analyst-chart-card">
-        <div class="analyst-chart-head">
-          <div>
-            <h5>Analyst Rating Distribution</h5>
-            <p>Alpha Vantage OVERVIEW ไม่มี rating split สำหรับหุ้นตัวนี้</p>
-          </div>
-          <span class="mini-chip chip-muted">No split</span>
-        </div>
-        <div class="target-empty compact-empty">ยังไม่มี Strong Buy / Buy / Hold / Sell split ให้ plot</div>
-      </div>`;
-  }
-  return `
-    <div class="analyst-chart-card">
-      <div class="analyst-chart-head">
-        <div>
-          <h5>Analyst Rating Distribution</h5>
-          <p>ดูน้ำหนัก consensus ว่าเป็น buy-heavy หรือแค่ hold-heavy</p>
-        </div>
-        <span class="mini-chip chip-good">${escapeHtml(String(total))} analysts</span>
-      </div>
-      <div class="rating-bars">
-        ${rows.map(row => {
-          const pct = total ? (row.value / total) * 100 : 0;
-          return `
-            <div class="rating-bar-row">
-              <div class="rating-bar-label"><span>${escapeHtml(row.label)}</span><strong>${escapeHtml(String(row.value))}</strong></div>
-              <div class="rating-bar-track" aria-label="${escapeHtml(row.label)} ${formatNumber(pct, 1)}%">
-                <div class="rating-bar-fill rating-${escapeHtml(row.tone)}" style="width:${Math.max(0, Math.min(100, pct)).toFixed(2)}%"></div>
-              </div>
-              <div class="rating-bar-pct">${formatNumber(pct, 1)}%</div>
-            </div>`;
-        }).join('')}
-      </div>
-    </div>`;
-}
-
-function markerHtml(kind, label, value, axisMin, axisMax) {
-  const n = toFiniteNumber(value);
-  if (n === null) return '';
-  const raw = ((n - axisMin) / (axisMax - axisMin)) * 100;
-  const pct = Math.max(1.5, Math.min(98.5, raw));
-  return `
-    <div class="av-price-marker av-price-${escapeHtml(kind)}" style="left:${pct.toFixed(2)}%">
-      <span class="av-marker-dot"></span>
-      <span class="av-marker-label"><strong>${escapeHtml(label)}</strong><small>${formatNumber(n, 2)}</small></span>
-    </div>`;
-}
-
-function analystPricePositionHtml(analyst = {}, overview = {}, currentPrice) {
-  const current = toFiniteNumber(currentPrice);
-  const target = toFiniteNumber(analyst.targetMeanPrice);
-  const low52 = toFiniteNumber(overview.fiftyTwoWeekLow);
-  const high52 = toFiniteNumber(overview.fiftyTwoWeekHigh);
-  const values = [current, target, low52, high52].filter(v => v !== null && Number.isFinite(v));
-  if (values.length < 2) {
-    return `
-      <div class="analyst-chart-card">
-        <div class="analyst-chart-head">
-          <div>
-            <h5>Current vs Target Position</h5>
-            <p>ต้องมีอย่างน้อย current price + target หรือ 52W range</p>
-          </div>
-          <span class="mini-chip chip-muted">No range</span>
-        </div>
-        <div class="target-empty compact-empty">ยังไม่มีข้อมูลพอสำหรับทำ price map</div>
-      </div>`;
-  }
-  let axisMin = Math.min(...values);
-  let axisMax = Math.max(...values);
-  if (axisMax === axisMin) {
-    axisMin = axisMin * 0.95;
-    axisMax = axisMax * 1.05;
-  }
-  const pad = Math.max((axisMax - axisMin) * 0.08, Math.abs(axisMax || 1) * 0.01);
-  axisMin = Math.max(0, axisMin - pad);
-  axisMax = axisMax + pad;
-  const upsideText = analyst.targetUpsidePct !== null && analyst.targetUpsidePct !== undefined ? formatPct(analyst.targetUpsidePct) : 'N/A';
-  const targetContext = target !== null && high52 !== null && target > high52
-    ? 'target above 52W high'
-    : target !== null && low52 !== null && target < low52
-      ? 'target below 52W low'
-      : 'target inside visible range';
-  return `
-    <div class="analyst-chart-card price-position-card">
-      <div class="analyst-chart-head">
-        <div>
-          <h5>Current vs Target Position</h5>
-          <p>แผนที่ราคา: 52W low/high + ราคาปัจจุบัน + target จาก Alpha Vantage</p>
-        </div>
-        <span class="mini-chip ${analyst.targetUpsidePct > 0 ? 'chip-good' : analyst.targetUpsidePct < 0 ? 'chip-bad' : 'chip-muted'}">Upside ${escapeHtml(upsideText)}</span>
-      </div>
-      <div class="av-price-scale"><span>${formatNumber(axisMin, 2)}</span><span>${formatNumber(axisMax, 2)}</span></div>
-      <div class="av-price-map">
-        <div class="av-price-line"></div>
-        ${markerHtml('low52', '52W Low', low52, axisMin, axisMax)}
-        ${markerHtml('current', 'Current', current, axisMin, axisMax)}
-        ${markerHtml('target', 'Target', target, axisMin, axisMax)}
-        ${markerHtml('high52', '52W High', high52, axisMin, axisMax)}
-      </div>
-      <div class="av-price-note">
-        <span>${escapeHtml(targetContext)}</span>
-        <span>52W: ${low52 !== null ? formatNumber(low52, 2) : 'N/A'} → ${high52 !== null ? formatNumber(high52, 2) : 'N/A'}</span>
-      </div>
-    </div>`;
-}
-
-function analystVisualsHtml(analyst = {}, overview = {}, currentPrice) {
-  return `
-    <div class="analyst-visual-grid">
-      ${analystRatingsBarChartHtml(analyst.ratings || {})}
-      ${analystPricePositionHtml(analyst, overview, currentPrice)}
-    </div>`;
-}
-
-
-function utcDayKey() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function nextUtcMidnightLocalText() {
-  const now = new Date();
-  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-  return next.toLocaleString(undefined, { hour12: false });
-}
-
-function safeNum(value) {
-  if (value === null || value === undefined || value === '' || String(value).toLowerCase() === 'none' || String(value).toLowerCase() === 'nan') return null;
-  const n = Number(String(value).replace(/,/g, ''));
-  return Number.isFinite(n) ? n : null;
-}
-
-function getAlphaQuotaLocal() {
-  const today = utcDayKey();
-  let raw = null;
-  try { raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaQuota) || 'null'); } catch (_) { raw = null; }
-  if (!raw || raw.dateUtc !== today) raw = { dateUtc: today, used: 0, calls: [] };
-  const used = Number(raw.used || 0);
-  return {
-    dateUtc: today,
-    used,
-    limit: 25,
-    remaining: Math.max(0, 25 - used),
-    resetAtLocal: nextUtcMidnightLocalText(),
-    calls: Array.isArray(raw.calls) ? raw.calls : []
-  };
-}
-
-function saveAlphaQuotaLocal(quota) {
-  try { localStorage.setItem(STORAGE_KEYS.alphaQuota, JSON.stringify({ dateUtc: quota.dateUtc, used: quota.used, calls: quota.calls || [] })); } catch (_) {}
-}
-
-function incrementAlphaQuotaLocal(symbol) {
-  const q = getAlphaQuotaLocal();
-  if (q.remaining <= 0) throw new Error('Daily Alpha Vantage limit reached in this browser. Try again after reset.');
-  q.used += 1;
-  q.remaining = Math.max(0, q.limit - q.used);
-  q.calls.push({ symbol, endpoint: 'OVERVIEW', atUtc: new Date().toISOString() });
-  saveAlphaQuotaLocal(q);
-  return q;
-}
-
-function getAlphaCacheLocal(symbol) {
-  const today = utcDayKey();
-  try {
-    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaCache) || '{}') || {};
-    const hit = raw[String(symbol || '').toUpperCase()];
-    if (hit && hit.dateUtc === today && hit.payload) return hit.payload;
-  } catch (_) {}
-  return null;
-}
-
-function setAlphaCacheLocal(symbol, payload) {
-  const today = utcDayKey();
-  try {
-    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.alphaCache) || '{}') || {};
-    raw[String(symbol || '').toUpperCase()] = { dateUtc: today, payload };
-    localStorage.setItem(STORAGE_KEYS.alphaCache, JSON.stringify(raw));
-  } catch (_) {}
-}
-
-function parseAlphaOverviewClient(ticker, raw, currentPrice) {
-  if (!raw || typeof raw !== 'object') throw new Error('Alpha Vantage returned empty overview data');
-  if (raw.Note) throw new Error('Alpha Vantage provider limit reached. Try again after provider reset.');
-  if (raw.Information) throw new Error(String(raw.Information));
-  if (raw['Error Message']) throw new Error(String(raw['Error Message']));
-  if (!raw.Symbol && Object.keys(raw).length <= 2) throw new Error('Alpha Vantage returned no overview data for this ticker');
-  const target = safeNum(raw.AnalystTargetPrice);
-  const current = safeNum(currentPrice);
-  const upside = target !== null && current && current > 0 ? (target / current - 1) * 100 : null;
-  const ratingKeys = ['AnalystRatingStrongBuy', 'AnalystRatingBuy', 'AnalystRatingHold', 'AnalystRatingSell', 'AnalystRatingStrongSell'];
-  const ratings = Object.fromEntries(ratingKeys.map(k => [k, safeNum(raw[k]) === null ? null : Math.trunc(safeNum(raw[k]))]));
-  const analystCount = Object.values(ratings).filter(v => v !== null).reduce((a, b) => a + b, 0) || null;
-  let ratingScore = null;
-  if (analystCount) {
-    const weights = { AnalystRatingStrongBuy: 2, AnalystRatingBuy: 1, AnalystRatingHold: 0, AnalystRatingSell: -1, AnalystRatingStrongSell: -2 };
-    ratingScore = ratingKeys.reduce((sum, k) => sum + (ratings[k] || 0) * weights[k], 0) / analystCount;
-  }
-  return {
-    ok: true,
-    cached: false,
-    ticker: raw.Symbol || String(ticker || '').toUpperCase(),
-    name: raw.Name || null,
-    source: 'Alpha Vantage OVERVIEW direct BYOK',
-    fetchedAtUtc: new Date().toISOString(),
-    analyst: {
-      targetMeanPrice: target,
-      targetUpsidePct: upside,
-      targetAnalystCount: analystCount,
-      ratings,
-      ratingScore,
-      status: (target !== null || analystCount) ? 'Loaded' : 'No analyst target fields in OVERVIEW response'
-    },
-    overview: {
-      sector: raw.Sector || null,
-      industry: raw.Industry || null,
-      latestQuarter: raw.LatestQuarter || null,
-      marketCapitalization: safeNum(raw.MarketCapitalization),
-      epsTtm: safeNum(raw.EPS),
-      revenueTtm: safeNum(raw.RevenueTTM),
-      profitMargin: safeNum(raw.ProfitMargin),
-      returnOnEquityTtm: safeNum(raw.ReturnOnEquityTTM),
-      peRatio: safeNum(raw.PERatio),
-      pegRatio: safeNum(raw.PEGRatio),
-      beta: safeNum(raw.Beta),
-      fiftyTwoWeekHigh: safeNum(raw['52WeekHigh']),
-      fiftyTwoWeekLow: safeNum(raw['52WeekLow'])
-    }
-  };
-}
-
-async function fetchAlphaOverviewDirect(symbol, currentPrice, apiKey) {
-  const url = 'https://www.alphavantage.co/query?' + new URLSearchParams({ function: 'OVERVIEW', symbol, apikey: apiKey }).toString();
-  const raw = await fetchJsonOrThrow(url, { cache: 'no-store' });
-  return parseAlphaOverviewClient(symbol, raw, currentPrice);
-}
-
-function getStoredAlphaKey() {
-  try {
-    return String(localStorage.getItem(AV_API_KEY_STORAGE_KEY) || '').trim();
-  } catch (_) {
-    return '';
-  }
-}
-
-function setStoredAlphaKey(key) {
-  try {
-    if (key) localStorage.setItem(AV_API_KEY_STORAGE_KEY, key);
-    else localStorage.removeItem(AV_API_KEY_STORAGE_KEY);
-  } catch (_) {
-    // Ignore browsers/storage modes that block localStorage.
-  }
-}
-
-function maskApiKey(key) {
-  key = String(key || '').trim();
-  if (!key) return '';
-  if (key.length <= 8) return '****';
-  return `${key.slice(0, 4)}…${key.slice(-4)}`;
-}
-
-function alphaQuotaText(quota) {
-  if (!quota) return 'Quota: unknown';
-  return `Alpha Vantage quota: ${quota.used}/${quota.limit} used • ${quota.remaining} left • reset ${quota.resetAtLocal || quota.resetAtUtc || ''}`;
-}
-
-async function fetchAlphaKeyStatus() {
-  const storedKey = getStoredAlphaKey();
-  state.alphaKeyStatus = {
-    ok: true,
-    hasKey: Boolean(storedKey),
-    maskedKey: storedKey ? maskApiKey(storedKey) : null,
-    storage: 'browser-localStorage',
-    quota: getAlphaQuotaLocal()
-  };
-  state.alphaKeyFetched = true;
-  return state.alphaKeyStatus;
-}
-
-async function saveAlphaKeyFromInput() {
-  const input = $('#avApiKeyInput');
-  const status = $('#avKeyStatus');
-  const apiKey = String(input?.value || '').trim();
-  if (!apiKey || apiKey.length < 8) {
-    if (status) status.textContent = 'ใส่ Alpha Vantage API key ให้ถูกต้องก่อน';
-    return;
-  }
-  setStoredAlphaKey(apiKey);
-  state.alphaKeyStatus = {
-    ok: true,
-    hasKey: true,
-    maskedKey: maskApiKey(apiKey),
-    storage: 'browser-localStorage',
-    quota: state.alphaKeyStatus?.quota || null
-  };
-  state.alphaKeyFetched = true;
-  if (input) input.value = '';
-  if (status) status.textContent = `Saved in this browser only (${maskApiKey(apiKey)}).`;
-  if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
-}
-
-function clearAlphaKey() {
-  setStoredAlphaKey('');
-  state.alphaKeyStatus = { ok: true, hasKey: false, storage: 'browser-localStorage', quota: state.alphaKeyStatus?.quota || null };
-  state.alphaKeyFetched = true;
-  state.analystCache = {};
-  if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
-}
-
-async function loadAnalystConsensus(symbol, currentPrice) {
-  symbol = String(symbol || '').trim().toUpperCase();
-  if (!symbol) return;
-  const apiKey = getStoredAlphaKey();
-  const btn = $('#loadAnalystBtn');
-  const status = $('#analystV2Status');
-  if (!apiKey || apiKey.length < 8) {
-    if (status) status.textContent = 'กรอกและ Save Alpha Vantage API key ใน browser นี้ก่อน';
-    const input = $('#avApiKeyInput');
-    if (input) input.focus();
-    return;
-  }
-  const cached = getAlphaCacheLocal(symbol);
-  if (cached) {
-    state.analystCache[symbol] = { ...cached, cached: true, quota: getAlphaQuotaLocal() };
-    if (status) status.textContent = 'Loaded from same-day browser cache; quota not used again.';
-    if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
-    return;
-  }
-  state.analystLoading[symbol] = true;
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = 'Loading...';
-  }
-  if (status) status.textContent = 'กำลังดึง Alpha Vantage OVERVIEW แบบ on-demand จาก browser...';
-  try {
-    const quota = incrementAlphaQuotaLocal(symbol);
-    let payload = await fetchAlphaOverviewDirect(symbol, currentPrice, apiKey);
-    payload = { ...payload, quota };
-    setAlphaCacheLocal(symbol, payload);
-    state.analystCache[symbol] = payload;
-    state.alphaKeyStatus = { ...(state.alphaKeyStatus || {}), quota, hasKey: true, maskedKey: maskApiKey(apiKey), storage: 'browser-localStorage' };
-    if (status) status.textContent = 'Loaded from Alpha Vantage direct BYOK.';
-  } catch (err) {
-    state.analystCache[symbol] = {
-      ok: false,
-      error: err.message || String(err),
-      quota: getAlphaQuotaLocal()
-    };
-  } finally {
-    state.analystLoading[symbol] = false;
-    if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
-  }
-}
-
-function analystTargetSectionHtml(symbol, currentPrice) {
-  const payload = state.analystCache[symbol];
-  const loading = Boolean(state.analystLoading[symbol]);
-  const ok = payload && payload.ok;
-  const analyst = ok ? (payload.analyst || {}) : {};
-  const overview = ok ? (payload.overview || {}) : {};
-  const quota = payload && payload.quota;
-  const errorText = payload && !payload.ok ? (payload.error || 'Could not load analyst consensus') : '';
-  const sourceText = ok ? `${payload.source || 'Alpha Vantage'}${payload.cached ? ' • cached today' : ''}` : 'ยังไม่ดึงข้อมูล — กดปุ่มด้านล่างเท่านั้น';
-  const keyStatus = state.alphaKeyStatus || {};
-  const storedKey = getStoredAlphaKey();
-  const hasLocalKey = Boolean(storedKey);
-  const keyLine = hasLocalKey
-    ? `API key saved in this browser only (${maskApiKey(storedKey)})`
-    : (state.alphaKeyFetched ? 'ยังไม่ได้ใส่ API key ใน browser นี้' : 'กำลังเช็ก API key ใน browser...');
-  const keyActionHtml = `
-          <div class="analyst-key-actions">
-            <input id="avApiKeyInput" type="password" autocomplete="off" placeholder="Paste Alpha Vantage API key here" />
-            <button id="saveAvKeyBtn" type="button">Save locally</button>
-            ${hasLocalKey ? '<button id="clearAvKeyBtn" type="button" class="secondary">Clear key</button>' : ''}
-          </div>
-          <small class="detail-muted">Public-safe BYOK mode: key is stored only in this browser localStorage and sent directly to Alpha Vantage only when you click Load.</small>`;
-  return `
-      <section class="target-section analyst-v2-section">
-        <div class="target-section-head">
-          <div>
-            <h4>Analyst Consensus — Alpha Vantage V2.8 BYOK Manual Loader</h4>
-            <p>ส่วนนี้แยกจากตาราง SEC: scan ปกติไม่เรียก Alpha Vantage, กดดึงทีละหุ้นเท่านั้น, API key เก็บเฉพาะใน browser นี้</p>
-          </div>
-          <span class="mini-chip ${ok ? 'chip-good' : 'chip-muted'}">${escapeHtml(ok ? 'Loaded' : 'Manual only')}</span>
-        </div>
-        <div class="analyst-key-box">
-          <div>
-            <strong>API key status</strong>
-            <p id="avKeyStatus" class="detail-muted">${escapeHtml(errorText || keyLine)}</p>
-          </div>
-          ${keyActionHtml}
-        </div>
-        <div class="analyst-actions">
-          <button id="loadAnalystBtn" type="button" ${loading ? 'disabled' : ''}>${loading ? 'Loading...' : `Load consensus for ${escapeHtml(symbol)}`}</button>
-          <span id="analystV2Status" class="detail-muted">${escapeHtml(sourceText)}</span>
-        </div>
-        <div class="target-summary-grid analyst-only-grid">
-          <div class="target-mini-card"><span>Current Price</span><strong>${formatNumber(currentPrice, 2)}</strong><small>from Yahoo chart</small></div>
-          <div class="target-mini-card"><span>Analyst Target</span><strong>${formatNumber(analyst.targetMeanPrice, 2)}</strong><small class="${clsForPct(analyst.targetUpsidePct)}">${formatPct(analyst.targetUpsidePct)}</small></div>
-          <div class="target-mini-card"><span>Analyst Count</span><strong>${analyst.targetAnalystCount ?? 'N/A'}</strong><small>${escapeHtml(analyst.status || 'not loaded')}</small></div>
-          <div class="target-mini-card"><span>Rating Score</span><strong>${formatNumber(analyst.ratingScore, 2)}</strong><small>-2 sell to +2 buy</small></div>
-          <div class="target-mini-card"><span>AV Latest Quarter</span><strong>${escapeHtml(overview.latestQuarter || 'N/A')}</strong><small>${escapeHtml(overview.sector || '')}</small></div>
-          <div class="target-mini-card"><span>PE / PEG</span><strong>${formatNumber(overview.peRatio, 2)} / ${formatNumber(overview.pegRatio, 2)}</strong><small>Alpha overview fields</small></div>
-        </div>
-        ${ok ? analystVisualsHtml(analyst, overview, currentPrice) : `
-          <div class="analyst-visual-grid">
-            <div class="analyst-chart-card">
-              <div class="analyst-chart-head"><div><h5>Analyst Rating Distribution</h5><p>กด Load consensus ก่อนเพื่อสร้าง bar chart</p></div><span class="mini-chip chip-muted">Manual</span></div>
-              <div class="target-empty compact-empty">ยังไม่เรียก Alpha Vantage</div>
-            </div>
-            <div class="analyst-chart-card">
-              <div class="analyst-chart-head"><div><h5>Current vs Target Position</h5><p>กด Load consensus เพื่อวาง target บน price range</p></div><span class="mini-chip chip-muted">Manual</span></div>
-              <div class="target-empty compact-empty">รอข้อมูล target / 52W range</div>
-            </div>
-          </div>`}
-        <p class="detail-muted">${escapeHtml(alphaQuotaText(quota || keyStatus.quota))}</p>
-        <p class="detail-muted">${escapeHtml(analystRatingsSummary(analyst.ratings || {}))}</p>
-        ${errorText ? `<p class="detail-muted bad">Error: ${escapeHtml(errorText)}</p>` : ''}
-      </section>`;
-}
-
-
-function fundDetailTabsHtml(activeTab) {
-  const tabs = [
-    ['earnings', 'Earnings Snapshot'],
-    ['guidance', 'Company Guidance View'],
-    ['analyst', 'Analyst Consensus']
+function renderPortfolioTabs(newName = null, newKey = null) {
+  const nav = $(".portfolio-tabs");
+  if (!nav) return;
+  const builtIns = [
+    ["default", "⭐ Default"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
   ];
-  return `
-      <div class="fund-detail-tabs" role="tablist" aria-label="Fundamental detail sections">
-        ${tabs.map(([key, label]) => `<button type="button" class="fund-detail-tab ${activeTab === key ? 'active' : ''}" data-fund-detail-tab="${key}">${label}</button>`).join('')}
-      </div>`;
+  const saved = getScreeners();
+  const custom = Object.keys(saved).filter(k => !builtIns.some(([key]) => key === k)).slice(0, 4).map(k => [k, `⭐ ${k}`]);
+  const tabs = [...builtIns.slice(0, 5), ...custom];
+  nav.innerHTML = tabs.map(([key, label]) => `<button class="portfolio-tab ${key === state.activeScreener ? "active" : ""}" data-screener="${esc(key)}" title="Double click to rename / long press to delete">${esc(label)}</button>`).join("") + `
+    <button class="portfolio-tab more-tab" data-export-screeners>⇅</button>
+    <button class="portfolio-tab add-tab" id="newScreenerBtn">+ New</button>`;
 }
 
-function setFundDetailTab(tab) {
-  if (!['earnings', 'guidance', 'analyst'].includes(tab)) return;
-  state.fundDetailTab = tab;
-  if (state.currentDetail) renderFundamentalDetail(state.currentDetail);
+
+
+function setColumnPreset(name) {
+  const presets = {
+    compact: { ticker:true, score:true, signal:true, price:true, ema5:false, ema20:true, ema89:false, ema200:false, rsi:true, macdHist:false, vol20:false, high52:false,
+      fundTicker:true, fundScore:true, fundQuarter:false, fundRevenue:true, fundNetIncome:false, fundEps:true, fundFcf:false, fundMargins:true, fundGuidance:false },
+    ema: { ticker:true, score:true, signal:true, price:true, ema5:true, ema20:true, ema89:true, ema200:true, rsi:true, macdHist:false, vol20:false, high52:false,
+      fundTicker:true, fundScore:true, fundQuarter:true, fundRevenue:true, fundNetIncome:true, fundEps:true, fundFcf:true, fundMargins:true, fundGuidance:false },
+    all: { ticker:true, score:true, signal:true, price:true, ema5:true, ema20:true, ema89:true, ema200:true, rsi:true, macdHist:true, vol20:true, high52:true,
+      fundTicker:true, fundScore:true, fundQuarter:true, fundRevenue:true, fundNetIncome:true, fundEps:true, fundFcf:true, fundMargins:true, fundGuidance:true },
+  };
+  state.columns = { ...state.columns, ...(presets[name] || presets.ema) };
+  renderColumnManager();
+  saveSettings();
+  renderAll();
 }
 
-function renderFundamentalDetail(data) {
-  const f = data.fundamental || data.latest || {};
-  const latest = data.latest || {};
-  const reasons = f.fundamentalReasons || [];
-  const highlights = f.fundamentalHighlights || [];
-  const detail = $('#fundamentalDetail');
-  if (!detail) return;
-
-  const currentPrice = latest.close;
-  const activeDetailTab = state.fundDetailTab || 'earnings';
-
-  const earningsPanelHtml = `
-      <div class="fund-tab-panel">
-        <div class="statement-card-grid">
-          ${statementCardHtml('Revenue', {
-            kind: 'money',
-            period: f.latestQuarter,
-            current: f.revenue,
-            prev: f.revenuePrevQuarter,
-            prevLabel: f.revenuePrevQuarterLabel,
-            yearAgo: f.revenueYearAgo,
-            yearAgoLabel: f.revenueYearAgoLabel,
-            estimate: f.estimatedRevenue,
-            estimateStatus: f.estimatedRevenueStatus,
-            surprise: f.revenueSurprisePct,
-            qoq: f.revenueQoQ,
-            yoy: f.revenueYoY,
-          })}
-          ${statementCardHtml('Net Income', {
-            kind: 'money',
-            period: f.latestQuarter,
-            current: f.netIncome,
-            prev: f.netIncomePrevQuarter,
-            prevLabel: f.netIncomePrevQuarterLabel,
-            yearAgo: f.netIncomeYearAgo,
-            yearAgoLabel: f.netIncomeYearAgoLabel,
-            estimate: f.estimatedNetIncome,
-            estimateStatus: 'Estimate ไม่มีใน source นี้',
-            surprise: f.profitSurprisePct,
-            qoq: f.profitQoQ,
-            qoqStatus: f.profitQoQStatus,
-            yoy: f.profitYoY,
-            yoyStatus: f.profitYoYStatus,
-          })}
-          ${statementCardHtml('EPS', {
-            kind: 'eps',
-            period: f.latestQuarter,
-            current: f.eps,
-            prev: f.epsPrevQuarter,
-            prevLabel: f.epsPrevQuarterLabel,
-            yearAgo: f.epsYearAgo,
-            yearAgoLabel: f.epsYearAgoLabel,
-            estimate: f.estimatedEps,
-            estimateStatus: f.estimatedEpsStatus,
-            surprise: f.epsSurprisePct,
-            qoq: f.epsQoQ,
-            qoqStatus: f.epsQoQStatus,
-            yoy: f.epsYoY,
-            yoyStatus: f.epsYoYStatus,
-          })}
-        </div>
-        <div class="fund-two-col fund-two-col-premium">
-          <div class="insight-card">
-            <h4>What stood out</h4>
-            <ul>${highlights.map(x => `<li>${escapeHtml(x)}</li>`).join('') || '<li>Insufficient data</li>'}</ul>
-          </div>
-          <div class="insight-card">
-            <h4>AI view</h4>
-            <ul class="ai-view-list">${reasons.map(renderAiReasonItem).join('') || '<li>ข้อมูลพื้นฐานไม่พอ ยังไม่ควรสรุปเชิงพื้นฐาน</li>'}</ul>
-          </div>
-        </div>
-      </div>`;
-
-  const guidanceStats = f.guidanceParseStats || {};
-  const guidanceHistoryRows = Array.isArray(f.guidanceHistory) ? f.guidanceHistory.slice(0, 8) : [];
-  const guidanceDebugRows = Array.isArray(f.guidanceDebug) ? f.guidanceDebug.slice(0, 8) : [];
-  const guidanceHistoryHtml = guidanceHistoryRows.length ? `
-        <div class="insight-card" style="margin-top:16px;">
-          <h4>Guidance History — medium/high confidence</h4>
-          <div class="mini-table-wrap">
-            <table class="mini-table">
-              <thead><tr><th>Filed</th><th>Period</th><th>Mid</th><th>Range</th><th>Conf.</th><th>Source</th></tr></thead>
-              <tbody>
-                ${guidanceHistoryRows.map(g => `<tr>
-                  <td>${escapeHtml(g.filedDate || '')}</td>
-                  <td>${escapeHtml(g.period || 'N/A')}</td>
-                  <td>${formatBig(g.midpoint)}</td>
-                  <td>${formatBig(g.low)} - ${formatBig(g.high)}</td>
-                  <td>${escapeHtml(g.confidence || 'N/A')}</td>
-                  <td>${escapeHtml(g.sourceDocument || '')}</td>
-                </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>` : '';
-  const guidanceDebugHtml = guidanceDebugRows.length ? `
-        <details class="debug-details">
-          <summary>Guidance debug snippets (${guidanceStats.revenueMatches || guidanceDebugRows.length} raw revenue candidate${(guidanceStats.revenueMatches || guidanceDebugRows.length) === 1 ? '' : 's'})</summary>
-          ${guidanceDebugRows.map(g => `<div class="debug-snippet">
-            <div><strong>${escapeHtml(g.confidence || 'low')}</strong> · ${escapeHtml(g.period || 'N/A')} · ${formatBig(g.midpoint)} · ${escapeHtml(g.filedDate || '')} · ${escapeHtml(g.sourceDocument || '')}</div>
-            <small>${escapeHtml(g.confidenceReason || '')}</small>
-            <p>${escapeHtml((g.textSnippet || '').slice(0, 420))}</p>
-          </div>`).join('')}
-        </details>` : '';
-
-  const guidancePanelHtml = `
-      <section class="target-section fund-tab-panel">
-        <div class="target-section-head">
-          <div>
-            <h4>Company Guidance View</h4>
-            <p>ดึงจาก SEC 8-K/6-K / Exhibit 99.1 แบบ conservative parser — ไม่ใช่ analyst consensus</p>
-          </div>
-          <span class="mini-chip ${f.companyGuidanceConnected ? 'chip-good' : 'chip-muted'}">${escapeHtml(f.companyGuidanceConnected ? 'Guidance parsed' : 'No guidance found')}</span>
-        </div>
-        <div class="target-summary-grid">
-          <div class="target-mini-card"><span>Prior Guide Period</span><strong>${escapeHtml(f.priorCompanyGuidanceRevenuePeriod || 'N/A')}</strong><small>${escapeHtml(f.priorCompanyGuidanceRevenueFiledDate || '')}</small></div>
-          <div class="target-mini-card"><span>Prior Rev Guide Mid</span><strong>${formatBig(f.priorCompanyGuidanceRevenue)}</strong><small>${formatBig(f.priorCompanyGuidanceRevenueLow)} - ${formatBig(f.priorCompanyGuidanceRevenueHigh)}</small></div>
-          <div class="target-mini-card"><span>Prior Guide Confidence</span><strong>${escapeHtml(f.priorCompanyGuidanceRevenueConfidence || 'N/A')}</strong><small>${escapeHtml(f.priorCompanyGuidanceRevenueConfidenceReason || '')}</small></div>
-          <div class="target-mini-card"><span>Actual vs Prior Guide</span><strong class="${clsForPct(f.actualVsPriorGuidanceRevenuePct)}">${formatPct(f.actualVsPriorGuidanceRevenuePct)}</strong><small>${escapeHtml(f.actualVsPriorGuidanceRevenueStatus || 'N/A')}</small></div>
-          <div class="target-mini-card"><span>Actual Used</span><strong>${formatBig(f.priorGuidanceRevenueActual)}</strong><small>${escapeHtml(f.priorGuidanceRevenueActualPeriod || 'N/A')}</small></div>
-          <div class="target-mini-card"><span>Next Guide Period</span><strong>${escapeHtml(f.nextCompanyGuidanceRevenuePeriod || 'N/A')}</strong><small>${escapeHtml(f.nextCompanyGuidanceRevenueFiledDate || '')}</small></div>
-          <div class="target-mini-card"><span>Next Rev Guide Mid</span><strong>${formatBig(f.nextCompanyGuidanceRevenue)}</strong><small>${formatBig(f.nextCompanyGuidanceRevenueLow)} - ${formatBig(f.nextCompanyGuidanceRevenueHigh)}</small></div>
-          <div class="target-mini-card"><span>Next Guide Confidence</span><strong>${escapeHtml(f.nextCompanyGuidanceRevenueConfidence || 'N/A')}</strong><small>${escapeHtml(f.nextCompanyGuidanceRevenueConfidenceReason || '')}</small></div>
-          <div class="target-mini-card"><span>Next EPS Guide Mid</span><strong>${formatNumber(f.nextCompanyGuidanceEps ?? f.companyGuidanceEps, 3)}</strong><small>${(f.nextCompanyGuidanceEpsLow != null || f.nextCompanyGuidanceEpsHigh != null) ? `${formatNumber(f.nextCompanyGuidanceEpsLow, 3)} - ${formatNumber(f.nextCompanyGuidanceEpsHigh, 3)}` : 'N/A'}</small></div>
-        </div>
-        <p class="detail-muted">${escapeHtml(f.companyGuidanceStatus || 'No company guidance parsed')}</p>
-        <p class="detail-muted">Scanned ${guidanceStats.filingsScanned || 0} SEC 8-K/6-K filing(s), ${guidanceStats.documentsScanned || 0} exhibit/document(s), ${guidanceStats.revenueMatches || 0} raw revenue candidate(s). High/Medium/Low: ${guidanceStats.highConfidence || 0}/${guidanceStats.mediumConfidence || 0}/${guidanceStats.lowConfidence || 0}</p>
-        ${f.priorCompanyGuidanceRevenueSourceDocument ? `<p class="detail-muted">Prior guide source: ${escapeHtml(f.priorCompanyGuidanceRevenueSourceDocument)}</p>` : ''}
-        ${f.nextCompanyGuidanceRevenueSourceDocument ? `<p class="detail-muted">Next guide source: ${escapeHtml(f.nextCompanyGuidanceRevenueSourceDocument)}</p>` : ''}
-        ${guidanceHistoryHtml}
-        ${guidanceDebugHtml}
-      </section>`;
-
-  const analystPanelHtml = analystTargetSectionHtml(String(latest.symbol || '').toUpperCase(), currentPrice);
-  const activePanelHtml = activeDetailTab === 'guidance' ? guidancePanelHtml : (activeDetailTab === 'analyst' ? analystPanelHtml : earningsPanelHtml);
-
-  detail.innerHTML = `
-    <div class="fund-card fund-card-premium">
-      <div class="fund-head fund-head-premium">
-        <div>
-          <p class="fund-kicker">Fundamental Dashboard</p>
-          <h3>${escapeHtml(latest.symbol || '')} dashboard</h3>
-          <p>เลือกมุมมอง: Earnings Snapshot / Company Guidance View / Analyst Consensus</p>
-        </div>
-        <div class="fund-head-side">
-          <span class="pill ${signalClass(f.fundamentalSignal || '')}">${escapeHtml(f.fundamentalSignal || 'Insufficient data')}</span>
-          <small>Source: ${escapeHtml(f.fundamentalSource || 'N/A')}</small>
-        </div>
-      </div>
-
-      <div class="fund-hero-grid">
-        <div class="hero-mini-card"><span>Fundamental Score</span><strong>${f.fundamentalScore ?? 'N/A'}</strong><small>/100 rules-based</small></div>
-        <div class="hero-mini-card"><span>Latest Quarter</span><strong>${escapeHtml(f.latestQuarter || 'N/A')}</strong><small>actual reported quarter</small></div>
-        <div class="hero-mini-card"><span>Period End</span><strong>${escapeHtml(f.earningsDate || 'N/A')}</strong><small>SEC reported accounting period</small></div>
-        <div class="hero-mini-card"><span>Active View</span><strong>${activeDetailTab === 'earnings' ? 'Earnings' : activeDetailTab === 'guidance' ? 'Guidance' : 'Analyst'}</strong><small>switch tabs below</small></div>
-      </div>
-
-      ${fundDetailTabsHtml(activeDetailTab)}
-
-      <div class="fund-note-strip">
-        <div class="note-pill note-info">SEC core fundamental remains the scoring source</div>
-        <div class="note-pill note-info">Alpha Vantage only runs in Analyst Consensus tab after clicking Load</div>
-      </div>
-
-      ${activePanelHtml}
-    </div>`;
-
-  $$('.fund-detail-tab').forEach(btn => {
-    btn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      setFundDetailTab(btn.dataset.fundDetailTab);
-    });
-  });
-
-  const saveKeyBtn = $('#saveAvKeyBtn');
-  if (saveKeyBtn) {
-    saveKeyBtn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      saveAlphaKeyFromInput();
-    });
-  }
-  const clearKeyBtn = $('#clearAvKeyBtn');
-  if (clearKeyBtn) {
-    clearKeyBtn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      clearAlphaKey();
-    });
-  }
-  const analystBtn = $('#loadAnalystBtn');
-  if (analystBtn) {
-    analystBtn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      loadAnalystConsensus(String(latest.symbol || '').toUpperCase(), currentPrice);
-    });
-  }
-  if (activeDetailTab === 'analyst' && !state.alphaKeyFetched) {
-    fetchAlphaKeyStatus().then(() => {
-      if (state.currentDetail && (state.fundDetailTab || 'earnings') === 'analyst') {
-        renderFundamentalDetail(state.currentDetail);
-      }
-    });
-  }
+function renderColumnManager() {
+  const technicalLabels = {
+    ticker:"Ticker", score:"Score", signal:"Signal", price:"Last Price", ema5:"EMA5 / %vs", ema20:"EMA20 / %vs", ema89:"EMA89 / %vs", ema200:"EMA200 / %vs", rsi:"RSI", macdHist:"MACD Hist", vol20:"Vol/20D", high52:"52Wk High"
+  };
+  const fundamentalLabels = {
+    fundTicker:"Ticker", fundScore:"Fund Score / Signal", fundQuarter:"Latest Quarter / Period", fundRevenue:"Revenue / QoQ / YoY", fundNetIncome:"Net Income / QoQ / YoY", fundEps:"EPS / QoQ / YoY", fundFcf:"Free Cash Flow", fundMargins:"Margin / Debt / ROE", fundGuidance:"Guidance"
+  };
+  const section = (title, labels) => `<div class="column-section"><h3>${title}</h3>${Object.entries(labels).map(([key,label]) => `<label><span>☰ ${label}</span><input type="checkbox" data-column-key="${key}" ${state.columns[key] !== false ? "checked" : ""}></label>`).join("")}</div>`;
+  const grid = $("#columnsGrid");
+  if (grid) grid.innerHTML = section("Technical", technicalLabels) + section("Fundamental", fundamentalLabels);
 }
 
-function renderScoreBars(parts) {
-  const max = { trend: 40, momentum: 30, rsi: 20, volume: 10 };
-  const labels = { trend: 'Trend', momentum: 'Momentum', rsi: 'RSI', volume: 'Volume' };
-  $('#scoreBars').innerHTML = Object.keys(max).map(k => {
-    const value = Number(parts[k] || 0);
-    const width = Math.max(0, Math.min(100, value / max[k] * 100));
-    return `
-      <div class="bar-row">
-        <span>${labels[k]}</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${width}%"></div></div>
-        <strong>${value}/${max[k]}</strong>
-      </div>`;
-  }).join('');
+function syncColumnsFromSheet() {
+  $$('[data-column-key]').forEach(cb => { state.columns[cb.dataset.columnKey] = cb.checked; });
+  if (!state.columns.ticker) state.columns.ticker = true;
+  saveSettings();
+  renderAll();
 }
 
-function drawChart(series, symbol) {
-  const canvas = $('#priceChart');
-  const ctx = canvas.getContext('2d');
-  const rect = canvas.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
-  const isMobile = window.innerWidth < 620;
-  const w = Math.max(330, rect.width || canvas.clientWidth || 330);
+function clearWatchlist() {
+  if (!confirm("Clear current watchlist?")) return;
+  state.watchlist = [];
+  state.rows = [];
+  state.quotes = {};
+  saveWatchlist();
+  renderAll();
+}
 
-  const points = series.slice(-260);
-  if (!points.length) {
-    const fallbackH = isMobile ? 880 : 820;
-    canvas.width = w * dpr;
-    canvas.height = fallbackH * dpr;
-    canvas.style.height = `${fallbackH}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, w, fallbackH);
+function renameActiveScreener() {
+  const current = state.activeScreener;
+  const name = prompt("Rename screener", current);
+  if (!name) return;
+  const newKey = name.toLowerCase().replace(/[^a-z0-9ก-๙]+/gi, "-").replace(/^-|-$/g, "") || `screener-${Date.now()}`;
+  const screeners = getScreeners();
+  screeners[newKey] = screeners[current] || { watchlist: state.watchlist, filters: state.filters, columns: state.columns, scannerTab: state.scannerTab, mobileView: state.mobileView };
+  if (newKey !== current) delete screeners[current];
+  setScreeners(screeners);
+  state.activeScreener = newKey;
+  saveSettings();
+  renderPortfolioTabs();
+}
+
+function deleteActiveScreener() {
+  if (["default", "momentum", "thai", "dividend", "quality"].includes(state.activeScreener)) {
+    alert("Default screeners cannot be deleted. Create a custom screener first.");
     return;
   }
+  if (!confirm(`Delete screener ${state.activeScreener}?`)) return;
+  const screeners = getScreeners();
+  delete screeners[state.activeScreener];
+  setScreeners(screeners);
+  state.activeScreener = "default";
+  loadScreener("default");
+}
 
-  const pricePanel = { x: 54, y: 24, w: w - 76, h: isMobile ? 230 : 260 };
-  const rsiPanel = { x: 54, y: pricePanel.y + pricePanel.h + 34, w: w - 76, h: 110 };
-  const macdPanel = { x: 54, y: rsiPanel.y + rsiPanel.h + 34, w: w - 76, h: isMobile ? 140 : 150 };
-  const volPanel = { x: 54, y: macdPanel.y + macdPanel.h + 34, w: w - 76, h: isMobile ? 125 : 115 };
-  const h = volPanel.y + volPanel.h + 42;
+function exportScreeners() {
+  const payload = JSON.stringify(getScreeners(), null, 2);
+  navigator.clipboard?.writeText(payload);
+  alert("Screener JSON copied to clipboard.");
+}
 
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  canvas.style.height = `${h}px`;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, w, h);
+function importScreeners() {
+  const raw = prompt("Paste screener JSON");
+  if (!raw) return;
+  try { setScreeners(JSON.parse(raw)); renderPortfolioTabs(); alert("Imported screeners."); }
+  catch (err) { alert("Invalid JSON"); }
+}
 
-  const dateLabel = (dateText) => {
-    if (!dateText) return '';
-    const parts = String(dateText).split('-');
-    if (parts.length !== 3) return String(dateText);
-    return `${parts[2]}/${parts[1]}/${parts[0].slice(2)}`;
-  };
-  const x = (i) => pricePanel.x + (i / Math.max(1, points.length - 1)) * pricePanel.w;
-  const drawPanelBg = (panel, title) => {
-    ctx.save();
-    ctx.fillStyle = 'rgba(8,15,40,.32)';
-    ctx.strokeStyle = 'rgba(255,255,255,.10)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    const rx = panel.x - 42;
-    const ry = panel.y - 18;
-    const rw = panel.w + 54;
-    const rh = panel.h + 28;
-    if (typeof ctx.roundRect === 'function') {
-      ctx.roundRect(rx, ry, rw, rh, 14);
-    } else {
-      ctx.rect(rx, ry, rw, rh);
+
+function persistDismissedAlerts() {
+  localStorage.setItem(STORAGE.alertDismissed, JSON.stringify(Array.from(state.dismissedAlerts || [])));
+}
+
+function markAlertDismissed(id) {
+  if (!id) return;
+  state.dismissedAlerts.add(String(id));
+  persistDismissedAlerts();
+}
+
+function visibleAlertItems(items) {
+  const dismissed = state.dismissedAlerts || new Set();
+  return items.filter(a => !dismissed.has(String(a.id)));
+}
+
+function closeAlertSheet() {
+  state.alertSheetOpen = false;
+  const sheet = $("#alertMobileSheet");
+  if (sheet) sheet.hidden = true;
+}
+
+function openAlertSheet() {
+  state.alertSheetOpen = true;
+  renderAlertCenter();
+  const sheet = $("#alertMobileSheet");
+  if (sheet) sheet.hidden = false;
+}
+
+function alertLevelRank(level) {
+  return ({ action: 0, hot: 1, risk: 2, near: 3, memo: 4, info: 5 }[level] ?? 9);
+}
+
+function alertPctHtml(value, mode = "technical") {
+  const n = toNum(value);
+  if (n === null) return `<span class="alert-value neutral">—</span>`;
+  const cls = mode === "fundamental" ? fundPctClass(n) : pctClass(n);
+  return `<span class="alert-value ${cls}">${pctLabel(n)}</span>`;
+}
+
+function latestMemoAlerts() {
+  let memos = [];
+  try { memos = JSON.parse(localStorage.getItem("stockTimingRadar.memos.v55") || "[]"); } catch (_) { memos = []; }
+  if (!Array.isArray(memos) || !memos.length) return [];
+  return memos.map(m => {
+    const ticker = normalizeTicker(m.ticker);
+    const current = toNum(m.currentPrice);
+    const target = toNum(m.targetPrice);
+    const hit = current !== null && target !== null && (m.targetDirection === "lte" ? current <= target : current >= target);
+    if (m.status === "Alert" || hit) {
+      return {
+        id: `memo-${m.id || ticker}`,
+        type: "memo",
+        level: "memo",
+        ticker,
+        title: "Memo alert triggered",
+        message: `${m.actionPlan || "Action"} · Target ${fmtMoney(target)} · Current ${fmtMoney(current)}`,
+        detail: m.reason || "Saved memo reached alert state",
+        sortScore: 92,
+        icon: "📝",
+      };
     }
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(248,251,255,.80)';
-    ctx.font = 'bold 13px system-ui';
-    ctx.fillText(title, panel.x - 36, panel.y - 1);
-    ctx.restore();
-  };
+    return null;
+  }).filter(Boolean);
+}
 
-  const drawHorizontalGrid = (panel, ticks = 4) => {
-    ctx.strokeStyle = 'rgba(255,255,255,.10)';
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= ticks; i++) {
-      const yy = panel.y + (i / ticks) * panel.h;
-      ctx.beginPath();
-      ctx.moveTo(panel.x, yy);
-      ctx.lineTo(panel.x + panel.w, yy);
-      ctx.stroke();
+function buildAlertItems() {
+  const alerts = [];
+  const stocks = allWatchlistStocks();
+  stocks.forEach(s => {
+    if (!s || !s.ticker) return;
+    if (s.error) {
+      alerts.push({ id:`err-${s.ticker}`, type:"risk", level:"risk", ticker:s.ticker, icon:"⚠️", title:"Data error", message:String(s.error), detail:"Scan returned an error for this ticker", sortScore:80 });
+      return;
     }
-  };
-
-  const drawDateAxis = () => {
-    ctx.fillStyle = 'rgba(248,251,255,.78)';
-    ctx.font = isMobile ? '10px system-ui' : '11px system-ui';
-    ctx.textAlign = 'center';
-    const dateTicks = isMobile ? 3 : 5;
-    for (let i = 0; i < dateTicks; i++) {
-      const idx = Math.round((i / Math.max(1, dateTicks - 1)) * (points.length - 1));
-      const xx = x(idx);
-      ctx.fillText(dateLabel(points[idx]?.date), xx, volPanel.y + volPanel.h + 26);
+    if (s.isPlaceholder) {
+      alerts.push({ id:`pending-${s.ticker}`, type:"info", level:"info", ticker:s.ticker, icon:"⏳", title:"Waiting for scan data", message:"Ticker is in watchlist but not loaded yet", detail:"Press Scan Now to fetch technical data", sortScore:10 });
+      return;
     }
-    ctx.textAlign = 'left';
-  };
-
-  const line = (panel, key, yScale, color, width = 1.6, dash = []) => {
-    ctx.save();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.setLineDash(dash);
-    ctx.beginPath();
-    let started = false;
-    points.forEach((p, i) => {
-      const value = p[key];
-      if (value === null || value === undefined || Number.isNaN(Number(value))) return;
-      if (!started) {
-        ctx.moveTo(x(i), yScale(Number(value)));
-        started = true;
-      } else {
-        ctx.lineTo(x(i), yScale(Number(value)));
-      }
-    });
-    ctx.stroke();
-    ctx.restore();
-  };
-
-  // PRICE + EMA PANEL
-  drawPanelBg(pricePanel, `${symbol} Price / EMA`);
-  drawHorizontalGrid(pricePanel, 4);
-  const priceKeys = ['close', 'ema5', 'ema20', 'ema89', 'ema200'];
-  const priceValues = points.flatMap(p => priceKeys.map(k => p[k]).filter(v => v !== null && v !== undefined));
-  if (priceValues.length) {
-    const minPrice = Math.min(...priceValues) * 0.98;
-    const maxPrice = Math.max(...priceValues) * 1.02;
-    const yPrice = (v) => pricePanel.y + (maxPrice - v) / (maxPrice - minPrice || 1) * pricePanel.h;
-    ctx.fillStyle = 'rgba(234,240,255,.76)';
-    ctx.font = '11px system-ui';
-    for (let i = 0; i <= 4; i++) {
-      const price = maxPrice - i / 4 * (maxPrice - minPrice);
-      const yy = pricePanel.y + i / 4 * pricePanel.h;
-      ctx.fillText(formatNumber(price), 8, yy + 4);
+    const score = toNum(s.score) ?? 0;
+    const rsi = toNum(s.rsi);
+    const ema20 = toNum(s.ema20Pct);
+    const ema89 = toNum(s.ema89Pct);
+    const ema200 = toNum(s.ema200Pct);
+    const macd = toNum(s.macd);
+    const sig = toNum(s.signal9);
+    const vol = toNum(s.vol20);
+    const near20 = ema20 !== null && Math.abs(ema20) <= 5;
+    const near89 = ema89 !== null && Math.abs(ema89) <= 6;
+    const hot = (rsi !== null && rsi >= 70) || (ema20 !== null && ema20 >= 15) || (ema89 !== null && ema89 >= 25) || (ema200 !== null && ema200 >= 45) || signalClass(s.signal) === "hot";
+    const risk = (ema200 !== null && ema200 < 0) || (rsi !== null && rsi < 38) || (macd !== null && sig !== null && macd < sig && score < 65);
+    const actionable = score >= 75 && near20 && !hot && !risk;
+    if (actionable) {
+      alerts.push({ id:`action-${s.ticker}`, type:"action", level:"action", ticker:s.ticker, icon:"🟢", title:"Buy-zone candidate", message:`Score ${fmt(score,0)} · EMA20 ${pctLabel(ema20)} · RSI ${fmt(rsi,1)}`, detail:"High score while price is still close to EMA20", sortScore:100 + score - Math.abs(ema20 || 0) });
     }
-    line(pricePanel, 'close', yPrice, '#f8fbff', 2.2);
-    line(pricePanel, 'ema5', yPrice, '#22c55e', 1.5);
-    line(pricePanel, 'ema20', yPrice, '#38bdf8', 1.5);
-    line(pricePanel, 'ema89', yPrice, '#f59e0b', 1.3, [4, 4]);
-    line(pricePanel, 'ema200', yPrice, '#f43f5e', 1.3, [6, 5]);
+    if (near20 && !actionable) {
+      alerts.push({ id:`near20-${s.ticker}`, type:"near", level:"near", ticker:s.ticker, icon:"📏", title:"Near EMA20", message:`EMA20 distance ${pctLabel(ema20)} · Price ${fmtMoney(s.price)}`, detail:"Potential entry is closer to the short/medium trend line", sortScore:75 - Math.abs(ema20 || 0) });
+    }
+    if (near89) {
+      alerts.push({ id:`near89-${s.ticker}`, type:"near", level:"near", ticker:s.ticker, icon:"📐", title:"Near EMA89", message:`EMA89 distance ${pctLabel(ema89)} · Score ${fmt(score,0)}`, detail:"Watch for deeper pullback / base support area", sortScore:68 - Math.abs(ema89 || 0) });
+    }
+    if (hot) {
+      const reason = rsi !== null && rsi >= 70 ? `RSI ${fmt(rsi,1)}` : `EMA stretch ${pctLabel(Math.max(ema20 || -999, ema89 || -999, ema200 || -999))}`;
+      alerts.push({ id:`hot-${s.ticker}`, type:"hot", level:"hot", ticker:s.ticker, icon:"🔥", title:"HOT — อย่าไล่ราคา", message:`${reason} · wait for pullback`, detail:"Trend may still be strong, but entry risk/reward is stretched", sortScore:90 });
+    }
+    if (risk) {
+      const parts = [];
+      if (ema200 !== null && ema200 < 0) parts.push(`below EMA200 ${pctLabel(ema200)}`);
+      if (rsi !== null && rsi < 38) parts.push(`RSI ${fmt(rsi,1)}`);
+      if (macd !== null && sig !== null && macd < sig) parts.push("MACD < Signal");
+      alerts.push({ id:`risk-${s.ticker}`, type:"risk", level:"risk", ticker:s.ticker, icon:"🔴", title:"Risk check", message:parts.join(" · ") || "Technical risk rising", detail:"Setup is weakening; review before adding", sortScore:85 });
+    }
+    if (vol !== null && vol >= 1.5 && score >= 65) {
+      alerts.push({ id:`vol-${s.ticker}`, type:"action", level:"action", ticker:s.ticker, icon:"📡", title:"Volume expansion", message:`Vol/20D ${fmt(vol,2)}x · Score ${fmt(score,0)}`, detail:"Volume is above recent average; confirm price action", sortScore:78 + vol });
+    }
+  });
+  alerts.push(...latestMemoAlerts());
+  const seen = new Set();
+  return alerts.filter(a => {
+    const key = `${a.id}-${a.ticker}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).sort((a,b) => alertLevelRank(a.level) - alertLevelRank(b.level) || (b.sortScore || 0) - (a.sortScore || 0) || String(a.ticker).localeCompare(String(b.ticker)));
+}
 
-    const legend = [
-      ['Close', '#f8fbff'], ['EMA5', '#22c55e'], ['EMA20', '#38bdf8'], ['EMA89', '#f59e0b'], ['EMA200', '#f43f5e']
-    ];
-    let lx = pricePanel.x;
-    legend.forEach(([name, color]) => {
-      if (lx > w - 86) return;
-      ctx.fillStyle = color;
-      ctx.fillRect(lx, pricePanel.y + pricePanel.h + 9, 10, 10);
-      ctx.fillStyle = 'rgba(248,251,255,.86)';
-      ctx.fillText(name, lx + 14, pricePanel.y + pricePanel.h + 18);
-      lx += 72;
-    });
+function filteredAlerts() {
+  const all = visibleAlertItems(buildAlertItems());
+  const f = state.alertFilter || "all";
+  if (f === "all") return all;
+  return all.filter(a => a.type === f || a.level === f);
+}
+
+function alertFilterLabel(f) {
+  return ({ all:"All", action:"Actionable", near:"Near EMA", hot:"HOT", risk:"Risk", memo:"Memo" }[f] || "All");
+}
+
+function renderAlertCenter() {
+  const panel = $("#alertCenter");
+  if (!panel) return;
+  const all = visibleAlertItems(buildAlertItems());
+  const items = filteredAlerts();
+  panel.classList.toggle("collapsed", state.alertCollapsed);
+  $$("[data-alert-filter]", panel).forEach(btn => btn.classList.toggle("active", btn.dataset.alertFilter === (state.alertFilter || "all")));
+  const counts = all.reduce((acc, a) => { acc[a.level] = (acc[a.level] || 0) + 1; acc.total += 1; return acc; }, { total:0 });
+  const pill = $("#alertCountPill");
+  if (pill) pill.textContent = `${counts.total} alerts`;
+  const subtitle = $("#alertSubtitle");
+  if (subtitle) subtitle.textContent = state.lastScanAt ? `Last checked ${state.lastScanAt} · ${alertFilterLabel(state.alertFilter)} view` : "Run Scan Now to generate technical alerts";
+  const toggle = panel.querySelector("[data-toggle-alerts]");
+  if (toggle) toggle.textContent = state.alertCollapsed ? "Show" : "Hide";
+  const summary = $("#alertSummaryGrid");
+  if (summary) {
+    summary.innerHTML = [
+      ["Actionable", counts.action || 0, "action", "🟢"],
+      ["Near EMA", counts.near || 0, "near", "📏"],
+      ["HOT", counts.hot || 0, "hot", "🔥"],
+      ["Risk", counts.risk || 0, "risk", "🔴"],
+      ["Memo", counts.memo || 0, "memo", "📝"],
+    ].map(([label, count, cls, icon]) => `<button class="alert-stat ${cls}" data-alert-filter="${cls}"><span>${icon} ${label}</span><strong>${count}</strong></button>`).join("");
   }
-
-  // RSI PANEL
-  drawPanelBg(rsiPanel, 'RSI(14)');
-  drawHorizontalGrid(rsiPanel, 2);
-  const yRsi = (v) => rsiPanel.y + (100 - v) / 100 * rsiPanel.h;
-  [70, 50, 30].forEach(level => {
-    ctx.strokeStyle = level === 50 ? 'rgba(255,255,255,.18)' : 'rgba(251,191,36,.22)';
-    ctx.setLineDash(level === 50 ? [] : [5, 5]);
-    ctx.beginPath();
-    ctx.moveTo(rsiPanel.x, yRsi(level));
-    ctx.lineTo(rsiPanel.x + rsiPanel.w, yRsi(level));
-    ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(248,251,255,.65)';
-    ctx.font = '10px system-ui';
-    ctx.fillText(String(level), 22, yRsi(level) + 3);
-  });
-  line(rsiPanel, 'rsi14', yRsi, '#0ea5e9', 2.0);
-  const latest = points[points.length - 1] || {};
-  ctx.fillStyle = '#0ea5e9';
-  ctx.font = 'bold 13px system-ui';
-  ctx.fillText(`RSI14: ${formatNumber(latest.rsi14, 2)}`, rsiPanel.x + 72, rsiPanel.y - 1);
-
-  // MACD PANEL
-  drawPanelBg(macdPanel, 'MACD(12,26,9)');
-  drawHorizontalGrid(macdPanel, 2);
-  const macdValues = points.flatMap(p => ['macd1226', 'macdSignal9', 'macdHist'].map(k => p[k]).filter(v => v !== null && v !== undefined));
-  if (macdValues.length) {
-    const absMax = Math.max(0.001, ...macdValues.map(v => Math.abs(Number(v))));
-    const yMacd = (v) => macdPanel.y + (absMax - v) / (absMax * 2 || 1) * macdPanel.h;
-    const zeroY = yMacd(0);
-    ctx.strokeStyle = 'rgba(255,255,255,.24)';
-    ctx.beginPath();
-    ctx.moveTo(macdPanel.x, zeroY);
-    ctx.lineTo(macdPanel.x + macdPanel.w, zeroY);
-    ctx.stroke();
-
-    const barW = Math.max(1, Math.min(8, macdPanel.w / points.length * 0.72));
-    points.forEach((p, i) => {
-      const hist = p.macdHist;
-      if (hist === null || hist === undefined || Number.isNaN(Number(hist))) return;
-      const xx = x(i) - barW / 2;
-      const yy = yMacd(Number(hist));
-      ctx.fillStyle = Number(hist) >= 0 ? 'rgba(20,184,166,.95)' : 'rgba(244,63,94,.95)';
-      ctx.fillRect(xx, Math.min(yy, zeroY), barW, Math.max(1, Math.abs(zeroY - yy)));
-    });
-
-    line(macdPanel, 'macd1226', yMacd, '#0ea5e9', 2.0);
-    line(macdPanel, 'macdSignal9', yMacd, '#f97316', 1.8);
-    ctx.fillStyle = '#0ea5e9';
-    ctx.font = 'bold 13px system-ui';
-    ctx.fillText(`MACD: ${formatNumber(latest.macd1226, 3)}`, macdPanel.x + 112, macdPanel.y - 1);
-    ctx.fillStyle = '#f97316';
-    ctx.fillText(`Signal: ${formatNumber(latest.macdSignal9, 3)}`, macdPanel.x + 224, macdPanel.y - 1);
-    ctx.fillStyle = '#d946ef';
-    ctx.fillText(`Hist: ${formatNumber(latest.macdHist, 3)}`, macdPanel.x + 350, macdPanel.y - 1);
+  const list = $("#alertList");
+  if (!list) return;
+  if (!items.length) {
+    list.innerHTML = `<div class="alert-empty">ไม่มี alert ในหมวดนี้ตอนนี้ · ลอง Scan Now หรือเปลี่ยน filter</div>`;
+    renderMobileAlertControls(all, items);
+    return;
   }
+  list.innerHTML = items.slice(0, 12).map(a => `<button class="alert-item ${a.level}" data-alert-id="${esc(a.id)}" data-alert-ticker="${esc(a.ticker)}" title="Open ${esc(a.ticker)} detail">
+    <span class="alert-icon">${a.icon}</span>
+    <span class="alert-main"><strong>${esc(a.ticker)} · ${esc(a.title)}</strong><small>${esc(a.message)}</small><em>${esc(a.detail)}</em></span>
+    <span class="alert-arrow">↗</span>
+  </button>`).join("");
 
-  // VOLUME PANEL with VMA5/VMA10 calculated client-side
-  drawPanelBg(volPanel, 'VOL(5,10)');
-  drawHorizontalGrid(volPanel, 2);
-  const volumes = points.map(p => Number(p.volume || 0));
-  const maxVol = Math.max(1, ...volumes);
-  const yVol = (v) => volPanel.y + (maxVol - v) / maxVol * volPanel.h;
-  const smaClient = (arr, period) => arr.map((_, i) => {
-    const start = Math.max(0, i - period + 1);
-    const slice = arr.slice(start, i + 1).filter(v => Number.isFinite(v));
-    if (slice.length < period) return null;
-    return slice.reduce((a, b) => a + b, 0) / slice.length;
-  });
-  const vma5 = smaClient(volumes, 5);
-  const vma10 = smaClient(volumes, 10);
-  const barW = Math.max(1, Math.min(8, volPanel.w / points.length * 0.72));
-  points.forEach((p, i) => {
-    const vol = Number(p.volume || 0);
-    const prevClose = i > 0 ? Number(points[i - 1].close || 0) : Number(p.open || p.close || 0);
-    const up = Number(p.close || 0) >= prevClose;
-    ctx.fillStyle = up ? 'rgba(20,184,166,.95)' : 'rgba(244,63,94,.95)';
-    const yy = yVol(vol);
-    ctx.fillRect(x(i) - barW / 2, yy, barW, Math.max(1, volPanel.y + volPanel.h - yy));
-  });
-  const yVolLine = (v) => yVol(v);
-  const drawArrayLine = (values, color) => {
-    ctx.save();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1.4;
-    ctx.beginPath();
-    let started = false;
-    values.forEach((value, i) => {
-      if (value === null || value === undefined) return;
-      if (!started) { ctx.moveTo(x(i), yVolLine(value)); started = true; }
-      else ctx.lineTo(x(i), yVolLine(value));
-    });
-    ctx.stroke();
-    ctx.restore();
-  };
-  drawArrayLine(vma5, '#0ea5e9');
-  drawArrayLine(vma10, '#f97316');
-  ctx.fillStyle = '#0ea5e9';
-  ctx.font = 'bold 13px system-ui';
-  ctx.fillText(`VMA5: ${formatNumber(vma5[vma5.length - 1], 0)}`, volPanel.x + 82, volPanel.y - 1);
-  ctx.fillStyle = '#f97316';
-  ctx.fillText(`VMA10: ${formatNumber(vma10[vma10.length - 1], 0)}`, volPanel.x + 218, volPanel.y - 1);
+  renderMobileAlertControls(all, items);
+}
 
-  drawDateAxis();
+function renderMobileAlertControls(all, items) {
+  const fab = $("#alertFab");
+  const badge = $("#alertFabBadge");
+  const sheet = $("#alertMobileSheet");
+  const mobileList = $("#alertMobileList");
+  const mobileSub = $("#alertMobileSubtitle");
+  const mobileFilters = $("#alertMobileFilters");
+  if (!fab || !badge || !sheet || !mobileList) return;
+  const unreadAll = (all || []).filter(a => !state.dismissedAlerts?.has(a.id));
+  const unreadItems = (items || []).filter(a => !state.dismissedAlerts?.has(a.id));
+  const count = unreadAll.length;
+  fab.hidden = count === 0;
+  badge.textContent = count > 99 ? "99+" : String(count);
+  fab.classList.toggle("pulse", count > 0 && !state.alertSheetOpen);
+  if (mobileSub) mobileSub.textContent = count ? `${count} unread · tap an alert to open and clear it` : "No unread alerts";
+  if (mobileFilters) $$('[data-alert-filter]', mobileFilters).forEach(btn => btn.classList.toggle("active", btn.dataset.alertFilter === (state.alertFilter || "all")));
+  if (!count) {
+    mobileList.innerHTML = `<div class="alert-empty">ไม่มี unread alert ตอนนี้</div>`;
+    sheet.hidden = !state.alertSheetOpen;
+    return;
+  }
+  if (!unreadItems.length) {
+    mobileList.innerHTML = `<div class="alert-empty">ไม่มี unread alert ในหมวดนี้ · ลองเลือก All</div>`;
+  } else {
+    mobileList.innerHTML = unreadItems.slice(0, 20).map(a => `<button class="alert-item ${a.level}" data-alert-id="${esc(a.id)}" data-alert-ticker="${esc(a.ticker)}" title="Open ${esc(a.ticker)} detail">
+      <span class="alert-icon">${a.icon}</span>
+      <span class="alert-main"><strong>${esc(a.ticker)} · ${esc(a.title)}</strong><small>${esc(a.message)}</small><em>${esc(a.detail)}</em></span>
+      <span class="alert-arrow">↗</span>
+    </button>`).join("");
+  }
+  sheet.hidden = !state.alertSheetOpen;
+}
+
+function alertSignature(alerts) {
+  return alerts.filter(a => ["action","hot","risk","memo"].includes(a.level)).slice(0, 8).map(a => `${a.level}:${a.ticker}:${a.title}`).join("|");
+}
+
+function showAlertToastIfNeeded(force = false) {
+  const alerts = visibleAlertItems(buildAlertItems()).filter(a => ["action","hot","risk","memo"].includes(a.level));
+  renderAlertCenter();
+  if (!alerts.length) return;
+  const sig = alertSignature(alerts);
+  if (!force && sig && sig === state.lastAlertSignature) return;
+  state.lastAlertSignature = sig;
+  localStorage.setItem(STORAGE.alertSeen, sig);
+  const top = alerts[0];
+  const toast = $("#alertToast");
+  if (!toast) return;
+  if (window.matchMedia("(max-width: 767px)").matches) {
+    toast.hidden = true;
+    const fab = $("#alertFab");
+    if (fab) {
+      fab.classList.remove("pulse");
+      void fab.offsetWidth;
+      fab.classList.add("pulse");
+    }
+    return;
+  }
+  toast.innerHTML = `<strong>🔔 ${alerts.length} technical alert${alerts.length > 1 ? "s" : ""}</strong><span>${esc(top.ticker)} · ${esc(top.title)} — ${esc(top.message)}</span><button data-open-alerts>Open</button>`;
+  toast.hidden = false;
+  clearTimeout(showAlertToastIfNeeded._timer);
+  showAlertToastIfNeeded._timer = setTimeout(() => { toast.hidden = true; }, 6500);
+}
+
+function renderStatus() {
+  const subtitle = $("#scannerSubtitle");
+  if (!subtitle || state.loading) return;
+  const err = state.errors?.length ? ` · ${state.errors.length} errors` : "";
+  const when = state.lastScanAt ? ` · Last scan ${state.lastScanAt}` : "";
+  subtitle.textContent = `Showing ${currentStocks().length} pass / ${state.lastScanSymbols.length || state.rows.length || state.watchlist.length} watchlist · table keeps filtered rows dimmed · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
+  updateMobileSortLabel();
+}
+
+function renderAll() {
+  const shell = $(".app-shell");
+  if (shell) {
+    shell.dataset.view = state.scannerTab;
+    shell.dataset.mobileView = state.mobileView;
+  }
+  applyFilterUi();
+  renderGroups();
+  renderColumnManager();
+  renderPortfolioTabs();
+  renderTechnicalTable();
+  renderTechnicalMobile();
+  renderTechnicalMobileTable();
+  renderFundamental();
+  renderFundamentalMobileTable();
+  renderDetail();
+  updateTabs();
+  updateResultCount();
+  renderAlertCenter();
+  renderStatus();
+  updateMobileSortLabel();
 }
 
 function updateTabs() {
-  $$('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === state.activeTab));
-  const note = $('#tabNote');
-  if (note) note.textContent = state.activeTab === 'fundamental'
-    ? 'Fundamental tab ใช้ SEC EDGAR static layer • Technical refresh จาก GitHub Actions ทุก ~15 นาที • Analyst Consensus ใช้ Alpha Vantage BYOK กดดึงทีละหุ้น'
-    : 'Technical indicators จาก workflow ล่าสุด';
+  $$('[data-tab]').forEach(btn => btn.classList.toggle("active", btn.dataset.tab === state.scannerTab));
+  $("#technicalScanner")?.classList.toggle("active", state.scannerTab === "technical");
+  $("#fundamentalScanner")?.classList.toggle("active", state.scannerTab === "fundamental");
+  $$('[data-mobile-view]').forEach(btn => btn.classList.toggle("active", btn.dataset.mobileView === state.mobileView));
+  $$(".portfolio-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.screener === state.activeScreener));
 }
 
-function switchTab(tab) {
-  state.activeTab = tab;
-  state.sortKey = tab === 'fundamental' ? 'fundamentalScore' : 'score';
-  state.sortDir = 'desc';
-  updateTabs();
-  renderColumnToggles();
-  applyFilters();
-  saveActiveSettings();
-}
-
-function setupEventListeners() {
-  $('#scanBtn').addEventListener('click', scan);
-  $('#refreshBtn').addEventListener('click', () => scan(true));
-  $('#loadSingleBtn').addEventListener('click', () => loadSymbol($('#singleSymbol').value.trim().toUpperCase()));
-  $('#singleSymbol').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') loadSymbol($('#singleSymbol').value.trim().toUpperCase());
-  });
-
-  ['symbols', 'range', 'minScore', 'filterAbove200', 'filterEmaStack', 'filterSweetRsi'].forEach(id => {
-    const el = $(`#${id}`);
-    el.addEventListener('input', () => { saveActiveSettings(); if (id !== 'symbols' && id !== 'range') applyFilters(); });
-    el.addEventListener('change', () => { saveActiveSettings(); if (id !== 'symbols' && id !== 'range') applyFilters(); });
-  });
-
-  $$('.tab-button').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-
-  $('#saveScreenerBtn').addEventListener('click', saveNamedScreener);
-  $('#loadScreenerBtn').addEventListener('click', loadNamedScreener);
-  $('#deleteScreenerBtn').addEventListener('click', deleteNamedScreener);
-  $('#savedScreeners').addEventListener('change', () => {
-    const selected = $('#savedScreeners').value;
-    if (selected) $('#screenerName').value = selected;
-  });
-
-  $('#showAllColsBtn').addEventListener('click', () => setColumns(Object.fromEntries(columnDefs.map(c => [c.key, true]))));
-  $('#compactColsBtn').addEventListener('click', () => setColumns(compactColumns));
-  $('#emaFocusColsBtn').addEventListener('click', () => setColumns(emaFocusColumns));
-
-  window.addEventListener('resize', () => {
-    renderMobileCards(state.filteredRows);
-    const symbol = $('#singleSymbol').value.trim().toUpperCase();
-    if (symbol) drawChart.__resizeTimer = clearTimeout(drawChart.__resizeTimer) || setTimeout(() => loadSymbol(symbol, false), 150);
-  });
-}
-
-function init() {
-  updateSavedScreenersDropdown();
-  updateTabs();
-  renderColumnToggles();
-  renderTableHeader();
-  setupEventListeners();
-  const restored = restoreActiveSettings();
-  if (!restored) {
-    renderColumnToggles();
-    renderTableHeader();
+function openSheet(id) {
+  const sheet = $("#" + id);
+  if (!sheet) {
+    console.warn("Missing sheet", id);
+    return;
   }
-  scan();
+  $$(".bottom-sheet").forEach(s => {
+    if (s !== sheet) {
+      s.classList.remove("open");
+      s.setAttribute("aria-hidden", "true");
+    }
+  });
+  const backdrop = $("#sheetBackdrop");
+  if (backdrop) backdrop.hidden = false;
+  document.body.classList.add("sheet-open");
+  sheet.classList.add("open");
+  sheet.setAttribute("aria-hidden", "false");
+  const first = sheet.querySelector("textarea, input, button:not([data-close-sheet])");
+  if (id === "bulkAddSheet" || id === "quickScanSheet") setTimeout(() => first?.focus(), 90);
+}
+function closeSheets() {
+  const backdrop = $("#sheetBackdrop");
+  if (backdrop) backdrop.hidden = true;
+  document.body.classList.remove("sheet-open");
+  $$(".bottom-sheet").forEach(s => { s.classList.remove("open"); s.setAttribute("aria-hidden", "true"); });
+}
+function openQuickScanSheet() {
+  const input = $("#quickScanInput");
+  if (input) input.value = state.watchlist.join(" ");
+  const summary = $("#quickScanSummary");
+  if (summary) summary.textContent = `${state.watchlist.length} symbols in current watchlist`;
+  openSheet("quickScanSheet");
+}
+function openMobileDetail() {
+  const modal = $("#mobileDetailModal");
+  if (modal) { modal.classList.add("open"); modal.setAttribute("aria-hidden", "false"); }
 }
 
-init();
+
+function setScannerTab(tabName) {
+  const next = tabName === "fundamental" ? "fundamental" : "technical";
+  if (state.scannerTab === next) {
+    updateTabs();
+    return;
+  }
+  state.scannerTab = next;
+  state.sortKey = "score";
+  state.sortAsc = false;
+  saveSettings();
+  renderAll();
+  if (next === "fundamental") {
+    ensureFundamentalData();
+  }
+}
+
+function setDetailTab(tabName) {
+  const allowed = new Set(["technical", "setup", "fundamental", "playbook"]);
+  state.detailTab = allowed.has(tabName) ? tabName : "technical";
+  saveSettings();
+  renderDetail();
+  ensureSymbolDetail(state.selected, state.detailTab === "fundamental");
+}
+
+function setFundSubTab(tabName) {
+  const allowed = new Set(["earnings", "guidance", "analyst"]);
+  state.fundSubTab = allowed.has(tabName) ? tabName : "earnings";
+  saveSettings();
+  renderDetail();
+  if (state.fundSubTab === "analyst") {
+    // Keep API on-demand: UI switches immediately; the user decides when to press Load.
+    return;
+  }
+  ensureSymbolDetail(state.selected, true);
+}
+
+function bindHardWiredTabs() {
+  // Capture phase fallback: guarantees UI tabs switch even if a parent panel is re-rendered
+  // or a table overlay catches the normal delegated click. API/data loading remains lazy.
+  ["pointerdown", "mousedown", "click"].forEach(type => {
+    document.addEventListener(type, (e) => {
+      const input = e.target.closest && e.target.closest("[data-alpha-key-input]");
+      if (!input) return;
+      // Desktop has nested clickable dashboard panels; keep API key typing isolated
+      // from delegated tab/table handlers without blocking the browser's native focus.
+      e.stopPropagation();
+      if (type === "click") input.focus();
+    }, true);
+  });
+  document.addEventListener("click", (e) => {
+    const alertFilter = e.target.closest("[data-alert-filter]");
+    if (alertFilter) {
+      e.preventDefault();
+      e.stopPropagation();
+      state.alertFilter = alertFilter.dataset.alertFilter || "all";
+      localStorage.setItem("stockTimingRadar.alertFilter.v61", state.alertFilter);
+      saveSettings();
+      renderAlertCenter();
+      return;
+    }
+    const alertTicker = e.target.closest("[data-alert-ticker]");
+    if (alertTicker) {
+      e.preventDefault();
+      e.stopPropagation();
+      markAlertDismissed(alertTicker.dataset.alertId);
+      state.selected = normalizeTicker(alertTicker.dataset.alertTicker);
+      closeAlertSheet();
+      renderAll();
+      ensureSymbolDetail(state.selected, false);
+      if (window.matchMedia("(max-width: 767px)").matches) openMobileDetail();
+      return;
+    }
+    if (e.target.closest("[data-toggle-alerts]")) {
+      e.preventDefault();
+      e.stopPropagation();
+      state.alertCollapsed = !state.alertCollapsed;
+      localStorage.setItem("stockTimingRadar.alertCollapsed.v61", state.alertCollapsed ? "1" : "0");
+      saveSettings();
+      renderAlertCenter();
+      return;
+    }
+    if (e.target.closest("[data-open-alerts]") || e.target.closest("#alertFab")) {
+      e.preventDefault();
+      e.stopPropagation();
+      $("#alertToast")?.setAttribute("hidden", "");
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        openAlertSheet();
+      } else {
+        state.alertCollapsed = false;
+        localStorage.setItem("stockTimingRadar.alertCollapsed.v61", "0");
+        renderAlertCenter();
+        $("#alertCenter")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
+    if (e.target.closest("[data-close-alert-sheet]")) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAlertSheet();
+      return;
+    }
+    if (e.target.closest("[data-dismiss-all-alerts]")) {
+      e.preventDefault();
+      e.stopPropagation();
+      visibleAlertItems(buildAlertItems()).forEach(a => markAlertDismissed(a.id));
+      closeAlertSheet();
+      renderAll();
+      return;
+    }
+    if (e.target.closest("[data-close-chart-modal]")) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeChartModal();
+      return;
+    }
+    const chartOpen = e.target.closest("[data-open-chart-modal]");
+    if (chartOpen && (!e.target.closest("[data-chart-controls]") || e.target.closest(".chart-expand-btn"))) {
+      e.preventDefault();
+      e.stopPropagation();
+      openChartModal();
+      return;
+    }
+    const chartMode = e.target.closest("[data-chart-mode]");
+    if (chartMode) {
+      e.preventDefault();
+      e.stopPropagation();
+      state.priceChartMode = chartMode.dataset.chartMode === "candles" ? "candles" : "line";
+      localStorage.setItem(STORAGE.priceChartMode, state.priceChartMode);
+      saveSettings();
+      renderDetail();
+      return;
+    }
+    const th = e.target.closest("th[data-sort]");
+    if (th) {
+      e.preventDefault();
+      e.stopPropagation();
+      const key = th.dataset.sort;
+      if (state.sortKey === key) state.sortAsc = !state.sortAsc;
+      else { state.sortKey = key; state.sortAsc = key.includes("Pct") || key.includes("Yoy") || key.includes("QoQ"); }
+      saveSettings();
+      renderAll();
+      return;
+    }
+    const sortPick = e.target.closest("[data-sort-pick]");
+    if (sortPick) {
+      e.preventDefault();
+      e.stopPropagation();
+      state.sortKey = sortPick.dataset.sortPick;
+      state.sortAsc = sortPick.dataset.sortDir !== "desc";
+      saveSettings();
+      closeSheets();
+      renderAll();
+      return;
+    }
+    const resetBtn = e.target.closest("#filtersSheet .sheet-actions .secondary-btn");
+    if (resetBtn && resetBtn.textContent.trim().toLowerCase().includes("reset")) {
+      e.preventDefault();
+      e.stopPropagation();
+      resetFilters();
+      return;
+    }
+    const openPanel = e.target.closest("[data-open-panel]");
+    if (openPanel) {
+      e.preventDefault();
+      e.stopPropagation();
+      const target = openPanel.dataset.openPanel === "columns" ? "columnsSheet" : openPanel.dataset.openPanel === "filters" ? "filtersSheet" : openPanel.dataset.openPanel === "sort" ? "sortSheet" : "bulkAddSheet";
+      openSheet(target);
+      return;
+    }
+    const scannerTab = e.target.closest("[data-tab]");
+    if (scannerTab) {
+      e.preventDefault();
+      e.stopPropagation();
+      setScannerTab(scannerTab.dataset.tab);
+      return;
+    }
+    const detailTab = e.target.closest("[data-detail-tab]");
+    if (detailTab) {
+      e.preventDefault();
+      e.stopPropagation();
+      setDetailTab(detailTab.dataset.detailTab);
+      return;
+    }
+    const fundTab = e.target.closest("[data-fund-tab]");
+    if (fundTab) {
+      e.preventDefault();
+      e.stopPropagation();
+      setFundSubTab(fundTab.dataset.fundTab);
+      return;
+    }
+  }, true);
+
+  document.addEventListener("input", (e) => {
+    const el = e.target;
+    if (!el || !(el instanceof HTMLInputElement)) return;
+    if (el.id === "scoreRange" || el.id === "sheetScoreRange") {
+      state.filters.score = Number(el.value || 0);
+      applyFilterUi();
+      saveSettings();
+      renderAll();
+    }
+  }, true);
+
+  document.addEventListener("change", (e) => {
+    const el = e.target;
+    if (!el || !(el instanceof HTMLInputElement)) return;
+    const ids = new Set(["filterAbove200","filterEmaStack","filterSweetRsi","filterVolume20","filterMacdSignal","sheetFilterAbove200","sheetFilterEmaStack","sheetFilterSweetRsi","sheetFilterVolume20","sheetFilterMacdSignal"]);
+    if (ids.has(el.id)) {
+      syncFiltersFromUi(el.id.startsWith("sheet") ? "sheet" : "desktop");
+      saveSettings();
+      renderAll();
+    }
+  }, true);
+}
+
+function bindEvents() {
+  document.body.addEventListener("click", (e) => {
+    if (e.target.closest && e.target.closest("[data-alpha-key-input]")) return;
+    const select = e.target.closest("[data-select]");
+    if (select) {
+      state.selected = normalizeTicker(select.dataset.select);
+      renderAll();
+      ensureSymbolDetail(state.selected, state.detailTab === "fundamental");
+      if (window.matchMedia("(max-width: 767px)").matches && select.closest(".stock-card")) openMobileDetail();
+      return;
+    }
+    const add = e.target.closest("[data-add-symbol]");
+    if (add) { openSheet("bulkAddSheet"); setTimeout(() => $("#bulkSymbolInput")?.focus(), 60); return; }
+    const group = e.target.closest("[data-market-group]");
+    if (group) { state.activeMarketGroup = group.dataset.marketGroup; renderAll(); return; }
+    const portfolio = e.target.closest(".portfolio-tab");
+    if (portfolio && !portfolio.classList.contains("add-tab") && !portfolio.classList.contains("more-tab")) { loadScreener(portfolio.dataset.screener || "default"); return; }
+    if (e.target.closest(".add-tab")) { newScreener(); return; }
+    const mobileView = e.target.closest("[data-mobile-view]");
+    if (mobileView) { state.mobileView = mobileView.dataset.mobileView; saveSettings(); renderAll(); return; }
+    const detailTab = e.target.closest("[data-detail-tab]");
+    if (detailTab) { setDetailTab(detailTab.dataset.detailTab); return; }
+    const tab = e.target.closest("[data-tab]");
+    if (tab) { setScannerTab(tab.dataset.tab); return; }
+    const fundTab = e.target.closest("[data-fund-tab]");
+    if (fundTab) { setFundSubTab(fundTab.dataset.fundTab); return; }
+    const open = e.target.closest("[data-open-panel]");
+    if (open) { openSheet(open.dataset.openPanel === "columns" ? "columnsSheet" : open.dataset.openPanel === "filters" ? "filtersSheet" : open.dataset.openPanel === "sort" ? "sortSheet" : "bulkAddSheet"); return; }
+    if (e.target.closest("[data-close-sheet]")) { closeSheets(); return; }
+    if (e.target.closest("[data-import-symbols]")) { importBulkSymbols(); return; }
+    if (e.target.closest("[data-replace-symbols]")) { const input = $("#bulkSymbolInput"); const result = addSymbolsBulk(input?.value || "", "replace"); const s = $("#bulkImportSummary"); if (s) s.textContent = `แทนที่ watchlist แล้ว: ${result.total} symbols`; if (input) input.value = ""; setTimeout(() => { closeSheets(); scan(true); }, 300); return; }
+    if (e.target.closest("[data-clear-watchlist]")) { clearWatchlist(); closeSheets(); return; }
+    if (e.target.closest("[data-column-preset]")) { setColumnPreset(e.target.closest("[data-column-preset]").dataset.columnPreset); return; }
+    if (e.target.closest("#columnsSheet .sheet-actions .primary-btn")) { syncColumnsFromSheet(); closeSheets(); return; }
+    if (e.target.closest("[data-rename-screener]")) { renameActiveScreener(); return; }
+    if (e.target.closest("[data-delete-screener]")) { deleteActiveScreener(); return; }
+    if (e.target.closest("[data-export-screeners]")) { exportScreeners(); return; }
+    if (e.target.closest("[data-import-screeners]")) { importScreeners(); return; }
+    if (e.target.closest("[data-clear-symbols]")) { const input = $("#bulkSymbolInput"); if (input) input.value = ""; const s = $("#bulkImportSummary"); if (s) s.textContent = ""; return; }
+    const sortPick = e.target.closest("[data-sort-pick]");
+    if (sortPick) { state.sortKey = sortPick.dataset.sortPick; state.sortAsc = sortPick.dataset.sortDir !== "desc"; saveSettings(); closeSheets(); renderAll(); return; }
+
+    if (e.target.closest("#mobileScanNow")) { openQuickScanSheet(); return; }
+    if (e.target.closest("#scanNowDesktop, #filtersSheet .sheet-actions .primary-btn")) { syncFiltersFromUi(e.target.closest("#filtersSheet") ? "sheet" : "desktop"); closeSheets(); scan(true); return; }
+    if (e.target.closest("[data-scan-current]")) { closeSheets(); scan(true); return; }
+    if (e.target.closest("[data-scan-temp]")) { const raw = $("#quickScanInput")?.value || ""; const symbols = parseTickerList(raw); if (!symbols.length) { const s=$("#quickScanSummary"); if (s) s.textContent="ใส่ ticker อย่างน้อย 1 ตัว"; return; } closeSheets(); scan(true, { symbols, message: `Scanning temporary list · ${symbols.length} symbols` }); return; }
+    if (e.target.closest("[data-replace-scan]")) { const raw = $("#quickScanInput")?.value || ""; const result = addSymbolsBulk(raw, "replace"); if (!result.total) { const s=$("#quickScanSummary"); if (s) s.textContent="ใส่ ticker อย่างน้อย 1 ตัว"; return; } closeSheets(); scan(true); return; }
+    if (e.target.closest("[data-append-scan]")) { const raw = $("#quickScanInput")?.value || ""; const result = addSymbolsBulk(raw, "append"); if (!result.total) { const s=$("#quickScanSummary"); if (s) s.textContent="ใส่ ticker อย่างน้อย 1 ตัว"; return; } closeSheets(); scan(true); return; }
+    const rangeBtn = e.target.closest("button[data-range]");
+    if (rangeBtn) { state.filters.range = rangeBtn.dataset.range; applyFilterUi(); saveSettings(); return; }
+    const th = e.target.closest("th[data-sort]");
+    if (th) { const key = th.dataset.sort; if (state.sortKey === key) state.sortAsc = !state.sortAsc; else { state.sortKey = key; state.sortAsc = key.includes("Pct"); } saveSettings(); renderAll(); return; }
+    const loadSymbolBtn = e.target.closest("[data-load-symbol]");
+    if (loadSymbolBtn) { const input = loadSymbolBtn.closest(".detail-header")?.querySelector("input"); loadSymbolFromBackend(input?.value || state.selected); return; }
+    // Analyst tab now links to Yahoo Finance; no API key interaction required.
+  });
+
+
+
+  document.body.addEventListener("input", (e) => {
+    if (e.target && e.target.matches("[data-alpha-key-input]")) {
+      localStorage.setItem(STORAGE.alphaKey, e.target.value.trim());
+    }
+  }, true);
+
+  document.body.addEventListener("keydown", (e) => {
+    if (e.target && e.target.matches("[data-alpha-key-input]")) {
+      e.stopPropagation();
+      return;
+    }
+  }, true);
+
+  document.body.addEventListener("dblclick", (e) => { if (e.target.closest(".portfolio-tab:not(.add-tab):not(.more-tab)")) renameActiveScreener(); });
+  let longPressTimer = null;
+  document.body.addEventListener("pointerdown", (e) => { const tab = e.target.closest(".portfolio-tab:not(.add-tab):not(.more-tab)"); if (tab) longPressTimer = setTimeout(deleteActiveScreener, 750); });
+  document.body.addEventListener("pointerup", () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
+  document.addEventListener("keydown", (event) => {
+    if (event.target && ["INPUT", "TEXTAREA"].includes(event.target.tagName)) return;
+    if (event.key === "Escape" && state.chartModalOpen) { event.preventDefault(); closeChartModal(); return; }
+    if (event.key === "/") { event.preventDefault(); $("#symbolSearch")?.focus(); }
+    if (event.key.toLowerCase() === "s") { event.preventDefault(); scan(true); }
+  });
+  $("#sheetBackdrop")?.addEventListener("click", closeSheets);
+  $("#closeDetail")?.addEventListener("click", () => $("#mobileDetailModal")?.classList.remove("open"));
+
+  ["#scoreRange", "#sheetScoreRange"].forEach(id => {
+    const el = $(id); if (!el) return;
+    el.addEventListener("input", () => {
+      state.filters.score = Number(el.value);
+      applyFilterUi();
+      renderAll();
+    });
+  });
+
+  ["#filterAbove200", "#filterEmaStack", "#filterSweetRsi", "#filterVolume20", "#filterMacdSignal", "#sheetFilterAbove200", "#sheetFilterEmaStack", "#sheetFilterSweetRsi", "#sheetFilterVolume20", "#sheetFilterMacdSignal"].forEach(sel => {
+    const el = $(sel); if (!el) return;
+    el.addEventListener("change", () => { syncFiltersFromUi(sel.startsWith("#sheet") ? "sheet" : "desktop"); renderAll(); });
+  });
+
+  document.body.addEventListener("change", (event) => {
+    const cb = event.target.closest("[data-column-key]");
+    if (!cb) return;
+    state.columns[cb.dataset.columnKey] = cb.checked;
+    if (!state.columns.ticker) state.columns.ticker = true;
+    if (!state.columns.fundTicker) state.columns.fundTicker = true;
+    saveSettings();
+    renderTechnicalTable();
+    renderFundamental();
+    renderFundamentalMobileTable();
+    renderStatus();
+  });
+
+  $("#bulkSymbolInput")?.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") { event.preventDefault(); importBulkSymbols(); }
+  });
+  $("#quickScanInput")?.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+      event.preventDefault();
+      const symbols = parseTickerList(event.currentTarget.value || "");
+      if (symbols.length) { closeSheets(); scan(true, { symbols, message: `Scanning temporary list · ${symbols.length} symbols` }); }
+    }
+  });
+
+  $("#symbolSearch")?.addEventListener("keydown", event => {
+    if (event.key === "Enter") { event.preventDefault(); loadSymbolFromBackend(event.currentTarget.value); event.currentTarget.value = ""; }
+  });
+}
+
+function bootstrapFromStaticIfAny() {
+  // Give the UI a useful shape before the first backend scan finishes.
+  state.rows = state.watchlist.map(t => ({ symbol: t, signal: "NEUTRAL", score: 0 }));
+}
+
+loadSettings();
+bootstrapFromStaticIfAny();
+bindHardWiredTabs();
+bindEvents();
+renderAll();
+if (state.staticMode || isStaticDeployHost()) {
+  loadStaticData({ message: "Loading GitHub Pages static data…" });
+} else {
+  scan(false);
+}
+
+
+/* v5.5 Memo page: localStorage investment memo dashboard */
+(function initMemoFeature(){
+  const MEMO_STORAGE = {
+    memos: "stockTimingRadar.memos.v55",
+    filters: "stockTimingRadar.memoFilters.v55",
+    notified: "stockTimingRadar.memoNotified.v55",
+    view: "stockTimingRadar.appView.v55"
+  };
+  const STATUS = ["Watchlist", "Alert", "Done", "Ignored"];
+  const TREND = ["Uptrend", "Downtrend", "Sideways", "Unknown"];
+  const CONVICTION = ["Low", "Medium", "High"];
+  const ACTIONS = ["Buy on pullback", "Wait for uptrend", "Buy breakout", "Avoid chasing", "Watch earnings", "Recheck valuation", "Hold off", "Custom"];
+  const CATEGORIES = ["News", "Earnings", "Valuation", "Technical setup", "Pullback", "Breakout", "Thematic", "Other"];
+  const memoState = {
+    memos: loadMemos(),
+    filters: loadMemoFilters(),
+    editingId: null,
+    loading: false
+  };
+
+  function memoEsc(v){ return (typeof esc === "function" ? esc(v) : String(v ?? "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[s]))); }
+  function memoToNum(v){ return typeof toNum === "function" ? toNum(v) : (Number.isFinite(Number(v)) ? Number(v) : null); }
+  function memoFmtMoney(v){ return typeof fmtMoney === "function" ? fmtMoney(v) : (memoToNum(v) == null ? "—" : `$${memoToNum(v).toFixed(2)}`); }
+  function memoPctLabel(v){ return typeof pctLabel === "function" ? pctLabel(v) : (memoToNum(v) == null ? "—" : `${memoToNum(v) > 0 ? "+" : ""}${memoToNum(v).toFixed(2)}%`); }
+  function memoPctClass(v){ const n=memoToNum(v); return n==null ? "neutral" : n < 0 ? "red" : "green"; }
+  function memoTicker(raw){ return typeof normalizeTicker === "function" ? normalizeTicker(raw) : String(raw||"").trim().toUpperCase().replace(/^[$#]+/, ""); }
+  function memoNow(){ return new Date().toISOString(); }
+  function memoLocalTime(iso){ try { return new Date(iso).toLocaleString(); } catch { return "—"; } }
+  function uid(){ return `m_${Date.now()}_${Math.random().toString(16).slice(2)}`; }
+
+  function loadMemos(){
+    try { const parsed = JSON.parse(localStorage.getItem(MEMO_STORAGE.memos) || "[]"); if (Array.isArray(parsed)) return parsed; } catch(_) {}
+    return [];
+  }
+  function saveMemos(){ localStorage.setItem(MEMO_STORAGE.memos, JSON.stringify(memoState.memos)); }
+  function loadMemoFilters(){
+    const base = { search:"", status:"All", trend:"All", conviction:"All", category:"All", actionPlan:"All", sort:"Alert first" };
+    try { return { ...base, ...(JSON.parse(localStorage.getItem(MEMO_STORAGE.filters) || "{}") || {}) }; } catch { return base; }
+  }
+  function saveMemoFilters(){ localStorage.setItem(MEMO_STORAGE.filters, JSON.stringify(memoState.filters)); }
+  function notifiedMap(){ try { return JSON.parse(localStorage.getItem(MEMO_STORAGE.notified) || "{}"); } catch { return {}; } }
+  function setNotified(id){ const map = notifiedMap(); map[id] = true; localStorage.setItem(MEMO_STORAGE.notified, JSON.stringify(map)); }
+
+  function buildAppNav(){
+    if (document.querySelector(".app-mode-nav")) return;
+    const brand = document.querySelector(".topbar .brand");
+    if (!brand) return;
+    const nav = document.createElement("nav");
+    nav.className = "app-mode-nav";
+    nav.innerHTML = `<button class="app-mode-btn active" data-app-view="scanner">Scanner</button><button class="app-mode-btn" data-app-view="memo">📝 Memo</button>`;
+    brand.insertAdjacentElement("afterend", nav);
+  }
+
+  function buildMemoPage(){
+    if (document.getElementById("memoPage")) return;
+    const shell = document.querySelector(".app-shell");
+    if (!shell) return;
+    const page = document.createElement("section");
+    page.id = "memoPage";
+    page.className = "memo-page";
+    page.innerHTML = `
+      <div class="memo-shell">
+        <section class="panel-card memo-top">
+          <div class="memo-title"><h2>Stock Memo</h2><p>Track stock ideas, targets, alerts, trends, and action plans</p></div>
+          <div class="memo-actions"><button class="primary-btn" data-memo-add>+ Add Memo</button><button class="secondary-btn" data-memo-refresh>Refresh Prices</button></div>
+        </section>
+        <section class="memo-stats" id="memoStats"></section>
+        <section class="panel-card memo-filters" id="memoFilters">
+          ${fieldHtml("Search", `<input data-memo-filter="search" type="search" placeholder="Search ticker or memo reason…" />`)}
+          ${selectField("Status", "status", ["All", ...STATUS])}
+          ${selectField("Trend", "trend", ["All", ...TREND])}
+          ${selectField("Conviction", "conviction", ["All", ...CONVICTION])}
+          ${selectField("Category", "category", ["All", ...CATEGORIES])}
+          ${selectField("Action plan", "actionPlan", ["All", ...ACTIONS])}
+          ${selectField("Sort", "sort", ["Alert first", "High conviction first", "Most actionable first", "Newest first", "% from target", "% change", "Trend", "Ticker"])}
+        </section>
+        <section class="panel-card memo-table-card"><div class="memo-table-wrap"><table class="memo-table"><thead><tr>
+          <th>Status</th><th>Note date/time</th><th>Stock ticker</th><th>Memo reason</th><th>Source link</th><th>Price at note</th><th>Current price</th><th>% change</th><th>Target price</th><th>% from target</th><th>Current trend</th><th>Conviction</th><th>Action plan</th><th>Actions</th>
+        </tr></thead><tbody id="memoTableBody"></tbody></table></div></section>
+        <section class="memo-mobile-list" id="memoMobileList"></section>
+      </div>
+      <button class="memo-fab" data-memo-add aria-label="Add memo">+</button>
+    `;
+    shell.appendChild(page);
+    const modal = document.createElement("section");
+    modal.id = "memoModal";
+    modal.className = "memo-modal";
+    modal.hidden = true;
+    modal.innerHTML = memoModalHtml();
+    document.body.appendChild(modal);
+    const toast = document.createElement("div");
+    toast.id = "memoToast";
+    toast.className = "memo-toast";
+    toast.hidden = true;
+    document.body.appendChild(toast);
+  }
+  function fieldHtml(label, control){ return `<div class="memo-field"><label>${label}</label>${control}</div>`; }
+  function selectField(label, key, options){ return fieldHtml(label, `<select data-memo-filter="${key}">${options.map(o => `<option value="${memoEsc(o)}">${memoEsc(o)}</option>`).join("")}</select>`); }
+  function memoModalHtml(){
+    return `<div class="memo-modal-backdrop" data-memo-cancel></div><div class="memo-modal-card">
+      <div class="memo-modal-header"><h2 id="memoModalTitle">Add Memo</h2><button class="icon-btn" data-memo-cancel>×</button></div>
+      <form class="memo-form" id="memoForm">
+        ${fieldHtml("Ticker", `<input name="ticker" required placeholder="NVDA" autocomplete="off" />`)}
+        ${fieldHtml("Target price", `<input name="targetPrice" required type="number" step="0.0001" placeholder="120.00" />`)}
+        ${fieldHtml("Target direction", `<select name="targetDirection"><option value="lte">Alert when price <= target</option><option value="gte">Alert when price >= target</option></select>`)}
+        ${fieldHtml("Conviction", `<select name="conviction">${CONVICTION.map(x=>`<option>${x}</option>`).join("")}</select>`)}
+        ${fieldHtml("Action plan", `<select name="actionPlan">${ACTIONS.map(x=>`<option>${x}</option>`).join("")}</select>`)}
+        ${fieldHtml("Category", `<select name="category">${CATEGORIES.map(x=>`<option>${x}</option>`).join("")}</select>`)}
+        ${fieldHtml("Custom action plan", `<input name="customActionPlan" placeholder="Optional when Custom is selected" />`)}
+        ${fieldHtml("Source link", `<input name="sourceLink" type="url" placeholder="https://…" />`)}
+        ${fieldHtml("Memo reason", `<textarea name="reason" required placeholder="Why is this stock interesting? What price matters? What action should be taken?"></textarea>`).replace('class="memo-field"','class="memo-field wide"')}
+        <div class="memo-form-actions"><button type="button" class="secondary-btn" data-memo-cancel>Cancel</button><button type="submit" class="primary-btn">Save Memo</button></div>
+      </form>
+    </div>`;
+  }
+
+  function setAppView(view){
+    const memo = view === "memo";
+    document.body.classList.toggle("memo-active", memo);
+    document.querySelectorAll("[data-app-view]").forEach(b => b.classList.toggle("active", b.dataset.appView === view));
+    localStorage.setItem(MEMO_STORAGE.view, view);
+    if (memo) renderMemo();
+  }
+
+  function statusClass(status){ return String(status||"Watchlist").toLowerCase(); }
+  function statusLabel(status){ return status === "Alert" ? "🚨 Alert" : status === "Done" ? "✅ Done" : status === "Ignored" ? "❌ Ignored" : "👀 Watchlist"; }
+  function trendClass(trend){ return String(trend||"Unknown").toLowerCase(); }
+  function convictionClass(conviction){ return String(conviction||"Low").toLowerCase(); }
+  function trendBadge(trend){ return `<span class="memo-badge ${trendClass(trend)}">${memoEsc(trend || "Unknown")}</span>`; }
+  function statusBadge(status){ return `<span class="memo-badge ${statusClass(status)}">${memoEsc(statusLabel(status))}</span>`; }
+  function convictionBadge(c){ return `<span class="memo-badge ${convictionClass(c)}">${memoEsc(c || "Low")}</span>`; }
+  function signedPct(v){
+    const n = memoToNum(v);
+    const cls = n == null ? "neutral" : n > 0 ? "memo-pct-up green" : n < 0 ? "memo-pct-down red" : "memo-pct-flat neutral";
+    return `<span class="memo-pct ${cls}">${memoPctLabel(v)}</span>`;
+  }
+  function calcPctChange(current, note){ const c=memoToNum(current), n=memoToNum(note); return c==null || !n ? null : ((c-n)/n)*100; }
+  function calcFromTarget(current, target){ const c=memoToNum(current), t=memoToNum(target); return c==null || !t ? null : ((c-t)/t)*100; }
+  function isTargetReached(memo){
+    const p=memoToNum(memo.currentPrice), t=memoToNum(memo.targetPrice); if(p==null || t==null) return false;
+    return memo.targetDirection === "lte" ? p <= t : p >= t;
+  }
+  function shortReason(reason){ const r=String(reason||""); return r.length <= 120 ? memoEsc(r) : `${memoEsc(r.slice(0,120))}…<details><summary>More</summary>${memoEsc(r)}</details>`; }
+  function sourceLinkHtml(url){ return url ? `<a class="memo-source-btn" href="${memoEsc(url)}" target="_blank" rel="noopener noreferrer">Source ↗</a>` : `<span class="neutral">—</span>`; }
+
+  function ema(values, period){
+    const nums = values.map(memoToNum); let k = 2/(period+1), out = [], prev = null;
+    nums.forEach(v => { if(v==null){ out.push(prev); return; } prev = prev==null ? v : (v*k + prev*(1-k)); out.push(prev); });
+    return out;
+  }
+  function trendFromQuote(latest, quote){
+    const series = Array.isArray(quote?.series) ? quote.series : [];
+    const current = memoToNum(latest?.close ?? latest?.regularMarketPrice ?? latest?.price);
+    if (!series.length || current == null) return "Unknown";
+    const closes = series.map(x => memoToNum(x.close)).filter(v => v != null);
+    if (closes.length < 60) return "Unknown";
+    const ema20 = ema(closes,20), ema50 = ema(closes,50);
+    const e20 = ema20[ema20.length-1], e50 = ema50[ema50.length-1], e50Prev = ema50[Math.max(0, ema50.length-6)];
+    if ([e20,e50,e50Prev].some(v => v == null)) return "Unknown";
+    if (current > e50 && e20 > e50 && e50 > e50Prev) return "Uptrend";
+    if (current < e50 && e20 < e50 && e50 < e50Prev) return "Downtrend";
+    return "Sideways";
+  }
+
+  function enrichMemo(m){
+    const current = memoToNum(m.currentPrice);
+    const out = { ...m };
+    out.changePct = calcPctChange(current, m.notePrice);
+    out.fromTargetPct = calcFromTarget(current, m.targetPrice);
+    if (out.status !== "Done" && out.status !== "Ignored" && isTargetReached(out)) out.status = "Alert";
+    return out;
+  }
+  function maybeNotify(memo){
+    if (memo.status !== "Alert") return;
+    const notified = notifiedMap();
+    if (notified[memo.id]) return;
+    setNotified(memo.id);
+    showMemoToast("🚨 Target reached", `${memo.ticker}: ${memoFmtMoney(memo.currentPrice)} reached target ${memoFmtMoney(memo.targetPrice)}`);
+    if ("Notification" in window && Notification.permission === "granted") {
+      try { new Notification(`Stock alert: ${memo.ticker}`, { body: `${memoFmtMoney(memo.currentPrice)} reached target ${memoFmtMoney(memo.targetPrice)}` }); } catch(_) {}
+    } else if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(()=>{});
+    }
+  }
+  function showMemoToast(title, text){
+    const el = document.getElementById("memoToast"); if(!el) return;
+    el.innerHTML = `<strong>${memoEsc(title)}</strong><span>${memoEsc(text)}</span>`;
+    el.hidden = false; clearTimeout(showMemoToast._timer); showMemoToast._timer = setTimeout(()=>{ el.hidden = true; }, 5200);
+  }
+
+  async function fetchMemoPrice(ticker){
+    const t = memoTicker(ticker);
+    const existing = (typeof allWatchlistStocks === "function" ? allWatchlistStocks() : []).find(s => s.ticker === t);
+    let best = existing && memoToNum(existing.price) != null ? { price:memoToNum(existing.price), trend: existing.ema20 && existing.price ? "Unknown" : "Unknown", quote: existing.quote, latest: existing.raw || {} } : null;
+    try {
+      const params = new URLSearchParams({ symbol:t, range:"1y", interval:"1d", includeFundamentals:"0", v:String(Date.now()) });
+      const data = await fetchJson(`/api/quote?${params}`);
+      const latest = data.latest || {};
+      const row = typeof mapRow === "function" ? mapRow(latest) : latest;
+      const price = memoToNum(row.price ?? latest.close ?? latest.regularMarketPrice);
+      const trend = trendFromQuote(latest, data);
+      if (price != null) return { price, trend, raw:data, latest };
+    } catch(err) { console.warn("memo price fetch failed", t, err); }
+    return best || { price:null, trend:"Unknown", raw:null, latest:{} };
+  }
+
+  async function refreshMemo(memo, {silent=false}={}){
+    if(!silent) showMemoToast("Refreshing price", memo.ticker);
+    const price = await fetchMemoPrice(memo.ticker);
+    const next = enrichMemo({ ...memo, currentPrice: price.price ?? memo.currentPrice, trend: price.trend || memo.trend || "Unknown", updatedAt:memoNow() });
+    const idx = memoState.memos.findIndex(x => x.id === memo.id);
+    if (idx >= 0) memoState.memos[idx] = next;
+    saveMemos(); maybeNotify(next); renderMemo();
+  }
+  async function refreshAllMemos(){
+    if (!memoState.memos.length) return;
+    memoState.loading = true; renderMemo();
+    for (const m of memoState.memos) await refreshMemo(m, {silent:true});
+    memoState.loading = false; saveMemos(); renderMemo(); showMemoToast("Prices refreshed", `${memoState.memos.length} memos checked`);
+  }
+
+  function getFilteredMemos(){
+    const f = memoState.filters;
+    let arr = memoState.memos.map(enrichMemo);
+    const q = String(f.search||"").trim().toLowerCase();
+    if(q) arr = arr.filter(m => `${m.ticker} ${m.reason}`.toLowerCase().includes(q));
+    if(f.status !== "All") arr = arr.filter(m => m.status === f.status);
+    if(f.trend !== "All") arr = arr.filter(m => (m.trend || "Unknown") === f.trend);
+    if(f.conviction !== "All") arr = arr.filter(m => m.conviction === f.conviction);
+    if(f.category !== "All") arr = arr.filter(m => m.category === f.category);
+    if(f.actionPlan !== "All") arr = arr.filter(m => (m.actionPlan === f.actionPlan || m.customActionPlan === f.actionPlan));
+    const rankStatus = { Alert:0, Watchlist:1, Done:2, Ignored:3 };
+    const rankConv = { High:0, Medium:1, Low:2 };
+    const rankTrend = { Uptrend:0, Sideways:1, Unknown:2, Downtrend:3 };
+    const actionable = m => (m.status === "Alert" ? 1000 : 0) + (m.conviction === "High" ? 100 : m.conviction === "Medium" ? 50 : 10) + (m.trend === "Uptrend" ? 25 : m.trend === "Sideways" ? 5 : 0) - Math.abs(memoToNum(m.fromTargetPct) ?? 999);
+    arr.sort((a,b)=>{
+      switch(f.sort){
+        case "High conviction first": return (rankConv[a.conviction]??9) - (rankConv[b.conviction]??9) || (rankStatus[a.status]??9)-(rankStatus[b.status]??9);
+        case "Most actionable first": return actionable(b) - actionable(a);
+        case "Newest first": return new Date(b.createdAt||0) - new Date(a.createdAt||0);
+        case "% from target": return Math.abs(memoToNum(a.fromTargetPct)??999) - Math.abs(memoToNum(b.fromTargetPct)??999);
+        case "% change": return (memoToNum(b.changePct)??-999) - (memoToNum(a.changePct)??-999);
+        case "Trend": return (rankTrend[a.trend]??9) - (rankTrend[b.trend]??9);
+        case "Ticker": return String(a.ticker).localeCompare(String(b.ticker));
+        default: return (rankStatus[a.status]??9) - (rankStatus[b.status]??9) || (rankConv[a.conviction]??9) - (rankConv[b.conviction]??9) || new Date(b.createdAt||0) - new Date(a.createdAt||0);
+      }
+    });
+    return arr;
+  }
+
+  function renderMemo(){
+    if(!document.body.classList.contains("memo-active") && localStorage.getItem(MEMO_STORAGE.view) !== "memo") return;
+    memoState.memos = memoState.memos.map(enrichMemo);
+    saveMemos();
+    renderMemoStats(); renderMemoFilters(); renderMemoTable(); renderMemoCards();
+  }
+  function renderMemoStats(){
+    const el = document.getElementById("memoStats"); if(!el) return;
+    const counts = { Watchlist:0, Alert:0, Done:0, Ignored:0 };
+    memoState.memos.forEach(m => { counts[enrichMemo(m).status] = (counts[enrichMemo(m).status]||0)+1; });
+    el.innerHTML = [["Watchlist",counts.Watchlist,"👀"],["Alert",counts.Alert,"🚨"],["Done",counts.Done,"✅"],["Ignored",counts.Ignored,"❌"]].map(([k,v,icon])=>`<div class="memo-stat"><span>${icon} ${k}</span><b>${v}</b></div>`).join("");
+  }
+  function renderMemoFilters(){
+    document.querySelectorAll("[data-memo-filter]").forEach(el => { const k=el.dataset.memoFilter; if (document.activeElement !== el) el.value = memoState.filters[k] ?? ""; });
+  }
+  function renderMemoTable(){
+    const body = document.getElementById("memoTableBody"); if(!body) return;
+    const memos = getFilteredMemos();
+    if(!memos.length){ body.innerHTML = `<tr><td colspan="14" class="memo-empty">No memos yet. Add one to start tracking an idea.</td></tr>`; return; }
+    body.innerHTML = memos.map(m => `<tr class="${statusClass(m.status)}-row">
+      <td>${statusBadge(m.status)}${m.status === "Alert" ? `<span class="memo-target-hit">Target reached</span>` : ""}</td>
+      <td class="memo-date">${memoEsc(memoLocalTime(m.createdAt))}</td>
+      <td><button class="memo-ticker-link" type="button" data-memo-open-ticker="${memoEsc(m.ticker)}"><span class="memo-ticker">${memoEsc(m.ticker)}</span></button><br><small>${memoEsc(m.category||"Other")}</small></td>
+      <td><div class="memo-reason">${shortReason(m.reason)}</div></td>
+      <td>${sourceLinkHtml(m.sourceLink)}</td>
+      <td>${memoFmtMoney(m.notePrice)}</td><td>${memoFmtMoney(m.currentPrice)}</td><td>${signedPct(m.changePct)}</td><td>${memoFmtMoney(m.targetPrice)}</td><td>${signedPct(m.fromTargetPct)}</td>
+      <td>${trendBadge(m.trend)}</td><td>${convictionBadge(m.conviction)}</td><td>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</td>
+      <td>${memoActionsHtml(m)}</td>
+    </tr>`).join("");
+  }
+  function renderMemoCards(){
+    const list = document.getElementById("memoMobileList"); if(!list) return;
+    const memos = getFilteredMemos();
+    if(!memos.length){ list.innerHTML = `<div class="panel-card memo-empty">No memos yet. Tap + Add Memo.</div>`; return; }
+    list.innerHTML = memos.map(m => `<article class="memo-card ${statusClass(m.status)}-card">
+      <div class="memo-card-top"><div><button class="memo-ticker-link card" type="button" data-memo-open-ticker="${memoEsc(m.ticker)}"><span class="memo-ticker">${memoEsc(m.ticker)}</span></button><br><small>${memoEsc(m.category||"Other")} · ${memoEsc(memoLocalTime(m.createdAt))}</small></div><div>${statusBadge(m.status)} ${trendBadge(m.trend)}</div></div>
+      <div class="memo-card-kpis"><div class="memo-kpi"><span>Current</span><b>${memoFmtMoney(m.currentPrice)}</b></div><div class="memo-kpi"><span>Target</span><b>${memoFmtMoney(m.targetPrice)}</b></div><div class="memo-kpi"><span>% from target</span><b>${signedPct(m.fromTargetPct)}</b></div><div class="memo-kpi"><span>% from note</span><b>${signedPct(m.changePct)}</b></div></div>
+      <div class="memo-card-row"><span>Conviction ${convictionBadge(m.conviction)}</span><span>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</span></div>
+      <div class="memo-card-reason">${shortReason(m.reason)}</div>
+      <div>${sourceLinkHtml(m.sourceLink)}</div>
+      <div class="memo-card-actions">${memoActionsHtml(m)}</div>
+    </article>`).join("");
+  }
+  function memoActionsHtml(m){ return `<div class="memo-actions-cell">
+    <button class="memo-mini-btn" data-memo-status="Done" data-memo-id="${m.id}">✅ Done</button><button class="memo-mini-btn" data-memo-status="Ignored" data-memo-id="${m.id}">❌ Ignore</button><button class="memo-mini-btn" data-memo-status="Watchlist" data-memo-id="${m.id}">👀 Watch</button><button class="memo-mini-btn" data-memo-edit="${m.id}">Edit</button><button class="memo-mini-btn" data-memo-refresh-one="${m.id}">Refresh</button><button class="memo-mini-btn" data-memo-delete="${m.id}">Delete</button>
+  </div>`; }
+
+  function openMemoModal(id=null){
+    memoState.editingId = id;
+    const modal = document.getElementById("memoModal"), form = document.getElementById("memoForm"), title = document.getElementById("memoModalTitle");
+    if(!modal || !form) return;
+    form.reset();
+    if(title) title.textContent = id ? "Edit Memo" : "Add Memo";
+    const m = memoState.memos.find(x => x.id === id);
+    if(m){ Object.keys(m).forEach(k => { if(form.elements[k]) form.elements[k].value = m[k] ?? ""; }); }
+    modal.hidden = false; setTimeout(()=>form.elements.ticker?.focus(), 50);
+  }
+  function closeMemoModal(){ const modal=document.getElementById("memoModal"); if(modal) modal.hidden = true; memoState.editingId = null; }
+  async function saveMemoFromForm(){
+    const form = document.getElementById("memoForm"); if(!form) return;
+    const fd = new FormData(form);
+    const ticker = memoTicker(fd.get("ticker"));
+    if(!ticker){ form.elements.ticker?.focus(); return; }
+    const priceInfo = await fetchMemoPrice(ticker);
+    const existing = memoState.memos.find(x => x.id === memoState.editingId);
+    const base = existing || { id: uid(), createdAt: memoNow(), notePrice: priceInfo.price };
+    const next = enrichMemo({
+      ...base,
+      ticker,
+      reason: String(fd.get("reason")||"").trim(),
+      sourceLink: String(fd.get("sourceLink")||"").trim(),
+      targetPrice: memoToNum(fd.get("targetPrice")),
+      targetDirection: fd.get("targetDirection") || "lte",
+      conviction: fd.get("conviction") || "Medium",
+      actionPlan: fd.get("actionPlan") || "Hold off",
+      customActionPlan: String(fd.get("customActionPlan")||"").trim(),
+      category: fd.get("category") || "Other",
+      currentPrice: priceInfo.price,
+      trend: priceInfo.trend || "Unknown",
+      updatedAt: memoNow(),
+      status: existing?.status || "Watchlist"
+    });
+    if(!existing) next.notePrice = priceInfo.price;
+    if(next.status !== "Done" && next.status !== "Ignored" && isTargetReached(next)) next.status = "Alert";
+    if(existing){ memoState.memos = memoState.memos.map(x => x.id === existing.id ? next : x); }
+    else { memoState.memos.unshift(next); }
+    saveMemos(); maybeNotify(next); closeMemoModal(); renderMemo();
+  }
+
+  function bindMemoEvents(){
+    document.addEventListener("click", async (e)=>{
+      const openTicker = e.target.closest("[data-memo-open-ticker]");
+      if(openTicker){
+        e.preventDefault();
+        const ticker = memoTicker(openTicker.dataset.memoOpenTicker);
+        if(ticker){
+          state.selected = ticker;
+          state.scannerTab = "technical";
+          state.detailTab = "technical";
+          setAppView("scanner");
+          saveSettings?.();
+          renderAll?.();
+          ensureSymbolDetail?.(ticker, false);
+          if (window.matchMedia("(max-width: 767px)").matches) {
+            openMobileDetail?.();
+          } else {
+            document.getElementById("detailPanel")?.scrollIntoView({ behavior:"smooth", block:"start" });
+          }
+        }
+        return;
+      }
+      const app = e.target.closest("[data-app-view]"); if(app){ e.preventDefault(); setAppView(app.dataset.appView); return; }
+      if(e.target.closest("[data-memo-add]")){ e.preventDefault(); openMemoModal(); return; }
+      if(e.target.closest("[data-memo-refresh]")){ e.preventDefault(); await refreshAllMemos(); return; }
+      if(e.target.closest("[data-memo-cancel]")){ e.preventDefault(); closeMemoModal(); return; }
+      const status = e.target.closest("[data-memo-status]"); if(status){ const m=memoState.memos.find(x=>x.id===status.dataset.memoId); if(m){ m.status = status.dataset.memoStatus; saveMemos(); renderMemo(); } return; }
+      const edit = e.target.closest("[data-memo-edit]"); if(edit){ openMemoModal(edit.dataset.memoEdit); return; }
+      const del = e.target.closest("[data-memo-delete]"); if(del){ if(confirm("Delete this memo?")){ memoState.memos = memoState.memos.filter(x=>x.id!==del.dataset.memoDelete); saveMemos(); renderMemo(); } return; }
+      const ref = e.target.closest("[data-memo-refresh-one]"); if(ref){ const m=memoState.memos.find(x=>x.id===ref.dataset.memoRefreshOne); if(m) await refreshMemo(m); return; }
+    }, true);
+    document.addEventListener("input", (e)=>{
+      const f = e.target.closest("[data-memo-filter]"); if(!f) return;
+      memoState.filters[f.dataset.memoFilter] = f.value; saveMemoFilters(); renderMemo();
+    });
+    document.addEventListener("change", (e)=>{
+      const f = e.target.closest("[data-memo-filter]"); if(!f) return;
+      memoState.filters[f.dataset.memoFilter] = f.value; saveMemoFilters(); renderMemo();
+    });
+    document.addEventListener("submit", async (e)=>{ if(e.target && e.target.id === "memoForm"){ e.preventDefault(); await saveMemoFromForm(); } });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && !document.getElementById("memoModal")?.hidden) closeMemoModal(); });
+  }
+
+  function seedExampleIfEmpty(){
+    if(memoState.memos.length) return;
+    const examples = [
+      { ticker:"NVDA", reason:"AI leader; watch for pullback near key EMA support before adding.", targetPrice:210, targetDirection:"lte", conviction:"High", actionPlan:"Buy on pullback", category:"Technical setup", currentPrice:null, notePrice:null, trend:"Unknown" },
+      { ticker:"HOOD", reason:"Retail trading recovery idea; recheck if price breaks above trend with volume.", targetPrice:85, targetDirection:"gte", conviction:"Medium", actionPlan:"Buy breakout", category:"Breakout", currentPrice:null, notePrice:null, trend:"Unknown" }
+    ];
+    memoState.memos = examples.map(x => enrichMemo({ id:uid(), createdAt:memoNow(), status:"Watchlist", sourceLink:"", ...x }));
+    saveMemos();
+  }
+
+  buildAppNav(); buildMemoPage(); bindMemoEvents();
+  const savedView = localStorage.getItem(MEMO_STORAGE.view) || "scanner";
+  setAppView(savedView === "memo" ? "memo" : "scanner");
+})();
+
+
+/* v5.6 mobile interaction + memo ticker hotfix */
+(function v56InteractionFix(){
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+  function safeCall(fn, ...args){ try { if (typeof fn === "function") return fn(...args); } catch (err) { console.error("v5.6 interaction error", err); } }
+  function forceOpenSheet(id){
+    const sheet = qs("#" + id);
+    const backdrop = qs("#sheetBackdrop");
+    if (!sheet) { console.warn("Sheet not found", id); return; }
+    qsa(".bottom-sheet").forEach(s => { if (s !== sheet) { s.classList.remove("open"); s.setAttribute("aria-hidden", "true"); } });
+    if (backdrop) backdrop.hidden = false;
+    document.body.classList.add("sheet-open");
+    sheet.hidden = false;
+    sheet.classList.add("open", "sheet-visible-force");
+    sheet.setAttribute("aria-hidden", "false");
+    sheet.style.transform = "translate3d(0, 0, 0)";
+    sheet.style.opacity = "1";
+    sheet.style.visibility = "visible";
+    sheet.style.pointerEvents = "auto";
+    const input = sheet.querySelector("textarea, input:not([type=checkbox]), button:not([data-close-sheet])");
+    if (id === "bulkAddSheet" || id === "quickScanSheet") setTimeout(() => input?.focus(), 80);
+  }
+  function forceCloseSheets(){ safeCall(closeSheets); qsa(".bottom-sheet").forEach(s => { s.classList.remove("sheet-visible-force"); s.style.transform=""; }); }
+  function applyFilterAndRender(source){
+    safeCall(syncFiltersFromUi, source || "desktop");
+    safeCall(saveSettings);
+    safeCall(renderAll);
+  }
+  document.addEventListener("click", function(e){
+    const close = e.target.closest?.("[data-close-sheet]");
+    if (close) { e.preventDefault(); e.stopImmediatePropagation(); forceCloseSheets(); return; }
+    const scanMobile = e.target.closest?.("#mobileScanNow");
+    if (scanMobile) { e.preventDefault(); e.stopImmediatePropagation(); if (typeof openQuickScanSheet === "function") openQuickScanSheet(); else forceOpenSheet("quickScanSheet"); return; }
+    const openPanel = e.target.closest?.("[data-open-panel]");
+    if (openPanel) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      const panel = openPanel.dataset.openPanel;
+      forceOpenSheet(panel === "columns" ? "columnsSheet" : panel === "filters" ? "filtersSheet" : panel === "sort" ? "sortSheet" : "bulkAddSheet");
+      return;
+    }
+    const th = e.target.closest?.("th[data-sort]");
+    if (th) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      const key = th.dataset.sort;
+      if (state.sortKey === key) state.sortAsc = !state.sortAsc;
+      else { state.sortKey = key; state.sortAsc = /Pct|Yoy|QoQ/i.test(key); }
+      safeCall(saveSettings); safeCall(renderAll);
+      return;
+    }
+    const pick = e.target.closest?.("[data-sort-pick]");
+    if (pick) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      state.sortKey = pick.dataset.sortPick;
+      state.sortAsc = pick.dataset.sortDir !== "desc";
+      safeCall(saveSettings); forceCloseSheets(); safeCall(renderAll);
+      return;
+    }
+    const desktopScan = e.target.closest?.("#scanNowDesktop");
+    if (desktopScan) { e.preventDefault(); e.stopImmediatePropagation(); applyFilterAndRender("desktop"); safeCall(scan, true); return; }
+    const filterPrimary = e.target.closest?.("#filtersSheet .sheet-actions .primary-btn");
+    if (filterPrimary) { e.preventDefault(); e.stopImmediatePropagation(); applyFilterAndRender("sheet"); forceCloseSheets(); safeCall(scan, true); return; }
+    const filterReset = e.target.closest?.("#filtersSheet .sheet-actions .secondary-btn");
+    if (filterReset) { e.preventDefault(); e.stopImmediatePropagation(); safeCall(resetFilters); return; }
+    const scanCurrent = e.target.closest?.("[data-scan-current]");
+    if (scanCurrent) { e.preventDefault(); e.stopImmediatePropagation(); forceCloseSheets(); safeCall(scan, true); return; }
+    const temp = e.target.closest?.("[data-scan-temp]");
+    if (temp) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      const symbols = typeof parseTickerList === "function" ? parseTickerList(qs("#quickScanInput")?.value || "") : [];
+      if (!symbols.length) { const s=qs("#quickScanSummary"); if(s) s.textContent="ใส่ ticker อย่างน้อย 1 ตัว"; return; }
+      forceCloseSheets(); safeCall(scan, true, { symbols, message:`Scanning temporary list · ${symbols.length} symbols` }); return;
+    }
+    const append = e.target.closest?.("[data-append-scan]");
+    if (append) { e.preventDefault(); e.stopImmediatePropagation(); const r=safeCall(addSymbolsBulk, qs("#quickScanInput")?.value||"", "append"); if(r?.total){ forceCloseSheets(); safeCall(scan,true); } return; }
+    const repl = e.target.closest?.("[data-replace-scan]");
+    if (repl) { e.preventDefault(); e.stopImmediatePropagation(); const r=safeCall(addSymbolsBulk, qs("#quickScanInput")?.value||"", "replace"); if(r?.total){ forceCloseSheets(); safeCall(scan,true); } return; }
+  }, true);
+  document.addEventListener("input", function(e){
+    const el = e.target;
+    if (!el) return;
+    if (el.id === "scoreRange" || el.id === "sheetScoreRange") { state.filters.score = Number(el.value || 0); safeCall(applyFilterUi); safeCall(saveSettings); safeCall(renderAll); return; }
+  }, true);
+  document.addEventListener("change", function(e){
+    const el = e.target;
+    if (!el) return;
+    const filterIds = new Set(["filterAbove200","filterEmaStack","filterSweetRsi","filterVolume20","filterMacdSignal","sheetFilterAbove200","sheetFilterEmaStack","sheetFilterSweetRsi","sheetFilterVolume20","sheetFilterMacdSignal"]);
+    if (filterIds.has(el.id)) { e.stopImmediatePropagation(); applyFilterAndRender(el.id.startsWith("sheet") ? "sheet" : "desktop"); }
+  }, true);
+})();
+
+/* v5.8 patch: portfolio tabs + screener action buttons must be real buttons. */
+(function v58ScreenerInteractionPatch(){
+  const BUILT_INS = new Set(["default", "momentum", "thai", "dividend", "quality"]);
+  function markActiveScreener(key){
+    try {
+      document.querySelectorAll(".portfolio-tab[data-screener]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.screener === key);
+        btn.setAttribute("aria-selected", btn.dataset.screener === key ? "true" : "false");
+      });
+    } catch (_) {}
+  }
+  function refreshAfterScreenerAction(){
+    try { renderPortfolioTabs(); } catch (_) {}
+    try { renderAll(); } catch (_) {}
+  }
+  function switchScreenerNow(key){
+    if (!key) return;
+    try { state.activeScreener = key; } catch (_) {}
+    markActiveScreener(key);
+    try {
+      loadScreener(key);
+      return;
+    } catch (err) {
+      console.error("Screener switch failed", err);
+    }
+    // Fallback path if loadScreener is interrupted by a stale handler.
+    try {
+      const defaults = {
+        default: BASE_WATCHLIST,
+        momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
+        thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
+        dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
+        quality: ["MSFT", "COST", "ASML", "LIN", "ISRG", "BKNG", "ADP", "ORLY", "INTU", "VRSK"],
+      };
+      const saved = getScreeners()[key] || {};
+      state.watchlist = normalizeTickers(saved.watchlist || defaults[key] || state.watchlist || BASE_WATCHLIST);
+      if (saved.filters) state.filters = { ...state.filters, ...saved.filters };
+      if (saved.columns) state.columns = { ...state.columns, ...saved.columns };
+      if (saved.scannerTab) state.scannerTab = saved.scannerTab;
+      if (saved.mobileView) state.mobileView = saved.mobileView;
+      if (saved.sortKey) state.sortKey = saved.sortKey;
+      if (typeof saved.sortAsc === "boolean") state.sortAsc = saved.sortAsc;
+      state.selected = state.watchlist[0] || state.selected || "NVDA";
+      saveWatchlist();
+      saveSettings();
+      applyFilterUi();
+      refreshAfterScreenerAction();
+      scan(false);
+    } catch (fallbackErr) {
+      console.error("Fallback screener switch failed", fallbackErr);
+      alert("เปลี่ยน watchlist ไม่สำเร็จ: " + (fallbackErr?.message || fallbackErr));
+    }
+  }
+  function renameNow(){
+    try {
+      renameActiveScreener();
+      refreshAfterScreenerAction();
+    } catch (err) {
+      console.error("Rename screener failed", err);
+      alert("Rename ไม่สำเร็จ: " + (err?.message || err));
+    }
+  }
+  function deleteNow(){
+    try {
+      deleteActiveScreener();
+      refreshAfterScreenerAction();
+    } catch (err) {
+      console.error("Delete screener failed", err);
+      alert("Delete ไม่สำเร็จ: " + (err?.message || err));
+    }
+  }
+  function importNow(){
+    try {
+      importScreeners();
+      refreshAfterScreenerAction();
+    } catch (err) {
+      console.error("Import screener failed", err);
+      alert("Import ไม่สำเร็จ: " + (err?.message || err));
+    }
+  }
+  function newNow(){
+    try {
+      newScreener();
+      refreshAfterScreenerAction();
+    } catch (err) {
+      console.error("New screener failed", err);
+      alert("สร้าง screener ไม่สำเร็จ: " + (err?.message || err));
+    }
+  }
+  document.addEventListener("click", function(e){
+    const tab = e.target.closest?.(".portfolio-tabs .portfolio-tab[data-screener]");
+    if (tab && !tab.classList.contains("add-tab") && !tab.classList.contains("more-tab")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      switchScreenerNow(tab.dataset.screener || "default");
+      return;
+    }
+    if (e.target.closest?.("#newScreenerBtn, .portfolio-tabs .add-tab")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      newNow();
+      return;
+    }
+    if (e.target.closest?.("[data-rename-screener]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      renameNow();
+      return;
+    }
+    if (e.target.closest?.("[data-delete-screener]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      deleteNow();
+      return;
+    }
+    if (e.target.closest?.("[data-import-screeners]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      importNow();
+      return;
+    }
+  }, true);
+  // Give custom tabs an explicit accessible role after every render.
+  try {
+    document.querySelectorAll(".portfolio-tab[data-screener]").forEach(btn => {
+      btn.setAttribute("type", "button");
+      btn.setAttribute("role", "tab");
+    });
+  } catch (_) {}
+})();
