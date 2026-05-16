@@ -1612,7 +1612,7 @@ class Handler(SimpleHTTPRequestHandler):
                 return
 
             if path == "/api/health":
-                self.send_json(200, {"ok": True, "app": "Stock Timing Radar", "fundamentalMode": "SEC EDGAR V2.7 first + upgraded guidance engine + public-safe BYOK Alpha Vantage", "priceTargetMode": "V2.7 Alpha Vantage OVERVIEW BYOK manual loader; browser localStorage key; one click = max one API call; same-day cache is free; excluded from SEC table", "priceTargetSources": ["Alpha Vantage OVERVIEW"], "secV1ImportError": SEC_V1_IMPORT_ERROR, "alphaVantageQuota": alpha_vantage_quota_status()})
+                self.send_json(200, {"ok": True, "app": "Stock Timing Radar v8.0 Stability", "fundamentalMode": "SEC EDGAR V2.7 first + upgraded guidance engine + public-safe BYOK Alpha Vantage", "priceTargetMode": "V2.7 Alpha Vantage OVERVIEW BYOK manual loader; browser localStorage key; one click = max one API call; same-day cache is free; excluded from SEC table", "priceTargetSources": ["Alpha Vantage OVERVIEW"], "secV1ImportError": SEC_V1_IMPORT_ERROR, "alphaVantageQuota": alpha_vantage_quota_status()})
                 return
 
             # Compatibility fix for the original static GitHub Pages UI.

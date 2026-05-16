@@ -1,10 +1,11 @@
-/* Stock Timing Radar — v6.7 GitHub Deploy
+/* Stock Timing Radar — v8.0 Stability & Data Integrity
    Full v3.3 mock UI shell + original Python backend engine.
    Backend endpoints used: /api/scan, /api/quote, /api/health; analyst view links out to Yahoo Finance
 */
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const BUILD_VERSION = "v8.0 Stability & Data Integrity";
 
 const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
 const BASE_WATCHLIST = ["PUMP", "SEI", "NVDA", "TSLA", "AMD", "AAPL", "AMZN", "PLTR", "SOUN"];
@@ -1674,13 +1675,18 @@ function persistDismissedAlerts() {
 
 function markAlertDismissed(id) {
   if (!id) return;
-  state.dismissedAlerts.add(String(id));
+  const key = String(id);
+  // Memo alerts represent saved user records. Do not auto-dismiss them just
+  // because the alert was opened; they should remain until the memo itself is
+  // deleted, marked Done, or ignored by the user.
+  if (key.startsWith("memo-")) return;
+  state.dismissedAlerts.add(key);
   persistDismissedAlerts();
 }
 
 function visibleAlertItems(items) {
   const dismissed = state.dismissedAlerts || new Set();
-  return items.filter(a => !dismissed.has(String(a.id)));
+  return items.filter(a => String(a.id || "").startsWith("memo-") || !dismissed.has(String(a.id)));
 }
 
 function closeAlertSheet() {
@@ -1715,6 +1721,8 @@ function latestMemoAlerts() {
     const ticker = normalizeTicker(m.ticker);
     const current = toNum(m.currentPrice);
     const target = toNum(m.targetPrice);
+    const terminal = ["Done", "Ignored", "Deleted"].includes(String(m.status || ""));
+    if (terminal) return null;
     const hit = current !== null && target !== null && (m.targetDirection === "lte" ? current <= target : current >= target);
     if (m.status === "Alert" || hit) {
       return {
@@ -1727,6 +1735,7 @@ function latestMemoAlerts() {
         detail: m.reason || "Saved memo reached alert state",
         sortScore: 92,
         icon: "📝",
+        persistent: true,
       };
     }
     return null;
@@ -2353,13 +2362,29 @@ if (state.staticMode || isStaticDeployHost()) {
     memos: "stockTimingRadar.memos.v55",
     filters: "stockTimingRadar.memoFilters.v55",
     notified: "stockTimingRadar.memoNotified.v55",
-    view: "stockTimingRadar.appView.v55"
+    view: "stockTimingRadar.appView.v55",
+    mobileView: "stockTimingRadar.memoMobileView.v72"
   };
   const STATUS = ["Watchlist", "Alert", "Done", "Ignored"];
   const TREND = ["Uptrend", "Downtrend", "Sideways", "Unknown"];
   const CONVICTION = ["Low", "Medium", "High"];
   const ACTIONS = ["Buy on pullback", "Wait for uptrend", "Buy breakout", "Avoid chasing", "Watch earnings", "Recheck valuation", "Hold off", "Custom"];
   const CATEGORIES = ["News", "Earnings", "Valuation", "Technical setup", "Pullback", "Breakout", "Thematic", "Other"];
+  const MEMO_PHASES = [
+    { value:"Early Uptrend", th:"เริ่มฟื้นตัว", cls:"early-uptrend", tone:"blue" },
+    { value:"Uptrend Confirmed", th:"ขาขึ้นยืนยันแล้ว", cls:"uptrend-confirmed", tone:"green" },
+    { value:"Healthy Pullback", th:"ย่อสุขภาพดี", cls:"healthy-pullback", tone:"teal" },
+    { value:"Actionable", th:"น่าลงมือ", cls:"actionable", tone:"green" },
+    { value:"HOT / Wait Pullback", th:"ร้อนแรง / รอย่อ", cls:"hot-wait-pullback", tone:"orange" },
+    { value:"Squeeze Setup", th:"บีบตัวรอเบรก", cls:"squeeze-setup", tone:"purple" },
+    { value:"Rotation Watch", th:"เงินเริ่มหมุนเข้า", cls:"rotation-watch", tone:"blue" },
+    { value:"Distribution Risk", th:"เสี่ยงถูกขายออก", cls:"distribution-risk", tone:"red" },
+    { value:"Oversold Watch", th:"ขายมากเกิน / รอฟื้น", cls:"oversold-watch", tone:"yellow" },
+    { value:"Downtrend", th:"ขาลง", cls:"downtrend-phase", tone:"red" },
+    { value:"Invalidated", th:"แผนเสียแล้ว", cls:"invalidated", tone:"red" },
+    { value:"Done", th:"ปิดงานแล้ว", cls:"done-phase", tone:"gray" },
+    { value:"Ignored", th:"พักไว้ก่อน", cls:"ignored-phase", tone:"gray" },
+  ];
   const memoState = {
     memos: loadMemos(),
     filters: loadMemoFilters(),
@@ -2423,8 +2448,12 @@ if (state.staticMode || isStaticDeployHost()) {
           ${selectField("Action plan", "actionPlan", ["All", ...ACTIONS])}
           ${selectField("Sort", "sort", ["Alert first", "High conviction first", "Most actionable first", "Newest first", "% from target", "% change", "Trend", "Ticker"])}
         </section>
+        <div class="memo-view-toggle" role="tablist" aria-label="Memo view">
+          <button type="button" class="memo-view-btn active" data-memo-view="cards">Card View</button>
+          <button type="button" class="memo-view-btn" data-memo-view="table">Table View</button>
+        </div>
         <section class="panel-card memo-table-card"><div class="memo-table-wrap"><table class="memo-table"><thead><tr>
-          <th>Status</th><th>Note date/time</th><th>Stock ticker</th><th>Memo reason</th><th>Source link</th><th>Price at note</th><th>Current price</th><th>% change</th><th>Target price</th><th>% from target</th><th>Current trend</th><th>Conviction</th><th>Action plan</th><th>Actions</th>
+          <th>Memo Status</th><th>Note date/time</th><th>Stock ticker</th><th>Memo reason</th><th>Source link</th><th>Price at note</th><th>Current price</th><th>% change</th><th>Target price</th><th>% from target</th><th>Tags</th><th>Alert Ladder</th><th>Conviction</th><th>Action plan</th><th>Actions</th>
         </tr></thead><tbody id="memoTableBody"></tbody></table></div></section>
         <section class="memo-mobile-list" id="memoMobileList"></section>
       </div>
@@ -2490,8 +2519,12 @@ if (state.staticMode || isStaticDeployHost()) {
         <input type="hidden" name="prefillEmaDistance" />
         <div id="memoPrefillPreview" class="memo-prefill-preview wide" hidden></div>
         ${fieldHtml("Ticker", `<input name="ticker" required placeholder="NVDA" autocomplete="off" />`)}
+        ${fieldHtml("Memo status", `<select name="memoPhase">${MEMO_PHASES.map(x=>`<option value="${memoEsc(x.value)}">${memoEsc(x.th)} · ${memoEsc(x.value)}</option>`).join("")}</select>`)}
         ${fieldHtml("Target price", `<input name="targetPrice" required inputmode="decimal" type="number" step="0.0001" placeholder="120.00" />`)}
         ${fieldHtml("Target direction", `<select name="targetDirection"><option value="lte">Alert when price <= target</option><option value="gte">Alert when price >= target</option></select>`)}
+        ${fieldHtml("Alert condition", `<select name="alertType"><option value="priceTarget">Price reaches target</option><option value="priceNearEma">Price near EMA line</option><option value="ema5GtEma89">EMA5 > EMA89</option><option value="ema89GtEma200">EMA89 > EMA200</option><option value="uptrendConfirm">EMA5 > EMA20 and EMA89 > EMA200</option></select>`)}
+        ${fieldHtml("EMA alert line", `<select name="alertEmaLine"><option value="EMA20">EMA20</option><option value="EMA5">EMA5</option><option value="EMA89">EMA89</option><option value="EMA200">EMA200</option></select>`)}
+        ${fieldHtml("EMA distance tolerance %", `<input name="alertDistancePct" inputmode="decimal" type="number" step="0.1" value="2" placeholder="2.0" />`)}
         ${fieldHtml("Conviction", `<select name="conviction">${CONVICTION.map(x=>`<option>${x}</option>`).join("")}</select>`)}
         ${fieldHtml("Action plan", `<select name="actionPlan">${ACTIONS.map(x=>`<option>${x}</option>`).join("")}</select>`)}
         ${fieldHtml("Category", `<select name="category">${CATEGORIES.map(x=>`<option>${x}</option>`).join("")}</select>`)}
@@ -2511,6 +2544,80 @@ if (state.staticMode || isStaticDeployHost()) {
     if (memo) renderMemo();
   }
 
+  function memoSlug(value){ return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "unknown"; }
+  function memoPhaseMeta(value){
+    const raw = String(value || "").trim();
+    return MEMO_PHASES.find(x => x.value === raw || x.th === raw || memoSlug(x.value) === memoSlug(raw)) || MEMO_PHASES[0];
+  }
+  function suggestedMemoPhase(m){
+    const stock = stockForMemoTicker(m?.ticker);
+    const rsi = memoToNum(stock?.rsi);
+    const e20 = memoToNum(stock?.ema20Pct), e89 = memoToNum(stock?.ema89Pct), e200 = memoToNum(stock?.ema200Pct);
+    const vol = memoToNum(stock?.volumeRatio ?? stock?.volRatio);
+    if (m?.status === "Done") return "Done";
+    if (m?.status === "Ignored") return "Ignored";
+    if (rsi != null && rsi < 30) return "Oversold Watch";
+    if (rsi != null && rsi > 70) return "HOT / Wait Pullback";
+    if (e20 != null && e89 != null && e200 != null && e20 > 0 && e89 > 0 && e200 > 0) {
+      if ((Math.abs(e20) <= 5 || Math.abs(e89) <= 8) && rsi != null && rsi >= 45 && rsi <= 65) return "Healthy Pullback";
+      return "Uptrend Confirmed";
+    }
+    if (e20 != null && e89 != null && e20 > 0 && e89 > -3) return "Early Uptrend";
+    if (e20 != null && e89 != null && e200 != null && e20 < 0 && e89 < 0 && e200 < 0) return "Downtrend";
+    if (vol != null && vol > 1.8 && e20 != null && e20 < 0) return "Distribution Risk";
+    return "Early Uptrend";
+  }
+  function memoPhaseFor(m){ return m?.memoPhase || suggestedMemoPhase(m); }
+  function memoPhaseBadge(m, opts={}){
+    const meta = memoPhaseMeta(memoPhaseFor(m));
+    const compact = opts.compact;
+    return `<span class="memo-phase-badge ${memoEsc(meta.cls)}"><span class="memo-phase-th">${memoEsc(meta.th)}</span>${compact ? "" : `<span class="memo-phase-en">${memoEsc(meta.value)}</span>`}</span>`;
+  }
+  function memoTriggeredTags(m){
+    const tags = [];
+    const stock = stockForMemoTicker(m?.ticker) || {};
+    const phase = memoPhaseMeta(memoPhaseFor(m)).value;
+    const e20 = memoToNum(stock.ema20Pct), e89 = memoToNum(stock.ema89Pct), e200 = memoToNum(stock.ema200Pct);
+    const rsi = memoToNum(stock.rsi), macd = memoToNum(stock.macdHist ?? stock.macdHistogram), vol = memoToNum(stock.volumeRatio ?? stock.volRatio);
+    if (m?.emaDistance && m.emaDistance !== "—") tags.push(m.emaDistance);
+    else if (e20 != null) tags.push(`EMA20 ${memoPctLabel(e20)}`);
+    if (rsi != null) tags.push(`RSI ${rsi.toFixed(0)}${rsi >= 70 ? " Hot" : rsi >= 50 && rsi <= 65 ? " Healthy" : rsi < 45 ? " Weak" : ""}`);
+    if (macd != null) tags.push(macd >= 0 ? "MACD Bullish" : "MACD Weakening");
+    if (vol != null && vol > 1.5) tags.push(`Volume ${vol.toFixed(1)}x`);
+    if (phase === "HOT / Wait Pullback" && e89 != null) tags.unshift(`EMA89 ${memoPctLabel(e89)}`);
+    if (phase === "Distribution Risk") tags.unshift("Volume Spike Down");
+    if (!tags.length && m?.emaStatus) tags.push(...String(m.emaStatus).split(" · ").slice(0,3));
+    return [...new Set(tags.filter(Boolean))].slice(0,3);
+  }
+  function memoTagsHtml(m){
+    const tags = memoTriggeredTags(m);
+    if (!tags.length) return `<span class="memo-tag neutral">No technical tags yet</span>`;
+    return tags.map(t => {
+      const neg = /below|weak|down|-\d|risk/i.test(t);
+      const hot = /hot|\+([2-9]\d|1[5-9])|volume/i.test(t);
+      return `<span class="memo-tag ${neg ? "risk" : hot ? "warm" : "good"}">${memoEsc(t)}</span>`;
+    }).join("");
+  }
+  function memoAlertLadderHtml(m){
+    const phase = memoPhaseMeta(memoPhaseFor(m)).value;
+    const positive = ["Early Uptrend","Uptrend Confirmed","Healthy Pullback","Actionable"];
+    const done = label => {
+      if (label === "Early Uptrend") return positive.includes(phase) || phase === "HOT / Wait Pullback";
+      if (label === "Uptrend Confirmed") return ["Uptrend Confirmed","Healthy Pullback","Actionable","HOT / Wait Pullback"].includes(phase);
+      if (label === "Healthy Pullback") return ["Healthy Pullback","Actionable"].includes(phase);
+      if (label === "HOT / Wait Pullback") return phase === "HOT / Wait Pullback";
+      if (label === "Distribution Risk") return ["Distribution Risk","Downtrend","Invalidated"].includes(phase);
+      return false;
+    };
+    const steps = [
+      ["Early Uptrend","เริ่มฟื้นตัว"],
+      ["Uptrend Confirmed","ขาขึ้นยืนยันแล้ว"],
+      ["Healthy Pullback","ย่อสุขภาพดี"],
+      phase === "Distribution Risk" || phase === "Downtrend" || phase === "Invalidated" ? ["Distribution Risk","เสี่ยงถูกขายออก"] : ["HOT / Wait Pullback","ร้อนแรง / รอย่อ"],
+    ];
+    return `<div class="memo-ladder">${steps.map(([en,th]) => `<span class="memo-ladder-step ${done(en) ? "done" : "todo"}"><b>${done(en) ? "✓" : "☐"}</b>${memoEsc(th)}</span>`).join("")}</div>`;
+  }
+
   function statusClass(status){ return String(status||"Watchlist").toLowerCase(); }
   function statusLabel(status){ return status === "Alert" ? "🚨 Alert" : status === "Done" ? "✅ Done" : status === "Ignored" ? "❌ Ignored" : "👀 Watchlist"; }
   function trendClass(trend){ return String(trend||"Unknown").toLowerCase(); }
@@ -2528,6 +2635,60 @@ if (state.staticMode || isStaticDeployHost()) {
   function isTargetReached(memo){
     const p=memoToNum(memo.currentPrice), t=memoToNum(memo.targetPrice); if(p==null || t==null) return false;
     return memo.targetDirection === "lte" ? p <= t : p >= t;
+  }
+  function stockForMemoTicker(ticker){
+    const t = memoTicker(ticker);
+    let stocks = [];
+    try { stocks = typeof allWatchlistStocks === "function" ? allWatchlistStocks() : []; } catch (_) { stocks = []; }
+    if (!Array.isArray(stocks) || !stocks.length) { try { stocks = typeof scannerStocks === "function" ? scannerStocks() : []; } catch (_) {} }
+    return (stocks || []).find(s => memoTicker(s?.ticker || s?.symbol) === t) || null;
+  }
+  function pctToEmaPrice(current, pct){
+    const c = memoToNum(current), p = memoToNum(pct);
+    if (c == null || p == null || (1 + p/100) === 0) return null;
+    return c / (1 + p/100);
+  }
+  function emaPriceFromStock(stock, line){
+    if (!stock) return null;
+    const key = String(line || "").toLowerCase();
+    const direct = memoToNum(stock[key] ?? stock[`${key}Price`]);
+    if (direct != null) return direct;
+    const pct = memoToNum(stock[`${key}Pct`]);
+    return pctToEmaPrice(stock.price, pct);
+  }
+  function emaPctFromStock(stock, line){
+    if (!stock) return null;
+    const key = String(line || "").toLowerCase();
+    const direct = memoToNum(stock[`${key}Pct`]);
+    if (direct != null) return direct;
+    const price = memoToNum(stock.price), emaP = emaPriceFromStock(stock, line);
+    return price == null || !emaP ? null : ((price / emaP) - 1) * 100;
+  }
+  function memoAlertLabel(memo){
+    const type = memo.alertType || "priceTarget";
+    if (type === "priceNearEma") return `Near ${memo.alertEmaLine || "EMA20"} ≤ ${memo.alertDistancePct || 2}%`;
+    if (type === "ema5GtEma89") return "EMA5 > EMA89";
+    if (type === "ema89GtEma200") return "EMA89 > EMA200";
+    if (type === "uptrendConfirm") return "EMA5 > EMA20 + EMA89 > EMA200";
+    return `Target ${memo.targetDirection === "gte" ? "≥" : "≤"} ${memoFmtMoney(memo.targetPrice)}`;
+  }
+  function isMemoAlertReached(memo){
+    const type = memo.alertType || "priceTarget";
+    if (type === "priceTarget") return isTargetReached(memo);
+    const stock = stockForMemoTicker(memo.ticker);
+    if (!stock) return false;
+    const current = memoToNum(stock.price ?? memo.currentPrice);
+    if (type === "priceNearEma") {
+      const line = memo.alertEmaLine || "EMA20";
+      const pct = emaPctFromStock(stock, line);
+      const tol = memoToNum(memo.alertDistancePct) ?? 2;
+      return pct != null && Math.abs(pct) <= Math.abs(tol);
+    }
+    const e5 = emaPriceFromStock(stock, "EMA5"), e20 = emaPriceFromStock(stock, "EMA20"), e89 = emaPriceFromStock(stock, "EMA89"), e200 = emaPriceFromStock(stock, "EMA200");
+    if (type === "ema5GtEma89") return e5 != null && e89 != null && e5 > e89;
+    if (type === "ema89GtEma200") return e89 != null && e200 != null && e89 > e200;
+    if (type === "uptrendConfirm") return e5 != null && e20 != null && e89 != null && e200 != null && e5 > e20 && e89 > e200 && (current == null || current > e200);
+    return false;
   }
   function shortReason(reason){ const r=String(reason||""); return r.length <= 120 ? memoEsc(r) : `${memoEsc(r.slice(0,120))}…<details><summary>More</summary>${memoEsc(r)}</details>`; }
   function sourceLinkHtml(url){ return url ? `<a class="memo-source-btn" href="${memoEsc(url)}" target="_blank" rel="noopener noreferrer">Source ↗</a>` : `<span class="neutral">—</span>`; }
@@ -2556,13 +2717,14 @@ if (state.staticMode || isStaticDeployHost()) {
     const out = { ...m };
     out.changePct = calcPctChange(current, m.notePrice);
     out.fromTargetPct = calcFromTarget(current, m.targetPrice);
-    if (out.status !== "Done" && out.status !== "Ignored" && isTargetReached(out)) out.status = "Alert";
+    if (out.status !== "Done" && out.status !== "Ignored" && isMemoAlertReached(out)) out.status = "Alert";
     return out;
   }
   function maybeNotify(memo){
     if (memo.status !== "Alert") return;
     const notified = notifiedMap();
     if (notified[memo.id]) return;
+    // Only suppress repeated browser/toast notifications; this does not hide the saved memo.
     setNotified(memo.id);
     showMemoToast("🚨 Target reached", `${memo.ticker}: ${memoFmtMoney(memo.currentPrice)} reached target ${memoFmtMoney(memo.targetPrice)}`);
     if ("Notification" in window && Notification.permission === "granted") {
@@ -2639,8 +2801,11 @@ if (state.staticMode || isStaticDeployHost()) {
 
   function renderMemo(){
     if(!document.body.classList.contains("memo-active") && localStorage.getItem(MEMO_STORAGE.view) !== "memo") return;
-    memoState.memos = memoState.memos.map(enrichMemo);
+    memoState.memos = loadMemos().map(enrichMemo);
     saveMemos();
+    const mv = localStorage.getItem(MEMO_STORAGE.mobileView) || "cards";
+    document.body.classList.toggle("memo-mobile-table-view", mv === "table");
+    document.querySelectorAll("[data-memo-view]").forEach(btn => btn.classList.toggle("active", btn.dataset.memoView === mv));
     renderMemoStats(); renderMemoFilters(); renderMemoTable(); renderMemoCards();
   }
   function renderMemoStats(){
@@ -2655,15 +2820,15 @@ if (state.staticMode || isStaticDeployHost()) {
   function renderMemoTable(){
     const body = document.getElementById("memoTableBody"); if(!body) return;
     const memos = getFilteredMemos();
-    if(!memos.length){ body.innerHTML = `<tr><td colspan="14" class="memo-empty">No memos yet. Add one to start tracking an idea.</td></tr>`; return; }
+    if(!memos.length){ body.innerHTML = `<tr><td colspan="15" class="memo-empty">No memos yet. Add one to start tracking an idea.</td></tr>`; return; }
     body.innerHTML = memos.map(m => `<tr class="${statusClass(m.status)}-row">
-      <td>${statusBadge(m.status)}${m.status === "Alert" ? `<span class="memo-target-hit">Target reached</span>` : ""}</td>
+      <td>${memoPhaseBadge(m)}<div class="memo-table-substatus">${statusBadge(m.status)}${m.status === "Alert" ? `<span class="memo-target-hit">Triggered</span>` : ""}</div></td>
       <td class="memo-date">${memoEsc(memoLocalTime(m.createdAt))}</td>
       <td><button class="memo-ticker-link" type="button" data-memo-open-ticker="${memoEsc(m.ticker)}"><span class="memo-ticker">${memoEsc(m.ticker)}</span></button><br><small>${memoEsc(m.category||"Other")}</small></td>
       <td><div class="memo-reason">${shortReason(m.reason)}</div></td>
       <td>${sourceLinkHtml(m.sourceLink)}</td>
       <td>${memoFmtMoney(m.notePrice)}</td><td>${memoFmtMoney(m.currentPrice)}</td><td>${signedPct(m.changePct)}</td><td>${memoFmtMoney(m.targetPrice)}</td><td>${signedPct(m.fromTargetPct)}</td>
-      <td>${trendBadge(m.trend)}</td><td>${convictionBadge(m.conviction)}</td><td>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</td>
+      <td><div class="memo-tags compact">${memoTagsHtml(m)}</div></td><td>${memoAlertLadderHtml(m)}</td><td>${convictionBadge(m.conviction)}</td><td>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</td>
       <td>${memoActionsHtml(m)}</td>
     </tr>`).join("");
   }
@@ -2671,13 +2836,14 @@ if (state.staticMode || isStaticDeployHost()) {
     const list = document.getElementById("memoMobileList"); if(!list) return;
     const memos = getFilteredMemos();
     if(!memos.length){ list.innerHTML = `<div class="panel-card memo-empty">No memos yet. Tap + Add Memo.</div>`; return; }
-    list.innerHTML = memos.map(m => `<article class="memo-card ${statusClass(m.status)}-card">
-      <div class="memo-card-top"><div><button class="memo-ticker-link card" type="button" data-memo-open-ticker="${memoEsc(m.ticker)}"><span class="memo-ticker">${memoEsc(m.ticker)}</span></button><br><small>${memoEsc(m.category||"Other")} · ${memoEsc(memoLocalTime(m.createdAt))}</small></div><div>${statusBadge(m.status)} ${trendBadge(m.trend)}</div></div>
-      <div class="memo-card-kpis"><div class="memo-kpi"><span>Current</span><b>${memoFmtMoney(m.currentPrice)}</b></div><div class="memo-kpi"><span>Target</span><b>${memoFmtMoney(m.targetPrice)}</b></div><div class="memo-kpi"><span>% from target</span><b>${signedPct(m.fromTargetPct)}</b></div><div class="memo-kpi"><span>% from note</span><b>${signedPct(m.changePct)}</b></div></div>
-      <div class="memo-card-row"><span>Conviction ${convictionBadge(m.conviction)}</span><span>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</span></div>
-      <div class="memo-card-reason">${shortReason(m.reason)}</div>
-      <div>${sourceLinkHtml(m.sourceLink)}</div>
-      <div class="memo-card-actions">${memoActionsHtml(m)}</div>
+    list.innerHTML = memos.map(m => `<article class="memo-card ${statusClass(m.status)}-card memo-phase-card ${memoEsc(memoPhaseMeta(memoPhaseFor(m)).cls)}">
+      <div class="memo-card-top"><div><button class="memo-ticker-link card" type="button" data-memo-open-ticker="${memoEsc(m.ticker)}"><span class="memo-ticker">${memoEsc(m.ticker)}</span></button><br><small>${memoEsc(m.category||"Other")} · ${memoEsc(memoLocalTime(m.createdAt))}</small></div><div class="memo-card-conviction">${memoEsc(m.conviction || "Low")} ${convictionBadge(m.conviction)}</div></div>
+      <div class="memo-primary-status">${memoPhaseBadge(m)}</div>
+      <div class="memo-card-kpis compact"><div class="memo-kpi"><span>Current</span><b>${memoFmtMoney(m.currentPrice)}</b></div><div class="memo-kpi"><span>Note</span><b>${memoFmtMoney(m.notePrice)} <small>${signedPct(m.changePct)} from note</small></b></div><div class="memo-kpi"><span>Target</span><b>${memoFmtMoney(m.targetPrice)} <small>${signedPct(m.fromTargetPct)} to target</small></b></div></div>
+      <div class="memo-section-label">Status Tags</div><div class="memo-tags">${memoTagsHtml(m)}</div>
+      <div class="memo-section-label">Alert Ladder</div>${memoAlertLadderHtml(m)}
+      <div class="memo-section-label">Action Plan</div><div class="memo-card-reason"><b>${memoEsc(m.actionPlan === "Custom" ? (m.customActionPlan || "Custom") : m.actionPlan)}</b><br>${shortReason(m.reason)}</div>
+      <div class="memo-card-footer">${sourceLinkHtml(m.sourceLink)}<div class="memo-card-actions">${memoActionsHtml(m)}</div></div>
     </article>`).join("");
   }
 
@@ -2839,9 +3005,13 @@ if (state.staticMode || isStaticDeployHost()) {
       targetPrice: memoToNum(fd.get("targetPrice")),
       targetDirection: fd.get("targetDirection") || "lte",
       conviction: fd.get("conviction") || "Medium",
+      memoPhase: fd.get("memoPhase") || existing?.memoPhase || suggestedMemoPhase({ ticker, status: existing?.status, trend: priceInfo.trend }),
       actionPlan: fd.get("actionPlan") || "Hold off",
       customActionPlan: String(fd.get("customActionPlan")||"").trim(),
       category: fd.get("category") || "Other",
+      alertType: fd.get("alertType") || "priceTarget",
+      alertEmaLine: fd.get("alertEmaLine") || "EMA20",
+      alertDistancePct: memoToNum(fd.get("alertDistancePct")) ?? 2,
       currentPrice: priceInfo.price ?? prefillPrice,
       trend: priceInfo.trend || "Unknown",
       emaStatus: String(fd.get("prefillEmaStatus") || existing?.emaStatus || ""),
@@ -2850,10 +3020,12 @@ if (state.staticMode || isStaticDeployHost()) {
       status: existing?.status || "Watchlist"
     });
     if(!existing) next.notePrice = prefillNotePrice ?? priceInfo.price;
-    if(next.status !== "Done" && next.status !== "Ignored" && isTargetReached(next)) next.status = "Alert";
+    if(next.status !== "Done" && next.status !== "Ignored" && isMemoAlertReached(next)) next.status = "Alert";
     if(existing){ memoState.memos = memoState.memos.map(x => x.id === existing.id ? next : x); }
     else { memoState.memos.unshift(next); }
-    saveMemos(); maybeNotify(next); closeMemoModal(); renderMemo();
+    memoState.filters = { search:"", status:"All", trend:"All", conviction:"All", category:"All", actionPlan:"All", sort:"Newest first" };
+    saveMemoFilters();
+    saveMemos(); maybeNotify(next); closeMemoModal(); setAppView("memo"); renderMemo();
     showMemoToast("Memo saved", `${next.ticker} added to Stock Memo`);
   }
 
@@ -2896,6 +3068,8 @@ if (state.staticMode || isStaticDeployHost()) {
         openMemoModal(null, stockToMemoPrefill(s));
         return;
       }
+      const viewBtn = e.target.closest("[data-memo-view]");
+      if(viewBtn){ e.preventDefault(); localStorage.setItem(MEMO_STORAGE.mobileView, viewBtn.dataset.memoView || "cards"); renderMemo(); return; }
       if(e.target.closest("[data-memo-add]")){ e.preventDefault(); openMemoModal(); return; }
       if(e.target.closest("[data-memo-refresh]")){ e.preventDefault(); await refreshAllMemos(); return; }
       if(e.target.closest("[data-memo-cancel]")){ e.preventDefault(); closeMemoModal(); return; }
@@ -2928,6 +3102,14 @@ if (state.staticMode || isStaticDeployHost()) {
     saveMemos();
   }
 
+  try {
+    const dismissed = JSON.parse(localStorage.getItem("stockTimingRadar.alertDismissed.v62") || "[]");
+    if (Array.isArray(dismissed)) {
+      const cleaned = dismissed.filter(id => !String(id).startsWith("memo-"));
+      if (cleaned.length !== dismissed.length) localStorage.setItem("stockTimingRadar.alertDismissed.v62", JSON.stringify(cleaned));
+      if (state && state.dismissedAlerts instanceof Set) state.dismissedAlerts = new Set(cleaned);
+    }
+  } catch (_) {}
   buildAppNav(); buildMemoPage(); bindMemoEvents();
   const savedView = localStorage.getItem(MEMO_STORAGE.view) || "scanner";
   setAppView(savedView === "memo" ? "memo" : "scanner");
@@ -3789,4 +3971,235 @@ if (state.staticMode || isStaticDeployHost()) {
   window.__stockcheckRenderReserveTabsV71 = renderMobileReserveTabs;
   window.__stockcheckSwitchReserveV71 = switchToReserve;
   setTimeout(() => { if (mobile()) { ensureReserveRecords(); renderMobileReserveTabs(); } }, 0);
+})();
+
+/* v8.0 Stability & Data Integrity
+   Release goal: stop adding new surface area; make existing scanner/memo/screener/data states resilient.
+   - Mobile uses stable fixed screeners: Default / Momentum / Thai / Port 1 / Port 2 / Port 3 / Settings.
+   - Portfolio rendering is idempotent and no longer depends on dynamic mobile tab creation.
+   - Data integrity banner shows technical/fundamental freshness and missing-layer warnings.
+   - Memo alerts remain persistent until user action; dismissed memo-alert ghosts are cleaned.
+   - Exposes window.__stockcheckDiagnosticsV80() for quick support/debug checks.
+*/
+(function v80StabilityRelease(){
+  const BUILD = "v8.0 Stability & Data Integrity";
+  const MOBILE_QUERY = "(max-width: 767px)";
+  const mobile = () => window.matchMedia && window.matchMedia(MOBILE_QUERY).matches;
+  const fixedTabs = [
+    ["default", "Default"],
+    ["momentum", "Momentum"],
+    ["thai", "Thai"],
+    ["port1", "Port 1"],
+    ["port2", "Port 2"],
+    ["port3", "Port 3"],
+  ];
+  const fixedKeys = new Set(fixedTabs.map(([k]) => k));
+  const defaultLists = {
+    default: BASE_WATCHLIST,
+    momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
+    thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
+    port1: [], port2: [], port3: [],
+  };
+  const safeHtml = (v) => String(v ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+  const getStore = () => { try { return JSON.parse(localStorage.getItem(STORAGE.screeners) || "{}"); } catch { return {}; } };
+  const setStore = (x) => localStorage.setItem(STORAGE.screeners, JSON.stringify(x || {}));
+  const snapshot = (label) => ({
+    label,
+    name: label,
+    watchlist: normalizeTickers(Array.isArray(state.watchlist) ? state.watchlist : []),
+    filters: { ...state.filters },
+    columns: { ...state.columns },
+    scannerTab: state.scannerTab || "technical",
+    mobileView: state.mobileView || "cards",
+    sortKey: state.sortKey || "score",
+    sortAsc: !!state.sortAsc,
+    savedAt: new Date().toISOString(),
+    v8Stable: true,
+  });
+  function ensureFixedScreeners(){
+    const screeners = getStore();
+    let changed = false;
+    fixedTabs.forEach(([key, label]) => {
+      const existing = screeners[key] || {};
+      if (!screeners[key] || !Array.isArray(existing.watchlist)) {
+        screeners[key] = {
+          label: existing.label || existing.name || label,
+          name: existing.name || existing.label || label,
+          watchlist: normalizeTickers(existing.watchlist || defaultLists[key] || []),
+          filters: { ...state.filters, ...(existing.filters || {}) },
+          columns: { ...state.columns, ...(existing.columns || {}) },
+          scannerTab: existing.scannerTab || state.scannerTab || "technical",
+          mobileView: existing.mobileView || state.mobileView || "cards",
+          sortKey: existing.sortKey || state.sortKey || "score",
+          sortAsc: !!existing.sortAsc,
+          savedAt: existing.savedAt || new Date().toISOString(),
+          reserved: true,
+          v8Stable: true,
+        };
+        changed = true;
+      } else if (!existing.reserved || !existing.v8Stable) {
+        screeners[key] = { ...existing, reserved: true, v8Stable: true, label: existing.label || existing.name || label, name: existing.name || existing.label || label };
+        changed = true;
+      }
+    });
+    if (changed) setStore(screeners);
+    return screeners;
+  }
+  function saveActiveFixedScreener(){
+    try {
+      const key = state.activeScreener || "default";
+      const screeners = ensureFixedScreeners();
+      const existing = screeners[key] || {};
+      const label = existing.label || existing.name || fixedTabs.find(([k]) => k === key)?.[1] || key;
+      screeners[key] = { ...existing, ...snapshot(label), reserved: fixedKeys.has(key) || existing.reserved };
+      setStore(screeners);
+      localStorage.setItem(STORAGE.activeScreener, key);
+    } catch (err) { console.warn("v8 save screener failed", err); }
+  }
+  function renderMobileTabsV80(){
+    const nav = document.querySelector(".portfolio-tabs");
+    if (!nav) return;
+    const screeners = ensureFixedScreeners();
+    const active = state.activeScreener || "default";
+    nav.classList.add("portfolio-tabs-v80");
+    nav.classList.remove("portfolio-tabs-v71");
+    nav.innerHTML = fixedTabs.map(([key, fallback]) => {
+      const rec = screeners[key] || {};
+      const label = rec.label || rec.name || fallback;
+      return `<button type="button" role="tab" class="portfolio-tab-v80 ${key === active ? "active" : ""}" data-v80-screener="${safeHtml(key)}" aria-selected="${key === active ? "true" : "false"}">${safeHtml(label)}</button>`;
+    }).join("") + `<button type="button" class="portfolio-tab-v80 settings" data-v80-screener-settings aria-label="Screener settings">Settings</button>`;
+    setTimeout(() => nav.querySelector(`[data-v80-screener="${CSS.escape(active)}"]`)?.scrollIntoView({ inline:"center", block:"nearest" }), 0);
+  }
+  function switchMobileScreenerV80(key){
+    if (!key) return;
+    saveActiveFixedScreener();
+    const screeners = ensureFixedScreeners();
+    const rec = screeners[key] || {};
+    state.activeScreener = key;
+    state.watchlist = normalizeTickers(rec.watchlist || defaultLists[key] || []);
+    state.filters = { ...state.filters, ...(rec.filters || {}) };
+    state.columns = { ...state.columns, ...(rec.columns || {}) };
+    state.scannerTab = rec.scannerTab || state.scannerTab || "technical";
+    state.mobileView = rec.mobileView || state.mobileView || "cards";
+    state.sortKey = rec.sortKey || state.sortKey || "score";
+    state.sortAsc = !!rec.sortAsc;
+    state.selected = state.watchlist[0] || state.selected || "NVDA";
+    try { saveSettings(); } catch (_) {}
+    renderMobileTabsV80();
+    try { renderAll(); } catch (err) { console.warn("v8 render after screener switch failed", err); }
+  }
+  const previousRenderPortfolioTabsV80 = typeof renderPortfolioTabs === "function" ? renderPortfolioTabs : null;
+  renderPortfolioTabs = function renderPortfolioTabsV80(...args){
+    if (mobile()) return renderMobileTabsV80();
+    return previousRenderPortfolioTabsV80 ? previousRenderPortfolioTabsV80.apply(this, args) : undefined;
+  };
+  const previousSaveWatchlistV80 = typeof saveWatchlist === "function" ? saveWatchlist : null;
+  saveWatchlist = function saveWatchlistV80(){
+    if (previousSaveWatchlistV80) previousSaveWatchlistV80.apply(this, arguments);
+    if (mobile() && fixedKeys.has(state.activeScreener || "default")) saveActiveFixedScreener();
+  };
+  function renderDataIntegrityBanner(){
+    const host = document.getElementById("scannerSubtitle");
+    if (!host) return;
+    let bar = document.getElementById("v80DataIntegrityBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "v80DataIntegrityBar";
+      bar.className = "v80-data-bar";
+      host.insertAdjacentElement("afterend", bar);
+    }
+    const tech = state.staticPayloads?.technical || {};
+    const fund = state.staticPayloads?.fundamental || {};
+    const techCount = Array.isArray(tech.rows) ? tech.rows.length : (state.rows || []).length;
+    const fundCount = Array.isArray(fund.rows) ? fund.rows.length : 0;
+    const errors = [ ...(Array.isArray(tech.errors) ? tech.errors : []), ...(Array.isArray(fund.errors) ? fund.errors : []), ...(Array.isArray(state.errors) ? state.errors : []) ];
+    const missingFund = state.scannerTab === "fundamental" && fundCount === 0;
+    const tone = missingFund || errors.length ? "warn" : "ok";
+    const techAt = tech.generatedAtTechnical || tech.generatedAt || "—";
+    const fundAt = fund.generatedAtFundamental || fund.generatedAt || "—";
+    bar.className = `v80-data-bar ${tone}`;
+    bar.innerHTML = `<span class="v80-build">${safeHtml(BUILD)}</span><span>Technical: ${safeHtml(String(techCount))} rows · ${safeHtml(String(techAt))}</span><span>Fundamental: ${safeHtml(String(fundCount))} rows · ${safeHtml(String(fundAt))}</span>${missingFund ? `<span class="v80-warning">Run fundamental workflow</span>` : ""}${errors.length ? `<span class="v80-warning">${errors.length} data warning${errors.length === 1 ? "" : "s"}</span>` : ""}`;
+  }
+  const previousRenderAllV80 = typeof renderAll === "function" ? renderAll : null;
+  renderAll = function renderAllV80(){
+    try {
+      if (previousRenderAllV80) previousRenderAllV80.apply(this, arguments);
+    } catch (err) {
+      console.error("v8 renderAll error", err);
+      const panel = document.querySelector(".scanner-panel");
+      if (panel && !document.getElementById("v80RenderError")) {
+        panel.insertAdjacentHTML("afterbegin", `<div id="v80RenderError" class="v80-render-error"><b>Render warning</b><br>${safeHtml(err.message || String(err))}</div>`);
+      }
+    }
+    renderDataIntegrityBanner();
+    if (mobile()) renderMobileTabsV80();
+  };
+  function cleanLegacyStorage(){
+    try {
+      ensureFixedScreeners();
+      const dismissed = JSON.parse(localStorage.getItem(STORAGE.alertDismissed) || "[]");
+      if (Array.isArray(dismissed)) {
+        const cleaned = dismissed.filter(id => !String(id).startsWith("memo-") && !String(id).includes("memo"));
+        if (cleaned.length !== dismissed.length) localStorage.setItem(STORAGE.alertDismissed, JSON.stringify(cleaned));
+      }
+      const memos = JSON.parse(localStorage.getItem("stockTimingRadar.memos.v55") || "[]");
+      if (!Array.isArray(memos)) localStorage.setItem("stockTimingRadar.memos.v55", "[]");
+      localStorage.setItem("stockTimingRadar.build", BUILD);
+    } catch (err) { console.warn("v8 storage cleanup skipped", err); }
+  }
+  document.addEventListener("click", function(e){
+    if (!mobile()) return;
+    const target = e.target;
+    if (!target || !target.closest) return;
+    const tab = target.closest("[data-v80-screener]");
+    if (tab) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      switchMobileScreenerV80(tab.getAttribute("data-v80-screener"));
+      return;
+    }
+    if (target.closest("[data-v80-screener-settings]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      try {
+        const screeners = ensureFixedScreeners();
+        const label = screeners[state.activeScreener || "default"]?.label || state.activeScreener || "Default";
+        const el = document.getElementById("activeScreenerLabel");
+        if (el) el.textContent = `Active screener: ${label}`;
+        openSheet("screenerSettingsSheet");
+      } catch (err) { alert(`Active screener: ${state.activeScreener || "default"}`); }
+      return;
+    }
+  }, true);
+  window.__stockcheckDiagnosticsV80 = function(){
+    const screeners = getStore();
+    const memosRaw = localStorage.getItem("stockTimingRadar.memos.v55") || "[]";
+    let memos = [];
+    try { memos = JSON.parse(memosRaw); } catch (_) {}
+    const out = {
+      build: BUILD,
+      host: location.href,
+      staticMode: !!state.staticMode,
+      activeScreener: state.activeScreener,
+      watchlistCount: state.watchlist?.length || 0,
+      rows: state.rows?.length || 0,
+      scannerTab: state.scannerTab,
+      mobileView: state.mobileView,
+      technicalGeneratedAt: state.staticPayloads?.technical?.generatedAtTechnical || state.staticPayloads?.technical?.generatedAt,
+      fundamentalGeneratedAt: state.staticPayloads?.fundamental?.generatedAtFundamental || state.staticPayloads?.fundamental?.generatedAt,
+      fundamentalRows: state.staticPayloads?.fundamental?.rows?.length || 0,
+      dataErrors: state.errors || [],
+      screenerKeys: Object.keys(screeners),
+      memoCount: Array.isArray(memos) ? memos.length : "invalid",
+      localStorageKeys: Object.keys(localStorage).filter(k => k.toLowerCase().includes("stock")),
+    };
+    console.table(out);
+    return out;
+  };
+  document.addEventListener("DOMContentLoaded", () => {
+    cleanLegacyStorage();
+    renderPortfolioTabs();
+    renderDataIntegrityBanner();
+  });
+  setTimeout(() => { cleanLegacyStorage(); try { renderPortfolioTabs(); renderDataIntegrityBanner(); } catch (_) {} }, 0);
 })();

@@ -59,6 +59,9 @@ jobs:
             printf '%s' '{"generatedAt":"Not generated yet","generatedAtFundamental":"Not generated yet","count":0,"watchlist":[],"rows":[],"fundamentals":{},"errors":[{"symbol":"SETUP","error":"Run the Update fundamental data workflow once."}],"mode":"github-pages-hybrid-fundamental-placeholder","dataLayer":"fundamental"}' > site/data/fundamental.json
           fi
 
+      - name: Validate static data before deploy
+        run: python scripts/validate_static_data.py
+
       - name: Add nojekyll marker
         run: touch site/.nojekyll
 
