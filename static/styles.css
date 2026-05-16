@@ -2162,3 +2162,40 @@ body.memo-active .memo-page { display:block; }
   }
   .memo-form-actions button { min-height: 48px; }
 }
+
+
+/* v6.8 mobile polish: avoid overlap between Scanner/Memo tabs, screener tabs, memo FAB and alert bell */
+@media (max-width: 767px) {
+  .topbar {
+    padding-bottom: 10px !important;
+    overflow: visible !important;
+  }
+  .topbar .app-mode-nav {
+    position: static !important;
+    z-index: 3 !important;
+    margin-top: 8px !important;
+  }
+  .portfolio-tabs {
+    margin-top: 8px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  .portfolio-tab {
+    touch-action: pan-x !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+  .memo-global-fab {
+    right: 16px !important;
+    bottom: max(154px, calc(env(safe-area-inset-bottom) + 154px)) !important;
+    z-index: 2410 !important;
+  }
+  .alert-fab {
+    right: 16px !important;
+    bottom: max(92px, calc(env(safe-area-inset-bottom) + 92px)) !important;
+    z-index: 2400 !important;
+  }
+  body.memo-active .memo-global-fab {
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+  }
+}

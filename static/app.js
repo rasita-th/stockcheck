@@ -3154,3 +3154,53 @@ if (state.staticMode || isStaticDeployHost()) {
     });
   } catch (_) {}
 })();
+
+
+/* v6.8 mobile fixes
+   - Prevent mobile portfolio tab taps/swipes from being interpreted as long-press delete.
+   - Keep + New screener as a create action only on mobile.
+   - Separate memo create FAB from alert bell FAB so they never overlap.
+*/
+(function v68MobileScreenerAndFabFix(){
+  const isMobile = () => window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+
+  // The older desktop long-press-to-delete handler listens on body pointerdown.
+  // On iOS/Safari, horizontal tab taps/swipes can accidentally keep that timer alive,
+  // so stop portfolio pointer events during the capture phase on mobile only.
+  document.addEventListener('pointerdown', function(e){
+    if (!isMobile()) return;
+    const tab = e.target && e.target.closest && e.target.closest('.portfolio-tabs .portfolio-tab');
+    if (!tab) return;
+    e.stopPropagation();
+  }, true);
+
+  document.addEventListener('dblclick', function(e){
+    if (!isMobile()) return;
+    if (e.target && e.target.closest && e.target.closest('.portfolio-tabs .portfolio-tab')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  document.addEventListener('contextmenu', function(e){
+    if (!isMobile()) return;
+    if (e.target && e.target.closest && e.target.closest('.portfolio-tabs .portfolio-tab')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // Belt-and-suspenders: on mobile, + New must never route to delete/rename.
+  document.addEventListener('click', function(e){
+    if (!isMobile()) return;
+    const add = e.target && e.target.closest && e.target.closest('#newScreenerBtn, .portfolio-tabs .add-tab');
+    if (!add) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    try { newScreener(); }
+    catch (err) {
+      console.error('Create screener failed', err);
+      alert('สร้าง screener ไม่สำเร็จ: ' + (err && err.message ? err.message : err));
+    }
+  }, true);
+})();
