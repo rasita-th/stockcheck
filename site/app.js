@@ -3355,3 +3355,248 @@ if (state.staticMode || isStaticDeployHost()) {
   // Initial repaint with patched renderer.
   setTimeout(() => { try { renderPortfolioTabs(); updateTabs(); } catch (_) {} }, 0);
 })();
+
+/* v7.0: hard fix mobile screener creation/render
+   Root cause: older mobile handlers use data-save-as-screener / data-confirm-save-screener
+   and can intercept + New before the tab renderer refreshes. This patch uses unique v70
+   attributes, renders from the single localStorage screeners state, and puts the active
+   custom screener first on mobile so newly-created tabs are immediately visible.
+*/
+(function v70HardFixMobileScreenerRender(){
+  const BUILT_INS = new Set(["default", "momentum", "thai", "dividend", "quality"]);
+  const BUILTIN_TABS = [
+    ["default", "⭐ Default"],
+    ["momentum", "🚀 Momentum"],
+    ["thai", "🇹🇭 Thai"],
+    ["dividend", "🏦 Dividend"],
+    ["quality", "🧱 High Quality"],
+  ];
+  const isMobile = () => window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+  const normalizeName = (name) => String(name || "").trim();
+  const slugifyV70 = (name) => normalizeName(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9ก-๙]+/gi, "-")
+    .replace(/^-|-$/g, "") || `screener-${Date.now()}`;
+  const getAllScreenersV70 = () => {
+    try { return JSON.parse(localStorage.getItem(STORAGE.screeners) || "{}"); }
+    catch (_) { return {}; }
+  };
+  const setAllScreenersV70 = (screeners) => localStorage.setItem(STORAGE.screeners, JSON.stringify(screeners || {}));
+  const labelForV70 = (key, screeners = getAllScreenersV70()) => {
+    const builtIn = BUILTIN_TABS.find(([k]) => k === key);
+    if (builtIn) return builtIn[1];
+    const rec = screeners[key] || {};
+    return rec.label || rec.name || `⭐ ${String(key).replace(/-/g, " ")}`;
+  };
+  const snapshotV70 = (label) => ({
+    label,
+    name: label,
+    watchlist: Array.isArray(state.watchlist) ? [...state.watchlist] : [],
+    filters: { ...state.filters },
+    columns: { ...state.columns },
+    scannerTab: state.scannerTab,
+    mobileView: state.mobileView,
+    sortKey: state.sortKey,
+    sortAsc: state.sortAsc,
+    savedAt: new Date().toISOString(),
+  });
+
+  function ensureV70Sheet(){
+    if (document.getElementById("saveScreenerSheetV70")) return;
+    const sheet = document.createElement("section");
+    sheet.className = "bottom-sheet save-screener-v70";
+    sheet.id = "saveScreenerSheetV70";
+    sheet.setAttribute("aria-hidden", "true");
+    sheet.setAttribute("aria-label", "Save as new screener");
+    sheet.innerHTML = `
+      <div class="sheet-grip"></div>
+      <div class="sheet-header"><h2>＋ Save as New Screener</h2><button class="icon-btn" data-v70-close-sheet>×</button></div>
+      <div class="sheet-body screener-sheet-body">
+        <p class="helper-text">บันทึก watchlist, filters, columns และมุมมองปัจจุบันเป็น screener ใหม่</p>
+        <label class="form-field"><span>Screener name</span><input id="saveScreenerNameV70" type="text" placeholder="เช่น AI Leaders / Thai Momentum" autocomplete="off" /></label>
+        <label class="toggle-row"><span>Clone current watchlist + settings</span><input id="saveScreenerCloneV70" type="checkbox" checked /></label>
+        <p id="saveScreenerStatusV70" class="bulk-import-summary" aria-live="polite"></p>
+      </div>
+      <div class="sheet-actions"><button class="secondary-btn" data-v70-close-sheet>Cancel</button><button class="primary-btn" data-v70-confirm-save-screener>Save Screener</button></div>`;
+    document.body.appendChild(sheet);
+  }
+
+  function closeV70Sheets(){
+    document.querySelectorAll(".bottom-sheet").forEach(s => {
+      s.classList.remove("open");
+      s.setAttribute("aria-hidden", "true");
+    });
+    const backdrop = document.getElementById("sheetBackdrop");
+    if (backdrop) backdrop.hidden = true;
+    document.body.classList.remove("sheet-open");
+  }
+
+  function openV70SaveSheet(defaultName = ""){
+    ensureV70Sheet();
+    const input = document.getElementById("saveScreenerNameV70");
+    const status = document.getElementById("saveScreenerStatusV70");
+    if (input) input.value = defaultName;
+    if (status) status.textContent = "";
+    document.querySelectorAll(".bottom-sheet").forEach(s => {
+      s.classList.remove("open");
+      s.setAttribute("aria-hidden", "true");
+    });
+    const sheet = document.getElementById("saveScreenerSheetV70");
+    const backdrop = document.getElementById("sheetBackdrop");
+    if (backdrop) backdrop.hidden = false;
+    document.body.classList.add("sheet-open");
+    sheet?.classList.add("open");
+    sheet?.setAttribute("aria-hidden", "false");
+    setTimeout(() => input?.focus(), 140);
+  }
+
+  function createScreenerV70(){
+    ensureV70Sheet();
+    const input = document.getElementById("saveScreenerNameV70");
+    const clone = document.getElementById("saveScreenerCloneV70")?.checked !== false;
+    const rawName = normalizeName(input?.value || "") || `Screener ${new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`;
+    const screeners = getAllScreenersV70();
+    const base = slugifyV70(rawName);
+    let key = base;
+    let idx = 2;
+    while (BUILT_INS.has(key) || screeners[key]) key = `${base}-${idx++}`;
+    screeners[key] = clone ? snapshotV70(rawName) : { ...snapshotV70(rawName), watchlist: [] };
+    setAllScreenersV70(screeners);
+
+    state.activeScreener = key;
+    if (!clone) state.watchlist = [];
+    state.selected = state.watchlist[0] || state.selected || "NVDA";
+    saveSettings();
+    closeV70Sheets();
+    renderPortfolioTabs();
+    updateTabs();
+    renderAll();
+    setTimeout(() => {
+      const btn = document.querySelector(`.portfolio-tabs [data-screener="${CSS.escape(key)}"]`);
+      btn?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      btn?.classList.add("active");
+    }, 40);
+    if (typeof setLoading === "function") setLoading(false, `Saved screener: ${rawName}`);
+  }
+
+  function switchScreenerV70(key){
+    if (!key) return;
+    try {
+      loadScreener(key);
+    } catch (err) {
+      console.warn("loadScreener failed; using fallback", err);
+      const screeners = getAllScreenersV70();
+      const rec = screeners[key];
+      const defaults = {
+        default: BASE_WATCHLIST,
+        momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
+        thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
+        dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
+        quality: ["MSFT", "COST", "ASML", "LIN", "ISRG", "BKNG", "ADP", "ORLY", "INTU", "VRSK"],
+      };
+      state.activeScreener = key;
+      state.watchlist = normalizeTickers(rec?.watchlist || defaults[key] || state.watchlist || []);
+      if (rec?.filters) state.filters = { ...state.filters, ...rec.filters };
+      if (rec?.columns) state.columns = { ...state.columns, ...rec.columns };
+      if (rec?.scannerTab) state.scannerTab = rec.scannerTab;
+      if (rec?.mobileView) state.mobileView = rec.mobileView;
+      state.selected = state.watchlist[0] || state.selected || "NVDA";
+      saveSettings();
+      renderAll();
+    }
+  }
+
+  // Override renderer completely. On mobile, put active custom first so it is visible immediately.
+  renderPortfolioTabs = function renderPortfolioTabsV70(){
+    const nav = document.querySelector(".portfolio-tabs");
+    if (!nav) return;
+    const screeners = getAllScreenersV70();
+    let custom = Object.keys(screeners)
+      .filter(k => !BUILT_INS.has(k))
+      .sort((a, b) => String(screeners[b]?.savedAt || "").localeCompare(String(screeners[a]?.savedAt || "")) || a.localeCompare(b))
+      .map(k => [k, labelForV70(k, screeners)]);
+    if (isMobile() && !BUILT_INS.has(state.activeScreener)) {
+      const active = custom.find(([k]) => k === state.activeScreener);
+      custom = [...(active ? [active] : []), ...custom.filter(([k]) => k !== state.activeScreener)];
+    }
+    const tabs = [...BUILTIN_TABS, ...custom];
+    nav.innerHTML = tabs.map(([key, label]) => `<button type="button" role="tab" class="portfolio-tab ${key === state.activeScreener ? "active" : ""}" data-screener="${esc(key)}" aria-selected="${key === state.activeScreener ? "true" : "false"}">${esc(label)}</button>`).join("") + `
+      <button type="button" class="portfolio-tab screener-settings-tab" data-v70-open-screener-settings>⚙</button>
+      <button type="button" class="portfolio-tab add-tab" id="newScreenerBtn" data-v70-save-screener>+ New</button>`;
+  };
+
+  // Remove old data attributes that trigger earlier v6.x handlers, then add v70 attributes.
+  function patchExistingButtons(){
+    document.querySelectorAll("[data-save-as-screener]").forEach(btn => {
+      btn.removeAttribute("data-save-as-screener");
+      btn.setAttribute("data-v70-save-screener", "");
+    });
+    document.querySelectorAll("[data-confirm-save-screener]").forEach(btn => {
+      btn.removeAttribute("data-confirm-save-screener");
+      btn.setAttribute("data-v70-confirm-save-screener", "");
+    });
+    document.querySelectorAll("[data-open-screener-settings]").forEach(btn => {
+      btn.removeAttribute("data-open-screener-settings");
+      btn.setAttribute("data-v70-open-screener-settings", "");
+    });
+  }
+
+  // Explicit capture handler with unique v70 attributes.
+  document.addEventListener("click", function(e){
+    const target = e.target;
+    if (!target || !target.closest) return;
+    const saveBtn = target.closest("[data-v70-save-screener], #newScreenerBtn.add-tab");
+    if (saveBtn) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      openV70SaveSheet("");
+      return;
+    }
+    if (target.closest("[data-v70-confirm-save-screener]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      createScreenerV70();
+      return;
+    }
+    if (target.closest("[data-v70-close-sheet]")) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      closeV70Sheets();
+      return;
+    }
+    const tab = target.closest(".portfolio-tabs .portfolio-tab[data-screener]");
+    if (tab) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      switchScreenerV70(tab.dataset.screener);
+      return;
+    }
+  }, true);
+
+  // Do not block pointer/click propagation inside portfolio tabs; old mobile long-press guard was too aggressive.
+  document.addEventListener("pointerdown", function(e){
+    if (!isMobile()) return;
+    if (e.target?.closest?.(".portfolio-tabs .portfolio-tab")) {
+      // Let the later click handler above handle it; just prevent text selection/long touch menu.
+      e.target.closest(".portfolio-tab")?.classList.add("touching");
+      setTimeout(() => e.target.closest?.(".portfolio-tab")?.classList.remove("touching"), 220);
+    }
+  }, true);
+
+  // Public debug helper for console testing.
+  window.__stockcheckCreateScreenerV70 = function(name = "Debug Screener"){
+    ensureV70Sheet();
+    document.getElementById("saveScreenerNameV70").value = name;
+    document.getElementById("saveScreenerCloneV70").checked = true;
+    createScreenerV70();
+    return { active: state.activeScreener, screeners: getAllScreenersV70() };
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    ensureV70Sheet();
+    patchExistingButtons();
+    renderPortfolioTabs();
+    updateTabs();
+  });
+  setTimeout(() => { ensureV70Sheet(); patchExistingButtons(); renderPortfolioTabs(); updateTabs(); }, 0);
+})();

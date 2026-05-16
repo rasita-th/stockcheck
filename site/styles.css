@@ -2255,3 +2255,35 @@ body.memo-active .memo-page { display:block; }
     padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
 }
+
+/* v7.0 mobile screener tab hard fix */
+@media (max-width: 767px) {
+  .portfolio-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    gap: 10px;
+    padding-inline: 18px;
+  }
+  .portfolio-tabs .portfolio-tab {
+    flex: 0 0 auto !important;
+    min-width: max-content;
+    scroll-snap-align: start;
+    position: relative;
+    z-index: 1;
+  }
+  .portfolio-tabs .portfolio-tab.active {
+    z-index: 2;
+  }
+  .portfolio-tabs .add-tab,
+  .portfolio-tabs .screener-settings-tab {
+    display: inline-flex !important;
+  }
+  .save-screener-v70 .form-field input {
+    min-height: 52px;
+    font-size: 17px;
+  }
+}
