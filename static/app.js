@@ -4270,8 +4270,16 @@ if (state.staticMode || isStaticDeployHost()) {
     if(Number.isNaN(d.getTime())) return String(iso);
     return d.toLocaleString(undefined, { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short" });
   }
-  function triggerMeta(type){ return TRIGGERS[type] || { icon:"•", label:String(type || "Trigger"), color:"default" }; }
-  function triggerBadge(type){ const m=triggerMeta(type); return `<span class="trigger-badge trigger-${escA(m.color)}"><span>${m.icon}</span>${escA(m.label)}</span>`; }
+  function triggerMeta(type, item){
+    const base = TRIGGERS[type] || { icon:"•", label:String(type || "Trigger"), color:"default" };
+    if(type === "price_move"){
+      const pct = numA(item?.day_change_pct);
+      if(pct != null && pct < 0) return { ...base, icon:"📉", label:"Price Drop", color:"trim" };
+      if(pct != null && pct > 0) return { ...base, icon:"📈", label:"Price Move", color:"price" };
+    }
+    return base;
+  }
+  function triggerBadge(type, item){ const m=triggerMeta(type, item); return `<span class="trigger-badge trigger-${escA(m.color)}"><span>${m.icon}</span>${escA(m.label)}</span>`; }
   function severityBadge(sev){
     const s=String(sev || "low").toLowerCase();
     const label = s === "high" ? "🔴 High" : s === "medium" ? "🟡 Med" : "⚪ Low";
@@ -4348,7 +4356,7 @@ if (state.staticMode || isStaticDeployHost()) {
     </tr></thead><tbody>${items.map(item => `<tr class="attention-row severity-row-${escA(item.severity || "low")}">
       <td><strong>${escA(item.ticker)}</strong><small>${escA(item.name || "")}</small></td>
       <td>${escA(item.role || "Watchlist")}</td>
-      <td>${triggerBadge(item.primary_trigger)}</td>
+      <td>${triggerBadge(item.primary_trigger, item)}</td>
       <td class="attention-signals">${signalsInline(item)}</td>
       <td>${severityBadge(item.severity)}</td>
       <td><div class="attention-actions">${actionButtons(item.actions)}</div></td>
@@ -4360,7 +4368,7 @@ if (state.staticMode || isStaticDeployHost()) {
     if(!items.length){ renderEmpty(list, (state.data?.items || []).length > 0); return; }
     list.innerHTML = items.map(item => `<article class="attention-card severity-row-${escA(item.severity || "low")}">
       <div class="attention-card-head"><div><strong>${escA(item.ticker)}</strong><span>${escA(item.role || "Watchlist")}</span></div>${severityBadge(item.severity)}</div>
-      <div class="attention-card-trigger">${triggerBadge(item.primary_trigger)}</div>
+      <div class="attention-card-trigger">${triggerBadge(item.primary_trigger, item)}</div>
       <ul class="attention-card-signals">${signalsList(item)}</ul>
       <div class="attention-price-strip"><span>Price ${moneyA(item.price)}</span><span class="${clsPctA(item.day_change_pct)}">${pctA(item.day_change_pct)}</span></div>
       <div class="attention-actions attention-mobile-actions">${actionButtons(item.actions)}</div>

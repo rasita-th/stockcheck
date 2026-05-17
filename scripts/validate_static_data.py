@@ -62,6 +62,34 @@ def main() -> None:
             raise SystemExit("attention_today: items must be a list")
         if not attention.get("updated_at"):
             all_warnings.append("attention_today has no updated_at timestamp")
+        # Guardrail: attention cards must not contradict scanner data.
+        # If a ticker exists in technical.json, price and day change should be
+        # sourced from that same row. Otherwise the attention radar can become
+        # misleading even when the UI renders correctly.
+        technical = load_json(SITE_DATA / "technical.json")
+        rows = technical.get("rows") or []
+        by_ticker = {str(r.get("ticker") or r.get("symbol") or "").upper(): r for r in rows if isinstance(r, dict)}
+        for item in attention.get("items", []):
+            if not isinstance(item, dict):
+                continue
+            ticker = str(item.get("ticker") or "").upper()
+            row = by_ticker.get(ticker)
+            if not row:
+                continue
+            try:
+                ap = float(item.get("price"))
+                sp = float(row.get("price") or row.get("regularMarketPrice"))
+                if sp and abs(ap - sp) / abs(sp) > 0.02:
+                    raise SystemExit(f"attention_today: {ticker} price mismatch with technical.json ({ap} vs {sp})")
+            except (TypeError, ValueError):
+                pass
+            try:
+                ac = float(item.get("day_change_pct"))
+                sc = float(row.get("dayPct"))
+                if abs(ac - sc) > 0.25:
+                    raise SystemExit(f"attention_today: {ticker} day_change_pct mismatch with technical.json ({ac} vs {sc})")
+            except (TypeError, ValueError):
+                pass
     for warning in all_warnings:
         print(f"::warning::{warning}")
     print("Static data validation passed")

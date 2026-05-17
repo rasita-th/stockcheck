@@ -26,8 +26,10 @@ STATIC_DATA_DIR = ROOT / "static" / "data"
 PORTFOLIO_PATHS = [DATA_DIR / "portfolio.json", SITE_DATA_DIR / "portfolio.json"]
 OUT_PATHS = [DATA_DIR / "attention_today.json", SITE_DATA_DIR / "attention_today.json", STATIC_DATA_DIR / "attention_today.json"]
 PREVIOUS_PATHS = [SITE_DATA_DIR / "attention_today.json", DATA_DIR / "attention_today.json"]
+TECHNICAL_PATHS = [SITE_DATA_DIR / "technical.json", DATA_DIR / "technical.json", STATIC_DATA_DIR / "technical.json", SITE_DATA_DIR / "scanner.json", STATIC_DATA_DIR / "scanner.json"]
 IMPORTANT_FORMS = {"8-K", "10-Q", "10-K", "S-3", "424B", "4", "DEF 14A"}
 USER_AGENT = os.environ.get("SEC_USER_AGENT") or "Stock Timing Radar attention script contact@example.com"
+OFFLINE_MODE = os.environ.get("STOCKCHECK_ATTENTION_OFFLINE", "").lower() in {"1", "true", "yes"}
 
 
 def now_ict() -> datetime:
@@ -67,7 +69,9 @@ def parse_previous_date() -> date:
         return (now_ict() - timedelta(days=1)).date()
 
 
-def http_json(url: str, timeout: int = 15, headers: dict[str, str] | None = None) -> dict[str, Any] | None:
+def http_json(url: str, timeout: int = 8, headers: dict[str, str] | None = None) -> dict[str, Any] | None:
+    if OFFLINE_MODE:
+        return None
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json", **(headers or {})})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -87,7 +91,56 @@ def to_float(v: Any) -> float | None:
     return None
 
 
-def fetch_price(ticker: str) -> dict[str, Any]:
+def load_technical_rows() -> dict[str, dict[str, Any]]:
+    """Load scanner/technical JSON and index by ticker.
+
+    Attention List must never drift away from the Scanner.  GitHub Pages is a
+    static app, so the safest source for price/change is the exact JSON used by
+    the scanner table.  Yahoo is only a fallback when a ticker is absent from
+    that static file.
+    """
+    path = first_existing(TECHNICAL_PATHS)
+    if not path:
+        return {}
+    data = load_json(path, {}) or {}
+    rows = data.get("rows") or data.get("items") or data.get("data") or []
+    if not isinstance(rows, list):
+        return {}
+    out: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        ticker = str(row.get("ticker") or row.get("symbol") or "").strip().upper()
+        if ticker:
+            out[ticker] = row
+    return out
+
+
+def price_from_technical(row: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not row:
+        return None
+    price = to_float(row.get("price")) or to_float(row.get("regularMarketPrice")) or to_float(row.get("lastPrice"))
+    chg = to_float(row.get("dayPct"))
+    if chg is None:
+        chg = to_float(row.get("day_change_pct"))
+    if chg is None:
+        chg = to_float(row.get("changePercent"))
+    if price is None and chg is None:
+        return None
+    return {
+        "price": price,
+        "day_change_pct": chg,
+        "previous_close": None,
+        "source": "technical.json",
+        "technical_row": row,
+    }
+
+
+def fetch_price(ticker: str, technical_row: dict[str, Any] | None = None) -> dict[str, Any]:
+    synced = price_from_technical(technical_row)
+    if synced:
+        return synced
+
     safe = urllib.parse.quote(ticker)
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{safe}?range=5d&interval=1d"
     data = http_json(url) or {}
@@ -101,7 +154,7 @@ def fetch_price(ticker: str) -> dict[str, Any]:
     chg = None
     if price is not None and prev not in (None, 0):
         chg = ((price - prev) / prev) * 100
-    return {"price": price, "day_change_pct": chg, "previous_close": prev}
+    return {"price": price, "day_change_pct": chg, "previous_close": prev, "source": "yahoo_fallback"}
 
 
 def sec_filing_url(cik: str, accession: str, primary_document: str = "") -> str:
@@ -223,6 +276,7 @@ def generate() -> dict[str, Any]:
     portfolio = load_json(portfolio_path, [])
     if not isinstance(portfolio, list):
         raise SystemExit("portfolio.json must be a list")
+    technical_map = load_technical_rows()
     last_checked = parse_previous_date()
     items: list[dict[str, Any]] = []
     errors: list[dict[str, str]] = []
@@ -232,10 +286,13 @@ def generate() -> dict[str, Any]:
         if not ticker:
             continue
         triggers: list[dict[str, Any]] = []
-        price_data = fetch_price(ticker)
+        technical_row = technical_map.get(ticker)
+        price_data = fetch_price(ticker, technical_row)
         price = to_float(price_data.get("price"))
         chg = to_float(price_data.get("day_change_pct"))
         if chg is not None and abs(chg) >= 5.0:
+            # Keep the sign exactly as the scanner sees it.  A -5% day is a
+            # price-drop trigger, not a positive price-move.
             add_trigger(triggers, "price_move", f"Price {chg:+.1f}%")
 
         filing = fetch_latest_filing(stock.get("sec_cik"), last_checked)
@@ -274,6 +331,7 @@ def generate() -> dict[str, Any]:
             "buy_zone": buy_zone,
             "trim_zone": trim_zone,
             "actions": build_actions(stock, ticker, triggers),
+            "price_source": price_data.get("source") or "unknown",
         }
         # Drop nulls for cleaner JSON.
         items.append({k: v for k, v in item.items() if v is not None})
@@ -286,6 +344,11 @@ def generate() -> dict[str, Any]:
         "total_monitored": len(portfolio),
         "items": items,
         "errors": errors,
+        "data_quality": {
+            "price_source": "technical.json first, Yahoo fallback",
+            "scanner_synced": bool(technical_map),
+            "technical_rows": len(technical_map),
+        },
     }
     return output
 

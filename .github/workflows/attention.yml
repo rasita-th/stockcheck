@@ -29,10 +29,26 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Refresh technical layer for attention sync
+        env:
+          INCLUDE_FUNDAMENTALS: "0"
+          TECHNICAL_RANGE: "1y"
+          TECHNICAL_INTERVAL: "1d"
+          TECHNICAL_SCAN_WORKERS: "8"
+        run: python scripts/update_technical_data.py
+
       - name: Generate attention_today.json
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
         run: python scripts/generate_attention.py
+
+      - name: Validate attention/scanner data consistency
+        run: python scripts/validate_static_data.py
 
       - name: Commit updated attention data
         run: |
