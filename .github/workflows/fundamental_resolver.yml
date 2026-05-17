@@ -13,7 +13,7 @@ concurrency:
 jobs:
   resolve:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,10 +31,18 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Resolve latest fundamental data
+      - name: Generate Finnhub cached bundle
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-        run: python scripts/generate_fundamental_resolver.py
+          FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
+          FINNHUB_FINANCIALS_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_EPS_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_REC_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_FINANCIALS_TTL_HOURS: "72"
+          FINNHUB_EPS_TTL_HOURS: "168"
+          FINNHUB_REC_TTL_HOURS: "168"
+          FINNHUB_MIN_DELAY_SECONDS: "0.25"
+        run: python scripts/generate_finnhub_bundle_cached.py
 
       - name: Validate static data
         run: python scripts/validate_static_data.py
@@ -43,11 +51,25 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          mkdir -p /tmp/stockcheck-generated
+          rm -rf /tmp/stockcheck-generated/data /tmp/stockcheck-generated/site-data /tmp/stockcheck-generated/static-data
+          cp -a data /tmp/stockcheck-generated/data
+          cp -a site/data /tmp/stockcheck-generated/site-data
+          cp -a static/data /tmp/stockcheck-generated/static-data
+
+          git fetch origin main
+          git reset --hard origin/main
+          rm -rf data site/data static/data
+          cp -a /tmp/stockcheck-generated/data data
+          mkdir -p site static
+          cp -a /tmp/stockcheck-generated/site-data site/data
+          cp -a /tmp/stockcheck-generated/static-data static/data
+
           git add -A data site/data static/data
           if git diff --cached --quiet; then
             echo "No fundamental resolver changes."
             exit 0
           fi
           git commit -m "Update resolved fundamental data"
-          git pull --rebase --autostash origin main
           git push origin HEAD:main

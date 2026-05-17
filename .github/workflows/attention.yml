@@ -54,20 +54,18 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_attention_finnhub.py
 
-      - name: Generate recommendation_trends.json
+      - name: Generate Finnhub cached bundle
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-        run: python scripts/generate_recommendation_trends_cached.py
-
-      - name: Resolve latest fundamental data
-        env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-        run: python scripts/generate_fundamental_resolver.py
-
-      - name: Generate eps_surprises.json
-        env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-        run: python scripts/generate_eps_surprises_cached.py
+          FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
+          FINNHUB_FINANCIALS_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_EPS_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_REC_MAX_CALLS_PER_RUN: "10"
+          FINNHUB_FINANCIALS_TTL_HOURS: "72"
+          FINNHUB_EPS_TTL_HOURS: "168"
+          FINNHUB_REC_TTL_HOURS: "168"
+          FINNHUB_MIN_DELAY_SECONDS: "0.25"
+        run: python scripts/generate_finnhub_bundle_cached.py
 
       - name: Validate attention/scanner data consistency
         run: python scripts/validate_static_data.py
@@ -87,8 +85,7 @@ jobs:
           cp -a static/data /tmp/stockcheck-generated/static-data
 
           # Generated JSON files are intentionally overwritten by the latest run.
-          # Avoid rebasing a generated-data commit over newer generated-data
-          # commits, because that creates pointless conflicts in JSON outputs.
+          # Avoid rebasing generated-data commits over newer generated-data commits.
           git fetch origin main
           git reset --hard origin/main
           rm -rf data site/data static/data
