@@ -55,6 +55,13 @@ def main() -> None:
     scanner_path = SITE_DATA / "scanner.json"
     if scanner_path.exists():
         load_json(scanner_path)
+    attention_path = SITE_DATA / "attention_today.json"
+    if attention_path.exists():
+        attention = load_json(attention_path)
+        if not isinstance(attention.get("items", []), list):
+            raise SystemExit("attention_today: items must be a list")
+        if not attention.get("updated_at"):
+            all_warnings.append("attention_today has no updated_at timestamp")
     for warning in all_warnings:
         print(f"::warning::{warning}")
     print("Static data validation passed")

@@ -1,0 +1,90 @@
+{
+  "updated_at": "2026-05-17T11:27:18+07:00",
+  "market": "US",
+  "total_monitored": 10,
+  "items": [
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "role": "Satellite AI",
+      "primary_trigger": "price_move",
+      "signals": [
+        "Price +5.4%",
+        "RSI 72 Hot",
+        "Close to trim zone"
+      ],
+      "severity": "high",
+      "price": 184.2,
+      "day_change_pct": 5.4,
+      "trim_zone": 195,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
+        "yahoo": "https://finance.yahoo.com/quote/AMD",
+        "raw_data": "data/technical.json"
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "role": "Core AI",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Price above trim target $245",
+        "EMA20 +5.1%",
+        "RSI 64.7 healthy/warm"
+      ],
+      "severity": "medium",
+      "price": 225.32,
+      "day_change_pct": 1.8,
+      "trim_zone": 245,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "yahoo": "https://finance.yahoo.com/quote/NVDA",
+        "company_ir": "https://investor.nvidia.com/",
+        "raw_data": "data/technical.json"
+      }
+    },
+    {
+      "ticker": "PUMP",
+      "name": "ProPetro Holding Corp.",
+      "role": "Cyclical Watch",
+      "primary_trigger": "earnings_soon",
+      "signals": [
+        "Earnings in 6 days",
+        "EMA20 +7.6%",
+        "Above trim zone"
+      ],
+      "severity": "medium",
+      "price": 17.45,
+      "day_change_pct": 2.1,
+      "earnings_date": "2026-05-23",
+      "trim_zone": 19,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
+        "yahoo": "https://finance.yahoo.com/quote/PUMP",
+        "raw_data": "data/technical.json"
+      }
+    },
+    {
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Near buy zone $68",
+        "Below EMA20 -4.8%",
+        "Watch reclaim EMA20"
+      ],
+      "severity": "low",
+      "price": 77.14,
+      "day_change_pct": -1.9,
+      "buy_zone": 68,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
+        "yahoo": "https://finance.yahoo.com/quote/HOOD",
+        "company_ir": "https://investors.robinhood.com/",
+        "raw_data": "data/technical.json"
+      }
+    }
+  ]
+}

@@ -4203,3 +4203,223 @@ if (state.staticMode || isStaticDeployHost()) {
   });
   setTimeout(() => { cleanLegacyStorage(); try { renderPortfolioTabs(); renderDataIntegrityBanner(); } catch (_) {} }, 0);
 })();
+
+/* v8.1 Today's Attention List: quiet radar / daily attention filter */
+(function initAttentionList(){
+  const ATTENTION_URL = "data/attention_today.json";
+  const PORTFOLIO_URL = "data/portfolio.json";
+  const STORAGE_VIEW = "stockTimingRadar.appView.v55";
+  const state = { data:null, portfolio:[], filter:"all", loading:false, error:null };
+  const escA = (v) => String(v ?? "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[s]));
+  const numA = (v) => { const n = Number(v); return Number.isFinite(n) ? n : null; };
+  const moneyA = (v) => { const n=numA(v); return n==null ? "—" : `$${n.toLocaleString(undefined,{maximumFractionDigits:2, minimumFractionDigits:n < 10 ? 2 : 0})}`; };
+  const pctA = (v) => { const n=numA(v); return n==null ? "—" : `${n>0?"+":""}${n.toFixed(1)}%`; };
+  const clsPctA = (v) => { const n=numA(v); return n==null ? "neutral" : n < 0 ? "red" : n > 0 ? "green" : "neutral"; };
+
+  const TRIGGERS = {
+    price_move: { icon:"📈", label:"Price Move", color:"price" },
+    sec_filing: { icon:"📄", label:"SEC Filing", color:"sec" },
+    earnings_soon: { icon:"📅", label:"Earnings", color:"earnings" },
+    earnings_today: { icon:"📅", label:"Earnings", color:"earnings" },
+    buy_zone: { icon:"🟢", label:"Buy Zone", color:"buy" },
+    trim_zone: { icon:"✂️", label:"Trim Zone", color:"trim" },
+  };
+  const FILTERS = [
+    ["all", "All"], ["price_move", "Price Move"], ["sec_filing", "SEC Filing"], ["earnings", "Earnings"], ["zone", "Buy/Trim Zone"]
+  ];
+
+  function ensureNav(){
+    const nav = document.querySelector(".app-mode-nav");
+    if(!nav || nav.querySelector('[data-app-view="attention"]')) return;
+    const btn = document.createElement("button");
+    btn.className = "app-mode-btn attention-mode-btn";
+    btn.type = "button";
+    btn.dataset.appView = "attention";
+    btn.innerHTML = `📡 Today <span class="attention-nav-badge" id="attentionNavBadge" hidden>0</span>`;
+    const memoBtn = nav.querySelector('[data-app-view="memo"]');
+    memoBtn ? nav.insertBefore(btn, memoBtn) : nav.appendChild(btn);
+  }
+
+  function buildPage(){
+    if(document.getElementById("attentionPage")) return;
+    const shell = document.querySelector(".app-shell") || document.body;
+    const page = document.createElement("section");
+    page.id = "attentionPage";
+    page.className = "attention-page";
+    page.innerHTML = `
+      <div class="attention-shell">
+        <section class="panel-card attention-hero" id="attentionHero"></section>
+        <section class="attention-filter-bar" id="attentionFilterBar"></section>
+        <section class="panel-card attention-table-card" id="attentionTableCard"></section>
+        <section class="attention-card-list" id="attentionCardList"></section>
+      </div>`;
+    shell.insertAdjacentElement("afterend", page);
+  }
+
+  function isStale(updatedAt){
+    if(!updatedAt) return true;
+    const t = Date.parse(updatedAt);
+    if(!Number.isFinite(t)) return true;
+    return (Date.now() - t) / 36e5 > 36;
+  }
+  function fmtTime(iso){
+    if(!iso) return "not generated yet";
+    const d = new Date(iso);
+    if(Number.isNaN(d.getTime())) return String(iso);
+    return d.toLocaleString(undefined, { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short" });
+  }
+  function triggerMeta(type){ return TRIGGERS[type] || { icon:"•", label:String(type || "Trigger"), color:"default" }; }
+  function triggerBadge(type){ const m=triggerMeta(type); return `<span class="trigger-badge trigger-${escA(m.color)}"><span>${m.icon}</span>${escA(m.label)}</span>`; }
+  function severityBadge(sev){
+    const s=String(sev || "low").toLowerCase();
+    const label = s === "high" ? "🔴 High" : s === "medium" ? "🟡 Med" : "⚪ Low";
+    return `<span class="severity-badge severity-${escA(s)}">${label}</span>`;
+  }
+  function itemMatchesFilter(item){
+    const f = state.filter;
+    if(f === "all") return true;
+    const primary = item.primary_trigger;
+    const signals = Array.isArray(item.signals) ? item.signals.join(" ").toLowerCase() : "";
+    if(f === "earnings") return primary === "earnings_soon" || primary === "earnings_today" || signals.includes("earning");
+    if(f === "zone") return primary === "buy_zone" || primary === "trim_zone" || signals.includes("buy zone") || signals.includes("trim");
+    return primary === f;
+  }
+  function sevWeight(sev){ return ({ high:0, medium:1, low:2 }[String(sev||"").toLowerCase()] ?? 3); }
+  function trigWeight(type){ return ({ sec_filing:1, earnings_today:2, price_move:3, buy_zone:4, trim_zone:4, earnings_soon:5 }[type] ?? 9); }
+  function sortedItems(){
+    const items = Array.isArray(state.data?.items) ? [...state.data.items] : [];
+    return items.filter(itemMatchesFilter).sort((a,b)=> sevWeight(a.severity)-sevWeight(b.severity) || trigWeight(a.primary_trigger)-trigWeight(b.primary_trigger) || String(a.ticker).localeCompare(String(b.ticker)));
+  }
+  function actionLabel(key){ return ({ tradingview:"TradingView", yahoo:"Yahoo", raw_data:"Raw Data", sec_filing:"SEC Filing", sec_search:"SEC Search", company_ir:"Company IR" }[key] || key); }
+  function actionButtons(actions){
+    if(!actions || typeof actions !== "object") return "";
+    const order = ["sec_filing", "sec_search", "tradingview", "yahoo", "company_ir", "raw_data"];
+    return order.filter(k => actions[k]).map(k => `<a class="attention-action-btn" href="${escA(actions[k])}" target="_blank" rel="noopener noreferrer">${escA(actionLabel(k))}</a>`).join("");
+  }
+  function signalsInline(item){ return (Array.isArray(item.signals) ? item.signals : []).map(s => `<span>${escA(s)}</span>`).join(`<b class="signal-dot">·</b>`); }
+  function signalsList(item){ return (Array.isArray(item.signals) ? item.signals : []).map(s => `<li>${escA(s)}</li>`).join(""); }
+
+  function renderHero(){
+    const hero = document.getElementById("attentionHero"); if(!hero) return;
+    const total = state.data?.total_monitored ?? state.portfolio.length ?? 0;
+    const count = Array.isArray(state.data?.items) ? state.data.items.length : 0;
+    const stale = isStale(state.data?.updated_at);
+    if(state.loading){
+      hero.innerHTML = `<div class="attention-title"><h2>📡 Today's Attention List</h2><p>Loading attention radar…</p></div><div class="attention-skeleton-line"></div>`;
+      return;
+    }
+    if(state.error){
+      hero.innerHTML = `<div class="attention-title"><h2>📡 Today's Attention List</h2><p class="red">Could not load attention_today.json · ${escA(state.error)}</p></div>`;
+      return;
+    }
+    hero.innerHTML = `
+      <div class="attention-title">
+        <h2>📡 Today's Attention List</h2>
+        <p>${count ? `${count} stocks need attention` : `${total || "—"} stocks monitored — all clear`} · Last updated: ${escA(fmtTime(state.data?.updated_at))}</p>
+      </div>
+      ${stale ? `<div class="attention-stale">⚠️ Data may be stale. Last update is older than 36 hours.</div>` : ""}`;
+  }
+  function renderFilters(){
+    const bar = document.getElementById("attentionFilterBar"); if(!bar) return;
+    bar.innerHTML = FILTERS.map(([id,label]) => `<button type="button" class="attention-filter ${state.filter===id?"active":""}" data-attention-filter="${escA(id)}">${escA(label)}</button>`).join("");
+  }
+  function renderEmpty(container, filtered=false){
+    const total = state.data?.total_monitored ?? state.portfolio.length ?? 0;
+    container.innerHTML = `<div class="attention-empty">
+      <h3>✅ ${filtered ? "No matching triggers" : "All clear today"}</h3>
+      <p>${filtered ? "Try another filter." : `${total || 0} stocks monitored — no triggers.`}</p>
+      <div class="attention-checklist">
+        <span>✓ No price move &gt; 5%</span>
+        <span>✓ No new SEC filings</span>
+        <span>✓ No earnings within 7 days</span>
+        <span>✓ No buy/trim zone triggered</span>
+      </div>
+      <p class="muted">Last updated: ${escA(fmtTime(state.data?.updated_at))}</p>
+    </div>`;
+  }
+  function renderTable(){
+    const card = document.getElementById("attentionTableCard"); if(!card) return;
+    const items = sortedItems();
+    if(!items.length){ renderEmpty(card, (state.data?.items || []).length > 0); return; }
+    card.innerHTML = `<div class="attention-table-wrap"><table class="attention-table"><thead><tr>
+      <th>Ticker</th><th>Role</th><th>Trigger</th><th>Signals</th><th>Severity</th><th>Actions</th>
+    </tr></thead><tbody>${items.map(item => `<tr class="attention-row severity-row-${escA(item.severity || "low")}">
+      <td><strong>${escA(item.ticker)}</strong><small>${escA(item.name || "")}</small></td>
+      <td>${escA(item.role || "Watchlist")}</td>
+      <td>${triggerBadge(item.primary_trigger)}</td>
+      <td class="attention-signals">${signalsInline(item)}</td>
+      <td>${severityBadge(item.severity)}</td>
+      <td><div class="attention-actions">${actionButtons(item.actions)}</div></td>
+    </tr>`).join("")}</tbody></table></div>`;
+  }
+  function renderCards(){
+    const list = document.getElementById("attentionCardList"); if(!list) return;
+    const items = sortedItems();
+    if(!items.length){ renderEmpty(list, (state.data?.items || []).length > 0); return; }
+    list.innerHTML = items.map(item => `<article class="attention-card severity-row-${escA(item.severity || "low")}">
+      <div class="attention-card-head"><div><strong>${escA(item.ticker)}</strong><span>${escA(item.role || "Watchlist")}</span></div>${severityBadge(item.severity)}</div>
+      <div class="attention-card-trigger">${triggerBadge(item.primary_trigger)}</div>
+      <ul class="attention-card-signals">${signalsList(item)}</ul>
+      <div class="attention-price-strip"><span>Price ${moneyA(item.price)}</span><span class="${clsPctA(item.day_change_pct)}">${pctA(item.day_change_pct)}</span></div>
+      <div class="attention-actions attention-mobile-actions">${actionButtons(item.actions)}</div>
+    </article>`).join("");
+  }
+  function updateNavBadge(){
+    const badge = document.getElementById("attentionNavBadge");
+    const count = Array.isArray(state.data?.items) ? state.data.items.length : 0;
+    if(badge){ badge.hidden = count <= 0; badge.textContent = String(count); }
+    const nav = document.querySelector('[data-app-view="attention"]');
+    if(nav){ nav.classList.toggle("has-attention", count > 0); }
+  }
+  function render(){ renderHero(); renderFilters(); renderTable(); renderCards(); updateNavBadge(); }
+
+  async function load(){
+    state.loading = true; state.error = null; render();
+    try{
+      const [attnRes, portRes] = await Promise.all([
+        fetch(`${ATTENTION_URL}?v=${Date.now()}`, { cache:"no-store" }),
+        fetch(`${PORTFOLIO_URL}?v=${Date.now()}`, { cache:"no-store" }).catch(()=>null)
+      ]);
+      if(!attnRes.ok) throw new Error(`HTTP ${attnRes.status}`);
+      state.data = await attnRes.json();
+      if(portRes && portRes.ok){ const p = await portRes.json(); state.portfolio = Array.isArray(p) ? p : []; }
+    }catch(err){
+      console.error("attention load failed", err);
+      state.error = err.message || String(err);
+      state.data = { updated_at:null, total_monitored:0, items:[] };
+    }finally{ state.loading = false; render(); }
+  }
+
+  function setAttentionActive(active){
+    document.body.classList.toggle("attention-active", !!active);
+    if(active){
+      document.body.classList.remove("memo-active");
+      document.querySelectorAll("[data-app-view]").forEach(b => b.classList.toggle("active", b.dataset.appView === "attention"));
+      localStorage.setItem(STORAGE_VIEW, "attention");
+      if(!state.data && !state.loading) load();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function bind(){
+    document.addEventListener("click", (e) => {
+      const nav = e.target.closest('[data-app-view]');
+      if(nav && nav.dataset.appView === "attention"){
+        e.preventDefault(); e.stopPropagation(); setAttentionActive(true); return;
+      }
+      if(nav && nav.dataset.appView !== "attention"){
+        setTimeout(()=>setAttentionActive(false), 0);
+      }
+      const filter = e.target.closest("[data-attention-filter]");
+      if(filter){ e.preventDefault(); state.filter = filter.dataset.attentionFilter || "all"; render(); }
+    }, true);
+  }
+
+  function init(){
+    ensureNav(); buildPage(); bind(); load();
+    if(localStorage.getItem(STORAGE_VIEW) === "attention") setAttentionActive(true);
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+  window.__stockcheckAttentionRefresh = load;
+})();
