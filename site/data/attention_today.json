@@ -1,90 +1,169 @@
 {
-  "updated_at": "2026-05-17T11:27:18+07:00",
+  "updated_at": "2026-05-17T11:53:04+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
+    {
+      "ticker": "PUMP",
+      "name": "ProPetro Holding Corp.",
+      "role": "Cyclical Watch",
+      "primary_trigger": "price_move",
+      "signals": [
+        "Price +11.3%"
+      ],
+      "severity": "high",
+      "price": 17.45,
+      "day_change_pct": 11.288265306122447,
+      "buy_zone": 15.0,
+      "trim_zone": 19.0,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
+        "yahoo": "https://finance.yahoo.com/quote/PUMP",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.propetroservices.com/"
+      }
+    },
     {
       "ticker": "AMD",
       "name": "Advanced Micro Devices, Inc.",
       "role": "Satellite AI",
       "primary_trigger": "price_move",
       "signals": [
-        "Price +5.4%",
-        "RSI 72 Hot",
-        "Close to trim zone"
+        "Price -6.8%",
+        "Price above trim target $195"
       ],
-      "severity": "high",
-      "price": 184.2,
-      "day_change_pct": 5.4,
-      "trim_zone": 195,
+      "severity": "medium",
+      "price": 424.1,
+      "day_change_pct": -6.830114897075941,
+      "buy_zone": 160.0,
+      "trim_zone": 195.0,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
         "yahoo": "https://finance.yahoo.com/quote/AMD",
-        "raw_data": "data/technical.json"
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.amd.com/"
       }
     },
     {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
-      "role": "Core AI",
+      "ticker": "SEI",
+      "name": "SEI Investments Company",
+      "role": "Quality Compounder",
+      "primary_trigger": "price_move",
+      "signals": [
+        "Price +7.7%"
+      ],
+      "severity": "medium",
+      "price": 78.58,
+      "day_change_pct": 7.702850877192989,
+      "buy_zone": 72.0,
+      "trim_zone": 86.0,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
+        "yahoo": "https://finance.yahoo.com/quote/SEI",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.seic.com/investor-relations"
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Price above trim target $245",
-        "EMA20 +5.1%",
-        "RSI 64.7 healthy/warm"
+        "Price above trim target $290"
       ],
       "severity": "medium",
-      "price": 225.32,
-      "day_change_pct": 1.8,
-      "trim_zone": 245,
+      "price": 300.23,
+      "day_change_pct": 2.3557888994954403,
+      "buy_zone": 235.0,
+      "trim_zone": 290.0,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
-        "yahoo": "https://finance.yahoo.com/quote/NVDA",
-        "company_ir": "https://investor.nvidia.com/",
-        "raw_data": "data/technical.json"
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
+        "yahoo": "https://finance.yahoo.com/quote/AAPL",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investor.apple.com/"
       }
     },
     {
-      "ticker": "PUMP",
-      "name": "ProPetro Holding Corp.",
-      "role": "Cyclical Watch",
-      "primary_trigger": "earnings_soon",
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "role": "Core Growth",
+      "primary_trigger": "trim_zone",
       "signals": [
-        "Earnings in 6 days",
-        "EMA20 +7.6%",
-        "Above trim zone"
+        "Price above trim target $255"
       ],
       "severity": "medium",
-      "price": 17.45,
-      "day_change_pct": 2.1,
-      "earnings_date": "2026-05-23",
-      "trim_zone": 19,
+      "price": 264.14,
+      "day_change_pct": -3.1318761918732654,
+      "buy_zone": 205.0,
+      "trim_zone": 255.0,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
-        "yahoo": "https://finance.yahoo.com/quote/PUMP",
-        "raw_data": "data/technical.json"
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
+        "yahoo": "https://finance.yahoo.com/quote/AMZN",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.aboutamazon.com/"
       }
     },
     {
-      "ticker": "HOOD",
-      "name": "Robinhood Markets, Inc.",
-      "role": "Satellite Growth",
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $68",
-        "Below EMA20 -4.8%",
-        "Watch reclaim EMA20"
+        "Reached buy zone $430"
       ],
-      "severity": "low",
-      "price": 77.14,
-      "day_change_pct": -1.9,
-      "buy_zone": 68,
+      "severity": "medium",
+      "price": 421.92,
+      "day_change_pct": 1.6380805550202377,
+      "buy_zone": 430.0,
+      "trim_zone": 520.0,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
-        "yahoo": "https://finance.yahoo.com/quote/HOOD",
-        "company_ir": "https://investors.robinhood.com/",
-        "raw_data": "data/technical.json"
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
+        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.microsoft.com/en-us/Investor/"
+      }
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "role": "Satellite AI",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Reached buy zone $145"
+      ],
+      "severity": "medium",
+      "price": 133.99,
+      "day_change_pct": -2.7648766328011627,
+      "buy_zone": 145.0,
+      "trim_zone": 185.0,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
+        "yahoo": "https://finance.yahoo.com/quote/PLTR",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.palantir.com/"
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Price above trim target $360"
+      ],
+      "severity": "medium",
+      "price": 422.24,
+      "day_change_pct": -1.426403641881642,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       }
     }
-  ]
+  ],
+  "errors": []
 }
