@@ -53,6 +53,11 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_recommendation_trends.py
 
+      - name: Resolve latest fundamental data
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python scripts/generate_fundamental_resolver.py
+
 
       - name: Generate eps_surprises.json
         env:
