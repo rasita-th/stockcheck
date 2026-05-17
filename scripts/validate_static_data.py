@@ -55,6 +55,20 @@ def main() -> None:
     scanner_path = SITE_DATA / "scanner.json"
     if scanner_path.exists():
         load_json(scanner_path)
+    earnings_calendar_path = SITE_DATA / "earnings_calendar.json"
+    if earnings_calendar_path.exists():
+        try:
+            earnings_calendar = json.loads(earnings_calendar_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise SystemExit(f"Invalid JSON in {earnings_calendar_path}: {exc}") from exc
+        if not isinstance(earnings_calendar, list):
+            raise SystemExit("earnings_calendar: root must be a list")
+        for row in earnings_calendar:
+            if not isinstance(row, dict):
+                raise SystemExit("earnings_calendar: each row must be an object")
+            if not row.get("ticker") or not row.get("earnings_date"):
+                raise SystemExit("earnings_calendar: ticker and earnings_date are required")
+
     attention_path = SITE_DATA / "attention_today.json"
     if attention_path.exists():
         attention = load_json(attention_path)
@@ -73,6 +87,23 @@ def main() -> None:
             if not isinstance(item, dict):
                 continue
             ticker = str(item.get("ticker") or "").upper()
+            technical_trigger = item.get("primary_trigger") in {"price_move", "buy_zone", "trim_zone"}
+            if technical_trigger and (item.get("price") is None or item.get("day_change_pct") is None):
+                raise SystemExit(f"attention_today: {ticker} technical trigger lacks price/day_change_pct")
+            if item.get("primary_trigger") == "buy_zone":
+                d = item.get("buy_zone_distance_pct")
+                try:
+                    if not (-10.01 <= float(d) <= 5.01):
+                        raise SystemExit(f"attention_today: {ticker} buy_zone distance outside valid range: {d}")
+                except (TypeError, ValueError):
+                    raise SystemExit(f"attention_today: {ticker} buy_zone item lacks valid buy_zone_distance_pct")
+            if item.get("primary_trigger") == "trim_zone":
+                d = item.get("trim_zone_distance_pct")
+                try:
+                    if not (-3.01 <= float(d) <= 10.01):
+                        raise SystemExit(f"attention_today: {ticker} trim_zone distance outside valid range: {d}")
+                except (TypeError, ValueError):
+                    raise SystemExit(f"attention_today: {ticker} trim_zone item lacks valid trim_zone_distance_pct")
             row = by_ticker.get(ticker)
             if not row:
                 continue

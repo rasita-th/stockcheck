@@ -4295,7 +4295,7 @@ if (state.staticMode || isStaticDeployHost()) {
     return primary === f;
   }
   function sevWeight(sev){ return ({ high:0, medium:1, low:2 }[String(sev||"").toLowerCase()] ?? 3); }
-  function trigWeight(type){ return ({ sec_filing:1, earnings_today:2, price_move:3, buy_zone:4, trim_zone:4, earnings_soon:5 }[type] ?? 9); }
+  function trigWeight(type){ return ({ sec_filing:1, earnings_today:2, earnings_soon:3, price_move:4, buy_zone:5, trim_zone:5 }[type] ?? 9); }
   function sortedItems(){
     const items = Array.isArray(state.data?.items) ? [...state.data.items] : [];
     return items.filter(itemMatchesFilter).sort((a,b)=> sevWeight(a.severity)-sevWeight(b.severity) || trigWeight(a.primary_trigger)-trigWeight(b.primary_trigger) || String(a.ticker).localeCompare(String(b.ticker)));
@@ -4308,6 +4308,12 @@ if (state.staticMode || isStaticDeployHost()) {
   }
   function signalsInline(item){ return (Array.isArray(item.signals) ? item.signals : []).map(s => `<span>${escA(s)}</span>`).join(`<b class="signal-dot">·</b>`); }
   function signalsList(item){ return (Array.isArray(item.signals) ? item.signals : []).map(s => `<li>${escA(s)}</li>`).join(""); }
+  function priceContext(item){
+    const p = moneyA(item.price);
+    const pct = pctA(item.day_change_pct);
+    const cls = clsPctA(item.day_change_pct);
+    return `<div class="attention-price-cell"><strong>${p}</strong><span class="${cls}">${pct}</span></div>`;
+  }
 
   function renderHero(){
     const hero = document.getElementById("attentionHero"); if(!hero) return;
@@ -4352,10 +4358,11 @@ if (state.staticMode || isStaticDeployHost()) {
     const items = sortedItems();
     if(!items.length){ renderEmpty(card, (state.data?.items || []).length > 0); return; }
     card.innerHTML = `<div class="attention-table-wrap"><table class="attention-table"><thead><tr>
-      <th>Ticker</th><th>Role</th><th>Trigger</th><th>Signals</th><th>Severity</th><th>Actions</th>
+      <th>Ticker</th><th>Role</th><th>Price / Change</th><th>Trigger</th><th>Signals</th><th>Severity</th><th>Actions</th>
     </tr></thead><tbody>${items.map(item => `<tr class="attention-row severity-row-${escA(item.severity || "low")}">
       <td><strong>${escA(item.ticker)}</strong><small>${escA(item.name || "")}</small></td>
       <td>${escA(item.role || "Watchlist")}</td>
+      <td>${priceContext(item)}</td>
       <td>${triggerBadge(item.primary_trigger, item)}</td>
       <td class="attention-signals">${signalsInline(item)}</td>
       <td>${severityBadge(item.severity)}</td>

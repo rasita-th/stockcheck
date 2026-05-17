@@ -2734,3 +2734,11 @@ body.attention-active .attention-page { display: block; }
     grid-template-columns: 1fr;
   }
 }
+
+/* v8.1.4 Attention price/change context */
+.attention-price-cell { display: flex; flex-direction: column; gap: 3px; min-width: 92px; font-family: var(--mono, 'IBM Plex Mono', monospace); }
+.attention-price-cell strong { color: var(--text, #E6EDF3); font-size: 14px; }
+.attention-price-cell span { font-weight: 800; font-size: 13px; }
+.attention-price-cell .red, .attention-price-strip .red { color: var(--red, #F85149); }
+.attention-price-cell .green, .attention-price-strip .green { color: var(--green, #3FB950); }
+.attention-price-cell .neutral, .attention-price-strip .neutral { color: var(--muted, #8B949E); }

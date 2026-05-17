@@ -24,6 +24,7 @@ DATA_DIR = ROOT / "data"
 SITE_DATA_DIR = ROOT / "site" / "data"
 STATIC_DATA_DIR = ROOT / "static" / "data"
 PORTFOLIO_PATHS = [DATA_DIR / "portfolio.json", SITE_DATA_DIR / "portfolio.json"]
+EARNINGS_CALENDAR_PATHS = [DATA_DIR / "earnings_calendar.json", SITE_DATA_DIR / "earnings_calendar.json", STATIC_DATA_DIR / "earnings_calendar.json"]
 OUT_PATHS = [DATA_DIR / "attention_today.json", SITE_DATA_DIR / "attention_today.json", STATIC_DATA_DIR / "attention_today.json"]
 PREVIOUS_PATHS = [SITE_DATA_DIR / "attention_today.json", DATA_DIR / "attention_today.json"]
 TECHNICAL_PATHS = [SITE_DATA_DIR / "technical.json", DATA_DIR / "technical.json", STATIC_DATA_DIR / "technical.json", SITE_DATA_DIR / "scanner.json", STATIC_DATA_DIR / "scanner.json"]
@@ -192,7 +193,40 @@ def fetch_latest_filing(cik: str | None, last_checked: date) -> dict[str, Any] |
     return None
 
 
-def fetch_earnings_date(ticker: str) -> date | None:
+def load_manual_earnings_calendar() -> dict[str, dict[str, Any]]:
+    """Load optional earnings overrides.
+
+    Free earnings APIs are spotty.  Today's Attention should not silently miss
+    a known portfolio event, so manual overrides are treated as first-class data
+    and Yahoo is only a fallback.
+    """
+    path = first_existing(EARNINGS_CALENDAR_PATHS)
+    raw = load_json(path, []) if path else []
+    if isinstance(raw, dict):
+        raw = raw.get("items") or raw.get("earnings") or []
+    out: dict[str, dict[str, Any]] = {}
+    if not isinstance(raw, list):
+        return out
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        ticker = str(item.get("ticker") or item.get("symbol") or "").strip().upper()
+        date_raw = item.get("earnings_date") or item.get("date")
+        if not ticker or not date_raw:
+            continue
+        try:
+            d = date.fromisoformat(str(date_raw)[:10])
+        except Exception:
+            continue
+        out[ticker] = {**item, "ticker": ticker, "earnings_date": d, "source": item.get("source") or "manual"}
+    return out
+
+
+def fetch_earnings_date(ticker: str, manual_calendar: dict[str, dict[str, Any]] | None = None) -> tuple[date | None, str | None]:
+    manual = (manual_calendar or {}).get(ticker.upper())
+    if manual:
+        return manual.get("earnings_date"), str(manual.get("source") or "manual")
+
     # Yahoo quoteSummary sometimes rate-limits this endpoint. Fail silently.
     safe = urllib.parse.quote(ticker)
     url = f"https://query1.finance.yahoo.com/v10/finance/quoteSummary/{safe}?modules=calendarEvents"
@@ -202,34 +236,51 @@ def fetch_earnings_date(ticker: str) -> date | None:
         earnings = result.get("calendarEvents", {}).get("earnings", {})
         raw = earnings.get("earningsDate") or []
         if not raw:
-            return None
+            return None, None
         ts = raw[0].get("raw")
         if ts:
-            return datetime.fromtimestamp(int(ts), tz=timezone.utc).date()
+            return datetime.fromtimestamp(int(ts), tz=timezone.utc).date(), "yahoo"
     except Exception:
-        return None
-    return None
+        return None, None
+    return None, None
 
 
 def add_trigger(triggers: list[dict[str, Any]], typ: str, signal: str, **extra: Any) -> None:
     triggers.append({"type": typ, "signal": signal, **extra})
 
 
+TRIGGER_SORT_PRIORITY = {
+    "sec_filing": 1,
+    "earnings_today": 2,
+    "earnings_soon": 3,
+    "price_move": 4,
+    "buy_zone": 5,
+    "trim_zone": 5,
+}
+
+
+def best_primary_trigger(triggers: list[dict[str, Any]]) -> dict[str, Any]:
+    return sorted(triggers, key=lambda t: TRIGGER_SORT_PRIORITY.get(str(t.get("type")), 99))[0]
+
+
 def calc_severity(triggers: list[dict[str, Any]], day_change_pct: float | None) -> str:
     types = {t.get("type") for t in triggers}
     filing_type = next((t.get("filing_type") for t in triggers if t.get("filing_type")), None)
     days_to_earnings = next((t.get("days_to_earnings") for t in triggers if t.get("days_to_earnings") is not None), None)
+
+    # Event-driven items come first in Today's Attention because they can change
+    # the thesis.  Technical/price triggers are important, but mostly context.
     if filing_type in {"8-K", "10-Q", "10-K", "S-3", "424B"}:
-        return "high"
-    if day_change_pct is not None and abs(day_change_pct) > 8:
         return "high"
     if days_to_earnings is not None and days_to_earnings <= 1:
         return "high"
-    if day_change_pct is not None and abs(day_change_pct) >= 5:
-        return "medium"
+    if day_change_pct is not None and abs(day_change_pct) > 8:
+        return "high"
     if days_to_earnings is not None and days_to_earnings <= 7:
         return "medium"
     if filing_type in {"4", "DEF 14A"}:
+        return "medium"
+    if day_change_pct is not None and abs(day_change_pct) >= 5:
         return "medium"
     if "buy_zone" in types or "trim_zone" in types:
         return "medium"
@@ -239,7 +290,7 @@ def calc_severity(triggers: list[dict[str, Any]], day_change_pct: float | None) 
 def trigger_priority(item: dict[str, Any]) -> tuple[int, int, str]:
     sev = {"high": 0, "medium": 1, "low": 2}.get(item.get("severity"), 3)
     trig = item.get("primary_trigger")
-    pr = {"sec_filing": 1, "earnings_today": 2, "price_move": 3, "buy_zone": 4, "trim_zone": 4, "earnings_soon": 5}.get(trig, 9)
+    pr = TRIGGER_SORT_PRIORITY.get(trig, 9)
     return (sev, pr, str(item.get("ticker", "")))
 
 
@@ -277,6 +328,7 @@ def generate() -> dict[str, Any]:
     if not isinstance(portfolio, list):
         raise SystemExit("portfolio.json must be a list")
     technical_map = load_technical_rows()
+    manual_earnings = load_manual_earnings_calendar()
     last_checked = parse_previous_date()
     items: list[dict[str, Any]] = []
     errors: list[dict[str, str]] = []
@@ -299,23 +351,42 @@ def generate() -> dict[str, Any]:
         if filing:
             add_trigger(triggers, "sec_filing", f"New {filing['form']} filing", filing_type=filing["form"], filing_date=filing["date"], filing_url=filing.get("url", ""))
 
-        earnings = fetch_earnings_date(ticker)
+        earnings, earnings_source = fetch_earnings_date(ticker, manual_earnings)
         if earnings:
             days = (earnings - now_ict().date()).days
             if 0 <= days <= 7:
+                typ = "earnings_today" if days == 0 else "earnings_soon"
                 label = "Earnings today" if days == 0 else f"Earnings in {days} day{'s' if days != 1 else ''}"
-                add_trigger(triggers, "earnings_soon", label, earnings_date=str(earnings), days_to_earnings=days)
+                add_trigger(triggers, typ, label, earnings_date=str(earnings), days_to_earnings=days, earnings_source=earnings_source)
 
         buy_zone = to_float(stock.get("buy_zone"))
         trim_zone = to_float(stock.get("trim_zone"))
-        if price is not None and buy_zone is not None and price <= buy_zone:
-            add_trigger(triggers, "buy_zone", f"Reached buy zone ${buy_zone:g}")
-        if price is not None and trim_zone is not None and price >= trim_zone:
-            add_trigger(triggers, "trim_zone", f"Price above trim target ${trim_zone:g}")
+        buy_zone_distance_pct = None
+        trim_zone_distance_pct = None
+
+        # Zones are valid only when price is near the configured plan.  A stale
+        # zone should not shout forever in Today's Attention.
+        if price is not None and buy_zone not in (None, 0):
+            buy_zone_distance_pct = ((price - buy_zone) / buy_zone) * 100
+            if -10 <= buy_zone_distance_pct <= 5:
+                if price <= buy_zone:
+                    signal = f"Reached buy zone ${buy_zone:g} · {buy_zone_distance_pct:+.1f}% from zone"
+                else:
+                    signal = f"Near buy zone ${buy_zone:g} · {buy_zone_distance_pct:+.1f}% from zone"
+                add_trigger(triggers, "buy_zone", signal, buy_zone_distance_pct=buy_zone_distance_pct)
+
+        if price is not None and trim_zone not in (None, 0):
+            trim_zone_distance_pct = ((price - trim_zone) / trim_zone) * 100
+            if -3 <= trim_zone_distance_pct <= 10:
+                if price >= trim_zone:
+                    signal = f"Reached trim zone ${trim_zone:g} · {trim_zone_distance_pct:+.1f}% from zone"
+                else:
+                    signal = f"Near trim zone ${trim_zone:g} · {trim_zone_distance_pct:+.1f}% from zone"
+                add_trigger(triggers, "trim_zone", signal, trim_zone_distance_pct=trim_zone_distance_pct)
 
         if not triggers:
             continue
-        primary = triggers[0]
+        primary = best_primary_trigger(triggers)
         item = {
             "ticker": ticker,
             "name": stock.get("name") or ticker,
@@ -330,6 +401,9 @@ def generate() -> dict[str, Any]:
             "filing_date": next((t.get("filing_date") for t in triggers if t.get("filing_date")), None),
             "buy_zone": buy_zone,
             "trim_zone": trim_zone,
+            "buy_zone_distance_pct": buy_zone_distance_pct,
+            "trim_zone_distance_pct": trim_zone_distance_pct,
+            "earnings_source": next((t.get("earnings_source") for t in triggers if t.get("earnings_source")), None),
             "actions": build_actions(stock, ticker, triggers),
             "price_source": price_data.get("source") or "unknown",
         }
@@ -346,8 +420,11 @@ def generate() -> dict[str, Any]:
         "errors": errors,
         "data_quality": {
             "price_source": "technical.json first, Yahoo fallback",
+            "earnings_source": "manual earnings_calendar.json first, Yahoo fallback",
+            "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
             "scanner_synced": bool(technical_map),
             "technical_rows": len(technical_map),
+            "manual_earnings_rows": len(manual_earnings),
         },
     }
     return output
