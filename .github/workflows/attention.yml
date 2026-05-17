@@ -48,6 +48,11 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_attention_finnhub.py
 
+      - name: Generate recommendation_trends.json
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python scripts/generate_recommendation_trends.py
+
       - name: Validate attention/scanner data consistency
         run: python scripts/validate_static_data.py
 
