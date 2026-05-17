@@ -34,6 +34,12 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Sync latest main before generating
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
       - name: Refresh technical layer for attention sync
         env:
           INCLUDE_FUNDAMENTALS: "0"
@@ -74,8 +80,23 @@ jobs:
           echo "Changed files before commit:"
           git status --short
 
-          # All generated market/fundamental data is committed as one unit.
-          # This avoids partial commits that later fail during rebase.
+          mkdir -p /tmp/stockcheck-generated
+          rm -rf /tmp/stockcheck-generated/data /tmp/stockcheck-generated/site-data /tmp/stockcheck-generated/static-data
+          cp -a data /tmp/stockcheck-generated/data
+          cp -a site/data /tmp/stockcheck-generated/site-data
+          cp -a static/data /tmp/stockcheck-generated/static-data
+
+          # Generated JSON files are intentionally overwritten by the latest run.
+          # Avoid rebasing a generated-data commit over newer generated-data
+          # commits, because that creates pointless conflicts in JSON outputs.
+          git fetch origin main
+          git reset --hard origin/main
+          rm -rf data site/data static/data
+          cp -a /tmp/stockcheck-generated/data data
+          mkdir -p site static
+          cp -a /tmp/stockcheck-generated/site-data site/data
+          cp -a /tmp/stockcheck-generated/static-data static/data
+
           git add -A data site/data static/data
 
           if git diff --cached --quiet; then
@@ -84,9 +105,4 @@ jobs:
           fi
 
           git commit -m "Update generated stock radar data"
-
-          # This workflow is the owner of scheduled generated data updates.
-          # The separate fundamental resolver workflow is manual-only and uses
-          # the same concurrency group, so rebase conflicts should be rare.
-          git pull --rebase --autostash origin main
           git push origin HEAD:main
