@@ -1,9 +1,8 @@
+# v8.2.7: manual fallback only. Scheduled generation is owned by Generate Attention List.
 name: Generate Fundamental Resolver
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "30 1 * * 1-5"
 
 permissions:
   contents: write
@@ -34,3 +33,8 @@ jobs:
           git commit -m "Update resolved fundamental data"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
+
+concurrency:
+  group: stockcheck-generated-data
+  cancel-in-progress: false
+
