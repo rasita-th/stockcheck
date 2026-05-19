@@ -1,22 +1,22 @@
-name: Generate Attention List
+name: Refresh Finnhub Slow Data
 
 on:
   workflow_dispatch:
   schedule:
-    # Daily after US market close, roughly 08:00 Bangkok / 01:00 UTC.
-    - cron: "0 1 * * 1-5"
+    # Slow data: monthly refresh only. Fundamental/recommendation/EPS do not need 10-minute refreshes.
+    - cron: "0 2 2 * *"
 
 permissions:
   contents: write
 
 concurrency:
-  group: stockcheck-fast-generated-data
+  group: stockcheck-slow-finnhub-data
   cancel-in-progress: false
 
 jobs:
-  generate:
+  refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,30 +34,29 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Sync latest main before generating
+      - name: Sync latest main before slow refresh
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
 
-      - name: Refresh technical layer for attention sync
+      - name: Generate slow Finnhub bundle with one shared budget
         env:
-          INCLUDE_FUNDAMENTALS: "0"
-          TECHNICAL_RANGE: "1y"
-          TECHNICAL_INTERVAL: "1d"
-          TECHNICAL_SCAN_WORKERS: "8"
-        run: python scripts/update_technical_data.py
-
-      - name: Generate attention_today.json
-        env:
-          SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-        run: python scripts/generate_attention_finnhub.py
+          FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
+          FINNHUB_FINANCIALS_MAX_CALLS_PER_RUN: "8"
+          FINNHUB_EPS_MAX_CALLS_PER_RUN: "11"
+          FINNHUB_REC_MAX_CALLS_PER_RUN: "11"
+          FINNHUB_FINANCIALS_TTL_HOURS: "720"
+          FINNHUB_EPS_TTL_HOURS: "168"
+          FINNHUB_REC_TTL_HOURS: "168"
+          FINNHUB_MIN_DELAY_SECONDS: "0.25"
+        run: python scripts/generate_finnhub_bundle_cached.py
 
       - name: Validate static data
         run: python scripts/validate_static_data.py
 
-      - name: Commit updated fast generated data
+      - name: Commit slow Finnhub data only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -73,21 +72,20 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
 
-          # Fast refresh owns only price/scanner/attention outputs.
-          for f in technical.json scanner.json attention_today.json; do
+          for f in fundamental.json fundamental_resolver_report.json finnhub_bundle_cache.json recommendation_trends.json eps_surprises.json; do
             [ -f "/tmp/stockcheck-generated/data/$f" ] && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
             [ -f "/tmp/stockcheck-generated/site-data/$f" ] && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
             [ -f "/tmp/stockcheck-generated/static-data/$f" ] && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
           done
 
-          git add -A data/technical.json data/scanner.json data/attention_today.json \
-            site/data/technical.json site/data/scanner.json site/data/attention_today.json \
-            static/data/technical.json static/data/scanner.json static/data/attention_today.json
+          git add -A data/fundamental.json data/fundamental_resolver_report.json data/finnhub_bundle_cache.json data/recommendation_trends.json data/eps_surprises.json \
+            site/data/fundamental.json site/data/fundamental_resolver_report.json site/data/finnhub_bundle_cache.json site/data/recommendation_trends.json site/data/eps_surprises.json \
+            static/data/fundamental.json static/data/fundamental_resolver_report.json static/data/finnhub_bundle_cache.json static/data/recommendation_trends.json static/data/eps_surprises.json
 
           if git diff --cached --quiet; then
-            echo "No fast generated data changes to commit."
+            echo "No slow Finnhub data changes."
             exit 0
           fi
 
-          git commit -m "Update fast stock radar data"
+          git commit -m "Refresh slow Finnhub data"
           git push origin HEAD:main

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""v8.2.11 Unified Finnhub budget manager.
+"""v8.2.12 Unified Finnhub budget manager.
 
 One workflow run should not let three independent scripts spend Finnhub quota
 blindly. This bundle coordinates these Finnhub endpoints under one global budget:
 
-- financials_reported(symbol, freq="quarterly") for the fundamental resolver
+- financials_reported(symbol, freq="quarterly") for the fundamental resolver; default TTL 30 days
 - company_earnings(symbol, limit=5) for EPS surprise / resolver
 - recommendation_trends(symbol) for analyst consensus
 
@@ -39,7 +39,7 @@ ENDPOINT_MAX = {
     "recommendations": int(os.environ.get("FINNHUB_REC_MAX_CALLS_PER_RUN", "10")),
 }
 TTL_HOURS = {
-    "financials": float(os.environ.get("FINNHUB_FINANCIALS_TTL_HOURS", "72")),
+    "financials": float(os.environ.get("FINNHUB_FINANCIALS_TTL_HOURS", "720")),
     "earnings": float(os.environ.get("FINNHUB_EPS_TTL_HOURS", "168")),
     "recommendations": float(os.environ.get("FINNHUB_REC_TTL_HOURS", "168")),
 }
@@ -163,7 +163,7 @@ def portfolio_tickers() -> list[str]:
 def default_cache() -> dict[str, Any]:
     return {
         "generated_at": now_iso(),
-        "version": "8.2.11",
+        "version": "8.2.12",
         "financials": {},
         "earnings": {},
         "recommendations": {},
@@ -329,7 +329,7 @@ def write_recommendations_output() -> None:
         "trends": CACHE.get("recommendations", {}),
         "_cache": {"fetched_at": CACHE.get("_cache", {}).get("fetched_at", {}).get("recommendations", {})},
         "_meta": {
-            "version": "8.2.11",
+            "version": "8.2.12",
             "finnhub_status": "missing_api_key" if not API_KEY else "loaded",
             "ttl_hours": TTL_HOURS["recommendations"],
             "global_budget_per_run": TOTAL_MAX_CALLS,
@@ -353,7 +353,7 @@ def write_eps_output() -> None:
         "surprises": CACHE.get("earnings", {}),
         "_cache": {"fetched_at": CACHE.get("_cache", {}).get("fetched_at", {}).get("earnings", {})},
         "_meta": {
-            "version": "8.2.11",
+            "version": "8.2.12",
             "finnhub_status": "missing_api_key" if not API_KEY else "loaded",
             "ttl_hours": TTL_HOURS["earnings"],
             "global_budget_per_run": TOTAL_MAX_CALLS,
@@ -385,7 +385,7 @@ def write_bundle_cache(tickers: list[str]) -> None:
         "skipped_fresh": BUDGET.skipped_fresh,
         "skipped_budget": BUDGET.skipped_budget,
         "failed": BUDGET.failed,
-        "policy": "Never run financials, EPS surprise, and recommendation calls as separate unlimited scripts. One run, one shared quota envelope.",
+        "policy": "v8.2.12: One global Finnhub quota envelope. Fundamental financials default to 30-day TTL; EPS/recommendation default to 7-day TTL. Fast price refresh never calls these endpoints.",
     }
     save_all(CACHE_PATHS, CACHE)
 
@@ -418,7 +418,7 @@ def main() -> None:
     init_client()
     patch_resolver()
 
-    print("Finnhub unified budget manager v8.2.11")
+    print("Finnhub unified budget manager v8.2.12")
     print(f"- API key present: {bool(API_KEY)}")
     print(f"- Tickers checked: {len(tickers)}")
     print(f"- Global max calls this run: {TOTAL_MAX_CALLS}")
