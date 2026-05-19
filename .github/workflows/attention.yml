@@ -3,7 +3,7 @@ name: Generate Attention List
 on:
   workflow_dispatch:
   schedule:
-    # After US market close, roughly 08:00 Bangkok / 01:00 UTC.
+    # Daily after US market close, roughly 08:00 Bangkok / 01:00 UTC.
     - cron: "0 1 * * 1-5"
 
 permissions:
@@ -54,27 +54,13 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_attention_finnhub.py
 
-      - name: Generate Finnhub cached bundle
-        env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-          FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
-          FINNHUB_FINANCIALS_MAX_CALLS_PER_RUN: "10"
-          FINNHUB_EPS_MAX_CALLS_PER_RUN: "10"
-          FINNHUB_REC_MAX_CALLS_PER_RUN: "10"
-          FINNHUB_FINANCIALS_TTL_HOURS: "72"
-          FINNHUB_EPS_TTL_HOURS: "168"
-          FINNHUB_REC_TTL_HOURS: "168"
-          FINNHUB_MIN_DELAY_SECONDS: "0.25"
-        run: python scripts/generate_finnhub_bundle_cached.py
-
-      - name: Validate attention/scanner data consistency
+      - name: Validate static data
         run: python scripts/validate_static_data.py
 
-      - name: Commit updated generated data
+      - name: Commit updated fast generated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           echo "Changed files before commit:"
           git status --short
 
@@ -84,22 +70,24 @@ jobs:
           cp -a site/data /tmp/stockcheck-generated/site-data
           cp -a static/data /tmp/stockcheck-generated/static-data
 
-          # Generated JSON files are intentionally overwritten by the latest run.
-          # Avoid rebasing generated-data commits over newer generated-data commits.
           git fetch origin main
           git reset --hard origin/main
-          rm -rf data site/data static/data
-          cp -a /tmp/stockcheck-generated/data data
-          mkdir -p site static
-          cp -a /tmp/stockcheck-generated/site-data site/data
-          cp -a /tmp/stockcheck-generated/static-data static/data
 
-          git add -A data site/data static/data
+          # Fast attention refresh owns only price/scanner/attention outputs.
+          for f in technical.json scanner.json attention_today.json; do
+            [ -f "/tmp/stockcheck-generated/data/$f" ] && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
+            [ -f "/tmp/stockcheck-generated/site-data/$f" ] && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
+            [ -f "/tmp/stockcheck-generated/static-data/$f" ] && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
+          done
+
+          git add -A data/technical.json data/scanner.json data/attention_today.json \
+            site/data/technical.json site/data/scanner.json site/data/attention_today.json \
+            static/data/technical.json static/data/scanner.json static/data/attention_today.json
 
           if git diff --cached --quiet; then
-            echo "No generated data changes to commit."
+            echo "No fast generated data changes to commit."
             exit 0
           fi
 
-          git commit -m "Update generated stock radar data"
+          git commit -m "Update fast stock radar data"
           git push origin HEAD:main
