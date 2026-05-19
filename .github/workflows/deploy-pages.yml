@@ -43,6 +43,12 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
+      - name: Regenerate Today attention from refreshed technical data
+        env:
+          SEC_USER_AGENT: "Stock Timing Radar GitHub Pages deploy contact@users.noreply.github.com"
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python scripts/generate_attention_finnhub.py
+
       - name: Refresh latest static fundamental layer from main
         run: |
           mkdir -p site/data
