@@ -1,22 +1,23 @@
-name: Generate Attention List
+name: Refresh Technical Prices
 
 on:
   workflow_dispatch:
   schedule:
-    # Daily after US market close, roughly 08:00 Bangkok / 01:00 UTC.
-    - cron: "0 1 * * 1-5"
+    # Fast price/technical refresh during broad US market window.
+    # GitHub schedules are UTC and can be delayed.
+    - cron: "*/15 13-22 * * 1-5"
 
 permissions:
   contents: write
 
 concurrency:
   group: stockcheck-fast-generated-data
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  generate:
+  refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,13 +35,13 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Sync latest main before generating
+      - name: Sync latest main before refresh
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
 
-      - name: Refresh technical layer for attention sync
+      - name: Generate technical data only
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -48,7 +49,7 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
-      - name: Generate attention_today.json
+      - name: Refresh attention from latest technical data
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
@@ -57,12 +58,10 @@ jobs:
       - name: Validate static data
         run: python scripts/validate_static_data.py
 
-      - name: Commit updated fast generated data
+      - name: Commit fast data only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo "Changed files before commit:"
-          git status --short
 
           mkdir -p /tmp/stockcheck-generated
           rm -rf /tmp/stockcheck-generated/data /tmp/stockcheck-generated/site-data /tmp/stockcheck-generated/static-data
@@ -73,7 +72,6 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
 
-          # Fast refresh owns only price/scanner/attention outputs.
           for f in technical.json scanner.json attention_today.json; do
             [ -f "/tmp/stockcheck-generated/data/$f" ] && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
             [ -f "/tmp/stockcheck-generated/site-data/$f" ] && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
@@ -85,9 +83,9 @@ jobs:
             static/data/technical.json static/data/scanner.json static/data/attention_today.json
 
           if git diff --cached --quiet; then
-            echo "No fast generated data changes to commit."
+            echo "No fast data changes."
             exit 0
           fi
 
-          git commit -m "Update fast stock radar data"
+          git commit -m "Refresh technical prices and attention"
           git push origin HEAD:main
