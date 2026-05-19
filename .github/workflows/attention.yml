@@ -80,9 +80,16 @@ jobs:
             [ -f "/tmp/stockcheck-generated/static-data/$f" ] && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
           done
 
-          git add -A data/technical.json data/scanner.json data/attention_today.json \
+          for f in \
+            data/technical.json data/scanner.json data/attention_today.json \
             site/data/technical.json site/data/scanner.json site/data/attention_today.json \
-            static/data/technical.json static/data/scanner.json static/data/attention_today.json
+            static/data/technical.json static/data/scanner.json static/data/attention_today.json; do
+            if [ -e "$f" ]; then
+              git add "$f"
+            else
+              echo "Skip missing generated file: $f"
+            fi
+          done
 
           if git diff --cached --quiet; then
             echo "No fast generated data changes to commit."
