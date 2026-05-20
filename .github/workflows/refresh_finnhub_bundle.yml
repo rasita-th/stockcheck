@@ -1,9 +1,9 @@
-name: Refresh Finnhub Slow Data
+name: Refresh Slow Finnhub Fundamentals
 
 on:
   workflow_dispatch:
   schedule:
-    # Slow data: monthly refresh only. Fundamental/recommendation/EPS do not need 10-minute refreshes.
+    # Monthly safety refresh. Fundamental data does not need minute-level refresh.
     - cron: "0 2 2 * *"
 
 permissions:
@@ -11,12 +11,12 @@ permissions:
 
 concurrency:
   group: stockcheck-slow-finnhub-data
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,58 +34,32 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Sync latest main before slow refresh
+      - name: Sync latest main
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
 
-      - name: Generate slow Finnhub bundle with one shared budget
+      - name: Refresh slow Finnhub bundle
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
-          FINNHUB_FINANCIALS_MAX_CALLS_PER_RUN: "8"
-          FINNHUB_EPS_MAX_CALLS_PER_RUN: "11"
-          FINNHUB_REC_MAX_CALLS_PER_RUN: "11"
           FINNHUB_FINANCIALS_TTL_HOURS: "720"
           FINNHUB_EPS_TTL_HOURS: "168"
           FINNHUB_REC_TTL_HOURS: "168"
-          FINNHUB_MIN_DELAY_SECONDS: "0.25"
         run: python scripts/generate_finnhub_bundle_cached.py
 
       - name: Validate static data
         run: python scripts/validate_static_data.py
 
-      - name: Commit slow Finnhub data only
+      - name: Commit slow data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo "Changed files before commit:"
-          git status --short
-
-          mkdir -p /tmp/stockcheck-generated
-          rm -rf /tmp/stockcheck-generated/data /tmp/stockcheck-generated/site-data /tmp/stockcheck-generated/static-data
-          cp -a data /tmp/stockcheck-generated/data
-          cp -a site/data /tmp/stockcheck-generated/site-data
-          cp -a static/data /tmp/stockcheck-generated/static-data
-
-          git fetch origin main
-          git reset --hard origin/main
-
-          for f in fundamental.json fundamental_resolver_report.json finnhub_bundle_cache.json recommendation_trends.json eps_surprises.json; do
-            [ -f "/tmp/stockcheck-generated/data/$f" ] && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
-            [ -f "/tmp/stockcheck-generated/site-data/$f" ] && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
-            [ -f "/tmp/stockcheck-generated/static-data/$f" ] && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
-          done
-
-          git add -A data/fundamental.json data/fundamental_resolver_report.json data/finnhub_bundle_cache.json data/recommendation_trends.json data/eps_surprises.json \
-            site/data/fundamental.json site/data/fundamental_resolver_report.json site/data/finnhub_bundle_cache.json site/data/recommendation_trends.json site/data/eps_surprises.json \
-            static/data/fundamental.json static/data/fundamental_resolver_report.json static/data/finnhub_bundle_cache.json static/data/recommendation_trends.json static/data/eps_surprises.json
-
+          git add -A data site/data static/data
           if git diff --cached --quiet; then
-            echo "No slow Finnhub data changes."
+            echo "No slow data changes."
             exit 0
           fi
-
-          git commit -m "Refresh slow Finnhub data"
+          git commit -m "Refresh slow Finnhub fundamental data"
           git push origin HEAD:main

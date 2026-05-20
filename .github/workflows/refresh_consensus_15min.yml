@@ -1,0 +1,75 @@
+name: Refresh Analyst Consensus Queue
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Queue check every 15 minutes. Actual API calls are capped and cache-aware.
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stockcheck-analyst-consensus-cache
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Refresh cached analyst consensus
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          ANALYST_CONSENSUS_MAX_CALLS_PER_RUN: "3"
+          ANALYST_CONSENSUS_TTL_HOURS: "168"
+          FINNHUB_MIN_DELAY_SECONDS: "0.35"
+        run: python scripts/generate_analyst_consensus_cache.py
+
+      - name: Commit analyst consensus cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          mkdir -p /tmp/stockcheck-consensus
+          [ -d data ] && cp -a data /tmp/stockcheck-consensus/data || mkdir -p /tmp/stockcheck-consensus/data
+          [ -d site/data ] && cp -a site/data /tmp/stockcheck-consensus/site-data || mkdir -p /tmp/stockcheck-consensus/site-data
+          [ -d static/data ] && cp -a static/data /tmp/stockcheck-consensus/static-data || mkdir -p /tmp/stockcheck-consensus/static-data
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          for f in recommendation_trends.json; do
+            [ -f "/tmp/stockcheck-consensus/data/$f" ] && mkdir -p data && cp "/tmp/stockcheck-consensus/data/$f" "data/$f"
+            [ -f "/tmp/stockcheck-consensus/site-data/$f" ] && mkdir -p site/data && cp "/tmp/stockcheck-consensus/site-data/$f" "site/data/$f"
+            [ -f "/tmp/stockcheck-consensus/static-data/$f" ] && mkdir -p static/data && cp "/tmp/stockcheck-consensus/static-data/$f" "static/data/$f"
+          done
+
+          for f in data/recommendation_trends.json site/data/recommendation_trends.json static/data/recommendation_trends.json; do
+            if [ -e "$f" ]; then git add "$f"; else echo "Skip missing generated file: $f"; fi
+          done
+
+          if git diff --cached --quiet; then
+            echo "No analyst consensus changes."
+            exit 0
+          fi
+
+          git commit -m "Refresh analyst consensus cache"
+          git push origin HEAD:main

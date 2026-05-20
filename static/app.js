@@ -477,10 +477,11 @@ function barFill(value, max = maxDistance()) {
 
 function emaRows(stock, compact = false) {
   const rows = [["EMA5", stock.ema5, stock.ema5Pct], ["EMA20", stock.ema20, stock.ema20Pct], ["EMA89", stock.ema89, stock.ema89Pct], ["EMA200", stock.ema200, stock.ema200Pct]];
-  // Card-level relative scale: compare EMA5/20/89/200 inside the same stock.
+
+  // v8.3.0: scale EMA bars inside each card, not across the whole watchlist.
   // Floor at 5% so tiny distances do not look fully stretched.
-  const distances = rows.map(([, , pct]) => Math.abs(toNum(pct) ?? 0));
-  const max = Math.max(5, ...distances);
+  const max = Math.max(5, ...rows.map(([, , pct]) => Math.abs(toNum(pct) ?? 0)));
+
   return rows.map(([label, price, pct]) => `
     <div class="${compact ? "ema-bar-row" : "distance-row"}">
       <span>${label}</span>
@@ -601,9 +602,14 @@ function renderTechnicalMobile() {
   const wrap = $("#technicalMobileCards");
   if (!wrap) return;
   const rows = scannerStocks();
-  if (!rows.length) { wrap.innerHTML = `<div class="mobile-empty">No stocks passed filters.</div>`; return; }
+
+  if (!rows.length) {
+    wrap.innerHTML = `<div class="mobile-empty">No stocks passed filters.</div>`;
+    return;
+  }
+
   wrap.innerHTML = rows.map(s => `
-    <article class="stock-card ${s.isPlaceholder ? "pending-card" : s._filteredOut ? "filtered-card" : ""}" data-select="${esc(s.ticker)}">
+    <article class="stock-card ${s.isPlaceholder ? "pending-card" : s._filteredOut ? "filtered-card" : ""}" data-select="${esc(s.ticker)}" data-ticker="${esc(s.ticker)}">
       <div class="stock-card-header">
         <div class="stock-card-title">
           <span class="logo-box ${signalClass(s.signal) === "buy" ? "green" : (signalClass(s.signal) === "watch" || signalClass(s.signal) === "hot") ? "orange" : signalClass(s.signal) === "avoid" ? "red" : ""}">${esc(s.ticker[0])}</span>
@@ -611,12 +617,18 @@ function renderTechnicalMobile() {
         </div>
         <div class="card-score"><strong>${fmt(s.score, 0)}</strong><span>Score</span></div>
       </div>
-      <div class="card-price-row">
-        <span>${fmtMoney(s.price)} <small class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</small></span>
+
+      <div class="card-price-row daily-price-row">
+        <span>
+          ${fmtMoney(s.price)}
+          <small class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</small>
+        </span>
         <span>RSI: ${fmt(s.rsi, 1)}</span>
         <span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span>
       </div>
+
       <div class="ema-bars">${emaRows(s, true)}</div>
+      ${s._filteredOut ? `<div class="filtered-note">Filtered out by current filters</div>` : ""}
     </article>`).join("");
 }
 
@@ -1109,15 +1121,9 @@ function recommendationTrendsTableHtml(s) {
 function analystLinksHtml(s) {
   const analysisUrl = yahooAnalysisUrl(s.ticker);
   const quoteUrl = yahooQuoteUrl(s.ticker);
-  const trendHtml = recommendationTrendsTableHtml(s);
-  setTimeout(() => {
-    loadRecommendationTrendsCache().then(() => {
-      if (state.fundSubTab === "analyst") renderDetail();
-    });
-  }, 0);
   return `<div class="standout-card yahoo-analysis-card"><strong>Yahoo Finance Analysis</strong><p class="note">ไม่ใช้ Alpha Vantage API แล้ว — กดปุ่มเพื่อเปิดหน้า Analyst Estimates / Earnings Estimates ของ Yahoo Finance โดยตรง</p>
     <ul><li>Current Price: ${fmtMoney(s.price)}</li><li>Ticker: ${esc(s.ticker)}</li><li>Source: Yahoo Finance Analysis + Finnhub cached recommendation trends</li></ul>
-    ${trendHtml}
+    ${recommendationTrendsTableHtml(s)}
     <div class="link-row"><a class="external-link" href="${analysisUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Analysis ↗</a><a class="external-link secondary" href="${quoteUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Quote ↗</a></div>
   </div>`;
 }

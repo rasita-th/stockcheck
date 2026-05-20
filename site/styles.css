@@ -2770,3 +2770,31 @@ body.attention-active .attention-page { display: block; }
   margin-left: 8px;
   font-weight: 800;
 }
+
+
+/* v8.3.0 final analyst consensus + mobile card render */
+.daily-price-row small.pct {
+  display: inline-block;
+  margin-left: 8px;
+  font-weight: 800;
+}
+.recommendation-trends-card {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid rgba(88,166,255,.35);
+  border-radius: 18px;
+  background: rgba(13,17,23,.72);
+}
+.recommendation-trends-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+.recommendation-trends-table th,
+.recommendation-trends-table td {
+  white-space: nowrap;
+  text-align: center;
+}
+.recommendation-trends-table th:first-child,
+.recommendation-trends-table td:first-child {
+  text-align: left;
+}
