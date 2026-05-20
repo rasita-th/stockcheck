@@ -2742,3 +2742,31 @@ body.attention-active .attention-page { display: block; }
 .attention-price-cell .red, .attention-price-strip .red { color: var(--red, #F85149); }
 .attention-price-cell .green, .attention-price-strip .green { color: var(--green, #3FB950); }
 .attention-price-cell .neutral, .attention-price-strip .neutral { color: var(--muted, #8B949E); }
+
+
+/* v8.2.17 core render fix */
+.recommendation-trends-card {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid rgba(88,166,255,.35);
+  border-radius: 18px;
+  background: rgba(13,17,23,.72);
+}
+.recommendation-trends-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+.recommendation-trends-table th,
+.recommendation-trends-table td {
+  white-space: nowrap;
+  text-align: center;
+}
+.recommendation-trends-table td:first-child,
+.recommendation-trends-table th:first-child {
+  text-align: left;
+}
+.card-price-row small.pct {
+  display: inline-block;
+  margin-left: 8px;
+  font-weight: 800;
+}
