@@ -477,7 +477,10 @@ function barFill(value, max = maxDistance()) {
 
 function emaRows(stock, compact = false) {
   const rows = [["EMA5", stock.ema5, stock.ema5Pct], ["EMA20", stock.ema20, stock.ema20Pct], ["EMA89", stock.ema89, stock.ema89Pct], ["EMA200", stock.ema200, stock.ema200Pct]];
-  const max = maxDistance(currentStocks());
+  // Card-level relative scale: compare EMA5/20/89/200 inside the same stock.
+  // Floor at 5% so tiny distances do not look fully stretched.
+  const distances = rows.map(([, , pct]) => Math.abs(toNum(pct) ?? 0));
+  const max = Math.max(5, ...distances);
   return rows.map(([label, price, pct]) => `
     <div class="${compact ? "ema-bar-row" : "distance-row"}">
       <span>${label}</span>
@@ -608,7 +611,11 @@ function renderTechnicalMobile() {
         </div>
         <div class="card-score"><strong>${fmt(s.score, 0)}</strong><span>Score</span></div>
       </div>
-      <div class="card-price-row"><span>${fmtMoney(s.price)}</span><span>RSI: ${fmt(s.rsi, 1)}</span><span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span></div>
+      <div class="card-price-row">
+        <span>${fmtMoney(s.price)} <small class="pct ${pctClass(s.dayPct)}">${pctLabel(s.dayPct)}</small></span>
+        <span>RSI: ${fmt(s.rsi, 1)}</span>
+        <span class="signal-badge ${signalClass(s.signal)}">${signalText(s.signal)}</span>
+      </div>
       <div class="ema-bars">${emaRows(s, true)}</div>
     </article>`).join("");
 }
@@ -1024,11 +1031,93 @@ function fundamentalDashboardHtml(s, wrapped = true) {
   return wrapped ? `<article class="panel-card fundamental-dashboard">${html}</article>` : html;
 }
 
+
+let recommendationTrendsCache = null;
+
+async function loadRecommendationTrendsCache() {
+  if (recommendationTrendsCache) return recommendationTrendsCache;
+  const urls = [
+    "data/recommendation_trends.json?v=" + Date.now(),
+    "data/finnhub_recommendation_trends.json?v=" + Date.now()
+  ];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) continue;
+      const data = await res.json();
+      recommendationTrendsCache = data;
+      return data;
+    } catch (_) {}
+  }
+  recommendationTrendsCache = {};
+  return recommendationTrendsCache;
+}
+
+function findRecommendationTrendRows(ticker, cache) {
+  const t = normalizeTicker(ticker);
+  if (!cache) return [];
+  const candidates = [
+    cache[t],
+    cache.recommendation_trends?.[t],
+    cache.recommendations?.[t],
+    cache.trends?.[t],
+    cache.data?.[t]
+  ].filter(Boolean);
+
+  for (const c of candidates) {
+    if (Array.isArray(c)) return c;
+    if (Array.isArray(c?.rows)) return c.rows;
+    if (Array.isArray(c?.trend)) return c.trend;
+    if (Array.isArray(c?.data)) return c.data;
+  }
+
+  const rows = Array.isArray(cache.rows) ? cache.rows : Array.isArray(cache.data) ? cache.data : [];
+  return rows.filter(r => normalizeTicker(r.symbol || r.ticker || "") === t);
+}
+
+function recommendationTrendsTableHtml(s) {
+  const cache = recommendationTrendsCache || {};
+  const rows = findRecommendationTrendRows(s.ticker, cache).slice(0, 6);
+
+  const sourceAt = cache.generated_at || cache.generatedAt || cache.updated_at || cache.updatedAt || "";
+  const header = `<div class="recommendation-trends-card"><strong>${esc(s.ticker)} Analyst Consensus</strong><p class="note">Finnhub recommendation trends${sourceAt ? ` · ${esc(String(sourceAt).slice(0, 19).replace("T", " "))}` : ""}</p>`;
+
+  if (!rows.length) {
+    return `${header}<div class="chart-empty">No analyst consensus data in generated cache yet.</div></div>`;
+  }
+
+  const body = rows.map(r => `
+    <tr>
+      <td>${esc(r.period || r.date || r.quarter || "—")}</td>
+      <td>${fmt(r.strongBuy ?? r.strong_buy ?? r.strongbuy, 0)}</td>
+      <td>${fmt(r.buy, 0)}</td>
+      <td>${fmt(r.hold, 0)}</td>
+      <td>${fmt(r.sell, 0)}</td>
+      <td>${fmt(r.strongSell ?? r.strong_sell ?? r.strongsell, 0)}</td>
+    </tr>`).join("");
+
+  return `${header}
+    <div class="table-wrap recommendation-trends-wrap">
+      <table class="scanner-table recommendation-trends-table">
+        <thead><tr><th>Period</th><th>Strong Buy</th><th>Buy</th><th>Hold</th><th>Sell</th><th>Strong Sell</th></tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
 function analystLinksHtml(s) {
   const analysisUrl = yahooAnalysisUrl(s.ticker);
   const quoteUrl = yahooQuoteUrl(s.ticker);
+  const trendHtml = recommendationTrendsTableHtml(s);
+  setTimeout(() => {
+    loadRecommendationTrendsCache().then(() => {
+      if (state.fundSubTab === "analyst") renderDetail();
+    });
+  }, 0);
   return `<div class="standout-card yahoo-analysis-card"><strong>Yahoo Finance Analysis</strong><p class="note">ไม่ใช้ Alpha Vantage API แล้ว — กดปุ่มเพื่อเปิดหน้า Analyst Estimates / Earnings Estimates ของ Yahoo Finance โดยตรง</p>
-    <ul><li>Current Price: ${fmtMoney(s.price)}</li><li>Ticker: ${esc(s.ticker)}</li><li>Source: Yahoo Finance Analysis</li></ul>
+    <ul><li>Current Price: ${fmtMoney(s.price)}</li><li>Ticker: ${esc(s.ticker)}</li><li>Source: Yahoo Finance Analysis + Finnhub cached recommendation trends</li></ul>
+    ${trendHtml}
     <div class="link-row"><a class="external-link" href="${analysisUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Analysis ↗</a><a class="external-link secondary" href="${quoteUrl}" target="_blank" rel="noopener noreferrer">Open Yahoo Quote ↗</a></div>
   </div>`;
 }
