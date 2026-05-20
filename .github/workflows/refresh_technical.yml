@@ -1,11 +1,10 @@
-name: Refresh Technical Prices
+name: Refresh Prices 20:30 Thailand
 
 on:
   workflow_dispatch:
   schedule:
-    # Fast price/technical refresh during broad US market window.
-    # GitHub schedules are UTC and can be delayed.
-    - cron: "*/15 13-22 * * 1-5"
+    # 20:30 Thailand = 13:30 UTC.
+    - cron: "30 13 * * *"
 
 permissions:
   contents: write
@@ -41,7 +40,7 @@ jobs:
           git checkout main
           git reset --hard origin/main
 
-      - name: Generate technical data only
+      - name: Generate technical data
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -49,7 +48,7 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
-      - name: Refresh attention from latest technical data
+      - name: Regenerate Today attention from refreshed technical data
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
@@ -58,35 +57,31 @@ jobs:
       - name: Validate static data
         run: python scripts/validate_static_data.py
 
-      - name: Commit fast data only
+      - name: Commit fast generated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           mkdir -p /tmp/stockcheck-generated
           rm -rf /tmp/stockcheck-generated/data /tmp/stockcheck-generated/site-data /tmp/stockcheck-generated/static-data
-          cp -a data /tmp/stockcheck-generated/data
-          cp -a site/data /tmp/stockcheck-generated/site-data
-          cp -a static/data /tmp/stockcheck-generated/static-data
+          [ -d data ] && cp -a data /tmp/stockcheck-generated/data || mkdir -p /tmp/stockcheck-generated/data
+          [ -d site/data ] && cp -a site/data /tmp/stockcheck-generated/site-data || mkdir -p /tmp/stockcheck-generated/site-data
+          [ -d static/data ] && cp -a static/data /tmp/stockcheck-generated/static-data || mkdir -p /tmp/stockcheck-generated/static-data
 
           git fetch origin main
           git reset --hard origin/main
 
           for f in technical.json scanner.json attention_today.json; do
-            [ -f "/tmp/stockcheck-generated/data/$f" ] && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
-            [ -f "/tmp/stockcheck-generated/site-data/$f" ] && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
-            [ -f "/tmp/stockcheck-generated/static-data/$f" ] && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
+            [ -f "/tmp/stockcheck-generated/data/$f" ] && mkdir -p data && cp "/tmp/stockcheck-generated/data/$f" "data/$f"
+            [ -f "/tmp/stockcheck-generated/site-data/$f" ] && mkdir -p site/data && cp "/tmp/stockcheck-generated/site-data/$f" "site/data/$f"
+            [ -f "/tmp/stockcheck-generated/static-data/$f" ] && mkdir -p static/data && cp "/tmp/stockcheck-generated/static-data/$f" "static/data/$f"
           done
 
           for f in \
             data/technical.json data/scanner.json data/attention_today.json \
             site/data/technical.json site/data/scanner.json site/data/attention_today.json \
             static/data/technical.json static/data/scanner.json static/data/attention_today.json; do
-            if [ -e "$f" ]; then
-              git add "$f"
-            else
-              echo "Skip missing generated file: $f"
-            fi
+            if [ -e "$f" ]; then git add "$f"; else echo "Skip missing generated file: $f"; fi
           done
 
           if git diff --cached --quiet; then
@@ -94,5 +89,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Refresh technical prices and attention"
+          git commit -m "Refresh prices and Today attention"
           git push origin HEAD:main
