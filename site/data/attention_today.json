@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-22T21:07:39+07:00",
+  "updated_at": "2026-05-23T01:28:24+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +6.4% from zone"
+        "Reached trim zone $290 · +6.7% from zone"
       ],
       "severity": "medium",
-      "price": 308.56,
+      "price": 309.45,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 31.30212765957447,
-      "trim_zone_distance_pct": 6.4,
+      "buy_zone_distance_pct": 31.680851063829785,
+      "trim_zone_distance_pct": 6.706896551724134,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -34,11 +34,11 @@
         "Reached trim zone $255 · +5.1% from zone"
       ],
       "severity": "medium",
-      "price": 268.0,
+      "price": 268.03,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 30.73170731707317,
-      "trim_zone_distance_pct": 5.098039215686274,
+      "buy_zone_distance_pct": 30.746341463414623,
+      "trim_zone_distance_pct": 5.109803921568616,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -53,14 +53,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -2.5% from zone"
+        "Reached buy zone $430 · -2.6% from zone"
       ],
       "severity": "medium",
-      "price": 419.29,
+      "price": 418.99,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -2.4906976744186,
-      "trim_zone_distance_pct": -19.36730769230769,
+      "buy_zone_distance_pct": -2.5604651162790675,
+      "trim_zone_distance_pct": -19.424999999999997,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -75,14 +75,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -6.4% from zone"
+        "Reached buy zone $145 · -5.4% from zone"
       ],
       "severity": "medium",
-      "price": 135.65,
+      "price": 137.24,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -6.448275862068961,
-      "trim_zone_distance_pct": -26.675675675675674,
+      "buy_zone_distance_pct": -5.351724137931028,
+      "trim_zone_distance_pct": -25.81621621621621,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -97,14 +97,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $72 · +3.2% from zone"
+        "Near buy zone $72 · +4.9% from zone"
       ],
       "severity": "medium",
-      "price": 74.3,
+      "price": 75.5,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": 3.1944444444444406,
-      "trim_zone_distance_pct": -13.6046511627907,
+      "buy_zone_distance_pct": 4.861111111111112,
+      "trim_zone_distance_pct": -12.209302325581394,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -120,14 +120,14 @@
     "earnings_source": "Finnhub primary, Yahoo fallback, manual fallback; manual force overrides all",
     "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
     "scanner_synced": true,
-    "technical_rows": 408,
+    "technical_rows": 409,
     "manual_earnings_rows": 1,
     "finnhub_rows": 0
   },
   "earnings_diagnostics": {
     "checked": 10,
     "finnhub_enabled": true,
-    "finnhub_status": "loaded",
+    "finnhub_status": "error",
     "loaded_from_finnhub": [],
     "loaded_from_yahoo": [],
     "loaded_from_manual": [
@@ -144,11 +144,12 @@
       "SEI",
       "TSLA"
     ],
-    "api_failed": [],
+    "api_failed": [
+      "finnhub: HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)"
+    ],
     "finnhub_window": {
-      "from": "2026-05-22",
-      "to": "2026-06-05"
-    },
-    "finnhub_rows_matched": 0
+      "from": "2026-05-23",
+      "to": "2026-06-06"
+    }
   }
 }
