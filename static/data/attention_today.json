@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-26T02:06:54+07:00",
+  "updated_at": "2026-05-27T00:18:17+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +6.5% from zone"
+        "Reached trim zone $290 · +6.6% from zone"
       ],
       "severity": "medium",
-      "price": 308.82,
+      "price": 309.25,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 31.412765957446805,
-      "trim_zone_distance_pct": 6.489655172413792,
+      "buy_zone_distance_pct": 31.595744680851062,
+      "trim_zone_distance_pct": 6.637931034482758,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $255 · +4.4% from zone"
+        "Reached trim zone $255 · +2.8% from zone"
       ],
       "severity": "medium",
-      "price": 266.32,
+      "price": 262.17,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 29.912195121951218,
-      "trim_zone_distance_pct": 4.439215686274507,
+      "buy_zone_distance_pct": 27.88780487804879,
+      "trim_zone_distance_pct": 2.811764705882359,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -53,14 +53,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -2.7% from zone"
+        "Reached buy zone $430 · -3.7% from zone"
       ],
       "severity": "medium",
-      "price": 418.57,
+      "price": 414.0,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -2.6581395348837225,
-      "trim_zone_distance_pct": -19.505769230769232,
+      "buy_zone_distance_pct": -3.7209302325581395,
+      "trim_zone_distance_pct": -20.384615384615383,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -70,19 +70,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "role": "Core AI",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Near buy zone $205 · +4.2% from zone"
+      ],
+      "severity": "medium",
+      "price": 213.66,
+      "buy_zone": 205.0,
+      "trim_zone": 245.0,
+      "buy_zone_distance_pct": 4.2243902439024374,
+      "trim_zone_distance_pct": -12.791836734693879,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "yahoo": "https://finance.yahoo.com/quote/NVDA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investor.nvidia.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "PLTR",
       "name": "Palantir Technologies Inc.",
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -5.6% from zone"
+        "Reached buy zone $145 · -5.2% from zone"
       ],
       "severity": "medium",
-      "price": 136.88,
+      "price": 137.45,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -5.600000000000003,
-      "trim_zone_distance_pct": -26.010810810810813,
+      "buy_zone_distance_pct": -5.206896551724146,
+      "trim_zone_distance_pct": -25.702702702702705,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -97,14 +119,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $72 · +3.2% from zone"
+        "Near buy zone $72 · +4.2% from zone"
       ],
       "severity": "medium",
-      "price": 74.27,
+      "price": 75.0,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": 3.1527777777777724,
-      "trim_zone_distance_pct": -13.639534883720936,
+      "buy_zone_distance_pct": 4.166666666666666,
+      "trim_zone_distance_pct": -12.790697674418606,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -145,8 +167,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-05-26",
-      "to": "2026-06-09"
+      "from": "2026-05-27",
+      "to": "2026-06-10"
     },
     "finnhub_rows_matched": 0
   }
