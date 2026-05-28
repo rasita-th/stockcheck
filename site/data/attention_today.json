@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T12:02:51+07:00",
+  "updated_at": "2026-05-29T00:08:10+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +7.2% from zone"
+        "Reached trim zone $290 · +7.4% from zone"
       ],
       "severity": "medium",
-      "price": 310.85,
+      "price": 311.57,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 32.27659574468086,
-      "trim_zone_distance_pct": 7.189655172413801,
+      "buy_zone_distance_pct": 32.58297872340425,
+      "trim_zone_distance_pct": 7.437931034482756,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $255 · +6.6% from zone"
+        "Reached trim zone $255 · +5.9% from zone"
       ],
       "severity": "medium",
-      "price": 271.85,
+      "price": 270.16,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 32.60975609756099,
-      "trim_zone_distance_pct": 6.607843137254911,
+      "buy_zone_distance_pct": 31.785365853658547,
+      "trim_zone_distance_pct": 5.945098039215696,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -53,14 +53,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -4.0% from zone"
+        "Reached buy zone $430 · -1.2% from zone"
       ],
       "severity": "medium",
-      "price": 412.67,
+      "price": 424.89,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -4.030232558139532,
-      "trim_zone_distance_pct": -20.640384615384612,
+      "buy_zone_distance_pct": -1.1883720930232589,
+      "trim_zone_distance_pct": -18.290384615384617,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -75,14 +75,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +3.7% from zone"
+        "Near buy zone $205 · +4.2% from zone"
       ],
       "severity": "medium",
-      "price": 212.6,
+      "price": 213.69,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 3.707317073170729,
-      "trim_zone_distance_pct": -13.22448979591837,
+      "buy_zone_distance_pct": 4.239024390243902,
+      "trim_zone_distance_pct": -12.779591836734694,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -97,14 +97,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -8.6% from zone"
+        "Reached buy zone $145 · -3.8% from zone"
       ],
       "severity": "medium",
-      "price": 132.51,
+      "price": 139.51,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -8.613793103448282,
-      "trim_zone_distance_pct": -28.372972972972978,
+      "buy_zone_distance_pct": -3.7862068965517306,
+      "trim_zone_distance_pct": -24.589189189189195,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -114,19 +114,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "PUMP",
+      "name": "ProPetro Holding Corp.",
+      "role": "Cyclical Watch",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Near buy zone $15 · +2.4% from zone"
+      ],
+      "severity": "medium",
+      "price": 15.36,
+      "buy_zone": 15.0,
+      "trim_zone": 19.0,
+      "buy_zone_distance_pct": 2.3999999999999964,
+      "trim_zone_distance_pct": -19.157894736842106,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
+        "yahoo": "https://finance.yahoo.com/quote/PUMP",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.propetroservices.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "SEI",
       "name": "SEI Investments Company",
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -0.7% from zone"
+        "Reached buy zone $72 · -3.9% from zone"
       ],
       "severity": "medium",
-      "price": 71.49,
+      "price": 69.16,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -0.7083333333333404,
-      "trim_zone_distance_pct": -16.872093023255818,
+      "buy_zone_distance_pct": -3.944444444444449,
+      "trim_zone_distance_pct": -19.581395348837212,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -167,8 +189,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-05-28",
-      "to": "2026-06-11"
+      "from": "2026-05-29",
+      "to": "2026-06-12"
     },
     "finnhub_rows_matched": 0
   }
