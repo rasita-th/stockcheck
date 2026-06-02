@@ -1,9 +1,17 @@
 {
-  "generated_at": "2026-05-20T16:49:09.459105+00:00",
+  "generated_at": "2026-06-02T17:56:51.326745+00:00",
   "source": "Finnhub company_earnings cached by unified budget manager",
   "api_key_present": true,
   "surprises": {
     "NVDA": [
+      {
+        "period": "2026-06-30",
+        "actual": 1.87,
+        "estimate": 1.7922,
+        "surprise": 0.0778,
+        "surprisePercent": 4.341,
+        "symbol": "NVDA"
+      },
       {
         "period": "2026-03-31",
         "actual": 1.62,
@@ -26,14 +34,6 @@
         "estimate": 1.0281,
         "surprise": 0.0219,
         "surprisePercent": 2.1301,
-        "symbol": "NVDA"
-      },
-      {
-        "period": "2025-06-30",
-        "actual": 0.96,
-        "estimate": 0.9521,
-        "surprise": 0.0079,
-        "surprisePercent": 0.8297,
         "symbol": "NVDA"
       }
     ],
@@ -175,6 +175,14 @@
     ],
     "CRDO": [
       {
+        "period": "2026-06-30",
+        "actual": 1.16,
+        "estimate": 1.0497,
+        "surprise": 0.1103,
+        "surprisePercent": 10.5078,
+        "symbol": "CRDO"
+      },
+      {
         "period": "2026-03-31",
         "actual": 1.07,
         "estimate": 0.9744,
@@ -196,14 +204,6 @@
         "estimate": 0.3696,
         "surprise": 0.1504,
         "surprisePercent": 40.6926,
-        "symbol": "CRDO"
-      },
-      {
-        "period": "2025-06-30",
-        "actual": 0.35,
-        "estimate": 0.2814,
-        "surprise": 0.0686,
-        "surprisePercent": 24.3781,
         "symbol": "CRDO"
       }
     ],
@@ -277,6 +277,14 @@
     ],
     "ADI": [
       {
+        "period": "2026-06-30",
+        "actual": 3.09,
+        "estimate": 2.9337,
+        "surprise": 0.1563,
+        "surprisePercent": 5.3277,
+        "symbol": "ADI"
+      },
+      {
         "period": "2026-03-31",
         "actual": 2.46,
         "estimate": 2.3344,
@@ -298,14 +306,6 @@
         "estimate": 1.9727,
         "surprise": 0.0773,
         "surprisePercent": 3.9185,
-        "symbol": "ADI"
-      },
-      {
-        "period": "2025-06-30",
-        "actual": 1.85,
-        "estimate": 1.7182,
-        "surprise": 0.1318,
-        "surprisePercent": 7.6708,
         "symbol": "ADI"
       }
     ],
@@ -1758,16 +1758,16 @@
   },
   "_cache": {
     "fetched_at": {
-      "NVDA": "2026-05-17T15:33:03.239755+00:00",
-      "PLTR": "2026-05-17T15:33:03.891495+00:00",
-      "SNDK": "2026-05-17T15:33:04.499012+00:00",
-      "MU": "2026-05-17T15:33:05.200036+00:00",
-      "CRCL": "2026-05-17T15:33:05.788122+00:00",
-      "CRDO": "2026-05-17T15:33:06.389302+00:00",
-      "ALAB": "2026-05-17T15:33:06.956049+00:00",
-      "META": "2026-05-17T15:33:07.620256+00:00",
-      "ADI": "2026-05-17T15:33:08.391615+00:00",
-      "WDC": "2026-05-17T15:33:09.099636+00:00",
+      "NVDA": "2026-06-02T17:56:39.662851+00:00",
+      "PLTR": "2026-06-02T17:56:39.998404+00:00",
+      "SNDK": "2026-06-02T17:56:40.346643+00:00",
+      "MU": "2026-06-02T17:56:40.679746+00:00",
+      "CRCL": "2026-06-02T17:56:41.013135+00:00",
+      "CRDO": "2026-06-02T17:56:41.344214+00:00",
+      "ALAB": "2026-06-02T17:56:41.683818+00:00",
+      "META": "2026-06-02T17:56:42.016392+00:00",
+      "ADI": "2026-06-02T17:56:42.348701+00:00",
+      "WDC": "2026-06-02T17:56:42.686656+00:00",
       "TER": "2026-05-18T12:57:44.978331+00:00",
       "ANET": "2026-05-18T12:57:45.599791+00:00",
       "MPWR": "2026-05-18T12:57:46.242813+00:00",
@@ -1817,23 +1817,22 @@
     "finnhub_status": "loaded",
     "ttl_hours": 168.0,
     "global_budget_per_run": 30,
-    "endpoint_budget_per_run": 11,
-    "calls_used": 11,
+    "endpoint_budget_per_run": 10,
+    "calls_used": 10,
     "refreshed": [
-      "DDOG",
-      "AIR",
-      "CRM",
-      "SPGI",
-      "PANW",
-      "PATH",
-      "SITM",
-      "ONDS",
-      "NXPI",
-      "AXON",
-      "VRTX"
+      "NVDA",
+      "PLTR",
+      "SNDK",
+      "MU",
+      "CRCL",
+      "CRDO",
+      "ALAB",
+      "META",
+      "ADI",
+      "WDC"
     ],
-    "skipped_fresh_count": 41,
-    "skipped_budget_count": 354,
+    "skipped_fresh_count": 0,
+    "skipped_budget_count": 396,
     "failed": [],
     "policy": "Shared Finnhub budget; company_earnings cache is also used by fundamental resolver EPS surprise."
   }
