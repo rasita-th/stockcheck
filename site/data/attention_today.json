@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-03T00:53:16+07:00",
+  "updated_at": "2026-06-03T12:54:56+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +8.6% from zone"
+        "Reached trim zone $290 · +8.7% from zone"
       ],
       "severity": "medium",
-      "price": 314.98,
+      "price": 315.2,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 34.0340425531915,
-      "trim_zone_distance_pct": 8.613793103448282,
+      "buy_zone_distance_pct": 34.127659574468076,
+      "trim_zone_distance_pct": 8.689655172413788,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $255 · +1.2% from zone"
+        "Reached trim zone $255 · +0.6% from zone"
       ],
       "severity": "medium",
-      "price": 258.1,
+      "price": 256.52,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 25.902439024390254,
-      "trim_zone_distance_pct": 1.215686274509813,
+      "buy_zone_distance_pct": 25.13170731707316,
+      "trim_zone_distance_pct": 0.5960784313725419,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -53,14 +53,14 @@
       "role": "Satellite Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Near trim zone $90 · -2.1% from zone"
+        "Near trim zone $90 · -2.0% from zone"
       ],
       "severity": "medium",
-      "price": 88.15,
+      "price": 88.16,
       "buy_zone": 68.0,
       "trim_zone": 90.0,
-      "buy_zone_distance_pct": 29.632352941176478,
-      "trim_zone_distance_pct": -2.055555555555549,
+      "buy_zone_distance_pct": 29.647058823529406,
+      "trim_zone_distance_pct": -2.0444444444444483,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
         "yahoo": "https://finance.yahoo.com/quote/HOOD",
@@ -75,14 +75,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $430 · +3.2% from zone"
+        "Near buy zone $430 · +2.6% from zone"
       ],
       "severity": "medium",
-      "price": 443.91,
+      "price": 441.31,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": 3.2348837209302386,
-      "trim_zone_distance_pct": -14.632692307692302,
+      "buy_zone_distance_pct": 2.6302325581395354,
+      "trim_zone_distance_pct": -15.132692307692308,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -92,19 +92,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "role": "Satellite AI",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Near buy zone $145 · +4.9% from zone"
+      ],
+      "severity": "medium",
+      "price": 152.17,
+      "buy_zone": 145.0,
+      "trim_zone": 185.0,
+      "buy_zone_distance_pct": 4.9448275862068884,
+      "trim_zone_distance_pct": -17.745945945945955,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
+        "yahoo": "https://finance.yahoo.com/quote/PLTR",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.palantir.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "SEI",
       "name": "SEI Investments Company",
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $72 · +1.0% from zone"
+        "Reached buy zone $72 · -0.1% from zone"
       ],
       "severity": "medium",
-      "price": 72.7,
+      "price": 71.92,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": 0.9722222222222262,
-      "trim_zone_distance_pct": -15.465116279069765,
+      "buy_zone_distance_pct": -0.11111111111110875,
+      "trim_zone_distance_pct": -16.37209302325581,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
