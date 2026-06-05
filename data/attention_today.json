@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-04T23:33:31+07:00",
+  "updated_at": "2026-06-05T12:08:06+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +7.1% from zone"
+        "Reached trim zone $290 · +7.3% from zone"
       ],
       "severity": "medium",
-      "price": 310.73,
+      "price": 311.23,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 32.22553191489362,
-      "trim_zone_distance_pct": 7.148275862068972,
+      "buy_zone_distance_pct": 32.438297872340435,
+      "trim_zone_distance_pct": 7.32068965517242,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,19 +31,41 @@
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Near trim zone $255 · -0.4% from zone"
+        "Near trim zone $255 · -0.5% from zone"
       ],
       "severity": "medium",
-      "price": 253.91,
+      "price": 253.79,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 23.858536585365854,
-      "trim_zone_distance_pct": -0.42745098039215823,
+      "buy_zone_distance_pct": 23.799999999999997,
+      "trim_zone_distance_pct": -0.4745098039215717,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
         "raw_data": "data/technical.json",
         "company_ir": "https://ir.aboutamazon.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Near trim zone $90 · -1.9% from zone"
+      ],
+      "severity": "medium",
+      "price": 88.33,
+      "buy_zone": 68.0,
+      "trim_zone": 90.0,
+      "buy_zone_distance_pct": 29.89705882352941,
+      "trim_zone_distance_pct": -1.8555555555555574,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
+        "yahoo": "https://finance.yahoo.com/quote/HOOD",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.robinhood.com/"
       },
       "price_source": "technical.json"
     },
@@ -56,11 +78,11 @@
         "Reached buy zone $430 · -0.5% from zone"
       ],
       "severity": "medium",
-      "price": 427.79,
+      "price": 428.05,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -0.5139534883720882,
-      "trim_zone_distance_pct": -17.732692307692304,
+      "buy_zone_distance_pct": -0.4534883720930206,
+      "trim_zone_distance_pct": -17.682692307692307,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -75,14 +97,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -2.2% from zone"
+        "Reached buy zone $145 · -2.3% from zone"
       ],
       "severity": "medium",
-      "price": 141.84,
+      "price": 141.7,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -2.179310344827584,
-      "trim_zone_distance_pct": -23.329729729729728,
+      "buy_zone_distance_pct": -2.275862068965525,
+      "trim_zone_distance_pct": -23.40540540540541,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -98,7 +120,7 @@
     "earnings_source": "Finnhub primary, Yahoo fallback, manual fallback; manual force overrides all",
     "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
     "scanner_synced": true,
-    "technical_rows": 409,
+    "technical_rows": 408,
     "manual_earnings_rows": 1,
     "finnhub_rows": 0
   },
@@ -123,8 +145,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-06-04",
-      "to": "2026-06-18"
+      "from": "2026-06-05",
+      "to": "2026-06-19"
     },
     "finnhub_rows_matched": 0
   }
