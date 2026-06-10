@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-10T12:09:46+07:00",
+  "updated_at": "2026-06-10T23:48:00+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +0.2% from zone"
+        "Reached trim zone $290 · +0.8% from zone"
       ],
       "severity": "medium",
-      "price": 290.55,
+      "price": 292.34,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 23.63829787234043,
-      "trim_zone_distance_pct": 0.18965517241379704,
+      "buy_zone_distance_pct": 24.399999999999988,
+      "trim_zone_distance_pct": 0.8068965517241292,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -26,19 +26,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Near trim zone $90 · -2.3% from zone"
+      ],
+      "severity": "medium",
+      "price": 87.97,
+      "buy_zone": 68.0,
+      "trim_zone": 90.0,
+      "buy_zone_distance_pct": 29.367647058823525,
+      "trim_zone_distance_pct": -2.255555555555557,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
+        "yahoo": "https://finance.yahoo.com/quote/HOOD",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.robinhood.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "MSFT",
       "name": "Microsoft Corporation",
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -6.2% from zone"
+        "Reached buy zone $430 · -6.4% from zone"
       ],
       "severity": "medium",
-      "price": 403.41,
+      "price": 402.56,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -6.183720930232552,
-      "trim_zone_distance_pct": -22.421153846153842,
+      "buy_zone_distance_pct": -6.381395348837208,
+      "trim_zone_distance_pct": -22.584615384615383,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -53,14 +75,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +1.6% from zone"
+        "Reached buy zone $205 · -1.2% from zone"
       ],
       "severity": "medium",
-      "price": 208.19,
+      "price": 202.44,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 1.5560975609756087,
-      "trim_zone_distance_pct": -15.024489795918369,
+      "buy_zone_distance_pct": -1.2487804878048792,
+      "trim_zone_distance_pct": -17.37142857142857,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -75,14 +97,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -8.9% from zone"
+        "Reached buy zone $145 · -9.1% from zone"
       ],
       "severity": "medium",
-      "price": 132.07,
+      "price": 131.75,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -8.917241379310349,
-      "trim_zone_distance_pct": -28.610810810810815,
+      "buy_zone_distance_pct": -9.137931034482758,
+      "trim_zone_distance_pct": -28.783783783783782,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -97,14 +119,14 @@
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $15 · -2.2% from zone"
+        "Near buy zone $15 · +0.6% from zone"
       ],
       "severity": "medium",
-      "price": 14.67,
+      "price": 15.09,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": -2.2000000000000006,
-      "trim_zone_distance_pct": -22.789473684210527,
+      "buy_zone_distance_pct": 0.5999999999999991,
+      "trim_zone_distance_pct": -20.57894736842105,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
@@ -119,19 +141,41 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -4.7% from zone"
+        "Reached buy zone $72 · -8.1% from zone"
       ],
       "severity": "medium",
-      "price": 68.61,
+      "price": 66.2,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -4.708333333333334,
-      "trim_zone_distance_pct": -20.22093023255814,
+      "buy_zone_distance_pct": -8.055555555555552,
+      "trim_zone_distance_pct": -23.023255813953487,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
         "raw_data": "data/technical.json",
         "company_ir": "https://www.seic.com/investor-relations"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $360 · +6.0% from zone"
+      ],
+      "severity": "medium",
+      "price": 381.55,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 33.877192982456144,
+      "trim_zone_distance_pct": 5.986111111111114,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
