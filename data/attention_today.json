@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T12:19:29+07:00",
+  "updated_at": "2026-06-12T00:07:46+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +0.5% from zone"
+        "Reached trim zone $290 · +1.2% from zone"
       ],
       "severity": "medium",
-      "price": 291.58,
+      "price": 293.59,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 24.076595744680844,
-      "trim_zone_distance_pct": 0.5448275862068911,
+      "buy_zone_distance_pct": 24.93191489361701,
+      "trim_zone_distance_pct": 1.2379310344827499,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -26,24 +26,24 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "MSFT",
-      "name": "Microsoft Corporation",
-      "role": "Core Quality",
-      "primary_trigger": "buy_zone",
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
       "signals": [
-        "Reached buy zone $430 · -7.6% from zone"
+        "Near trim zone $90 · -1.5% from zone"
       ],
       "severity": "medium",
-      "price": 397.36,
-      "buy_zone": 430.0,
-      "trim_zone": 520.0,
-      "buy_zone_distance_pct": -7.590697674418602,
-      "trim_zone_distance_pct": -23.584615384615383,
+      "price": 88.64,
+      "buy_zone": 68.0,
+      "trim_zone": 90.0,
+      "buy_zone_distance_pct": 30.352941176470587,
+      "trim_zone_distance_pct": -1.5111111111111104,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
-        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
+        "yahoo": "https://finance.yahoo.com/quote/HOOD",
         "raw_data": "data/technical.json",
-        "company_ir": "https://www.microsoft.com/en-us/Investor/"
+        "company_ir": "https://investors.robinhood.com/"
       },
       "price_source": "technical.json"
     },
@@ -56,11 +56,11 @@
         "Reached buy zone $205 · -2.2% from zone"
       ],
       "severity": "medium",
-      "price": 200.42,
+      "price": 200.47,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -2.2341463414634206,
-      "trim_zone_distance_pct": -18.195918367346945,
+      "buy_zone_distance_pct": -2.2097560975609762,
+      "trim_zone_distance_pct": -18.175510204081633,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -75,14 +75,14 @@
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $15 · +0.5% from zone"
+        "Near buy zone $15 · +2.3% from zone"
       ],
       "severity": "medium",
-      "price": 15.07,
+      "price": 15.34,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": 0.4666666666666685,
-      "trim_zone_distance_pct": -20.684210526315788,
+      "buy_zone_distance_pct": 2.2666666666666657,
+      "trim_zone_distance_pct": -19.263157894736842,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
@@ -97,14 +97,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -5.2% from zone"
+        "Near buy zone $72 · +0.0% from zone"
       ],
       "severity": "medium",
-      "price": 68.24,
+      "price": 72.02,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -5.222222222222229,
-      "trim_zone_distance_pct": -20.65116279069768,
+      "buy_zone_distance_pct": 0.027777777777772253,
+      "trim_zone_distance_pct": -16.255813953488378,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -119,14 +119,14 @@
       "role": "Satellite Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $360 · +6.0% from zone"
+        "Reached trim zone $360 · +7.0% from zone"
       ],
       "severity": "medium",
-      "price": 381.59,
+      "price": 385.31,
       "buy_zone": 285.0,
       "trim_zone": 360.0,
-      "buy_zone_distance_pct": 33.89122807017543,
-      "trim_zone_distance_pct": 5.997222222222216,
+      "buy_zone_distance_pct": 35.19649122807017,
+      "trim_zone_distance_pct": 7.030555555555557,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
         "yahoo": "https://finance.yahoo.com/quote/TSLA",
@@ -167,8 +167,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-06-11",
-      "to": "2026-06-25"
+      "from": "2026-06-12",
+      "to": "2026-06-26"
     },
     "finnhub_rows_matched": 0
   }
