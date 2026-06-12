@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T12:24:50+07:00",
+  "updated_at": "2026-06-12T23:32:20+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +1.9% from zone"
+        "Reached trim zone $290 · +0.5% from zone"
       ],
       "severity": "medium",
-      "price": 295.63,
+      "price": 291.51,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 25.8,
-      "trim_zone_distance_pct": 1.9413793103448258,
+      "buy_zone_distance_pct": 24.046808510638293,
+      "trim_zone_distance_pct": 0.5206896551724106,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Satellite Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $90 · +2.5% from zone"
+        "Reached trim zone $90 · +3.5% from zone"
       ],
       "severity": "medium",
-      "price": 92.23,
+      "price": 93.17,
       "buy_zone": 68.0,
       "trim_zone": 90.0,
-      "buy_zone_distance_pct": 35.63235294117648,
-      "trim_zone_distance_pct": 2.4777777777777823,
+      "buy_zone_distance_pct": 37.01470588235294,
+      "trim_zone_distance_pct": 3.522222222222224,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
         "yahoo": "https://finance.yahoo.com/quote/HOOD",
@@ -53,14 +53,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -9.2% from zone"
+        "Reached buy zone $430 · -9.8% from zone"
       ],
       "severity": "medium",
-      "price": 390.34,
+      "price": 387.73,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -9.223255813953495,
-      "trim_zone_distance_pct": -24.934615384615388,
+      "buy_zone_distance_pct": -9.83023255813953,
+      "trim_zone_distance_pct": -25.43653846153846,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -78,11 +78,11 @@
         "Reached buy zone $205 · -0.1% from zone"
       ],
       "severity": "medium",
-      "price": 204.87,
+      "price": 204.88,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -0.06341463414633924,
-      "trim_zone_distance_pct": -16.37959183673469,
+      "buy_zone_distance_pct": -0.058536585365855875,
+      "trim_zone_distance_pct": -16.375510204081635,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -92,46 +92,46 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "PLTR",
-      "name": "Palantir Technologies Inc.",
-      "role": "Satellite AI",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $145 · -9.6% from zone"
-      ],
-      "severity": "medium",
-      "price": 131.08,
-      "buy_zone": 145.0,
-      "trim_zone": 185.0,
-      "buy_zone_distance_pct": -9.599999999999993,
-      "trim_zone_distance_pct": -29.14594594594594,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
-        "yahoo": "https://finance.yahoo.com/quote/PLTR",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://investors.palantir.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
       "ticker": "PUMP",
       "name": "ProPetro Holding Corp.",
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $15 · -1.5% from zone"
+        "Near buy zone $15 · +3.4% from zone"
       ],
       "severity": "medium",
-      "price": 14.78,
+      "price": 15.51,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": -1.466666666666671,
-      "trim_zone_distance_pct": -22.210526315789476,
+      "buy_zone_distance_pct": 3.399999999999999,
+      "trim_zone_distance_pct": -18.368421052631582,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
         "raw_data": "data/technical.json",
         "company_ir": "https://investors.propetroservices.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $360 · +9.9% from zone"
+      ],
+      "severity": "medium",
+      "price": 395.68,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 38.83508771929825,
+      "trim_zone_distance_pct": 9.911111111111113,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
