@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T23:32:20+07:00",
+  "updated_at": "2026-06-13T22:19:13+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +0.5% from zone"
+        "Reached trim zone $290 · +0.4% from zone"
       ],
       "severity": "medium",
-      "price": 291.51,
+      "price": 291.13,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 24.046808510638293,
-      "trim_zone_distance_pct": 0.5206896551724106,
+      "buy_zone_distance_pct": 23.885106382978723,
+      "trim_zone_distance_pct": 0.38965517241379155,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -34,11 +34,11 @@
         "Reached trim zone $90 · +3.5% from zone"
       ],
       "severity": "medium",
-      "price": 93.17,
+      "price": 93.19,
       "buy_zone": 68.0,
       "trim_zone": 90.0,
-      "buy_zone_distance_pct": 37.01470588235294,
-      "trim_zone_distance_pct": 3.522222222222224,
+      "buy_zone_distance_pct": 37.04411764705882,
+      "trim_zone_distance_pct": 3.5444444444444416,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
         "yahoo": "https://finance.yahoo.com/quote/HOOD",
@@ -53,14 +53,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -9.8% from zone"
+        "Reached buy zone $430 · -9.1% from zone"
       ],
       "severity": "medium",
-      "price": 387.73,
+      "price": 390.74,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -9.83023255813953,
-      "trim_zone_distance_pct": -25.43653846153846,
+      "buy_zone_distance_pct": -9.130232558139532,
+      "trim_zone_distance_pct": -24.857692307692307,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -75,14 +75,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -0.1% from zone"
+        "Near buy zone $205 · +0.1% from zone"
       ],
       "severity": "medium",
-      "price": 204.88,
+      "price": 205.19,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -0.058536585365855875,
-      "trim_zone_distance_pct": -16.375510204081635,
+      "buy_zone_distance_pct": 0.09268292682926718,
+      "trim_zone_distance_pct": -16.248979591836736,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -114,24 +114,24 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "TSLA",
-      "name": "Tesla, Inc.",
-      "role": "Satellite Growth",
-      "primary_trigger": "trim_zone",
+      "ticker": "SEI",
+      "name": "SEI Investments Company",
+      "role": "Quality Compounder",
+      "primary_trigger": "buy_zone",
       "signals": [
-        "Reached trim zone $360 · +9.9% from zone"
+        "Near buy zone $72 · +2.8% from zone"
       ],
       "severity": "medium",
-      "price": 395.68,
-      "buy_zone": 285.0,
-      "trim_zone": 360.0,
-      "buy_zone_distance_pct": 38.83508771929825,
-      "trim_zone_distance_pct": 9.911111111111113,
+      "price": 74.01,
+      "buy_zone": 72.0,
+      "trim_zone": 86.0,
+      "buy_zone_distance_pct": 2.791666666666674,
+      "trim_zone_distance_pct": -13.941860465116275,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
-        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
+        "yahoo": "https://finance.yahoo.com/quote/SEI",
         "raw_data": "data/technical.json",
-        "company_ir": "https://ir.tesla.com/"
+        "company_ir": "https://www.seic.com/investor-relations"
       },
       "price_source": "technical.json"
     }
@@ -167,8 +167,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-06-12",
-      "to": "2026-06-26"
+      "from": "2026-06-13",
+      "to": "2026-06-27"
     },
     "finnhub_rows_matched": 0
   }
