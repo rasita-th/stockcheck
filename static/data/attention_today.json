@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T11:53:21+07:00",
+  "updated_at": "2026-06-23T23:11:54+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +2.4% from zone"
+        "Reached trim zone $290 · +2.9% from zone"
       ],
       "severity": "medium",
-      "price": 297.01,
+      "price": 298.48,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 26.38723404255319,
-      "trim_zone_distance_pct": 2.4172413793103416,
+      "buy_zone_distance_pct": 27.012765957446817,
+      "trim_zone_distance_pct": 2.924137931034489,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +1.8% from zone"
+        "Reached buy zone $205 · -1.1% from zone"
       ],
       "severity": "medium",
-      "price": 208.65,
+      "price": 202.8,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 1.7804878048780515,
-      "trim_zone_distance_pct": -14.836734693877549,
+      "buy_zone_distance_pct": -1.0731707317073116,
+      "trim_zone_distance_pct": -17.224489795918362,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,19 +53,41 @@
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $15 · +0.3% from zone"
+        "Reached buy zone $15 · -1.5% from zone"
       ],
       "severity": "medium",
-      "price": 15.04,
+      "price": 14.78,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": 0.266666666666661,
-      "trim_zone_distance_pct": -20.842105263157897,
+      "buy_zone_distance_pct": -1.466666666666671,
+      "trim_zone_distance_pct": -22.210526315789476,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
         "raw_data": "data/technical.json",
         "company_ir": "https://investors.propetroservices.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $360 · +6.9% from zone"
+      ],
+      "severity": "medium",
+      "price": 384.8,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 35.01754385964912,
+      "trim_zone_distance_pct": 6.888888888888892,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
