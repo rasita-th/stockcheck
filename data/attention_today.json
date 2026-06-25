@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T22:53:45+07:00",
+  "updated_at": "2026-06-25T11:56:29+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +3.3% from zone"
+        "Reached trim zone $290 · +1.1% from zone"
       ],
       "severity": "medium",
-      "price": 299.61,
+      "price": 293.08,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 27.493617021276602,
-      "trim_zone_distance_pct": 3.3137931034482806,
+      "buy_zone_distance_pct": 24.714893617021268,
+      "trim_zone_distance_pct": 1.0620689655172357,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -26,19 +26,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $90 · +8.0% from zone"
+      ],
+      "severity": "medium",
+      "price": 97.19,
+      "buy_zone": 68.0,
+      "trim_zone": 90.0,
+      "buy_zone_distance_pct": 42.92647058823529,
+      "trim_zone_distance_pct": 7.988888888888887,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
+        "yahoo": "https://finance.yahoo.com/quote/HOOD",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investors.robinhood.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -1.8% from zone"
+        "Reached buy zone $205 · -2.9% from zone"
       ],
       "severity": "medium",
-      "price": 201.25,
+      "price": 199.0,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -1.8292682926829267,
-      "trim_zone_distance_pct": -17.857142857142858,
+      "buy_zone_distance_pct": -2.9268292682926833,
+      "trim_zone_distance_pct": -18.775510204081634,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,14 +75,14 @@
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $15 · -7.1% from zone"
+        "Reached buy zone $15 · -6.8% from zone"
       ],
       "severity": "medium",
-      "price": 13.94,
+      "price": 13.98,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": -7.06666666666667,
-      "trim_zone_distance_pct": -26.63157894736842,
+      "buy_zone_distance_pct": -6.799999999999998,
+      "trim_zone_distance_pct": -26.421052631578945,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
@@ -75,14 +97,14 @@
       "role": "Satellite Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $360 · +6.2% from zone"
+        "Reached trim zone $360 · +4.3% from zone"
       ],
       "severity": "medium",
-      "price": 382.44,
+      "price": 375.53,
       "buy_zone": 285.0,
       "trim_zone": 360.0,
-      "buy_zone_distance_pct": 34.189473684210526,
-      "trim_zone_distance_pct": 6.2333333333333325,
+      "buy_zone_distance_pct": 31.764912280701747,
+      "trim_zone_distance_pct": 4.313888888888881,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
         "yahoo": "https://finance.yahoo.com/quote/TSLA",
@@ -123,8 +145,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-06-24",
-      "to": "2026-07-08"
+      "from": "2026-06-25",
+      "to": "2026-07-09"
     },
     "finnhub_rows_matched": 0
   }
