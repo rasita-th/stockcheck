@@ -1,22 +1,44 @@
 {
-  "updated_at": "2026-06-29T23:46:19+07:00",
+  "updated_at": "2026-06-30T11:56:36+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "role": "Core Quality",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Near trim zone $290 · -2.8% from zone"
+      ],
+      "severity": "medium",
+      "price": 281.74,
+      "buy_zone": 235.0,
+      "trim_zone": 290.0,
+      "buy_zone_distance_pct": 19.889361702127665,
+      "trim_zone_distance_pct": -2.8482758620689625,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
+        "yahoo": "https://finance.yahoo.com/quote/AAPL",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://investor.apple.com/"
+      },
+      "price_source": "technical.json"
+    },
     {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -5.8% from zone"
+        "Reached buy zone $205 · -4.9% from zone"
       ],
       "severity": "medium",
-      "price": 193.19,
+      "price": 194.97,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -5.760975609756098,
-      "trim_zone_distance_pct": -21.146938775510204,
+      "buy_zone_distance_pct": -4.892682926829269,
+      "trim_zone_distance_pct": -20.420408163265307,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -31,14 +53,14 @@
       "role": "Cyclical Watch",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $15 · -0.5% from zone"
+        "Reached buy zone $15 · -1.7% from zone"
       ],
       "severity": "medium",
-      "price": 14.92,
+      "price": 14.74,
       "buy_zone": 15.0,
       "trim_zone": 19.0,
-      "buy_zone_distance_pct": -0.5333333333333339,
-      "trim_zone_distance_pct": -21.47368421052632,
+      "buy_zone_distance_pct": -1.7333333333333318,
+      "trim_zone_distance_pct": -22.42105263157895,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
         "yahoo": "https://finance.yahoo.com/quote/PUMP",
@@ -79,8 +101,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-06-29",
-      "to": "2026-07-13"
+      "from": "2026-06-30",
+      "to": "2026-07-14"
     },
     "finnhub_rows_matched": 0
   }
