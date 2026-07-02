@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-02T11:51:55+07:00",
+  "updated_at": "2026-07-02T22:53:32+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +1.5% from zone"
+        "Reached trim zone $290 · +5.5% from zone"
       ],
       "severity": "medium",
-      "price": 294.38,
+      "price": 305.91,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 25.268085106382976,
-      "trim_zone_distance_pct": 1.5103448275862055,
+      "buy_zone_distance_pct": 30.174468085106394,
+      "trim_zone_distance_pct": 5.4862068965517325,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -26,19 +26,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "role": "Core Quality",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Reached buy zone $430 · -9.6% from zone"
+      ],
+      "severity": "medium",
+      "price": 388.57,
+      "buy_zone": 430.0,
+      "trim_zone": 520.0,
+      "buy_zone_distance_pct": -9.634883720930235,
+      "trim_zone_distance_pct": -25.275000000000002,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
+        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.microsoft.com/en-us/Investor/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -3.6% from zone"
+        "Reached buy zone $205 · -5.3% from zone"
       ],
       "severity": "medium",
-      "price": 197.58,
+      "price": 194.18,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -3.6195121951219456,
-      "trim_zone_distance_pct": -19.355102040816323,
+      "buy_zone_distance_pct": -5.278048780487802,
+      "trim_zone_distance_pct": -20.74285714285714,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,14 +75,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $72 · +2.0% from zone"
+        "Reached buy zone $72 · -5.0% from zone"
       ],
       "severity": "medium",
-      "price": 73.42,
+      "price": 68.4,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": 1.9722222222222245,
-      "trim_zone_distance_pct": -14.627906976744184,
+      "buy_zone_distance_pct": -4.999999999999992,
+      "trim_zone_distance_pct": -20.46511627906976,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
