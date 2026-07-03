@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-02T22:53:32+07:00",
+  "updated_at": "2026-07-03T11:34:40+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +5.5% from zone"
+        "Reached trim zone $290 · +6.4% from zone"
       ],
       "severity": "medium",
-      "price": 305.91,
+      "price": 308.63,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 30.174468085106394,
-      "trim_zone_distance_pct": 5.4862068965517325,
+      "buy_zone_distance_pct": 31.331914893617018,
+      "trim_zone_distance_pct": 6.424137931034481,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -9.6% from zone"
+        "Reached buy zone $430 · -9.2% from zone"
       ],
       "severity": "medium",
-      "price": 388.57,
+      "price": 390.49,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -9.634883720930235,
-      "trim_zone_distance_pct": -25.275000000000002,
+      "buy_zone_distance_pct": -9.188372093023252,
+      "trim_zone_distance_pct": -24.905769230769227,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -53,14 +53,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -5.3% from zone"
+        "Reached buy zone $205 · -5.0% from zone"
       ],
       "severity": "medium",
-      "price": 194.18,
+      "price": 194.83,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -5.278048780487802,
-      "trim_zone_distance_pct": -20.74285714285714,
+      "buy_zone_distance_pct": -4.960975609756091,
+      "trim_zone_distance_pct": -20.477551020408157,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -75,19 +75,41 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -5.0% from zone"
+        "Reached buy zone $72 · -6.7% from zone"
       ],
       "severity": "medium",
-      "price": 68.4,
+      "price": 67.19,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -4.999999999999992,
-      "trim_zone_distance_pct": -20.46511627906976,
+      "buy_zone_distance_pct": -6.680555555555559,
+      "trim_zone_distance_pct": -21.872093023255818,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
         "raw_data": "data/technical.json",
         "company_ir": "https://www.seic.com/investor-relations"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $360 · +9.3% from zone"
+      ],
+      "severity": "medium",
+      "price": 393.45,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 38.05263157894736,
+      "trim_zone_distance_pct": 9.291666666666663,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
@@ -123,8 +145,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-07-02",
-      "to": "2026-07-16"
+      "from": "2026-07-03",
+      "to": "2026-07-17"
     },
     "finnhub_rows_matched": 0
   }
