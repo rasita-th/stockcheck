@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T11:41:04+07:00",
+  "updated_at": "2026-07-07T23:04:11+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,19 +9,41 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +7.8% from zone"
+        "Reached trim zone $290 · +8.3% from zone"
       ],
       "severity": "medium",
-      "price": 312.66,
+      "price": 314.19,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 33.04680851063831,
-      "trim_zone_distance_pct": 7.813793103448284,
+      "buy_zone_distance_pct": 33.69787234042553,
+      "trim_zone_distance_pct": 8.341379310344827,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
         "raw_data": "data/technical.json",
         "company_ir": "https://investor.apple.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "role": "Core Quality",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Reached buy zone $430 · -8.5% from zone"
+      ],
+      "severity": "medium",
+      "price": 393.62,
+      "buy_zone": 430.0,
+      "trim_zone": 520.0,
+      "buy_zone_distance_pct": -8.46046511627907,
+      "trim_zone_distance_pct": -24.303846153846152,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
+        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.microsoft.com/en-us/Investor/"
       },
       "price_source": "technical.json"
     },
@@ -34,11 +56,11 @@
         "Reached buy zone $205 · -4.6% from zone"
       ],
       "severity": "medium",
-      "price": 195.55,
+      "price": 195.49,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -4.60975609756097,
-      "trim_zone_distance_pct": -20.18367346938775,
+      "buy_zone_distance_pct": -4.639024390243899,
+      "trim_zone_distance_pct": -20.20816326530612,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,14 +75,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -8.6% from zone"
+        "Reached buy zone $145 · -6.5% from zone"
       ],
       "severity": "medium",
-      "price": 132.54,
+      "price": 135.59,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -8.593103448275867,
-      "trim_zone_distance_pct": -28.356756756756763,
+      "buy_zone_distance_pct": -6.489655172413792,
+      "trim_zone_distance_pct": -26.708108108108107,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -75,14 +97,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -6.3% from zone"
+        "Reached buy zone $72 · -8.6% from zone"
       ],
       "severity": "medium",
-      "price": 67.47,
+      "price": 65.78,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -6.291666666666668,
-      "trim_zone_distance_pct": -21.546511627906977,
+      "buy_zone_distance_pct": -8.638888888888888,
+      "trim_zone_distance_pct": -23.51162790697674,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
