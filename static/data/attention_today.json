@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T23:04:11+07:00",
+  "updated_at": "2026-07-08T11:00:40+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +8.3% from zone"
+        "Reached trim zone $290 · +7.1% from zone"
       ],
       "severity": "medium",
-      "price": 314.19,
+      "price": 310.66,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 33.69787234042553,
-      "trim_zone_distance_pct": 8.341379310344827,
+      "buy_zone_distance_pct": 32.19574468085107,
+      "trim_zone_distance_pct": 7.1241379310344914,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -8.5% from zone"
+        "Reached buy zone $430 · -9.6% from zone"
       ],
       "severity": "medium",
-      "price": 393.62,
+      "price": 388.84,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -8.46046511627907,
-      "trim_zone_distance_pct": -24.303846153846152,
+      "buy_zone_distance_pct": -9.572093023255821,
+      "trim_zone_distance_pct": -25.223076923076924,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -53,14 +53,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $205 · -4.6% from zone"
+        "Reached buy zone $205 · -3.9% from zone"
       ],
       "severity": "medium",
-      "price": 195.49,
+      "price": 196.93,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -4.639024390243899,
-      "trim_zone_distance_pct": -20.20816326530612,
+      "buy_zone_distance_pct": -3.936585365853655,
+      "trim_zone_distance_pct": -19.620408163265303,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -75,14 +75,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -6.5% from zone"
+        "Reached buy zone $145 · -7.3% from zone"
       ],
       "severity": "medium",
-      "price": 135.59,
+      "price": 134.37,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -6.489655172413792,
-      "trim_zone_distance_pct": -26.708108108108107,
+      "buy_zone_distance_pct": -7.331034482758618,
+      "trim_zone_distance_pct": -27.367567567567562,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -97,14 +97,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -8.6% from zone"
+        "Reached buy zone $72 · -9.2% from zone"
       ],
       "severity": "medium",
-      "price": 65.78,
+      "price": 65.35,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -8.638888888888888,
-      "trim_zone_distance_pct": -23.51162790697674,
+      "buy_zone_distance_pct": -9.236111111111118,
+      "trim_zone_distance_pct": -24.011627906976752,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -122,13 +122,15 @@
     "scanner_synced": true,
     "technical_rows": 409,
     "manual_earnings_rows": 1,
-    "finnhub_rows": 0
+    "finnhub_rows": 1
   },
   "earnings_diagnostics": {
     "checked": 10,
     "finnhub_enabled": true,
     "finnhub_status": "loaded",
-    "loaded_from_finnhub": [],
+    "loaded_from_finnhub": [
+      "TSLA"
+    ],
     "loaded_from_yahoo": [],
     "loaded_from_manual": [],
     "missing": [
@@ -140,14 +142,13 @@
       "NVDA",
       "PLTR",
       "PUMP",
-      "SEI",
-      "TSLA"
+      "SEI"
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-07-07",
-      "to": "2026-07-21"
+      "from": "2026-07-08",
+      "to": "2026-07-22"
     },
-    "finnhub_rows_matched": 0
+    "finnhub_rows_matched": 1
   }
 }
