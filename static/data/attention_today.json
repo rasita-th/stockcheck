@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T11:00:40+07:00",
+  "updated_at": "2026-07-08T22:52:00+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,41 +9,19 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +7.1% from zone"
+        "Reached trim zone $290 · +6.8% from zone"
       ],
       "severity": "medium",
-      "price": 310.66,
+      "price": 309.62,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 32.19574468085107,
-      "trim_zone_distance_pct": 7.1241379310344914,
+      "buy_zone_distance_pct": 31.753191489361704,
+      "trim_zone_distance_pct": 6.765517241379312,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
         "raw_data": "data/technical.json",
         "company_ir": "https://investor.apple.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "MSFT",
-      "name": "Microsoft Corporation",
-      "role": "Core Quality",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $430 · -9.6% from zone"
-      ],
-      "severity": "medium",
-      "price": 388.84,
-      "buy_zone": 430.0,
-      "trim_zone": 520.0,
-      "buy_zone_distance_pct": -9.572093023255821,
-      "trim_zone_distance_pct": -25.223076923076924,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
-        "yahoo": "https://finance.yahoo.com/quote/MSFT",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://www.microsoft.com/en-us/Investor/"
       },
       "price_source": "technical.json"
     },
@@ -56,11 +34,11 @@
         "Reached buy zone $205 · -3.9% from zone"
       ],
       "severity": "medium",
-      "price": 196.93,
+      "price": 197.02,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": -3.936585365853655,
-      "trim_zone_distance_pct": -19.620408163265303,
+      "buy_zone_distance_pct": -3.8926829268292633,
+      "trim_zone_distance_pct": -19.58367346938775,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -70,46 +48,24 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "PLTR",
-      "name": "Palantir Technologies Inc.",
-      "role": "Satellite AI",
-      "primary_trigger": "buy_zone",
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
       "signals": [
-        "Reached buy zone $145 · -7.3% from zone"
+        "Reached trim zone $360 · +9.1% from zone"
       ],
       "severity": "medium",
-      "price": 134.37,
-      "buy_zone": 145.0,
-      "trim_zone": 185.0,
-      "buy_zone_distance_pct": -7.331034482758618,
-      "trim_zone_distance_pct": -27.367567567567562,
+      "price": 392.73,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 37.800000000000004,
+      "trim_zone_distance_pct": 9.091666666666672,
       "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
-        "yahoo": "https://finance.yahoo.com/quote/PLTR",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
         "raw_data": "data/technical.json",
-        "company_ir": "https://investors.palantir.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "SEI",
-      "name": "SEI Investments Company",
-      "role": "Quality Compounder",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $72 · -9.2% from zone"
-      ],
-      "severity": "medium",
-      "price": 65.35,
-      "buy_zone": 72.0,
-      "trim_zone": 86.0,
-      "buy_zone_distance_pct": -9.236111111111118,
-      "trim_zone_distance_pct": -24.011627906976752,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
-        "yahoo": "https://finance.yahoo.com/quote/SEI",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://www.seic.com/investor-relations"
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
