@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T22:57:33+07:00",
+  "updated_at": "2026-07-11T21:36:25+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +8.1% from zone"
+        "Reached trim zone $290 · +8.7% from zone"
       ],
       "severity": "medium",
-      "price": 313.44,
+      "price": 315.32,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 33.37872340425532,
-      "trim_zone_distance_pct": 8.082758620689654,
+      "buy_zone_distance_pct": 34.178723404255315,
+      "trim_zone_distance_pct": 8.731034482758618,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -31,14 +31,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +1.8% from zone"
+        "Near buy zone $205 · +2.9% from zone"
       ],
       "severity": "medium",
-      "price": 208.75,
+      "price": 210.96,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 1.8292682926829267,
-      "trim_zone_distance_pct": -14.795918367346939,
+      "buy_zone_distance_pct": 2.9073170731707356,
+      "trim_zone_distance_pct": -13.893877551020406,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,14 +53,14 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -1.3% from zone"
+        "Reached buy zone $72 · -0.6% from zone"
       ],
       "severity": "medium",
-      "price": 71.05,
+      "price": 71.57,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -1.3194444444444484,
-      "trim_zone_distance_pct": -17.38372093023256,
+      "buy_zone_distance_pct": -0.5972222222222318,
+      "trim_zone_distance_pct": -16.779069767441868,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -76,7 +76,7 @@
     "earnings_source": "Finnhub primary, Yahoo fallback, manual fallback; manual force overrides all",
     "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
     "scanner_synced": true,
-    "technical_rows": 409,
+    "technical_rows": 408,
     "manual_earnings_rows": 1,
     "finnhub_rows": 1
   },
@@ -102,8 +102,8 @@
     ],
     "api_failed": [],
     "finnhub_window": {
-      "from": "2026-07-10",
-      "to": "2026-07-24"
+      "from": "2026-07-11",
+      "to": "2026-07-25"
     },
     "finnhub_rows_matched": 1
   }
