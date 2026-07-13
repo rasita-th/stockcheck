@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-13T11:23:38+07:00",
+  "updated_at": "2026-07-13T23:06:26+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -9,14 +9,14 @@
       "role": "Core Quality",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Reached trim zone $290 · +8.7% from zone"
+        "Reached trim zone $290 · +9.5% from zone"
       ],
       "severity": "medium",
-      "price": 315.32,
+      "price": 317.55,
       "buy_zone": 235.0,
       "trim_zone": 290.0,
-      "buy_zone_distance_pct": 34.178723404255315,
-      "trim_zone_distance_pct": 8.731034482758618,
+      "buy_zone_distance_pct": 35.12765957446809,
+      "trim_zone_distance_pct": 9.500000000000004,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
         "yahoo": "https://finance.yahoo.com/quote/AAPL",
@@ -26,19 +26,63 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "role": "Core Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Near trim zone $255 · -2.8% from zone"
+      ],
+      "severity": "medium",
+      "price": 247.88,
+      "buy_zone": 205.0,
+      "trim_zone": 255.0,
+      "buy_zone_distance_pct": 20.917073170731708,
+      "trim_zone_distance_pct": -2.7921568627450997,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
+        "yahoo": "https://finance.yahoo.com/quote/AMZN",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.aboutamazon.com/"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "role": "Core Quality",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Reached buy zone $430 · -9.2% from zone"
+      ],
+      "severity": "medium",
+      "price": 390.44,
+      "buy_zone": 430.0,
+      "trim_zone": 520.0,
+      "buy_zone_distance_pct": -9.2,
+      "trim_zone_distance_pct": -24.915384615384617,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
+        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.microsoft.com/en-us/Investor/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +2.9% from zone"
+        "Near buy zone $205 · +0.5% from zone"
       ],
       "severity": "medium",
-      "price": 210.96,
+      "price": 205.93,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 2.9073170731707356,
-      "trim_zone_distance_pct": -13.893877551020406,
+      "buy_zone_distance_pct": 0.4536585365853692,
+      "trim_zone_distance_pct": -15.946938775510203,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -53,19 +97,41 @@
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -0.6% from zone"
+        "Reached buy zone $72 · -3.2% from zone"
       ],
       "severity": "medium",
-      "price": 71.57,
+      "price": 69.68,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -0.5972222222222318,
-      "trim_zone_distance_pct": -16.779069767441868,
+      "buy_zone_distance_pct": -3.2222222222222126,
+      "trim_zone_distance_pct": -18.976744186046503,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
         "raw_data": "data/technical.json",
         "company_ir": "https://www.seic.com/investor-relations"
+      },
+      "price_source": "technical.json"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "role": "Satellite Growth",
+      "primary_trigger": "trim_zone",
+      "signals": [
+        "Reached trim zone $360 · +9.6% from zone"
+      ],
+      "severity": "medium",
+      "price": 394.64,
+      "buy_zone": 285.0,
+      "trim_zone": 360.0,
+      "buy_zone_distance_pct": 38.470175438596485,
+      "trim_zone_distance_pct": 9.622222222222218,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "yahoo": "https://finance.yahoo.com/quote/TSLA",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://ir.tesla.com/"
       },
       "price_source": "technical.json"
     }
