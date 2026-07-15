@@ -1,85 +1,42 @@
 <!doctype html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Market Pulse · Stock Timing Radar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="market.css?v=9.0.0">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Market Pulse · Stock Timing Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="market.css?v=9.2.0">
 </head>
 <body>
-  <header class="pulse-header">
-    <a class="back-link" href="index.html">← Radar</a>
-    <div>
-      <h1>🌍 Market Pulse</h1>
-      <p>ดูเงินไหลผ่านตลาดโลก ภาคธุรกิจสหรัฐฯ และธีมลงทุน โดยไม่ปนกับ watchlist หุ้นหลัก</p>
-    </div>
-    <div class="freshness" id="freshness">Loading…</div>
-  </header>
-
-  <main>
-    <section class="hero-grid">
-      <article class="hero-card">
-        <span>US Sector Breadth</span>
-        <strong id="breadthDay">—</strong>
-        <small>positive today</small>
-      </article>
-      <article class="hero-card">
-        <span>Weekly Breadth</span>
-        <strong id="breadthWeek">—</strong>
-        <small>positive this week</small>
-      </article>
-      <article class="hero-card">
-        <span>Radar Mode</span>
-        <strong>Quiet by default</strong>
-        <small>show only meaningful leaders and laggards</small>
-      </article>
-    </section>
-
-    <section class="panel">
-      <div class="panel-head">
-        <div><h2>📡 Today Pulse</h2><p>สิ่งที่ควรหยิบขึ้นมาดูวันนี้ จาก sector/theme movement</p></div>
-      </div>
-      <div id="todayPulse" class="pulse-list"></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-head">
-        <div><h2>🌐 Global Markets</h2><p>เปรียบเทียบ 1D · 1W · 1M · YTD ผ่าน ETF proxy</p></div>
-        <div class="time-tabs" data-target="globalTable">
-          <button data-period="day_pct">1D</button><button data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button class="active" data-period="ytd_pct">YTD</button>
-        </div>
-      </div>
-      <div id="globalTable" class="ranking-grid"></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-head">
-        <div><h2>🇺🇸 USA Sector Rotation</h2><p>ดูว่ากระแสเงินกำลังหมุนเข้าสู่ sector ไหน</p></div>
-        <div class="time-tabs" data-target="sectorTable">
-          <button data-period="day_pct">1D</button><button class="active" data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button data-period="ytd_pct">YTD</button>
-        </div>
-      </div>
-      <div id="sectorTable" class="ranking-grid"></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-head">
-        <div><h2>🧭 Themes & Money Flow</h2><p>Semiconductors, defense, uranium, biotech, software และธีมสำคัญ</p></div>
-        <div class="time-tabs" data-target="themeTable">
-          <button data-period="day_pct">1D</button><button class="active" data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button data-period="ytd_pct">YTD</button>
-        </div>
-      </div>
-      <div id="themeTable" class="ranking-grid"></div>
-    </section>
-
-    <section class="method-note">
-      <strong>How to read</strong>
-      <p>สีและอันดับสะท้อนผลตอบแทนของ ETF proxy ไม่ใช่ fund-flow แบบเงินจริงโดยตรง แต่เหมาะสำหรับอ่าน relative strength และ rotation แบบรวดเร็ว</p>
-    </section>
-  </main>
-  <script src="market.js?v=9.0.0"></script>
-</body>
-</html>
+<header class="topbar">
+  <div class="brand-row"><a class="brand" href="index.html"><span class="logo">◎</span><span>Stock Timing Radar</span></a><a class="back" href="index.html">← Scanner</a></div>
+  <nav class="topnav" aria-label="Primary"><a href="index.html">Scanner</a><a href="index.html#today">Today</a><a class="active" href="market.html">Market Pulse</a></nav>
+</header>
+<main>
+<section class="intro">
+ <div><span class="eyebrow">GLOBAL MARKET INTELLIGENCE</span><h1>ภาพรวมตลาดโลกในหน้าจอเดียว</h1><p>อ่านทิศทางดัชนีประเทศ ภาวะตลาดสหรัฐ การหมุนของ sector และธีมลงทุน โดยแยกจาก watchlist หุ้นหลัก</p></div>
+ <div class="fresh-card"><span>ข้อมูลล่าสุด</span><strong id="freshness">กำลังโหลด…</strong><small id="dataStatus">กำลังตรวจสอบแหล่งข้อมูล</small></div>
+</section>
+<section class="summary-grid">
+ <article><span>US breadth วันนี้</span><strong id="breadthDay">—</strong><small>sector บวกจากทั้งหมด</small></article>
+ <article><span>US breadth สัปดาห์</span><strong id="breadthWeek">—</strong><small>sector บวกจากทั้งหมด</small></article>
+ <article><span>ภาวะตลาด</span><strong id="riskMode">—</strong><small id="riskNote">ประเมินจากดัชนีและ sector</small></article>
+ <article><span>ผู้นำสัปดาห์</span><strong id="weeklyLeader">—</strong><small id="weeklyLeaderValue">—</small></article>
+</section>
+<section class="panel pulse-panel">
+ <div class="panel-title"><div><span class="kicker">TODAY</span><h2>สิ่งที่เปลี่ยนเด่นที่สุด</h2><p>เรียงจากความแรงของการเคลื่อนไหวระยะสั้น ไม่ใช่ fund flow จริง</p></div></div>
+ <div id="todayPulse" class="pulse-grid"></div>
+</section>
+<section class="panel">
+ <div class="panel-title"><div><span class="kicker">WORLD</span><h2>ดัชนีหุ้นแต่ละประเทศ</h2><p>เปรียบเทียบผลตอบแทน พร้อมคำอธิบายบทบาทของแต่ละตลาด</p></div><div class="tabs" data-target="globalTable"></div></div>
+ <div class="region-filter" id="regionFilter"></div><div id="globalTable" class="market-grid"></div>
+</section>
+<section class="two-col">
+ <section class="panel"><div class="panel-title"><div><span class="kicker">UNITED STATES</span><h2>ดัชนีหลักสหรัฐ</h2><p>Large cap, growth, blue-chip, small cap และ volatility</p></div><div class="tabs" data-target="usIndexTable"></div></div><div id="usIndexTable" class="market-grid single"></div></section>
+ <section class="panel"><div class="panel-title"><div><span class="kicker">ROTATION</span><h2>USA Sector Rotation</h2><p>ใช้ ETF sector เป็นตัวแทน relative strength</p></div><div class="tabs" data-target="sectorTable"></div></div><div id="sectorTable" class="market-grid single"></div></section>
+</section>
+<section class="panel"><div class="panel-title"><div><span class="kicker">THEMES</span><h2>ธีมลงทุนสำคัญ</h2><p>Semiconductor, software, defense, uranium, biotech และอื่น ๆ</p></div><div class="tabs" data-target="themeTable"></div></div><div id="themeTable" class="market-grid"></div></section>
+<section class="method"><strong>วิธีอ่าน</strong><p>สีเขียว/แดงแสดงผลตอบแทนของดัชนีหรือ ETF proxy ในช่วงที่เลือก คำว่า “Rotation” หมายถึง relative performance ไม่ใช่กระแสเงินกองทุนจริง ข้อมูลที่หาไม่ได้จะแสดงสถานะ unavailable โดยไม่ทำให้ทั้งหน้าว่าง</p></section>
+</main>
+<script src="market.js?v=9.2.0"></script>
+</body></html>
