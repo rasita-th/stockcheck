@@ -1,0 +1,135 @@
+name: Refresh Live Market Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 15 minutes on weekdays. A New York market-hours gate below
+    # prevents unnecessary work outside 09:30-16:15 ET and handles DST.
+    - cron: "*/15 * * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stockcheck-live-market-data
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check US market window
+        id: market
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime, time
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo("America/New_York"))
+          open_now = now.weekday() < 5 and time(9, 30) <= now.time() <= time(16, 15)
+          print(f"open={'true' if open_now else 'false'}")
+          print(f"new_york_time={now.isoformat()}")
+          PY
+
+      - name: Skip outside market hours
+        if: steps.market.outputs.open != 'true' && github.event_name != 'workflow_dispatch'
+        run: echo "Outside US market hours at ${{ steps.market.outputs.new_york_time }}; no refresh needed."
+
+      - name: Checkout
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install yfinance pandas
+
+      - name: Sync latest main
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Refresh stock technical data
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          INCLUDE_FUNDAMENTALS: "0"
+          TECHNICAL_RANGE: "1y"
+          TECHNICAL_INTERVAL: "1d"
+          TECHNICAL_SCAN_WORKERS: "8"
+        run: python scripts/update_technical_data.py
+
+      - name: Refresh dynamic Today attention
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python scripts/generate_attention_finnhub.py
+
+      - name: Refresh global and sector pulse
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: python scripts/generate_market_pulse.py
+
+      - name: Validate generated data
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: python scripts/validate_static_data.py
+
+      - name: Commit generated data safely
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          mkdir -p /tmp/stockcheck-live-data
+          for root in data site/data static/data; do
+            mkdir -p "/tmp/stockcheck-live-data/$root"
+            for file in technical.json scanner.json attention_today.json market_pulse.json; do
+              [ -f "$root/$file" ] && cp "$root/$file" "/tmp/stockcheck-live-data/$root/$file"
+            done
+          done
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          for root in data site/data static/data; do
+            mkdir -p "$root"
+            for file in technical.json scanner.json attention_today.json market_pulse.json; do
+              [ -f "/tmp/stockcheck-live-data/$root/$file" ] && cp "/tmp/stockcheck-live-data/$root/$file" "$root/$file"
+            done
+          done
+
+          git add data/technical.json data/scanner.json data/attention_today.json data/market_pulse.json \
+                  site/data/technical.json site/data/scanner.json site/data/attention_today.json site/data/market_pulse.json \
+                  static/data/technical.json static/data/scanner.json static/data/attention_today.json static/data/market_pulse.json 2>/dev/null || true
+
+          if git diff --cached --quiet; then
+            echo "No live data changes."
+            exit 0
+          fi
+
+          git commit -m "Refresh live prices, Today attention, and market pulse"
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push conflict on attempt $attempt; rebasing generated commit."
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          exit 1
