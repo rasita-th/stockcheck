@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T10:51:47+07:00",
+  "updated_at": "2026-07-15T22:09:09+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -12,12 +12,12 @@
         "Earnings in 7 days"
       ],
       "severity": "medium",
-      "price": 396.18,
+      "price": 397.06,
       "earnings_date": "2026-07-22",
       "buy_zone": 285.0,
       "trim_zone": 360.0,
-      "buy_zone_distance_pct": 39.01052631578948,
-      "trim_zone_distance_pct": 10.050000000000002,
+      "buy_zone_distance_pct": 39.319298245614036,
+      "trim_zone_distance_pct": 10.294444444444444,
       "earnings_source": "finnhub",
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
@@ -28,41 +28,19 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "AAPL",
-      "name": "Apple Inc.",
-      "role": "Core Quality",
-      "primary_trigger": "trim_zone",
-      "signals": [
-        "Reached trim zone $290 · +8.6% from zone"
-      ],
-      "severity": "medium",
-      "price": 314.86,
-      "buy_zone": 235.0,
-      "trim_zone": 290.0,
-      "buy_zone_distance_pct": 33.98297872340426,
-      "trim_zone_distance_pct": 8.572413793103454,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
-        "yahoo": "https://finance.yahoo.com/quote/AAPL",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://investor.apple.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
       "ticker": "AMZN",
       "name": "Amazon.com, Inc.",
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Near trim zone $255 · -2.9% from zone"
+        "Near trim zone $255 · -0.2% from zone"
       ],
       "severity": "medium",
-      "price": 247.49,
+      "price": 254.52,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 20.726829268292686,
-      "trim_zone_distance_pct": -2.9450980392156825,
+      "buy_zone_distance_pct": 24.156097560975613,
+      "trim_zone_distance_pct": -0.18823529411764306,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -72,19 +50,41 @@
       "price_source": "technical.json"
     },
     {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "role": "Core Quality",
+      "primary_trigger": "buy_zone",
+      "signals": [
+        "Reached buy zone $430 · -8.2% from zone"
+      ],
+      "severity": "medium",
+      "price": 394.58,
+      "buy_zone": 430.0,
+      "trim_zone": 520.0,
+      "buy_zone_distance_pct": -8.237209302325585,
+      "trim_zone_distance_pct": -24.119230769230775,
+      "actions": {
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
+        "yahoo": "https://finance.yahoo.com/quote/MSFT",
+        "raw_data": "data/technical.json",
+        "company_ir": "https://www.microsoft.com/en-us/Investor/"
+      },
+      "price_source": "technical.json"
+    },
+    {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +3.3% from zone"
+        "Near buy zone $205 · +2.4% from zone"
       ],
       "severity": "medium",
-      "price": 211.8,
+      "price": 210.01,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 3.317073170731713,
-      "trim_zone_distance_pct": -13.55102040816326,
+      "buy_zone_distance_pct": 2.4439024390243858,
+      "trim_zone_distance_pct": -14.281632653061227,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -99,14 +99,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -7.8% from zone"
+        "Reached buy zone $145 · -7.6% from zone"
       ],
       "severity": "medium",
-      "price": 133.72,
+      "price": 134.03,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -7.779310344827587,
-      "trim_zone_distance_pct": -27.718918918918924,
+      "buy_zone_distance_pct": -7.565517241379309,
+      "trim_zone_distance_pct": -27.55135135135135,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -116,41 +116,19 @@
       "price_source": "technical.json"
     },
     {
-      "ticker": "PUMP",
-      "name": "ProPetro Holding Corp.",
-      "role": "Cyclical Watch",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $15 · -8.3% from zone"
-      ],
-      "severity": "medium",
-      "price": 13.75,
-      "buy_zone": 15.0,
-      "trim_zone": 19.0,
-      "buy_zone_distance_pct": -8.333333333333332,
-      "trim_zone_distance_pct": -27.631578947368425,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-PUMP/",
-        "yahoo": "https://finance.yahoo.com/quote/PUMP",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://investors.propetroservices.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
       "ticker": "SEI",
       "name": "SEI Investments Company",
       "role": "Quality Compounder",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $72 · -3.5% from zone"
+        "Reached buy zone $72 · -7.8% from zone"
       ],
       "severity": "medium",
-      "price": 69.5,
+      "price": 66.36,
       "buy_zone": 72.0,
       "trim_zone": 86.0,
-      "buy_zone_distance_pct": -3.4722222222222223,
-      "trim_zone_distance_pct": -19.186046511627907,
+      "buy_zone_distance_pct": -7.833333333333334,
+      "trim_zone_distance_pct": -22.837209302325583,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-SEI/",
         "yahoo": "https://finance.yahoo.com/quote/SEI",
@@ -168,7 +146,7 @@
     "scanner_synced": true,
     "technical_rows": 408,
     "manual_earnings_rows": 1,
-    "finnhub_rows": 3
+    "finnhub_rows": 4
   },
   "earnings_diagnostics": {
     "checked": 10,
@@ -177,6 +155,7 @@
     "loaded_from_finnhub": [
       "HOOD",
       "MSFT",
+      "PUMP",
       "TSLA"
     ],
     "loaded_from_yahoo": [],
@@ -187,7 +166,6 @@
       "AMZN",
       "NVDA",
       "PLTR",
-      "PUMP",
       "SEI"
     ],
     "api_failed": [],
@@ -195,6 +173,6 @@
       "from": "2026-07-15",
       "to": "2026-07-29"
     },
-    "finnhub_rows_matched": 3
+    "finnhub_rows_matched": 4
   }
 }
