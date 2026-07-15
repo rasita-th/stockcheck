@@ -1,42 +1,350 @@
 {
   "global_markets": [
-    {"symbol":"SPY","label":"United States · S&P 500","region":"United States"},
-    {"symbol":"FEZ","label":"Europe · Euro Stoxx 50","region":"Europe"},
-    {"symbol":"EWJ","label":"Japan","region":"Japan"},
-    {"symbol":"MCHI","label":"China","region":"China"},
-    {"symbol":"EWY","label":"South Korea","region":"South Korea"},
-    {"symbol":"EWT","label":"Taiwan","region":"Taiwan"},
-    {"symbol":"INDA","label":"India","region":"India"},
-    {"symbol":"EIDO","label":"Indonesia","region":"Indonesia"},
-    {"symbol":"EWM","label":"Malaysia","region":"Malaysia"},
-    {"symbol":"EWS","label":"Singapore","region":"Singapore"},
-    {"symbol":"EPHE","label":"Philippines","region":"Philippines"},
-    {"symbol":"THD","label":"Thailand","region":"Thailand"},
-    {"symbol":"VNM","label":"Vietnam","region":"Vietnam"}
+    {
+      "symbol": "^GSPC",
+      "label": "S&P 500",
+      "country": "United States",
+      "region": "Americas",
+      "flag": "🇺🇸",
+      "description": "หุ้นขนาดใหญ่สหรัฐ 500 บริษัท ใช้เป็นตัวแทนตลาดหุ้นสหรัฐโดยรวม"
+    },
+    {
+      "symbol": "^IXIC",
+      "label": "Nasdaq Composite",
+      "country": "United States",
+      "region": "Americas",
+      "flag": "🇺🇸",
+      "description": "ตลาดหุ้นที่ให้น้ำหนักกลุ่มเทคโนโลยีและหุ้นเติบโตสูง"
+    },
+    {
+      "symbol": "^DJI",
+      "label": "Dow Jones",
+      "country": "United States",
+      "region": "Americas",
+      "flag": "🇺🇸",
+      "description": "หุ้นสหรัฐขนาดใหญ่ 30 บริษัท เน้นธุรกิจ成熟และ blue-chip"
+    },
+    {
+      "symbol": "^RUT",
+      "label": "Russell 2000",
+      "country": "United States",
+      "region": "Americas",
+      "flag": "🇺🇸",
+      "description": "หุ้นขนาดเล็กสหรัฐ สะท้อนเศรษฐกิจภายในประเทศ"
+    },
+    {
+      "symbol": "^STOXX50E",
+      "label": "Euro Stoxx 50",
+      "country": "Eurozone",
+      "region": "Europe",
+      "flag": "🇪🇺",
+      "description": "บริษัทชั้นนำ 50 แห่งในเขตยูโร"
+    },
+    {
+      "symbol": "^FTSE",
+      "label": "FTSE 100",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "flag": "🇬🇧",
+      "description": "หุ้นขนาดใหญ่ในตลาดลอนดอน"
+    },
+    {
+      "symbol": "^GDAXI",
+      "label": "DAX",
+      "country": "Germany",
+      "region": "Europe",
+      "flag": "🇩🇪",
+      "description": "บริษัทขนาดใหญ่ของเยอรมนี เน้นอุตสาหกรรมและการส่งออก"
+    },
+    {
+      "symbol": "^FCHI",
+      "label": "CAC 40",
+      "country": "France",
+      "region": "Europe",
+      "flag": "🇫🇷",
+      "description": "บริษัทขนาดใหญ่ของฝรั่งเศส รวมสินค้าแบรนด์และอุตสาหกรรม"
+    },
+    {
+      "symbol": "^N225",
+      "label": "Nikkei 225",
+      "country": "Japan",
+      "region": "Asia",
+      "flag": "🇯🇵",
+      "description": "ดัชนีหุ้นชั้นนำญี่ปุ่นแบบ price-weighted"
+    },
+    {
+      "symbol": "^TOPX",
+      "label": "TOPIX",
+      "country": "Japan",
+      "region": "Asia",
+      "flag": "🇯🇵",
+      "description": "ภาพตลาดญี่ปุ่นที่กว้างกว่า Nikkei"
+    },
+    {
+      "symbol": "^HSI",
+      "label": "Hang Seng",
+      "country": "Hong Kong",
+      "region": "Asia",
+      "flag": "🇭🇰",
+      "description": "หุ้นขนาดใหญ่ฮ่องกงและจีนที่จดทะเบียนในฮ่องกง"
+    },
+    {
+      "symbol": "000300.SS",
+      "label": "CSI 300",
+      "country": "China",
+      "region": "Asia",
+      "flag": "🇨🇳",
+      "description": "หุ้นขนาดใหญ่ในเซี่ยงไฮ้และเซินเจิ้น"
+    },
+    {
+      "symbol": "000001.SS",
+      "label": "Shanghai Composite",
+      "country": "China",
+      "region": "Asia",
+      "flag": "🇨🇳",
+      "description": "ภาพรวมตลาดหุ้นเซี่ยงไฮ้"
+    },
+    {
+      "symbol": "^KS11",
+      "label": "KOSPI",
+      "country": "South Korea",
+      "region": "Asia",
+      "flag": "🇰🇷",
+      "description": "ตลาดหุ้นเกาหลีใต้ เน้น semiconductor และอุตสาหกรรม"
+    },
+    {
+      "symbol": "^TWII",
+      "label": "Taiwan Weighted",
+      "country": "Taiwan",
+      "region": "Asia",
+      "flag": "🇹🇼",
+      "description": "ตลาดหุ้นไต้หวัน ซึ่งมีน้ำหนัก semiconductor สูง"
+    },
+    {
+      "symbol": "^NSEI",
+      "label": "Nifty 50",
+      "country": "India",
+      "region": "Asia",
+      "flag": "🇮🇳",
+      "description": "หุ้นขนาดใหญ่ 50 บริษัทของอินเดีย"
+    },
+    {
+      "symbol": "^STI",
+      "label": "Straits Times",
+      "country": "Singapore",
+      "region": "Asia",
+      "flag": "🇸🇬",
+      "description": "ตลาดสิงคโปร์ เน้นธนาคารและอสังหาริมทรัพย์"
+    },
+    {
+      "symbol": "^KLSE",
+      "label": "FTSE Bursa Malaysia KLCI",
+      "country": "Malaysia",
+      "region": "Asia",
+      "flag": "🇲🇾",
+      "description": "หุ้นขนาดใหญ่ของมาเลเซีย"
+    },
+    {
+      "symbol": "^JKSE",
+      "label": "Jakarta Composite",
+      "country": "Indonesia",
+      "region": "Asia",
+      "flag": "🇮🇩",
+      "description": "ภาพรวมตลาดหุ้นอินโดนีเซีย"
+    },
+    {
+      "symbol": "PSEI.PS",
+      "label": "PSEi",
+      "country": "Philippines",
+      "region": "Asia",
+      "flag": "🇵🇭",
+      "description": "หุ้นชั้นนำของฟิลิปปินส์"
+    },
+    {
+      "symbol": "^SET.BK",
+      "label": "SET Index",
+      "country": "Thailand",
+      "region": "Asia",
+      "flag": "🇹🇭",
+      "description": "ภาพรวมตลาดหุ้นไทย"
+    },
+    {
+      "symbol": "^VNINDEX.VN",
+      "label": "VN-Index",
+      "country": "Vietnam",
+      "region": "Asia",
+      "flag": "🇻🇳",
+      "description": "ภาพรวมตลาดหุ้นเวียดนาม"
+    },
+    {
+      "symbol": "^AXJO",
+      "label": "ASX 200",
+      "country": "Australia",
+      "region": "Pacific",
+      "flag": "🇦🇺",
+      "description": "หุ้นขนาดใหญ่ของออสเตรเลีย เน้นการเงินและทรัพยากร"
+    }
+  ],
+  "us_indices": [
+    {
+      "symbol": "^GSPC",
+      "label": "S&P 500",
+      "category": "Large Cap",
+      "description": "ตลาดหุ้นขนาดใหญ่สหรัฐ"
+    },
+    {
+      "symbol": "^IXIC",
+      "label": "Nasdaq Composite",
+      "category": "Growth / Tech",
+      "description": "ตลาดเทคโนโลยีและหุ้นเติบโต"
+    },
+    {
+      "symbol": "^DJI",
+      "label": "Dow Jones",
+      "category": "Blue Chip",
+      "description": "หุ้น blue-chip 30 บริษัท"
+    },
+    {
+      "symbol": "^RUT",
+      "label": "Russell 2000",
+      "category": "Small Cap",
+      "description": "หุ้นขนาดเล็กสหรัฐ"
+    },
+    {
+      "symbol": "^VIX",
+      "label": "VIX",
+      "category": "Volatility",
+      "description": "ดัชนีความผันผวน ยิ่งสูงยิ่งสะท้อนความกังวล"
+    }
   ],
   "us_sectors": [
-    {"symbol":"XLK","label":"Technology","sector":"Technology"},
-    {"symbol":"XLC","label":"Communication Services","sector":"Communication Services"},
-    {"symbol":"XLY","label":"Consumer Discretionary","sector":"Consumer Discretionary"},
-    {"symbol":"XLP","label":"Consumer Staples","sector":"Consumer Staples"},
-    {"symbol":"XLF","label":"Financials","sector":"Financials"},
-    {"symbol":"XLV","label":"Health Care","sector":"Health Care"},
-    {"symbol":"XLI","label":"Industrials","sector":"Industrials"},
-    {"symbol":"XLE","label":"Energy","sector":"Energy"},
-    {"symbol":"XLU","label":"Utilities","sector":"Utilities"},
-    {"symbol":"XLRE","label":"Real Estate","sector":"Real Estate"},
-    {"symbol":"XLB","label":"Materials","sector":"Materials"}
+    {
+      "symbol": "XLK",
+      "label": "Technology",
+      "sector": "Technology",
+      "description": "ซอฟต์แวร์ ฮาร์ดแวร์ semiconductor และบริการไอที"
+    },
+    {
+      "symbol": "XLC",
+      "label": "Communication Services",
+      "sector": "Communication Services",
+      "description": "แพลตฟอร์มดิจิทัล สื่อ โทรคมนาคม"
+    },
+    {
+      "symbol": "XLY",
+      "label": "Consumer Discretionary",
+      "sector": "Consumer Discretionary",
+      "description": "สินค้าฟุ่มเฟือย รถยนต์ ร้านค้าออนไลน์"
+    },
+    {
+      "symbol": "XLP",
+      "label": "Consumer Staples",
+      "sector": "Consumer Staples",
+      "description": "อาหาร เครื่องดื่ม และสินค้าใช้ประจำ"
+    },
+    {
+      "symbol": "XLF",
+      "label": "Financials",
+      "sector": "Financials",
+      "description": "ธนาคาร ประกัน และบริการการเงิน"
+    },
+    {
+      "symbol": "XLV",
+      "label": "Health Care",
+      "sector": "Health Care",
+      "description": "ยา อุปกรณ์การแพทย์ และบริการสุขภาพ"
+    },
+    {
+      "symbol": "XLI",
+      "label": "Industrials",
+      "sector": "Industrials",
+      "description": "เครื่องจักร ขนส่ง ก่อสร้าง และการบิน"
+    },
+    {
+      "symbol": "XLE",
+      "label": "Energy",
+      "sector": "Energy",
+      "description": "น้ำมัน ก๊าซ และบริการพลังงาน"
+    },
+    {
+      "symbol": "XLU",
+      "label": "Utilities",
+      "sector": "Utilities",
+      "description": "ไฟฟ้า ก๊าซ และสาธารณูปโภค"
+    },
+    {
+      "symbol": "XLRE",
+      "label": "Real Estate",
+      "sector": "Real Estate",
+      "description": "REIT และธุรกิจอสังหาริมทรัพย์"
+    },
+    {
+      "symbol": "XLB",
+      "label": "Materials",
+      "sector": "Materials",
+      "description": "เคมีภัณฑ์ เหมือง โลหะ และวัสดุก่อสร้าง"
+    }
   ],
   "themes": [
-    {"symbol":"SMH","label":"Semiconductors","theme":"Semiconductors"},
-    {"symbol":"IGV","label":"Software","theme":"Software"},
-    {"symbol":"ARKQ","label":"Automation & Robotics","theme":"Automation"},
-    {"symbol":"ITA","label":"Aerospace & Defense","theme":"Defense"},
-    {"symbol":"URA","label":"Uranium","theme":"Uranium"},
-    {"symbol":"URNM","label":"Uranium Miners","theme":"Uranium Miners"},
-    {"symbol":"IBB","label":"Biotechnology","theme":"Biotech"},
-    {"symbol":"HACK","label":"Cybersecurity","theme":"Cybersecurity"},
-    {"symbol":"KWEB","label":"China Internet","theme":"China Internet"},
-    {"symbol":"COPX","label":"Copper Miners","theme":"Copper"}
+    {
+      "symbol": "SMH",
+      "label": "Semiconductors",
+      "theme": "Semiconductors",
+      "description": "ชิปและอุปกรณ์การผลิต semiconductor"
+    },
+    {
+      "symbol": "IGV",
+      "label": "Software",
+      "theme": "Software",
+      "description": "ซอฟต์แวร์องค์กรและ cloud"
+    },
+    {
+      "symbol": "HACK",
+      "label": "Cybersecurity",
+      "theme": "Cybersecurity",
+      "description": "ระบบรักษาความปลอดภัยไซเบอร์"
+    },
+    {
+      "symbol": "ITA",
+      "label": "Aerospace & Defense",
+      "theme": "Defense",
+      "description": "อากาศยานและกลาโหม"
+    },
+    {
+      "symbol": "ARKQ",
+      "label": "Automation & Robotics",
+      "theme": "Automation",
+      "description": "หุ่นยนต์ ระบบอัตโนมัติ และ AI เชิงอุตสาหกรรม"
+    },
+    {
+      "symbol": "URA",
+      "label": "Uranium",
+      "theme": "Uranium",
+      "description": "ผู้ผลิตและห่วงโซ่อุปทานยูเรเนียม"
+    },
+    {
+      "symbol": "COPX",
+      "label": "Copper Miners",
+      "theme": "Copper",
+      "description": "เหมืองทองแดงและวัตถุดิบไฟฟ้า"
+    },
+    {
+      "symbol": "IBB",
+      "label": "Biotechnology",
+      "theme": "Biotech",
+      "description": "ชีวเวชภัณฑ์และเทคโนโลยีชีวภาพ"
+    },
+    {
+      "symbol": "KWEB",
+      "label": "China Internet",
+      "theme": "China Internet",
+      "description": "แพลตฟอร์มอินเทอร์เน็ตจีน"
+    },
+    {
+      "symbol": "BITQ",
+      "label": "Crypto Equities",
+      "theme": "Crypto",
+      "description": "บริษัทที่เกี่ยวข้องกับสินทรัพย์ดิจิทัล"
+    }
   ]
 }
