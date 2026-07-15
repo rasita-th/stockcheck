@@ -1,4 +1,4 @@
-name: Refresh Market Pulse v9.2
+name: Refresh Market Pulse v9.2 (safe)
 
 on:
   workflow_dispatch:
@@ -8,49 +8,85 @@ on:
     branches: [main]
     paths:
       - "scripts/generate_market_pulse.py"
+      - "scripts/validate_market_pulse.py"
       - "data/market_universe.json"
       - ".github/workflows/refresh-market-pulse-v9-2.yml"
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
-  group: refresh-market-pulse-v9-2
+  group: market-pulse-production
   cancel-in-progress: true
+
+env:
+  PYTHONUNBUFFERED: "1"
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
+
       - name: Install data dependencies
         run: python -m pip install --upgrade pip pandas yfinance
-      - name: Generate Market Pulse JSON
+
+      - name: Backup last-known-good JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .deploy-backup
+          for f in data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
+            [ -f "$f" ] && cp --parents "$f" .deploy-backup/
+          done
+
+      - name: Upload pre-refresh backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-pulse-backup-${{ github.run_number }}
+          path: .deploy-backup
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Generate candidate JSON
         run: python scripts/generate_market_pulse.py
-      - name: Validate v9.2 schema
+
+      - name: Validate candidate
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('data/market_pulse.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
-          required=('global_markets','us_indices','us_sectors','themes')
-          missing=[k for k in required if not isinstance(d.get(k),list) or not d[k]]
-          if missing:
-              raise SystemExit(f'Missing or empty required datasets: {missing}')
-          print({k:len(d[k]) for k in required})
-          PY
-      - name: Commit refreshed data
+          python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
+          cmp data/market_pulse.json site/data/market_pulse.json
+          cmp data/market_pulse.json static/data/market_pulse.json
+
+      - name: Upload validated candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-pulse-candidate-${{ github.run_number }}
+          path: |
+            data/market_pulse.json
+            site/data/market_pulse.json
+            static/data/market_pulse.json
+          retention-days: 30
+
+      - name: Commit validated data only
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json
-          git diff --cached --quiet && exit 0
-          git commit -m "data: refresh Market Pulse"
-          git push
+          if git diff --cached --quiet; then
+            echo "No data changes"
+            exit 0
+          fi
+          git commit -m "data: refresh validated Market Pulse"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -95,3 +95,101 @@ header .nav-tabs,header .top-nav,header .header-actions,
     white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
   }
 }
+
+/* v9.2.2: treat all top action links as one responsive rail. */
+@media (min-width: 1101px) {
+  header .header-inner, header .header-row,
+  .app-header .header-inner, .app-header .header-row,
+  .top-header .header-inner, .top-header .header-row {
+    display:grid!important;
+    grid-template-columns:minmax(260px,auto) minmax(300px,1fr) minmax(max-content,auto)!important;
+    align-items:center!important;
+  }
+  header .header-actions, header .top-nav, header .nav-actions,
+  .app-header .header-actions, .app-header .top-nav, .app-header .nav-actions {
+    overflow:visible!important;
+  }
+}
+@media (max-width:1100px) and (min-width:721px){
+  header .header-inner, header .header-row,
+  .app-header .header-inner, .app-header .header-row,
+  .top-header .header-inner, .top-header .header-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  header .search-wrap,header .search-container,header .symbol-search,
+  .app-header .search-wrap,.app-header .search-container,.app-header .symbol-search{
+    grid-column:1/-1!important;grid-row:2!important;width:100%!important
+  }
+  header .header-actions,header .top-nav,header .nav-actions,
+  .app-header .header-actions,.app-header .top-nav,.app-header .nav-actions{
+    display:flex!important;overflow-x:auto!important;max-width:60vw!important;
+    scrollbar-width:none!important
+  }
+}
+@media (max-width:720px){
+  header .header-actions,header .top-nav,header .nav-actions,
+  .app-header .header-actions,.app-header .top-nav,.app-header .nav-actions,
+  .top-header .header-actions,.top-header .top-nav,.top-header .nav-actions{
+    display:flex!important;grid-template-columns:none!important;overflow-x:auto!important;
+    justify-content:flex-start!important;scroll-snap-type:x proximity!important;
+    -webkit-overflow-scrolling:touch!important;scrollbar-width:none!important
+  }
+  header .header-actions>a,header .header-actions>button,header .top-nav>a,header .top-nav>button,
+  .app-header .header-actions>a,.app-header .header-actions>button,.app-header .top-nav>a,.app-header .top-nav>button{
+    width:auto!important;min-width:max-content!important;min-height:44px!important;
+    overflow:visible!important;text-overflow:clip!important;scroll-snap-align:start!important
+  }
+}
+
+/* v9.2.3 — Market Pulse is a real child of the Memo action group.
+   It intentionally occupies its own row, so it cannot cover Memo/Today. */
+.stockradar-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  position: static !important;
+  overflow: visible !important;
+  min-width: 0 !important;
+}
+
+.stockradar-header-actions > .stockradar-market-pulse-link,
+.stockradar-header-actions > .market-pulse-link,
+.stockradar-header-actions > a[href$="market.html"] {
+  order: 999 !important;
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  translate: none !important;
+  float: none !important;
+  z-index: auto !important;
+  flex: 1 0 100% !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 2px 0 0 !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 720px) {
+  .stockradar-header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+
+  .stockradar-header-actions > .stockradar-market-pulse-link,
+  .stockradar-header-actions > .market-pulse-link,
+  .stockradar-header-actions > a[href$="market.html"] {
+    min-height: 44px !important;
+  }
+}
