@@ -8,8 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+<style id="market-pulse-launch-style">
+.market-pulse-launch{position:fixed;right:18px;top:18px;z-index:9999;text-decoration:none;color:#e6edf3;background:rgba(22,27,34,.94);border:1px solid #30363d;border-radius:999px;padding:10px 14px;font:700 14px "DM Sans",sans-serif;box-shadow:0 8px 26px rgba(0,0,0,.25)}
+.market-pulse-launch:hover{border-color:#58a6ff;color:#58a6ff}
+@media(max-width:760px){.market-pulse-launch{top:auto;bottom:92px;right:18px;padding:11px 13px;font-size:0}.market-pulse-launch::first-letter{font-size:22px}}
+</style>
 </head>
 <body>
+  <a class="market-pulse-launch" href="market.html" aria-label="Open Market Pulse">🌍 Market Pulse</a>
   <div class="app-shell" data-view="technical">
     <header class="topbar">
       <button class="icon-btn mobile-only" aria-label="Open menu" data-open-panel="watchlist">☰</button>
@@ -363,6 +370,6 @@ META MSFT PLTR SOUN SEI"></textarea>
     <div class="alert-mobile-list" id="alertMobileList"></div>
     <button class="ghost-btn alert-clear-btn" type="button" data-dismiss-all-alerts>Clear all</button>
   </section>
-  <script src="app.js?v=8.3.1"></script>
+  <script src="app.js?v=9.0.0"></script>
 </body>
 </html>

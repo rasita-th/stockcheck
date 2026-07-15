@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Market Pulse · Stock Timing Radar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="market.css?v=9.0.0">
+</head>
+<body>
+  <header class="pulse-header">
+    <a class="back-link" href="index.html">← Radar</a>
+    <div>
+      <h1>🌍 Market Pulse</h1>
+      <p>ดูเงินไหลผ่านตลาดโลก ภาคธุรกิจสหรัฐฯ และธีมลงทุน โดยไม่ปนกับ watchlist หุ้นหลัก</p>
+    </div>
+    <div class="freshness" id="freshness">Loading…</div>
+  </header>
+
+  <main>
+    <section class="hero-grid">
+      <article class="hero-card">
+        <span>US Sector Breadth</span>
+        <strong id="breadthDay">—</strong>
+        <small>positive today</small>
+      </article>
+      <article class="hero-card">
+        <span>Weekly Breadth</span>
+        <strong id="breadthWeek">—</strong>
+        <small>positive this week</small>
+      </article>
+      <article class="hero-card">
+        <span>Radar Mode</span>
+        <strong>Quiet by default</strong>
+        <small>show only meaningful leaders and laggards</small>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>📡 Today Pulse</h2><p>สิ่งที่ควรหยิบขึ้นมาดูวันนี้ จาก sector/theme movement</p></div>
+      </div>
+      <div id="todayPulse" class="pulse-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>🌐 Global Markets</h2><p>เปรียบเทียบ 1D · 1W · 1M · YTD ผ่าน ETF proxy</p></div>
+        <div class="time-tabs" data-target="globalTable">
+          <button data-period="day_pct">1D</button><button data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button class="active" data-period="ytd_pct">YTD</button>
+        </div>
+      </div>
+      <div id="globalTable" class="ranking-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>🇺🇸 USA Sector Rotation</h2><p>ดูว่ากระแสเงินกำลังหมุนเข้าสู่ sector ไหน</p></div>
+        <div class="time-tabs" data-target="sectorTable">
+          <button data-period="day_pct">1D</button><button class="active" data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button data-period="ytd_pct">YTD</button>
+        </div>
+      </div>
+      <div id="sectorTable" class="ranking-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>🧭 Themes & Money Flow</h2><p>Semiconductors, defense, uranium, biotech, software และธีมสำคัญ</p></div>
+        <div class="time-tabs" data-target="themeTable">
+          <button data-period="day_pct">1D</button><button class="active" data-period="week_pct">1W</button><button data-period="month_pct">1M</button><button data-period="ytd_pct">YTD</button>
+        </div>
+      </div>
+      <div id="themeTable" class="ranking-grid"></div>
+    </section>
+
+    <section class="method-note">
+      <strong>How to read</strong>
+      <p>สีและอันดับสะท้อนผลตอบแทนของ ETF proxy ไม่ใช่ fund-flow แบบเงินจริงโดยตรง แต่เหมาะสำหรับอ่าน relative strength และ rotation แบบรวดเร็ว</p>
+    </section>
+  </main>
+  <script src="market.js?v=9.0.0"></script>
+</body>
+</html>
