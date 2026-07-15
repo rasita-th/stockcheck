@@ -1,3 +1,97 @@
-/* v9.2 navigation overlap fix */
-@media (min-width:901px){header .nav-tabs,.top-nav,.header-actions{display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:nowrap!important;position:static!important;transform:none!important;max-width:100%!important}header{min-height:76px}.market-pulse-link{white-space:nowrap!important}}
-@media (max-width:900px){header,.app-header,.top-header{height:auto!important;min-height:0!important}.header-inner,.header-row{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}.nav-tabs,.top-nav,.header-actions{position:static!important;transform:none!important;width:100%!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}.nav-tabs a,.nav-tabs button,.top-nav a,.header-actions a,.header-actions button{min-width:0!important;width:100%!important;text-align:center!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}}
+/* v9.2.1 — main-header collision fix
+   Loaded last so it can neutralise legacy absolute/fixed positioning. */
+:root{--stockradar-header-gap:12px}
+
+/* Never let the Market Pulse shortcut float over Memo/Today. */
+.market-pulse-link,
+a[href$="market.html"].market-pulse-link,
+header a[href$="market.html"],
+.app-header a[href$="market.html"],
+.top-header a[href$="market.html"]{
+  position:static!important;
+  inset:auto!important;
+  top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+  transform:none!important;
+  margin:0!important;
+  white-space:nowrap!important;
+}
+
+/* Make the main row use real layout space instead of overlay coordinates. */
+header .header-inner,header .header-row,
+.app-header .header-inner,.app-header .header-row,
+.top-header .header-inner,.top-header .header-row{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+header .search-wrap,header .search-container,header .symbol-search,
+.app-header .search-wrap,.app-header .search-container,.app-header .symbol-search{
+  min-width:0!important;
+  flex:1 1 360px!important;
+}
+header .nav-tabs,header .top-nav,header .header-actions,
+.app-header .nav-tabs,.app-header .top-nav,.app-header .header-actions,
+.top-header .nav-tabs,.top-header .top-nav,.top-header .header-actions{
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+@media (min-width:901px){
+  header,.app-header,.top-header{height:auto!important;min-height:76px!important;overflow:visible!important}
+  header .header-inner,header .header-row,
+  .app-header .header-inner,.app-header .header-row,
+  .top-header .header-inner,.top-header .header-row{
+    display:flex!important;
+    align-items:center!important;
+    gap:var(--stockradar-header-gap)!important;
+    flex-wrap:nowrap!important;
+  }
+  header .nav-tabs,header .top-nav,header .header-actions,
+  .app-header .nav-tabs,.app-header .top-nav,.app-header .header-actions,
+  .top-header .nav-tabs,.top-header .top-nav,.top-header .header-actions{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:8px!important;
+    flex:0 0 auto!important;
+    flex-wrap:nowrap!important;
+  }
+  header .nav-tabs>a,header .nav-tabs>button,header .top-nav>a,header .header-actions>a,header .header-actions>button{
+    flex:0 0 auto!important;
+  }
+}
+
+@media (max-width:1200px) and (min-width:901px){
+  header .brand-subtitle,.app-header .brand-subtitle,.top-header .brand-subtitle{display:none!important}
+  header .search-wrap,header .search-container,header .symbol-search{flex-basis:260px!important}
+  header .nav-tabs a,header .nav-tabs button,header .top-nav a,header .header-actions a,header .header-actions button{
+    padding-left:11px!important;padding-right:11px!important
+  }
+}
+
+@media (max-width:900px){
+  header,.app-header,.top-header{height:auto!important;min-height:0!important;overflow:visible!important}
+  header .header-inner,header .header-row,
+  .app-header .header-inner,.app-header .header-row,
+  .top-header .header-inner,.top-header .header-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  header .search-wrap,header .search-container,header .symbol-search{width:100%!important;flex-basis:auto!important}
+  header .nav-tabs,header .top-nav,header .header-actions,
+  .app-header .nav-tabs,.app-header .top-nav,.app-header .header-actions,
+  .top-header .nav-tabs,.top-header .top-nav,.top-header .header-actions{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  header .nav-tabs a,header .nav-tabs button,header .top-nav a,header .header-actions a,header .header-actions button{
+    min-width:0!important;width:100%!important;text-align:center!important;
+    white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
+  }
+}
