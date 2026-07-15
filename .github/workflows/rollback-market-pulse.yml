@@ -1,0 +1,53 @@
+name: Roll back Market Pulse data
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Known-good commit/tag/branch to restore JSON from"
+        required: true
+        default: "HEAD~1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-pulse-production
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Restore JSON from selected ref
+        shell: bash
+        env:
+          SOURCE_REF: ${{ inputs.source_ref }}
+        run: |
+          set -euo pipefail
+          git rev-parse --verify "$SOURCE_REF^{commit}"
+          for f in data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
+            git show "$SOURCE_REF:$f" > "$f"
+          done
+          python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.70
+          cmp data/market_pulse.json site/data/market_pulse.json
+          cmp data/market_pulse.json static/data/market_pulse.json
+      - name: Commit rollback
+        shell: bash
+        env:
+          SOURCE_REF: ${{ inputs.source_ref }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: roll back Market Pulse from ${SOURCE_REF}"
+          git pull --rebase origin main
+          git push origin HEAD:main
