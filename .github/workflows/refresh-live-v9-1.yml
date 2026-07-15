@@ -1,0 +1,107 @@
+name: Refresh Live Data v9.1
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * 1-5"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: stockcheck-v9-1-live
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check US market window
+        id: market
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime, time
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo("America/New_York"))
+          is_open = now.weekday() < 5 and time(9, 25) <= now.time() <= time(16, 20)
+          print(f"open={'true' if is_open else 'false'}")
+          print(f"now={now.isoformat()}")
+          PY
+
+      - name: Skip outside market hours
+        if: steps.market.outputs.open != 'true' && github.event_name != 'workflow_dispatch'
+        run: echo "Outside market window at ${{ steps.market.outputs.now }}"
+
+      - uses: actions/checkout@v4
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Seed canonical generated layer
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: python scripts/build_generated_layer.py
+
+      - name: Refresh latest quotes
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: python scripts/update_quote_data.py
+
+      - name: Refresh technical layer
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          INCLUDE_FUNDAMENTALS: "0"
+          TECHNICAL_RANGE: "1y"
+          TECHNICAL_INTERVAL: "1d"
+          TECHNICAL_SCAN_WORKERS: "8"
+        run: |
+          python scripts/update_technical_data.py
+          cp site/data/technical.json data/generated/technical.json
+          cp site/data/scanner.json data/generated/scanner.json
+
+      - name: Refresh Today attention
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+        run: |
+          python scripts/generate_attention_finnhub.py
+          cp site/data/attention_today.json data/generated/attention_today.json
+
+      - name: Refresh Market Pulse
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          python scripts/generate_market_pulse.py
+          cp site/data/market_pulse.json data/generated/market_pulse.json
+
+      - name: Generate health and publish
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          python scripts/generate_health.py
+          python scripts/publish_generated_data.py
+          python scripts/validate_generated_data_v9_1.py
+
+      - name: Commit canonical generated data
+        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/generated site/data static/data
+          if git diff --cached --quiet; then
+            echo "No data changes."
+            exit 0
+          fi
+          git commit -m "Refresh canonical generated data"
+          git push origin HEAD:main
