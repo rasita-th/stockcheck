@@ -1,17 +1,14 @@
-/* Stock Timing Radar v9.3.6 — clickable unified navigation */
-:root{--sr936-edge:clamp(12px,1.15vw,22px);--sr936-gap:clamp(8px,.72vw,12px);--sr936-action-h:48px}
-html,body{width:100%;max-width:none!important}body{margin:0!important;overflow-x:hidden!important}
-#sr-dashboard,#sr-v932-layout{max-width:none!important;width:100%!important}
-.sr936-global-header{width:calc(100% - 2 * var(--sr936-edge))!important;max-width:none!important;margin:var(--sr936-edge) var(--sr936-edge) 0!important;box-sizing:border-box!important;overflow:visible!important;position:relative!important;z-index:50!important}
-.sr936-global-header::before,.sr936-global-header::after,.sr936-header-inner::before,.sr936-header-inner::after{pointer-events:none!important}
-.sr936-global-header .sr936-header-inner{width:100%!important;max-width:none!important;box-sizing:border-box!important;display:grid!important;grid-template-columns:minmax(270px,.78fr) minmax(360px,1.65fr) minmax(500px,1.18fr)!important;align-items:center!important;gap:clamp(12px,1.2vw,22px)!important;padding:14px clamp(14px,1.2vw,22px)!important}
-.sr936-brand-zone{min-width:0!important}.sr936-search-zone{min-width:0!important;width:100%!important}.sr936-search-zone input,.sr936-search-zone [role="searchbox"]{width:100%!important;max-width:none!important;box-sizing:border-box!important}
-.sr936-action-zone{position:relative!important;z-index:999!important;inset:auto!important;transform:none!important;width:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;grid-template-columns:repeat(4,minmax(112px,1fr))!important;gap:var(--sr936-gap)!important;align-items:center!important;box-sizing:border-box!important;pointer-events:auto!important}
-.sr936-nav-action{appearance:none!important;-webkit-appearance:none!important;position:relative!important;z-index:1000!important;inset:auto!important;transform:none!important;width:100%!important;min-width:0!important;max-width:none!important;height:var(--sr936-action-h)!important;margin:0!important;padding:0 12px!important;box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;border-radius:16px!important;white-space:nowrap!important;text-decoration:none!important;overflow:hidden!important;text-overflow:ellipsis!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;font:inherit!important;color:inherit}
-.sr936-nav-action[aria-current="page"]{border-color:#4da3ff!important;color:#58a9ff!important;background:rgba(56,137,219,.13)!important}
-.sr936-live-badge{min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;line-height:1}
-.sr936-legacy-action{display:none!important}.sr936-empty-action-shell{display:none!important;min-height:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important;pointer-events:none!important}
-.sr936-tabs-balanced{width:calc(100% - 2 * var(--sr936-edge))!important;max-width:none!important;margin:0 var(--sr936-edge)!important;box-sizing:border-box!important;display:grid!important;grid-auto-flow:column!important;grid-auto-columns:minmax(128px,1fr)!important;overflow-x:auto!important;overscroll-behavior-x:contain!important}
-.sr936-tabs-balanced>*{min-width:128px!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding-left:12px!important;padding-right:12px!important;box-sizing:border-box!important}
-@media(max-width:1380px){.sr936-global-header .sr936-header-inner{grid-template-columns:minmax(230px,.72fr) minmax(300px,1.28fr)!important}.sr936-action-zone{grid-column:1/-1!important;max-width:720px!important;justify-self:end!important}}
-@media(max-width:820px){:root{--sr936-edge:10px;--sr936-action-h:44px}.sr936-global-header .sr936-header-inner{display:flex!important;flex-wrap:wrap!important;padding:12px!important}.sr936-brand-zone{flex:1 1 230px!important}.sr936-search-zone{order:3!important;flex:1 0 100%!important}.sr936-action-zone{order:4!important;grid-template-columns:repeat(4,minmax(108px,1fr))!important;overflow-x:auto!important;max-width:none!important}.sr936-tabs-balanced{grid-auto-columns:minmax(122px,1fr)!important}}
+/* Stock Timing Radar v9.4 — stable native navigation. No core dashboard DOM is moved. */
+:root{--sr94-edge:clamp(12px,1.2vw,22px);--sr94-gap:10px;--sr94-action-h:46px}
+html,body{max-width:none;width:100%}
+body.sr94-stable-ui{overflow-x:hidden}
+.sr94-legacy-market-link{display:none!important}
+header.topbar{position:relative!important;z-index:20!important;overflow:visible!important}
+.sr94-stable-nav{margin-left:auto;display:grid!important;grid-template-columns:repeat(4,minmax(112px,1fr));gap:var(--sr94-gap);align-items:center;min-width:min(620px,48vw);pointer-events:auto!important;position:relative!important;z-index:30!important}
+.sr94-nav-action{appearance:none;border:1px solid #30363d;background:#0d141d;color:#c7d0db;border-radius:16px;height:var(--sr94-action-h);padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 14px "DM Sans",sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;pointer-events:auto!important;position:relative!important;z-index:31!important}
+.sr94-nav-action:hover{border-color:#58a6ff;color:#58a6ff;background:#101b28}
+.sr94-nav-action[aria-current="page"]{border-color:#58a6ff;color:#58a6ff;background:rgba(56,137,219,.13);box-shadow:inset 0 -2px 0 #58a6ff}
+.sr94-nav-badge{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#ff4d4f;color:white;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+body.sr94-stable-ui header.topbar>.topnav{display:none!important}
+@media(max-width:1200px){.sr94-stable-nav{grid-column:1/-1;width:100%;min-width:0;margin-left:0}.topbar{flex-wrap:wrap!important;gap:12px!important}}
+@media(max-width:760px){:root{--sr94-edge:10px;--sr94-action-h:44px}.sr94-stable-nav{display:flex!important;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}.sr94-stable-nav::-webkit-scrollbar{display:none}.sr94-nav-action{flex:0 0 auto;min-width:116px}}
