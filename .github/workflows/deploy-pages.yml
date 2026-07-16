@@ -43,10 +43,11 @@ jobs:
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
 
-      - name: Validate static data before deploy
+      - name: Validate data and UI smoke test
         run: |
-          python -m py_compile scripts/validate_static_data.py
+          python -m py_compile scripts/validate_static_data.py scripts/smoke_test_site_v9_4_6.py
           python scripts/validate_static_data.py
+          python scripts/smoke_test_site_v9_4_6.py
 
       - name: Verify clean UI artifact
         run: |
