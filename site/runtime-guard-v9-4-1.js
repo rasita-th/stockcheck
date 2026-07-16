@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '9.4.1';
+  const VERSION = '9.4.2';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
@@ -8,29 +8,28 @@
     $('#sr-dashboard')?.remove();
     $('#sr-v932-layout')?.remove();
     $('#sr-v937-workspace')?.remove();
-    document.body.classList.remove(
-      'sr-dashboard-mounted',
-      'sr932-mounted',
-      'sr937-mounted',
-      'sr936-stable-ui',
-      'sr94-stable-ui'
-    );
+    document.body.classList.remove('sr-dashboard-mounted','sr932-mounted','sr937-mounted','sr936-stable-ui','sr94-stable-ui');
   }
 
   function revealNativeUi() {
-    const selectors = [
-      '.app-shell', '.topbar', '.portfolio-tabs', '.workspace',
-      '#watchlistPanel', '.content-area', '#alertCenter', '.scanner-panel',
-      '#detailPanel', '.lower-grid', '#memoPage', '#attentionPage'
-    ];
+    const selectors = ['.app-shell','.topbar','.portfolio-tabs','.workspace','#watchlistPanel','.content-area','#alertCenter','.scanner-panel','#detailPanel','.lower-grid','#memoPage','#attentionPage'];
     for (const selector of selectors) {
       for (const el of $$(selector)) {
-        el.classList.remove('sr937-empty-shell', 'sr936-empty-action-shell', 'sr936-legacy-action');
-        for (const property of ['display','visibility','opacity','width','height','position','inset','transform']) {
-          el.style.removeProperty(property);
-        }
+        el.classList.remove('sr937-empty-shell','sr936-empty-action-shell','sr936-legacy-action');
+        for (const property of ['display','visibility','opacity','width','height','position','inset','transform']) el.style.removeProperty(property);
       }
     }
+  }
+
+  function mountMarketPulseInNativeNav() {
+    const nav = $('.app-mode-nav');
+    const link = $('.market-pulse-launch');
+    if (!nav || !link) return false;
+    link.classList.add('app-mode-btn','market-mode-btn');
+    link.removeAttribute('style');
+    link.innerHTML = '<span aria-hidden="true">🌍</span><span>Market Pulse</span>';
+    if (link.parentElement !== nav) nav.appendChild(link);
+    return true;
   }
 
   function activateNativeView(view) {
@@ -51,7 +50,7 @@
     const rows = $('#technicalTableBody');
     const scanner = $('.scanner-panel');
     if (!scanner || !rows) return;
-    window.setTimeout(() => {
+    setTimeout(() => {
       if (!rows.children.length && !$('#v941DataRecoveryNote')) {
         const note = document.createElement('div');
         note.id = 'v941DataRecoveryNote';
@@ -65,6 +64,7 @@
   function recover() {
     removeLegacyRuntime();
     revealNativeUi();
+    mountMarketPulseInNativeNav();
     applyHash();
     verifyDataUi();
   }
@@ -72,13 +72,15 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       recover();
-      setTimeout(recover, 250);
-      setTimeout(recover, 1200);
+      setTimeout(recover, 150);
+      setTimeout(recover, 600);
+      setTimeout(recover, 1400);
     }, { once: true });
-  } else {
-    recover();
-  }
+  } else recover();
+
   addEventListener('load', recover, { once: true });
   addEventListener('hashchange', applyHash);
-  window.StockRadarRuntimeGuard = { version: VERSION, recover, activateNativeView };
+  const observer = new MutationObserver(() => mountMarketPulseInNativeNav());
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+  window.StockRadarRuntimeGuard = { version: VERSION, recover, activateNativeView, mountMarketPulseInNativeNav };
 })();
