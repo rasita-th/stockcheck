@@ -1,0 +1,19 @@
+/* Stock Timing Radar v9.4.6 — single native shell, no DOM relocation. */
+:root{--sr946-gap:8px;--sr946-border:#30363d;--sr946-bg:#0d141d;--sr946-text:#c7d0db;--sr946-blue:#58a6ff}
+html,body{width:100%;max-width:none}
+body{overflow-x:hidden}
+header.topbar{position:relative!important;z-index:40!important;overflow:visible!important;height:auto!important;min-height:68px}
+.app-mode-nav.stable-primary-nav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sr946-gap);align-items:stretch;min-width:0;pointer-events:auto!important;position:relative;z-index:44}
+.app-mode-nav.stable-primary-nav>.app-mode-btn{appearance:none;min-width:0;min-height:44px;padding:7px 10px;border:1px solid var(--sr946-border);border-radius:13px;background:var(--sr946-bg);color:var(--sr946-text);display:inline-flex!important;align-items:center;justify-content:center;gap:7px;font:700 13px "DM Sans",sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;pointer-events:auto!important;position:relative;overflow:visible}
+.app-mode-nav.stable-primary-nav>.app-mode-btn:hover{border-color:var(--sr946-blue);color:var(--sr946-blue);background:#101b28}
+.app-mode-nav.stable-primary-nav>.app-mode-btn.active,.app-mode-nav.stable-primary-nav>.app-mode-btn[aria-current="page"]{border-color:var(--sr946-blue);color:var(--sr946-blue);background:rgba(56,137,219,.13);box-shadow:inset 0 -2px 0 var(--sr946-blue)}
+.attention-nav-badge{min-width:21px;height:21px;padding:0 6px;border-radius:999px;background:#ff4d4f;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.attention-nav-badge[hidden]{display:none!important}
+.market-pulse-launch,.sr94-stable-nav,.sr945-primary-nav{display:none!important}
+#sr-dashboard,#sr-v932-layout,#sr-v937-workspace{display:none!important}
+#sr946Status{display:none;margin:10px 14px;padding:10px 12px;border:1px solid #d29922;border-radius:12px;background:rgba(210,153,34,.12);color:#e6edf3;font:600 13px "DM Sans",sans-serif;position:relative;z-index:20}
+#sr946Status.show{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#sr946Status button{border:1px solid #58a6ff;border-radius:10px;background:#0d141d;color:#58a6ff;padding:7px 10px;font-weight:700;cursor:pointer}
+@media(min-width:1201px){header.topbar{display:grid!important;grid-template-columns:minmax(240px,320px) minmax(300px,1fr) minmax(460px,620px)!important;align-items:center!important;gap:14px!important;padding:8px 14px!important}.app-mode-nav.stable-primary-nav{grid-column:3}.topbar>.search-box{grid-column:2}}
+@media(max-width:1200px){header.topbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:10px!important;padding:8px 10px!important}.topbar>.search-box{grid-column:1/-1!important;width:100%!important}.app-mode-nav.stable-primary-nav{grid-column:1/-1!important;width:100%!important}}
+@media(max-width:767px){header.topbar{position:relative!important;grid-template-columns:auto minmax(0,1fr) auto!important}.app-mode-nav.stable-primary-nav{grid-column:1/-1!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;width:100%!important}.app-mode-nav.stable-primary-nav>.app-mode-btn{min-height:46px;padding:6px 3px;font-size:11px;line-height:1.1;white-space:normal;text-align:center;gap:3px}.app-mode-nav.stable-primary-nav>.app-mode-btn>span:first-child{display:none}.attention-nav-badge{position:absolute;top:-6px;right:-3px}.market-pulse-launch{display:none!important}}
