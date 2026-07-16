@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "9.4.2"
+VERSION = "9.4.3"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -49,6 +49,12 @@ def prepare_index(path: Path) -> None:
         html,
         r'\s*<link[^>]+mobile-nav-v9-4-2\.css[^>]*>',
         f'<link rel="stylesheet" href="mobile-nav-v9-4-2.css?v={VERSION}">',
+        r'</head>',
+    )
+    html = inject_once(
+        html,
+        r'\s*<link[^>]+desktop-layout-v9-4-3\.css[^>]*>',
+        f'<link rel="stylesheet" href="desktop-layout-v9-4-3.css?v={VERSION}">',
         r'</head>',
     )
     html = inject_once(
