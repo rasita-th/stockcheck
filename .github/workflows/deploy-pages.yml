@@ -27,10 +27,41 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Prepare stable Pages artifact
+        run: |
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
+          python scripts/prepare_stable_site_v9_4_1.py
+
+      - name: Validate JavaScript entry points
+        run: |
+          node --check site/app.js
+          node --check site/runtime-guard-v9-4-1.js
+          node --check site/market.js
+
       - name: Validate static data before deploy
         run: |
           python -m py_compile scripts/validate_static_data.py
           python scripts/validate_static_data.py
+
+      - name: Verify required UI and data files
+        run: |
+          test -s site/index.html
+          test -s site/styles.css
+          test -s site/app.js
+          test -s site/runtime-guard-v9-4-1.js
+          test -s site/data/technical.json
+          test -s site/data/fundamental.json
+          grep -q 'app.js?v=9.4.1' site/index.html
+          grep -q 'runtime-guard-v9-4-1.js?v=9.4.1' site/index.html
+          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2' site/index.html; then
+            echo 'Legacy runtime asset still referenced by deployment artifact'
+            exit 1
+          fi
 
       - name: Add nojekyll marker
         run: touch site/.nojekyll
