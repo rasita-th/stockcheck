@@ -1,14 +1,14 @@
-/* Stock Timing Radar v9.4 — stable native navigation. No core dashboard DOM is moved. */
-:root{--sr94-edge:clamp(12px,1.2vw,22px);--sr94-gap:10px;--sr94-action-h:46px}
-html,body{max-width:none;width:100%}
-body.sr94-stable-ui{overflow-x:hidden}
-.sr94-legacy-market-link{display:none!important}
-header.topbar{position:relative!important;z-index:20!important;overflow:visible!important}
-.sr94-stable-nav{margin-left:auto;display:grid!important;grid-template-columns:repeat(4,minmax(112px,1fr));gap:var(--sr94-gap);align-items:center;min-width:min(620px,48vw);pointer-events:auto!important;position:relative!important;z-index:30!important}
-.sr94-nav-action{appearance:none;border:1px solid #30363d;background:#0d141d;color:#c7d0db;border-radius:16px;height:var(--sr94-action-h);padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 14px "DM Sans",sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;pointer-events:auto!important;position:relative!important;z-index:31!important}
-.sr94-nav-action:hover{border-color:#58a6ff;color:#58a6ff;background:#101b28}
-.sr94-nav-action[aria-current="page"]{border-color:#58a6ff;color:#58a6ff;background:rgba(56,137,219,.13);box-shadow:inset 0 -2px 0 #58a6ff}
-.sr94-nav-badge{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#ff4d4f;color:white;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
-body.sr94-stable-ui header.topbar>.topnav{display:none!important}
-@media(max-width:1200px){.sr94-stable-nav{grid-column:1/-1;width:100%;min-width:0;margin-left:0}.topbar{flex-wrap:wrap!important;gap:12px!important}}
-@media(max-width:760px){:root{--sr94-edge:10px;--sr94-action-h:44px}.sr94-stable-nav{display:flex!important;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}.sr94-stable-nav::-webkit-scrollbar{display:none}.sr94-nav-action{flex:0 0 auto;min-width:116px}}
+/* Stock Timing Radar v9.4.5 — source-level stable navigation.
+   No dashboard panel is moved, cloned, or hidden. */
+html,body{width:100%;max-width:none}
+body.sr945-ready{overflow-x:hidden}
+.sr945-legacy-market-link{display:none!important}
+header.topbar{position:sticky!important;top:0;z-index:30!important;overflow:visible!important}
+.sr945-primary-nav{display:grid!important;grid-template-columns:repeat(4,minmax(104px,1fr));gap:8px;align-items:center;justify-self:end;min-width:min(600px,48vw);pointer-events:auto!important;position:relative;z-index:32}
+.sr945-nav-action{appearance:none;min-width:0;min-height:42px;padding:0 12px;border:1px solid #30363d;border-radius:13px;background:#0d141d;color:#c7d0db;display:inline-flex;align-items:center;justify-content:center;gap:7px;font:700 14px "DM Sans",sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;pointer-events:auto!important;position:relative}
+.sr945-nav-action:hover{border-color:#58a6ff;color:#58a6ff;background:#101b28}
+.sr945-nav-action[aria-current="page"]{border-color:#58a6ff;color:#58a6ff;background:rgba(56,137,219,.13);box-shadow:inset 0 -2px #58a6ff}
+.sr945-nav-badge{min-width:21px;height:21px;padding:0 6px;border-radius:999px;background:#ff4d4f;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+@media(min-width:1201px){header.topbar{height:auto!important;min-height:68px;grid-template-columns:minmax(240px,320px) minmax(320px,1fr) auto!important;gap:14px!important;padding:8px 14px!important}.sr945-primary-nav{grid-column:auto}}
+@media(max-width:1200px){header.topbar{height:auto!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;padding:8px 10px!important}.topbar .search-box{grid-column:1/-1}.sr945-primary-nav{grid-column:1/-1;width:100%;min-width:0;justify-self:stretch}}
+@media(max-width:767px){header.topbar{position:relative!important}.sr945-primary-nav{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.sr945-nav-action{min-height:46px;padding:6px 3px;font-size:11px;line-height:1.1;white-space:normal;text-align:center;gap:4px}.sr945-nav-action>span:first-child{display:none}.sr945-nav-badge{position:absolute;top:-6px;right:-3px}.market-pulse-launch{display:none!important}}
