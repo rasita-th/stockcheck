@@ -3,7 +3,6 @@ name: Update static fundamental data
 on:
   workflow_dispatch:
   schedule:
-    # Daily refresh. UTC schedule; GitHub may delay scheduled runs under load.
     - cron: "23 11 * * *"
 
 permissions:
@@ -31,6 +30,11 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -54,8 +58,6 @@ jobs:
             echo "No fundamental data changes to commit."
           else
             git commit -m "Update static fundamental data"
-            # The remote main branch may have moved while this long-running SEC job was running.
-            # Rebase before push to avoid non-fast-forward / fetch-first failures.
             git fetch origin main
             git rebase origin/main
             git push origin HEAD:main
@@ -69,8 +71,22 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
-      - name: Validate static data before deploy
-        run: python scripts/validate_static_data.py
+      - name: Prepare clean single-runtime Pages artifact
+        run: |
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
+          python scripts/prepare_stable_site_v9_4_1.py
+
+      - name: Validate JavaScript and static data
+        run: |
+          node --check site/app.js
+          node --check site/app-shell-v9-4-6.js
+          node --check site/market.js
+          python scripts/validate_static_data.py
+          grep -q 'app-shell-v9-4-6.js?v=9.4.6' site/index.html
+          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|runtime-guard-v9-4-1' site/index.html site/market.html; then
+            echo 'Legacy runtime found in data workflow artifact'
+            exit 1
+          fi
 
       - name: Add nojekyll marker
         run: touch site/.nojekyll
