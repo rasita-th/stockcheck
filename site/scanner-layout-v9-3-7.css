@@ -1,0 +1,98 @@
+/* Stock Timing Radar v9.3.7 — balanced full-screen lower workspace */
+:root{
+  --sr937-page-pad:clamp(10px,1.2vw,22px);
+  --sr937-gap:clamp(10px,1vw,16px);
+  --sr937-left:clamp(260px,18vw,330px);
+  --sr937-right:clamp(330px,25vw,470px);
+}
+html,body{width:100%!important;max-width:none!important;overflow-x:hidden!important}
+body{margin:0!important}
+body.sr937-mounted{--content-max:none}
+body.sr937-mounted>main,
+body.sr937-mounted>#app,
+body.sr937-mounted>.app,
+body.sr937-mounted>.page,
+body.sr937-mounted .main-content,
+body.sr937-mounted .content,
+body.sr937-mounted .container,
+body.sr937-mounted .dashboard-container{
+  width:100%!important;max-width:none!important;margin-inline:0!important;box-sizing:border-box!important
+}
+
+#sr-v937-workspace{
+  width:100%!important;max-width:none!important;margin:0!important;
+  padding:var(--sr937-gap) var(--sr937-page-pad) 28px!important;
+  box-sizing:border-box!important;display:grid!important;gap:var(--sr937-gap)!important;
+  clear:both!important;position:relative!important;z-index:1!important
+}
+#sr-v937-workspace *{box-sizing:border-box}
+#sr-v937-workspace>.sr937-zone{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important}
+#sr-v937-workspace [class*="card"],
+#sr-v937-workspace [class*="panel"],
+#sr-v937-workspace article,
+#sr-v937-workspace section{
+  max-width:none!important;min-width:0!important;box-sizing:border-box!important
+}
+
+/* Compact controls and alerts share one balanced row. */
+.sr937-control-zone{
+  display:grid!important;
+  grid-template-columns:var(--sr937-left) minmax(0,1fr)!important;
+  gap:var(--sr937-gap)!important;align-items:start!important
+}
+.sr937-left-stack{display:grid!important;gap:var(--sr937-gap)!important;align-content:start!important;min-width:0!important}
+.sr937-center-stack{display:grid!important;gap:var(--sr937-gap)!important;min-width:0!important}
+.sr937-left-stack>*,.sr937-center-stack>*{width:100%!important;max-width:none!important;margin:0!important}
+
+/* Scanner Results is the primary long-form content and always owns a full row. */
+.sr937-results-zone,.sr937-results-zone>*{
+  display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important
+}
+.sr937-results-zone [class*="table-wrap"],
+.sr937-results-zone [class*="results-wrap"],
+.sr937-results-zone .table-container,
+.sr937-results-zone .table-scroll{
+  width:100%!important;max-width:none!important;overflow:auto!important
+}
+.sr937-results-zone table{width:100%!important;min-width:1180px!important;table-layout:auto!important}
+.sr937-results-zone thead th{position:sticky!important;top:0!important;z-index:6!important}
+
+/* Charts/details use the whole row rather than an abandoned right sidebar. */
+.sr937-detail-zone{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr))!important;
+  gap:var(--sr937-gap)!important;align-items:stretch!important
+}
+.sr937-detail-zone>*{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;height:auto!important}
+.sr937-detail-zone canvas,.sr937-detail-zone svg{max-width:100%!important}
+
+/* Analysis cards become a balanced full-width grid below the table. */
+.sr937-analysis-zone{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(min(520px,100%),1fr))!important;
+  gap:var(--sr937-gap)!important;align-items:start!important
+}
+.sr937-analysis-zone>*{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important}
+
+/* Completely remove empty legacy columns/wrappers after content is promoted. */
+.sr937-empty-shell{display:none!important;width:0!important;height:0!important;min-height:0!important;overflow:hidden!important;margin:0!important;padding:0!important;border:0!important}
+body.sr937-mounted [class*="sidebar"]:empty,
+body.sr937-mounted [class*="column"]:empty,
+body.sr937-mounted [class*="col-"]:empty,
+body.sr937-mounted [class*="layout"]:empty{
+  display:none!important
+}
+
+@media(min-width:1500px){
+  .sr937-control-zone{grid-template-columns:clamp(280px,17vw,350px) minmax(0,1fr)!important}
+  .sr937-detail-zone{grid-template-columns:repeat(auto-fit,minmax(400px,1fr))!important}
+}
+@media(max-width:1050px){
+  .sr937-control-zone{grid-template-columns:minmax(230px,300px) minmax(0,1fr)!important}
+  .sr937-detail-zone{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:780px){
+  :root{--sr937-page-pad:10px;--sr937-gap:10px}
+  .sr937-control-zone,.sr937-detail-zone,.sr937-analysis-zone{grid-template-columns:1fr!important}
+  .sr937-results-zone table{min-width:980px!important}
+}
