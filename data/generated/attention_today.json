@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-17T01:50:46+07:00",
+  "updated_at": "2026-07-17T03:03:49+07:00",
   "market": "US",
   "total_monitored": 10,
   "items": [
@@ -10,15 +10,15 @@
       "primary_trigger": "earnings_soon",
       "signals": [
         "Earnings in 5 days",
-        "Reached trim zone $360 · +8.5% from zone"
+        "Reached trim zone $360 · +8.6% from zone"
       ],
       "severity": "medium",
-      "price": 390.69,
+      "price": 391.06,
       "earnings_date": "2026-07-22",
       "buy_zone": 285.0,
       "trim_zone": 360.0,
-      "buy_zone_distance_pct": 37.084210526315786,
-      "trim_zone_distance_pct": 8.524999999999999,
+      "buy_zone_distance_pct": 37.214035087719296,
+      "trim_zone_distance_pct": 8.627777777777778,
       "earnings_source": "finnhub",
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
@@ -34,14 +34,14 @@
       "role": "Core Growth",
       "primary_trigger": "trim_zone",
       "signals": [
-        "Near trim zone $255 · -0.8% from zone"
+        "Near trim zone $255 · -2.0% from zone"
       ],
       "severity": "medium",
-      "price": 253.03,
+      "price": 249.89,
       "buy_zone": 205.0,
       "trim_zone": 255.0,
-      "buy_zone_distance_pct": 23.429268292682927,
-      "trim_zone_distance_pct": -0.7725490196078427,
+      "buy_zone_distance_pct": 21.89756097560975,
+      "trim_zone_distance_pct": -2.0039215686274563,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "yahoo": "https://finance.yahoo.com/quote/AMZN",
@@ -56,14 +56,14 @@
       "role": "Core Quality",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $430 · -5.9% from zone"
+        "Reached buy zone $430 · -6.7% from zone"
       ],
       "severity": "medium",
-      "price": 404.57,
+      "price": 401.1,
       "buy_zone": 430.0,
       "trim_zone": 520.0,
-      "buy_zone_distance_pct": -5.913953488372094,
-      "trim_zone_distance_pct": -22.198076923076922,
+      "buy_zone_distance_pct": -6.720930232558134,
+      "trim_zone_distance_pct": -22.86538461538461,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
         "yahoo": "https://finance.yahoo.com/quote/MSFT",
@@ -78,14 +78,14 @@
       "role": "Core AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Near buy zone $205 · +1.1% from zone"
+        "Near buy zone $205 · +1.2% from zone"
       ],
       "severity": "medium",
-      "price": 207.24,
+      "price": 207.4,
       "buy_zone": 205.0,
       "trim_zone": 245.0,
-      "buy_zone_distance_pct": 1.0926829268292728,
-      "trim_zone_distance_pct": -15.412244897959178,
+      "buy_zone_distance_pct": 1.170731707317076,
+      "trim_zone_distance_pct": -15.346938775510202,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "yahoo": "https://finance.yahoo.com/quote/NVDA",
@@ -100,14 +100,14 @@
       "role": "Satellite AI",
       "primary_trigger": "buy_zone",
       "signals": [
-        "Reached buy zone $145 · -7.7% from zone"
+        "Reached buy zone $145 · -7.3% from zone"
       ],
       "severity": "medium",
-      "price": 133.87,
+      "price": 134.44,
       "buy_zone": 145.0,
       "trim_zone": 185.0,
-      "buy_zone_distance_pct": -7.675862068965514,
-      "trim_zone_distance_pct": -27.637837837837836,
+      "buy_zone_distance_pct": -7.282758620689657,
+      "trim_zone_distance_pct": -27.329729729729728,
       "actions": {
         "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
         "yahoo": "https://finance.yahoo.com/quote/PLTR",
@@ -123,7 +123,7 @@
     "earnings_source": "Finnhub primary, Yahoo fallback, manual fallback; manual force overrides all",
     "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
     "scanner_synced": true,
-    "technical_rows": 407,
+    "technical_rows": 408,
     "manual_earnings_rows": 1,
     "finnhub_rows": 6
   },
