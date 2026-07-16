@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "9.4.4"
+VERSION = "9.4.5"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -19,7 +19,6 @@ LEGACY_ASSETS = (
     "scanner-layout-v9-3-7.css", "scanner-layout-v9-3-7.js",
     "shared-app-shell-v9-3-3.css", "shared-app-shell-v9-3-3.js",
     "shared-app-shell-v9-3-4.css", "shared-app-shell-v9-3-4.js",
-    "shared-app-shell-v9-3-6.css", "shared-app-shell-v9-3-6.js",
     "thai-time-v9-3-3.js", "thai-time-v9-3-4.js",
     "desktop-layout-v9-4-3.css",
 )
@@ -44,8 +43,8 @@ def prepare_index(path: Path) -> None:
     html = path.read_text(encoding="utf-8")
     for asset in LEGACY_ASSETS:
         html = strip_asset(html, asset)
-    html = cache_bust(html, "styles.css")
-    html = cache_bust(html, "app.js")
+    for asset in ("styles.css", "app.js", "shared-app-shell-v9-3-6.css", "shared-app-shell-v9-3-6.js"):
+        html = cache_bust(html, asset)
     html = inject_once(
         html,
         r'\s*<link[^>]+mobile-nav-v9-4-2\.css[^>]*>',
@@ -65,8 +64,8 @@ def prepare_market(path: Path) -> None:
     html = path.read_text(encoding="utf-8")
     for asset in LEGACY_ASSETS:
         html = strip_asset(html, asset)
-    html = cache_bust(html, "market.css")
-    html = cache_bust(html, "market.js")
+    for asset in ("market.css", "market.js", "shared-app-shell-v9-3-6.css", "shared-app-shell-v9-3-6.js"):
+        html = cache_bust(html, asset)
     html = inject_once(
         html,
         r'\s*<script[^>]+runtime-guard-v9-4-1\.js[^>]*></script>',
@@ -92,7 +91,7 @@ def main() -> None:
     prepare_index(SITE / "index.html")
     prepare_market(SITE / "market.html")
     validate_data()
-    print(f"Prepared emergency recovery v{VERSION} Pages artifact")
+    print(f"Prepared source-level recovery v{VERSION} Pages artifact")
 
 
 if __name__ == "__main__":
