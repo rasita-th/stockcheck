@@ -54,19 +54,15 @@ jobs:
           test -s site/styles.css
           test -s site/app.js
           test -s site/mobile-nav-v9-4-2.css
-          test -s site/desktop-layout-v9-4-3.css
           test -s site/runtime-guard-v9-4-1.js
           test -s site/data/technical.json
           test -s site/data/fundamental.json
-          grep -q 'app.js?v=9.4.3' site/index.html
-          grep -q 'mobile-nav-v9-4-2.css?v=9.4.3' site/index.html
-          grep -q 'desktop-layout-v9-4-3.css?v=9.4.3' site/index.html
-          grep -q 'runtime-guard-v9-4-1.js?v=9.4.3' site/index.html
+          grep -q 'app.js?v=9.4.4' site/index.html
+          grep -q 'mobile-nav-v9-4-2.css?v=9.4.4' site/index.html
+          grep -q 'runtime-guard-v9-4-1.js?v=9.4.4' site/index.html
           grep -q 'grid-template-columns:repeat(4' site/mobile-nav-v9-4-2.css
-          grep -q 'grid-template-areas:' site/desktop-layout-v9-4-3.css
-          grep -q 'display: contents' site/desktop-layout-v9-4-3.css
-          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2' site/index.html; then
-            echo 'Legacy runtime asset still referenced by deployment artifact'
+          if grep -Eq 'desktop-layout-v9-4-3|scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2' site/index.html; then
+            echo 'Unstable layout asset still referenced by deployment artifact'
             exit 1
           fi
 
