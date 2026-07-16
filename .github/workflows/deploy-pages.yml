@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Prepare stable Pages artifact
+      - name: Prepare clean Pages artifact
         run: |
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
           python scripts/prepare_stable_site_v9_4_1.py
@@ -40,8 +40,7 @@ jobs:
       - name: Validate JavaScript entry points
         run: |
           node --check site/app.js
-          node --check site/shared-app-shell-v9-3-6.js
-          node --check site/runtime-guard-v9-4-1.js
+          node --check site/app-shell-v9-4-6.js
           node --check site/market.js
 
       - name: Validate static data before deploy
@@ -49,26 +48,25 @@ jobs:
           python -m py_compile scripts/validate_static_data.py
           python scripts/validate_static_data.py
 
-      - name: Verify required UI and data files
+      - name: Verify clean UI artifact
         run: |
           test -s site/index.html
           test -s site/styles.css
           test -s site/app.js
-          test -s site/shared-app-shell-v9-3-6.css
-          test -s site/shared-app-shell-v9-3-6.js
-          test -s site/mobile-nav-v9-4-2.css
-          test -s site/runtime-guard-v9-4-1.js
+          test -s site/app-shell-v9-4-6.css
+          test -s site/app-shell-v9-4-6.js
+          test -s site/market.html
+          test -s site/market.js
           test -s site/data/technical.json
           test -s site/data/fundamental.json
-          grep -q 'app.js?v=9.4.5' site/index.html
-          grep -q 'shared-app-shell-v9-3-6.css?v=9.4.5' site/index.html
-          grep -q 'shared-app-shell-v9-3-6.js?v=9.4.5' site/index.html
-          grep -q 'mobile-nav-v9-4-2.css?v=9.4.5' site/index.html
-          grep -q 'runtime-guard-v9-4-1.js?v=9.4.5' site/index.html
-          grep -q "Today" site/shared-app-shell-v9-3-6.js
-          grep -q "Memo" site/shared-app-shell-v9-3-6.js
-          if grep -Eq 'desktop-layout-v9-4-3|scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3-[34]|nav-fix-v9-2' site/index.html; then
-            echo 'Unstable legacy asset still referenced by deployment artifact'
+          grep -q 'app.js?v=9.4.6' site/index.html
+          grep -q 'app-shell-v9-4-6.css?v=9.4.6' site/index.html
+          grep -q 'app-shell-v9-4-6.js?v=9.4.6' site/index.html
+          grep -q 'index.html#today' site/market.html
+          grep -q 'index.html#memo' site/market.html
+          grep -q 'Market Pulse' site/market.html
+          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|thai-time-v9-3|runtime-guard-v9-4-1|mobile-nav-v9-4-2' site/index.html site/market.html; then
+            echo 'Conflicting legacy runtime still referenced by deployment artifact'
             exit 1
           fi
 
