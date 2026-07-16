@@ -1,0 +1,170 @@
+/* Stock Timing Radar v9.4.3 — CSS-only desktop recovery
+   Keeps the native DOM and app.js event handlers intact. */
+
+@media (min-width: 1181px) {
+  html,
+  body {
+    width: 100%;
+    max-width: none;
+    overflow-x: hidden;
+  }
+
+  .app-shell {
+    width: 100%;
+    max-width: none;
+    padding: 12px clamp(12px, 1.25vw, 24px) 32px;
+  }
+
+  .topbar {
+    width: 100%;
+    height: auto;
+    min-height: 72px;
+    grid-template-columns: minmax(240px, 320px) minmax(360px, 1fr) auto;
+    gap: clamp(12px, 1.2vw, 22px);
+    padding: 10px clamp(14px, 1.4vw, 24px);
+  }
+
+  .topbar .brand,
+  .topbar .search-box,
+  .topbar .app-mode-nav {
+    min-width: 0;
+  }
+
+  .topbar .app-mode-nav {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .topbar .app-mode-nav > .app-mode-btn,
+  .topbar .app-mode-nav > .market-pulse-launch {
+    flex: 0 0 auto;
+    min-width: 112px;
+    min-height: 42px;
+    padding: 0 14px !important;
+    white-space: nowrap !important;
+    border-radius: 12px !important;
+  }
+
+  .portfolio-tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .portfolio-tabs > .portfolio-tab {
+    flex: 1 1 0;
+    min-width: 108px;
+    padding-inline: 12px;
+  }
+
+  .workspace {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns:
+      minmax(250px, 290px)
+      minmax(520px, 1fr)
+      minmax(320px, 380px);
+    grid-template-areas:
+      "sidebar alerts detail"
+      "scanner scanner scanner";
+    gap: 14px;
+    align-items: start;
+    padding: 14px;
+  }
+
+  /* Let the native children participate in the workspace grid without moving DOM. */
+  .workspace > .content-area {
+    display: contents;
+  }
+
+  #watchlistPanel {
+    grid-area: sidebar;
+    min-width: 0;
+    max-height: min(70vh, 760px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  #alertCenter {
+    grid-area: alerts;
+    min-width: 0;
+    max-height: min(70vh, 760px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  #detailPanel {
+    grid-area: detail;
+    min-width: 0;
+    max-height: min(70vh, 760px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  #detailPanel .detail-card {
+    min-height: 0;
+  }
+
+  .scanner-panel {
+    grid-area: scanner;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .scanner-panel .scanner-header {
+    position: sticky;
+    top: 72px;
+    z-index: 5;
+    background: rgba(13, 17, 23, 0.97);
+    backdrop-filter: blur(14px);
+  }
+
+  .scanner-panel .table-wrap {
+    width: 100%;
+    max-height: min(72vh, 840px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  .scanner-panel .scanner-table {
+    width: 100%;
+    min-width: 1080px;
+  }
+
+  .scanner-panel th {
+    top: 0;
+  }
+
+  .lower-grid {
+    width: 100%;
+    max-width: none;
+    grid-template-columns: minmax(280px, 1fr) minmax(440px, 1.6fr) minmax(280px, 1fr);
+    gap: 14px;
+  }
+
+  .panel-card,
+  .detail-card,
+  .scanner-panel,
+  .lower-grid > * {
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1500px) {
+  .workspace {
+    grid-template-columns: 300px minmax(680px, 1fr) 390px;
+  }
+
+  .scanner-panel .scanner-table {
+    min-width: 100%;
+  }
+}
