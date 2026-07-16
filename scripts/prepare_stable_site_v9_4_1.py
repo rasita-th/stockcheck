@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "9.4.3"
+VERSION = "9.4.4"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -21,6 +21,7 @@ LEGACY_ASSETS = (
     "shared-app-shell-v9-3-4.css", "shared-app-shell-v9-3-4.js",
     "shared-app-shell-v9-3-6.css", "shared-app-shell-v9-3-6.js",
     "thai-time-v9-3-3.js", "thai-time-v9-3-4.js",
+    "desktop-layout-v9-4-3.css",
 )
 
 
@@ -49,12 +50,6 @@ def prepare_index(path: Path) -> None:
         html,
         r'\s*<link[^>]+mobile-nav-v9-4-2\.css[^>]*>',
         f'<link rel="stylesheet" href="mobile-nav-v9-4-2.css?v={VERSION}">',
-        r'</head>',
-    )
-    html = inject_once(
-        html,
-        r'\s*<link[^>]+desktop-layout-v9-4-3\.css[^>]*>',
-        f'<link rel="stylesheet" href="desktop-layout-v9-4-3.css?v={VERSION}">',
         r'</head>',
     )
     html = inject_once(
@@ -97,7 +92,7 @@ def main() -> None:
     prepare_index(SITE / "index.html")
     prepare_market(SITE / "market.html")
     validate_data()
-    print(f"Prepared stable v{VERSION} Pages artifact")
+    print(f"Prepared emergency recovery v{VERSION} Pages artifact")
 
 
 if __name__ == "__main__":
