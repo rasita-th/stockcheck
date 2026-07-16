@@ -40,6 +40,7 @@ jobs:
       - name: Validate JavaScript entry points
         run: |
           node --check site/app.js
+          node --check site/shared-app-shell-v9-3-6.js
           node --check site/runtime-guard-v9-4-1.js
           node --check site/market.js
 
@@ -53,16 +54,21 @@ jobs:
           test -s site/index.html
           test -s site/styles.css
           test -s site/app.js
+          test -s site/shared-app-shell-v9-3-6.css
+          test -s site/shared-app-shell-v9-3-6.js
           test -s site/mobile-nav-v9-4-2.css
           test -s site/runtime-guard-v9-4-1.js
           test -s site/data/technical.json
           test -s site/data/fundamental.json
-          grep -q 'app.js?v=9.4.4' site/index.html
-          grep -q 'mobile-nav-v9-4-2.css?v=9.4.4' site/index.html
-          grep -q 'runtime-guard-v9-4-1.js?v=9.4.4' site/index.html
-          grep -q 'grid-template-columns:repeat(4' site/mobile-nav-v9-4-2.css
-          if grep -Eq 'desktop-layout-v9-4-3|scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2' site/index.html; then
-            echo 'Unstable layout asset still referenced by deployment artifact'
+          grep -q 'app.js?v=9.4.5' site/index.html
+          grep -q 'shared-app-shell-v9-3-6.css?v=9.4.5' site/index.html
+          grep -q 'shared-app-shell-v9-3-6.js?v=9.4.5' site/index.html
+          grep -q 'mobile-nav-v9-4-2.css?v=9.4.5' site/index.html
+          grep -q 'runtime-guard-v9-4-1.js?v=9.4.5' site/index.html
+          grep -q "Today" site/shared-app-shell-v9-3-6.js
+          grep -q "Memo" site/shared-app-shell-v9-3-6.js
+          if grep -Eq 'desktop-layout-v9-4-3|scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3-[34]|nav-fix-v9-2' site/index.html; then
+            echo 'Unstable legacy asset still referenced by deployment artifact'
             exit 1
           fi
 
