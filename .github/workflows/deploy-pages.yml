@@ -42,30 +42,60 @@ jobs:
           node --check site/app.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
+          node --check site/notification-phase2.js
+          node --check site/final-ui-coordinator.js
+          node --check site/memo-only-fix.js
 
       - name: Validate data and UI smoke test
         run: |
-          python -m py_compile scripts/validate_static_data.py scripts/smoke_test_site_v9_4_6.py
+          python -m py_compile \
+            scripts/validate_static_data.py \
+            scripts/smoke_test_site_v9_4_6.py \
+            scripts/check_ui_view_contract.py
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
+          python scripts/check_ui_view_contract.py
 
       - name: Verify clean UI artifact
+        shell: bash
         run: |
+          set -euo pipefail
+          VERSION="$(python -c 'import runpy; print(runpy.run_path("scripts/prepare_stable_site_v9_4_1.py")["VERSION"])')"
+          echo "Deployment version: ${VERSION}"
+
           test -s site/index.html
           test -s site/styles.css
           test -s site/app.js
           test -s site/app-shell-v9-4-6.css
           test -s site/app-shell-v9-4-6.js
+          test -s site/notification-phase2.css
+          test -s site/notification-phase2.js
+          test -s site/final-ui-coordinator.css
+          test -s site/final-ui-coordinator.js
+          test -s site/memo-only-fix.css
+          test -s site/memo-only-fix.js
           test -s site/market.html
           test -s site/market.js
           test -s site/data/technical.json
           test -s site/data/fundamental.json
-          grep -q 'app.js?v=9.4.6' site/index.html
-          grep -q 'app-shell-v9-4-6.css?v=9.4.6' site/index.html
-          grep -q 'app-shell-v9-4-6.js?v=9.4.6' site/index.html
+
+          for asset in \
+            styles.css \
+            app.js \
+            notification-phase2.css \
+            notification-phase2.js \
+            final-ui-coordinator.css \
+            final-ui-coordinator.js \
+            memo-only-fix.css \
+            memo-only-fix.js; do
+            grep -Fq "${asset}?v=${VERSION}" site/index.html
+          done
+          grep -Fq "app-shell-v9-4-6.css?v=${VERSION}" site/index.html
+          grep -Fq "app-shell-v9-4-6.js?v=${VERSION}" site/index.html
           grep -q 'index.html#today' site/market.html
           grep -q 'index.html#memo' site/market.html
           grep -q 'Market Pulse' site/market.html
+
           if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|thai-time-v9-3|runtime-guard-v9-4-1|mobile-nav-v9-4-2' site/index.html site/market.html; then
             echo 'Conflicting legacy runtime still referenced by deployment artifact'
             exit 1
