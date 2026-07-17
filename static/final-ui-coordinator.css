@@ -1,0 +1,34 @@
+/* v9.5.3 final notification layout coordination */
+@media (min-width: 1181px) {
+  #alertCenter.final-height-coordinated {
+    height: var(--final-alert-height) !important;
+    min-height: var(--final-alert-height) !important;
+    max-height: var(--final-alert-height) !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #alertCenter.final-height-coordinated #alertList,
+  #alertCenter.final-height-coordinated .alert-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .final-memo-primary {
+    order: -10 !important;
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .final-scanner-secondary {
+    order: 10 !important;
+  }
+
+  body.memo-active .final-memo-primary,
+  body[class*="memo"] .final-memo-primary,
+  .app-shell[data-view="memo"] .final-memo-primary {
+    display: block;
+  }
+}
