@@ -2889,3 +2889,34 @@ body.attention-active .attention-page { display: block; }
     margin: 10px 0 0;
   }
 }
+
+/* v9.4.9 align alert center with desktop side panels */
+@media (min-width: 1181px) {
+  .workspace {
+    align-items: stretch;
+  }
+
+  .content-area {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 170px);
+  }
+
+  .alert-center {
+    flex: 1;
+    min-height: calc(100vh - 220px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .alert-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  #watchlistPanel,
+  #detailPanel {
+    align-self: stretch;
+  }
+}
