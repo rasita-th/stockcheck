@@ -1,12 +1,21 @@
 name: Refresh Market Pulse v9.6 (safe)
 
-# Sole writer for Market Pulse. A successful run triggers the existing Pages
-# deployment workflow through workflow_run, so validated JSON is published.
+# Sole writer for Market Pulse. A successful production run triggers the
+# existing Pages deployment workflow through workflow_run. Pull requests run
+# the same generator and validators but never commit generated data.
 on:
   workflow_dispatch:
   schedule:
     - cron: "0 1,13 * * *"
   push:
+    branches: [main]
+    paths:
+      - "scripts/generate_market_pulse.py"
+      - "scripts/test_market_pulse_narrative.py"
+      - "scripts/validate_market_pulse.py"
+      - "data/market_universe.json"
+      - ".github/workflows/refresh-market-pulse-v9-6.yml"
+  pull_request:
     branches: [main]
     paths:
       - "scripts/generate_market_pulse.py"
@@ -20,7 +29,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: market-pulse-production
+  group: ${{ github.event_name == 'pull_request' && format('market-pulse-pr-{0}', github.event.pull_request.number) || 'market-pulse-production' }}
   cancel-in-progress: true
 
 env:
@@ -85,6 +94,7 @@ jobs:
           retention-days: 30
 
       - name: Commit validated data only
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
