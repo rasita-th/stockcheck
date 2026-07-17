@@ -35,6 +35,7 @@ jobs:
           python scripts/generate_analyst_consensus_cache.py
           cp site/data/recommendation_trends.json data/generated/recommendation_trends.json
       - run: |
+          python scripts/test_publish_generated_data.py
           python scripts/generate_health.py
           python scripts/publish_generated_data.py
       - name: Commit consensus and health
