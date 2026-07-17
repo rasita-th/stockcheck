@@ -31,7 +31,10 @@
         return;
       }
 
-      alertCenter.style.setProperty("--final-alert-height", `${railHeight}px`);
+      const nextHeight = `${railHeight}px`;
+      if (alertCenter.style.getPropertyValue("--final-alert-height") !== nextHeight) {
+        alertCenter.style.setProperty("--final-alert-height", nextHeight);
+      }
       alertCenter.classList.add("final-height-coordinated");
     });
   }
@@ -41,8 +44,7 @@
     [
       "#watchlistPanel",
       "#watchlistPanel .watchlist-card",
-      "#watchlistPanel .filter-card",
-      ".workspace"
+      "#watchlistPanel .filter-card"
     ].forEach((selector) => {
       const element = document.querySelector(selector);
       if (element) resizeObserver.observe(element);
