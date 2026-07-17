@@ -1,0 +1,100 @@
+name: Refresh Market Pulse v9.6 (safe)
+
+# Sole writer for Market Pulse. A successful run triggers the existing Pages
+# deployment workflow through workflow_run, so validated JSON is published.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1,13 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/generate_market_pulse.py"
+      - "scripts/test_market_pulse_narrative.py"
+      - "scripts/validate_market_pulse.py"
+      - "data/market_universe.json"
+      - ".github/workflows/refresh-market-pulse-v9-6.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: market-pulse-production
+  cancel-in-progress: true
+
+env:
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install data dependencies
+        run: python -m pip install --upgrade pip pandas yfinance
+
+      - name: Validate narrative engine
+        run: |
+          python -m py_compile scripts/generate_market_pulse.py scripts/test_market_pulse_narrative.py scripts/validate_market_pulse.py
+          python scripts/test_market_pulse_narrative.py
+
+      - name: Backup last-known-good JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .deploy-backup
+          for f in data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
+            [ -f "$f" ] && cp --parents "$f" .deploy-backup/
+          done
+
+      - name: Upload pre-refresh backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-pulse-backup-${{ github.run_number }}
+          path: .deploy-backup
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Generate candidate JSON
+        run: python scripts/generate_market_pulse.py
+
+      - name: Validate candidate
+        run: |
+          python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
+          cmp data/market_pulse.json site/data/market_pulse.json
+          cmp data/market_pulse.json static/data/market_pulse.json
+
+      - name: Upload validated candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-pulse-candidate-${{ github.run_number }}
+          path: |
+            data/market_pulse.json
+            site/data/market_pulse.json
+            static/data/market_pulse.json
+          retention-days: 30
+
+      - name: Commit validated data only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json
+          if git diff --cached --quiet; then
+            echo "No data changes"
+            exit 0
+          fi
+          git commit -m "data: refresh validated Market Pulse v9.6"
+          git pull --rebase origin main
+          git push origin HEAD:main
