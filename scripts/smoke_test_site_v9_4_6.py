@@ -2,10 +2,20 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
+PREPARE_SCRIPT = ROOT / "scripts" / "prepare_stable_site_v9_4_1.py"
+
+
+def deployment_version() -> str:
+    text = PREPARE_SCRIPT.read_text(encoding="utf-8")
+    match = re.search(r'^VERSION\s*=\s*["\']([^"\']+)["\']', text, flags=re.MULTILINE)
+    if not match:
+        raise SystemExit(f"{PREPARE_SCRIPT}: VERSION constant not found")
+    return match.group(1)
 
 
 def require_text(path: Path, tokens: tuple[str, ...]) -> None:
@@ -34,14 +44,15 @@ def validate_json(name: str, require_rows: bool = True) -> None:
 
 
 def main() -> None:
+    version = deployment_version()
     require_text(SITE / "index.html", (
         'id="technicalTableBody"',
         'id="technicalMobileCards"',
         'id="alertCenter"',
         'id="detailPanel"',
-        'app.js?v=9.4.6',
-        'app-shell-v9-4-6.css?v=9.4.6',
-        'app-shell-v9-4-6.js?v=9.4.6',
+        f'app.js?v={version}',
+        f'app-shell-v9-4-6.css?v={version}',
+        f'app-shell-v9-4-6.js?v={version}',
     ))
     require_text(SITE / "app-shell-v9-4-6.js", (
         "Scanner", "Today", "Memo", "Market Pulse",
@@ -56,7 +67,7 @@ def main() -> None:
     ))
     validate_json("technical.json", require_rows=True)
     validate_json("fundamental.json", require_rows=False)
-    print("v9.4.6 static UI smoke test passed")
+    print(f"v{version} static UI smoke test passed")
 
 
 if __name__ == "__main__":
