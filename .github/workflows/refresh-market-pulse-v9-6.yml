@@ -2,7 +2,7 @@ name: Refresh Market Pulse v9.6 (safe)
 
 # Sole writer for Market Pulse. A successful production run triggers the
 # existing Pages deployment workflow through workflow_run. Pull requests run
-# the same generator and validators but never commit generated data.
+# the same generator and validators but never push generated data.
 on:
   workflow_dispatch:
   schedule:
@@ -93,6 +93,22 @@ jobs:
             static/data/market_pulse.json
           retention-days: 30
 
+      - name: Rehearse generated-data commit
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json
+          if git diff --cached --quiet; then
+            echo "Expected generated Market Pulse changes, but the index is clean"
+            exit 1
+          fi
+          git diff --cached --stat
+          git commit -m "ci: rehearse validated Market Pulse commit"
+          git show --stat --oneline --summary HEAD
+
       - name: Commit validated data only
         if: github.event_name != 'pull_request'
         shell: bash
@@ -105,6 +121,18 @@ jobs:
             echo "No data changes"
             exit 0
           fi
+          git diff --cached --stat
           git commit -m "data: refresh validated Market Pulse v9.6"
-          git pull --rebase origin main
-          git push origin HEAD:main
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "Published validated Market Pulse on attempt ${attempt}"
+              exit 0
+            fi
+            echo "Push conflict on attempt ${attempt}; rebasing onto latest main"
+            git fetch origin main
+            git rebase origin/main
+            sleep $((attempt * 2))
+          done
+          echo "Unable to publish validated Market Pulse after three attempts"
+          exit 1
