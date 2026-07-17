@@ -2834,3 +2834,58 @@ body.attention-active .attention-page { display: block; }
     overflow-x: auto;
   }
 }
+
+/* v9.4.8 decision workspace + full-width screener */
+@media (min-width: 1181px) {
+  .app-shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding: 14px clamp(10px, 1vw, 20px) 24px;
+  }
+
+  .workspace {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    grid-template-columns:
+      clamp(250px, 16vw, 320px)
+      minmax(0, 1fr)
+      clamp(340px, 22vw, 440px);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .workspace > *,
+  .content-area,
+  .sidebar,
+  .detail-panel,
+  .decision-screener,
+  .decision-screener .table-wrap {
+    min-width: 0;
+  }
+
+  .decision-screener {
+    width: 100%;
+    max-width: none;
+    margin: 12px 0 0;
+    min-height: 0;
+  }
+
+  .decision-screener .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .decision-screener .scanner-table {
+    min-width: 1180px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .decision-screener {
+    width: 100%;
+    max-width: none;
+    margin: 10px 0 0;
+  }
+}
