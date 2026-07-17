@@ -1,11 +1,17 @@
-/* v9.5.3 final notification layout coordination */
+/* v9.5.5 single-owner Alert Center height coordination */
 @media (min-width: 1181px) {
+  .content-area {
+    min-height: 0;
+  }
+
   #alertCenter.final-height-coordinated {
+    box-sizing: border-box;
     height: var(--final-alert-height) !important;
     min-height: var(--final-alert-height) !important;
     max-height: var(--final-alert-height) !important;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   #alertCenter.final-height-coordinated #alertList,
@@ -14,21 +20,6 @@
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
-  }
-
-  .final-memo-primary {
-    order: -10 !important;
-    width: 100%;
-    margin-bottom: 14px;
-  }
-
-  .final-scanner-secondary {
-    order: 10 !important;
-  }
-
-  body.memo-active .final-memo-primary,
-  body[class*="memo"] .final-memo-primary,
-  .app-shell[data-view="memo"] .final-memo-primary {
-    display: block;
+    scrollbar-gutter: stable;
   }
 }
