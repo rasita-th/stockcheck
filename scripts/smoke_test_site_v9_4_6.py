@@ -84,7 +84,7 @@ def main() -> None:
     ))
     require_text(SITE / "market.js", (
         'stockTimingRadar.watchlist.v54', 'technical.json', 'normaliseNarrative',
-        'applyPortfolioNarrative', 'STALE DATA',
+        'applyPortfolioNarrative', 'pulseStaleBadge',
     ))
     forbid_text(SITE / "index.html", (
         "scanner-dashboard", "scanner-layout-v9-3", "shared-app-shell-v9-3",
