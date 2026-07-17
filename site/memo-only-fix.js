@@ -1,65 +1,57 @@
 (() => {
   "use strict";
 
-  function isMemoButton(node) {
-    if (!(node instanceof Element)) return false;
-    const label = (node.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    return label === "memo" || label.startsWith("memo ");
+  const VIEW_KEY = "stockTimingRadar.appView.v55";
+
+  function preferredView(explicitView = "") {
+    if (explicitView) return explicitView;
+    try {
+      return localStorage.getItem(VIEW_KEY) || "";
+    } catch {
+      return "";
+    }
   }
 
-  function memoIsActive() {
-    const shell = document.querySelector(".app-shell");
-    if (shell?.dataset.view === "memo") return true;
-    if (document.body.classList.contains("attention-active")) return true;
-    if (document.body.classList.contains("memo-active")) return true;
+  function enforceExclusiveView(explicitView = "") {
+    const body = document.body;
+    if (!body) return;
 
-    return [...document.querySelectorAll("button.active,a.active,[role='tab'].active")]
-      .some(isMemoButton);
-  }
+    const memoActive = body.classList.contains("memo-active");
+    const attentionActive = body.classList.contains("attention-active");
+    if (!memoActive || !attentionActive) return;
 
-  function syncMemoIsolation() {
-    const active = memoIsActive();
-    document.documentElement.classList.toggle("memo-only-view", active);
-    document.body.classList.toggle("memo-view-isolated", active);
+    const activeControl = document.querySelector("[data-app-view].active");
+    const view = preferredView(explicitView || activeControl?.dataset.appView || "");
 
-    const scanner = document.querySelector(".decision-screener, .scanner-panel");
-    const workspace = document.querySelector(".workspace");
-    const lowerGrid = document.querySelector(".lower-grid");
-
-    for (const element of [scanner, workspace, lowerGrid]) {
-      if (!(element instanceof HTMLElement)) continue;
-      if (active) {
-        element.dataset.memoPreviousDisplay = element.style.display || "";
-        element.style.setProperty("display", "none", "important");
-        element.setAttribute("aria-hidden", "true");
-      } else if (element.hasAttribute("data-memo-previous-display")) {
-        const previous = element.dataset.memoPreviousDisplay || "";
-        element.style.removeProperty("display");
-        if (previous) element.style.display = previous;
-        element.removeAttribute("data-memo-previous-display");
-        element.removeAttribute("aria-hidden");
-      }
+    if (view === "attention") {
+      body.classList.remove("memo-active");
+    } else {
+      body.classList.remove("attention-active");
     }
   }
 
   function boot() {
-    syncMemoIsolation();
+    enforceExclusiveView();
 
-    const observer = new MutationObserver(() => queueMicrotask(syncMemoIsolation));
-    observer.observe(document.body, {
-      subtree: true,
-      childList: true,
-      attributes: true,
-      attributeFilter: ["class", "data-view", "aria-selected", "hidden"]
-    });
+    document.addEventListener("click", (event) => {
+      const control = event.target.closest?.("[data-app-view]");
+      if (!control) return;
 
-    document.addEventListener("click", () => {
-      requestAnimationFrame(syncMemoIsolation);
-      setTimeout(syncMemoIsolation, 80);
+      const view = control.dataset.appView || "";
+      if (view === "memo") {
+        document.body.classList.remove("attention-active");
+      } else if (view === "attention") {
+        document.body.classList.remove("memo-active");
+      }
+
+      requestAnimationFrame(() => enforceExclusiveView(view));
     }, true);
 
-    window.addEventListener("popstate", syncMemoIsolation);
-    window.addEventListener("hashchange", syncMemoIsolation);
+    const classObserver = new MutationObserver(() => enforceExclusiveView());
+    classObserver.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"]
+    });
   }
 
   if (document.readyState === "loading") {
