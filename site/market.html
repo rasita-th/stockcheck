@@ -5,8 +5,8 @@
 <title>Market Pulse · Stock Timing Radar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="market.css?v=9.4.6">
-<link rel="stylesheet" href="app-shell-v9-4-6.css?v=9.4.6">
+<link rel="stylesheet" href="market.css?v=9.6.0">
+<link rel="stylesheet" href="app-shell-v9-4-6.css?v=9.6.0">
 </head>
 <body>
 <header class="topbar">
@@ -18,6 +18,57 @@
  <div><span class="eyebrow">GLOBAL MARKET INTELLIGENCE</span><h1>ภาพรวมตลาดโลกในหน้าจอเดียว</h1><p>อ่านทิศทางดัชนีประเทศ ภาวะตลาดสหรัฐ การหมุนของ sector และธีมลงทุน โดยแยกจาก watchlist หุ้นหลัก</p></div>
  <div class="fresh-card"><span>ข้อมูลล่าสุด</span><strong id="freshness">กำลังโหลด…</strong><small id="dataStatus">กำลังตรวจสอบแหล่งข้อมูล</small></div>
 </section>
+
+<section class="briefing-card" id="marketBriefing" aria-labelledby="pulseBriefingTitle" aria-busy="true">
+ <div class="briefing-topline">
+  <div>
+   <span class="kicker">12-HOUR BRIEF</span>
+   <h2 id="pulseBriefingTitle">Market Pulse Briefing</h2>
+   <p>สรุปข้อมูลตลาดเป็นภาษาที่อ่านเร็ว พร้อมมุมมองพอร์ตและความเสี่ยง โดยยึดข้อมูลชุดเดียวกับตารางด้านล่าง</p>
+  </div>
+  <div class="briefing-badges" aria-label="Market status">
+   <span class="status-badge neutral" id="pulseRegimeBadge">กำลังประเมิน</span>
+   <span class="status-badge neutral" id="pulseRiskBadge">Risk —</span>
+   <span class="status-badge stale" id="pulseStaleBadge" hidden>STALE DATA</span>
+  </div>
+ </div>
+
+ <div class="pulse-mode-tabs" role="tablist" aria-label="เลือกรูปแบบ Market Pulse">
+  <button type="button" role="tab" aria-selected="true" class="active" data-pulse-mode="balanced">Market</button>
+  <button type="button" role="tab" aria-selected="false" data-pulse-mode="portfolio">Portfolio</button>
+  <button type="button" role="tab" aria-selected="false" data-pulse-mode="action">Action</button>
+  <button type="button" role="tab" aria-selected="false" data-pulse-mode="news">News</button>
+  <button type="button" role="tab" aria-selected="false" data-pulse-mode="risk">Risk</button>
+ </div>
+
+ <div class="briefing-layout" aria-live="polite">
+  <article class="briefing-copy">
+   <span class="briefing-edition" id="pulseEdition">MARKET · BALANCED</span>
+   <h3 id="pulseHeadline">กำลังสร้าง Market Pulse…</h3>
+   <p class="briefing-deck" id="pulseDeck">ระบบกำลังอ่าน breadth, ดัชนี, sector และ theme ล่าสุด</p>
+   <ol class="pulse-summary-list" id="pulseSummaryList"><li>กำลังโหลดข้อมูลล่าสุด</li></ol>
+   <div class="pulse-actions" id="pulseActionGrid" hidden></div>
+  </article>
+
+  <aside class="briefing-side" aria-label="Portfolio impact summary">
+   <div class="signal-grid" id="pulseSignalGrid">
+    <section class="signal-box positive-box"><span>POSITIVE</span><strong>—</strong><small>รอข้อมูล</small></section>
+    <section class="signal-box watch-box"><span>WATCH</span><strong>—</strong><small>รอข้อมูล</small></section>
+    <section class="signal-box risk-box"><span>RISK</span><strong>—</strong><small>รอข้อมูล</small></section>
+   </div>
+   <div class="briefing-meta">
+    <div><span>อัปเดตรอบนี้</span><strong id="pulseUpdatedAt">—</strong></div>
+    <div><span>รอบถัดไป</span><strong id="pulseNextRefresh">—</strong></div>
+   </div>
+   <details class="source-details" id="pulseSources">
+    <summary>แหล่งข้อมูลและวิธีสร้าง</summary>
+    <div id="pulseSourceList"><p>กำลังตรวจสอบแหล่งข้อมูล</p></div>
+   </details>
+  </aside>
+ </div>
+ <p class="briefing-disclaimer" id="pulseDisclaimer">เป็น decision-support จากข้อมูลดัชนี, ETF proxy และ scanner ไม่ใช่คำสั่งซื้อขาย</p>
+</section>
+
 <section class="summary-grid">
  <article><span>US breadth วันนี้</span><strong id="breadthDay">—</strong><small>sector บวกจากทั้งหมด</small></article>
  <article><span>US breadth สัปดาห์</span><strong id="breadthWeek">—</strong><small>sector บวกจากทั้งหมด</small></article>
@@ -30,5 +81,5 @@
 <section class="panel"><div class="panel-title"><div><span class="kicker">THEMES</span><h2>ธีมลงทุนสำคัญ</h2><p>Semiconductor, software, defense, uranium, biotech และอื่น ๆ</p></div><div class="tabs" data-target="themeTable"></div></div><div id="themeTable" class="market-grid"></div></section>
 <section class="method"><strong>วิธีอ่าน</strong><p>สีเขียว/แดงแสดงผลตอบแทนของดัชนีหรือ ETF proxy ในช่วงที่เลือก คำว่า “Rotation” หมายถึง relative performance ไม่ใช่กระแสเงินกองทุนจริง ข้อมูลที่หาไม่ได้จะแสดงสถานะ unavailable โดยไม่ทำให้ทั้งหน้าว่าง</p></section>
 </main>
-<script src="market.js?v=9.4.6"></script>
+<script src="market.js?v=9.6.0"></script>
 </body></html>
