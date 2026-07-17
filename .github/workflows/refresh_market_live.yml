@@ -79,10 +79,6 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_attention_finnhub.py
 
-      - name: Refresh global and sector pulse
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
-        run: python scripts/generate_market_pulse.py
-
       - name: Validate generated data
         if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         run: python scripts/validate_static_data.py
@@ -97,7 +93,7 @@ jobs:
           mkdir -p /tmp/stockcheck-live-data
           for root in data site/data static/data; do
             mkdir -p "/tmp/stockcheck-live-data/$root"
-            for file in technical.json scanner.json attention_today.json market_pulse.json; do
+            for file in technical.json scanner.json attention_today.json; do
               [ -f "$root/$file" ] && cp "$root/$file" "/tmp/stockcheck-live-data/$root/$file"
             done
           done
@@ -107,21 +103,21 @@ jobs:
 
           for root in data site/data static/data; do
             mkdir -p "$root"
-            for file in technical.json scanner.json attention_today.json market_pulse.json; do
+            for file in technical.json scanner.json attention_today.json; do
               [ -f "/tmp/stockcheck-live-data/$root/$file" ] && cp "/tmp/stockcheck-live-data/$root/$file" "$root/$file"
             done
           done
 
-          git add data/technical.json data/scanner.json data/attention_today.json data/market_pulse.json \
-                  site/data/technical.json site/data/scanner.json site/data/attention_today.json site/data/market_pulse.json \
-                  static/data/technical.json static/data/scanner.json static/data/attention_today.json static/data/market_pulse.json 2>/dev/null || true
+          git add data/technical.json data/scanner.json data/attention_today.json \
+                  site/data/technical.json site/data/scanner.json site/data/attention_today.json \
+                  static/data/technical.json static/data/scanner.json static/data/attention_today.json 2>/dev/null || true
 
           if git diff --cached --quiet; then
             echo "No live data changes."
             exit 0
           fi
 
-          git commit -m "Refresh live prices, Today attention, and market pulse"
+          git commit -m "Refresh live prices and Today attention"
 
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
