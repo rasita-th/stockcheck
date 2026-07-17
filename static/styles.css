@@ -2798,3 +2798,39 @@ body.attention-active .attention-page { display: block; }
 .recommendation-trends-table td:first-child {
   text-align: left;
 }
+
+/* v9.4.7 canonical full-width desktop layout */
+@media (min-width: 1181px) {
+  .app-shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding: 14px clamp(10px, 1vw, 20px) 24px;
+  }
+
+  .workspace {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    grid-template-columns:
+      clamp(250px, 16vw, 320px)
+      minmax(0, 1fr)
+      clamp(340px, 22vw, 440px);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .workspace > *,
+  .content-area,
+  .scanner-panel,
+  .sidebar,
+  .detail-panel,
+  .table-wrap {
+    min-width: 0;
+  }
+
+  .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
