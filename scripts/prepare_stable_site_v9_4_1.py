@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "9.5.5"
+VERSION = "9.6.0"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -114,6 +114,10 @@ def validate_data() -> None:
         if name == "technical.json" and not rows:
             raise SystemExit("technical.json is empty; refusing stable deploy")
         print(f"{name}: {len(rows)} rows")
+    pulse = SITE / "data" / "market_pulse.json"
+    if not pulse.exists() or pulse.stat().st_size < 100:
+        raise SystemExit("market_pulse.json missing/empty; refusing stable deploy")
+    json.loads(pulse.read_text(encoding="utf-8"))
 
 
 def validate_clean_html() -> None:
@@ -126,9 +130,15 @@ def validate_clean_html() -> None:
     for token in ("Scanner", "Today", "Memo", "Market Pulse"):
         if token not in market:
             raise SystemExit(f"market navigation missing: {token}")
+    for token in ('id="marketBriefing"', 'data-pulse-mode="balanced"', 'data-pulse-mode="portfolio"', 'id="pulseSummaryList"'):
+        if token not in market:
+            raise SystemExit(f"market briefing contract missing: {token}")
     for asset in RUNTIME_ASSETS:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
+    for asset in ("market.css", "market.js"):
+        if f"{asset}?v={VERSION}" not in market:
+            raise SystemExit(f"market asset missing cache-busted reference: {asset}")
 
 
 def main() -> None:

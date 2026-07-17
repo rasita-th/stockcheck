@@ -75,7 +75,9 @@ jobs:
           test -s site/memo-only-fix.css
           test -s site/memo-only-fix.js
           test -s site/market.html
+          test -s site/market.css
           test -s site/market.js
+          test -s site/data/market_pulse.json
           test -s site/data/technical.json
           test -s site/data/fundamental.json
 
@@ -92,9 +94,13 @@ jobs:
           done
           grep -Fq "app-shell-v9-4-6.css?v=${VERSION}" site/index.html
           grep -Fq "app-shell-v9-4-6.js?v=${VERSION}" site/index.html
+          grep -Fq "market.css?v=${VERSION}" site/market.html
+          grep -Fq "market.js?v=${VERSION}" site/market.html
           grep -q 'index.html#today' site/market.html
           grep -q 'index.html#memo' site/market.html
-          grep -q 'Market Pulse' site/market.html
+          grep -q 'id="marketBriefing"' site/market.html
+          grep -q 'data-pulse-mode="portfolio"' site/market.html
+          grep -q 'id="pulseSummaryList"' site/market.html
 
           if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|thai-time-v9-3|runtime-guard-v9-4-1|mobile-nav-v9-4-2' site/index.html site/market.html; then
             echo 'Conflicting legacy runtime still referenced by deployment artifact'
