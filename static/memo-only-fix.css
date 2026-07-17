@@ -1,0 +1,30 @@
+/* v9.5.4 memo-only view isolation */
+body.attention-active .workspace,
+body.attention-active .decision-screener,
+body.attention-active .scanner-panel,
+body.attention-active .lower-grid,
+body.memo-active .workspace,
+body.memo-active .decision-screener,
+body.memo-active .scanner-panel,
+body.memo-active .lower-grid,
+.app-shell[data-view="memo"] .workspace,
+.app-shell[data-view="memo"] .decision-screener,
+.app-shell[data-view="memo"] .scanner-panel,
+.app-shell[data-view="memo"] .lower-grid {
+  display: none !important;
+}
+
+body.attention-active .attention-page,
+body.memo-active .attention-page,
+.app-shell[data-view="memo"] .attention-page {
+  display: block !important;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+body.attention-active .app-shell,
+body.memo-active .app-shell,
+.app-shell[data-view="memo"] {
+  min-height: 100vh;
+}
