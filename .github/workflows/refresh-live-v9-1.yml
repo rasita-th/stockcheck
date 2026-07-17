@@ -80,12 +80,6 @@ jobs:
           python scripts/generate_attention_finnhub.py
           cp site/data/attention_today.json data/generated/attention_today.json
 
-      - name: Refresh Market Pulse
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
-        run: |
-          python scripts/generate_market_pulse.py
-          cp site/data/market_pulse.json data/generated/market_pulse.json
-
       - name: Generate health and publish
         if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         run: |
