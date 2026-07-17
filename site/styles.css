@@ -3168,3 +3168,32 @@ body.attention-active .attention-page { display: block; }
     letter-spacing: 0.06em;
   }
 }
+
+
+/* v9.5.2 stretch notification workspace to left rail height */
+@media (min-width: 1181px) {
+  .workspace {
+    align-items: stretch;
+  }
+
+  .content-area {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  .alert-center {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 100%;
+    align-self: stretch;
+  }
+
+  #alertList,
+  .alert-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
