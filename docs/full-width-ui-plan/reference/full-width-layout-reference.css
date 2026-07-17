@@ -1,0 +1,82 @@
+/*
+REFERENCE ONLY — do not load directly in production.
+Map selectors to the existing DOM and keep one canonical stylesheet.
+No display:none, no DOM replacement, no fixed positioning.
+*/
+
+:root {
+  --workspace-gap: 12px;
+  --controls-min: 280px;
+  --controls-max: 360px;
+  --insight-min: 360px;
+  --insight-max: 520px;
+}
+
+/* Remove fixed canvas behavior from the existing root container. */
+.app-shell {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* Existing workspace only — do not create a replacement workspace. */
+.workspace {
+  display: grid;
+  grid-template-columns:
+    clamp(var(--controls-min), 20vw, var(--controls-max))
+    minmax(640px, 1fr)
+    clamp(var(--insight-min), 25vw, var(--insight-max));
+  gap: var(--workspace-gap);
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+}
+
+.workspace > * {
+  min-width: 0;
+}
+
+.scanner-results-region {
+  min-width: 0;
+  width: 100%;
+}
+
+.scanner-table-scroll {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.insight-rail {
+  display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: var(--workspace-gap);
+  min-width: 0;
+}
+
+@media (max-width: 1439px) {
+  .workspace {
+    grid-template-columns:
+      clamp(260px, 24vw, 340px)
+      minmax(0, 1fr);
+  }
+
+  /* Existing insight region moves to the next grid row via CSS only. */
+  .insight-rail {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 1099px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .controls-rail,
+  .scanner-results-region,
+  .insight-rail {
+    grid-column: 1;
+  }
+}
