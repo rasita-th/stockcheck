@@ -6,7 +6,7 @@ import math
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import pandas as pd
 import yfinance as yf
@@ -18,6 +18,7 @@ UNIVERSE_PATHS = [
     ROOT / "static/data/market_universe.json",
 ]
 OUTPUT_DIRS = [ROOT / "data/generated", ROOT / "data", ROOT / "site/data", ROOT / "static/data"]
+BATCH_SIZE = 20
 
 
 def universe() -> dict[str, Any]:
@@ -50,18 +51,90 @@ def ytd(series: pd.Series) -> float | None:
     return None if len(current) < 2 or float(current.iloc[0]) == 0 else safe((float(current.iloc[-1]) / float(current.iloc[0]) - 1) * 100)
 
 
+def extract_close(history: pd.DataFrame, symbol: str) -> pd.Series:
+    """Return one symbol's Close series from any yfinance column layout."""
+    if history is None or history.empty:
+        return pd.Series(dtype="float64")
+
+    close: pd.Series | pd.DataFrame | None = None
+    columns = history.columns
+    if isinstance(columns, pd.MultiIndex):
+        level0 = set(columns.get_level_values(0))
+        level1 = set(columns.get_level_values(1)) if columns.nlevels > 1 else set()
+        if symbol in level0:
+            block = history[symbol]
+            if isinstance(block, pd.DataFrame) and "Close" in block.columns:
+                close = block["Close"]
+        elif "Close" in level0 and symbol in level1:
+            block = history["Close"]
+            if isinstance(block, pd.DataFrame) and symbol in block.columns:
+                close = block[symbol]
+    elif "Close" in columns:
+        close = history["Close"]
+
+    if close is None:
+        return pd.Series(dtype="float64")
+    if isinstance(close, pd.DataFrame):
+        if close.empty:
+            return pd.Series(dtype="float64")
+        close = close.iloc[:, 0]
+    return pd.to_numeric(close, errors="coerce").dropna()
+
+
+def chunks(values: list[str], size: int = BATCH_SIZE) -> Iterable[list[str]]:
+    for start in range(0, len(values), size):
+        yield values[start : start + size]
+
+
+def get_many(symbols: list[str]) -> dict[str, pd.Series]:
+    """Fetch most symbols in a few requests; missing symbols fall back later."""
+    unique = list(dict.fromkeys(symbol for symbol in symbols if symbol))
+    cache: dict[str, pd.Series] = {}
+    for batch in chunks(unique):
+        last_error: Exception | None = None
+        for attempt in range(2):
+            try:
+                history = yf.download(
+                    tickers=batch,
+                    period="18mo",
+                    interval="1d",
+                    auto_adjust=True,
+                    group_by="ticker",
+                    progress=False,
+                    threads=True,
+                )
+                for symbol in batch:
+                    close = extract_close(history, symbol)
+                    if not close.empty:
+                        cache[symbol] = close
+                if cache.keys() >= set(batch):
+                    break
+            except Exception as exc:
+                last_error = exc
+            if attempt == 0:
+                time.sleep(2)
+        found = sum(1 for symbol in batch if symbol in cache)
+        print(f"batch fetched {found}/{len(batch)} symbols")
+        if found == 0 and last_error:
+            print(f"batch error: {last_error}")
+    return cache
+
+
 def get_one(symbol: str) -> pd.Series:
     last_error: Exception | None = None
     for attempt in range(3):
         try:
-            history = yf.download(symbol, period="18mo", interval="1d", auto_adjust=True, progress=False, threads=False)
-            if not history.empty:
-                close = history["Close"]
-                if isinstance(close, pd.DataFrame):
-                    close = close.iloc[:, 0]
-                close = close.dropna()
-                if not close.empty:
-                    return close
+            history = yf.download(
+                tickers=symbol,
+                period="18mo",
+                interval="1d",
+                auto_adjust=True,
+                progress=False,
+                threads=False,
+            )
+            close = extract_close(history, symbol)
+            if not close.empty:
+                return close
         except Exception as exc:
             last_error = exc
         time.sleep(1 + attempt)
@@ -282,12 +355,19 @@ def save(payload: dict[str, Any]) -> None:
 
 def main() -> None:
     config = universe()
-    cache: dict[str, pd.Series] = {}
+    groups = (
+        config.get("global_markets", []),
+        config.get("us_indices", []),
+        config.get("us_sectors", []),
+        config.get("themes", []),
+    )
+    symbols = [str(item.get("symbol") or "").strip() for items in groups for item in items]
+    cache = get_many(symbols)
     failed: list[dict[str, str]] = []
-    global_markets = build(config.get("global_markets", []), cache, failed)
-    us_indices = build(config.get("us_indices", []), cache, failed)
-    sectors = build(config.get("us_sectors", []), cache, failed)
-    themes = build(config.get("themes", []), cache, failed)
+    global_markets = build(groups[0], cache, failed)
+    us_indices = build(groups[1], cache, failed)
+    sectors = build(groups[2], cache, failed)
+    themes = build(groups[3], cache, failed)
     all_rows = global_markets + us_indices + sectors + themes
     ok = sum(1 for row in all_rows if row.get("status") == "ok")
     breadth = {
