@@ -43,6 +43,23 @@ def validate_json(name: str, require_rows: bool = True) -> None:
     print(f"{name}: {len(rows)} rows")
 
 
+def validate_market_pulse() -> None:
+    path = SITE / "data" / "market_pulse.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    for key in ("global_markets", "us_indices", "us_sectors", "themes"):
+        if not isinstance(data.get(key), list):
+            raise SystemExit(f"{path}: {key} must be a list")
+    narrative = data.get("narrative")
+    if narrative is not None:
+        modes = narrative.get("modes") if isinstance(narrative, dict) else None
+        if not isinstance(modes, dict):
+            raise SystemExit(f"{path}: narrative.modes must be an object when narrative exists")
+        for key in ("balanced", "portfolio", "action", "news", "risk"):
+            if key not in modes:
+                raise SystemExit(f"{path}: narrative mode missing: {key}")
+    print(f"market_pulse.json: schema {data.get('schema_version', 'legacy')} (legacy-compatible)")
+
+
 def main() -> None:
     version = deployment_version()
     require_text(SITE / "index.html", (
@@ -60,6 +77,14 @@ def main() -> None:
     ))
     require_text(SITE / "market.html", (
         'index.html#scanner', 'index.html#today', 'index.html#memo', 'Market Pulse',
+        'id="marketBriefing"', 'id="pulseHeadline"', 'id="pulseSummaryList"',
+        'id="pulseSignalGrid"', 'data-pulse-mode="balanced"', 'data-pulse-mode="portfolio"',
+        'data-pulse-mode="action"', 'data-pulse-mode="news"', 'data-pulse-mode="risk"',
+        f'market.css?v={version}', f'market.js?v={version}',
+    ))
+    require_text(SITE / "market.js", (
+        'stockTimingRadar.watchlist.v54', 'technical.json', 'normaliseNarrative',
+        'applyPortfolioNarrative', 'STALE DATA',
     ))
     forbid_text(SITE / "index.html", (
         "scanner-dashboard", "scanner-layout-v9-3", "shared-app-shell-v9-3",
@@ -67,6 +92,7 @@ def main() -> None:
     ))
     validate_json("technical.json", require_rows=True)
     validate_json("fundamental.json", require_rows=False)
+    validate_market_pulse()
     print(f"v{version} static UI smoke test passed")
 
 
