@@ -128,7 +128,67 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    timeout-minutes: 15
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Smoke test deployed Market Pulse
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          BASE="${PAGE_URL%/}"
+          test -n "$BASE"
+          ready=false
+          for attempt in $(seq 1 18); do
+            nonce="$(date +%s)-${attempt}"
+            echo "Production smoke attempt ${attempt}: ${BASE}"
+            if curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json; then
+              ready=true
+              break
+            fi
+            sleep 5
+          done
+          if [ "$ready" != "true" ]; then
+            echo "GitHub Pages did not become readable within the smoke-test window"
+            exit 1
+          fi
+
+          grep -q 'id="marketBriefing"' /tmp/market.html
+          grep -q 'data-pulse-mode="balanced"' /tmp/market.html
+          grep -q 'data-pulse-mode="portfolio"' /tmp/market.html
+          grep -q 'data-pulse-mode="risk"' /tmp/market.html
+          grep -q 'normaliseNarrative' /tmp/market.js
+          grep -q 'applyPortfolioNarrative' /tmp/market.js
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('/tmp/market_pulse.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          if not isinstance(data, dict):
+              raise SystemExit('deployed market_pulse.json root is not an object')
+          for key in ('global_markets', 'us_indices', 'us_sectors', 'themes'):
+              rows = data.get(key)
+              if not isinstance(rows, list) or not rows:
+                  raise SystemExit(f'deployed market_pulse.json missing/non-populated {key}')
+          if not data.get('generated_at'):
+              raise SystemExit('deployed market_pulse.json missing generated_at')
+          narrative = data.get('narrative')
+          if narrative is not None:
+              modes = narrative.get('modes') if isinstance(narrative, dict) else None
+              required = {'balanced', 'portfolio', 'action', 'news', 'risk'}
+              if not isinstance(modes, dict) or not required.issubset(modes):
+                  raise SystemExit('deployed narrative modes are incomplete')
+          print({
+              'schema_version': data.get('schema_version'),
+              'generated_at': data.get('generated_at'),
+              'successful_symbols': data.get('successful_symbols'),
+          })
+          PY
