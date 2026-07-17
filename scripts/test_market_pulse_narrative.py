@@ -16,6 +16,8 @@ def validate(narrative: dict) -> None:
     assert narrative["default_mode"] == "balanced"
     assert narrative["regime"] in {"risk-on", "mixed", "risk-off"}
     assert narrative["risk_level"] in {"contained", "moderate", "elevated"}
+    assert narrative["refresh_window_hours"] == 12
+    assert len(narrative["sources"]) >= 2
     assert set(narrative["modes"]) == set(MODES)
     for key in MODES:
         mode = narrative["modes"][key]
@@ -65,7 +67,7 @@ def main() -> None:
     validate(bearish)
     assert bearish["regime"] == "risk-off"
     assert bearish["risk_level"] == "elevated"
-    print("Market Pulse narrative and batch extraction tests passed")
+    print("Market Pulse narrative, cadence, sources, and batch extraction tests passed")
 
 
 if __name__ == "__main__":
