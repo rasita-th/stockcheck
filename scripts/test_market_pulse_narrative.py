@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-from generate_market_pulse import build_narrative
+import pandas as pd
+
+from generate_market_pulse import build_narrative, extract_close
 
 MODES = ("balanced", "portfolio", "action", "news", "risk")
 
@@ -26,7 +28,30 @@ def validate(narrative: dict) -> None:
         assert isinstance(mode["risk"], list)
 
 
+def validate_close_extraction() -> None:
+    index = pd.date_range("2026-01-01", periods=3, freq="D")
+
+    flat = pd.DataFrame({"Close": [10.0, 11.0, 12.0]}, index=index)
+    assert extract_close(flat, "AAA").tolist() == [10.0, 11.0, 12.0]
+
+    ticker_first = pd.DataFrame(
+        [[10.0, 20.0], [11.0, 21.0], [12.0, 22.0]],
+        index=index,
+        columns=pd.MultiIndex.from_tuples([("AAA", "Close"), ("BBB", "Close")]),
+    )
+    assert extract_close(ticker_first, "BBB").tolist() == [20.0, 21.0, 22.0]
+
+    price_first = pd.DataFrame(
+        [[10.0, 20.0], [11.0, 21.0], [12.0, 22.0]],
+        index=index,
+        columns=pd.MultiIndex.from_tuples([("Close", "AAA"), ("Close", "BBB")]),
+    )
+    assert extract_close(price_first, "AAA").tolist() == [10.0, 11.0, 12.0]
+    assert extract_close(price_first, "MISSING").empty
+
+
 def main() -> None:
+    validate_close_extraction()
     globals_ = [row("^GSPC", "S&P 500", 2.0), row("^N225", "Nikkei 225", -1.0), row("^HSI", "Hang Seng", 3.0)]
     us = [row("^GSPC", "S&P 500", 2.0), row("^IXIC", "Nasdaq", 2.5), row("^VIX", "VIX", -8.0)]
     sectors_up = [row(f"S{i}", f"Sector {i}", 1.0 + i / 10) for i in range(9)] + [row("S9", "Sector 9", -0.2)]
@@ -40,7 +65,7 @@ def main() -> None:
     validate(bearish)
     assert bearish["regime"] == "risk-off"
     assert bearish["risk_level"] == "elevated"
-    print("Market Pulse narrative tests passed")
+    print("Market Pulse narrative and batch extraction tests passed")
 
 
 if __name__ == "__main__":
