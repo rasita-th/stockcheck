@@ -142,29 +142,34 @@ jobs:
           set -euo pipefail
           BASE="${PAGE_URL%/}"
           test -n "$BASE"
+
+          fetch_and_check_ui() {
+            local nonce="$1"
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
+              && grep -q 'id="marketBriefing"' /tmp/market.html \
+              && grep -q 'data-pulse-mode="balanced"' /tmp/market.html \
+              && grep -q 'data-pulse-mode="portfolio"' /tmp/market.html \
+              && grep -q 'data-pulse-mode="risk"' /tmp/market.html \
+              && grep -q 'normaliseNarrative' /tmp/market.js \
+              && grep -q 'applyPortfolioNarrative' /tmp/market.js
+          }
+
           ready=false
           for attempt in $(seq 1 18); do
             nonce="$(date +%s)-${attempt}"
             echo "Production smoke attempt ${attempt}: ${BASE}"
-            if curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json; then
+            if fetch_and_check_ui "$nonce"; then
               ready=true
               break
             fi
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo "GitHub Pages did not become readable within the smoke-test window"
+            echo "GitHub Pages did not serve the new Market Pulse UI within the smoke-test window"
             exit 1
           fi
-
-          grep -q 'id="marketBriefing"' /tmp/market.html
-          grep -q 'data-pulse-mode="balanced"' /tmp/market.html
-          grep -q 'data-pulse-mode="portfolio"' /tmp/market.html
-          grep -q 'data-pulse-mode="risk"' /tmp/market.html
-          grep -q 'normaliseNarrative' /tmp/market.js
-          grep -q 'applyPortfolioNarrative' /tmp/market.js
 
           python - <<'PY'
           import json
