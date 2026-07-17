@@ -1,5 +1,7 @@
 name: Refresh Market Pulse v9.6 (safe)
 
+# Sole writer for Market Pulse. A successful run triggers the existing Pages
+# deployment workflow through workflow_run, so validated JSON is published.
 on:
   workflow_dispatch:
   schedule:
@@ -27,7 +29,7 @@ env:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
