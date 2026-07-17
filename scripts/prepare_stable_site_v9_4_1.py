@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "9.4.6"
+VERSION = "9.5.5"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -24,6 +24,17 @@ LEGACY_ASSETS = (
     "mobile-nav-v9-4-2.css", "runtime-guard-v9-4-1.js",
     "desktop-layout-v9-4-3.css",
     "app-shell-v9-4-6.css", "app-shell-v9-4-6.js",
+)
+
+RUNTIME_ASSETS = (
+    "styles.css",
+    "app.js",
+    "notification-phase2.css",
+    "notification-phase2.js",
+    "final-ui-coordinator.css",
+    "final-ui-coordinator.js",
+    "memo-only-fix.css",
+    "memo-only-fix.js",
 )
 
 
@@ -52,8 +63,8 @@ def prepare_index(path: Path) -> None:
     html = strip_legacy_markup(path.read_text(encoding="utf-8"))
     for asset in LEGACY_ASSETS:
         html = strip_asset(html, asset)
-    html = cache_bust(html, "styles.css")
-    html = cache_bust(html, "app.js")
+    for asset in RUNTIME_ASSETS:
+        html = cache_bust(html, asset)
     html = inject_once(
         html,
         r'\s*<link[^>]+app-shell-v9-4-6\.css[^>]*>',
@@ -115,6 +126,9 @@ def validate_clean_html() -> None:
     for token in ("Scanner", "Today", "Memo", "Market Pulse"):
         if token not in market:
             raise SystemExit(f"market navigation missing: {token}")
+    for asset in RUNTIME_ASSETS:
+        if f"{asset}?v={VERSION}" not in index:
+            raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
 
 
 def main() -> None:

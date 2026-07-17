@@ -1,30 +1,37 @@
-/* v9.5.4 memo-only view isolation */
-body.attention-active .workspace,
-body.attention-active .decision-screener,
-body.attention-active .scanner-panel,
-body.attention-active .lower-grid,
+/* v9.5.5 canonical Memo view isolation */
+
+/* Memo is a dedicated workspace. Scanner, Today, and scanner-only controls must not leak into it. */
+body.memo-active .portfolio-tabs,
 body.memo-active .workspace,
 body.memo-active .decision-screener,
 body.memo-active .scanner-panel,
 body.memo-active .lower-grid,
-.app-shell[data-view="memo"] .workspace,
-.app-shell[data-view="memo"] .decision-screener,
-.app-shell[data-view="memo"] .scanner-panel,
-.app-shell[data-view="memo"] .lower-grid {
+body.memo-active .mobile-scan-btn,
+body.memo-active .attention-page,
+body.memo-active .alert-fab,
+body.memo-active .alert-mobile-sheet,
+body.memo-active #alertToast {
   display: none !important;
 }
 
-body.attention-active .attention-page,
-body.memo-active .attention-page,
-.app-shell[data-view="memo"] .attention-page {
+body.memo-active #memoPage.memo-page {
   display: block !important;
   width: 100%;
   max-width: none;
   margin: 0;
+  padding-top: 14px;
 }
 
-body.attention-active .app-shell,
-body.memo-active .app-shell,
-.app-shell[data-view="memo"] {
+/* Today remains a separate page and must never render the Memo workspace. */
+body.attention-active #memoPage.memo-page {
+  display: none !important;
+}
+
+/* Outside Memo mode the page stays hidden until the native view controller activates it. */
+body:not(.memo-active) #memoPage.memo-page {
+  display: none;
+}
+
+body.memo-active .app-shell {
   min-height: 100vh;
 }
