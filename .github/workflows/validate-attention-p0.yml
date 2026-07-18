@@ -1,4 +1,4 @@
-name: Validate Today Attention P0
+name: Validate Today Attention PR2
 
 on:
   pull_request:
@@ -7,16 +7,24 @@ on:
       - ".github/workflows/validate-attention-p0.yml"
       - ".github/workflows/deploy-pages.yml"
       - "scripts/generate_attention_p0.py"
+      - "scripts/generate_attention_pr2.py"
+      - "scripts/attention_sources/**"
       - "scripts/build_generated_layer.py"
       - "scripts/generate_health.py"
       - "scripts/validate_generated_data_v9_1.py"
+      - "scripts/validate_attention_pr2.py"
       - "scripts/validate_static_data.py"
       - "scripts/smoke_test_site_v9_4_6.py"
       - "scripts/prepare_stable_site_v9_4_1.py"
       - "scripts/check_ui_view_contract.py"
       - "tests/test_attention_p0.py"
+      - "tests/test_attention_news.py"
+      - "tests/fixtures/attention_news/**"
+      - "tests/golden/attention_today_v2_0.json"
       - "data/portfolio.json"
       - "data/earnings_calendar.json"
+      - "data/source_registry.json"
+      - "data/source_state/news.json"
       - "site/attention-p0.*"
       - "static/attention-p0.*"
       - "site/memo-only-fix.*"
@@ -44,24 +52,31 @@ jobs:
       - name: Compile attention and Pages scripts
         run: |
           python -m py_compile scripts/generate_attention_p0.py
+          python -m py_compile scripts/generate_attention_pr2.py
+          python -m py_compile scripts/attention_sources/*.py
           python -m py_compile scripts/generate_health.py
           python -m py_compile scripts/validate_generated_data_v9_1.py
+          python -m py_compile scripts/validate_attention_pr2.py
           python -m py_compile scripts/validate_static_data.py
           python -m py_compile scripts/smoke_test_site_v9_4_6.py
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
       - name: Run attention unit tests
-        run: python -m unittest discover -s tests -p "test_attention_p0.py" -v
+        run: |
+          python -m unittest discover -s tests -p "test_attention_p0.py" -v
+          python -m unittest discover -s tests -p "test_attention_news.py" -v
       - name: Build offline attention fixture
         env:
           STOCKCHECK_ATTENTION_OFFLINE: "1"
+          ATTENTION_NEWS_ENABLED: "0"
           ATTENTION_MAX_ITEMS: "7"
-        run: python scripts/generate_attention_p0.py
+        run: python scripts/generate_attention_pr2.py
       - name: Validate generated schema and UI isolation
         run: |
           python scripts/build_generated_layer.py
           python scripts/generate_health.py
           python scripts/publish_generated_data.py
           python scripts/validate_generated_data_v9_1.py
+          python scripts/validate_attention_pr2.py
           python scripts/check_ui_view_contract.py
       - name: Run the production Pages preflight
         run: |

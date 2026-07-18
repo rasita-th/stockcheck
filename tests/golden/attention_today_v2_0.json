@@ -1,0 +1,48 @@
+{
+  "schema_version": "2.0-p0",
+  "updated_at": "2026-07-18T08:15:00+00:00",
+  "market_timezone": "America/New_York",
+  "display_timezone": "Asia/Bangkok",
+  "stale_after_minutes": 90,
+  "total_monitored": 1,
+  "total_events": 1,
+  "coverage_status": "partial",
+  "summary": {"Critical": 0, "Risk": 0, "Action": 1, "Watch": 0, "Developing": 0},
+  "source_health": {},
+  "items": [
+    {
+      "ticker": "RKLB",
+      "name": "Rocket Lab USA, Inc.",
+      "portfolio_status": "holding",
+      "priority": "Action",
+      "priority_score": 60,
+      "why_today": ["A material agreement event was detected."],
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "event_time": "2026-07-18T08:02:00+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/defense-contract"
+      },
+      "events": [
+        {
+          "event_id": "company_ir:RKLB:golden",
+          "ticker": "RKLB",
+          "event_type": "corporate_event",
+          "event_subtype": "material_agreement",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/defense-contract"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "data_quality": {"free_sources_only": true, "max_attention_items": 7}
+}
