@@ -2317,6 +2317,7 @@ function bindEvents() {
       renderAll();
       ensureSymbolDetail(state.selected, state.detailTab === "fundamental");
       if (window.matchMedia("(max-width: 767px)").matches && select.closest(".stock-card")) openMobileDetail();
+      else window.StockRadarDetailDialog?.open(select);
       return;
     }
     const add = e.target.closest("[data-add-symbol]");

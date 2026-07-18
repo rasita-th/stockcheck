@@ -1,6 +1,7 @@
 (() => {
   "use strict";
 
+  const VERSION = "9.6.2";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   let frame = 0;
@@ -127,6 +128,7 @@
   }
 
   function boot() {
+    document.documentElement.dataset.stockDetailDialog = VERSION;
     const resizeObserver = new ResizeObserver(syncAlertHeight);
     [
       "#watchlistPanel",
@@ -162,6 +164,12 @@
     closeStockDetail({ restoreFocus: false });
     syncAlertHeight();
   }
+
+  window.StockRadarDetailDialog = Object.freeze({
+    version: VERSION,
+    open: openStockDetail,
+    close: closeStockDetail
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot, { once: true });
