@@ -1,11 +1,12 @@
 import sys
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from attention_event_memory import retain_discovered_events  # noqa: E402
 from attention_pr3 import enrich_payload  # noqa: E402
 from attention_sources.regulators import collect_regulator_events  # noqa: E402
 
@@ -43,6 +44,28 @@ def sample_payload(priority="Watch", price=100.0, event_count=1):
         ],
         "technical_watch": [],
         "features": {},
+    }
+
+
+def discovery_event(
+    source_type="regulator",
+    event_type="regulatory",
+    verification="confirmed",
+    detected_at=NOW,
+):
+    return {
+        "event_id": f"{source_type}:TEST:example",
+        "ticker": "TEST",
+        "event_type": event_type,
+        "event_subtype": event_type,
+        "detected_at": detected_at.isoformat(),
+        "verification_status": verification,
+        "source": {
+            "type": source_type,
+            "quality": "primary" if verification == "confirmed" else "secondary",
+            "url": "https://example.gov/event",
+            "published_at": detected_at.isoformat(),
+        },
     }
 
 
@@ -116,6 +139,31 @@ class AttentionPR3Tests(unittest.TestCase):
         self.assertEqual(event["verification_status"], "confirmed")
         self.assertEqual(event["source"]["quality"], "primary")
         self.assertEqual(event["regulator"], "FAA")
+
+    def test_confirmed_regulator_event_survives_next_refresh(self):
+        event = discovery_event()
+        retained = retain_discovered_events([event], NOW + timedelta(days=13))
+        self.assertEqual(len(retained), 1)
+        self.assertEqual(retained[0]["retention_status"], "active")
+        self.assertIn("retention_expires_at", retained[0])
+
+    def test_confirmed_regulator_event_expires_after_ttl(self):
+        event = discovery_event()
+        retained = retain_discovered_events([event], NOW + timedelta(days=15))
+        self.assertEqual(retained, [])
+
+    def test_unverified_news_has_short_retention(self):
+        event = discovery_event(source_type="gdelt", event_type="corporate_event", verification="unverified")
+        self.assertEqual(len(retain_discovered_events([event], NOW + timedelta(hours=23))), 1)
+        self.assertEqual(retain_discovered_events([event], NOW + timedelta(hours=25)), [])
+
+    def test_canonical_events_are_not_retained(self):
+        rows = [
+            discovery_event(source_type="company_ir", event_type="earnings"),
+            discovery_event(source_type="sec", event_type="sec_filing"),
+            discovery_event(source_type="technical_json", event_type="technical"),
+        ]
+        self.assertEqual(retain_discovered_events(rows, NOW + timedelta(minutes=15)), [])
 
 
 if __name__ == "__main__":
