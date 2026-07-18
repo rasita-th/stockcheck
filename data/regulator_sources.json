@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "policy": {
+    "official_sources_only": true,
+    "first_page_check_emits_events": false,
+    "company_match_required": true
+  },
+  "sources": {
+    "FDA": {
+      "name": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/news-events/fda-newsroom/press-announcements",
+      "mode": "page",
+      "domain": "fda.gov"
+    },
+    "FAA": {
+      "name": "Federal Aviation Administration",
+      "url": "https://www.faa.gov/newsroom/press_releases",
+      "mode": "page",
+      "domain": "faa.gov"
+    },
+    "NRC": {
+      "name": "U.S. Nuclear Regulatory Commission",
+      "url": "https://www.nrc.gov/reading-rm/doc-collections/news/index",
+      "mode": "page",
+      "domain": "nrc.gov"
+    },
+    "DOE": {
+      "name": "U.S. Department of Energy",
+      "url": "https://www.energy.gov/newsroom",
+      "mode": "page",
+      "domain": "energy.gov"
+    }
+  },
+  "assignments": {
+    "RKLB": ["FAA"],
+    "ASTS": ["FAA"],
+    "OKLO": ["NRC", "DOE"],
+    "TEM": ["FDA"],
+    "TMDX": ["FDA"],
+    "RXRX": ["FDA"],
+    "BEAM": ["FDA"],
+    "MP": ["DOE"],
+    "EQT": ["DOE"],
+    "EOSE": ["DOE"],
+    "UUUU": ["DOE", "NRC"],
+    "PSIX": ["DOE"],
+    "TMC": ["DOE"],
+    "TE": ["DOE"]
+  }
+}
