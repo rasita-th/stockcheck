@@ -116,6 +116,7 @@ jobs:
       - name: Commit canonical generated data and runtime mirrors
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/generated data/source_state site/data static/data
@@ -127,4 +128,20 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh PR3 attention workflow data"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+          # Pages may write a deployment-receipt commit while this slower refresh
+          # is running. Rebase the generated-data commit onto the latest branch
+          # before pushing so that receipt commits cannot reject the refresh.
+          for attempt in 1 2 3; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "Refresh data pushed successfully on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push race on attempt ${attempt}; retrying after fetching latest main."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 3))
+          done
+          echo "Unable to push refreshed data after three attempts."
+          exit 1
