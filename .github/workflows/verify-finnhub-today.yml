@@ -1,0 +1,31 @@
+name: Verify Finnhub Today Deployment
+
+on:
+  workflow_run:
+    workflows: ["Refresh Finnhub Earnings Events"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Verify deployed Finnhub calendar and Today linkage
+        run: |
+          python -m py_compile scripts/verify_finnhub_today_deploy.py
+          python scripts/verify_finnhub_today_deploy.py \
+            --base-url https://rasita2644-star.github.io/stockcheck \
+            --attempts 36 \
+            --sleep-seconds 10

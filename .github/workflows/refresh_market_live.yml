@@ -1,17 +1,16 @@
-name: Refresh Live Market Data
+name: Legacy Refresh Live Market Data (manual only)
 
+# The production live/Today workflow is refresh-live-v9-1.yml. Keep this older
+# workflow available for manual rollback diagnostics, but do not schedule it or
+# let it overwrite the PR3 Today contract.
 on:
   workflow_dispatch:
-  schedule:
-    # Every 15 minutes on weekdays. A New York market-hours gate below
-    # prevents unnecessary work outside 09:30-16:15 ET and handles DST.
-    - cron: "*/15 * * * 1-5"
 
 permissions:
   contents: write
 
 concurrency:
-  group: stockcheck-live-market-data
+  group: stockcheck-live-market-data-legacy
   cancel-in-progress: true
 
 jobs:
@@ -32,39 +31,30 @@ jobs:
           print(f"new_york_time={now.isoformat()}")
           PY
 
-      - name: Skip outside market hours
-        if: steps.market.outputs.open != 'true' && github.event_name != 'workflow_dispatch'
-        run: echo "Outside US market hours at ${{ steps.market.outputs.new_york_time }}; no refresh needed."
-
       - name: Checkout
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
 
       - name: Set up Python
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
       - name: Install dependencies
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install yfinance pandas
 
       - name: Sync latest main
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
 
       - name: Refresh stock technical data
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -72,21 +62,19 @@ jobs:
           TECHNICAL_SCAN_WORKERS: "8"
         run: python scripts/update_technical_data.py
 
-      - name: Refresh dynamic Today attention
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
+      - name: Refresh legacy Today attention
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/generate_attention_finnhub.py
 
       - name: Validate generated data
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         run: python scripts/validate_static_data.py
 
       - name: Commit generated data safely
-        if: steps.market.outputs.open == 'true' || github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -113,11 +101,11 @@ jobs:
                   static/data/technical.json static/data/scanner.json static/data/attention_today.json 2>/dev/null || true
 
           if git diff --cached --quiet; then
-            echo "No live data changes."
+            echo "No legacy live data changes."
             exit 0
           fi
 
-          git commit -m "Refresh live prices and Today attention"
+          git commit -m "Refresh legacy live prices and Today attention"
 
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
