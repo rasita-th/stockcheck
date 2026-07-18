@@ -4,12 +4,14 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
+    paths-ignore:
+      - ".github/deploy-receipt.json"
   workflow_run:
     workflows: ["Refresh Market Pulse v9.6 (safe)"]
     types: [completed]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -218,6 +220,8 @@ jobs:
 
           python - <<'PY'
           import json
+          import os
+          from datetime import datetime, timezone
           from pathlib import Path
 
           attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
@@ -249,5 +253,46 @@ jobs:
           for key in ('changes_summary', 'recently_resolved', 'preferences_applied'):
               if key not in attention:
                   raise SystemExit(f'deployed PR3 field missing: {key}')
+
+          receipt = {
+              'schema_version': '1.0',
+              'status': 'verified',
+              'deployed_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+              'page_url': os.environ['PAGE_URL'],
+              'source_commit': os.environ['GITHUB_SHA'],
+              'asset_version': os.environ['EXPECTED_VERSION'],
+              'contract_version': attention.get('contract_version'),
+              'data_updated_at': attention.get('updated_at'),
+              'catalyst_count': len(items),
+              'technical_watch_count': len(technical_watch),
+              'regulator_health': (health.get('regulators') or {}).get('status'),
+              'production_smoke_passed': True,
+          }
+          Path('/tmp/deploy-receipt.json').write_text(
+              json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
           print(f"Deployed PR3 verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
           PY
+
+      - name: Checkout main for deployment receipt
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Record verified production deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/deploy-receipt.json .github/deploy-receipt.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/deploy-receipt.json
+          if git diff --cached --quiet; then
+            echo "Deployment receipt is unchanged."
+            exit 0
+          fi
+          git commit -m "Record verified PR3 Pages deployment"
+          git pull --rebase origin main
+          git push origin HEAD:main
