@@ -19,14 +19,38 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Dispatch verified Pages deployment
+      - name: Verify refresh published data and dispatch Pages
         uses: actions/github-script@v7
         with:
           script: |
+            const run = context.payload.workflow_run;
+            const jobs = await github.paginate(
+              github.rest.actions.listJobsForWorkflowRun,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                per_page: 100,
+              },
+            );
+
+            const publishStepName = 'Commit canonical generated data and runtime mirrors';
+            const publishStep = jobs
+              .flatMap(job => job.steps || [])
+              .find(step => step.name === publishStepName);
+
+            if (!publishStep || publishStep.conclusion !== 'success') {
+              core.notice(
+                `Skipping Pages dispatch for PR3 run ${run.id}: ` +
+                `${publishStepName} was ${publishStep?.conclusion || 'not run'}.`,
+              );
+              return;
+            }
+
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'deploy-pages.yml',
               ref: 'main',
             });
-            core.info(`Dispatched deploy-pages.yml after PR3 run ${context.payload.workflow_run.id}`);
+            core.info(`Dispatched deploy-pages.yml after published PR3 run ${run.id}`);
