@@ -62,6 +62,13 @@ def validate_attention() -> None:
         events = item.get("events") if isinstance(item, dict) and isinstance(item.get("events"), list) else []
         if not events or any(event.get("event_type") != "technical" for event in events):
             raise SystemExit(f"{path}: invalid technical_watch item")
+    if str(data.get("contract_version") or "").startswith("3.0"):
+        for key in ("changes_summary", "recently_resolved", "preferences_applied"):
+            if key not in data:
+                raise SystemExit(f"{path}: PR3 field missing: {key}")
+        for item in items + technical_watch:
+            if not isinstance(item.get("change"), dict) or not isinstance(item.get("impact"), dict):
+                raise SystemExit(f"{path}: PR3 history fields missing for {item.get('ticker')}")
     print(f"attention_today.json: {len(items)} catalysts, {len(technical_watch)} technical watch")
 
 
@@ -72,13 +79,17 @@ def main() -> None:
         f'app.js?v={version}', f'app-shell-v9-4-6.css?v={version}', f'app-shell-v9-4-6.js?v={version}',
     ))
     require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
-    require_text(SITE / "memo-only-fix.js", ("attention-p0.js", "10.2.0", "loadAttentionP0"))
-    require_text(SITE / "memo-only-fix.css", ("attention-p0.css?v=10.2.0", "today-view-isolation.css"))
+    require_text(SITE / "memo-only-fix.js", ("attention-p0.js", "attention-pr3.js?v=10.3.0", "loadAttentionP3"))
+    require_text(SITE / "memo-only-fix.css", ("attention-p0.css?v=10.2.0", "today-view-isolation.css", "attention-pr3.css?v=10.3.0"))
     require_text(SITE / "attention-p0.js", (
         "สิ่งที่ต้องจับตาวันนี้", "เหตุการณ์สำคัญวันนี้", "จับตาทางเทคนิค", "technical_watch",
         "normalizePayload", "ข่าวและเหตุการณ์", "externalSources", "source_chain", "lastKnownGood", "Today render error",
     ))
-    require_text(SITE / "attention-p0.css", (".attention-p0-page", ".p0-data-status", ".p0-section-header", ".p0-technical-section"))
+    require_text(SITE / "attention-pr3.js", (
+        "PR3 · PERSONAL RISK DESK", "เปลี่ยนจากรอบก่อน", "พัก 1 วัน", "ซ่อนวันนี้",
+        "data-pr3-action", "data-pr3-pref", "attention-p3-ready", "StockcheckAttentionP3",
+    ))
+    require_text(SITE / "attention-pr3.css", (".attention-p3-page", ".pr3-summary-grid", ".pr3-actions", "attention-p3-ready"))
     require_text(SITE / "today-view-isolation.css", (
         "body.attention-active .portfolio-tabs", "body.attention-active .workspace",
         "body.attention-active .decision-screener", "body.attention-active .attention-p0-page",
