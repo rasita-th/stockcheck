@@ -10,6 +10,7 @@ on:
       - "scripts/generate_attention_pr2.py"
       - "scripts/generate_attention_pr3.py"
       - "scripts/attention_pr3.py"
+      - "scripts/attention_event_memory.py"
       - "scripts/attention_sources/**"
       - "scripts/sync_attention_assets.py"
       - "scripts/build_generated_layer.py"
@@ -66,6 +67,7 @@ jobs:
           python -m py_compile scripts/generate_attention_pr2.py
           python -m py_compile scripts/generate_attention_pr3.py
           python -m py_compile scripts/attention_pr3.py
+          python -m py_compile scripts/attention_event_memory.py
           python -m py_compile scripts/attention_sources/*.py
           python -m py_compile scripts/sync_attention_assets.py
           python -m py_compile scripts/generate_health.py
