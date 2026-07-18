@@ -81,22 +81,23 @@ def main() -> None:
         event_type = str(event.get("event_type") or "")
         if source_type == "company_ir" and event_type == "earnings":
             continue
-        if source_type not in {"gdelt", "company_ir"}:
+        if source_type not in {"gdelt", "company_ir", "regulator"}:
             continue
         for field in ("dedupe_key", "entity_confidence", "verification_level", "verification_reason", "source_chain"):
-            require(field in event, f"PR2 event missing {field}: {event.get('event_id')}")
-        require(isinstance(event.get("source_chain"), list) and event["source_chain"], f"PR2 event source_chain is empty: {event.get('event_id')}")
+            require(field in event, f"PR2/PR3 event missing {field}: {event.get('event_id')}")
+        require(isinstance(event.get("source_chain"), list) and event["source_chain"], f"PR2/PR3 event source_chain is empty: {event.get('event_id')}")
         dedupe_key = str(event.get("dedupe_key") or "")
-        require(dedupe_key not in seen_dedupe, f"duplicate PR2 dedupe_key: {dedupe_key}")
+        require(dedupe_key not in seen_dedupe, f"duplicate PR2/PR3 dedupe_key: {dedupe_key}")
         seen_dedupe.add(dedupe_key)
         if event.get("verification_status") == "confirmed":
-            require(any((source or {}).get("quality") == "primary" and (source or {}).get("url") for source in event["source_chain"]), f"confirmed PR2 event lacks primary source: {event.get('event_id')}")
+            require(any((source or {}).get("quality") == "primary" and (source or {}).get("url") for source in event["source_chain"]), f"confirmed PR2/PR3 event lacks primary source: {event.get('event_id')}")
 
     if features.get("thai_friendly_ui"):
-        require(str(attention.get("contract_version") or "").startswith("2.2"), "Thai catalyst-first payload must use contract 2.2")
+        contract = str(attention.get("contract_version") or "")
+        require(contract.startswith("2.2") or contract.startswith("3.0"), "Thai catalyst-first payload must use contract 2.2 or 3.0")
         require(isinstance(attention.get("technical_summary"), dict), "technical_summary must be an object")
 
-    print("PR2 catalyst-first attention validation passed")
+    print("PR2 catalyst-first compatibility validation passed")
 
 
 if __name__ == "__main__":
