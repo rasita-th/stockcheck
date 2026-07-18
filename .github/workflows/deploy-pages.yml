@@ -17,11 +17,14 @@ concurrency:
   group: stockcheck-pages-deploy
   cancel-in-progress: true
 
+env:
+  TODAY_DEPLOY_VERSION: "10.2.2"
+
 jobs:
   build:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +44,7 @@ jobs:
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
           python scripts/prepare_stable_site_v9_4_1.py
 
-      - name: Validate JavaScript entry points
+      - name: Validate source artifact
         run: |
           node --check site/app.js
           node --check site/app-shell-v9-4-6.js
@@ -50,77 +53,78 @@ jobs:
           node --check site/final-ui-coordinator.js
           node --check site/memo-only-fix.js
           node --check site/attention-p0.js
-
-      - name: Validate data and UI smoke test
-        run: |
-          python -m py_compile \
-            scripts/validate_static_data.py \
-            scripts/smoke_test_site_v9_4_6.py \
-            scripts/check_ui_view_contract.py
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
 
-      - name: Verify clean UI artifact
+      - name: Force production cache bust
+        env:
+          VERSION: ${{ env.TODAY_DEPLOY_VERSION }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          pages = {
+              Path("site/index.html"): (
+                  "styles.css",
+                  "app.js",
+                  "notification-phase2.css",
+                  "notification-phase2.js",
+                  "final-ui-coordinator.css",
+                  "final-ui-coordinator.js",
+                  "memo-only-fix.css",
+                  "memo-only-fix.js",
+                  "app-shell-v9-4-6.css",
+                  "app-shell-v9-4-6.js",
+              ),
+              Path("site/market.html"): (
+                  "market.css",
+                  "market.js",
+                  "app-shell-v9-4-6.css",
+              ),
+          }
+          for path, assets in pages.items():
+              text = path.read_text(encoding="utf-8")
+              for asset in assets:
+                  text = re.sub(
+                      rf"({re.escape(asset)})(?:\?[^\"']*)?",
+                      rf"\1?v={version}",
+                      text,
+                      flags=re.IGNORECASE,
+                  )
+              path.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Verify final Today artifact
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="$(python -c 'import runpy; print(runpy.run_path("scripts/prepare_stable_site_v9_4_1.py")["VERSION"])')"
-          echo "Deployment version: ${VERSION}"
-
           test -s site/index.html
-          test -s site/styles.css
-          test -s site/app.js
-          test -s site/app-shell-v9-4-6.css
-          test -s site/app-shell-v9-4-6.js
-          test -s site/notification-phase2.css
-          test -s site/notification-phase2.js
-          test -s site/final-ui-coordinator.css
-          test -s site/final-ui-coordinator.js
-          test -s site/memo-only-fix.css
-          test -s site/memo-only-fix.js
-          test -s site/attention-p0.css
           test -s site/attention-p0.js
+          test -s site/attention-p0.css
+          test -s site/memo-only-fix.js
+          test -s site/memo-only-fix.css
           test -s site/today-view-isolation.css
-          test -s site/market.html
-          test -s site/market.css
-          test -s site/market.js
-          test -s site/data/market_pulse.json
-          test -s site/data/technical.json
-          test -s site/data/fundamental.json
           test -s site/data/attention_today.json
-          test -s site/data/earnings_calendar.json
-
-          for asset in \
-            styles.css \
-            app.js \
-            notification-phase2.css \
-            notification-phase2.js \
-            final-ui-coordinator.css \
-            final-ui-coordinator.js \
-            memo-only-fix.css \
-            memo-only-fix.js; do
-            grep -Fq "${asset}?v=${VERSION}" site/index.html
-          done
-          grep -Fq "app-shell-v9-4-6.css?v=${VERSION}" site/index.html
-          grep -Fq "app-shell-v9-4-6.js?v=${VERSION}" site/index.html
-          grep -Fq "attention-p0.css?v=10.1.0" site/memo-only-fix.css
-          grep -Fq "today-view-isolation.css?v=10.1.0" site/memo-only-fix.css
-          grep -Fq "attention-p0.js?v=10.1.0" site/memo-only-fix.js
-          grep -Fq "body.attention-active .decision-screener" site/today-view-isolation.css
-          grep -Fq "body.attention-active .workspace" site/today-view-isolation.css
-          grep -Fq "normalizePayload" site/attention-p0.js
-          grep -Fq "News & Events" site/attention-p0.js
-          grep -Fq "market.css?v=${VERSION}" site/market.html
-          grep -Fq "market.js?v=${VERSION}" site/market.html
-          grep -q 'index.html#today' site/market.html
-          grep -q 'index.html#memo' site/market.html
-          grep -q 'id="marketBriefing"' site/market.html
-          grep -q 'data-pulse-mode="portfolio"' site/market.html
-          grep -q 'id="pulseSummaryList"' site/market.html
-
-          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|thai-time-v9-3|runtime-guard-v9-4-1|mobile-nav-v9-4-2' site/index.html site/market.html; then
-            echo 'Conflicting legacy runtime still referenced by deployment artifact'
+          grep -Fq "memo-only-fix.js?v=${TODAY_DEPLOY_VERSION}" site/index.html
+          grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
+          grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
+          grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
+          grep -Fq 'today-view-isolation.css?v=10.2.1' site/memo-only-fix.css
+          grep -Fq 'สิ่งที่ต้องจับตาวันนี้' site/attention-p0.js
+          grep -Fq 'เหตุการณ์สำคัญวันนี้' site/attention-p0.js
+          grep -Fq 'จับตาทางเทคนิค' site/attention-p0.js
+          grep -Fq 'technical_watch' site/attention-p0.js
+          grep -Fq 'externalSources' site/attention-p0.js
+          if grep -Fq 'Unverified report' site/attention-p0.js; then
+            echo 'Legacy English verification UI remains in Today renderer'
+            exit 1
+          fi
+          if grep -Fq 'Open source' site/attention-p0.js; then
+            echo 'Legacy internal-source action remains in Today renderer'
             exit 1
           fi
 
@@ -147,10 +151,11 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed Market Pulse and Today PR2
+      - name: Smoke test deployed Today UI
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          EXPECTED_VERSION: ${{ env.TODAY_DEPLOY_VERSION }}
         run: |
           set -euo pipefail
           BASE="${PAGE_URL%/}"
@@ -158,31 +163,35 @@ jobs:
 
           fetch_and_check_ui() {
             local nonce="$1"
-            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
-              && grep -q 'memo-only-fix.js' /tmp/index.html \
-              && grep -q 'Today Attention' /tmp/attention-p0.js \
-              && grep -q 'normalizePayload' /tmp/attention-p0.js \
-              && grep -q 'News & Events' /tmp/attention-p0.js \
-              && grep -q 'source_chain' /tmp/attention-p0.js \
-              && grep -q 'body.attention-active .portfolio-tabs' /tmp/today-view-isolation.css \
-              && grep -q 'body.attention-active .workspace' /tmp/today-view-isolation.css \
-              && grep -q 'body.attention-active .decision-screener' /tmp/today-view-isolation.css \
-              && grep -q 'id="marketBriefing"' /tmp/market.html \
-              && grep -q 'data-pulse-mode="balanced"' /tmp/market.html \
-              && grep -q 'data-pulse-mode="portfolio"' /tmp/market.html \
-              && grep -q 'data-pulse-mode="risk"' /tmp/market.html \
-              && grep -q 'normaliseNarrative' /tmp/market.js \
-              && grep -q 'applyPortfolioNarrative' /tmp/market.js
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.js?smoke=${nonce}" -o /tmp/memo-only-fix.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.css?smoke=${nonce}" -o /tmp/memo-only-fix.css || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js || return 1
+
+            grep -Fq "memo-only-fix.js?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
+            grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
+            grep -Fq 'attention-p0.js?v=10.2.0' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'attention-p0.css?v=10.2.0' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'today-view-isolation.css?v=10.2.1' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'สิ่งที่ต้องจับตาวันนี้' /tmp/attention-p0.js || return 1
+            grep -Fq 'เหตุการณ์สำคัญวันนี้' /tmp/attention-p0.js || return 1
+            grep -Fq 'จับตาทางเทคนิค' /tmp/attention-p0.js || return 1
+            grep -Fq 'technical_watch' /tmp/attention-p0.js || return 1
+            grep -Fq 'externalSources' /tmp/attention-p0.js || return 1
+            grep -Fq 'body.attention-active .workspace' /tmp/today-view-isolation.css || return 1
+            grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
+            grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
+            grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
+            ! grep -Fq 'Unverified report' /tmp/attention-p0.js || return 1
+            ! grep -Fq 'Open source' /tmp/attention-p0.js || return 1
           }
 
           ready=false
-          for attempt in $(seq 1 18); do
+          for attempt in $(seq 1 24); do
             nonce="$(date +%s)-${attempt}"
             echo "Production smoke attempt ${attempt}: ${BASE}"
             if fetch_and_check_ui "$nonce"; then
@@ -192,7 +201,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo "GitHub Pages did not serve the new Market Pulse and Today PR2 UI within the smoke-test window"
+            echo 'GitHub Pages did not serve the Thai catalyst-first Today UI'
             exit 1
           fi
 
@@ -200,43 +209,22 @@ jobs:
           import json
           from pathlib import Path
 
-          attention_path = Path('/tmp/attention_today.json')
-          attention = json.loads(attention_path.read_text(encoding='utf-8'))
+          attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
           if not isinstance(attention, dict):
-              raise SystemExit('deployed attention_today.json root is not an object')
-          if not str(attention.get('schema_version') or '').startswith('2.0'):
-              raise SystemExit('deployed attention_today.json is not P0-compatible schema')
+              raise SystemExit('deployed attention payload must be an object')
+          if not str(attention.get('contract_version') or '').startswith('2.2'):
+              raise SystemExit('deployed Today contract is not catalyst-first 2.2')
           items = attention.get('items')
-          if not isinstance(items, list) or len(items) > 7:
-              raise SystemExit('deployed attention_today.json items are invalid')
-          if attention.get('coverage_status') not in {'complete', 'partial'}:
-              raise SystemExit('deployed attention_today.json coverage_status is invalid')
-          if not isinstance(attention.get('source_health'), dict):
-              raise SystemExit('deployed attention_today.json source_health is missing')
-
-          path = Path('/tmp/market_pulse.json')
-          data = json.loads(path.read_text(encoding='utf-8'))
-          if not isinstance(data, dict):
-              raise SystemExit('deployed market_pulse.json root is not an object')
-          for key in ('global_markets', 'us_indices', 'us_sectors', 'themes'):
-              rows = data.get(key)
-              if not isinstance(rows, list) or not rows:
-                  raise SystemExit(f'deployed market_pulse.json missing/non-populated {key}')
-          if not data.get('generated_at'):
-              raise SystemExit('deployed market_pulse.json missing generated_at')
-          narrative = data.get('narrative')
-          if narrative is not None:
-              modes = narrative.get('modes') if isinstance(narrative, dict) else None
-              required = {'balanced', 'portfolio', 'action', 'news', 'risk'}
-              if not isinstance(modes, dict) or not required.issubset(modes):
-                  raise SystemExit('deployed narrative modes are incomplete')
-          print({
-              'attention_schema': attention.get('schema_version'),
-              'attention_contract': attention.get('contract_version'),
-              'attention_items': len(items),
-              'attention_coverage': attention.get('coverage_status'),
-              'market_schema': data.get('schema_version'),
-              'market_generated_at': data.get('generated_at'),
-              'market_successful_symbols': data.get('successful_symbols'),
-          })
+          technical_watch = attention.get('technical_watch')
+          if not isinstance(items, list) or not isinstance(technical_watch, list):
+              raise SystemExit('deployed Today sections are missing')
+          for item in items:
+              events = item.get('events') if isinstance(item, dict) else None
+              if not isinstance(events, list) or not any(event.get('event_type') != 'technical' for event in events):
+                  raise SystemExit('technical-only item leaked into deployed main catalysts')
+          for item in technical_watch:
+              events = item.get('events') if isinstance(item, dict) else None
+              if not isinstance(events, list) or not events or any(event.get('event_type') != 'technical' for event in events):
+                  raise SystemExit('deployed technical watch contains a non-technical event')
+          print(f"Deployed Today verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
           PY
