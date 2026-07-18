@@ -22,7 +22,7 @@
 
   <link rel="stylesheet" href="scanner-layout-v9-3-7.css?v=9.3.7">
   <link rel="stylesheet" href="notification-phase2.css?v=9.5.1">
-  <link rel="stylesheet" href="final-ui-coordinator.css?v=9.5.3">
+  <link rel="stylesheet" href="final-ui-coordinator.css?v=9.6.0">
   <link rel="stylesheet" href="memo-only-fix.css?v=9.5.4">
 </head>
 <body>
@@ -34,7 +34,7 @@
         <span class="radar-logo" aria-hidden="true">◎</span>
         <div>
           <h1>Stock Timing Radar</h1>
-          <p>Rank stocks by distance from EMA</p>
+          <p>คัดหุ้น หา setup และเปิดรายละเอียดในคลิกเดียว</p>
         </div>
       </div>
       <label class="search-box desktop-only" aria-label="Search symbol">
@@ -55,6 +55,19 @@
       <button class="portfolio-tab more-tab">…</button>
       <button class="portfolio-tab add-tab" id="newScreenerBtn">+ New</button>
     </nav>
+
+    <section class="page-guide scanner-page-guide" id="scannerPageGuide" aria-label="วิธีใช้หน้า Scanner">
+      <div class="page-guide-copy">
+        <span class="page-guide-kicker">เริ่มตรงนี้</span>
+        <strong>Scanner ช่วยคัดหุ้นจาก Watchlist ให้เหลือตัวที่น่าตรวจต่อ</strong>
+        <p>เลือก Screener หรือปรับ Filter แล้วคลิกชื่อหุ้นในตาราง เพื่อเปิด Technical, Setup, Fundamental และ Playbook ในหน้าต่างเดียว</p>
+      </div>
+      <ol class="page-guide-steps" aria-label="ขั้นตอนใช้งาน">
+        <li><span>1</span>เลือกหุ้นตัวอย่าง 10 ตัวหรือเพิ่ม Watchlist</li>
+        <li><span>2</span>กด Scan Now เพื่ออัปเดตผล</li>
+        <li><span>3</span>คลิกหุ้นเพื่อดูรายละเอียด</li>
+      </ol>
+    </section>
 
     <main class="workspace">
       <aside class="sidebar desktop-panel" id="watchlistPanel">
@@ -131,7 +144,8 @@
 
       </section>
 
-      <aside class="detail-panel desktop-panel" id="detailPanel">
+      <aside class="detail-panel desktop-panel" id="detailPanel" role="dialog" aria-modal="true" aria-label="รายละเอียดหุ้น" aria-hidden="true" hidden>
+        <button class="stock-detail-close" type="button" data-close-stock-detail aria-label="ปิดรายละเอียดหุ้น">×</button>
         <section class="detail-card active" id="detailCard"></section>
       </aside>
     </main>
@@ -139,8 +153,8 @@
         <section class="scanner-panel panel-card decision-screener">
           <div class="scanner-header">
             <div>
-              <h2>Scanner Results</h2>
-              <p id="scannerSubtitle">Default sort: Score ↓ · click EMA headers to find nearest line</p>
+              <h2>ผลการคัดหุ้น</h2>
+              <p id="scannerSubtitle">เรียงจาก Score สูงสุด · คลิกหุ้นเพื่อดูกราฟ Setup และ Fundamental</p>
             </div>
             <div class="scanner-actions">
               <div class="tab-switch" role="tablist" aria-label="Scanner mode">
@@ -223,15 +237,10 @@
           </div>
         </section>
 
-
-    <section class="lower-grid desktop-only">
-      <article class="panel-card setup-card" id="setupSummary"></article>
-      <article class="panel-card fundamental-dashboard" id="fundamentalDashboard"></article>
-      <article class="panel-card playbook-card" id="playbookCards"></article>
-    </section>
-
     <button class="primary-btn mobile-scan-btn mobile-only" id="mobileScanNow">◎ Scan Now</button>
   </div>
+
+  <div class="stock-detail-backdrop" id="desktopDetailBackdrop" data-close-stock-detail hidden></div>
 
   <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
 
@@ -392,7 +401,7 @@ META MSFT PLTR SOUN SEI"></textarea>
 
   <script src="scanner-layout-v9-3-7.js?v=9.3.7" defer></script>
   <script src="notification-phase2.js?v=9.5.1" defer></script>
-  <script src="final-ui-coordinator.js?v=9.5.3" defer></script>
+  <script src="final-ui-coordinator.js?v=9.6.0" defer></script>
   <script src="memo-only-fix.js?v=9.5.4" defer></script>
 </body>
 </html>

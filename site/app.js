@@ -8,7 +8,9 @@ const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selec
 const BUILD_VERSION = "v8.1.1 Attention Render Fix";
 
 const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
-const BASE_WATCHLIST = ["PUMP", "SEI", "NVDA", "TSLA", "AMD", "AAPL", "AMZN", "PLTR", "SOUN"];
+// Keep first-run onboarding intentionally compact: exactly 10 examples.
+// Existing users keep their saved Watchlist unchanged.
+const BASE_WATCHLIST = ["PUMP", "SEI", "NVDA", "TSLA", "AMD", "AAPL", "AMZN", "PLTR", "SOUN", "MSFT"];
 const STORAGE = {
   watchlist: "stockTimingRadar.watchlist.v54",
   screeners: "stockTimingRadar.screeners.v54",
@@ -1144,7 +1146,7 @@ function playbookHtml(wrapped = true) {
 function setLoading(on, text = "") {
   state.loading = on;
   const subtitle = $("#scannerSubtitle");
-  if (subtitle) subtitle.textContent = text || (on ? "Scanning with original Python engine…" : "Default sort: Score ↓ · click EMA headers to find nearest line");
+  if (subtitle) subtitle.textContent = text || (on ? "กำลังสแกนและอัปเดตข้อมูล…" : "เรียงจาก Score สูงสุด · คลิกหุ้นเพื่อดูกราฟ Setup และ Fundamental");
   ["#scanNowDesktop", "#mobileScanNow"].forEach(sel => { const b = $(sel); if (b) { b.disabled = on; b.textContent = on ? "Scanning…" : "◎ Scan Now"; } });
 }
 
