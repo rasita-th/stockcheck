@@ -142,7 +142,7 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing usability UI: {token}")
     if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
         errors.append(f"{index_path} still renders duplicated desktop detail cards")
-    for asset in ("app.js?v=9.6.2", "final-ui-coordinator.css?v=9.6.2", "final-ui-coordinator.js?v=9.6.2"):
+    for asset in ("app.js?v=10.3.1", "final-ui-coordinator.css?v=10.3.1", "final-ui-coordinator.js?v=10.3.1"):
         if asset not in index:
             errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
