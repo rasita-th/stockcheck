@@ -30,7 +30,13 @@ def main() -> None:
     require(str(attention.get("contract_version") or "").startswith("3.0"), "PR3 payload must use contract 3.0")
 
     features = attention.get("features") if isinstance(attention.get("features"), dict) else {}
-    for key in ("what_changed", "historical_impact", "local_review_actions", "personal_priority"):
+    for key in (
+        "what_changed",
+        "historical_impact",
+        "local_review_actions",
+        "personal_priority",
+        "discovered_event_retention",
+    ):
         require(features.get(key) is True, f"PR3 feature missing: {key}")
 
     changes = attention.get("changes_summary") if isinstance(attention.get("changes_summary"), dict) else {}
@@ -59,6 +65,15 @@ def main() -> None:
     source_health = attention.get("source_health") if isinstance(attention.get("source_health"), dict) else {}
     if features.get("official_regulator_sources"):
         require("regulators" in source_health, "regulator source health missing")
+    retention_health = source_health.get("discovered_event_retention")
+    require(isinstance(retention_health, dict), "discovered event retention health missing")
+    require(retention_health.get("status") == "ok", "discovered event retention health is not ok")
+    require(isinstance(retention_health.get("retained_events"), int), "retained event count must be an integer")
+    for key in ("confirmed_ttl_days", "regulator_ttl_days", "unverified_ttl_days"):
+        require(isinstance(retention_health.get(key), int) and retention_health[key] > 0, f"retention health missing {key}")
+
+    quality = attention.get("data_quality") if isinstance(attention.get("data_quality"), dict) else {}
+    require(bool(quality.get("discovery_retention_policy")), "discovery retention policy missing")
 
     regulator_dedupe: set[str] = set()
     for event in events_doc.get("events") or []:
@@ -73,8 +88,14 @@ def main() -> None:
         dedupe_key = str(event.get("dedupe_key") or "")
         require(dedupe_key and dedupe_key not in regulator_dedupe, f"duplicate regulator event: {event_id}")
         regulator_dedupe.add(dedupe_key)
+        if event.get("retention_status") == "active":
+            require(bool(event.get("retention_expires_at")), f"retained regulator event lacks expiry: {event_id}")
 
-    print(f"PR3 validation passed: {len(rows)} active items, {len(regulator_dedupe)} regulator events")
+    print(
+        f"PR3 validation passed: {len(rows)} active items, "
+        f"{len(regulator_dedupe)} regulator events, "
+        f"{retention_health.get('retained_events')} retained"
+    )
 
 
 if __name__ == "__main__":
