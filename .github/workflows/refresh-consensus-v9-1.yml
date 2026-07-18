@@ -16,33 +16,63 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+
       - run: pip install -r requirements.txt
-      - name: Refresh analyst queue with key B
+
+      - name: Refresh free-tier analyst queue with key B
         env:
           FINNHUB_API_KEY_ANALYST: ${{ secrets.FINNHUB_API_KEY_ANALYST || secrets.FINNHUB_API_KEY_2 || secrets.FINNHUB_API_KEY }}
           FINNHUB_ANALYST_MAX_CALLS_PER_RUN: "48"
           FINNHUB_MIN_DELAY_SECONDS: "1.25"
-        run: python scripts/finnhub_pipeline.py --mode analyst
-      - run: |
-          python -m unittest tests.test_finnhub_pipeline
-          python scripts/validate_static_data.py
-      - name: Publish analyst contracts
+        run: python scripts/run_finnhub_free_tier.py --mode analyst
+
+      - name: Validate analyst contracts
         run: |
+          python -m py_compile scripts/run_finnhub_free_tier.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
+          python scripts/validate_static_data.py
+
+      - name: Publish analyst contracts safely
+        shell: bash
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add data/finnhub data/recommendation_trends.json data/finnhub_features.json \
                   site/data/recommendation_trends.json site/data/finnhub_features.json \
                   static/data/recommendation_trends.json static/data/finnhub_features.json
-          if git diff --cached --quiet; then exit 0; fi
+
+          if git diff --cached --quiet; then
+            echo "No analyst data changes."
+            exit 0
+          fi
+
           git commit -m "Refresh Finnhub analyst features"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git reset --hard HEAD
+          git clean -fd
+          test -z "$(git status --porcelain)"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort 2>/dev/null || true
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push race on attempt ${attempt}; retrying."
+            sleep $((attempt * 3))
+          done
+          exit 1
