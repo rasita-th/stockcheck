@@ -64,11 +64,11 @@ jobs:
         run: python scripts/build_generated_layer.py
 
       - name: Refresh latest quotes
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
         run: python scripts/update_quote_data.py
 
       - name: Refresh technical layer
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
