@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-18T08:22:47+00:00",
+  "updated_at": "2026-07-18T09:13:44+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-18T08:20:44.850740+00:00",
+          "detected_at": "2026-07-18T09:11:35.113306+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -150,9 +150,9 @@
         "Earnings are scheduled within 4 days (after market)."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
         "active_days": 0
       },
@@ -362,92 +362,87 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "NOW",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RXRX",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -460,6 +455,9 @@
     "news_contract": "additive fields only; legacy P0 fields preserved",
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
+    "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
+    "newly_discovered_event_count": 0,
+    "active_discovered_event_count": 0,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -470,6 +468,7 @@
   "features": {
     "free_news_discovery": true,
     "official_regulator_sources": true,
+    "discovered_event_retention": true,
     "technical_watch": true,
     "technical_scan_fill": true,
     "thai_friendly_ui": true,
@@ -521,7 +520,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T08:22:47+00:00",
+          "detected_at": "2026-07-18T09:13:44+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -566,9 +565,9 @@
         "Latest technical scan dated 2026-07-17: score 9/100, AVOID / Turnaround only, RSI 31.0, -19.1% vs EMA20, -53.1% vs EMA200, volume 0.98x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
         "active_days": 0
       },
@@ -620,7 +619,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T08:22:47+00:00",
+          "detected_at": "2026-07-18T09:13:44+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -665,9 +664,9 @@
         "Latest technical scan dated 2026-07-17: score 9/100, AVOID / Turnaround only, RSI 26.2, -23.3% vs EMA20, -29.1% vs EMA200, volume 0.92x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
         "active_days": 0
       },
@@ -719,7 +718,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T08:22:47+00:00",
+          "detected_at": "2026-07-18T09:13:44+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -764,9 +763,9 @@
         "Latest technical scan dated 2026-07-17: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.9, +3.6% vs EMA20, +14.6% vs EMA200, volume 0.77x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
         "active_days": 0
       },
@@ -783,10 +782,10 @@
     }
   ],
   "changes_summary": {
-    "new": 4,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 0,
+    "ongoing": 4,
     "eased": 0,
     "resolved": 0
   },
