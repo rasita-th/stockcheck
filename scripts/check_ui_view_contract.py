@@ -122,6 +122,8 @@ for forbidden in ("insertBefore(", "appendChild(", "final-memo-primary", "final-
 for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-page-guide"):
     if token not in coordinator_js:
         errors.append(f"Usability coordinator missing: {token}")
+if 'requestAnimationFrame(() => openStockDetail(stock));\n    }, true);' not in coordinator_js:
+    errors.append("Desktop stock detail click must be captured before app.js rerenders the selected row")
 for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)"):
     if token not in coordinator_css:
         errors.append(f"Usability stylesheet missing: {token}")

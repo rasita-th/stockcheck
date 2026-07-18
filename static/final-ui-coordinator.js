@@ -80,6 +80,9 @@
   }
 
   function bindStockDetail() {
+    // Capture the stock target before app.js rerenders the selected row in its
+    // body-level click handler. Once that row is detached, a later delegated
+    // selector can no longer prove that it came from the screener.
     document.addEventListener("click", (event) => {
       const close = event.target.closest("[data-close-stock-detail]");
       if (close) {
@@ -89,7 +92,7 @@
       }
       const stock = event.target.closest(".decision-screener [data-select], #watchlistPanel [data-select]");
       if (stock && detailQuery.matches) requestAnimationFrame(() => openStockDetail(stock));
-    });
+    }, true);
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && document.body.classList.contains("stock-detail-open")) closeStockDetail();
     });
