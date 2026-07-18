@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-18T06:34:12+00:00",
+  "updated_at": "2026-07-18T08:22:47+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,25 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 7,
-      "errors": 1
+      "ok": 1,
+      "partial": 9,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
+      "ok": 1,
+      "errors": 9
+    },
+    "regulators": {
+      "status": "ok",
+      "source": "Official regulator pages",
+      "checked": 4,
       "ok": 4,
-      "errors": 6
+      "partial": 0,
+      "errors": 0,
+      "accepted_events": 0
     }
   },
   "items": [
@@ -99,7 +108,7 @@
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-18T06:32:04.080344+00:00",
+          "detected_at": "2026-07-18T08:20:44.850740+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -139,6 +148,24 @@
       "primary_trigger": "earnings_upcoming",
       "signals": [
         "Earnings are scheduled within 4 days (after market)."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-18T08:22:47+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 381.35,
+        "current_price": 381.35,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
       ]
     }
   ],
@@ -335,72 +362,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TEM",
+      "ticker": "EOSE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "EOSE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "UUUU",
       "message": "GDELT response unavailable"
     },
     {
+      "source": "ir",
+      "ticker": "PSIX",
+      "message": "IR URL unavailable"
+    },
+    {
       "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "PSIX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "CIFR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "CIFR",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RXRX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     }
   ],
@@ -408,25 +455,28 @@
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
     "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency",
-    "technical_policy": "technical-only rows live in a separate technical_watch section and never fill the main catalyst list",
+    "technical_policy": "technical-only rows remain in technical_watch and never fill the main catalyst list",
     "max_attention_items": 7,
     "news_contract": "additive fields only; legacy P0 fields preserved",
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
+    "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
-    "source_registry_schema": "1.0",
-    "attention_policy": "earnings, SEC filings, company events and verified news are shown before technical-only context",
+    "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
     "technical_watch_minimum": 3,
-    "technical_max_age_days": 3,
-    "relative_volume_policy": "only dimensionless ratio fields are exposed",
-    "internal_verification_policy": "repository-generated technical rows are confirmed-internal and are not shown as external sources"
+    "technical_max_age_days": 3
   },
-  "contract_version": "2.2-catalyst-first",
+  "contract_version": "3.0-attention-workflow",
   "features": {
     "free_news_discovery": true,
+    "official_regulator_sources": true,
     "technical_watch": true,
     "technical_scan_fill": true,
-    "thai_friendly_ui": true
+    "thai_friendly_ui": true,
+    "what_changed": true,
+    "historical_impact": true,
+    "local_review_actions": true,
+    "personal_priority": true
   },
   "technical_summary": {
     "risk": 2,
@@ -471,7 +521,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T06:34:12+00:00",
+          "detected_at": "2026-07-18T08:22:47+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -514,6 +564,23 @@
       "primary_trigger": "technical_risk",
       "signals": [
         "Latest technical scan dated 2026-07-17: score 9/100, AVOID / Turnaround only, RSI 31.0, -19.1% vs EMA20, -53.1% vs EMA200, volume 0.98x 20-day average."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-18T08:22:47+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 4.16,
+        "current_price": 4.16,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 56,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
       ]
     },
     {
@@ -553,7 +620,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T06:34:12+00:00",
+          "detected_at": "2026-07-18T08:22:47+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -596,6 +663,23 @@
       "primary_trigger": "technical_risk",
       "signals": [
         "Latest technical scan dated 2026-07-17: score 9/100, AVOID / Turnaround only, RSI 26.2, -23.3% vs EMA20, -29.1% vs EMA200, volume 0.92x 20-day average."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-18T08:22:47+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 34.92,
+        "current_price": 34.92,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 56,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
       ]
     },
     {
@@ -635,7 +719,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T06:34:12+00:00",
+          "detected_at": "2026-07-18T08:22:47+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -678,7 +762,44 @@
       "primary_trigger": "technical_setup",
       "signals": [
         "Latest technical scan dated 2026-07-17: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.9, +3.6% vs EMA20, +14.6% vs EMA200, volume 0.77x 20-day average."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-18T08:22:47+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 21.9,
+        "current_price": 21.9,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 56,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
       ]
     }
-  ]
+  ],
+  "changes_summary": {
+    "new": 4,
+    "escalated": 0,
+    "updated": 0,
+    "ongoing": 0,
+    "eased": 0,
+    "resolved": 0
+  },
+  "recently_resolved": [],
+  "preferences_applied": {
+    "holding_priority_boost": 8,
+    "event_type_boosts": {
+      "earnings": 8,
+      "sec_filing": 6,
+      "regulatory": 10,
+      "corporate_event": 5,
+      "litigation": 4
+    },
+    "ticker_boosts": {}
+  }
 }
