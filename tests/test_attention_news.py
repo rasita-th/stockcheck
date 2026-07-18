@@ -1,12 +1,13 @@
 import json
 import sys
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+import generate_attention_pr2 as pr2  # noqa: E402
 from attention_sources import (  # noqa: E402
     build_registry_entry,
     canonical_url,
@@ -87,6 +88,58 @@ class AttentionNewsTests(unittest.TestCase):
         self.assertEqual(len(merged), 1)
         self.assertEqual(merged[0]["verification_status"], "unverified")
         self.assertEqual(merged[0]["verification_level"], "corroborated_secondary")
+
+    def test_recent_technical_scan_candidate_uses_real_scanner_fields(self):
+        scan_date = pr2.p0.now_et().date().isoformat()
+        events = pr2._technical_scan_candidates(
+            [{"ticker": "TEST", "portfolio_status": "holding"}],
+            {
+                "TEST": {
+                    "score": 95,
+                    "signal": "BUY ZONE / Trend Confirmed",
+                    "regularMarketTime": scan_date,
+                    "rsi14": 61.2,
+                    "pctVsEma20": 4.3,
+                    "pctVsEma200": 18.7,
+                    "volumeRatio20": 1.45,
+                }
+            },
+        )
+        self.assertEqual(len(events), 1)
+        self.assertEqual(events[0]["event_subtype"], "technical_setup")
+        self.assertEqual(events[0]["verification_status"], "confirmed")
+        self.assertEqual(events[0]["source"]["type"], "technical_json")
+        self.assertIn("score 95/100", events[0]["why_today"])
+        self.assertIn("context, not a recommendation", events[0]["summary"])
+
+    def test_stale_technical_scan_candidate_is_rejected(self):
+        stale_date = (pr2.p0.now_et().date() - timedelta(days=pr2.MAX_TECHNICAL_AGE_DAYS + 1)).isoformat()
+        events = pr2._technical_scan_candidates(
+            [{"ticker": "STALE", "portfolio_status": "holding"}],
+            {"STALE": {"score": 100, "signal": "BUY ZONE", "regularMarketTime": stale_date}},
+        )
+        self.assertEqual(events, [])
+
+    def test_quiet_list_is_filled_only_to_configured_minimum(self):
+        today = pr2.p0.now_et().date().isoformat()
+        portfolio = [
+            {"ticker": "A", "name": "A", "portfolio_status": "holding"},
+            {"ticker": "B", "name": "B", "portfolio_status": "holding"},
+            {"ticker": "C", "name": "C", "portfolio_status": "holding"},
+            {"ticker": "D", "name": "D", "portfolio_status": "holding"},
+        ]
+        technical = {
+            "A": {"score": 100, "signal": "BUY ZONE", "regularMarketTime": today},
+            "B": {"score": 5, "signal": "SELL / Weak", "regularMarketTime": today},
+            "C": {"score": 92, "signal": "Trend Confirmed", "regularMarketTime": today},
+            "D": {"score": 55, "signal": "Neutral", "regularMarketTime": today},
+        }
+        portfolio_map = {row["ticker"]: row for row in portfolio}
+        contexts = {ticker: pr2.p0.price_context(row) for ticker, row in technical.items()}
+        merged, fill_count = pr2._add_technical_fill([], portfolio, technical, portfolio_map, contexts)
+        self.assertEqual(fill_count, pr2.MIN_ATTENTION_ITEMS)
+        self.assertEqual(len(merged), pr2.MIN_ATTENTION_ITEMS)
+        self.assertEqual(len({event["ticker"] for event in merged}), pr2.MIN_ATTENTION_ITEMS)
 
     def test_golden_contract_remains_backward_compatible(self):
         payload = json.loads(GOLDEN.read_text(encoding="utf-8"))
