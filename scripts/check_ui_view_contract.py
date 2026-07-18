@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,7 @@ pr3_js = read("site/attention-pr3.js")
 pr3_css = read("site/attention-pr3.css")
 today_css = read("site/today-view-isolation.css")
 coordinator_js = read("site/final-ui-coordinator.js")
+coordinator_css = read("site/final-ui-coordinator.css")
 legacy_workflow = ROOT / ".github/workflows/fill-alert-center-content.yml"
 
 for forbidden in ('if (document.body.classList.contains("attention-active")) return true;', "data-memo-previous-display", 'style.setProperty("display", "none", "important")'):
@@ -117,6 +119,12 @@ for token in (".attention-p3-page", ".pr3-summary-grid", ".pr3-actions", "attent
 for forbidden in ("insertBefore(", "appendChild(", "final-memo-primary", "final-scanner-secondary", "memoCandidates", "placeMemoBeforeScanner"):
     if forbidden in coordinator_js:
         errors.append(f"Height coordinator contains DOM relocation logic: {forbidden}")
+for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-page-guide"):
+    if token not in coordinator_js:
+        errors.append(f"Usability coordinator missing: {token}")
+for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)"):
+    if token not in coordinator_css:
+        errors.append(f"Usability stylesheet missing: {token}")
 if legacy_workflow.exists():
     errors.append("legacy self-mutating CSS workflow still exists")
 for index_path in ("site/index.html", "static/index.html"):
@@ -124,6 +132,16 @@ for index_path in ("site/index.html", "static/index.html"):
     for asset in ("notification-phase2.css", "notification-phase2.js", "final-ui-coordinator.css", "final-ui-coordinator.js", "memo-only-fix.css", "memo-only-fix.js"):
         if asset not in index:
             errors.append(f"{index_path} missing asset reference: {asset}")
+    for token in ("scannerPageGuide", "desktopDetailBackdrop", "data-close-stock-detail"):
+        if token not in index:
+            errors.append(f"{index_path} missing usability UI: {token}")
+    if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
+        errors.append(f"{index_path} still renders duplicated desktop detail cards")
+
+app_js = read("site/app.js")
+base_watchlist_match = re.search(r"const BASE_WATCHLIST = \[(.*?)\];", app_js)
+if not base_watchlist_match or len(re.findall(r'"[A-Z0-9.\\-]+"', base_watchlist_match.group(1))) != 10:
+    errors.append("First-run BASE_WATCHLIST must contain exactly 10 examples")
 if errors:
     print("UI view contract failed:", file=sys.stderr)
     for error in errors:
