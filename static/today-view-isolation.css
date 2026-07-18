@@ -24,6 +24,11 @@ body.attention-active .app-shell {
   min-height: 100vh;
 }
 
+/* Technical Watch is internal market context. Keep only the chart action visible. */
+body.attention-active .p0-technical-section .p0-action:not([href*="tradingview.com"]) {
+  display: none !important;
+}
+
 .p0-fallback-note {
   margin-top: 8px !important;
   color: #f3c36f !important;
