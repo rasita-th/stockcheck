@@ -129,9 +129,18 @@ jobs:
           fi
           git commit -m "Refresh PR3 attention workflow data"
 
-          # Pages may write a deployment-receipt commit while this slower refresh
-          # is running. Rebase the generated-data commit onto the latest branch
-          # before pushing so that receipt commits cannot reject the refresh.
+          # The generated-data commit now contains every intended publication.
+          # Discard intentionally excluded working-tree changes (for example
+          # market_pulse.json) so Git can rebase cleanly onto receipt commits.
+          echo "Working tree before cleanup:"
+          git status --short
+          git reset --hard HEAD
+          git clean -fd
+          test -z "$(git status --porcelain)"
+
+          # Pages or audit workflows may write receipt commits while this slower
+          # refresh is running. Rebase the generated-data commit onto the latest
+          # branch before pushing so those receipts cannot reject the refresh.
           for attempt in 1 2 3; do
             git fetch origin "${GITHUB_REF_NAME}"
             git rebase "origin/${GITHUB_REF_NAME}"
