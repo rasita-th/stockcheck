@@ -1,65 +1,49 @@
-name: Refresh Slow Finnhub Fundamentals
+name: Refresh Finnhub Full Backfill
 
 on:
   workflow_dispatch:
-  schedule:
-    # Monthly safety refresh. Fundamental data does not need minute-level refresh.
-    - cron: "0 2 2 * *"
 
 permissions:
   contents: write
 
 concurrency:
-  group: stockcheck-slow-finnhub-data
-  cancel-in-progress: true
+  group: stockcheck-data-publisher
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-
-      - name: Install Python dependencies
+      - run: pip install -r requirements.txt
+      - name: Test unified Finnhub pipeline
         run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Sync latest main
-        run: |
-          git fetch origin main
-          git checkout main
-          git reset --hard origin/main
-
-      - name: Refresh slow Finnhub bundle
+          python -m py_compile scripts/finnhub_pipeline.py
+          python -m unittest tests.test_finnhub_pipeline
+      - name: Run full dual-key backfill
         env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-          FINNHUB_BUNDLE_MAX_CALLS_PER_RUN: "30"
-          FINNHUB_FINANCIALS_TTL_HOURS: "720"
-          FINNHUB_EPS_TTL_HOURS: "168"
-          FINNHUB_REC_TTL_HOURS: "168"
-        run: python scripts/generate_finnhub_bundle_cached.py
-
-      - name: Validate static data
-        run: python scripts/validate_static_data.py
-
-      - name: Commit slow data
+          FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
+          FINNHUB_API_KEY_ANALYST: ${{ secrets.FINNHUB_API_KEY_ANALYST || secrets.FINNHUB_API_KEY_2 || secrets.FINNHUB_API_KEY }}
+          FINNHUB_EVENTS_MAX_CALLS_PER_RUN: "48"
+          FINNHUB_ANALYST_MAX_CALLS_PER_RUN: "48"
+          FINNHUB_MIN_DELAY_SECONDS: "1.25"
+        run: python scripts/finnhub_pipeline.py --mode all
+      - run: python scripts/validate_static_data.py
+      - name: Publish generated data safely
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data site/data static/data
-          if git diff --cached --quiet; then
-            echo "No slow data changes."
-            exit 0
-          fi
-          git commit -m "Refresh slow Finnhub fundamental data"
+          git add data/finnhub data/earnings_calendar.json data/eps_surprises.json data/recommendation_trends.json data/finnhub_features.json \
+                  site/data/earnings_calendar.json site/data/eps_surprises.json site/data/recommendation_trends.json site/data/finnhub_features.json \
+                  static/data/earnings_calendar.json static/data/eps_surprises.json static/data/recommendation_trends.json static/data/finnhub_features.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh unified Finnhub data"
+          git pull --rebase origin main
           git push origin HEAD:main
