@@ -2,12 +2,25 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 UTC = timezone.utc
 PRIORITY_RANK = {"Critical": 0, "Risk": 1, "Action": 2, "Watch": 3, "Developing": 4}
+DEFAULT_DISCOVERY_RETENTION_DAYS = 7
+DISCOVERY_RETENTION_DAYS = {
+    "regulatory": 14,
+    "litigation": 14,
+    "capital_raise": 14,
+    "guidance": 10,
+    "earnings": 7,
+    "corporate_event": 7,
+    "contract": 7,
+    "management_change": 7,
+    "analyst_action": 3,
+    "news": 3,
+}
 
 
 def _parse_datetime(value: Any) -> datetime | None:
@@ -51,6 +64,103 @@ def item_key(item: dict[str, Any]) -> str:
             str(item.get("event_time") or event.get("event_time") or "unknown"),
         )
     )
+
+
+def discovered_event_key(event: dict[str, Any]) -> str:
+    for field in ("event_id", "dedupe_key"):
+        value = str(event.get(field) or "").strip()
+        if value:
+            return value
+    source = event.get("source") if isinstance(event.get("source"), dict) else {}
+    return ":".join(
+        (
+            str(event.get("ticker") or "").upper(),
+            str(event.get("event_subtype") or event.get("event_type") or "event"),
+            str(source.get("url") or event.get("event_time") or event.get("headline") or "unknown"),
+        )
+    )
+
+
+def _event_is_resolved(event: dict[str, Any]) -> bool:
+    status = str(event.get("resolution_status") or event.get("status") or "").strip().lower()
+    return bool(event.get("resolved_at")) or status in {"resolved", "expired", "dismissed", "cancelled"}
+
+
+def _retention_days(event: dict[str, Any]) -> int:
+    event_type = str(event.get("event_type") or "").strip().lower()
+    return int(DISCOVERY_RETENTION_DAYS.get(event_type, DEFAULT_DISCOVERY_RETENTION_DAYS))
+
+
+def retain_active_discovered_events(
+    new_events: list[dict[str, Any]],
+    old_state: dict[str, Any] | None,
+    now: datetime | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Keep news/regulator events active across refreshes until expiry or resolution.
+
+    Discovery collectors intentionally emit only previously unseen URLs. Their URL
+    cursors are not an active-event store, so this state preserves the full event
+    while it remains decision-relevant. Expired or explicitly resolved events are
+    removed and can then be reported as resolved by the PR3 history layer.
+    """
+
+    now = (now or datetime.now(UTC)).astimezone(UTC).replace(microsecond=0)
+    old_state = old_state if isinstance(old_state, dict) else {}
+    prior_records = old_state.get("events") if isinstance(old_state.get("events"), dict) else {}
+    active: dict[str, dict[str, Any]] = {}
+
+    for key, record in prior_records.items():
+        if not isinstance(record, dict):
+            continue
+        event = record.get("event") if isinstance(record.get("event"), dict) else {}
+        expires_at = _parse_datetime(record.get("expires_at"))
+        if not event or _event_is_resolved(event) or not expires_at or expires_at < now:
+            continue
+        active[str(key)] = {
+            "event": deepcopy(event),
+            "first_seen_at": str(record.get("first_seen_at") or now.isoformat()),
+            "last_seen_at": str(record.get("last_seen_at") or now.isoformat()),
+            "expires_at": expires_at.astimezone(UTC).replace(microsecond=0).isoformat(),
+        }
+
+    for event in new_events:
+        if not isinstance(event, dict):
+            continue
+        key = discovered_event_key(event)
+        if not key:
+            continue
+        if _event_is_resolved(event):
+            active.pop(key, None)
+            continue
+        prior = active.get(key) if isinstance(active.get(key), dict) else {}
+        first_seen = _parse_datetime(prior.get("first_seen_at")) or now
+        prior_expiry = _parse_datetime(prior.get("expires_at"))
+        candidate_expiry = now + timedelta(days=_retention_days(event))
+        expires_at = max(prior_expiry, candidate_expiry) if prior_expiry else candidate_expiry
+        active[key] = {
+            "event": deepcopy(event),
+            "first_seen_at": first_seen.isoformat(),
+            "last_seen_at": now.isoformat(),
+            "expires_at": expires_at.astimezone(UTC).replace(microsecond=0).isoformat(),
+        }
+
+    ordered_records = dict(
+        sorted(
+            active.items(),
+            key=lambda pair: (
+                str((pair[1].get("event") or {}).get("ticker") or ""),
+                str(pair[0]),
+            ),
+        )
+    )
+    retained_events = [deepcopy(record["event"]) for record in ordered_records.values()]
+    next_state = {
+        "schema_version": "1.0",
+        "updated_at": now.isoformat(),
+        "active_count": len(retained_events),
+        "events": ordered_records,
+    }
+    return retained_events, next_state
 
 
 def _priority_change(current: str, previous: str) -> str:
