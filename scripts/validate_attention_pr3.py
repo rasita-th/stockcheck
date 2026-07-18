@@ -30,7 +30,13 @@ def main() -> None:
     require(str(attention.get("contract_version") or "").startswith("3.0"), "PR3 payload must use contract 3.0")
 
     features = attention.get("features") if isinstance(attention.get("features"), dict) else {}
-    for key in ("what_changed", "historical_impact", "local_review_actions", "personal_priority"):
+    for key in (
+        "what_changed",
+        "historical_impact",
+        "local_review_actions",
+        "personal_priority",
+        "discovered_event_retention",
+    ):
         require(features.get(key) is True, f"PR3 feature missing: {key}")
 
     changes = attention.get("changes_summary") if isinstance(attention.get("changes_summary"), dict) else {}
@@ -39,6 +45,12 @@ def main() -> None:
 
     require(isinstance(attention.get("recently_resolved"), list), "recently_resolved must be a list")
     require(isinstance(attention.get("preferences_applied"), dict), "preferences_applied must be an object")
+
+    quality = attention.get("data_quality") if isinstance(attention.get("data_quality"), dict) else {}
+    require(bool(quality.get("discovered_event_retention")), "discovered event retention policy is missing")
+    require(isinstance(quality.get("newly_discovered_event_count"), int), "newly discovered event count must be an integer")
+    require(isinstance(quality.get("active_discovered_event_count"), int), "active discovered event count must be an integer")
+    require(quality["active_discovered_event_count"] >= 0, "active discovered event count cannot be negative")
 
     rows = []
     for section in ("items", "technical_watch"):
@@ -74,7 +86,11 @@ def main() -> None:
         require(dedupe_key and dedupe_key not in regulator_dedupe, f"duplicate regulator event: {event_id}")
         regulator_dedupe.add(dedupe_key)
 
-    print(f"PR3 validation passed: {len(rows)} active items, {len(regulator_dedupe)} regulator events")
+    print(
+        "PR3 validation passed: "
+        f"{len(rows)} active items, {len(regulator_dedupe)} regulator events, "
+        f"{quality['active_discovered_event_count']} retained discovered events"
+    )
 
 
 if __name__ == "__main__":

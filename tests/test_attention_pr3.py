@@ -1,12 +1,12 @@
 import sys
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from attention_pr3 import enrich_payload  # noqa: E402
+from attention_pr3 import enrich_payload, retain_active_discovered_events  # noqa: E402
 from attention_sources.regulators import collect_regulator_events  # noqa: E402
 
 NOW = datetime(2026, 7, 18, 8, 0, tzinfo=timezone.utc)
@@ -46,6 +46,26 @@ def sample_payload(priority="Watch", price=100.0, event_count=1):
     }
 
 
+def discovered_event(**overrides):
+    event = {
+        "event_id": "regulatory:RKLB:faa-approval",
+        "dedupe_key": "RKLB:regulatory:faa-approval",
+        "ticker": "RKLB",
+        "event_type": "regulatory",
+        "event_subtype": "regulatory_update",
+        "headline": "FAA approval for Rocket Lab launch operations",
+        "detected_at": NOW.isoformat(),
+        "verification_status": "confirmed",
+        "source": {
+            "type": "regulator",
+            "quality": "primary",
+            "url": "https://www.faa.gov/newsroom/rocket-lab-approval",
+        },
+    }
+    event.update(overrides)
+    return event
+
+
 class AttentionPR3Tests(unittest.TestCase):
     def test_first_run_marks_item_new_and_applies_personal_score(self):
         output, state = enrich_payload(
@@ -81,6 +101,31 @@ class AttentionPR3Tests(unittest.TestCase):
         empty, _ = enrich_payload({"items": [], "technical_watch": [], "features": {}}, state, {}, NOW)
         self.assertEqual(empty["changes_summary"]["resolved"], 1)
         self.assertEqual(empty["recently_resolved"][0]["ticker"], "TEST")
+
+    def test_discovered_event_remains_active_without_new_url(self):
+        first_events, first_state = retain_active_discovered_events([discovered_event()], {}, NOW)
+        self.assertEqual(len(first_events), 1)
+        later = NOW + timedelta(hours=1)
+        second_events, second_state = retain_active_discovered_events([], first_state, later)
+        self.assertEqual(len(second_events), 1)
+        self.assertEqual(second_events[0]["event_id"], "regulatory:RKLB:faa-approval")
+        self.assertEqual(second_state["active_count"], 1)
+        record = next(iter(second_state["events"].values()))
+        self.assertEqual(record["first_seen_at"], NOW.isoformat())
+
+    def test_discovered_event_expires_after_event_type_ttl(self):
+        _, state = retain_active_discovered_events([discovered_event()], {}, NOW)
+        after_regulatory_ttl = NOW + timedelta(days=15)
+        events, next_state = retain_active_discovered_events([], state, after_regulatory_ttl)
+        self.assertEqual(events, [])
+        self.assertEqual(next_state["active_count"], 0)
+
+    def test_explicitly_resolved_discovered_event_is_removed(self):
+        _, state = retain_active_discovered_events([discovered_event()], {}, NOW)
+        resolved = discovered_event(resolution_status="resolved", resolved_at=(NOW + timedelta(hours=2)).isoformat())
+        events, next_state = retain_active_discovered_events([resolved], state, NOW + timedelta(hours=2))
+        self.assertEqual(events, [])
+        self.assertEqual(next_state["active_count"], 0)
 
     def test_regulator_bootstrap_then_new_matched_event(self):
         portfolio = [{"ticker": "RKLB", "name": "Rocket Lab USA, Inc."}]
