@@ -1,0 +1,25 @@
+/* Today owns only the event-first attention surface. Scanner/Screener UI remains mounted but is not visible. */
+body.attention-active .portfolio-tabs,
+body.attention-active .workspace,
+body.attention-active .scanner-panel,
+body.attention-active .decision-screener,
+body.attention-active .lower-grid,
+body.attention-active .mobile-scan-btn,
+body.attention-active .sheet-backdrop,
+body.attention-active .bottom-sheet,
+body.attention-active .chart-modal,
+body.attention-active #mobileDetailModal,
+body.attention-active #alertFab,
+body.attention-active #alertMobileSheet,
+body.attention-active #alertToast {
+  display: none !important;
+}
+
+body.attention-active .attention-p0-page {
+  display: block !important;
+  width: 100%;
+}
+
+body.attention-active .app-shell {
+  min-height: 100vh;
+}
