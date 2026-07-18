@@ -1,6 +1,6 @@
-/* v9.5.5 canonical Memo view isolation */
+@import url("attention-p0.css?v=10.0.0");
 
-/* Memo is a dedicated workspace. Scanner, Today, and scanner-only controls must not leak into it. */
+/* v9.5.5 canonical Memo view isolation */
 body.memo-active .portfolio-tabs,
 body.memo-active .workspace,
 body.memo-active .decision-screener,
@@ -13,7 +13,6 @@ body.memo-active .alert-mobile-sheet,
 body.memo-active #alertToast {
   display: none !important;
 }
-
 body.memo-active #memoPage.memo-page {
   display: block !important;
   width: 100%;
@@ -21,17 +20,6 @@ body.memo-active #memoPage.memo-page {
   margin: 0;
   padding-top: 14px;
 }
-
-/* Today remains a separate page and must never render the Memo workspace. */
-body.attention-active #memoPage.memo-page {
-  display: none !important;
-}
-
-/* Outside Memo mode the page stays hidden until the native view controller activates it. */
-body:not(.memo-active) #memoPage.memo-page {
-  display: none;
-}
-
-body.memo-active .app-shell {
-  min-height: 100vh;
-}
+body.attention-active #memoPage.memo-page { display: none !important; }
+body:not(.memo-active) #memoPage.memo-page { display: none; }
+body.memo-active .app-shell { min-height: 100vh; }
