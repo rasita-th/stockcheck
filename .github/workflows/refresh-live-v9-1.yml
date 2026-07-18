@@ -1,4 +1,4 @@
-name: Refresh Live Data v10 P0
+name: Refresh Live Data v10 PR2
 
 on:
   workflow_dispatch:
@@ -79,13 +79,18 @@ jobs:
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch'
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+          ATTENTION_NEWS_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+          ATTENTION_NEWS_ENABLED: "0"
+          ATTENTION_NEWS_BATCH_SIZE: "10"
           ATTENTION_MAX_ITEMS: "7"
           SEC_BOOTSTRAP_DAYS: "1"
-        run: python scripts/generate_attention_p0.py
+        run: python scripts/generate_attention_pr2.py
 
       - name: Run attention unit tests
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch'
-        run: python -m unittest discover -s tests -p "test_attention_p0.py" -v
+        run: |
+          python -m unittest discover -s tests -p "test_attention_p0.py" -v
+          python -m unittest discover -s tests -p "test_attention_news.py" -v
 
       - name: Generate health and publish
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch'
@@ -94,6 +99,7 @@ jobs:
           python scripts/generate_health.py
           python scripts/publish_generated_data.py
           python scripts/validate_generated_data_v9_1.py
+          python scripts/validate_attention_pr2.py
           python scripts/check_ui_view_contract.py
 
       - name: Commit canonical generated data
