@@ -61,6 +61,10 @@ def main() -> None:
         require(any(event.get("event_type") != "technical" for event in events), f"technical-only item leaked into main catalysts: {item.get('ticker')}")
         if events[0].get("verification_status") == "unverified":
             require(item.get("priority") in {"Watch", "Developing"}, f"unverified catalyst exceeds Watch: {item.get('ticker')}")
+        for event in events:
+            if event.get("event_type") == "earnings" and event.get("verification_status") == "confirmed":
+                source = event.get("source") if isinstance(event.get("source"), dict) else {}
+                require(source.get("quality") == "primary" and bool(source.get("url")), f"confirmed earnings lacks primary source URL: {event.get('event_id')}")
 
     for item in technical_watch:
         events = item_events(item)
@@ -74,6 +78,9 @@ def main() -> None:
     seen_dedupe: set[str] = set()
     for event in events_doc.get("events") or []:
         source_type = str((event.get("source") or {}).get("type") or "")
+        event_type = str(event.get("event_type") or "")
+        if source_type == "company_ir" and event_type == "earnings":
+            continue
         if source_type not in {"gdelt", "company_ir"}:
             continue
         for field in ("dedupe_key", "entity_confidence", "verification_level", "verification_reason", "source_chain"):
