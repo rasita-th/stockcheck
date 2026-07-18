@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-18T05:30:24+00:00",
+  "updated_at": "2026-07-18T05:41:59+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 8,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "partial",
+      "status": "error",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 0,
+      "errors": 10
     }
   },
   "items": [
@@ -75,7 +75,7 @@
       "event_type": "technical",
       "event_subtype": "technical_risk",
       "event_time": "2026-07-17",
-      "verification_status": "unverified",
+      "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
@@ -85,7 +85,7 @@
       },
       "price": 4.16,
       "day_change_pct": null,
-      "relative_volume": 25822904.0,
+      "relative_volume": 0.98,
       "trigger_level": null,
       "events": [
         {
@@ -99,10 +99,10 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T05:32:42+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
+          "detected_at": "2026-07-18T05:41:59+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
@@ -157,7 +157,7 @@
       "event_type": "technical",
       "event_subtype": "technical_risk",
       "event_time": "2026-07-17",
-      "verification_status": "unverified",
+      "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
@@ -167,7 +167,7 @@
       },
       "price": 34.92,
       "day_change_pct": null,
-      "relative_volume": 21983372.0,
+      "relative_volume": 0.92,
       "trigger_level": null,
       "events": [
         {
@@ -181,10 +181,10 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T05:32:42+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
+          "detected_at": "2026-07-18T05:41:59+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
@@ -239,7 +239,7 @@
       "event_type": "technical",
       "event_subtype": "technical_setup",
       "event_time": "2026-07-17",
-      "verification_status": "unverified",
+      "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
@@ -249,7 +249,7 @@
       },
       "price": 21.9,
       "day_change_pct": null,
-      "relative_volume": 9148350.0,
+      "relative_volume": 0.77,
       "trigger_level": null,
       "events": [
         {
@@ -263,10 +263,10 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T05:32:42+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
+          "detected_at": "2026-07-18T05:41:59+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
@@ -502,87 +502,102 @@
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "UUUU",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "RXRX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "RXRX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "SYM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "RR",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "ZETA",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "ZETA",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OPEN",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -598,7 +613,9 @@
     "source_registry_schema": "1.0",
     "technical_fill_count": 3,
     "minimum_attention_items": 3,
-    "technical_max_age_days": 3
+    "technical_max_age_days": 3,
+    "relative_volume_policy": "only dimensionless ratio fields are exposed; vol20 average shares are never labelled as relative volume",
+    "internal_verification_policy": "repository-generated technical rows are confirmed-internal and are not treated as unverified news"
   },
   "contract_version": "2.1-additive",
   "features": {
