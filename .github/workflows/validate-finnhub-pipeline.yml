@@ -4,14 +4,22 @@ on:
   pull_request:
     paths:
       - "scripts/finnhub_pipeline.py"
+      - "scripts/run_finnhub_free_tier.py"
+      - "scripts/verify_finnhub_today_deploy.py"
       - "tests/test_finnhub_pipeline.py"
+      - "tests/test_finnhub_free_tier.py"
       - ".github/workflows/refresh_finnhub*.yml"
       - ".github/workflows/refresh-consensus-v9-1.yml"
+      - ".github/workflows/verify-finnhub-today.yml"
+      - ".github/workflows/refresh_market_live.yml"
   push:
     branches: ["main"]
     paths:
       - "scripts/finnhub_pipeline.py"
+      - "scripts/run_finnhub_free_tier.py"
+      - "scripts/verify_finnhub_today_deploy.py"
       - "tests/test_finnhub_pipeline.py"
+      - "tests/test_finnhub_free_tier.py"
 
 permissions:
   contents: read
@@ -24,7 +32,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Unit and syntax tests
+      - name: Unit, integration and syntax tests
         run: |
-          python -m py_compile scripts/finnhub_pipeline.py
-          python -m unittest tests.test_finnhub_pipeline
+          python -m py_compile \
+            scripts/finnhub_pipeline.py \
+            scripts/run_finnhub_free_tier.py \
+            scripts/verify_finnhub_today_deploy.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
