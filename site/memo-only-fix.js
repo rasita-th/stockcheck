@@ -27,7 +27,7 @@
   function loadAttentionP0() {
     if (document.querySelector('script[data-attention-p0-loader]')) return;
     const script = document.createElement("script");
-    script.src = "attention-p0.js?v=10.1.0";
+    script.src = "attention-p0.js?v=10.2.0";
     script.defer = true;
     script.dataset.attentionP0Loader = "true";
     script.addEventListener("error", () => console.error("Could not load attention-p0.js"), { once: true });

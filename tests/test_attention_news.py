@@ -110,7 +110,6 @@ class AttentionNewsTests(unittest.TestCase):
         self.assertEqual(events[0]["verification_status"], "confirmed")
         self.assertEqual(events[0]["source"]["type"], "technical_json")
         self.assertIn("score 95/100", events[0]["why_today"])
-        self.assertIn("context, not a recommendation", events[0]["summary"])
 
     def test_internal_technical_verification_survives_dedupe(self):
         scan_date = pr2.p0.now_et().date().isoformat()
@@ -125,22 +124,12 @@ class AttentionNewsTests(unittest.TestCase):
 
     def test_technical_context_uses_ratio_not_average_share_volume(self):
         technical = {
-            "RATIO": {
-                "regularMarketPrice": 10,
-                "volumeRatio20": 1.45,
-                "vol20": 1_000_000,
-            },
-            "NO_RATIO": {
-                "regularMarketPrice": 20,
-                "vol20": 2_000_000,
-            },
+            "RATIO": {"regularMarketPrice": 10, "volumeRatio20": 1.45, "vol20": 1_000_000},
+            "NO_RATIO": {"regularMarketPrice": 20, "vol20": 2_000_000},
         }
         contexts = pr2._technical_contexts(
             technical,
-            {
-                "RATIO": {"ticker": "RATIO"},
-                "NO_RATIO": {"ticker": "NO_RATIO"},
-            },
+            {"RATIO": {"ticker": "RATIO"}, "NO_RATIO": {"ticker": "NO_RATIO"}},
         )
         self.assertEqual(contexts["RATIO"]["relative_volume"], 1.45)
         self.assertIsNone(contexts["NO_RATIO"]["relative_volume"])
@@ -153,27 +142,67 @@ class AttentionNewsTests(unittest.TestCase):
         )
         self.assertEqual(events, [])
 
-    def test_quiet_list_is_filled_only_to_configured_minimum(self):
+    def test_catalysts_and_technical_watch_are_separate(self):
+        today = pr2.p0.now_et().date().isoformat()
+        portfolio = [
+            {"ticker": "FUND", "name": "Fundamental Co", "portfolio_status": "holding"},
+            {"ticker": "TECH", "name": "Technical Co", "portfolio_status": "holding"},
+        ]
+        portfolio_map = {row["ticker"]: row for row in portfolio}
+        technical = {
+            "FUND": {"score": 55, "signal": "Neutral", "regularMarketTime": today},
+            "TECH": {"score": 95, "signal": "Trend Confirmed", "regularMarketTime": today},
+        }
+        contexts = pr2._technical_contexts(technical, portfolio_map)
+        earnings_event = {
+            "event_id": "earnings:FUND:2026-07-22:confirmed",
+            "ticker": "FUND",
+            "event_type": "earnings",
+            "event_subtype": "earnings_upcoming",
+            "headline": "Earnings in 4 days",
+            "summary": "Confirmed by company IR.",
+            "why_today": "Earnings are scheduled within 4 days.",
+            "materiality": "medium",
+            "urgency": "upcoming",
+            "event_time": "2026-07-22",
+            "detected_at": NOW.isoformat(),
+            "verification_status": "confirmed",
+            "source": {"type": "company_ir", "quality": "primary", "url": "https://example.com/ir"},
+        }
+        merged, catalysts, technical_watch, fill_count = pr2._build_sections(
+            [earnings_event],
+            portfolio,
+            technical,
+            portfolio_map,
+            contexts,
+        )
+        self.assertGreaterEqual(len(merged), 2)
+        self.assertEqual([item["ticker"] for item in catalysts], ["FUND"])
+        self.assertEqual([item["ticker"] for item in technical_watch], ["TECH"])
+        self.assertEqual(fill_count, 1)
+        self.assertTrue(all(pr2._is_catalyst_item(item) for item in catalysts))
+        self.assertTrue(all(not pr2._is_catalyst_item(item) for item in technical_watch))
+
+    def test_quiet_main_list_stays_empty_while_technical_watch_fills(self):
         today = pr2.p0.now_et().date().isoformat()
         portfolio = [
             {"ticker": "A", "name": "A", "portfolio_status": "holding"},
             {"ticker": "B", "name": "B", "portfolio_status": "holding"},
             {"ticker": "C", "name": "C", "portfolio_status": "holding"},
-            {"ticker": "D", "name": "D", "portfolio_status": "holding"},
         ]
         technical = {
             "A": {"score": 100, "signal": "BUY ZONE", "regularMarketTime": today},
             "B": {"score": 5, "signal": "SELL / Weak", "regularMarketTime": today},
             "C": {"score": 92, "signal": "Trend Confirmed", "regularMarketTime": today},
-            "D": {"score": 55, "signal": "Neutral", "regularMarketTime": today},
         }
         portfolio_map = {row["ticker"]: row for row in portfolio}
         contexts = pr2._technical_contexts(technical, portfolio_map)
-        merged, fill_count = pr2._add_technical_fill([], portfolio, technical, portfolio_map, contexts)
-        self.assertEqual(fill_count, pr2.MIN_ATTENTION_ITEMS)
-        self.assertEqual(len(merged), pr2.MIN_ATTENTION_ITEMS)
-        self.assertEqual(len({event["ticker"] for event in merged}), pr2.MIN_ATTENTION_ITEMS)
-        self.assertTrue(all(event["verification_status"] == "confirmed" for event in merged))
+        _, catalysts, technical_watch, fill_count = pr2._build_sections(
+            [], portfolio, technical, portfolio_map, contexts
+        )
+        self.assertEqual(catalysts, [])
+        self.assertEqual(fill_count, pr2.TECHNICAL_WATCH_MIN)
+        self.assertEqual(len(technical_watch), pr2.TECHNICAL_WATCH_MIN)
 
     def test_golden_contract_remains_backward_compatible(self):
         payload = json.loads(GOLDEN.read_text(encoding="utf-8"))

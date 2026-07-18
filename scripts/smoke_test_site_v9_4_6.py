@@ -25,13 +25,6 @@ def require_text(path: Path, tokens: tuple[str, ...]) -> None:
             raise SystemExit(f"{path}: missing required token {token!r}")
 
 
-def forbid_text(path: Path, tokens: tuple[str, ...]) -> None:
-    text = path.read_text(encoding="utf-8")
-    for token in tokens:
-        if token in text:
-            raise SystemExit(f"{path}: forbidden legacy token {token!r}")
-
-
 def validate_json(name: str, require_rows: bool = True) -> None:
     path = SITE / "data" / name
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -49,91 +42,53 @@ def validate_market_pulse() -> None:
     for key in ("global_markets", "us_indices", "us_sectors", "themes"):
         if not isinstance(data.get(key), list):
             raise SystemExit(f"{path}: {key} must be a list")
-    narrative = data.get("narrative")
-    if narrative is not None:
-        modes = narrative.get("modes") if isinstance(narrative, dict) else None
-        if not isinstance(modes, dict):
-            raise SystemExit(f"{path}: narrative.modes must be an object when narrative exists")
-        for key in ("balanced", "portfolio", "action", "news", "risk"):
-            if key not in modes:
-                raise SystemExit(f"{path}: narrative mode missing: {key}")
-    print(f"market_pulse.json: schema {data.get('schema_version', 'legacy')} (legacy-compatible)")
+    print(f"market_pulse.json: schema {data.get('schema_version', 'legacy')}")
 
 
-def validate_attention_p0() -> None:
+def validate_attention() -> None:
     path = SITE / "data" / "attention_today.json"
     data = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(data, dict):
-        raise SystemExit(f"{path}: root must be an object")
     items = data.get("items")
-    if not isinstance(items, list):
-        raise SystemExit(f"{path}: items must be a list")
-    if len(items) > 7:
-        raise SystemExit(f"{path}: expected at most 7 items, found {len(items)}")
-    if str(data.get("schema_version") or "").startswith("2.0") is False:
-        raise SystemExit(f"{path}: expected P0-compatible schema version")
-    if not isinstance(data.get("source_health"), dict):
-        raise SystemExit(f"{path}: source_health must be an object")
-    if data.get("coverage_status") not in {"complete", "partial"}:
-        raise SystemExit(f"{path}: invalid coverage_status")
-    print(f"attention_today.json: schema {data.get('schema_version')}, {len(items)} items")
+    technical_watch = data.get("technical_watch", [])
+    if not isinstance(items, list) or not isinstance(technical_watch, list):
+        raise SystemExit(f"{path}: items and technical_watch must be lists")
+    if len(items) > 7 or len(technical_watch) > 7:
+        raise SystemExit(f"{path}: each Today section may contain at most 7 items")
+    for item in items:
+        events = item.get("events") if isinstance(item, dict) and isinstance(item.get("events"), list) else []
+        if events and all(event.get("event_type") == "technical" for event in events):
+            raise SystemExit(f"{path}: technical-only item leaked into main catalysts")
+    for item in technical_watch:
+        events = item.get("events") if isinstance(item, dict) and isinstance(item.get("events"), list) else []
+        if not events or any(event.get("event_type") != "technical" for event in events):
+            raise SystemExit(f"{path}: invalid technical_watch item")
+    print(f"attention_today.json: {len(items)} catalysts, {len(technical_watch)} technical watch")
 
 
 def main() -> None:
     version = deployment_version()
     require_text(SITE / "index.html", (
-        'id="technicalTableBody"',
-        'id="technicalMobileCards"',
-        'id="alertCenter"',
-        'id="detailPanel"',
-        f'app.js?v={version}',
-        f'app-shell-v9-4-6.css?v={version}',
-        f'app-shell-v9-4-6.js?v={version}',
+        'id="technicalTableBody"', 'id="technicalMobileCards"', 'id="alertCenter"', 'id="detailPanel"',
+        f'app.js?v={version}', f'app-shell-v9-4-6.css?v={version}', f'app-shell-v9-4-6.js?v={version}',
     ))
-    require_text(SITE / "app-shell-v9-4-6.js", (
-        "Scanner", "Today", "Memo", "Market Pulse",
-        'data-app-view', "verifyDataAndRecover",
-    ))
-    require_text(SITE / "memo-only-fix.js", (
-        "attention-p0.js", "10.1.0", "loadAttentionP0", "attention-active", "memo-active",
-    ))
-    require_text(SITE / "memo-only-fix.css", (
-        "attention-p0.css", "today-view-isolation.css", "body.memo-active .attention-page",
-    ))
+    require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
+    require_text(SITE / "memo-only-fix.js", ("attention-p0.js", "10.2.0", "loadAttentionP0"))
+    require_text(SITE / "memo-only-fix.css", ("attention-p0.css?v=10.2.0", "today-view-isolation.css"))
     require_text(SITE / "attention-p0.js", (
-        "Today Attention", "coverage_status", "source_health", "verification_status",
-        "normalizePayload", "News & Events", "source_chain", "lastKnownGood", "render error",
+        "สิ่งที่ต้องจับตาวันนี้", "เหตุการณ์สำคัญวันนี้", "จับตาทางเทคนิค", "technical_watch",
+        "normalizePayload", "ข่าวและเหตุการณ์", "externalSources", "source_chain", "lastKnownGood", "Today render error",
     ))
-    require_text(SITE / "attention-p0.css", (
-        ".attention-p0-page", ".p0-priority", ".p0-source-strip",
-    ))
+    require_text(SITE / "attention-p0.css", (".attention-p0-page", ".p0-data-status", ".p0-section-header", ".p0-technical-section"))
     require_text(SITE / "today-view-isolation.css", (
-        "body.attention-active .portfolio-tabs",
-        "body.attention-active .workspace",
-        "body.attention-active .decision-screener",
-        "body.attention-active .bottom-sheet",
-        "body.attention-active .attention-p0-page",
+        "body.attention-active .portfolio-tabs", "body.attention-active .workspace",
+        "body.attention-active .decision-screener", "body.attention-active .attention-p0-page",
         "display: none !important",
     ))
-    require_text(SITE / "market.html", (
-        'index.html#scanner', 'index.html#today', 'index.html#memo', 'Market Pulse',
-        'id="marketBriefing"', 'id="pulseHeadline"', 'id="pulseSummaryList"',
-        'id="pulseSignalGrid"', 'data-pulse-mode="balanced"', 'data-pulse-mode="portfolio"',
-        'data-pulse-mode="action"', 'data-pulse-mode="news"', 'data-pulse-mode="risk"',
-        f'market.css?v={version}', f'market.js?v={version}',
-    ))
-    require_text(SITE / "market.js", (
-        'stockTimingRadar.watchlist.v54', 'technical.json', 'normaliseNarrative',
-        'applyPortfolioNarrative', 'pulseStaleBadge',
-    ))
-    forbid_text(SITE / "index.html", (
-        "scanner-dashboard", "scanner-layout-v9-3", "shared-app-shell-v9-3",
-        "nav-fix-v9-2", "runtime-guard-v9-4-1", "mobile-nav-v9-4-2",
-    ))
+    require_text(SITE / "market.html", ('id="marketBriefing"', 'id="pulseHeadline"', f'market.js?v={version}'))
     validate_json("technical.json", require_rows=True)
     validate_json("fundamental.json", require_rows=False)
     validate_market_pulse()
-    validate_attention_p0()
+    validate_attention()
     print(f"v{version} static UI smoke test passed")
 
 

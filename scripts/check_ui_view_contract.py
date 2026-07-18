@@ -41,10 +41,10 @@ legacy_workflow = ROOT / ".github/workflows/fill-alert-center-content.yml"
 for forbidden in ('if (document.body.classList.contains("attention-active")) return true;', "data-memo-previous-display", 'style.setProperty("display", "none", "important")'):
     if forbidden in memo_js:
         errors.append(f"Memo guard contains legacy runtime hiding: {forbidden}")
-if "attention-p0.js" not in memo_js:
-    errors.append("Memo stability loader must load attention-p0.js")
-if "attention-p0.css" not in memo_css:
-    errors.append("Memo stability stylesheet must import attention-p0.css")
+if "attention-p0.js" not in memo_js or "10.2.0" not in memo_js:
+    errors.append("Memo stability loader must load attention-p0.js v10.2.0")
+if "attention-p0.css" not in memo_css or "10.2.0" not in memo_css:
+    errors.append("Memo stability stylesheet must import attention-p0.css v10.2.0")
 if "today-view-isolation.css" not in memo_css:
     errors.append("Memo stability stylesheet must import today-view-isolation.css")
 if "body.memo-active .attention-page" not in memo_css:
@@ -68,11 +68,26 @@ for token in (
     if token not in today_css:
         errors.append(f"Today isolation CSS missing Scanner guard: {token}")
 
-for token in ("normalizePayload", "source_chain", "News & Events", "lastKnownGood", "render error"):
+for token in (
+    "normalizePayload",
+    "technical_watch",
+    "source_chain",
+    "externalSources",
+    "เหตุการณ์สำคัญวันนี้",
+    "จับตาทางเทคนิค",
+    "ข่าวและเหตุการณ์",
+    "ดูข้อมูลต้นฉบับ",
+    "lastKnownGood",
+    "Today render error",
+):
     if token not in attention_js:
         errors.append(f"Today runtime adapter missing: {token}")
-if 'definitions = [["primary_source", "Open source"], ["company_ir", "Company IR"], ["tradingview", "Chart"]]' not in attention_js:
-    errors.append("Today actions must not expose Scanner raw-data controls")
+if 'window.StockcheckAttentionP0 = { version: "10.2.0"' not in attention_js:
+    errors.append("Today runtime version must be 10.2.0")
+if 'definitions = [["primary_source", "Open source"]' in attention_js:
+    errors.append("Today must not expose legacy internal source actions")
+if "technical_json</" in attention_js:
+    errors.append("Today UI must not render technical_json as visible source text")
 
 for forbidden in ("insertBefore(", "appendChild(", "final-memo-primary", "final-scanner-secondary", "memoCandidates", "placeMemoBeforeScanner"):
     if forbidden in coordinator_js:
