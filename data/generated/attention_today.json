@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-18T09:31:47+00:00",
+  "updated_at": "2026-07-18T09:49:00+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 8,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-18T09:29:32.994310+00:00",
+          "detected_at": "2026-07-18T09:46:44.136696+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -362,92 +362,97 @@
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "UUUU",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "RXRX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "RXRX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "SYM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
+      "source": "ir",
+      "ticker": "OPEN",
+      "message": "IR URL unavailable"
+    },
+    {
       "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -525,7 +530,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T09:31:47+00:00",
+          "detected_at": "2026-07-18T09:49:00+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -624,7 +629,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T09:31:47+00:00",
+          "detected_at": "2026-07-18T09:49:00+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -723,7 +728,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-18T09:31:47+00:00",
+          "detected_at": "2026-07-18T09:49:00+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
