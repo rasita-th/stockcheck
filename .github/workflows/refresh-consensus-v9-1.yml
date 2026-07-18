@@ -1,50 +1,48 @@
-name: Refresh Consensus v9.1
+name: Refresh Finnhub Analyst Features
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    # Every 6 hours. Recommendation changes are slow; each run advances the queue.
+    - cron: "37 */6 * * *"
 
 permissions:
   contents: write
 
 concurrency:
-  group: stockcheck-v9-1-generated
+  group: stockcheck-data-publisher
   cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
         with:
+          persist-credentials: true
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
       - run: pip install -r requirements.txt
-      - run: python scripts/build_generated_layer.py
-      - name: Refresh consensus queue
+      - name: Refresh analyst queue with key B
         env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-          ANALYST_CONSENSUS_MAX_CALLS_PER_RUN: "2"
-          ANALYST_CONSENSUS_TTL_HOURS: "168"
-          FINNHUB_MIN_DELAY_SECONDS: "1.1"
-        run: |
-          python scripts/generate_analyst_consensus_cache.py
-          cp site/data/recommendation_trends.json data/generated/recommendation_trends.json
+          FINNHUB_API_KEY_ANALYST: ${{ secrets.FINNHUB_API_KEY_ANALYST || secrets.FINNHUB_API_KEY_2 || secrets.FINNHUB_API_KEY }}
+          FINNHUB_ANALYST_MAX_CALLS_PER_RUN: "48"
+          FINNHUB_MIN_DELAY_SECONDS: "1.25"
+        run: python scripts/finnhub_pipeline.py --mode analyst
       - run: |
-          python scripts/test_publish_generated_data.py
-          python scripts/generate_health.py
-          python scripts/publish_generated_data.py
-      - name: Commit consensus and health
+          python -m unittest tests.test_finnhub_pipeline
+          python scripts/validate_static_data.py
+      - name: Publish analyst contracts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/generated/recommendation_trends.json data/generated/health.json \
-                  site/data/recommendation_trends.json site/data/health.json \
-                  static/data/recommendation_trends.json static/data/health.json
+          git add data/finnhub data/recommendation_trends.json data/finnhub_features.json \
+                  site/data/recommendation_trends.json site/data/finnhub_features.json \
+                  static/data/recommendation_trends.json static/data/finnhub_features.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Refresh consensus cache and health"
+          git commit -m "Refresh Finnhub analyst features"
+          git pull --rebase origin main
           git push origin HEAD:main
