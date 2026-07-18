@@ -42,7 +42,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -91,3 +91,47 @@ jobs:
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
+      - name: Generate live Today refresh artifact
+        env:
+          SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+          ATTENTION_NEWS_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
+          ATTENTION_NEWS_ENABLED: "1"
+          ATTENTION_NEWS_BATCH_SIZE: "10"
+          ATTENTION_MAX_ITEMS: "7"
+          SEC_BOOTSTRAP_DAYS: "3"
+        run: |
+          python scripts/build_generated_layer.py
+          python scripts/generate_attention_pr2.py
+          python scripts/generate_health.py
+          python scripts/publish_generated_data.py
+          python scripts/validate_generated_data_v9_1.py
+          python scripts/validate_attention_pr2.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('data/generated/attention_today.json').read_text(encoding='utf-8'))
+          print({
+              'updated_at': data.get('updated_at'),
+              'items': len(data.get('items') or []),
+              'events': data.get('total_events'),
+              'coverage': data.get('coverage_status'),
+              'summary': data.get('summary'),
+          })
+          if not data.get('updated_at'):
+              raise SystemExit('live attention artifact has no updated_at')
+          PY
+      - name: Upload live Today refresh artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: attention-live-refresh
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            data/generated/attention_today.json
+            data/generated/events.json
+            data/source_state/*.json
+            site/data/attention_today.json
+            site/data/events.json
+            static/data/attention_today.json
+            static/data/events.json
