@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-"""PR3 generator for the Today Attention workflow.
-
-PR3 builds on the catalyst-first PR2 contract and adds:
-- official regulator-page discovery
-- change tracking versus the previous successful run
-- price impact since an item first entered Today
-- configurable personal priority scores
-"""
+"""PR3 generator for the Today Attention workflow."""
 from __future__ import annotations
 
 import os
+from datetime import timezone
 from typing import Any
 
 import generate_attention_pr2 as pr2
+from attention_event_memory import (
+    CONFIRMED_TTL_DAYS,
+    REGULATOR_TTL_DAYS,
+    UNVERIFIED_TTL_DAYS,
+    retain_discovered_events,
+)
 from attention_pr3 import enrich_payload
 from attention_sources import collect_news_events, collect_regulator_events
 
+UTC = timezone.utc
 REGULATOR_CONFIG_PATH = pr2.p0.DATA_DIR / "regulator_sources.json"
 REGULATOR_STATE_PATH = pr2.p0.STATE_DIR / "regulators.json"
 PR3_STATE_PATH = pr2.p0.STATE_DIR / "pr3_attention.json"
@@ -31,7 +32,17 @@ def _technical_summary(rows: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
+def _load_prior_discovery(now) -> list[dict[str, Any]]:
+    document = pr2.p0.load_json(pr2.p0.GENERATED_DIR / "events.json", {}) or {}
+    rows = document.get("events") if isinstance(document, dict) else []
+    candidates = [row for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+    return retain_discovered_events(candidates, now)
+
+
 def generate() -> dict[str, Any]:
+    generation_started_at = pr2.p0.now_utc().astimezone(UTC)
+    retained_discovery = _load_prior_discovery(generation_started_at)
+
     base_output = pr2.p0.generate()
     portfolio = pr2.p0.load_portfolio()
     portfolio_map = {stock["ticker"]: stock for stock in portfolio}
@@ -58,7 +69,7 @@ def generate() -> dict[str, Any]:
     )
 
     merged_events, catalyst_items, technical_watch, technical_fill_count = pr2._build_sections(
-        pr2._load_events() + news_result.events + regulator_result.events,
+        pr2._load_events() + retained_discovery + news_result.events + regulator_result.events,
         portfolio,
         technical_map,
         portfolio_map,
@@ -69,6 +80,14 @@ def generate() -> dict[str, Any]:
     source_health.pop("news", None)
     source_health.update(news_result.health)
     source_health.update(regulator_result.health)
+    source_health["discovered_event_retention"] = {
+        "status": "ok",
+        "source": "PR3 bounded event memory",
+        "retained_events": len(retained_discovery),
+        "confirmed_ttl_days": CONFIRMED_TTL_DAYS,
+        "regulator_ttl_days": REGULATOR_TTL_DAYS,
+        "unverified_ttl_days": UNVERIFIED_TTL_DAYS,
+    }
     errors = (
         [row for row in base_output.get("errors", []) if isinstance(row, dict)]
         + news_result.errors
@@ -89,6 +108,7 @@ def generate() -> dict[str, Any]:
                 **(base_output.get("features") or {}),
                 "free_news_discovery": pr2.NEWS_ENABLED,
                 "official_regulator_sources": REGULATORS_ENABLED,
+                "discovered_event_retention": True,
                 "technical_watch": True,
                 "technical_scan_fill": technical_fill_count > 0,
                 "thai_friendly_ui": True,
@@ -108,6 +128,8 @@ def generate() -> dict[str, Any]:
         "news_contract": "additive fields only; legacy P0 fields preserved",
         "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
         "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
+        "discovery_retention_policy": "unverified discovery events remain for 1 day, confirmed events for 7 days, and regulator events for 14 days unless explicitly expired",
+        "retained_discovered_events": len(retained_discovery),
         "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
         "attention_policy": "company catalysts remain above technical-only context",
         "technical_policy": "technical-only rows remain in technical_watch and never fill the main catalyst list",
@@ -122,7 +144,7 @@ def generate() -> dict[str, Any]:
 
     event_output = {
         "schema_version": "1.0",
-        "contract_version": "1.3-pr3",
+        "contract_version": "1.4-pr3-retention",
         "generated_at": output.get("updated_at") or generated_at,
         "row_count": len(merged_events),
         "events": merged_events,
@@ -143,11 +165,13 @@ def generate() -> dict[str, Any]:
 def main() -> None:
     output = generate()
     changes = output.get("changes_summary") or {}
+    retained = (output.get("source_health") or {}).get("discovered_event_retention", {}).get("retained_events", 0)
     print(
         "Generated PR3 Today workflow: "
         f"{len(output.get('items') or [])} catalysts / "
         f"{len(output.get('technical_watch') or [])} technical watch / "
-        f"{changes.get('new', 0)} new / {changes.get('escalated', 0)} escalated"
+        f"{changes.get('new', 0)} new / {changes.get('escalated', 0)} escalated / "
+        f"{retained} retained"
     )
 
 
