@@ -124,6 +124,9 @@ for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-p
         errors.append(f"Usability coordinator missing: {token}")
 if 'requestAnimationFrame(() => openStockDetail(stock));\n    }, true);' not in coordinator_js:
     errors.append("Desktop stock detail click must be captured before app.js rerenders the selected row")
+for token in ('const VERSION = "9.6.2"', "window.StockRadarDetailDialog", "open: openStockDetail"):
+    if token not in coordinator_js:
+        errors.append(f"Desktop stock detail API missing: {token}")
 for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)"):
     if token not in coordinator_css:
         errors.append(f"Usability stylesheet missing: {token}")
@@ -139,8 +142,13 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing usability UI: {token}")
     if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
         errors.append(f"{index_path} still renders duplicated desktop detail cards")
+    for asset in ("app.js?v=9.6.2", "final-ui-coordinator.css?v=9.6.2", "final-ui-coordinator.js?v=9.6.2"):
+        if asset not in index:
+            errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
 app_js = read("site/app.js")
+if "window.StockRadarDetailDialog?.open(select)" not in app_js:
+    errors.append("Stock selection handler must open the desktop dialog directly")
 base_watchlist_match = re.search(r"const BASE_WATCHLIST = \[(.*?)\];", app_js)
 if not base_watchlist_match or len(re.findall(r'"[A-Z0-9.\\-]+"', base_watchlist_match.group(1))) != 10:
     errors.append("First-run BASE_WATCHLIST must contain exactly 10 examples")
