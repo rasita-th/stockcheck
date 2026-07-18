@@ -1,0 +1,96 @@
+name: Verify PR3 Pages Deployment
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: verify-pr3-pages
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify public PR3 assets and payload
+        env:
+          BASE_URL: "https://rasita2644-star.github.io/stockcheck"
+        run: |
+          set -euo pipefail
+          nonce="$(date +%s)"
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/index.html?verify=${nonce}" -o /tmp/index.html
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/memo-only-fix.js?verify=${nonce}" -o /tmp/memo-only-fix.js
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/attention-pr3.js?verify=${nonce}" -o /tmp/attention-pr3.js
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/attention-pr3.css?verify=${nonce}" -o /tmp/attention-pr3.css
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/data/attention_today.json?verify=${nonce}" -o /tmp/attention_today.json
+
+          grep -Fq 'memo-only-fix.js?v=10.3.0' /tmp/index.html
+          grep -Fq 'attention-pr3.js?v=10.3.0' /tmp/memo-only-fix.js
+          grep -Fq 'PR3 · PERSONAL RISK DESK' /tmp/attention-pr3.js
+          grep -Fq 'เปลี่ยนจากรอบก่อน' /tmp/attention-pr3.js
+          grep -Fq 'พัก 1 วัน' /tmp/attention-pr3.js
+          grep -Fq 'attention-p3-ready' /tmp/attention-pr3.css
+          ! grep -Fq 'technical_json' /tmp/attention-pr3.js
+
+          python - <<'PY' > /tmp/receipt.env
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
+          contract = str(data.get('contract_version') or '')
+          if not contract.startswith('3.0'):
+              raise SystemExit(f'Expected PR3 contract, got {contract!r}')
+          items = data.get('items')
+          technical = data.get('technical_watch')
+          if not isinstance(items, list) or not isinstance(technical, list):
+              raise SystemExit('Today sections are missing')
+          for item in items + technical:
+              if not isinstance(item.get('change'), dict) or not isinstance(item.get('impact'), dict):
+                  raise SystemExit(f"History fields missing for {item.get('ticker')}")
+          health = data.get('source_health') if isinstance(data.get('source_health'), dict) else {}
+          if 'regulators' not in health:
+              raise SystemExit('Regulator health missing')
+          print(f"CONTRACT={contract}")
+          print(f"UPDATED_AT={data.get('updated_at')}")
+          print(f"CATALYSTS={len(items)}")
+          print(f"TECHNICAL={len(technical)}")
+          print(f"COVERAGE={data.get('coverage_status')}")
+          print(f"REGULATORS={health['regulators'].get('status')}")
+          PY
+          cat /tmp/receipt.env >> "$GITHUB_ENV"
+
+      - name: Post deployment receipt to PR 83
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- pr3-deployment-receipt -->';
+            const body = `${marker}\n✅ **PR3 deployed and verified on GitHub Pages**\n\n- Contract: \`${process.env.CONTRACT}\`\n- Updated: \`${process.env.UPDATED_AT}\`\n- Main catalysts: **${process.env.CATALYSTS}**\n- Technical watch: **${process.env.TECHNICAL}**\n- Coverage: **${process.env.COVERAGE}**\n- Regulator sources: **${process.env.REGULATORS}**\n- Runtime: \`attention-pr3.js/css v10.3.0\`\n\nThe public URL passed asset, Thai UI, history/impact and regulator-health checks.`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 83,
+              per_page: 100,
+            });
+            const existing = comments.find(comment => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: 83,
+                body,
+              });
+            }
