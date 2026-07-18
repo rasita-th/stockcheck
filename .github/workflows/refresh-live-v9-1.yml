@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: stockcheck-v10-live
+  group: stockcheck-v10-live-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -108,4 +108,4 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh event-first attention data"
-          git push origin HEAD:main
+          git push origin "HEAD:${GITHUB_REF_NAME}"
