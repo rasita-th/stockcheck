@@ -112,6 +112,39 @@ class AttentionNewsTests(unittest.TestCase):
         self.assertIn("score 95/100", events[0]["why_today"])
         self.assertIn("context, not a recommendation", events[0]["summary"])
 
+    def test_internal_technical_verification_survives_dedupe(self):
+        scan_date = pr2.p0.now_et().date().isoformat()
+        event = pr2._technical_scan_candidates(
+            [{"ticker": "TEST", "portfolio_status": "holding"}],
+            {"TEST": {"score": 95, "signal": "BUY ZONE", "regularMarketTime": scan_date}},
+        )[0]
+        merged = pr2._dedupe_with_provenance([event])
+        self.assertEqual(merged[0]["verification_status"], "confirmed")
+        self.assertEqual(merged[0]["verification_level"], "confirmed_internal")
+        self.assertIn("technical.json", merged[0]["verification_reason"])
+
+    def test_technical_context_uses_ratio_not_average_share_volume(self):
+        technical = {
+            "RATIO": {
+                "regularMarketPrice": 10,
+                "volumeRatio20": 1.45,
+                "vol20": 1_000_000,
+            },
+            "NO_RATIO": {
+                "regularMarketPrice": 20,
+                "vol20": 2_000_000,
+            },
+        }
+        contexts = pr2._technical_contexts(
+            technical,
+            {
+                "RATIO": {"ticker": "RATIO"},
+                "NO_RATIO": {"ticker": "NO_RATIO"},
+            },
+        )
+        self.assertEqual(contexts["RATIO"]["relative_volume"], 1.45)
+        self.assertIsNone(contexts["NO_RATIO"]["relative_volume"])
+
     def test_stale_technical_scan_candidate_is_rejected(self):
         stale_date = (pr2.p0.now_et().date() - timedelta(days=pr2.MAX_TECHNICAL_AGE_DAYS + 1)).isoformat()
         events = pr2._technical_scan_candidates(
@@ -135,11 +168,12 @@ class AttentionNewsTests(unittest.TestCase):
             "D": {"score": 55, "signal": "Neutral", "regularMarketTime": today},
         }
         portfolio_map = {row["ticker"]: row for row in portfolio}
-        contexts = {ticker: pr2.p0.price_context(row) for ticker, row in technical.items()}
+        contexts = pr2._technical_contexts(technical, portfolio_map)
         merged, fill_count = pr2._add_technical_fill([], portfolio, technical, portfolio_map, contexts)
         self.assertEqual(fill_count, pr2.MIN_ATTENTION_ITEMS)
         self.assertEqual(len(merged), pr2.MIN_ATTENTION_ITEMS)
         self.assertEqual(len({event["ticker"] for event in merged}), pr2.MIN_ATTENTION_ITEMS)
+        self.assertTrue(all(event["verification_status"] == "confirmed" for event in merged))
 
     def test_golden_contract_remains_backward_compatible(self):
         payload = json.loads(GOLDEN.read_text(encoding="utf-8"))
