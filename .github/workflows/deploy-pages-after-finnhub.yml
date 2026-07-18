@@ -1,0 +1,67 @@
+name: Deploy Pages after Finnhub Refresh
+
+on:
+  workflow_run:
+    workflows:
+      - "Refresh Finnhub Earnings Events"
+      - "Refresh Finnhub Analyst Features"
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: dispatch-pages-after-finnhub
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify Finnhub publish and dispatch Pages
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const jobs = await github.paginate(
+              github.rest.actions.listJobsForWorkflowRun,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                per_page: 100,
+              },
+            );
+
+            const expectedPublishSteps = {
+              'Refresh Finnhub Earnings Events': 'Publish Finnhub and Today contracts safely',
+              'Refresh Finnhub Analyst Features': 'Publish analyst contracts safely',
+            };
+            const publishStepName = expectedPublishSteps[run.name];
+            if (!publishStepName) {
+              core.notice(`No Finnhub Pages bridge mapping for workflow ${run.name}.`);
+              return;
+            }
+
+            const publishStep = jobs
+              .flatMap(job => job.steps || [])
+              .find(step => step.name === publishStepName);
+
+            if (!publishStep || publishStep.conclusion !== 'success') {
+              core.notice(
+                `Skipping Pages dispatch for Finnhub run ${run.id}: ` +
+                `${publishStepName} was ${publishStep?.conclusion || 'not run'}.`,
+              );
+              return;
+            }
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-pages.yml',
+              ref: 'main',
+            });
+            core.info(`Dispatched deploy-pages.yml after Finnhub run ${run.id}`);
