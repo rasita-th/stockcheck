@@ -1,0 +1,32 @@
+name: Deploy Pages after PR3 Refresh
+
+on:
+  workflow_run:
+    workflows: ["Refresh Live Data v10 PR3"]
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: dispatch-pages-after-pr3
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch verified Pages deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-pages.yml',
+              ref: 'main',
+            });
+            core.info(`Dispatched deploy-pages.yml after PR3 run ${context.payload.workflow_run.id}`);
