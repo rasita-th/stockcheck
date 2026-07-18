@@ -1,157 +1,20 @@
 {
-  "updated_at": "2026-07-18T02:56:18+07:00",
-  "market": "US",
-  "total_monitored": 10,
-  "items": [
-    {
-      "ticker": "TSLA",
-      "name": "Tesla, Inc.",
-      "role": "Satellite Growth",
-      "primary_trigger": "earnings_soon",
-      "signals": [
-        "Earnings in 4 days",
-        "Reached trim zone $360 · +6.0% from zone"
-      ],
-      "severity": "medium",
-      "price": 381.62,
-      "earnings_date": "2026-07-22",
-      "buy_zone": 285.0,
-      "trim_zone": 360.0,
-      "buy_zone_distance_pct": 33.901754385964914,
-      "trim_zone_distance_pct": 6.005555555555557,
-      "earnings_source": "finnhub",
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
-        "yahoo": "https://finance.yahoo.com/quote/TSLA",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://ir.tesla.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "AMZN",
-      "name": "Amazon.com, Inc.",
-      "role": "Core Growth",
-      "primary_trigger": "trim_zone",
-      "signals": [
-        "Near trim zone $255 · -2.9% from zone"
-      ],
-      "severity": "medium",
-      "price": 247.5,
-      "buy_zone": 205.0,
-      "trim_zone": 255.0,
-      "buy_zone_distance_pct": 20.73170731707317,
-      "trim_zone_distance_pct": -2.941176470588235,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
-        "yahoo": "https://finance.yahoo.com/quote/AMZN",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://ir.aboutamazon.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "MSFT",
-      "name": "Microsoft Corporation",
-      "role": "Core Quality",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $430 · -8.3% from zone"
-      ],
-      "severity": "medium",
-      "price": 394.38,
-      "buy_zone": 430.0,
-      "trim_zone": 520.0,
-      "buy_zone_distance_pct": -8.283720930232558,
-      "trim_zone_distance_pct": -24.157692307692308,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
-        "yahoo": "https://finance.yahoo.com/quote/MSFT",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://www.microsoft.com/en-us/Investor/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
-      "role": "Core AI",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $205 · -0.7% from zone"
-      ],
-      "severity": "medium",
-      "price": 203.55,
-      "buy_zone": 205.0,
-      "trim_zone": 245.0,
-      "buy_zone_distance_pct": -0.7073170731707262,
-      "trim_zone_distance_pct": -16.91836734693877,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
-        "yahoo": "https://finance.yahoo.com/quote/NVDA",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://investor.nvidia.com/"
-      },
-      "price_source": "technical.json"
-    },
-    {
-      "ticker": "PLTR",
-      "name": "Palantir Technologies Inc.",
-      "role": "Satellite AI",
-      "primary_trigger": "buy_zone",
-      "signals": [
-        "Reached buy zone $145 · -8.7% from zone"
-      ],
-      "severity": "medium",
-      "price": 132.43,
-      "buy_zone": 145.0,
-      "trim_zone": 185.0,
-      "buy_zone_distance_pct": -8.668965517241373,
-      "trim_zone_distance_pct": -28.41621621621621,
-      "actions": {
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-PLTR/",
-        "yahoo": "https://finance.yahoo.com/quote/PLTR",
-        "raw_data": "data/technical.json",
-        "company_ir": "https://investors.palantir.com/"
-      },
-      "price_source": "technical.json"
-    }
-  ],
-  "errors": [],
-  "data_quality": {
-    "price_source": "technical.json first, Yahoo fallback",
-    "earnings_source": "Finnhub primary, Yahoo fallback, manual fallback; manual force overrides all",
-    "zone_logic": "buy_zone triggers only -10% to +5%; trim_zone triggers only -3% to +10%; stale zones are suppressed",
-    "scanner_synced": true,
-    "technical_rows": 408,
-    "manual_earnings_rows": 1,
-    "finnhub_rows": 6
+  "schema_version": "2.0-p0",
+  "updated_at": null,
+  "market_timezone": "America/New_York",
+  "display_timezone": "Asia/Bangkok",
+  "stale_after_minutes": 90,
+  "total_monitored": 38,
+  "total_events": 0,
+  "coverage_status": "partial",
+  "summary": {"Critical": 0, "Risk": 0, "Action": 0, "Watch": 0, "Developing": 0},
+  "source_health": {
+    "sec": {"status": "partial", "checked": 0, "source": "SEC EDGAR", "note": "Waiting for first workflow run."},
+    "earnings": {"status": "partial", "rows": 0, "source": "Company/SEC-confirmed curated calendar"},
+    "market_data": {"status": "partial", "rows": 0, "source": "technical.json"},
+    "news": {"status": "unavailable", "source": "Not enabled in PR1", "note": "Free news discovery is planned for PR2."}
   },
-  "earnings_diagnostics": {
-    "checked": 10,
-    "finnhub_enabled": true,
-    "finnhub_status": "loaded",
-    "loaded_from_finnhub": [
-      "AAPL",
-      "AMZN",
-      "HOOD",
-      "MSFT",
-      "PUMP",
-      "TSLA"
-    ],
-    "loaded_from_yahoo": [],
-    "loaded_from_manual": [],
-    "missing": [
-      "AMD",
-      "NVDA",
-      "PLTR",
-      "SEI"
-    ],
-    "api_failed": [],
-    "finnhub_window": {
-      "from": "2026-07-18",
-      "to": "2026-08-01"
-    },
-    "finnhub_rows_matched": 6
-  }
+  "items": [],
+  "errors": [],
+  "data_quality": {"free_sources_only": true, "bootstrap": true, "max_attention_items": 7}
 }
