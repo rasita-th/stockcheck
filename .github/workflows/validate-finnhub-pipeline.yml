@@ -1,0 +1,30 @@
+name: Validate Finnhub Pipeline
+
+on:
+  pull_request:
+    paths:
+      - "scripts/finnhub_pipeline.py"
+      - "tests/test_finnhub_pipeline.py"
+      - ".github/workflows/refresh_finnhub*.yml"
+      - ".github/workflows/refresh-consensus-v9-1.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/finnhub_pipeline.py"
+      - "tests/test_finnhub_pipeline.py"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Unit and syntax tests
+        run: |
+          python -m py_compile scripts/finnhub_pipeline.py
+          python -m unittest tests.test_finnhub_pipeline
