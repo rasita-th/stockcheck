@@ -1,20 +1,337 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": null,
+  "updated_at": "2026-07-18T05:19:43+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
   "total_events": 0,
   "coverage_status": "partial",
-  "summary": {"Critical": 0, "Risk": 0, "Action": 0, "Watch": 0, "Developing": 0},
+  "summary": {
+    "Critical": 0,
+    "Risk": 0,
+    "Action": 0,
+    "Watch": 0,
+    "Developing": 0
+  },
   "source_health": {
-    "sec": {"status": "partial", "checked": 0, "source": "SEC EDGAR", "note": "Waiting for first workflow run."},
-    "earnings": {"status": "partial", "rows": 0, "source": "Company/SEC-confirmed curated calendar"},
-    "market_data": {"status": "partial", "rows": 0, "source": "technical.json"},
-    "news": {"status": "unavailable", "source": "Not enabled in PR1", "note": "Free news discovery is planned for PR2."}
+    "sec": {
+      "status": "partial",
+      "checked": 38,
+      "ok": 0,
+      "partial": 32,
+      "errors": 6,
+      "source": "SEC EDGAR"
+    },
+    "earnings": {
+      "status": "partial",
+      "rows": 0,
+      "source": "Company/SEC-confirmed curated calendar",
+      "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
+    },
+    "market_data": {
+      "status": "ok",
+      "rows": 408,
+      "source": "technical.json"
+    },
+    "sec_ticker_map": {
+      "status": "error",
+      "rows": 0,
+      "source": "SEC company_tickers.json"
+    },
+    "news": {
+      "status": "partial",
+      "source": "Free news discovery",
+      "checked": 10,
+      "accepted_events": 0
+    },
+    "ir": {
+      "status": "partial",
+      "source": "Company IR/RSS",
+      "checked": 10,
+      "ok": 5,
+      "partial": 4,
+      "errors": 1
+    },
+    "gdelt": {
+      "status": "partial",
+      "source": "GDELT DOC 2.0",
+      "checked": 10,
+      "ok": 2,
+      "errors": 8
+    }
   },
   "items": [],
-  "errors": [],
-  "data_quality": {"free_sources_only": true, "bootstrap": true, "max_attention_items": 7}
+  "errors": [
+    {
+      "source": "sec",
+      "ticker": "RKLB",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "AMZN",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "HOOD",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "NVDA",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "IREN",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "ASTS",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "OKLO",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "TSLA",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "GOOGL",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "BMNR",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "NBIS",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "TEM",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "MP",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "IONQ",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "AMD",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "ORCL",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "EQT",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "TMDX",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "EOSE",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "PLTR",
+      "message": "SEC submissions unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "UUUU",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "PSIX",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "CIFR",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "RXRX",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "JEPQ",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "SYM",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "TMC",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "OSCR",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "COPX",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "RR",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "ZETA",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "OPEN",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "COST",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "BEAM",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "NOW",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "TE",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "NASA",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "sec",
+      "ticker": "INDI",
+      "message": "CIK unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IREN",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IREN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "ASTS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "ASTS",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OKLO",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "OKLO",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "BMNR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "BMNR",
+      "message": "GDELT response unavailable"
+    }
+  ],
+  "data_quality": {
+    "free_sources_only": true,
+    "sec_cursor": "accession-number based; multiple same-day filings are preserved",
+    "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency",
+    "technical_policy": "large daily moves and same-day zone crossings only; stale near-zone alerts are suppressed",
+    "max_attention_items": 7,
+    "news_contract": "additive fields only; legacy P0 fields preserved",
+    "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
+    "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
+    "source_registry_schema": "1.0"
+  },
+  "contract_version": "2.1-additive",
+  "features": {
+    "free_news_discovery": true
+  }
 }
