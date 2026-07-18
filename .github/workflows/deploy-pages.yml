@@ -49,6 +49,7 @@ jobs:
           node --check site/notification-phase2.js
           node --check site/final-ui-coordinator.js
           node --check site/memo-only-fix.js
+          node --check site/attention-p0.js
 
       - name: Validate data and UI smoke test
         run: |
@@ -78,12 +79,16 @@ jobs:
           test -s site/final-ui-coordinator.js
           test -s site/memo-only-fix.css
           test -s site/memo-only-fix.js
+          test -s site/attention-p0.css
+          test -s site/attention-p0.js
           test -s site/market.html
           test -s site/market.css
           test -s site/market.js
           test -s site/data/market_pulse.json
           test -s site/data/technical.json
           test -s site/data/fundamental.json
+          test -s site/data/attention_today.json
+          test -s site/data/earnings_calendar.json
 
           for asset in \
             styles.css \
@@ -98,6 +103,8 @@ jobs:
           done
           grep -Fq "app-shell-v9-4-6.css?v=${VERSION}" site/index.html
           grep -Fq "app-shell-v9-4-6.js?v=${VERSION}" site/index.html
+          grep -Fq "attention-p0.css" site/memo-only-fix.css
+          grep -Fq "attention-p0.js" site/memo-only-fix.js
           grep -Fq "market.css?v=${VERSION}" site/market.html
           grep -Fq "market.js?v=${VERSION}" site/market.html
           grep -q 'index.html#today' site/market.html
@@ -134,7 +141,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed Market Pulse
+      - name: Smoke test deployed Market Pulse and Today P0
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -145,9 +152,15 @@ jobs:
 
           fetch_and_check_ui() {
             local nonce="$1"
-            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
+              && grep -q 'memo-only-fix.js' /tmp/index.html \
+              && grep -q 'Today Attention' /tmp/attention-p0.js \
+              && grep -q 'coverage_status' /tmp/attention-p0.js \
               && grep -q 'id="marketBriefing"' /tmp/market.html \
               && grep -q 'data-pulse-mode="balanced"' /tmp/market.html \
               && grep -q 'data-pulse-mode="portfolio"' /tmp/market.html \
@@ -167,13 +180,27 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo "GitHub Pages did not serve the new Market Pulse UI within the smoke-test window"
+            echo "GitHub Pages did not serve the new Market Pulse and Today P0 UI within the smoke-test window"
             exit 1
           fi
 
           python - <<'PY'
           import json
           from pathlib import Path
+
+          attention_path = Path('/tmp/attention_today.json')
+          attention = json.loads(attention_path.read_text(encoding='utf-8'))
+          if not isinstance(attention, dict):
+              raise SystemExit('deployed attention_today.json root is not an object')
+          if not str(attention.get('schema_version') or '').startswith('2.0'):
+              raise SystemExit('deployed attention_today.json is not P0 schema')
+          items = attention.get('items')
+          if not isinstance(items, list) or len(items) > 7:
+              raise SystemExit('deployed attention_today.json items are invalid')
+          if attention.get('coverage_status') not in {'complete', 'partial'}:
+              raise SystemExit('deployed attention_today.json coverage_status is invalid')
+          if not isinstance(attention.get('source_health'), dict):
+              raise SystemExit('deployed attention_today.json source_health is missing')
 
           path = Path('/tmp/market_pulse.json')
           data = json.loads(path.read_text(encoding='utf-8'))
@@ -192,8 +219,11 @@ jobs:
               if not isinstance(modes, dict) or not required.issubset(modes):
                   raise SystemExit('deployed narrative modes are incomplete')
           print({
-              'schema_version': data.get('schema_version'),
-              'generated_at': data.get('generated_at'),
-              'successful_symbols': data.get('successful_symbols'),
+              'attention_schema': attention.get('schema_version'),
+              'attention_items': len(items),
+              'attention_coverage': attention.get('coverage_status'),
+              'market_schema': data.get('schema_version'),
+              'market_generated_at': data.get('generated_at'),
+              'market_successful_symbols': data.get('successful_symbols'),
           })
           PY
