@@ -31,6 +31,50 @@ def _coverage_status(source_health: dict[str, Any]) -> str:
     return "partial" if any(str((value or {}).get("status") or "unknown") in degraded for value in source_health.values() if isinstance(value, dict)) else "complete"
 
 
+def _first_ratio(row: dict[str, Any] | None) -> float | None:
+    row = row if isinstance(row, dict) else {}
+    for key in ("relativeVolume", "relVolume", "volumeRatio", "volumeRatio20"):
+        value = p0.to_float(row.get(key))
+        if value is not None:
+            return value
+    return None
+
+
+def _technical_contexts(
+    technical_map: dict[str, dict[str, Any]],
+    portfolio_map: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    contexts: dict[str, dict[str, Any]] = {}
+    for ticker in portfolio_map:
+        row = technical_map.get(ticker)
+        context = p0.price_context(row)
+        # p0 legacy fallback may read vol20 (average share volume) as a ratio.
+        # PR2 only exposes genuine dimensionless ratio fields to the UI.
+        context["relative_volume"] = _first_ratio(row)
+        contexts[ticker] = context
+    return contexts
+
+
+def _restore_internal_verification(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep repository-generated technical facts confirmed after news dedupe.
+
+    News confirmation requires a primary public source. Technical facts have a
+    different provenance: they are deterministic rows from technical.json and
+    should be labelled confirmed-internal rather than unverified-news.
+    """
+    for event in events:
+        source = event.get("source") if isinstance(event.get("source"), dict) else {}
+        if event.get("event_type") == "technical" and source.get("quality") == "internal":
+            event["verification_status"] = "confirmed"
+            event["verification_level"] = "confirmed_internal"
+            event["verification_reason"] = "Derived directly from the repository's latest technical.json row."
+    return events
+
+
+def _dedupe_with_provenance(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return _restore_internal_verification(deduplicate_events(events))
+
+
 def _scan_date(row: dict[str, Any]) -> Any:
     for key in ("regularMarketTime", "date", "dataDate", "asOfDate"):
         parsed = p0.parse_date(row.get(key))
@@ -77,7 +121,7 @@ def _technical_scan_candidates(portfolio: list[dict[str, Any]], technical_map: d
         rsi = p0.to_float(row.get("rsi14"))
         pct_ema20 = p0.to_float(row.get("pctVsEma20"))
         pct_ema200 = p0.to_float(row.get("pctVsEma200"))
-        volume_ratio = p0.to_float(row.get("volumeRatio20"))
+        volume_ratio = _first_ratio(row)
         detail_parts = [f"score {score:.0f}/100", signal]
         if rsi is not None:
             detail_parts.append(f"RSI {rsi:.1f}")
@@ -133,7 +177,7 @@ def _add_technical_fill(
     portfolio_map: dict[str, dict[str, Any]],
     contexts: dict[str, dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], int]:
-    merged = deduplicate_events(events)
+    merged = _dedupe_with_provenance(events)
     current_items = p0.aggregate_items(merged, portfolio_map, contexts)
     needed = max(0, MIN_ATTENTION_ITEMS - len(current_items))
     if needed == 0:
@@ -148,7 +192,7 @@ def _add_technical_fill(
         existing_tickers.add(ticker)
         if len(selected) >= needed:
             break
-    return deduplicate_events(merged + selected), len(selected)
+    return _dedupe_with_provenance(merged + selected), len(selected)
 
 
 def _enforce_unverified_cap(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -170,7 +214,7 @@ def generate() -> dict[str, Any]:
     portfolio = p0.load_portfolio()
     portfolio_map = {stock["ticker"]: stock for stock in portfolio}
     technical_map = p0.load_technical_rows()
-    contexts = {ticker: p0.price_context(technical_map.get(ticker)) for ticker in portfolio_map}
+    contexts = _technical_contexts(technical_map, portfolio_map)
     registry = p0.load_json(REGISTRY_PATH, {}) or {}
     old_news_state = p0.load_json(NEWS_STATE_PATH, {}) or {}
 
@@ -194,10 +238,12 @@ def generate() -> dict[str, Any]:
     source_health.update(news_result.health)
     errors = [row for row in base_output.get("errors", []) if isinstance(row, dict)] + news_result.errors
     summary = {label: sum(1 for item in items if item.get("priority") == label) for label in ("Critical", "Risk", "Action", "Watch", "Developing")}
+    generated_at = p0.now_utc().replace(microsecond=0).isoformat()
 
     output = dict(base_output)
     output.update({
         "contract_version": "2.1-additive",
+        "updated_at": generated_at,
         "features": {
             **(base_output.get("features") or {}),
             "free_news_discovery": NEWS_ENABLED,
@@ -220,12 +266,14 @@ def generate() -> dict[str, Any]:
         "technical_fill_count": technical_fill_count,
         "minimum_attention_items": MIN_ATTENTION_ITEMS,
         "technical_max_age_days": MAX_TECHNICAL_AGE_DAYS,
+        "relative_volume_policy": "only dimensionless ratio fields are exposed; vol20 average shares are never labelled as relative volume",
+        "internal_verification_policy": "repository-generated technical rows are confirmed-internal and are not treated as unverified news",
     }
 
     event_output = {
         "schema_version": "1.0",
         "contract_version": "1.1-additive",
-        "generated_at": output.get("updated_at"),
+        "generated_at": generated_at,
         "row_count": len(merged_events),
         "events": merged_events,
     }
