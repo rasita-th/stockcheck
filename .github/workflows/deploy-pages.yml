@@ -18,13 +18,13 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.2.2"
+  TODAY_DEPLOY_VERSION: "10.3.0"
 
 jobs:
   build:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,8 +41,9 @@ jobs:
 
       - name: Prepare clean Pages artifact
         run: |
-          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py scripts/sync_attention_assets.py
           python scripts/prepare_stable_site_v9_4_1.py
+          python scripts/sync_attention_assets.py
 
       - name: Validate source artifact
         run: |
@@ -53,6 +54,7 @@ jobs:
           node --check site/final-ui-coordinator.js
           node --check site/memo-only-fix.js
           node --check site/attention-p0.js
+          node --check site/attention-pr3.js
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
@@ -98,13 +100,15 @@ jobs:
               path.write_text(text, encoding="utf-8")
           PY
 
-      - name: Verify final Today artifact
+      - name: Verify final PR3 artifact
         shell: bash
         run: |
           set -euo pipefail
           test -s site/index.html
           test -s site/attention-p0.js
           test -s site/attention-p0.css
+          test -s site/attention-pr3.js
+          test -s site/attention-pr3.css
           test -s site/memo-only-fix.js
           test -s site/memo-only-fix.css
           test -s site/today-view-isolation.css
@@ -112,19 +116,23 @@ jobs:
           grep -Fq "memo-only-fix.js?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
+          grep -Fq 'attention-pr3.js?v=10.3.0' site/memo-only-fix.js
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.1' site/memo-only-fix.css
-          grep -Fq 'สิ่งที่ต้องจับตาวันนี้' site/attention-p0.js
-          grep -Fq 'เหตุการณ์สำคัญวันนี้' site/attention-p0.js
-          grep -Fq 'จับตาทางเทคนิค' site/attention-p0.js
-          grep -Fq 'technical_watch' site/attention-p0.js
-          grep -Fq 'externalSources' site/attention-p0.js
-          if grep -Fq 'Unverified report' site/attention-p0.js; then
-            echo 'Legacy English verification UI remains in Today renderer'
+          grep -Fq 'attention-pr3.css?v=10.3.0' site/memo-only-fix.css
+          grep -Fq 'PR3 · PERSONAL RISK DESK' site/attention-pr3.js
+          grep -Fq 'เปลี่ยนจากรอบก่อน' site/attention-pr3.js
+          grep -Fq 'พัก 1 วัน' site/attention-pr3.js
+          grep -Fq 'ซ่อนวันนี้' site/attention-pr3.js
+          grep -Fq 'data-pr3-action' site/attention-pr3.js
+          grep -Fq 'StockcheckAttentionP3' site/attention-pr3.js
+          grep -Fq 'attention-p3-ready' site/attention-pr3.css
+          if grep -Fq 'Unverified report' site/attention-pr3.js; then
+            echo 'Legacy English verification UI remains in PR3 renderer'
             exit 1
           fi
-          if grep -Fq 'Open source' site/attention-p0.js; then
-            echo 'Legacy internal-source action remains in Today renderer'
+          if grep -Fq 'technical_json' site/attention-pr3.js; then
+            echo 'Internal technical source is exposed in PR3 renderer'
             exit 1
           fi
 
@@ -145,13 +153,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    timeout-minutes: 15
+    timeout-minutes: 18
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed Today UI
+      - name: Smoke test deployed PR3 Today UI
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -167,6 +175,8 @@ jobs:
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.js?smoke=${nonce}" -o /tmp/memo-only-fix.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.css?smoke=${nonce}" -o /tmp/memo-only-fix.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr3.js?smoke=${nonce}" -o /tmp/attention-pr3.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr3.css?smoke=${nonce}" -o /tmp/attention-pr3.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html || return 1
@@ -175,25 +185,26 @@ jobs:
             grep -Fq "memo-only-fix.js?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq 'attention-p0.js?v=10.2.0' /tmp/memo-only-fix.js || return 1
-            grep -Fq 'attention-p0.css?v=10.2.0' /tmp/memo-only-fix.css || return 1
-            grep -Fq 'today-view-isolation.css?v=10.2.1' /tmp/memo-only-fix.css || return 1
-            grep -Fq 'สิ่งที่ต้องจับตาวันนี้' /tmp/attention-p0.js || return 1
-            grep -Fq 'เหตุการณ์สำคัญวันนี้' /tmp/attention-p0.js || return 1
-            grep -Fq 'จับตาทางเทคนิค' /tmp/attention-p0.js || return 1
-            grep -Fq 'technical_watch' /tmp/attention-p0.js || return 1
-            grep -Fq 'externalSources' /tmp/attention-p0.js || return 1
+            grep -Fq 'attention-pr3.js?v=10.3.0' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'attention-pr3.css?v=10.3.0' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'PR3 · PERSONAL RISK DESK' /tmp/attention-pr3.js || return 1
+            grep -Fq 'เปลี่ยนจากรอบก่อน' /tmp/attention-pr3.js || return 1
+            grep -Fq 'พัก 1 วัน' /tmp/attention-pr3.js || return 1
+            grep -Fq 'data-pr3-action' /tmp/attention-pr3.js || return 1
+            grep -Fq 'StockcheckAttentionP3' /tmp/attention-pr3.js || return 1
+            grep -Fq 'attention-p3-ready' /tmp/attention-pr3.css || return 1
             grep -Fq 'body.attention-active .workspace' /tmp/today-view-isolation.css || return 1
             grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
             grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
-            ! grep -Fq 'Unverified report' /tmp/attention-p0.js || return 1
-            ! grep -Fq 'Open source' /tmp/attention-p0.js || return 1
+            ! grep -Fq 'Unverified report' /tmp/attention-pr3.js || return 1
+            ! grep -Fq 'technical_json' /tmp/attention-pr3.js || return 1
           }
 
           ready=false
-          for attempt in $(seq 1 24); do
+          for attempt in $(seq 1 30); do
             nonce="$(date +%s)-${attempt}"
-            echo "Production smoke attempt ${attempt}: ${BASE}"
+            echo "Production PR3 smoke attempt ${attempt}: ${BASE}"
             if fetch_and_check_ui "$nonce"; then
               ready=true
               break
@@ -201,7 +212,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo 'GitHub Pages did not serve the Thai catalyst-first Today UI'
+            echo 'GitHub Pages did not serve the PR3 Today workflow'
             exit 1
           fi
 
@@ -212,12 +223,17 @@ jobs:
           attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
           if not isinstance(attention, dict):
               raise SystemExit('deployed attention payload must be an object')
-          if not str(attention.get('contract_version') or '').startswith('2.2'):
-              raise SystemExit('deployed Today contract is not catalyst-first 2.2')
+          if not str(attention.get('contract_version') or '').startswith('3.0'):
+              raise SystemExit('deployed Today contract is not PR3 3.0')
           items = attention.get('items')
           technical_watch = attention.get('technical_watch')
           if not isinstance(items, list) or not isinstance(technical_watch, list):
               raise SystemExit('deployed Today sections are missing')
+          for item in items + technical_watch:
+              if not isinstance(item.get('change'), dict) or not isinstance(item.get('impact'), dict):
+                  raise SystemExit(f"deployed PR3 history fields missing: {item.get('ticker')}")
+              if not isinstance(item.get('personal_priority_score'), int):
+                  raise SystemExit(f"deployed personal priority missing: {item.get('ticker')}")
           for item in items:
               events = item.get('events') if isinstance(item, dict) else None
               if not isinstance(events, list) or not any(event.get('event_type') != 'technical' for event in events):
@@ -226,5 +242,12 @@ jobs:
               events = item.get('events') if isinstance(item, dict) else None
               if not isinstance(events, list) or not events or any(event.get('event_type') != 'technical' for event in events):
                   raise SystemExit('deployed technical watch contains a non-technical event')
-          print(f"Deployed Today verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
+          features = attention.get('features') if isinstance(attention.get('features'), dict) else {}
+          health = attention.get('source_health') if isinstance(attention.get('source_health'), dict) else {}
+          if features.get('official_regulator_sources') and 'regulators' not in health:
+              raise SystemExit('deployed regulator source health is missing')
+          for key in ('changes_summary', 'recently_resolved', 'preferences_applied'):
+              if key not in attention:
+                  raise SystemExit(f'deployed PR3 field missing: {key}')
+          print(f"Deployed PR3 verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
           PY
