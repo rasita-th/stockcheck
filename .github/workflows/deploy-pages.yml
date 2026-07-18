@@ -81,6 +81,7 @@ jobs:
           test -s site/memo-only-fix.js
           test -s site/attention-p0.css
           test -s site/attention-p0.js
+          test -s site/today-view-isolation.css
           test -s site/market.html
           test -s site/market.css
           test -s site/market.js
@@ -103,8 +104,13 @@ jobs:
           done
           grep -Fq "app-shell-v9-4-6.css?v=${VERSION}" site/index.html
           grep -Fq "app-shell-v9-4-6.js?v=${VERSION}" site/index.html
-          grep -Fq "attention-p0.css" site/memo-only-fix.css
-          grep -Fq "attention-p0.js" site/memo-only-fix.js
+          grep -Fq "attention-p0.css?v=10.1.0" site/memo-only-fix.css
+          grep -Fq "today-view-isolation.css?v=10.1.0" site/memo-only-fix.css
+          grep -Fq "attention-p0.js?v=10.1.0" site/memo-only-fix.js
+          grep -Fq "body.attention-active .decision-screener" site/today-view-isolation.css
+          grep -Fq "body.attention-active .workspace" site/today-view-isolation.css
+          grep -Fq "normalizePayload" site/attention-p0.js
+          grep -Fq "News & Events" site/attention-p0.js
           grep -Fq "market.css?v=${VERSION}" site/market.html
           grep -Fq "market.js?v=${VERSION}" site/market.html
           grep -q 'index.html#today' site/market.html
@@ -141,7 +147,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed Market Pulse and Today P0
+      - name: Smoke test deployed Market Pulse and Today PR2
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -154,13 +160,19 @@ jobs:
             local nonce="$1"
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
               && grep -q 'memo-only-fix.js' /tmp/index.html \
               && grep -q 'Today Attention' /tmp/attention-p0.js \
-              && grep -q 'coverage_status' /tmp/attention-p0.js \
+              && grep -q 'normalizePayload' /tmp/attention-p0.js \
+              && grep -q 'News & Events' /tmp/attention-p0.js \
+              && grep -q 'source_chain' /tmp/attention-p0.js \
+              && grep -q 'body.attention-active .portfolio-tabs' /tmp/today-view-isolation.css \
+              && grep -q 'body.attention-active .workspace' /tmp/today-view-isolation.css \
+              && grep -q 'body.attention-active .decision-screener' /tmp/today-view-isolation.css \
               && grep -q 'id="marketBriefing"' /tmp/market.html \
               && grep -q 'data-pulse-mode="balanced"' /tmp/market.html \
               && grep -q 'data-pulse-mode="portfolio"' /tmp/market.html \
@@ -180,7 +192,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo "GitHub Pages did not serve the new Market Pulse and Today P0 UI within the smoke-test window"
+            echo "GitHub Pages did not serve the new Market Pulse and Today PR2 UI within the smoke-test window"
             exit 1
           fi
 
@@ -193,7 +205,7 @@ jobs:
           if not isinstance(attention, dict):
               raise SystemExit('deployed attention_today.json root is not an object')
           if not str(attention.get('schema_version') or '').startswith('2.0'):
-              raise SystemExit('deployed attention_today.json is not P0 schema')
+              raise SystemExit('deployed attention_today.json is not P0-compatible schema')
           items = attention.get('items')
           if not isinstance(items, list) or len(items) > 7:
               raise SystemExit('deployed attention_today.json items are invalid')
@@ -220,6 +232,7 @@ jobs:
                   raise SystemExit('deployed narrative modes are incomplete')
           print({
               'attention_schema': attention.get('schema_version'),
+              'attention_contract': attention.get('contract_version'),
               'attention_items': len(items),
               'attention_coverage': attention.get('coverage_status'),
               'market_schema': data.get('schema_version'),

@@ -71,7 +71,7 @@ def validate_attention_p0() -> None:
     if len(items) > 7:
         raise SystemExit(f"{path}: expected at most 7 items, found {len(items)}")
     if str(data.get("schema_version") or "").startswith("2.0") is False:
-        raise SystemExit(f"{path}: expected P0 schema version")
+        raise SystemExit(f"{path}: expected P0-compatible schema version")
     if not isinstance(data.get("source_health"), dict):
         raise SystemExit(f"{path}: source_health must be an object")
     if data.get("coverage_status") not in {"complete", "partial"}:
@@ -95,16 +95,25 @@ def main() -> None:
         'data-app-view', "verifyDataAndRecover",
     ))
     require_text(SITE / "memo-only-fix.js", (
-        "attention-p0.js", "loadAttentionP0", "attention-active", "memo-active",
+        "attention-p0.js", "10.1.0", "loadAttentionP0", "attention-active", "memo-active",
     ))
     require_text(SITE / "memo-only-fix.css", (
-        "attention-p0.css", "body.memo-active .attention-page",
+        "attention-p0.css", "today-view-isolation.css", "body.memo-active .attention-page",
     ))
     require_text(SITE / "attention-p0.js", (
         "Today Attention", "coverage_status", "source_health", "verification_status",
+        "normalizePayload", "News & Events", "source_chain", "lastKnownGood", "render error",
     ))
     require_text(SITE / "attention-p0.css", (
         ".attention-p0-page", ".p0-priority", ".p0-source-strip",
+    ))
+    require_text(SITE / "today-view-isolation.css", (
+        "body.attention-active .portfolio-tabs",
+        "body.attention-active .workspace",
+        "body.attention-active .decision-screener",
+        "body.attention-active .bottom-sheet",
+        "body.attention-active .attention-p0-page",
+        "display: none !important",
     ))
     require_text(SITE / "market.html", (
         'index.html#scanner', 'index.html#today', 'index.html#memo', 'Market Pulse',

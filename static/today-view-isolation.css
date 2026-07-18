@@ -1,0 +1,58 @@
+/* Today owns only the event-first attention surface. Scanner/Screener UI remains mounted but is not visible. */
+body.attention-active .portfolio-tabs,
+body.attention-active .workspace,
+body.attention-active .scanner-panel,
+body.attention-active .decision-screener,
+body.attention-active .lower-grid,
+body.attention-active .mobile-scan-btn,
+body.attention-active .sheet-backdrop,
+body.attention-active .bottom-sheet,
+body.attention-active .chart-modal,
+body.attention-active #mobileDetailModal,
+body.attention-active #alertFab,
+body.attention-active #alertMobileSheet,
+body.attention-active #alertToast {
+  display: none !important;
+}
+
+body.attention-active .attention-p0-page {
+  display: block !important;
+  width: 100%;
+}
+
+body.attention-active .app-shell {
+  min-height: 100vh;
+}
+
+.p0-fallback-note {
+  margin-top: 8px !important;
+  color: #f3c36f !important;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.p0-source-chain {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid var(--border, #30363d);
+  border-radius: 10px;
+  background: rgba(13, 17, 23, 0.5);
+  font-size: 11px;
+}
+
+.p0-source-chain > strong {
+  color: var(--text, #e6edf3);
+}
+
+.p0-source-chain a,
+.p0-source-chain span,
+.p0-source-chain small {
+  color: var(--muted, #8b949e);
+  overflow-wrap: anywhere;
+}
+
+.p0-source-chain a:hover {
+  color: var(--accent, #58a6ff);
+}

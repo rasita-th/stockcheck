@@ -12,6 +12,7 @@ PAIRS = [
     ("notification-phase2.css", "site/notification-phase2.css", "static/notification-phase2.css"),
     ("attention-p0.js", "site/attention-p0.js", "static/attention-p0.js"),
     ("attention-p0.css", "site/attention-p0.css", "static/attention-p0.css"),
+    ("today-view-isolation.css", "site/today-view-isolation.css", "static/today-view-isolation.css"),
 ]
 errors = []
 
@@ -32,8 +33,11 @@ for label, site_path, static_path in PAIRS:
 
 memo_js = read("site/memo-only-fix.js")
 memo_css = read("site/memo-only-fix.css")
+attention_js = read("site/attention-p0.js")
+today_css = read("site/today-view-isolation.css")
 coordinator_js = read("site/final-ui-coordinator.js")
 legacy_workflow = ROOT / ".github/workflows/fill-alert-center-content.yml"
+
 for forbidden in ('if (document.body.classList.contains("attention-active")) return true;', "data-memo-previous-display", 'style.setProperty("display", "none", "important")'):
     if forbidden in memo_js:
         errors.append(f"Memo guard contains legacy runtime hiding: {forbidden}")
@@ -41,12 +45,35 @@ if "attention-p0.js" not in memo_js:
     errors.append("Memo stability loader must load attention-p0.js")
 if "attention-p0.css" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-p0.css")
+if "today-view-isolation.css" not in memo_css:
+    errors.append("Memo stability stylesheet must import today-view-isolation.css")
 if "body.memo-active .attention-page" not in memo_css:
     errors.append("Memo CSS must explicitly hide the Today page")
 if "body.memo-active #memoPage.memo-page" not in memo_css:
     errors.append("Memo CSS must explicitly show only #memoPage")
 if "body.attention-active .attention-page" in memo_css and "display: block" in memo_css:
     errors.append("Memo CSS must not own Today page visibility")
+
+for token in (
+    "body.attention-active .portfolio-tabs",
+    "body.attention-active .workspace",
+    "body.attention-active .scanner-panel",
+    "body.attention-active .decision-screener",
+    "body.attention-active .lower-grid",
+    "body.attention-active .mobile-scan-btn",
+    "body.attention-active .bottom-sheet",
+    "body.attention-active .attention-p0-page",
+    "display: none !important",
+):
+    if token not in today_css:
+        errors.append(f"Today isolation CSS missing Scanner guard: {token}")
+
+for token in ("normalizePayload", "source_chain", "News & Events", "lastKnownGood", "render error"):
+    if token not in attention_js:
+        errors.append(f"Today runtime adapter missing: {token}")
+if 'definitions = [["primary_source", "Open source"], ["company_ir", "Company IR"], ["tradingview", "Chart"]]' not in attention_js:
+    errors.append("Today actions must not expose Scanner raw-data controls")
+
 for forbidden in ("insertBefore(", "appendChild(", "final-memo-primary", "final-scanner-secondary", "memoCandidates", "placeMemoBeforeScanner"):
     if forbidden in coordinator_js:
         errors.append(f"Height coordinator contains DOM relocation logic: {forbidden}")
