@@ -5,10 +5,14 @@ on:
     paths:
       - ".github/workflows/refresh-live-v9-1.yml"
       - ".github/workflows/validate-attention-p0.yml"
+      - ".github/workflows/deploy-pages.yml"
       - "scripts/generate_attention_p0.py"
       - "scripts/build_generated_layer.py"
       - "scripts/generate_health.py"
       - "scripts/validate_generated_data_v9_1.py"
+      - "scripts/validate_static_data.py"
+      - "scripts/smoke_test_site_v9_4_6.py"
+      - "scripts/prepare_stable_site_v9_4_1.py"
       - "scripts/check_ui_view_contract.py"
       - "tests/test_attention_p0.py"
       - "data/portfolio.json"
@@ -18,7 +22,9 @@ on:
       - "site/memo-only-fix.*"
       - "static/memo-only-fix.*"
       - "site/data/attention_today.json"
+      - "site/data/earnings_calendar.json"
       - "static/data/attention_today.json"
+      - "static/data/earnings_calendar.json"
 
 permissions:
   contents: read
@@ -26,17 +32,23 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Compile attention scripts
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Compile attention and Pages scripts
         run: |
           python -m py_compile scripts/generate_attention_p0.py
           python -m py_compile scripts/generate_health.py
           python -m py_compile scripts/validate_generated_data_v9_1.py
+          python -m py_compile scripts/validate_static_data.py
+          python -m py_compile scripts/smoke_test_site_v9_4_6.py
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
       - name: Run attention unit tests
         run: python -m unittest discover -s tests -p "test_attention_p0.py" -v
       - name: Build offline attention fixture
@@ -50,4 +62,14 @@ jobs:
           python scripts/generate_health.py
           python scripts/publish_generated_data.py
           python scripts/validate_generated_data_v9_1.py
+          python scripts/check_ui_view_contract.py
+      - name: Run the production Pages preflight
+        run: |
+          python scripts/prepare_stable_site_v9_4_1.py
+          node --check site/app.js
+          node --check site/app-shell-v9-4-6.js
+          node --check site/attention-p0.js
+          node --check site/memo-only-fix.js
+          python scripts/validate_static_data.py
+          python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py

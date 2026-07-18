@@ -60,6 +60,25 @@ def validate_market_pulse() -> None:
     print(f"market_pulse.json: schema {data.get('schema_version', 'legacy')} (legacy-compatible)")
 
 
+def validate_attention_p0() -> None:
+    path = SITE / "data" / "attention_today.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise SystemExit(f"{path}: root must be an object")
+    items = data.get("items")
+    if not isinstance(items, list):
+        raise SystemExit(f"{path}: items must be a list")
+    if len(items) > 7:
+        raise SystemExit(f"{path}: expected at most 7 items, found {len(items)}")
+    if str(data.get("schema_version") or "").startswith("2.0") is False:
+        raise SystemExit(f"{path}: expected P0 schema version")
+    if not isinstance(data.get("source_health"), dict):
+        raise SystemExit(f"{path}: source_health must be an object")
+    if data.get("coverage_status") not in {"complete", "partial"}:
+        raise SystemExit(f"{path}: invalid coverage_status")
+    print(f"attention_today.json: schema {data.get('schema_version')}, {len(items)} items")
+
+
 def main() -> None:
     version = deployment_version()
     require_text(SITE / "index.html", (
@@ -74,6 +93,18 @@ def main() -> None:
     require_text(SITE / "app-shell-v9-4-6.js", (
         "Scanner", "Today", "Memo", "Market Pulse",
         'data-app-view', "verifyDataAndRecover",
+    ))
+    require_text(SITE / "memo-only-fix.js", (
+        "attention-p0.js", "loadAttentionP0", "attention-active", "memo-active",
+    ))
+    require_text(SITE / "memo-only-fix.css", (
+        "attention-p0.css", "body.memo-active .attention-page",
+    ))
+    require_text(SITE / "attention-p0.js", (
+        "Today Attention", "coverage_status", "source_health", "verification_status",
+    ))
+    require_text(SITE / "attention-p0.css", (
+        ".attention-p0-page", ".p0-priority", ".p0-source-strip",
     ))
     require_text(SITE / "market.html", (
         'index.html#scanner', 'index.html#today', 'index.html#memo', 'Market Pulse',
@@ -93,6 +124,7 @@ def main() -> None:
     validate_json("technical.json", require_rows=True)
     validate_json("fundamental.json", require_rows=False)
     validate_market_pulse()
+    validate_attention_p0()
     print(f"v{version} static UI smoke test passed")
 
 
