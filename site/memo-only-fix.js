@@ -24,13 +24,35 @@
     else body.classList.remove("attention-active");
   }
 
+  function loadScript(src, datasetKey, onload) {
+    if (document.querySelector(`script[data-${datasetKey}]`)) return;
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = false;
+    script.dataset[datasetKey] = "true";
+    if (onload) script.addEventListener("load", onload, { once: true });
+    script.addEventListener("error", () => console.error(`Could not load ${src}`), { once: true });
+    document.head.appendChild(script);
+  }
+
+  function loadAttentionP3() {
+    loadScript("attention-pr3.js?v=10.3.0", "attentionPr3Loader");
+  }
+
   function loadAttentionP0() {
-    if (document.querySelector('script[data-attention-p0-loader]')) return;
+    if (document.querySelector("script[data-attention-p0-loader]")) {
+      loadAttentionP3();
+      return;
+    }
     const script = document.createElement("script");
     script.src = "attention-p0.js?v=10.2.0";
-    script.defer = true;
+    script.async = false;
     script.dataset.attentionP0Loader = "true";
-    script.addEventListener("error", () => console.error("Could not load attention-p0.js"), { once: true });
+    script.addEventListener("load", loadAttentionP3, { once: true });
+    script.addEventListener("error", () => {
+      console.error("Could not load attention-p0.js");
+      loadAttentionP3();
+    }, { once: true });
     document.head.appendChild(script);
   }
 
