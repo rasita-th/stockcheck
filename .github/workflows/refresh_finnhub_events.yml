@@ -1,0 +1,49 @@
+name: Refresh Finnhub Earnings Events
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Batch calendar plus priority ticker queue every 3 hours.
+    - cron: "17 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stockcheck-data-publisher
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements.txt
+      - name: Refresh events queue with key A
+        env:
+          FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
+          FINNHUB_EVENTS_MAX_CALLS_PER_RUN: "48"
+          FINNHUB_CALENDAR_TTL_HOURS: "3"
+          FINNHUB_MIN_DELAY_SECONDS: "1.25"
+        run: python scripts/finnhub_pipeline.py --mode events
+      - run: |
+          python -m unittest tests.test_finnhub_pipeline
+          python scripts/validate_static_data.py
+      - name: Publish event contracts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json \
+                  site/data/earnings_calendar.json site/data/eps_surprises.json site/data/finnhub_features.json \
+                  static/data/earnings_calendar.json static/data/eps_surprises.json static/data/finnhub_features.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh Finnhub earnings events"
+          git pull --rebase origin main
+          git push origin HEAD:main
