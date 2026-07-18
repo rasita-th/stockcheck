@@ -12,6 +12,8 @@ PAIRS = [
     ("notification-phase2.css", "site/notification-phase2.css", "static/notification-phase2.css"),
     ("attention-p0.js", "site/attention-p0.js", "static/attention-p0.js"),
     ("attention-p0.css", "site/attention-p0.css", "static/attention-p0.css"),
+    ("attention-pr3.js", "site/attention-pr3.js", "static/attention-pr3.js"),
+    ("attention-pr3.css", "site/attention-pr3.css", "static/attention-pr3.css"),
     ("today-view-isolation.css", "site/today-view-isolation.css", "static/today-view-isolation.css"),
 ]
 errors = []
@@ -34,6 +36,8 @@ for label, site_path, static_path in PAIRS:
 memo_js = read("site/memo-only-fix.js")
 memo_css = read("site/memo-only-fix.css")
 attention_js = read("site/attention-p0.js")
+pr3_js = read("site/attention-pr3.js")
+pr3_css = read("site/attention-pr3.css")
 today_css = read("site/today-view-isolation.css")
 coordinator_js = read("site/final-ui-coordinator.js")
 legacy_workflow = ROOT / ".github/workflows/fill-alert-center-content.yml"
@@ -42,11 +46,15 @@ for forbidden in ('if (document.body.classList.contains("attention-active")) ret
     if forbidden in memo_js:
         errors.append(f"Memo guard contains legacy runtime hiding: {forbidden}")
 if "attention-p0.js" not in memo_js or "10.2.0" not in memo_js:
-    errors.append("Memo stability loader must load attention-p0.js v10.2.0")
+    errors.append("Memo stability loader must load attention-p0.js v10.2.0 as fallback")
+if "attention-pr3.js?v=10.3.0" not in memo_js or "loadAttentionP3" not in memo_js:
+    errors.append("Memo stability loader must load attention-pr3.js v10.3.0 after the fallback")
 if "attention-p0.css" not in memo_css or "10.2.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-p0.css v10.2.0")
 if "today-view-isolation.css" not in memo_css:
     errors.append("Memo stability stylesheet must import today-view-isolation.css")
+if "attention-pr3.css?v=10.3.0" not in memo_css:
+    errors.append("Memo stability stylesheet must import attention-pr3.css v10.3.0")
 if "body.memo-active .attention-page" not in memo_css:
     errors.append("Memo CSS must explicitly hide the Today page")
 if "body.memo-active #memoPage.memo-page" not in memo_css:
@@ -81,13 +89,30 @@ for token in (
     "Today render error",
 ):
     if token not in attention_js:
-        errors.append(f"Today runtime adapter missing: {token}")
+        errors.append(f"Today PR2 fallback adapter missing: {token}")
 if 'window.StockcheckAttentionP0 = { version: "10.2.0"' not in attention_js:
-    errors.append("Today runtime version must be 10.2.0")
+    errors.append("Today fallback runtime version must be 10.2.0")
 if 'definitions = [["primary_source", "Open source"]' in attention_js:
     errors.append("Today must not expose legacy internal source actions")
 if "technical_json</" in attention_js:
     errors.append("Today UI must not render technical_json as visible source text")
+
+for token in (
+    "PR3 · PERSONAL RISK DESK",
+    "attention-p3-ready",
+    "เปลี่ยนจากรอบก่อน",
+    "ตรวจแล้ว",
+    "พัก 1 วัน",
+    "ซ่อนวันนี้",
+    "data-pr3-action",
+    "data-pr3-pref",
+    "StockcheckAttentionP3",
+):
+    if token not in pr3_js:
+        errors.append(f"Today PR3 runtime missing: {token}")
+for token in (".attention-p3-page", ".pr3-summary-grid", ".pr3-actions", "attention-p3-ready"):
+    if token not in pr3_css:
+        errors.append(f"Today PR3 CSS missing: {token}")
 
 for forbidden in ("insertBefore(", "appendChild(", "final-memo-primary", "final-scanner-secondary", "memoCandidates", "placeMemoBeforeScanner"):
     if forbidden in coordinator_js:
