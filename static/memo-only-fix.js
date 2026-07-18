@@ -15,48 +15,40 @@
   function enforceExclusiveView(explicitView = "") {
     const body = document.body;
     if (!body) return;
-
     const memoActive = body.classList.contains("memo-active");
     const attentionActive = body.classList.contains("attention-active");
     if (!memoActive || !attentionActive) return;
-
     const activeControl = document.querySelector("[data-app-view].active");
     const view = preferredView(explicitView || activeControl?.dataset.appView || "");
+    if (view === "attention") body.classList.remove("memo-active");
+    else body.classList.remove("attention-active");
+  }
 
-    if (view === "attention") {
-      body.classList.remove("memo-active");
-    } else {
-      body.classList.remove("attention-active");
-    }
+  function loadAttentionP0() {
+    if (document.querySelector('script[data-attention-p0-loader]')) return;
+    const script = document.createElement("script");
+    script.src = "attention-p0.js?v=10.0.0";
+    script.defer = true;
+    script.dataset.attentionP0Loader = "true";
+    script.addEventListener("error", () => console.error("Could not load attention-p0.js"), { once: true });
+    document.head.appendChild(script);
   }
 
   function boot() {
     enforceExclusiveView();
-
+    loadAttentionP0();
     document.addEventListener("click", (event) => {
       const control = event.target.closest?.("[data-app-view]");
       if (!control) return;
-
       const view = control.dataset.appView || "";
-      if (view === "memo") {
-        document.body.classList.remove("attention-active");
-      } else if (view === "attention") {
-        document.body.classList.remove("memo-active");
-      }
-
+      if (view === "memo") document.body.classList.remove("attention-active");
+      else if (view === "attention") document.body.classList.remove("memo-active");
       requestAnimationFrame(() => enforceExclusiveView(view));
     }, true);
-
     const classObserver = new MutationObserver(() => enforceExclusiveView());
-    classObserver.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["class"]
-    });
+    classObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot, { once: true });
-  } else {
-    boot();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
+  else boot();
 })();

@@ -1,0 +1,53 @@
+name: Validate Today Attention P0
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/refresh-live-v9-1.yml"
+      - ".github/workflows/validate-attention-p0.yml"
+      - "scripts/generate_attention_p0.py"
+      - "scripts/build_generated_layer.py"
+      - "scripts/generate_health.py"
+      - "scripts/validate_generated_data_v9_1.py"
+      - "scripts/check_ui_view_contract.py"
+      - "tests/test_attention_p0.py"
+      - "data/portfolio.json"
+      - "data/earnings_calendar.json"
+      - "site/attention-p0.*"
+      - "static/attention-p0.*"
+      - "site/memo-only-fix.*"
+      - "static/memo-only-fix.*"
+      - "site/data/attention_today.json"
+      - "static/data/attention_today.json"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile attention scripts
+        run: |
+          python -m py_compile scripts/generate_attention_p0.py
+          python -m py_compile scripts/generate_health.py
+          python -m py_compile scripts/validate_generated_data_v9_1.py
+      - name: Run attention unit tests
+        run: python -m unittest discover -s tests -p "test_attention_p0.py" -v
+      - name: Build offline attention fixture
+        env:
+          STOCKCHECK_ATTENTION_OFFLINE: "1"
+          ATTENTION_MAX_ITEMS: "7"
+        run: python scripts/generate_attention_p0.py
+      - name: Validate generated schema and UI isolation
+        run: |
+          python scripts/build_generated_layer.py
+          python scripts/generate_health.py
+          python scripts/publish_generated_data.py
+          python scripts/validate_generated_data_v9_1.py
+          python scripts/check_ui_view_contract.py
