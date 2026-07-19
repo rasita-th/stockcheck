@@ -1,11 +1,43 @@
 (() => {
   "use strict";
 
-  const VERSION = "9.6.2";
+  const VERSION = "9.6.3";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   let frame = 0;
   let detailReturnFocus = null;
+  let detailLogoFrame = 0;
+  let detailLogoRetry = 0;
+
+  function syncStockDetailLogos() {
+    cancelAnimationFrame(detailLogoFrame);
+    detailLogoFrame = requestAnimationFrame(() => {
+      const identities = document.querySelectorAll(
+        "body.stock-detail-open #detailPanel .detail-identity, #mobileDetailModal:not([hidden]) .detail-identity"
+      );
+      if (!identities.length) return;
+      const adapter = window.StockcheckCompanyLogo;
+      if (!adapter?.markup) {
+        clearTimeout(detailLogoRetry);
+        detailLogoRetry = window.setTimeout(syncStockDetailLogos, 250);
+        return;
+      }
+      clearTimeout(detailLogoRetry);
+      identities.forEach((identity) => {
+        if (identity.querySelector("[data-logo-shell]")) return;
+        const mark = identity.querySelector(".logo-box");
+        const ticker = identity.querySelector("h2, strong")?.textContent?.trim();
+        if (!mark || !ticker) return;
+        const template = document.createElement("template");
+        template.innerHTML = adapter.markup(
+          { ticker },
+          `${mark.className} stock-detail-company-logo`
+        );
+        const logo = template.content.firstElementChild;
+        if (logo) mark.replaceWith(logo);
+      });
+    });
+  }
 
   function scannerViewIsActive() {
     return !document.body.classList.contains("memo-active")
@@ -65,6 +97,7 @@
     if (backdrop) backdrop.hidden = true;
     if (restoreFocus && detailReturnFocus instanceof HTMLElement) detailReturnFocus.focus({ preventScroll: true });
     detailReturnFocus = null;
+    clearTimeout(detailLogoRetry);
   }
 
   function openStockDetail(trigger) {
@@ -77,6 +110,7 @@
     panel.setAttribute("aria-hidden", "false");
     backdrop.hidden = false;
     document.body.classList.add("stock-detail-open");
+    syncStockDetailLogos();
     requestAnimationFrame(() => panel.querySelector("[data-close-stock-detail]")?.focus());
   }
 
@@ -159,6 +193,13 @@
     window.addEventListener("pageshow", syncAlertHeight);
     document.addEventListener("click", () => requestAnimationFrame(syncAlertHeight), true);
 
+    const detailObserver = new MutationObserver(syncStockDetailLogos);
+    ["#detailCard", "#mobileDetailBody"].forEach((selector) => {
+      const element = document.querySelector(selector);
+      if (element) detailObserver.observe(element, { childList: true, subtree: true });
+    });
+    document.addEventListener("click", syncStockDetailLogos, true);
+
     bindStockDetail();
     ensurePageGuides();
     closeStockDetail({ restoreFocus: false });
@@ -177,3 +218,4 @@
     boot();
   }
 })();
+
