@@ -10,7 +10,7 @@ from generate_earnings_radar import generate as generate_earnings_radar
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "10.3.1"
+VERSION = "10.7.0"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
