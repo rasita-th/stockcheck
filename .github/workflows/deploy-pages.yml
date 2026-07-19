@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.3.1"
+  TODAY_DEPLOY_VERSION: "10.4.0"
 
 jobs:
   build:
@@ -57,6 +57,7 @@ jobs:
           node --check site/memo-only-fix.js
           node --check site/attention-p0.js
           node --check site/attention-pr3.js
+          node --check site/attention-pr4.js
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
@@ -102,7 +103,7 @@ jobs:
               path.write_text(text, encoding="utf-8")
           PY
 
-      - name: Verify final PR3 artifact
+      - name: Verify final PR4 artifact
         shell: bash
         run: |
           set -euo pipefail
@@ -111,6 +112,8 @@ jobs:
           test -s site/attention-p0.css
           test -s site/attention-pr3.js
           test -s site/attention-pr3.css
+          test -s site/attention-pr4.js
+          test -s site/attention-pr4.css
           test -s site/memo-only-fix.js
           test -s site/memo-only-fix.css
           test -s site/today-view-isolation.css
@@ -119,22 +122,24 @@ jobs:
           grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
           grep -Fq 'attention-pr3.js?v=10.3.0' site/memo-only-fix.js
+          grep -Fq 'attention-pr4.js?v=10.4.0' site/memo-only-fix.js
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.1' site/memo-only-fix.css
           grep -Fq 'attention-pr3.css?v=10.3.0' site/memo-only-fix.css
-          grep -Fq 'PR3 · PERSONAL RISK DESK' site/attention-pr3.js
-          grep -Fq 'เปลี่ยนจากรอบก่อน' site/attention-pr3.js
-          grep -Fq 'พัก 1 วัน' site/attention-pr3.js
-          grep -Fq 'ซ่อนวันนี้' site/attention-pr3.js
-          grep -Fq 'data-pr3-action' site/attention-pr3.js
-          grep -Fq 'StockcheckAttentionP3' site/attention-pr3.js
-          grep -Fq 'attention-p3-ready' site/attention-pr3.css
-          if grep -Fq 'Unverified report' site/attention-pr3.js; then
-            echo 'Legacy English verification UI remains in PR3 renderer'
+          grep -Fq 'attention-pr4.css?v=10.4.0' site/memo-only-fix.css
+          grep -Fq 'PR4 · DECISION-FIRST TODAY' site/attention-pr4.js
+          grep -Fq 'p4-catalyst-hero' site/attention-pr4.js
+          grep -Fq 'p4-technical-grid' site/attention-pr4.js
+          grep -Fq 'data-p4-action' site/attention-pr4.js
+          grep -Fq 'StockcheckAttentionP4' site/attention-pr4.js
+          grep -Fq 'attention-p4-ready' site/attention-pr4.css
+          grep -Fq 'body.attention-p4-ready #attentionPageP3' site/attention-pr4.css
+          if grep -Fq 'Unverified report' site/attention-pr4.js; then
+            echo 'Legacy English verification UI remains in PR4 renderer'
             exit 1
           fi
-          if grep -Fq 'technical_json' site/attention-pr3.js; then
-            echo 'Internal technical source is exposed in PR3 renderer'
+          if grep -Fq 'technical_json' site/attention-pr4.js; then
+            echo 'Internal technical source is exposed in PR4 renderer'
             exit 1
           fi
 
@@ -161,7 +166,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed PR3 Today UI
+      - name: Smoke test deployed PR4 Today UI
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -178,7 +183,8 @@ jobs:
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.css?smoke=${nonce}" -o /tmp/memo-only-fix.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr3.js?smoke=${nonce}" -o /tmp/attention-pr3.js || return 1
-            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr3.css?smoke=${nonce}" -o /tmp/attention-pr3.css || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.js?smoke=${nonce}" -o /tmp/attention-pr4.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.css?smoke=${nonce}" -o /tmp/attention-pr4.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html || return 1
@@ -188,25 +194,27 @@ jobs:
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq 'attention-p0.js?v=10.2.0' /tmp/memo-only-fix.js || return 1
             grep -Fq 'attention-pr3.js?v=10.3.0' /tmp/memo-only-fix.js || return 1
-            grep -Fq 'attention-pr3.css?v=10.3.0' /tmp/memo-only-fix.css || return 1
-            grep -Fq 'PR3 · PERSONAL RISK DESK' /tmp/attention-pr3.js || return 1
-            grep -Fq 'เปลี่ยนจากรอบก่อน' /tmp/attention-pr3.js || return 1
-            grep -Fq 'พัก 1 วัน' /tmp/attention-pr3.js || return 1
-            grep -Fq 'data-pr3-action' /tmp/attention-pr3.js || return 1
-            grep -Fq 'StockcheckAttentionP3' /tmp/attention-pr3.js || return 1
-            grep -Fq 'attention-p3-ready' /tmp/attention-pr3.css || return 1
+            grep -Fq 'attention-pr4.js?v=10.4.0' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'attention-pr4.css?v=10.4.0' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'PR4 · DECISION-FIRST TODAY' /tmp/attention-pr4.js || return 1
+            grep -Fq 'p4-catalyst-hero' /tmp/attention-pr4.js || return 1
+            grep -Fq 'p4-technical-grid' /tmp/attention-pr4.js || return 1
+            grep -Fq 'data-p4-action' /tmp/attention-pr4.js || return 1
+            grep -Fq 'StockcheckAttentionP4' /tmp/attention-pr4.js || return 1
+            grep -Fq 'attention-p4-ready' /tmp/attention-pr4.css || return 1
+            grep -Fq 'body.attention-p4-ready #attentionPageP3' /tmp/attention-pr4.css || return 1
             grep -Fq 'body.attention-active .workspace' /tmp/today-view-isolation.css || return 1
             grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
             grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
-            ! grep -Fq 'Unverified report' /tmp/attention-pr3.js || return 1
-            ! grep -Fq 'technical_json' /tmp/attention-pr3.js || return 1
+            ! grep -Fq 'Unverified report' /tmp/attention-pr4.js || return 1
+            ! grep -Fq 'technical_json' /tmp/attention-pr4.js || return 1
           }
 
           ready=false
           for attempt in $(seq 1 30); do
             nonce="$(date +%s)-${attempt}"
-            echo "Production PR3 smoke attempt ${attempt}: ${BASE}"
+            echo "Production PR4 smoke attempt ${attempt}: ${BASE}"
             if fetch_and_check_ui "$nonce"; then
               ready=true
               break
@@ -214,7 +222,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo 'GitHub Pages did not serve the PR3 Today workflow'
+            echo 'GitHub Pages did not serve the PR4 Today hierarchy'
             exit 1
           fi
 
@@ -228,7 +236,7 @@ jobs:
           if not isinstance(attention, dict):
               raise SystemExit('deployed attention payload must be an object')
           if not str(attention.get('contract_version') or '').startswith('3.0'):
-              raise SystemExit('deployed Today contract is not PR3 3.0')
+              raise SystemExit('deployed Today data contract is not PR3 3.0 compatible')
           items = attention.get('items')
           technical_watch = attention.get('technical_watch')
           if not isinstance(items, list) or not isinstance(technical_watch, list):
@@ -261,6 +269,7 @@ jobs:
               'page_url': os.environ['PAGE_URL'],
               'source_commit': os.environ['GITHUB_SHA'],
               'asset_version': os.environ['EXPECTED_VERSION'],
+              'ui_runtime': 'PR4 decision-first hierarchy',
               'contract_version': attention.get('contract_version'),
               'data_updated_at': attention.get('updated_at'),
               'catalyst_count': len(items),
@@ -272,7 +281,7 @@ jobs:
               json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
               encoding='utf-8',
           )
-          print(f"Deployed PR3 verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
+          print(f"Deployed PR4 verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
           PY
 
       - name: Checkout main for deployment receipt
@@ -293,6 +302,6 @@ jobs:
             echo "Deployment receipt is unchanged."
             exit 0
           fi
-          git commit -m "Record verified PR3 Pages deployment"
+          git commit -m "Record verified PR4 Pages deployment"
           git pull --rebase origin main
           git push origin HEAD:main
