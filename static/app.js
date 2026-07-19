@@ -5,7 +5,7 @@
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-const BUILD_VERSION = "v8.2.0 Personal Portfolio Adapter";
+const BUILD_VERSION = "v8.2.0 Personal Portfolio Today";
 
 const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
 // Keep first-run onboarding intentionally compact: exactly 10 examples.
@@ -1692,7 +1692,7 @@ function renderPortfolioTabs(newName = null, newKey = null) {
   const nav = $(".portfolio-tabs");
   if (!nav) return;
   const builtIns = [
-    ["default", "⭐ Default"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
+    ["default", "💼 My Portfolio"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
   ];
   const saved = getScreeners();
   const custom = Object.keys(saved).filter(k => !builtIns.some(([key]) => key === k)).slice(0, 4).map(k => [k, `⭐ ${k}`]);
@@ -3516,7 +3516,7 @@ if (state.staticMode || isStaticDeployHost()) {
 (function v69MobileScreenerCreationFix(){
   const BUILT_INS = new Set(["default", "momentum", "thai", "dividend", "quality"]);
   const builtInTabs = [
-    ["default", "⭐ Default"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
+    ["default", "💼 My Portfolio"], ["momentum", "🚀 Momentum"], ["thai", "🇹🇭 Thai"], ["dividend", "🏦 Dividend"], ["quality", "🧱 High Quality"],
   ];
   const isMobile = () => window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
   const slugify = (name) => String(name || "")
@@ -3667,7 +3667,7 @@ if (state.staticMode || isStaticDeployHost()) {
 (function v70HardFixMobileScreenerRender(){
   const BUILT_INS = new Set(["default", "momentum", "thai", "dividend", "quality"]);
   const BUILTIN_TABS = [
-    ["default", "⭐ Default"],
+    ["default", "💼 My Portfolio"],
     ["momentum", "🚀 Momentum"],
     ["thai", "🇹🇭 Thai"],
     ["dividend", "🏦 Dividend"],
@@ -3911,7 +3911,7 @@ if (state.staticMode || isStaticDeployHost()) {
 (function v71MobileReserveScreeners(){
   const MOBILE_QUERY = "(max-width: 767px)";
   const reserveTabs = [
-    ["default", "Default"],
+    ["default", "My Portfolio"],
     ["momentum", "Momentum"],
     ["thai", "Thai"],
     ["port1", "Port 1"],
@@ -4037,7 +4037,7 @@ if (state.staticMode || isStaticDeployHost()) {
       e.stopImmediatePropagation();
       try {
         const el = document.getElementById("activeScreenerLabel");
-        if (el) el.textContent = `Active screener: ${getAll()[state.activeScreener]?.label || state.activeScreener || "Default"}`;
+        if (el) el.textContent = `Active screener: ${getAll()[state.activeScreener]?.label || state.activeScreener || "My Portfolio"}`;
         openSheet("screenerSettingsSheet");
       } catch (err) {
         alert(`Active screener: ${state.activeScreener || "default"}`);
@@ -4106,7 +4106,7 @@ if (state.staticMode || isStaticDeployHost()) {
   const MOBILE_QUERY = "(max-width: 767px)";
   const mobile = () => window.matchMedia && window.matchMedia(MOBILE_QUERY).matches;
   const fixedTabs = [
-    ["default", "Default"],
+    ["default", "My Portfolio"],
     ["momentum", "Momentum"],
     ["thai", "Thai"],
     ["port1", "Port 1"],
@@ -4283,7 +4283,7 @@ if (state.staticMode || isStaticDeployHost()) {
       e.stopImmediatePropagation();
       try {
         const screeners = ensureFixedScreeners();
-        const label = screeners[state.activeScreener || "default"]?.label || state.activeScreener || "Default";
+        const label = screeners[state.activeScreener || "default"]?.label || state.activeScreener || "My Portfolio";
         const el = document.getElementById("activeScreenerLabel");
         if (el) el.textContent = `Active screener: ${label}`;
         openSheet("screenerSettingsSheet");
