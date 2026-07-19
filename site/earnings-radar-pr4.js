@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.5.0";
+  const VERSION = "10.5.1";
   const DATA_URL = "data/earnings_radar.json";
   const PAGE_SIZE = 30;
   const FILTERS = [
@@ -132,7 +132,9 @@
   }
 
   function tickerMark(item) {
-    return `<span class="er-ticker-mark">${esc(String(item.ticker || "?").slice(0, 2))}</span>`;
+    const logoMarkup = window.StockcheckCompanyLogo?.markup;
+    if (typeof logoMarkup === "function") return logoMarkup(item, "er-ticker-mark");
+    return `<span class="er-ticker-mark" data-logo-shell><span data-logo-fallback>${esc(String(item.ticker || "?").slice(0, 2))}</span></span>`;
   }
 
   function selectedSummaryCards() {
