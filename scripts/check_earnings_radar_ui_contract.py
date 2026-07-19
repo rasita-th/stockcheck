@@ -54,7 +54,7 @@ for token in (
     "Earnings Radar",
     "Earnings Calendar",
     "เกี่ยวข้องกับหุ้นของคุณ",
-    "หุ้นในพอร์ตใกล้ประกาศ",
+    "หุ้นในพอร์ตที่ใกล้ประกาศงบ",
     "StockcheckCompanyLogo",
     "tickerMark",
 ):
