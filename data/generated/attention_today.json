@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-19T03:58:04+00:00",
+  "updated_at": "2026-07-19T05:57:56+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -79,7 +79,7 @@
       "priority": "Action",
       "priority_score": 67,
       "why_today": [
-        "Earnings are scheduled within 4 days (after market)."
+        "Earnings are scheduled within 3 days (after market)."
       ],
       "event_type": "earnings",
       "event_subtype": "earnings_upcoming",
@@ -102,13 +102,13 @@
           "ticker": "TSLA",
           "event_type": "earnings",
           "event_subtype": "earnings_upcoming",
-          "headline": "Earnings in 4 days",
+          "headline": "Earnings in 3 days",
           "summary": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
-          "why_today": "Earnings are scheduled within 4 days (after market).",
+          "why_today": "Earnings are scheduled within 3 days (after market).",
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-19T03:56:23.703499+00:00",
+          "detected_at": "2026-07-19T05:56:07.705745+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -118,7 +118,7 @@
           },
           "earnings_status": "confirmed",
           "earnings_timing": "after_market",
-          "days_to_event": 4,
+          "days_to_event": 3,
           "priority_score": 67,
           "priority": "Action",
           "verification_level": "confirmed_primary",
@@ -147,7 +147,7 @@
       "severity": "medium",
       "primary_trigger": "earnings_upcoming",
       "signals": [
-        "Earnings are scheduled within 4 days (after market)."
+        "Earnings are scheduled within 3 days (after market)."
       ],
       "change": {
         "status": "ongoing",
@@ -362,77 +362,77 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TE",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "INDI",
+      "ticker": "NBIS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "TEM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
       "message": "GDELT response unavailable"
     }
   ],
@@ -510,7 +510,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-19T03:58:04+00:00",
+          "detected_at": "2026-07-19T05:57:56+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -530,7 +530,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 1,
+          "scan_age_days": 2,
           "rsi14": 31.02,
           "pct_vs_ema20": -19.07,
           "pct_vs_ema200": -53.15,
@@ -609,7 +609,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-19T03:58:04+00:00",
+          "detected_at": "2026-07-19T05:57:56+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -629,7 +629,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 1,
+          "scan_age_days": 2,
           "rsi14": 26.19,
           "pct_vs_ema20": -23.27,
           "pct_vs_ema200": -29.13,
@@ -708,7 +708,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-17",
-          "detected_at": "2026-07-19T03:58:04+00:00",
+          "detected_at": "2026-07-19T05:57:56+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -728,7 +728,7 @@
           ],
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 1,
+          "scan_age_days": 2,
           "rsi14": 56.94,
           "pct_vs_ema20": 3.64,
           "pct_vs_ema200": 14.6,
