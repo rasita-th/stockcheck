@@ -25,7 +25,10 @@
   }
 
   function loadScript(src, datasetKey, onload) {
-    if (document.querySelector(`script[data-${datasetKey}]`)) return;
+    if (document.querySelector(`script[data-${datasetKey}]`)) {
+      if (onload) onload();
+      return;
+    }
     const script = document.createElement("script");
     script.src = src;
     script.async = false;
@@ -35,8 +38,12 @@
     document.head.appendChild(script);
   }
 
+  function loadAttentionP4() {
+    loadScript("attention-pr4.js?v=10.4.0", "attentionPr4Loader");
+  }
+
   function loadAttentionP3() {
-    loadScript("attention-pr3.js?v=10.3.0", "attentionPr3Loader");
+    loadScript("attention-pr3.js?v=10.3.0", "attentionPr3Loader", loadAttentionP4);
   }
 
   function loadAttentionP0() {
