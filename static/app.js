@@ -5,7 +5,7 @@
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-const BUILD_VERSION = "v8.2.0 Personal Portfolio Today";
+const BUILD_VERSION = "v8.2.1 Mobile Portfolio Sync";
 
 const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
 // Keep first-run onboarding intentionally compact: exactly 10 examples.
@@ -4136,29 +4136,42 @@ if (state.staticMode || isStaticDeployHost()) {
     savedAt: new Date().toISOString(),
     v8Stable: true,
   });
+  const LEGACY_MY_PORTFOLIO_LABELS = new Set(["", "Default", "⭐ Default", "💼 Default", "💼 My Portfolio"]);
   function ensureFixedScreeners(){
     const screeners = getStore();
     let changed = false;
     fixedTabs.forEach(([key, label]) => {
       const existing = screeners[key] || {};
-      if (!screeners[key] || !Array.isArray(existing.watchlist)) {
-        screeners[key] = {
-          label: existing.label || existing.name || label,
-          name: existing.name || existing.label || label,
-          watchlist: normalizeTickers(existing.watchlist || defaultLists[key] || []),
-          filters: { ...state.filters, ...(existing.filters || {}) },
-          columns: { ...state.columns, ...(existing.columns || {}) },
-          scannerTab: existing.scannerTab || state.scannerTab || "technical",
-          mobileView: existing.mobileView || state.mobileView || "cards",
-          sortKey: existing.sortKey || state.sortKey || "score",
-          sortAsc: !!existing.sortAsc,
-          savedAt: existing.savedAt || new Date().toISOString(),
-          reserved: true,
-          v8Stable: true,
-        };
-        changed = true;
-      } else if (!existing.reserved || !existing.v8Stable) {
-        screeners[key] = { ...existing, reserved: true, v8Stable: true, label: existing.label || existing.name || label, name: existing.name || existing.label || label };
+      const savedLabel = String(existing.label || existing.name || label).trim();
+      const savedName = String(existing.name || existing.label || label).trim();
+      const nextLabel = key === "default" && LEGACY_MY_PORTFOLIO_LABELS.has(savedLabel) ? label : savedLabel;
+      const nextName = key === "default" && LEGACY_MY_PORTFOLIO_LABELS.has(savedName) ? label : savedName;
+      const existingWatchlist = normalizeTickers(Array.isArray(existing.watchlist) ? existing.watchlist : []);
+      const nextWatchlist = key === "default"
+        ? normalizeTickers(loadMyPortfolio())
+        : normalizeTickers(Array.isArray(existing.watchlist) ? existing.watchlist : (defaultLists[key] || []));
+      const next = {
+        ...existing,
+        label: nextLabel,
+        name: nextName,
+        watchlist: nextWatchlist,
+        filters: { ...state.filters, ...(existing.filters || {}) },
+        columns: { ...state.columns, ...(existing.columns || {}) },
+        scannerTab: existing.scannerTab || state.scannerTab || "technical",
+        mobileView: existing.mobileView || state.mobileView || "cards",
+        sortKey: existing.sortKey || state.sortKey || "score",
+        sortAsc: !!existing.sortAsc,
+        savedAt: existing.savedAt || new Date().toISOString(),
+        reserved: true,
+        v8Stable: true,
+      };
+      if (!screeners[key]
+          || nextLabel !== savedLabel
+          || nextName !== savedName
+          || JSON.stringify(nextWatchlist) !== JSON.stringify(existingWatchlist)
+          || !existing.reserved
+          || !existing.v8Stable) {
+        screeners[key] = next;
         changed = true;
       }
     });
@@ -4291,6 +4304,20 @@ if (state.staticMode || isStaticDeployHost()) {
       return;
     }
   }, true);
+  function syncMobileMyPortfolio(){
+    ensureFixedScreeners();
+    if ((state.activeScreener || "default") === "default") {
+      state.watchlist = normalizeTickers(loadMyPortfolio());
+      state.selected = state.watchlist[0] || state.selected || "NVDA";
+      try { renderAll(); } catch (err) { console.warn("mobile My Portfolio render failed", err); }
+    } else if (mobile()) {
+      renderMobileTabsV80();
+    }
+  }
+  window.addEventListener("stockcheck:portfolio-change", syncMobileMyPortfolio);
+  window.addEventListener("storage", (event) => {
+    if ([STORAGE.myPortfolio, STORAGE.screeners, STORAGE.watchlist].includes(event.key)) syncMobileMyPortfolio();
+  });
   window.__stockcheckDiagnosticsV80 = function(){
     const screeners = getStore();
     const memosRaw = localStorage.getItem("stockTimingRadar.memos.v55") || "[]";
