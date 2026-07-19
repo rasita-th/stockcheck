@@ -41,7 +41,7 @@ for token in (
         errors.append(f"missing local portfolio personalization: {token}")
 
 for token in (
-    'const VERSION = "10.5.1"',
+    'const VERSION = "10.7.1"',
     'const DATA_URL = "data/earnings_radar.json"',
     "chooseInitialDate",
     "daily_summary",
@@ -53,7 +53,7 @@ for token in (
     "StockcheckEarningsRadarP4",
     "Earnings Radar",
     "Earnings Calendar",
-    "เกี่ยวข้องกับพอร์ตคุณ",
+    "เกี่ยวข้องกับหุ้นของคุณ",
     "หุ้นในพอร์ตใกล้ประกาศ",
     "StockcheckCompanyLogo",
     "tickerMark",
