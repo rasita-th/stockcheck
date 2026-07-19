@@ -234,6 +234,21 @@ body:not(.attention-active) #attentionPageP4 {
   color: var(--tone);
   font: 800 17px "IBM Plex Mono", monospace;
 }
+.p4-ticker-mark img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: 9px;
+}
+.p4-ticker-mark img[hidden],
+.p4-ticker-mark [data-logo-fallback][hidden] { display: none !important; }
+.p4-ticker-mark [data-logo-fallback] {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
 .p4-ticker-block strong,
 .p4-ticker-block span { display: block; }
 .p4-ticker-block > div > strong {
