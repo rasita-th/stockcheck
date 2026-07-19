@@ -448,9 +448,15 @@
     state.error = null;
     render();
     try {
-      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
-      state.data = validatePayload(await response.json());
+      let payload;
+      if (typeof window.StockcheckAttentionDataStore?.load === "function") {
+        payload = await window.StockcheckAttentionDataStore.load();
+      } else {
+        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
+        payload = await response.json();
+      }
+      state.data = validatePayload(payload);
     } catch (error) {
       state.error = error?.message || String(error);
       state.data = null;
