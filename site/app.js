@@ -58,6 +58,7 @@ let state = {
   },
   lastScanAt: null,
   watchlist: loadWatchlist(),
+  portfolioIsFirstRun: !hasPersistedPortfolio(),
   rows: [],
   quotes: {},
   errors: [],
@@ -114,11 +115,21 @@ function saveMyPortfolio(tickers) {
     localStorage.setItem(STORAGE.myPortfolio, serialized);
     window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
   }
+  if (typeof state === "object" && state) state.portfolioIsFirstRun = false;
   return portfolio;
 }
 
+function hasPersistedPortfolio() {
+  try {
+    return [STORAGE.myPortfolio, STORAGE.screeners, STORAGE.watchlist]
+      .some((key) => localStorage.getItem(key) !== null);
+  } catch (_) {
+    return false;
+  }
+}
+
 function loadWatchlist() {
-  return loadMyPortfolio();
+  return hasPersistedPortfolio() ? loadMyPortfolio() : [...BASE_WATCHLIST];
 }
 
 function saveWatchlist() {
@@ -615,6 +626,10 @@ function renderTechnicalTable() {
   }
   const rows = scannerStocks();
   if (!rows.length) {
+    if (!state.watchlist.length) {
+      body.innerHTML = `<tr><td colspan="${Math.max(cols.length, 1)}" class="muted-empty">My Portfolio ยังว่างอยู่ <button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></td></tr>`;
+      return;
+    }
     let hint = state.errors?.length
       ? `Scan failed / no market data returned. First error: ${esc(state.errors[0].symbol || "")}: ${esc(state.errors[0].error || "")}`
       : "No stocks passed filters. Try lowering score or unchecking filters.";
@@ -635,7 +650,9 @@ function renderTechnicalMobile() {
   const rows = scannerStocks();
 
   if (!rows.length) {
-    wrap.innerHTML = `<div class="mobile-empty">No stocks passed filters.</div>`;
+    wrap.innerHTML = !state.watchlist.length
+      ? `<div class="mobile-empty">My Portfolio ยังว่างอยู่ <button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></div>`
+      : `<div class="mobile-empty">No stocks passed filters.</div>`;
     return;
   }
 
@@ -667,7 +684,12 @@ function renderTechnicalMobileTable() {
   const body = $("#technicalMobileTableBody");
   if (!body) return;
   const rows = scannerStocks();
-  if (!rows.length) { body.innerHTML = `<tr><td class="sticky-col">No result</td><td colspan="7">Adjust filters</td></tr>`; return; }
+  if (!rows.length) {
+    body.innerHTML = !state.watchlist.length
+      ? `<tr><td class="sticky-col">My Portfolio</td><td colspan="7"><button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></td></tr>`
+      : `<tr><td class="sticky-col">No result</td><td colspan="7">Adjust filters</td></tr>`;
+    return;
+  }
   body.innerHTML = rows.map(s => `
     <tr class="${s.ticker === state.selected ? "active-row" : ""} ${s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : ""}" data-select="${esc(s.ticker)}">
       <td class="sticky-col"><strong class="num">${esc(s.ticker)}</strong><span>${esc(s.company || s.exchange || "")}</span></td>
@@ -1550,8 +1572,9 @@ function closeChartModal() {
 function addSymbolsBulk(rawText = "", mode = "append") {
   const tickers = parseTickerList(rawText);
   if (!tickers.length) return { total: 0, added: [], existing: [] };
-  const before = new Set(state.watchlist);
-  if (mode === "replace") state.watchlist = [];
+  const replacingExamples = Boolean(state.portfolioIsFirstRun);
+  const before = new Set(replacingExamples ? [] : state.watchlist);
+  if (mode === "replace" || replacingExamples) state.watchlist = [];
   tickers.forEach(t => {
     if (!state.watchlist.includes(t)) state.watchlist.push(t);
     if (!state.rows.some(r => normalizeTicker(r.symbol) === t)) state.rows.push({ symbol: t, signal: "NEUTRAL", score: 0 });
@@ -2047,6 +2070,10 @@ function renderStatus() {
   if (!subtitle || state.loading) return;
   const err = state.errors?.length ? ` · ${state.errors.length} errors` : "";
   const when = state.lastScanAt ? ` · Last scan ${state.lastScanAt}` : "";
+  if (state.portfolioIsFirstRun) {
+    subtitle.textContent = `ตัวอย่างเริ่มต้น ${state.watchlist.length} หุ้น · เพิ่มหุ้นแรกเพื่อสร้าง My Portfolio · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
+    return;
+  }
   subtitle.textContent = `Showing ${currentStocks().length} pass / ${state.lastScanSymbols.length || state.rows.length || state.watchlist.length} watchlist · table keeps filtered rows dimmed · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
   updateMobileSortLabel();
 }
