@@ -1,0 +1,134 @@
+name: Materialize Logo Budget PR
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "scripts/apply_company_logo_budget.py"
+      - "scripts/check_company_logo_budget.py"
+      - "scripts/sync_attention_assets.py"
+      - "site/memo-only-fix.js"
+      - ".github/workflows/materialize-logo-budget-pr.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: materialize-logo-budget-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    if: github.head_ref == 'agent/pr4f-budgeted-company-logos-v4'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 1
+          show-progress: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Apply budgeted runtime and mirrors
+        run: |
+          set -euo pipefail
+          python scripts/apply_company_logo_budget.py
+          python scripts/sync_attention_assets.py
+
+      - name: Update production and regression guards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(name, old, new, expected=1):
+              path = Path(name)
+              text = path.read_text(encoding="utf-8")
+              count = text.count(old)
+              print(f"{name}: {old!r} -> {count}")
+              if count != expected:
+                  raise SystemExit(f"{name}: expected {expected}, found {count}")
+              path.write_text(text.replace(old, new), encoding="utf-8")
+
+          deploy = ".github/workflows/deploy-pages.yml"
+          replace_exact(deploy, 'TODAY_DEPLOY_VERSION: "10.5.6"', 'TODAY_DEPLOY_VERSION: "10.6.0"')
+          replace_exact(
+              deploy,
+              'python -m py_compile scripts/prepare_stable_site_v9_4_1.py scripts/sync_attention_assets.py',
+              'python -m py_compile scripts/prepare_stable_site_v9_4_1.py scripts/apply_company_logo_budget.py scripts/sync_attention_assets.py scripts/check_company_logo_budget.py',
+          )
+          replace_exact(
+              deploy,
+              'python scripts/prepare_stable_site_v9_4_1.py\n          python scripts/sync_attention_assets.py',
+              'python scripts/prepare_stable_site_v9_4_1.py\n          python scripts/apply_company_logo_budget.py\n          python scripts/sync_attention_assets.py',
+          )
+          replace_exact(
+              deploy,
+              '          python scripts/check_earnings_radar_activation.py',
+              '          python scripts/check_earnings_radar_activation.py\n          python scripts/check_company_logo_budget.py',
+          )
+          replace_exact(deploy, 'attention-pr4.js?v=10.4.3', 'attention-pr4.js?v=10.4.4', expected=2)
+          replace_exact(
+              deploy,
+              "          grep -Fq 'loadPersonalTickers' site/attention-pr4.js",
+              "          grep -Fq 'loadPersonalTickers' site/attention-pr4.js\n          grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' site/attention-pr4.js\n          grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' site/attention-pr4.js\n          grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' site/attention-pr4.js",
+          )
+          replace_exact(
+              deploy,
+              "            grep -Fq 'loadPersonalTickers' /tmp/attention-pr4.js || return 1",
+              "            grep -Fq 'loadPersonalTickers' /tmp/attention-pr4.js || return 1\n            grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' /tmp/attention-pr4.js || return 1\n            grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' /tmp/attention-pr4.js || return 1\n            grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' /tmp/attention-pr4.js || return 1",
+          )
+
+          activation = "scripts/check_earnings_radar_activation.py"
+          replace_exact(activation, 'attention-pr4.js?v=10.4.3', 'attention-pr4.js?v=10.4.4')
+          replace_exact(activation, 'TODAY_DEPLOY_VERSION: "10.5.6"', 'TODAY_DEPLOY_VERSION: "10.6.0"')
+          replace_exact(
+              activation,
+              '    "earnings_published_rows",',
+              '    "earnings_published_rows",\n    "python scripts/check_company_logo_budget.py",',
+          )
+
+          ui = "scripts/check_ui_view_contract.py"
+          replace_exact(ui, 'attention-pr4.js?v=10.4.3', 'attention-pr4.js?v=10.4.4', expected=2)
+          replace_exact(ui, 'const VERSION = "10.4.3"', 'const VERSION = "10.4.4"')
+          replace_exact(
+              ui,
+              '    "fallback=404",\n    \'loading="lazy"\',',
+              '    "fallback=404",\n    "MAX_UNIQUE_LOGOS_PER_PAGE = 6",\n    "MAX_NON_DETAIL_LOGOS_PER_PAGE = 5",\n    "MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60",\n    "LOGO_FAILURE_TTL_MS",',
+          )
+
+          smoke = "scripts/smoke_test_site_v9_4_6.py"
+          replace_exact(smoke, 'attention-pr4.js?v=10.4.3', 'attention-pr4.js?v=10.4.4')
+          replace_exact(
+              smoke,
+              '        "StockcheckCompanyLogo", "img.logo.dev/ticker/", "fallback=404",',
+              '        "StockcheckCompanyLogo", "img.logo.dev/ticker/", "fallback=404",\n        "MAX_UNIQUE_LOGOS_PER_PAGE = 6", "MAX_NON_DETAIL_LOGOS_PER_PAGE = 5",\n        "MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60", "LOGO_FAILURE_TTL_MS",',
+          )
+          PY
+
+      - name: Validate materialized branch
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/apply_company_logo_budget.py scripts/sync_attention_assets.py scripts/check_company_logo_budget.py scripts/check_earnings_radar_activation.py scripts/check_ui_view_contract.py scripts/smoke_test_site_v9_4_6.py
+          node --check site/attention-pr4.js
+          node --check static/attention-pr4.js
+          node --check site/memo-only-fix.js
+          python scripts/check_company_logo_budget.py
+          python scripts/check_ui_view_contract.py
+          python scripts/smoke_test_site_v9_4_6.py
+          python scripts/check_earnings_radar_activation.py
+
+      - name: Commit clean materialized result
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/materialize-logo-budget-pr.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/deploy-pages.yml scripts site static
+          git commit -m "Materialize budgeted Logo.dev runtime"
+          git push origin HEAD:${{ github.head_ref }}
