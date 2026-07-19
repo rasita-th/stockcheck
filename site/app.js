@@ -5,7 +5,7 @@
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-const BUILD_VERSION = "v8.1.1 Attention Render Fix";
+const BUILD_VERSION = "v8.2.0 Personal Portfolio Adapter";
 
 const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PRNT", "SMH", "SOXX", "QQQI", "JEPQ", "AIQ", "COPX", "UFO"]);
 // Keep first-run onboarding intentionally compact: exactly 10 examples.
@@ -13,6 +13,7 @@ const ETF_TICKERS = new Set(["ARKK", "ARKQ", "ARKW", "ARKG", "ARKF", "ARKX", "PR
 const BASE_WATCHLIST = ["PUMP", "SEI", "NVDA", "TSLA", "AMD", "AAPL", "AMZN", "PLTR", "SOUN", "MSFT"];
 const STORAGE = {
   watchlist: "stockTimingRadar.watchlist.v54",
+  myPortfolio: "stockTimingRadar.myPortfolio.v1",
   screeners: "stockTimingRadar.screeners.v54",
   activeScreener: "stockTimingRadar.activeScreener.v54",
   settings: "stockTimingRadar.settings.v54",
@@ -86,12 +87,34 @@ let state = {
   },
 };
 
-function loadWatchlist() {
+function loadMyPortfolio() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE.watchlist) || "[]");
-    if (Array.isArray(saved) && saved.length) return normalizeTickers(saved);
+    const direct = localStorage.getItem(STORAGE.myPortfolio);
+    if (direct !== null) {
+      const saved = JSON.parse(direct);
+      return Array.isArray(saved) ? normalizeTickers(saved) : [];
+    }
   } catch (_) {}
-  return [...BASE_WATCHLIST];
+  try {
+    const screeners = JSON.parse(localStorage.getItem(STORAGE.screeners) || "{}");
+    if (Array.isArray(screeners?.default?.watchlist)) return normalizeTickers(screeners.default.watchlist);
+  } catch (_) {}
+  try {
+    const legacy = JSON.parse(localStorage.getItem(STORAGE.watchlist) || "[]");
+    if (Array.isArray(legacy)) return normalizeTickers(legacy);
+  } catch (_) {}
+  return [];
+}
+
+function saveMyPortfolio(tickers) {
+  const portfolio = normalizeTickers(Array.isArray(tickers) ? tickers : []);
+  localStorage.setItem(STORAGE.myPortfolio, JSON.stringify(portfolio));
+  window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
+  return portfolio;
+}
+
+function loadWatchlist() {
+  return loadMyPortfolio();
 }
 
 function saveWatchlist() {
@@ -1241,9 +1264,6 @@ function mergeStaticPayloads(technical = {}, fundamental = {}) {
   const generatedAt = technical.generatedAtTechnical || technical.generatedAt || fundamental.generatedAtFundamental || fundamental.generatedAt || null;
   state.lastScanAt = generatedAt ? String(generatedAt).replace(" UTC", "") : new Date().toLocaleString();
   state.lastScanSymbols = normalizeTickers(technical.watchlist || fundamental.watchlist || rows.map(r => r.symbol || r.ticker));
-  if ((!state.watchlist || !state.watchlist.length || state.watchlist.every(t => BASE_WATCHLIST.includes(t))) && state.lastScanSymbols.length) {
-    state.watchlist = [...state.lastScanSymbols];
-  }
   const errs = [];
   if (Array.isArray(technical.errors)) errs.push(...technical.errors);
   if (Array.isArray(fundamental.errors)) errs.push(...fundamental.errors);
@@ -1629,13 +1649,15 @@ function getScreeners() {
 }
 function setScreeners(x) { localStorage.setItem(STORAGE.screeners, JSON.stringify(x)); }
 function persistActiveScreener() {
+  const active = state.activeScreener || "default";
   const screeners = getScreeners();
-  screeners[state.activeScreener] = { watchlist: state.watchlist, filters: state.filters, columns: state.columns, scannerTab: state.scannerTab, mobileView: state.mobileView, sortKey: state.sortKey, sortAsc: state.sortAsc };
+  screeners[active] = { watchlist: state.watchlist, filters: state.filters, columns: state.columns, scannerTab: state.scannerTab, mobileView: state.mobileView, sortKey: state.sortKey, sortAsc: state.sortAsc };
   setScreeners(screeners);
+  if (active === "default") saveMyPortfolio(state.watchlist);
 }
 function loadScreener(key) {
   const defaults = {
-    default: BASE_WATCHLIST,
+    default: loadMyPortfolio(),
     momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
     thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
     dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
@@ -3332,7 +3354,7 @@ if (state.staticMode || isStaticDeployHost()) {
     // Fallback path if loadScreener is interrupted by a stale handler.
     try {
       const defaults = {
-        default: BASE_WATCHLIST,
+        default: loadMyPortfolio(),
         momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
         thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
         dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
@@ -3768,7 +3790,7 @@ if (state.staticMode || isStaticDeployHost()) {
       const screeners = getAllScreenersV70();
       const rec = screeners[key];
       const defaults = {
-        default: BASE_WATCHLIST,
+        default: loadMyPortfolio(),
         momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
         thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
         dividend: ["JEPQ", "QQQI", "KO", "PEP", "CVX", "ABBV", "WMT", "COST", "BAC", "AXP"],
@@ -3897,7 +3919,7 @@ if (state.staticMode || isStaticDeployHost()) {
     ["port3", "Port 3"],
   ];
   const defaultLists = {
-    default: BASE_WATCHLIST,
+    default: loadMyPortfolio(),
     momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
     thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
     port1: [],
@@ -4093,7 +4115,7 @@ if (state.staticMode || isStaticDeployHost()) {
   ];
   const fixedKeys = new Set(fixedTabs.map(([k]) => k));
   const defaultLists = {
-    default: BASE_WATCHLIST,
+    default: loadMyPortfolio(),
     momentum: ["NVDA", "AMD", "AVGO", "TSLA", "PLTR", "APP", "CRWD", "DDOG", "HOOD", "COIN"],
     thai: ["PTT.BK", "CPALL.BK", "AOT.BK", "ADVANC.BK", "KBANK.BK", "BDMS.BK", "DELTA.BK", "GULF.BK", "TRUE.BK", "PTTEP.BK"],
     port1: [], port2: [], port3: [],

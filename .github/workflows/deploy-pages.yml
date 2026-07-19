@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.5.3"
+  TODAY_DEPLOY_VERSION: "10.5.4"
 
 jobs:
   build:
@@ -158,6 +158,7 @@ jobs:
           grep -Fq 'earnings-radar-pr4.css?v=10.5.1' site/memo-only-fix.css
           grep -Fq 'PR4 · DECISION-FIRST TODAY' site/attention-pr4.js
           grep -Fq 'StockcheckAttentionP4' site/attention-pr4.js
+          grep -Fq 'stockTimingRadar.myPortfolio.v1' site/app.js
           grep -Fq 'StockcheckEarningsRadarP4' site/earnings-radar-pr4.js
           grep -Fq 'Earnings Radar' site/earnings-radar-pr4.js
           grep -Fq 'Earnings Calendar' site/earnings-radar-pr4.js
@@ -358,4 +359,5 @@ jobs:
           git commit -m "Record verified PR4 Earnings Radar deployment"
           git pull --rebase origin main
           git push origin HEAD:main
+
 
