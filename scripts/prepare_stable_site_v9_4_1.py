@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from generate_earnings_radar import generate as generate_earnings_radar
+from harden_earnings_radar import STATE_PATH, harden_payload, load_json as load_radar_json, save_all as save_radar_all
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -108,23 +109,23 @@ def prepare_market(path: Path) -> None:
 
 
 def prepare_earnings_radar() -> None:
-    # This is a deterministic projection of repository state and makes no API
-    # calls. Rebuilding it here guarantees every Pages artifact carries the
-    # same 45-day contract even when a bot-generated data commit has not yet
-    # triggered another Pages run.
+    # This deterministic projection makes no API calls. The hardening pass then
+    # rejects stale/non-overlapping caches and preserves explicit null fields.
     os.environ["EARNINGS_RADAR_DAYS_BACK"] = "1"
     os.environ["EARNINGS_RADAR_DAYS_FORWARD"] = "45"
     payload = generate_earnings_radar()
+    payload = harden_payload(payload, load_radar_json(STATE_PATH))
+    save_radar_all(payload)
     window = payload.get("window") if isinstance(payload.get("window"), dict) else {}
     coverage = payload.get("coverage") if isinstance(payload.get("coverage"), dict) else {}
     if int(window.get("days_forward") or 0) < 45:
         raise SystemExit("earnings_radar.json is not a 45-day contract")
-    if int(coverage.get("market_source_rows") or 0) <= int(coverage.get("portfolio_total") or 0):
-        raise SystemExit("earnings_radar.json is not market-wide")
+    if int(coverage.get("market_rows_in_window") or 0) <= 0:
+        raise SystemExit("earnings_radar.json has no in-window market rows")
     print(
         "Prepared Earnings Radar: "
         f"{coverage.get('published_rows', 0)} published rows / "
-        f"{coverage.get('market_source_rows', 0)} market-source rows"
+        f"{coverage.get('market_rows_in_window', 0)} in-window market rows"
     )
 
 
