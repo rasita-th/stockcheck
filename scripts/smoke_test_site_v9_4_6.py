@@ -79,8 +79,14 @@ def main() -> None:
         f'app.js?v={version}', f'app-shell-v9-4-6.css?v={version}', f'app-shell-v9-4-6.js?v={version}',
     ))
     require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
-    require_text(SITE / "memo-only-fix.js", ("attention-p0.js", "attention-pr3.js?v=10.3.0", "loadAttentionP3"))
-    require_text(SITE / "memo-only-fix.css", ("attention-p0.css?v=10.2.0", "today-view-isolation.css", "attention-pr3.css?v=10.3.0"))
+    require_text(SITE / "memo-only-fix.js", (
+        "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.4.0",
+        "loadAttentionP3", "loadAttentionP4",
+    ))
+    require_text(SITE / "memo-only-fix.css", (
+        "attention-p0.css?v=10.2.0", "today-view-isolation.css",
+        "attention-pr3.css?v=10.3.0", "attention-pr4.css?v=10.4.0",
+    ))
     require_text(SITE / "attention-p0.js", (
         "สิ่งที่ต้องจับตาวันนี้", "เหตุการณ์สำคัญวันนี้", "จับตาทางเทคนิค", "technical_watch",
         "normalizePayload", "ข่าวและเหตุการณ์", "externalSources", "source_chain", "lastKnownGood", "Today render error",
@@ -90,6 +96,14 @@ def main() -> None:
         "data-pr3-action", "data-pr3-pref", "attention-p3-ready", "StockcheckAttentionP3",
     ))
     require_text(SITE / "attention-pr3.css", (".attention-p3-page", ".pr3-summary-grid", ".pr3-actions", "attention-p3-ready"))
+    require_text(SITE / "attention-pr4.js", (
+        "PR4 · DECISION-FIRST TODAY", "attention-p4-ready", "p4-catalyst-hero", "p4-technical-grid",
+        "validatePayload", "externalSources", "data-p4-action", "data-p4-filter", "StockcheckAttentionP4",
+    ))
+    require_text(SITE / "attention-pr4.css", (
+        ".attention-p4-page", ".p4-summary-strip", ".p4-catalyst-hero", ".p4-technical-grid",
+        "body.attention-p4-ready #attentionPageP3",
+    ))
     require_text(SITE / "today-view-isolation.css", (
         "body.attention-active .portfolio-tabs", "body.attention-active .workspace",
         "body.attention-active .decision-screener", "body.attention-active .attention-p0-page",
