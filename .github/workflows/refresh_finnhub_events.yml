@@ -7,6 +7,9 @@ on:
     paths:
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/finnhub_pipeline.py"
+      - "scripts/generate_earnings_radar.py"
+      - "scripts/validate_earnings_radar.py"
+      - "data/earnings_relevance.json"
       - ".github/workflows/refresh_finnhub_events.yml"
       - ".github/refresh-finnhub-now"
   schedule:
@@ -58,6 +61,12 @@ jobs:
           cp data/eps_surprises.json data/generated/eps_surprises.json
           cp data/finnhub_features.json data/generated/finnhub_features.json
 
+      - name: Generate market-wide earnings radar contract
+        env:
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
+        run: python scripts/generate_earnings_radar.py
+
       - name: Regenerate PR3 Today from refreshed earnings
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
@@ -71,8 +80,14 @@ jobs:
 
       - name: Test and publish generated contracts
         run: |
-          python -m py_compile scripts/run_finnhub_free_tier.py
-          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
+          python -m py_compile \
+            scripts/run_finnhub_free_tier.py \
+            scripts/generate_earnings_radar.py \
+            scripts/validate_earnings_radar.py
+          python -m unittest \
+            tests.test_finnhub_pipeline \
+            tests.test_finnhub_free_tier \
+            tests.test_earnings_radar
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python scripts/test_publish_generated_data.py
@@ -80,6 +95,7 @@ jobs:
           python scripts/publish_generated_data.py
           python scripts/validate_generated_data_v9_1.py
           python scripts/validate_attention_pr3.py
+          python scripts/validate_earnings_radar.py
           python scripts/validate_static_data.py
           python scripts/check_ui_view_contract.py
 
@@ -95,11 +111,11 @@ jobs:
           git reset -- data/generated/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json 2>/dev/null || true
 
           if git diff --cached --quiet; then
-            echo "No Finnhub or Today data changes."
+            echo "No Finnhub, earnings radar, or Today data changes."
             exit 0
           fi
 
-          git commit -m "Refresh Finnhub earnings and Today data"
+          git commit -m "Refresh Finnhub earnings radar and Today data"
 
           # Tests and generators may leave untracked caches. Clean them before
           # rebasing so Pages receipt commits cannot make git pull fail.
@@ -115,12 +131,12 @@ jobs:
               exit 1
             fi
             if git push origin HEAD:main; then
-              echo "Finnhub and Today data pushed on attempt ${attempt}."
+              echo "Finnhub, earnings radar, and Today data pushed on attempt ${attempt}."
               exit 0
             fi
             echo "Push race on attempt ${attempt}; retrying."
             sleep $((attempt * 3))
           done
 
-          echo "Unable to publish Finnhub and Today data after three attempts."
+          echo "Unable to publish Finnhub, earnings radar, and Today data after three attempts."
           exit 1
