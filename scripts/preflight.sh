@@ -22,15 +22,22 @@ python3 -m py_compile \
   scripts/prepare_stable_site_v9_4_1.py \
   scripts/preflight_check.py \
   scripts/validate_static_data.py \
-  scripts/check_ui_view_contract.py
+  scripts/check_ui_view_contract.py \
+  scripts/sync_attention_assets.py \
+  scripts/generate_earnings_radar.py \
+  scripts/harden_earnings_radar.py
 node --check site/app.js
 node --check site/market.js
 node --check site/app-shell-v9-4-6.js
 node --check site/notification-phase2.js
 node --check site/final-ui-coordinator.js
 node --check site/memo-only-fix.js
-python3 scripts/check_ui_view_contract.py
+node --check site/attention-pr4.js
+node --check site/earnings-radar-pr4.js
 
+# Runtime mirrors are generated assets. Validate them in a disposable clean
+# checkout after sync instead of requiring a source checkout to contain stale
+# hand-copied static files.
 echo "== Build clean artifact in temporary directory =="
 mkdir -p "$TMP/repo"
 if command -v rsync >/dev/null 2>&1; then
@@ -42,10 +49,12 @@ fi
 
 (
   cd "$TMP/repo"
+  python3 scripts/sync_attention_assets.py
   python3 scripts/prepare_stable_site_v9_4_1.py
   python3 scripts/validate_static_data.py
   python3 scripts/preflight_check.py --site site
   python3 scripts/check_ui_view_contract.py
+  python3 scripts/harden_earnings_radar.py
 )
 
 echo "Preflight passed. Source was not modified; validation ran against a temporary prepared artifact."
