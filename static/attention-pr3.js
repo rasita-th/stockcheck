@@ -354,9 +354,14 @@
     state.error = null;
     render();
     try {
-      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
-      const payload = await response.json();
+      let payload;
+      if (typeof window.StockcheckAttentionDataStore?.load === "function") {
+        payload = await window.StockcheckAttentionDataStore.load();
+      } else {
+        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
+        payload = await response.json();
+      }
       if (!payload || typeof payload !== "object" || !Array.isArray(payload.items) || !Array.isArray(payload.technical_watch)) {
         throw new Error("รูปแบบข้อมูล PR3 ไม่ถูกต้อง");
       }

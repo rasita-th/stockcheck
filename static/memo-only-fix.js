@@ -2,6 +2,40 @@
   "use strict";
 
   const VIEW_KEY = "stockTimingRadar.appView.v55";
+  const ATTENTION_DATA_URL = "data/attention_today.json";
+  const ATTENTION_CACHE_WINDOW_MS = 15 * 1000;
+
+  function installAttentionDataStore() {
+    if (window.StockcheckAttentionDataStore?.load) return window.StockcheckAttentionDataStore;
+    let requestPromise = null;
+    let loadedAt = 0;
+    const clone = (payload) => typeof structuredClone === "function"
+      ? structuredClone(payload)
+      : JSON.parse(JSON.stringify(payload));
+    const load = async () => {
+      const fresh = requestPromise && Date.now() - loadedAt < ATTENTION_CACHE_WINDOW_MS;
+      if (!fresh) {
+        loadedAt = Date.now();
+        requestPromise = fetch(`${ATTENTION_DATA_URL}?v=${loadedAt}`, { cache: "no-store" })
+          .then((response) => {
+            if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
+            return response.json();
+          })
+          .then((payload) => {
+            if (!payload || typeof payload !== "object") throw new Error("attention_today.json is not an object");
+            return payload;
+          })
+          .catch((error) => {
+            requestPromise = null;
+            loadedAt = 0;
+            throw error;
+          });
+      }
+      return clone(await requestPromise);
+    };
+    window.StockcheckAttentionDataStore = Object.freeze({ version: "1.0.0", load });
+    return window.StockcheckAttentionDataStore;
+  }
 
   function preferredView(explicitView = "") {
     if (explicitView) return explicitView;
@@ -38,8 +72,12 @@
     document.head.appendChild(script);
   }
 
+  function loadEarningsRadar() {
+    loadScript("earnings-radar-pr4.js?v=10.7.1", "earningsRadarPr4Loader");
+  }
+
   function loadAttentionP4() {
-    loadScript("attention-pr4.js?v=10.4.0", "attentionPr4Loader");
+    loadScript("attention-pr4.js?v=10.7.1", "attentionPr4Loader", loadEarningsRadar);
   }
 
   function loadAttentionP3() {
@@ -65,6 +103,7 @@
 
   function boot() {
     enforceExclusiveView();
+    installAttentionDataStore();
     loadAttentionP0();
     document.addEventListener("click", (event) => {
       const control = event.target.closest?.("[data-app-view]");
@@ -81,3 +120,4 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
   else boot();
 })();
+
