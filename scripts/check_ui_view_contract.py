@@ -63,8 +63,8 @@ if "today-view-isolation.css" not in memo_css:
     errors.append("Memo stability stylesheet must import today-view-isolation.css")
 if "attention-pr3.css?v=10.3.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-pr3.css v10.3.0")
-if "attention-pr4.css?v=10.4.1" not in memo_css:
-    errors.append("Memo stability stylesheet must import attention-pr4.css v10.4.1")
+if "attention-pr4.css?v=10.4.2" not in memo_css:
+    errors.append("Memo stability stylesheet must import attention-pr4.css v10.4.2")
 if "body.memo-active .attention-page" not in memo_css:
     errors.append("Memo CSS must explicitly hide the Today page")
 if "body.memo-active #memoPage.memo-page" not in memo_css:
@@ -88,6 +88,15 @@ for token in (
 ):
     if token not in today_css:
         errors.append(f"Today isolation CSS missing Scanner guard: {token}")
+
+for token in (
+    "html body.attention-active.attention-p4-ready #attentionPageP3",
+    "html body.attention-active.attention-p4-ready #attentionPageP0",
+    "html body.attention-active.attention-p4-ready #attentionPage",
+    "display: none !important",
+):
+    if token not in pr4_css:
+        errors.append(f"PR4 canonical visibility guard missing: {token}")
 
 for token in (
     "normalizePayload",
@@ -150,7 +159,7 @@ for token in (
     ".p4-summary-strip",
     ".p4-catalyst-hero",
     ".p4-technical-grid",
-    "body.attention-p4-ready #attentionPageP3",
+    "html body.attention-active.attention-p4-ready #attentionPageP3",
 ):
     if token not in pr4_css:
         errors.append(f"Today PR4 CSS missing: {token}")
