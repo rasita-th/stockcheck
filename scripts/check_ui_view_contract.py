@@ -55,16 +55,16 @@ if "attention-p0.js" not in memo_js or "10.2.0" not in memo_js:
     errors.append("Memo stability loader must load attention-p0.js v10.2.0 as fallback")
 if "attention-pr3.js?v=10.3.0" not in memo_js or "loadAttentionP3" not in memo_js:
     errors.append("Memo stability loader must load attention-pr3.js v10.3.0 after the fallback")
-if "attention-pr4.js?v=10.4.0" not in memo_js or "loadAttentionP4" not in memo_js:
-    errors.append("Memo stability loader must load attention-pr4.js v10.4.0 after PR3")
+if "attention-pr4.js?v=10.4.1" not in memo_js or "loadAttentionP4" not in memo_js:
+    errors.append("Memo stability loader must load attention-pr4.js v10.4.1 after PR3")
 if "attention-p0.css" not in memo_css or "10.2.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-p0.css v10.2.0")
 if "today-view-isolation.css" not in memo_css:
     errors.append("Memo stability stylesheet must import today-view-isolation.css")
 if "attention-pr3.css?v=10.3.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-pr3.css v10.3.0")
-if "attention-pr4.css?v=10.4.0" not in memo_css:
-    errors.append("Memo stability stylesheet must import attention-pr4.css v10.4.0")
+if "attention-pr4.css?v=10.4.1" not in memo_css:
+    errors.append("Memo stability stylesheet must import attention-pr4.css v10.4.1")
 if "body.memo-active .attention-page" not in memo_css:
     errors.append("Memo CSS must explicitly hide the Today page")
 if "body.memo-active #memoPage.memo-page" not in memo_css:
@@ -82,6 +82,9 @@ for token in (
     "body.attention-active .bottom-sheet",
     "body.attention-active .attention-p0-page",
     "display: none !important",
+    "body.attention-active .attention-page",
+    "body.attention-active.attention-p4-ready #attentionPageP4",
+    "body.attention-active:not(.attention-p4-ready).attention-p3-ready #attentionPageP3",
 ):
     if token not in today_css:
         errors.append(f"Today isolation CSS missing Scanner guard: {token}")
@@ -134,7 +137,11 @@ for token in (
     "data-p4-action",
     "data-p4-filter",
     "StockcheckAttentionP4",
-    'const VERSION = "10.4.0"',
+    'const VERSION = "10.4.1"',
+    "StockcheckCompanyLogo",
+    "img.logo.dev/ticker/",
+    "fallback=404",
+    'loading="lazy"',
 ):
     if token not in pr4_js:
         errors.append(f"Today PR4 runtime missing: {token}")
