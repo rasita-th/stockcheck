@@ -108,8 +108,12 @@ function loadMyPortfolio() {
 
 function saveMyPortfolio(tickers) {
   const portfolio = normalizeTickers(Array.isArray(tickers) ? tickers : []);
-  localStorage.setItem(STORAGE.myPortfolio, JSON.stringify(portfolio));
-  window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
+  const serialized = JSON.stringify(portfolio);
+  const previous = localStorage.getItem(STORAGE.myPortfolio);
+  if (previous !== serialized) {
+    localStorage.setItem(STORAGE.myPortfolio, serialized);
+    window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
+  }
   return portfolio;
 }
 
@@ -118,8 +122,10 @@ function loadWatchlist() {
 }
 
 function saveWatchlist() {
+  state.watchlist = normalizeTickers(Array.isArray(state.watchlist) ? state.watchlist : []);
   localStorage.setItem(STORAGE.watchlist, JSON.stringify(state.watchlist));
   persistActiveScreener();
+  if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist);
 }
 
 function normalizeTicker(raw) {
@@ -3543,13 +3549,15 @@ if (state.staticMode || isStaticDeployHost()) {
   });
   const oldPersist = persistActiveScreener;
   persistActiveScreener = function patchedPersistActiveScreener(){
+    const active = state.activeScreener || "default";
     const screeners = getScreeners();
-    const existing = screeners[state.activeScreener] || {};
-    screeners[state.activeScreener] = {
+    const existing = screeners[active] || {};
+    screeners[active] = {
       ...existing,
-      ...snapshot(existing.label || existing.name || labelFor(state.activeScreener, existing)),
+      ...snapshot(existing.label || existing.name || labelFor(active, existing)),
     };
     setScreeners(screeners);
+    if (active === "default") saveMyPortfolio(state.watchlist);
   };
   renderPortfolioTabs = function patchedRenderPortfolioTabs(){
     const nav = document.querySelector(".portfolio-tabs");
@@ -4187,6 +4195,7 @@ if (state.staticMode || isStaticDeployHost()) {
       screeners[key] = { ...existing, ...snapshot(label), reserved: fixedKeys.has(key) || existing.reserved };
       setStore(screeners);
       localStorage.setItem(STORAGE.activeScreener, key);
+      if (key === "default") saveMyPortfolio(state.watchlist);
     } catch (err) { console.warn("v8 save screener failed", err); }
   }
   function renderMobileTabsV80(){
