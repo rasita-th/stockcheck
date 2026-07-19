@@ -10,6 +10,22 @@ ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "data" / "generated" / "earnings_radar.json"
 VALID_RELATIONS = {"portfolio", "related", "coverage", "market"}
 VALID_TIMES = {"before_market", "during_market", "after_market", "unknown"}
+OPTIONAL_ITEM_FIELDS = (
+    "fiscal_quarter",
+    "event_time",
+    "source_url",
+    "eps_actual",
+    "eps_estimate",
+    "revenue_actual",
+    "revenue_estimate",
+    "note",
+    "exchange",
+    "industry",
+    "logo_url",
+    "market_cap_millions",
+    "portfolio_role",
+    "relation_reason_th",
+)
 
 
 def require(condition: bool, message: str) -> None:
@@ -66,18 +82,32 @@ def main() -> None:
         "portfolio_total",
         "coverage_universe_total",
         "market_source_rows",
+        "market_rows_in_window",
         "published_rows",
         "profile_names_known",
         "estimate_rows",
         "official_rows",
     ):
         require(isinstance(coverage.get(key), int) and coverage[key] >= 0, f"coverage.{key} must be a non-negative integer")
+    require(coverage["market_source_rows"] >= coverage["market_rows_in_window"] > 0, "market rows must overlap the publish window")
     require(coverage["market_source_rows"] >= coverage["published_rows"], "published rows cannot exceed market source rows after official overlays")
     require(coverage["coverage_universe_total"] >= coverage["portfolio_total"], "coverage universe cannot be smaller than portfolio")
+    require(coverage.get("provider_window_overlaps_publish_window") is True, "provider window must overlap the publish window")
+    source_range = coverage.get("market_source_date_range") if isinstance(coverage.get("market_source_date_range"), dict) else {}
+    overlap = coverage.get("provider_window_overlap") if isinstance(coverage.get("provider_window_overlap"), dict) else {}
+    source_start = date.fromisoformat(str(source_range.get("from")))
+    source_end = date.fromisoformat(str(source_range.get("to")))
+    overlap_start = date.fromisoformat(str(overlap.get("from")))
+    overlap_end = date.fromisoformat(str(overlap.get("to")))
+    require(source_start <= source_end, "market source date range is invalid")
+    require(overlap_start <= overlap_end, "provider overlap range is invalid")
+    require(start <= overlap_start <= overlap_end <= end, "provider overlap is outside the publish window")
+    require(source_start <= overlap_start <= overlap_end <= source_end, "provider overlap is outside the source range")
 
     seen: set[tuple[str, str]] = set()
     today_count = 0
     selected_date = str(payload.get("selected_date") or "")
+    finnhub_rows = 0
     for item in payload["items"]:
         require(isinstance(item, dict), "each earnings radar item must be an object")
         ticker = str(item.get("ticker") or "")
@@ -92,8 +122,12 @@ def main() -> None:
         require(item.get("time") in VALID_TIMES, f"invalid event time for {ticker}")
         require(isinstance(item.get("related_to"), list), f"related_to must be a list for {ticker}")
         require(isinstance(item.get("priority_score"), int), f"priority_score must be an integer for {ticker}")
+        for field in OPTIONAL_ITEM_FIELDS:
+            require(field in item, f"optional field {field} is missing for {ticker}")
         require(item.get("eps_estimate") is None or isinstance(item.get("eps_estimate"), (int, float)), f"invalid EPS estimate for {ticker}")
         require(item.get("revenue_estimate") is None or isinstance(item.get("revenue_estimate"), (int, float)), f"invalid revenue estimate for {ticker}")
+        if item.get("source_type") == "finnhub":
+            finnhub_rows += 1
         if item.get("relation") == "portfolio":
             require(item.get("related_to") == [ticker], f"portfolio item relation must point to itself: {ticker}")
         if item.get("relation") == "related":
@@ -102,9 +136,14 @@ def main() -> None:
         if event_date == selected_date:
             today_count += 1
 
+    require(finnhub_rows == coverage["market_rows_in_window"], "market_rows_in_window does not match normalized Finnhub rows")
     require(today_count == summary["total"], "selected-date item count does not match summary.total")
     require(len(payload["items"]) == coverage["published_rows"], "coverage.published_rows does not match item count")
     require(len(payload["daily_summary"]) == (end - start).days + 1, "daily_summary does not cover every date in the window")
+
+    policy = payload["policy"]
+    require(bool(policy.get("stale_cache")), "stale-cache publication policy is missing")
+    require(bool(policy.get("optional_fields")), "optional-field null policy is missing")
 
     mirrors = [ROOT / "site" / "data" / "earnings_radar.json", ROOT / "static" / "data" / "earnings_radar.json"]
     canonical = PATH.read_bytes()
@@ -115,7 +154,7 @@ def main() -> None:
     print(
         "Earnings radar validation passed: "
         f"{summary['total']} selected-date rows / {coverage['published_rows']} window rows / "
-        f"{coverage['market_source_rows']} source rows"
+        f"{coverage['market_rows_in_window']} in-window market rows"
     )
 
 
