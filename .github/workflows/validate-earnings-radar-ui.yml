@@ -5,14 +5,18 @@ on:
     paths:
       - ".github/workflows/validate-earnings-radar-ui.yml"
       - ".github/workflows/refresh_finnhub_events.yml"
+      - ".github/workflows/deploy-pages.yml"
       - "scripts/generate_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
       - "scripts/check_earnings_radar_ui_contract.py"
+      - "scripts/check_earnings_radar_activation.py"
       - "scripts/sync_attention_assets.py"
       - "tests/test_earnings_radar.py"
       - "data/earnings_relevance.json"
       - "site/earnings-radar-pr4.*"
       - "static/earnings-radar-pr4.*"
+      - "site/memo-only-fix.*"
+      - "static/memo-only-fix.*"
       - "site/data/earnings_radar.json"
       - "static/data/earnings_radar.json"
   push:
@@ -21,8 +25,11 @@ on:
       - "scripts/generate_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
       - "scripts/check_earnings_radar_ui_contract.py"
+      - "scripts/check_earnings_radar_activation.py"
       - "site/earnings-radar-pr4.*"
       - "static/earnings-radar-pr4.*"
+      - "site/memo-only-fix.*"
+      - ".github/workflows/deploy-pages.yml"
 
 permissions:
   contents: read
@@ -45,6 +52,7 @@ jobs:
             scripts/generate_earnings_radar.py \
             scripts/validate_earnings_radar.py \
             scripts/check_earnings_radar_ui_contract.py \
+            scripts/check_earnings_radar_activation.py \
             scripts/sync_attention_assets.py
       - name: Test earnings radar data contract
         run: python -m unittest tests.test_earnings_radar -v
@@ -53,10 +61,12 @@ jobs:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
         run: python scripts/generate_earnings_radar.py
-      - name: Sync dark-launched runtime assets
+      - name: Sync runtime assets
         run: python scripts/sync_attention_assets.py
-      - name: Validate JavaScript, schema and UI contract
+      - name: Validate JavaScript, schema, UI and activation contracts
         run: |
+          node --check site/memo-only-fix.js
           node --check site/earnings-radar-pr4.js
           python scripts/validate_earnings_radar.py
           python scripts/check_earnings_radar_ui_contract.py
+          python scripts/check_earnings_radar_activation.py
