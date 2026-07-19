@@ -85,7 +85,7 @@ def main() -> None:
     ))
     require_text(SITE / "memo-only-fix.css", (
         "attention-p0.css?v=10.2.0", "today-view-isolation.css",
-        "attention-pr3.css?v=10.3.0", "attention-pr4.css?v=10.4.1",
+        "attention-pr3.css?v=10.3.0", "attention-pr4.css?v=10.4.2",
     ))
     require_text(SITE / "attention-p0.js", (
         "สิ่งที่ต้องจับตาวันนี้", "เหตุการณ์สำคัญวันนี้", "จับตาทางเทคนิค", "technical_watch",
@@ -103,7 +103,7 @@ def main() -> None:
     ))
     require_text(SITE / "attention-pr4.css", (
         ".attention-p4-page", ".p4-summary-strip", ".p4-catalyst-hero", ".p4-technical-grid",
-        "body.attention-p4-ready #attentionPageP3",
+        "html body.attention-active.attention-p4-ready #attentionPageP3",
     ))
     require_text(SITE / "today-view-isolation.css", (
         "body.attention-active .portfolio-tabs", "body.attention-active .workspace",

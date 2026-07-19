@@ -5,8 +5,10 @@
 body.attention-active.attention-p4-ready #attentionPageP4 {
   display: block !important;
 }
-body.attention-p4-ready #attentionPageP3,
-body.attention-p4-ready #attentionPageP0 {
+/* Keep PR4 canonical even when PR3's ready rule also uses !important. */
+html body.attention-active.attention-p4-ready #attentionPageP3,
+html body.attention-active.attention-p4-ready #attentionPageP0,
+html body.attention-active.attention-p4-ready #attentionPage {
   display: none !important;
 }
 body:not(.attention-active) #attentionPageP4 {
