@@ -8,18 +8,17 @@ on:
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/finnhub_pipeline.py"
       - "scripts/generate_earnings_radar.py"
+      - "scripts/harden_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
       - "data/earnings_relevance.json"
       - ".github/workflows/refresh_finnhub_events.yml"
       - ".github/refresh-finnhub-now"
   schedule:
-    # Batch calendar plus priority earnings queue every 3 hours.
     - cron: "17 */3 * * *"
 
 permissions:
   contents: write
 
-# Share the PR3 publisher lock so an event refresh cannot overwrite a live Today run.
 concurrency:
   group: stockcheck-v10-live-${{ github.ref_name }}
   cancel-in-progress: false
@@ -61,11 +60,13 @@ jobs:
           cp data/eps_surprises.json data/generated/eps_surprises.json
           cp data/finnhub_features.json data/generated/finnhub_features.json
 
-      - name: Generate market-wide earnings radar contract
+      - name: Generate and harden market-wide earnings radar contract
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
-        run: python scripts/generate_earnings_radar.py
+        run: |
+          python scripts/generate_earnings_radar.py
+          python scripts/harden_earnings_radar.py --write
 
       - name: Regenerate PR3 Today from refreshed earnings
         env:
@@ -78,11 +79,15 @@ jobs:
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
 
+      - name: Sync Today runtime mirrors
+        run: python scripts/sync_attention_assets.py
+
       - name: Test and publish generated contracts
         run: |
           python -m py_compile \
             scripts/run_finnhub_free_tier.py \
             scripts/generate_earnings_radar.py \
+            scripts/harden_earnings_radar.py \
             scripts/validate_earnings_radar.py
           python -m unittest \
             tests.test_finnhub_pipeline \
@@ -96,10 +101,11 @@ jobs:
           python scripts/validate_generated_data_v9_1.py
           python scripts/validate_attention_pr3.py
           python scripts/validate_earnings_radar.py
+          python scripts/harden_earnings_radar.py
           python scripts/validate_static_data.py
           python scripts/check_ui_view_contract.py
 
-      - name: Publish Finnhub and Today contracts safely
+      - name: Publish Finnhub, radar, Today data, and runtime mirrors safely
         shell: bash
         run: |
           set -euo pipefail
@@ -108,17 +114,19 @@ jobs:
 
           git add data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json
           git add data/generated data/source_state site/data static/data
+          git add static/attention-p0.js static/attention-p0.css
+          git add static/attention-pr3.js static/attention-pr3.css
+          git add static/attention-pr4.js static/attention-pr4.css
+          git add static/earnings-radar-pr4.js static/earnings-radar-pr4.css
+          git add static/memo-only-fix.js static/memo-only-fix.css static/today-view-isolation.css
           git reset -- data/generated/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json 2>/dev/null || true
 
           if git diff --cached --quiet; then
-            echo "No Finnhub, earnings radar, or Today data changes."
+            echo "No Finnhub, radar, Today data, or runtime mirror changes."
             exit 0
           fi
 
-          git commit -m "Refresh Finnhub earnings radar and Today data"
-
-          # Tests and generators may leave untracked caches. Clean them before
-          # rebasing so Pages receipt commits cannot make git pull fail.
+          git commit -m "Refresh hardened Earnings Radar and Today mirrors"
           git reset --hard HEAD
           git clean -fd
           test -z "$(git status --porcelain)"
@@ -131,12 +139,12 @@ jobs:
               exit 1
             fi
             if git push origin HEAD:main; then
-              echo "Finnhub, earnings radar, and Today data pushed on attempt ${attempt}."
+              echo "Hardened Earnings Radar and Today mirrors pushed on attempt ${attempt}."
               exit 0
             fi
             echo "Push race on attempt ${attempt}; retrying."
             sleep $((attempt * 3))
           done
 
-          echo "Unable to publish Finnhub, earnings radar, and Today data after three attempts."
+          echo "Unable to publish hardened Earnings Radar after three attempts."
           exit 1
