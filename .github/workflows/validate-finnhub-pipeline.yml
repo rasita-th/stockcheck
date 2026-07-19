@@ -6,8 +6,12 @@ on:
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/verify_finnhub_today_deploy.py"
+      - "scripts/generate_earnings_radar.py"
+      - "scripts/validate_earnings_radar.py"
+      - "data/earnings_relevance.json"
       - "tests/test_finnhub_pipeline.py"
       - "tests/test_finnhub_free_tier.py"
+      - "tests/test_earnings_radar.py"
       - ".github/workflows/refresh_finnhub*.yml"
       - ".github/workflows/refresh-consensus-v9-1.yml"
       - ".github/workflows/verify-finnhub-today.yml"
@@ -18,8 +22,12 @@ on:
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/verify_finnhub_today_deploy.py"
+      - "scripts/generate_earnings_radar.py"
+      - "scripts/validate_earnings_radar.py"
+      - "data/earnings_relevance.json"
       - "tests/test_finnhub_pipeline.py"
       - "tests/test_finnhub_free_tier.py"
+      - "tests/test_earnings_radar.py"
 
 permissions:
   contents: read
@@ -37,5 +45,17 @@ jobs:
           python -m py_compile \
             scripts/finnhub_pipeline.py \
             scripts/run_finnhub_free_tier.py \
-            scripts/verify_finnhub_today_deploy.py
-          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
+            scripts/verify_finnhub_today_deploy.py \
+            scripts/generate_earnings_radar.py \
+            scripts/validate_earnings_radar.py
+          python -m unittest \
+            tests.test_finnhub_pipeline \
+            tests.test_finnhub_free_tier \
+            tests.test_earnings_radar
+      - name: Generate and validate earnings radar offline
+        env:
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
+        run: |
+          python scripts/generate_earnings_radar.py
+          python scripts/validate_earnings_radar.py
