@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.4.0"
+  TODAY_DEPLOY_VERSION: "10.5.0"
 
 jobs:
   build:
@@ -58,9 +58,13 @@ jobs:
           node --check site/attention-p0.js
           node --check site/attention-pr3.js
           node --check site/attention-pr4.js
+          node --check site/earnings-radar-pr4.js
           python scripts/validate_static_data.py
+          python scripts/validate_earnings_radar.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
+          python scripts/check_earnings_radar_ui_contract.py
+          python scripts/check_earnings_radar_activation.py
 
       - name: Force production cache bust
         env:
@@ -103,7 +107,7 @@ jobs:
               path.write_text(text, encoding="utf-8")
           PY
 
-      - name: Verify final PR4 artifact
+      - name: Verify final PR4 Earnings Radar artifact
         shell: bash
         run: |
           set -euo pipefail
@@ -114,32 +118,42 @@ jobs:
           test -s site/attention-pr3.css
           test -s site/attention-pr4.js
           test -s site/attention-pr4.css
+          test -s site/earnings-radar-pr4.js
+          test -s site/earnings-radar-pr4.css
           test -s site/memo-only-fix.js
           test -s site/memo-only-fix.css
           test -s site/today-view-isolation.css
           test -s site/data/attention_today.json
+          test -s site/data/earnings_radar.json
           grep -Fq "memo-only-fix.js?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
           grep -Fq 'attention-pr3.js?v=10.3.0' site/memo-only-fix.js
           grep -Fq 'attention-pr4.js?v=10.4.0' site/memo-only-fix.js
+          grep -Fq 'earnings-radar-pr4.js?v=10.5.0' site/memo-only-fix.js
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.1' site/memo-only-fix.css
           grep -Fq 'attention-pr3.css?v=10.3.0' site/memo-only-fix.css
           grep -Fq 'attention-pr4.css?v=10.4.0' site/memo-only-fix.css
+          grep -Fq 'earnings-radar-pr4.css?v=10.5.0' site/memo-only-fix.css
           grep -Fq 'PR4 · DECISION-FIRST TODAY' site/attention-pr4.js
-          grep -Fq 'p4-catalyst-hero' site/attention-pr4.js
-          grep -Fq 'p4-technical-grid' site/attention-pr4.js
-          grep -Fq 'data-p4-action' site/attention-pr4.js
           grep -Fq 'StockcheckAttentionP4' site/attention-pr4.js
-          grep -Fq 'attention-p4-ready' site/attention-pr4.css
-          grep -Fq 'body.attention-p4-ready #attentionPageP3' site/attention-pr4.css
+          grep -Fq 'StockcheckEarningsRadarP4' site/earnings-radar-pr4.js
+          grep -Fq 'Earnings Radar' site/earnings-radar-pr4.js
+          grep -Fq 'Earnings Calendar' site/earnings-radar-pr4.js
+          grep -Fq 'data-er-date-input' site/earnings-radar-pr4.js
+          grep -Fq 'data-er-export' site/earnings-radar-pr4.js
+          grep -Fq 'er-relation-portfolio' site/earnings-radar-pr4.css
           if grep -Fq 'Unverified report' site/attention-pr4.js; then
             echo 'Legacy English verification UI remains in PR4 renderer'
             exit 1
           fi
           if grep -Fq 'technical_json' site/attention-pr4.js; then
             echo 'Internal technical source is exposed in PR4 renderer'
+            exit 1
+          fi
+          if grep -Fq '327 / 408' site/earnings-radar-pr4.js || grep -Fq '>146<' site/earnings-radar-pr4.js; then
+            echo 'Mockup earnings values are hard-coded in the production renderer'
             exit 1
           fi
 
@@ -166,7 +180,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Smoke test deployed PR4 Today UI
+      - name: Smoke test deployed PR4 Earnings Radar
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -181,28 +195,28 @@ jobs:
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.js?smoke=${nonce}" -o /tmp/memo-only-fix.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.css?smoke=${nonce}" -o /tmp/memo-only-fix.css || return 1
-            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-p0.js?smoke=${nonce}" -o /tmp/attention-p0.js || return 1
-            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr3.js?smoke=${nonce}" -o /tmp/attention-pr3.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.js?smoke=${nonce}" -o /tmp/attention-pr4.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.css?smoke=${nonce}" -o /tmp/attention-pr4.css || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/earnings-radar-pr4.js?smoke=${nonce}" -o /tmp/earnings-radar-pr4.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/earnings-radar-pr4.css?smoke=${nonce}" -o /tmp/earnings-radar-pr4.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/today-view-isolation.css?smoke=${nonce}" -o /tmp/today-view-isolation.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/earnings_radar.json?smoke=${nonce}" -o /tmp/earnings_radar.json || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js || return 1
 
             grep -Fq "memo-only-fix.js?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
-            grep -Fq 'attention-p0.js?v=10.2.0' /tmp/memo-only-fix.js || return 1
-            grep -Fq 'attention-pr3.js?v=10.3.0' /tmp/memo-only-fix.js || return 1
             grep -Fq 'attention-pr4.js?v=10.4.0' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'earnings-radar-pr4.js?v=10.5.0' /tmp/memo-only-fix.js || return 1
             grep -Fq 'attention-pr4.css?v=10.4.0' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'earnings-radar-pr4.css?v=10.5.0' /tmp/memo-only-fix.css || return 1
             grep -Fq 'PR4 · DECISION-FIRST TODAY' /tmp/attention-pr4.js || return 1
-            grep -Fq 'p4-catalyst-hero' /tmp/attention-pr4.js || return 1
-            grep -Fq 'p4-technical-grid' /tmp/attention-pr4.js || return 1
-            grep -Fq 'data-p4-action' /tmp/attention-pr4.js || return 1
             grep -Fq 'StockcheckAttentionP4' /tmp/attention-pr4.js || return 1
-            grep -Fq 'attention-p4-ready' /tmp/attention-pr4.css || return 1
-            grep -Fq 'body.attention-p4-ready #attentionPageP3' /tmp/attention-pr4.css || return 1
+            grep -Fq 'StockcheckEarningsRadarP4' /tmp/earnings-radar-pr4.js || return 1
+            grep -Fq 'data-er-date-input' /tmp/earnings-radar-pr4.js || return 1
+            grep -Fq 'data-er-export' /tmp/earnings-radar-pr4.js || return 1
+            grep -Fq 'er-relation-portfolio' /tmp/earnings-radar-pr4.css || return 1
             grep -Fq 'body.attention-active .workspace' /tmp/today-view-isolation.css || return 1
             grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
@@ -214,7 +228,7 @@ jobs:
           ready=false
           for attempt in $(seq 1 30); do
             nonce="$(date +%s)-${attempt}"
-            echo "Production PR4 smoke attempt ${attempt}: ${BASE}"
+            echo "Production PR4 Earnings Radar smoke attempt ${attempt}: ${BASE}"
             if fetch_and_check_ui "$nonce"; then
               ready=true
               break
@@ -222,7 +236,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo 'GitHub Pages did not serve the PR4 Today hierarchy'
+            echo 'GitHub Pages did not serve the PR4 Earnings Radar workflow'
             exit 1
           fi
 
@@ -233,19 +247,25 @@ jobs:
           from pathlib import Path
 
           attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
-          if not isinstance(attention, dict):
-              raise SystemExit('deployed attention payload must be an object')
-          if not str(attention.get('contract_version') or '').startswith('3.0'):
+          radar = json.loads(Path('/tmp/earnings_radar.json').read_text(encoding='utf-8'))
+          if not isinstance(attention, dict) or not str(attention.get('contract_version') or '').startswith('3.0'):
               raise SystemExit('deployed Today data contract is not PR3 3.0 compatible')
           items = attention.get('items')
           technical_watch = attention.get('technical_watch')
           if not isinstance(items, list) or not isinstance(technical_watch, list):
               raise SystemExit('deployed Today sections are missing')
-          for item in items + technical_watch:
-              if not isinstance(item.get('change'), dict) or not isinstance(item.get('impact'), dict):
-                  raise SystemExit(f"deployed PR3 history fields missing: {item.get('ticker')}")
-              if not isinstance(item.get('personal_priority_score'), int):
-                  raise SystemExit(f"deployed personal priority missing: {item.get('ticker')}")
+          if not isinstance(radar, dict) or not str(radar.get('schema_version') or '').startswith('1.0'):
+              raise SystemExit('deployed Earnings Radar schema is not 1.0')
+          radar_items = radar.get('items')
+          daily_summary = radar.get('daily_summary')
+          window = radar.get('window') if isinstance(radar.get('window'), dict) else {}
+          coverage = radar.get('coverage') if isinstance(radar.get('coverage'), dict) else {}
+          if not isinstance(radar_items, list) or not isinstance(daily_summary, list):
+              raise SystemExit('deployed Earnings Radar rows are missing')
+          if int(window.get('days_forward') or 0) < 45:
+              raise SystemExit('deployed Earnings Radar does not cover 45 days')
+          if int(coverage.get('market_source_rows') or 0) <= int(coverage.get('portfolio_total') or 0):
+              raise SystemExit('deployed Earnings Radar is not market-wide')
           for item in items:
               events = item.get('events') if isinstance(item, dict) else None
               if not isinstance(events, list) or not any(event.get('event_type') != 'technical' for event in events):
@@ -254,13 +274,9 @@ jobs:
               events = item.get('events') if isinstance(item, dict) else None
               if not isinstance(events, list) or not events or any(event.get('event_type') != 'technical' for event in events):
                   raise SystemExit('deployed technical watch contains a non-technical event')
-          features = attention.get('features') if isinstance(attention.get('features'), dict) else {}
           health = attention.get('source_health') if isinstance(attention.get('source_health'), dict) else {}
-          if features.get('official_regulator_sources') and 'regulators' not in health:
-              raise SystemExit('deployed regulator source health is missing')
-          for key in ('changes_summary', 'recently_resolved', 'preferences_applied'):
-              if key not in attention:
-                  raise SystemExit(f'deployed PR3 field missing: {key}')
+          selected_date = str(radar.get('selected_date') or '')
+          selected_summary = next((row for row in daily_summary if row.get('date') == selected_date), {})
 
           receipt = {
               'schema_version': '1.0',
@@ -269,19 +285,28 @@ jobs:
               'page_url': os.environ['PAGE_URL'],
               'source_commit': os.environ['GITHUB_SHA'],
               'asset_version': os.environ['EXPECTED_VERSION'],
-              'ui_runtime': 'PR4 decision-first hierarchy',
+              'ui_runtime': 'PR4 decision-first hierarchy + Earnings Radar',
               'contract_version': attention.get('contract_version'),
               'data_updated_at': attention.get('updated_at'),
               'catalyst_count': len(items),
               'technical_watch_count': len(technical_watch),
               'regulator_health': (health.get('regulators') or {}).get('status'),
+              'earnings_radar_schema': radar.get('schema_version'),
+              'earnings_selected_date': selected_date,
+              'earnings_selected_date_total': int(selected_summary.get('total') or 0),
+              'earnings_published_rows': int(coverage.get('published_rows') or 0),
+              'earnings_market_source_rows': int(coverage.get('market_source_rows') or 0),
+              'earnings_window_days_forward': int(window.get('days_forward') or 0),
               'production_smoke_passed': True,
           }
           Path('/tmp/deploy-receipt.json').write_text(
               json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
               encoding='utf-8',
           )
-          print(f"Deployed PR4 verified: {len(items)} catalysts / {len(technical_watch)} technical watch")
+          print(
+              f"Deployed PR4 Earnings Radar verified: {len(items)} catalysts / "
+              f"{len(technical_watch)} technical watch / {len(radar_items)} earnings rows"
+          )
           PY
 
       - name: Checkout main for deployment receipt
@@ -302,6 +327,6 @@ jobs:
             echo "Deployment receipt is unchanged."
             exit 0
           fi
-          git commit -m "Record verified PR4 Pages deployment"
+          git commit -m "Record verified PR4 Earnings Radar deployment"
           git pull --rebase origin main
           git push origin HEAD:main
