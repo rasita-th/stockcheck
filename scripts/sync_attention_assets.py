@@ -4,6 +4,8 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+from apply_company_logo_budget import apply_patch
+
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 STATIC = ROOT / "static"
@@ -23,6 +25,7 @@ ASSETS = (
 
 
 def main() -> None:
+    apply_patch(SITE / "attention-pr4.js")
     STATIC.mkdir(parents=True, exist_ok=True)
     for name in ASSETS:
         source = SITE / name
