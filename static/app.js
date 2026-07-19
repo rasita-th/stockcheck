@@ -1,4 +1,4 @@
-/* Stock Timing Radar — v8.0 Stability & Data Integrity
+/* Stock Timing Radar — v10.7.0 Stability & Data Integrity
    Full v3.3 mock UI shell + original Python backend engine.
    Backend endpoints used: /api/scan, /api/quote, /api/health; analyst view links out to Yahoo Finance
 */
@@ -4128,7 +4128,7 @@ if (state.staticMode || isStaticDeployHost()) {
   setTimeout(() => { if (mobile()) { ensureReserveRecords(); renderMobileReserveTabs(); } }, 0);
 })();
 
-/* v8.0 Stability & Data Integrity
+/* v10.7.0 Stability & Data Integrity
    Release goal: stop adding new surface area; make existing scanner/memo/screener/data states resilient.
    - Mobile uses stable fixed screeners: Default / Momentum / Thai / Port 1 / Port 2 / Port 3 / Settings.
    - Portfolio rendering is idempotent and no longer depends on dynamic mobile tab creation.
@@ -4137,7 +4137,7 @@ if (state.staticMode || isStaticDeployHost()) {
    - Exposes window.__stockcheckDiagnosticsV80() for quick support/debug checks.
 */
 (function v80StabilityRelease(){
-  const BUILD = "v8.0 Stability & Data Integrity";
+  const BUILD = "v10.7.0 Stability & Data Integrity";
   const MOBILE_QUERY = "(max-width: 767px)";
   const mobile = () => window.matchMedia && window.matchMedia(MOBILE_QUERY).matches;
   const fixedTabs = [
