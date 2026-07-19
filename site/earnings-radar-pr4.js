@@ -54,6 +54,7 @@
     selectedItem: null,
     observer: null,
     renderQueued: false,
+    personalTickers: new Set(),
   };
 
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -61,6 +62,46 @@
   }[char]));
   const asArray = (value) => Array.isArray(value) ? value : [];
   const asNumber = (value) => Number.isFinite(Number(value)) ? Number(value) : null;
+  const PERSONAL_STORAGE = Object.freeze({
+    portfolio: "stockTimingRadar.myPortfolio.v1",
+    screeners: "stockTimingRadar.screeners.v54",
+    watchlist: "stockTimingRadar.watchlist.v54",
+  });
+
+  function normaliseTicker(value) {
+    return String(value || "").trim().replace(/^[$#]+/, "").toUpperCase().replace(/[^A-Z0-9.\-]/g, "");
+  }
+
+  function loadPersonalTickers() {
+    try {
+      const direct = localStorage.getItem(PERSONAL_STORAGE.portfolio);
+      if (direct !== null) return new Set(asArray(JSON.parse(direct)).map(normaliseTicker).filter(Boolean));
+    } catch (_) {}
+    try {
+      const screeners = JSON.parse(localStorage.getItem(PERSONAL_STORAGE.screeners) || "{}");
+      if (Array.isArray(screeners?.default?.watchlist)) {
+        return new Set(screeners.default.watchlist.map(normaliseTicker).filter(Boolean));
+      }
+    } catch (_) {}
+    try {
+      return new Set(asArray(JSON.parse(localStorage.getItem(PERSONAL_STORAGE.watchlist) || "[]")).map(normaliseTicker).filter(Boolean));
+    } catch (_) {
+      return new Set();
+    }
+  }
+
+  function personaliseItem(item) {
+    const ticker = normaliseTicker(item?.ticker);
+    const relatedTo = asArray(item?.related_to).map(normaliseTicker).filter((value) => state.personalTickers.has(value));
+    let relation = ["coverage", "market"].includes(item?.relation) ? item.relation : "coverage";
+    if (state.personalTickers.has(ticker)) relation = "portfolio";
+    else if (relatedTo.length) relation = "related";
+    return { ...item, relation, related_to: relatedTo, source_relation: item?.relation || "market" };
+  }
+
+  function personalisedItems() {
+    return asArray(state.data?.items).map(personaliseItem);
+  }
 
   function formatDate(value, long = false) {
     const parsed = new Date(`${String(value || "").slice(0, 10)}T12:00:00Z`);
@@ -89,9 +130,19 @@
   }
 
   function daySummary(dateValue) {
-    return asArray(state.data?.daily_summary).find((row) => row?.date === dateValue) || {
+    const fallback = {
       date: dateValue, total: 0, before_market: 0, during_market: 0, after_market: 0,
       unknown: 0, portfolio: 0, related: 0, coverage: 0, market: 0, confirmed: 0, estimated: 0,
+    };
+    const source = asArray(state.data?.daily_summary).find((row) => row?.date === dateValue) || fallback;
+    const rows = personalisedItems().filter((item) => item.earnings_date === dateValue);
+    const relationCount = (relation) => rows.filter((item) => item.relation === relation).length;
+    return {
+      ...source,
+      portfolio: relationCount("portfolio"),
+      related: relationCount("related"),
+      coverage: relationCount("coverage"),
+      market: relationCount("market"),
     };
   }
 
@@ -107,7 +158,7 @@
   }
 
   function filteredRows() {
-    const rows = asArray(state.data?.items).filter((item) => item.earnings_date === state.selectedDate);
+    const rows = personalisedItems().filter((item) => item.earnings_date === state.selectedDate);
     if (state.filter === "all") return rows;
     if (["before_market", "after_market", "during_market", "unknown"].includes(state.filter)) {
       return rows.filter((item) => item.time === state.filter);
@@ -146,14 +197,14 @@
       <div class="er-stat-grid">
         <div><span>บริษัทที่ประกาศงบ</span><strong>${Number(summary.total || 0).toLocaleString()}</strong><small>ก่อนตลาด ${Number(summary.before_market || 0)} · หลังตลาด ${Number(summary.after_market || 0)} · ไม่ระบุ ${Number(summary.unknown || 0)}</small></div>
         <div class="actionable"><span>เกี่ยวข้องกับพอร์ตคุณ</span><strong>${Number(summary.related || 0).toLocaleString()}</strong><small>มี mapping ที่ตรวจสอบย้อนกลับได้</small></div>
-        <div><span>หุ้นในพอร์ตใกล้ประกาศ</span><strong>${Number(summary.portfolio || 0).toLocaleString()}</strong><small>จากพอร์ต ${Number(coverage.portfolio_total || 0)} ตัว</small></div>
+        <div><span>หุ้นในพอร์ตใกล้ประกาศ</span><strong>${Number(summary.portfolio || 0).toLocaleString()}</strong><small>จาก My Portfolio ${state.personalTickers.size} ตัว</small></div>
         <div><span>ข้อมูลในช่วง ${days} วัน</span><strong>${Number(coverage.published_rows || 0).toLocaleString()}</strong><small>จาก market source ${Number(coverage.market_source_rows || 0).toLocaleString()} แถว</small></div>
       </div>
     </section>`;
   }
 
   function filterBar(rows) {
-    const allDateRows = asArray(state.data?.items).filter((item) => item.earnings_date === state.selectedDate);
+    const allDateRows = personalisedItems().filter((item) => item.earnings_date === state.selectedDate);
     const countFor = (key) => {
       if (key === "all") return allDateRows.length;
       if (["before_market", "after_market", "during_market", "unknown"].includes(key)) return allDateRows.filter((item) => item.time === key).length;
@@ -264,7 +315,7 @@
 
   function selectItem(key) {
     const [ticker, eventDate] = String(key || "").split("|");
-    state.selectedItem = asArray(state.data?.items).find((item) => item.ticker === ticker && item.earnings_date === eventDate) || null;
+    state.selectedItem = personalisedItems().find((item) => item.ticker === ticker && item.earnings_date === eventDate) || null;
     renderIntoShell();
   }
 
@@ -303,6 +354,7 @@
       const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`earnings_radar.json HTTP ${response.status}`);
       state.data = validate(await response.json());
+      state.personalTickers = loadPersonalTickers();
       state.selectedDate = chooseInitialDate();
     } catch (error) {
       state.error = error?.message || String(error);
@@ -315,6 +367,16 @@
   }
 
   function init() {
+    state.personalTickers = loadPersonalTickers();
+    const syncPersonalPortfolio = () => {
+      state.personalTickers = loadPersonalTickers();
+      state.visibleCount = PAGE_SIZE;
+      renderIntoShell();
+    };
+    window.addEventListener("stockcheck:portfolio-change", syncPersonalPortfolio);
+    window.addEventListener("storage", (event) => {
+      if (Object.values(PERSONAL_STORAGE).includes(event.key)) syncPersonalPortfolio();
+    });
     document.addEventListener("click", (event) => {
       const scroll = event.target.closest?.("[data-er-scroll-calendar]");
       if (scroll) document.getElementById("earningsCalendarP4")?.scrollIntoView({ behavior: "smooth", block: "start" });
