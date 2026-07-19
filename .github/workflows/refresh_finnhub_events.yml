@@ -64,7 +64,7 @@ jobs:
       - name: Generate market-wide earnings radar contract
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
-          EARNINGS_RADAR_DAYS_FORWARD: "14"
+          EARNINGS_RADAR_DAYS_FORWARD: "45"
         run: python scripts/generate_earnings_radar.py
 
       - name: Regenerate PR3 Today from refreshed earnings

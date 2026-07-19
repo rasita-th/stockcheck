@@ -1,0 +1,489 @@
+.er-root {
+  display: grid;
+  gap: 18px;
+  margin-top: 2px;
+}
+.er-radar,
+.er-calendar {
+  overflow: hidden;
+  border: 1px solid var(--border, #30363d);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(17,23,32,.99), rgba(10,15,22,.98));
+}
+.er-radar > header,
+.er-calendar > header {
+  min-height: 72px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border, #30363d);
+}
+.er-radar > header > div,
+.er-calendar > header > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.er-radar h2,
+.er-calendar h2 {
+  margin: 0;
+  font-size: 21px;
+  letter-spacing: -.02em;
+}
+.er-radar h2::after {
+  content: "ใหม่";
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(88,166,255,.13);
+  color: #58a6ff;
+  font-size: 10px;
+  font-weight: 800;
+  vertical-align: middle;
+}
+.er-radar p,
+.er-calendar p {
+  margin: 3px 0 0;
+  color: var(--muted, #8b949e);
+  font-size: 12px;
+}
+.er-line-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #58a6ff;
+}
+.er-line-icon svg,
+.er-radar button svg,
+.er-calendar-controls svg,
+.er-calendar td button svg,
+.er-mobile-card button svg,
+.er-dialog svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.er-radar > header > button {
+  min-height: 38px;
+  padding: 0 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #388bfd;
+  border-radius: 8px;
+  background: rgba(56,139,253,.06);
+  color: #58a6ff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.er-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.er-stat-grid > div {
+  min-height: 124px;
+  padding: 20px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border-right: 1px solid var(--border, #30363d);
+}
+.er-stat-grid > div:last-child { border-right: 0; }
+.er-stat-grid span,
+.er-stat-grid small {
+  color: var(--muted, #8b949e);
+  font-size: 11px;
+}
+.er-stat-grid strong {
+  font: 800 30px "IBM Plex Mono", monospace;
+  letter-spacing: -.04em;
+}
+.er-stat-grid .actionable {
+  position: relative;
+  background: rgba(46,160,67,.07);
+}
+.er-stat-grid .actionable::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: #3fb950;
+}
+.er-stat-grid .actionable strong { color: #56d364; }
+
+.er-calendar > header > div:first-child {
+  display: block;
+}
+.er-calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.er-calendar-controls > button,
+.er-calendar-controls label {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--border, #30363d);
+  border-radius: 8px;
+  background: rgba(255,255,255,.02);
+  color: #c9d1d9;
+}
+.er-calendar-controls > button {
+  min-width: 38px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+.er-calendar-controls > button:disabled { opacity: .35; cursor: default; }
+.er-calendar-controls label { padding: 0 10px; }
+.er-calendar-controls input {
+  width: 132px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #e6edf3;
+  font: inherit;
+  color-scheme: dark;
+}
+.er-calendar-controls .er-export {
+  padding: 0 12px;
+  color: #58a6ff;
+}
+.er-filters {
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border, #30363d);
+}
+.er-filters button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted, #8b949e);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.er-filters button span {
+  margin-left: 4px;
+  color: #6e7681;
+  font: 700 10px "IBM Plex Mono", monospace;
+}
+.er-filters button.active {
+  border-color: #388bfd;
+  background: rgba(56,139,253,.08);
+  color: #58a6ff;
+}
+.er-filters button.active span { color: #79c0ff; }
+.er-table-wrap { overflow-x: auto; }
+.er-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1060px;
+}
+.er-calendar th {
+  padding: 11px 14px;
+  color: var(--muted, #8b949e);
+  background: rgba(255,255,255,.015);
+  font-size: 10px;
+  font-weight: 750;
+  text-align: left;
+  white-space: nowrap;
+}
+.er-calendar td {
+  position: relative;
+  padding: 13px 14px;
+  border-top: 1px solid rgba(48,54,61,.75);
+  vertical-align: middle;
+}
+.er-calendar tbody tr {
+  transition: background .14s ease;
+}
+.er-calendar tbody tr:nth-child(even) { background: rgba(255,255,255,.012); }
+.er-calendar tbody tr:hover { background: rgba(88,166,255,.045); }
+.er-calendar tbody tr.er-relation-portfolio {
+  background: rgba(248,81,73,.055);
+  box-shadow: inset 3px 0 #f85149;
+}
+.er-calendar tbody tr.er-relation-related {
+  box-shadow: inset 3px 0 rgba(210,153,34,.72);
+}
+.er-calendar td > strong,
+.er-calendar td > span { display: block; }
+.er-calendar td > strong { font-size: 12px; }
+.er-calendar td > span {
+  margin-top: 4px;
+  color: var(--muted, #8b949e);
+  font-size: 10px;
+}
+.er-company {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+}
+.er-ticker-mark {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+  color: #c9d1d9;
+  font: 800 11px "IBM Plex Mono", monospace;
+}
+.er-relation-portfolio .er-ticker-mark {
+  border-color: rgba(248,81,73,.45);
+  color: #ff7b72;
+}
+.er-relation-related .er-ticker-mark {
+  border-color: rgba(210,153,34,.45);
+  color: #e3b341;
+}
+.er-company strong,
+.er-company span { display: block; }
+.er-company strong {
+  font: 800 13px "IBM Plex Mono", monospace;
+}
+.er-company span {
+  max-width: 210px;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted, #8b949e);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.er-relation-text {
+  color: #b7c0cc !important;
+  line-height: 1.45;
+}
+.er-calendar td button,
+.er-mobile-card > button {
+  min-height: 34px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #30363d;
+  border-radius: 7px;
+  background: transparent;
+  color: #58a6ff;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.er-calendar td button svg,
+.er-mobile-card button svg { width: 13px; height: 13px; }
+.er-mobile-list { display: none; }
+.er-load-more {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-top: 1px solid var(--border, #30363d);
+  background: transparent;
+  color: #58a6ff;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+.er-empty,
+.er-error {
+  min-height: 110px;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--muted, #8b949e);
+  text-align: center;
+}
+.er-error { color: #ff7b72; }
+
+.er-dialog {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  z-index: 1102;
+  width: min(680px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  border: 1px solid #30363d;
+  border-radius: 18px;
+  background: #0d1117;
+  color: #e6edf3;
+  padding: 24px;
+  box-shadow: 0 34px 90px rgba(0,0,0,.62);
+}
+.er-dialog::backdrop { display: none; }
+.er-dialog > form {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+.er-dialog > form button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #30363d;
+  border-radius: 9px;
+  background: transparent;
+  color: #8b949e;
+  cursor: pointer;
+}
+.er-dialog-company {
+  padding-right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.er-dialog-company .er-ticker-mark { width: 54px; height: 54px; font-size: 15px; }
+.er-dialog-company span,
+.er-dialog-company p {
+  color: #8b949e;
+  font-size: 11px;
+}
+.er-dialog-company h2 {
+  margin: 2px 0;
+  font: 800 28px "IBM Plex Mono", monospace;
+}
+.er-dialog-company p { margin: 0; }
+.er-dialog-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid #30363d;
+  border-left: 1px solid #30363d;
+}
+.er-dialog-grid > div {
+  min-height: 104px;
+  padding: 15px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border-right: 1px solid #30363d;
+  border-bottom: 1px solid #30363d;
+}
+.er-dialog-grid span,
+.er-dialog-grid small {
+  color: #8b949e;
+  font-size: 10px;
+}
+.er-dialog-grid strong { font-size: 14px; line-height: 1.4; }
+.er-dialog-source {
+  margin-top: 18px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #58a6ff;
+  text-decoration: none;
+  font-weight: 750;
+}
+.er-dialog-note {
+  margin: 18px 0 0;
+  color: #8b949e;
+  font-size: 11px;
+}
+.er-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1101;
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(3px);
+}
+body:has(.er-dialog[open]) { overflow: hidden; }
+
+@media (max-width: 1000px) {
+  .er-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .er-stat-grid > div:nth-child(2) { border-right: 0; }
+  .er-stat-grid > div:nth-child(-n+2) { border-bottom: 1px solid #30363d; }
+  .er-calendar > header { align-items: flex-start; }
+  .er-calendar-controls { flex-wrap: wrap; justify-content: flex-end; }
+}
+
+@media (max-width: 760px) {
+  .er-radar,
+  .er-calendar { border-radius: 14px; }
+  .er-radar > header,
+  .er-calendar > header { align-items: stretch; }
+  .er-radar > header { display: grid; }
+  .er-radar > header > button { justify-self: start; }
+  .er-stat-grid > div { min-height: 104px; padding: 15px; }
+  .er-stat-grid strong { font-size: 25px; }
+  .er-calendar > header { display: grid; }
+  .er-calendar-controls { justify-content: flex-start; }
+  .er-calendar-controls label { flex: 1 1 170px; }
+  .er-calendar-controls input { width: 100%; }
+  .er-table-wrap { display: none; }
+  .er-mobile-list { display: grid; }
+  .er-mobile-card {
+    position: relative;
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+    border-top: 1px solid #30363d;
+  }
+  .er-mobile-card:nth-child(even) { background: rgba(255,255,255,.012); }
+  .er-mobile-card.er-relation-portfolio {
+    background: rgba(248,81,73,.055);
+    box-shadow: inset 3px 0 #f85149;
+  }
+  .er-mobile-card.er-relation-related { box-shadow: inset 3px 0 rgba(210,153,34,.72); }
+  .er-mobile-card > header {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .er-mobile-card > header > div:last-child { text-align: right; }
+  .er-mobile-card > header > div:last-child strong,
+  .er-mobile-card > header > div:last-child span { display: block; }
+  .er-mobile-card > header > div:last-child strong { font-size: 11px; }
+  .er-mobile-card > header > div:last-child span { margin-top: 4px; color: #8b949e; font-size: 10px; }
+  .er-mobile-card dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid #30363d;
+    border-left: 1px solid #30363d;
+  }
+  .er-mobile-card dl > div {
+    padding: 10px;
+    border-right: 1px solid #30363d;
+    border-bottom: 1px solid #30363d;
+  }
+  .er-mobile-card dt { color: #8b949e; font-size: 9px; }
+  .er-mobile-card dd { margin: 4px 0 0; font-size: 11px; line-height: 1.4; }
+  .er-mobile-card > button { justify-self: start; }
+}
+
+@media (max-width: 470px) {
+  .er-stat-grid { grid-template-columns: 1fr; }
+  .er-stat-grid > div { border-right: 0; border-bottom: 1px solid #30363d; }
+  .er-stat-grid > div:last-child { border-bottom: 0; }
+  .er-calendar-controls .er-export span { display: none; }
+  .er-dialog { padding: 20px 16px; }
+  .er-dialog-grid { grid-template-columns: 1fr; }
+  .er-mobile-card dl { grid-template-columns: 1fr; }
+}
