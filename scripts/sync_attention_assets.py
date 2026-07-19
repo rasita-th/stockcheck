@@ -16,6 +16,7 @@ ASSETS = (
     "attention-pr4.css",
     "earnings-radar-pr4.js",
     "earnings-radar-pr4.css",
+    "earnings-radar-error-guard.js",
     "today-view-isolation.css",
     "memo-only-fix.js",
     "memo-only-fix.css",
