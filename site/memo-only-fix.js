@@ -38,8 +38,12 @@
     document.head.appendChild(script);
   }
 
+  function loadEarningsRadarErrorGuard() {
+    loadScript("earnings-radar-error-guard.js?v=10.5.1", "earningsRadarErrorGuardLoader");
+  }
+
   function loadEarningsRadar() {
-    loadScript("earnings-radar-pr4.js?v=10.5.0", "earningsRadarPr4Loader");
+    loadScript("earnings-radar-pr4.js?v=10.5.0", "earningsRadarPr4Loader", loadEarningsRadarErrorGuard);
   }
 
   function loadAttentionP4() {
