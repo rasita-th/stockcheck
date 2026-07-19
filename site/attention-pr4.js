@@ -1,12 +1,19 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.4.3";
+  const VERSION = "10.7.0";
   const DATA_URL = "data/attention_today.json";
   const ACTIONS_KEY = "stockcheck.attention.pr3.actions.v1";
   const PREFS_KEY = "stockcheck.attention.pr4.preferences.v1";
   const LOGO_DEV_TOKEN = "__LOGO_DEV_PUBLISHABLE_KEY__";
-  const missingLogoTickers = new Set();
+  const MAX_UNIQUE_LOGOS_PER_PAGE = 6;
+  const MAX_NON_DETAIL_LOGOS_PER_PAGE = 5;
+  const MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60;
+  const LOGO_FAILURE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+  const LOGO_USAGE_KEY = "stockcheck.logoDev.usage.v3";
+  const LOGO_FAILURE_KEY = "stockcheck.logoDev.failures.v3";
+  const requestedLogoTickers = new Set();
+  let nonDetailLogoRequests = 0;
   let logoFallbackBound = false;
   const EXTERNAL_SOURCE_TYPES = new Set(["sec", "company_ir", "company_press_release", "regulator", "gdelt", "media"]);
   const PRIORITY_ORDER = { Critical: 0, Risk: 1, Action: 2, Watch: 3, Developing: 4 };
@@ -86,6 +93,63 @@
       .replace(/[^A-Z0-9.\-]/g, "");
   }
 
+  function readLogoStorage(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "null");
+      return value && typeof value === "object" ? value : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function writeLogoStorage(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* optional */ }
+  }
+
+  function logoMonthKey() {
+    return new Date().toISOString().slice(0, 7);
+  }
+
+  function currentLogoUsage() {
+    const stored = readLogoStorage(LOGO_USAGE_KEY, {});
+    if (stored.month !== logoMonthKey()) return { month: logoMonthKey(), attempts: 0 };
+    return { month: stored.month, attempts: Math.max(0, Number(stored.attempts) || 0) };
+  }
+
+  function currentLogoFailures() {
+    const now = Date.now();
+    const stored = readLogoStorage(LOGO_FAILURE_KEY, {});
+    const active = {};
+    for (const [ticker, failedAt] of Object.entries(stored)) {
+      if (Number.isFinite(Number(failedAt)) && now - Number(failedAt) < LOGO_FAILURE_TTL_MS) active[ticker] = Number(failedAt);
+    }
+    return active;
+  }
+
+  let logoUsage = currentLogoUsage();
+  let logoFailures = currentLogoFailures();
+  const missingLogoTickers = new Set(Object.keys(logoFailures));
+  writeLogoStorage(LOGO_USAGE_KEY, logoUsage);
+  writeLogoStorage(LOGO_FAILURE_KEY, logoFailures);
+
+  function fallbackLogoMarkup(markClass, fallback, ticker = "") {
+    return `<span class="${markClass}" data-logo-shell data-logo-ticker="${esc(ticker)}"><span data-logo-fallback>${fallback}</span></span>`;
+  }
+
+  function reserveLogoAttempt(ticker, detailRequest) {
+    if (requestedLogoTickers.has(ticker)) return true;
+    if (missingLogoTickers.has(ticker)) return false;
+    logoUsage = currentLogoUsage();
+    if (logoUsage.attempts >= MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH) return false;
+    if (requestedLogoTickers.size >= MAX_UNIQUE_LOGOS_PER_PAGE) return false;
+    if (!detailRequest && nonDetailLogoRequests >= MAX_NON_DETAIL_LOGOS_PER_PAGE) return false;
+    requestedLogoTickers.add(ticker);
+    if (!detailRequest) nonDetailLogoRequests += 1;
+    logoUsage.attempts += 1;
+    writeLogoStorage(LOGO_USAGE_KEY, logoUsage);
+    return true;
+  }
+
   const PERSONAL_STORAGE = Object.freeze({
     portfolio: "stockTimingRadar.myPortfolio.v1",
     screeners: "stockTimingRadar.screeners.v54",
@@ -117,11 +181,16 @@
   function companyLogoMarkup(item, markClass = "company-logo-mark") {
     const ticker = normaliseLogoTicker(item?.ticker);
     const fallback = esc(String(ticker || "?").slice(0, 2));
-    if (!ticker || missingLogoTickers.has(ticker)) {
-      return `<span class="${markClass}" data-logo-shell><span data-logo-fallback>${fallback}</span></span>`;
+    const detailRequest = String(markClass).includes("stock-detail-company-logo");
+    const earningsRequest = String(markClass).includes("er-ticker-mark");
+    const relevantEarnings = ["portfolio", "related"].includes(String(item?.relation || ""));
+    if (!ticker || (earningsRequest && !relevantEarnings) || !reserveLogoAttempt(ticker, detailRequest)) {
+      return fallbackLogoMarkup(markClass, fallback, ticker);
     }
-    const src = `https://img.logo.dev/ticker/${encodeURIComponent(ticker)}?token=${encodeURIComponent(LOGO_DEV_TOKEN)}&size=64&format=png&theme=dark&retina=true&fallback=404`;
-    return `<span class="${markClass}" data-logo-shell><img src="${src}" data-logo-ticker="${esc(ticker)}" alt="" aria-hidden="true" width="54" height="54" loading="lazy" decoding="async" fetchpriority="low"><span data-logo-fallback hidden>${fallback}</span></span>`;
+    const loading = detailRequest ? "eager" : "lazy";
+    const priority = detailRequest ? "high" : "low";
+    const src = `https://img.logo.dev/ticker/${encodeURIComponent(ticker)}?token=${encodeURIComponent(LOGO_DEV_TOKEN)}&size=64&format=webp&theme=dark&retina=true&fallback=404`;
+    return `<span class="${markClass}" data-logo-shell data-logo-ticker="${esc(ticker)}"><img src="${src}" data-logo-ticker="${esc(ticker)}" alt="" aria-hidden="true" width="54" height="54" loading="${loading}" decoding="async" fetchpriority="${priority}" referrerpolicy="origin"><span data-logo-fallback hidden>${fallback}</span></span>`;
   }
 
   function installLogoFallback() {
@@ -130,7 +199,12 @@
     document.addEventListener("error", (event) => {
       const image = event.target;
       if (!(image instanceof HTMLImageElement) || !image.dataset.logoTicker) return;
-      missingLogoTickers.add(image.dataset.logoTicker);
+      const ticker = normaliseLogoTicker(image.dataset.logoTicker);
+      if (ticker) {
+        missingLogoTickers.add(ticker);
+        logoFailures[ticker] = Date.now();
+        writeLogoStorage(LOGO_FAILURE_KEY, logoFailures);
+      }
       image.hidden = true;
       image.nextElementSibling?.removeAttribute("hidden");
     }, true);
@@ -448,9 +522,15 @@
     state.error = null;
     render();
     try {
-      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
-      state.data = validatePayload(await response.json());
+      let payload;
+      if (typeof window.StockcheckAttentionDataStore?.load === "function") {
+        payload = await window.StockcheckAttentionDataStore.load();
+      } else {
+        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
+        payload = await response.json();
+      }
+      state.data = validatePayload(payload);
     } catch (error) {
       state.error = error?.message || String(error);
       state.data = null;
@@ -464,7 +544,7 @@
     installLogoFallback();
     state.personalTickers = loadPersonalTickers();
     state.filter = state.personalTickers.size ? "holdings" : "all";
-    window.StockcheckCompanyLogo = Object.freeze({ version: "1.0.0", markup: companyLogoMarkup });
+    window.StockcheckCompanyLogo = Object.freeze({ version: "3.0.0", markup: companyLogoMarkup, limits: Object.freeze({ perPage: MAX_UNIQUE_LOGOS_PER_PAGE, nonDetailPerPage: MAX_NON_DETAIL_LOGOS_PER_PAGE, perBrowserMonth: MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH }) });
     ensurePage();
     document.addEventListener("click", (event) => {
       const filter = event.target.closest?.("[data-p4-filter]");

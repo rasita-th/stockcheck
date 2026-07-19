@@ -1,4 +1,4 @@
-/* Stock Timing Radar — v8.0 Stability & Data Integrity
+/* Stock Timing Radar — v10.7.0 Stability & Data Integrity
    Full v3.3 mock UI shell + original Python backend engine.
    Backend endpoints used: /api/scan, /api/quote, /api/health; analyst view links out to Yahoo Finance
 */
@@ -58,6 +58,7 @@ let state = {
   },
   lastScanAt: null,
   watchlist: loadWatchlist(),
+  portfolioIsFirstRun: !hasPersistedPortfolio(),
   rows: [],
   quotes: {},
   errors: [],
@@ -108,18 +109,34 @@ function loadMyPortfolio() {
 
 function saveMyPortfolio(tickers) {
   const portfolio = normalizeTickers(Array.isArray(tickers) ? tickers : []);
-  localStorage.setItem(STORAGE.myPortfolio, JSON.stringify(portfolio));
-  window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
+  const serialized = JSON.stringify(portfolio);
+  const previous = localStorage.getItem(STORAGE.myPortfolio);
+  if (previous !== serialized) {
+    localStorage.setItem(STORAGE.myPortfolio, serialized);
+    window.dispatchEvent(new CustomEvent("stockcheck:portfolio-change", { detail: { tickers: portfolio } }));
+  }
+  if (typeof state === "object" && state) state.portfolioIsFirstRun = false;
   return portfolio;
 }
 
+function hasPersistedPortfolio() {
+  try {
+    return [STORAGE.myPortfolio, STORAGE.screeners, STORAGE.watchlist]
+      .some((key) => localStorage.getItem(key) !== null);
+  } catch (_) {
+    return false;
+  }
+}
+
 function loadWatchlist() {
-  return loadMyPortfolio();
+  return hasPersistedPortfolio() ? loadMyPortfolio() : [...BASE_WATCHLIST];
 }
 
 function saveWatchlist() {
+  state.watchlist = normalizeTickers(Array.isArray(state.watchlist) ? state.watchlist : []);
   localStorage.setItem(STORAGE.watchlist, JSON.stringify(state.watchlist));
   persistActiveScreener();
+  if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist);
 }
 
 function normalizeTicker(raw) {
@@ -609,6 +626,10 @@ function renderTechnicalTable() {
   }
   const rows = scannerStocks();
   if (!rows.length) {
+    if (!state.watchlist.length) {
+      body.innerHTML = `<tr><td colspan="${Math.max(cols.length, 1)}" class="muted-empty">My Portfolio ยังว่างอยู่ <button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></td></tr>`;
+      return;
+    }
     let hint = state.errors?.length
       ? `Scan failed / no market data returned. First error: ${esc(state.errors[0].symbol || "")}: ${esc(state.errors[0].error || "")}`
       : "No stocks passed filters. Try lowering score or unchecking filters.";
@@ -629,7 +650,9 @@ function renderTechnicalMobile() {
   const rows = scannerStocks();
 
   if (!rows.length) {
-    wrap.innerHTML = `<div class="mobile-empty">No stocks passed filters.</div>`;
+    wrap.innerHTML = !state.watchlist.length
+      ? `<div class="mobile-empty">My Portfolio ยังว่างอยู่ <button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></div>`
+      : `<div class="mobile-empty">No stocks passed filters.</div>`;
     return;
   }
 
@@ -661,7 +684,12 @@ function renderTechnicalMobileTable() {
   const body = $("#technicalMobileTableBody");
   if (!body) return;
   const rows = scannerStocks();
-  if (!rows.length) { body.innerHTML = `<tr><td class="sticky-col">No result</td><td colspan="7">Adjust filters</td></tr>`; return; }
+  if (!rows.length) {
+    body.innerHTML = !state.watchlist.length
+      ? `<tr><td class="sticky-col">My Portfolio</td><td colspan="7"><button type="button" data-open-panel="quickScanSheet">เพิ่มหุ้นแรก</button></td></tr>`
+      : `<tr><td class="sticky-col">No result</td><td colspan="7">Adjust filters</td></tr>`;
+    return;
+  }
   body.innerHTML = rows.map(s => `
     <tr class="${s.ticker === state.selected ? "active-row" : ""} ${s.isPlaceholder ? "pending-row" : s._filteredOut ? "filtered-out" : ""}" data-select="${esc(s.ticker)}">
       <td class="sticky-col"><strong class="num">${esc(s.ticker)}</strong><span>${esc(s.company || s.exchange || "")}</span></td>
@@ -1544,8 +1572,9 @@ function closeChartModal() {
 function addSymbolsBulk(rawText = "", mode = "append") {
   const tickers = parseTickerList(rawText);
   if (!tickers.length) return { total: 0, added: [], existing: [] };
-  const before = new Set(state.watchlist);
-  if (mode === "replace") state.watchlist = [];
+  const replacingExamples = Boolean(state.portfolioIsFirstRun);
+  const before = new Set(replacingExamples ? [] : state.watchlist);
+  if (mode === "replace" || replacingExamples) state.watchlist = [];
   tickers.forEach(t => {
     if (!state.watchlist.includes(t)) state.watchlist.push(t);
     if (!state.rows.some(r => normalizeTicker(r.symbol) === t)) state.rows.push({ symbol: t, signal: "NEUTRAL", score: 0 });
@@ -2041,6 +2070,10 @@ function renderStatus() {
   if (!subtitle || state.loading) return;
   const err = state.errors?.length ? ` · ${state.errors.length} errors` : "";
   const when = state.lastScanAt ? ` · Last scan ${state.lastScanAt}` : "";
+  if (state.portfolioIsFirstRun) {
+    subtitle.textContent = `ตัวอย่างเริ่มต้น ${state.watchlist.length} หุ้น · เพิ่มหุ้นแรกเพื่อสร้าง My Portfolio · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
+    return;
+  }
   subtitle.textContent = `Showing ${currentStocks().length} pass / ${state.lastScanSymbols.length || state.rows.length || state.watchlist.length} watchlist · table keeps filtered rows dimmed · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
   updateMobileSortLabel();
 }
@@ -3543,13 +3576,15 @@ if (state.staticMode || isStaticDeployHost()) {
   });
   const oldPersist = persistActiveScreener;
   persistActiveScreener = function patchedPersistActiveScreener(){
+    const active = state.activeScreener || "default";
     const screeners = getScreeners();
-    const existing = screeners[state.activeScreener] || {};
-    screeners[state.activeScreener] = {
+    const existing = screeners[active] || {};
+    screeners[active] = {
       ...existing,
-      ...snapshot(existing.label || existing.name || labelFor(state.activeScreener, existing)),
+      ...snapshot(existing.label || existing.name || labelFor(active, existing)),
     };
     setScreeners(screeners);
+    if (active === "default") saveMyPortfolio(state.watchlist);
   };
   renderPortfolioTabs = function patchedRenderPortfolioTabs(){
     const nav = document.querySelector(".portfolio-tabs");
@@ -4093,7 +4128,7 @@ if (state.staticMode || isStaticDeployHost()) {
   setTimeout(() => { if (mobile()) { ensureReserveRecords(); renderMobileReserveTabs(); } }, 0);
 })();
 
-/* v8.0 Stability & Data Integrity
+/* v10.7.0 Stability & Data Integrity
    Release goal: stop adding new surface area; make existing scanner/memo/screener/data states resilient.
    - Mobile uses stable fixed screeners: Default / Momentum / Thai / Port 1 / Port 2 / Port 3 / Settings.
    - Portfolio rendering is idempotent and no longer depends on dynamic mobile tab creation.
@@ -4102,7 +4137,7 @@ if (state.staticMode || isStaticDeployHost()) {
    - Exposes window.__stockcheckDiagnosticsV80() for quick support/debug checks.
 */
 (function v80StabilityRelease(){
-  const BUILD = "v8.0 Stability & Data Integrity";
+  const BUILD = "v10.7.0 Stability & Data Integrity";
   const MOBILE_QUERY = "(max-width: 767px)";
   const mobile = () => window.matchMedia && window.matchMedia(MOBILE_QUERY).matches;
   const fixedTabs = [
@@ -4187,6 +4222,7 @@ if (state.staticMode || isStaticDeployHost()) {
       screeners[key] = { ...existing, ...snapshot(label), reserved: fixedKeys.has(key) || existing.reserved };
       setStore(screeners);
       localStorage.setItem(STORAGE.activeScreener, key);
+      if (key === "default") saveMyPortfolio(state.watchlist);
     } catch (err) { console.warn("v8 save screener failed", err); }
   }
   function renderMobileTabsV80(){

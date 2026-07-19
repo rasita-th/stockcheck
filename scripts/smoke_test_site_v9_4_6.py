@@ -80,7 +80,7 @@ def main() -> None:
     ))
     require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
     require_text(SITE / "memo-only-fix.js", (
-        "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.4.3",
+        "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.7.0",
         "loadAttentionP3", "loadAttentionP4",
     ))
     require_text(SITE / "memo-only-fix.css", (
@@ -100,6 +100,8 @@ def main() -> None:
         "PR4 · DECISION-FIRST TODAY", "attention-p4-ready", "p4-catalyst-hero", "p4-technical-grid",
         "validatePayload", "externalSources", "data-p4-action", "data-p4-filter", "StockcheckAttentionP4",
         "StockcheckCompanyLogo", "img.logo.dev/ticker/", "fallback=404",
+        "MAX_UNIQUE_LOGOS_PER_PAGE = 6", "MAX_NON_DETAIL_LOGOS_PER_PAGE = 5",
+        "MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60", "LOGO_FAILURE_TTL_MS",
         "loadPersonalTickers", "stockTimingRadar.myPortfolio.v1", "state.personalTickers.has",
     ))
     require_text(SITE / "attention-pr4.css", (

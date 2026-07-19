@@ -55,7 +55,7 @@ if "attention-p0.js" not in memo_js or "10.2.0" not in memo_js:
     errors.append("Memo stability loader must load attention-p0.js v10.2.0 as fallback")
 if "attention-pr3.js?v=10.3.0" not in memo_js or "loadAttentionP3" not in memo_js:
     errors.append("Memo stability loader must load attention-pr3.js v10.3.0 after the fallback")
-if "attention-pr4.js?v=10.4.3" not in memo_js or "loadAttentionP4" not in memo_js:
+if "attention-pr4.js?v=10.7.0" not in memo_js or "loadAttentionP4" not in memo_js:
     errors.append("Memo stability loader must load attention-pr4.js v10.4.3 with My Portfolio support")
 if "attention-p0.css" not in memo_css or "10.2.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-p0.css v10.2.0")
@@ -146,11 +146,16 @@ for token in (
     "data-p4-action",
     "data-p4-filter",
     "StockcheckAttentionP4",
-    'const VERSION = "10.4.3"',
+    'const VERSION = "10.7.0"',
     "StockcheckCompanyLogo",
     "img.logo.dev/ticker/",
     "fallback=404",
-    'loading="lazy"',
+    "MAX_UNIQUE_LOGOS_PER_PAGE = 6",
+    "MAX_NON_DETAIL_LOGOS_PER_PAGE = 5",
+    "MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60",
+    "LOGO_FAILURE_TTL_MS",
+    "format=webp",
+    'const loading = detailRequest ? "eager" : "lazy"',
 ):
     if token not in pr4_js:
         errors.append(f"Today PR4 runtime missing: {token}")
@@ -179,7 +184,7 @@ for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-p
         errors.append(f"Usability coordinator missing: {token}")
 if 'requestAnimationFrame(() => openStockDetail(stock));\n    }, true);' not in coordinator_js:
     errors.append("Desktop stock detail click must be captured before app.js rerenders the selected row")
-for token in ('const VERSION = "9.6.3"', "window.StockRadarDetailDialog", "open: openStockDetail"):
+for token in ('const VERSION = "10.7.0"', "window.StockRadarDetailDialog", "open: openStockDetail"):
     if token not in coordinator_js:
         errors.append(f"Desktop stock detail API missing: {token}")
 for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)", ".stock-detail-company-logo", "object-fit: contain"):
@@ -197,16 +202,52 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing usability UI: {token}")
     if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
         errors.append(f"{index_path} still renders duplicated desktop detail cards")
-    for asset in ("app.js?v=10.3.1", "final-ui-coordinator.css?v=10.3.1", "final-ui-coordinator.js?v=10.3.1"):
+    for asset in ("app.js?v=10.7.0", "final-ui-coordinator.css?v=10.7.0", "final-ui-coordinator.js?v=10.7.0"):
         if asset not in index:
             errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
+memo_loader = read("site/memo-only-fix.js")
+for token in (
+    "StockcheckAttentionDataStore",
+    "ATTENTION_CACHE_WINDOW_MS",
+    "installAttentionDataStore",
+    "structuredClone",
+):
+    if token not in memo_loader:
+        errors.append(f"shared Today data store missing: {token}")
+for renderer in ("site/attention-p0.js", "site/attention-pr3.js", "site/attention-pr4.js"):
+    renderer_js = read(renderer)
+    if "StockcheckAttentionDataStore" not in renderer_js:
+        errors.append(f"{renderer} does not consume the shared Today data store")
+
+coordinator_js = read("site/final-ui-coordinator.js")
+for token in ("MAX_LOGO_ADAPTER_RETRIES = 12", "detailLogoRetryCount"):
+    if token not in coordinator_js:
+        errors.append(f"bounded Stock Detail logo retry missing: {token}")
+
 app_js = read("site/app.js")
-for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change", "💼 My Portfolio"):
+for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change", "💼 My Portfolio", "v10.7.0 Stability & Data Integrity"):
     if token not in app_js:
         errors.append(f"My Portfolio adapter missing: {token}")
 if "state.watchlist = [...state.lastScanSymbols]" in app_js:
     errors.append("Static watchlist universe must not overwrite My Portfolio")
+for token in (
+    "hasPersistedPortfolio",
+    "portfolioIsFirstRun",
+    "replacingExamples",
+    'data-open-panel="quickScanSheet">เพิ่มหุ้นแรก',
+    "ตัวอย่างเริ่มต้น",
+):
+    if token not in app_js:
+        errors.append(f"First-run portfolio contract missing: {token}")
+for token in (
+    'previous !== serialized',
+    'if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist)',
+    'if (active === "default") saveMyPortfolio(state.watchlist)',
+    'if (key === "default") saveMyPortfolio(state.watchlist)',
+):
+    if token not in app_js:
+        errors.append(f"My Portfolio canonical write path missing: {token}")
 for token in ("LEGACY_MY_PORTFOLIO_LABELS", "syncMobileMyPortfolio", 'key === "default"', "normalizeTickers(loadMyPortfolio())"):
     if token not in app_js:
         errors.append(f"Mobile My Portfolio sync missing: {token}")
