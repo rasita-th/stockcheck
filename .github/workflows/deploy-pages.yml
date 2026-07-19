@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.5.5"
+  TODAY_DEPLOY_VERSION: "10.5.6"
 
 jobs:
   build:
@@ -154,11 +154,13 @@ jobs:
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.2' site/memo-only-fix.css
           grep -Fq 'attention-pr3.css?v=10.3.0' site/memo-only-fix.css
-          grep -Fq 'attention-pr4.css?v=10.4.2' site/memo-only-fix.css
+          grep -Fq 'attention-pr4.css?v=10.4.4' site/memo-only-fix.css
           grep -Fq 'earnings-radar-pr4.css?v=10.5.1' site/memo-only-fix.css
           grep -Fq 'PR4 · DECISION-FIRST TODAY' site/attention-pr4.js
           grep -Fq 'StockcheckAttentionP4' site/attention-pr4.js
           grep -Fq 'stockTimingRadar.myPortfolio.v1' site/app.js
+          grep -Fq 'syncMobileMyPortfolio' site/app.js
+          grep -Fq 'v10.4.4 Mobile My Portfolio layout' site/attention-pr4.css
           grep -Fq 'loadPersonalTickers' site/attention-pr4.js
           grep -Fq 'StockcheckEarningsRadarP4' site/earnings-radar-pr4.js
           grep -Fq 'Earnings Radar' site/earnings-radar-pr4.js
@@ -233,7 +235,7 @@ jobs:
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq 'attention-pr4.js?v=10.4.3' /tmp/memo-only-fix.js || return 1
             grep -Fq 'earnings-radar-pr4.js?v=10.5.1' /tmp/memo-only-fix.js || return 1
-            grep -Fq 'attention-pr4.css?v=10.4.2' /tmp/memo-only-fix.css || return 1
+            grep -Fq 'attention-pr4.css?v=10.4.4' /tmp/memo-only-fix.css || return 1
             grep -Fq 'earnings-radar-pr4.css?v=10.5.1' /tmp/memo-only-fix.css || return 1
             grep -Fq 'PR4 · DECISION-FIRST TODAY' /tmp/attention-pr4.js || return 1
             grep -Fq 'StockcheckAttentionP4' /tmp/attention-pr4.js || return 1
