@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.5.6"
+  TODAY_DEPLOY_VERSION: "10.7.0"
 
 jobs:
   build:
@@ -149,7 +149,7 @@ jobs:
           grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
           grep -Fq 'attention-pr3.js?v=10.3.0' site/memo-only-fix.js
-          grep -Fq 'attention-pr4.js?v=10.4.3' site/memo-only-fix.js
+          grep -Fq 'attention-pr4.js?v=10.7.0' site/memo-only-fix.js
           grep -Fq 'earnings-radar-pr4.js?v=10.5.1' site/memo-only-fix.js
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.2' site/memo-only-fix.css
@@ -162,6 +162,10 @@ jobs:
           grep -Fq 'syncMobileMyPortfolio' site/app.js
           grep -Fq 'v10.4.4 Mobile My Portfolio layout' site/attention-pr4.css
           grep -Fq 'loadPersonalTickers' site/attention-pr4.js
+          grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' site/attention-pr4.js
+          grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' site/attention-pr4.js
+          grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' site/attention-pr4.js
+          grep -Fq 'MAX_LOGO_ADAPTER_RETRIES = 12' site/final-ui-coordinator.js
           grep -Fq 'StockcheckEarningsRadarP4' site/earnings-radar-pr4.js
           grep -Fq 'Earnings Radar' site/earnings-radar-pr4.js
           grep -Fq 'Earnings Calendar' site/earnings-radar-pr4.js
@@ -233,7 +237,7 @@ jobs:
 
             grep -Fq "memo-only-fix.js?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
-            grep -Fq 'attention-pr4.js?v=10.4.3' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'attention-pr4.js?v=10.7.0' /tmp/memo-only-fix.js || return 1
             grep -Fq 'earnings-radar-pr4.js?v=10.5.1' /tmp/memo-only-fix.js || return 1
             grep -Fq 'attention-pr4.css?v=10.4.4' /tmp/memo-only-fix.css || return 1
             grep -Fq 'earnings-radar-pr4.css?v=10.5.1' /tmp/memo-only-fix.css || return 1
@@ -253,6 +257,9 @@ jobs:
           grep -Fq 'StockcheckCompanyLogo' /tmp/final-ui-coordinator.js || return 1
           grep -Fq '.stock-detail-company-logo' /tmp/final-ui-coordinator.css || return 1
           grep -Fq 'fallback=404' /tmp/attention-pr4.js || return 1
+          grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' /tmp/attention-pr4.js || return 1
+          grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' /tmp/attention-pr4.js || return 1
+          grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' /tmp/attention-pr4.js || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
             grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
             ! grep -Fq 'Unverified report' /tmp/attention-pr4.js || return 1
