@@ -437,9 +437,15 @@
     state.fallbackNote = "";
     render();
     try {
-      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
-      const payload = normalizePayload(await response.json());
+      let rawPayload;
+      if (typeof window.StockcheckAttentionDataStore?.load === "function") {
+        rawPayload = await window.StockcheckAttentionDataStore.load();
+      } else {
+        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`attention_today.json HTTP ${response.status}`);
+        rawPayload = await response.json();
+      }
+      const payload = normalizePayload(rawPayload);
       state.data = payload;
       saveLastKnownGood(payload);
     } catch (error) {
