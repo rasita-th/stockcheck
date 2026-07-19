@@ -32,7 +32,7 @@ if 'earnings-radar-pr4.css?v=10.5.1' not in styles:
     errors.append("production stylesheet does not import Earnings Radar 10.5.1")
 
 for token in (
-    'TODAY_DEPLOY_VERSION: "10.5.1"',
+    'TODAY_DEPLOY_VERSION: "10.5.2"',
     "node --check site/earnings-radar-pr4.js",
     "test -s site/earnings-radar-pr4.js",
     "test -s site/earnings-radar-pr4.css",
