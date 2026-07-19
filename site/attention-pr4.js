@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.4.1";
+  const VERSION = "10.4.3";
   const DATA_URL = "data/attention_today.json";
   const ACTIONS_KEY = "stockcheck.attention.pr3.actions.v1";
   const PREFS_KEY = "stockcheck.attention.pr4.preferences.v1";
@@ -67,6 +67,7 @@
     filter: "all",
     actions: loadJson(ACTIONS_KEY, {}),
     preferences: { showReviewed: true, ...loadJson(PREFS_KEY, {}) },
+    personalTickers: new Set(),
   };
 
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -83,6 +84,34 @@
       .replace(/^[$#]+/, "")
       .toUpperCase()
       .replace(/[^A-Z0-9.\-]/g, "");
+  }
+
+  const PERSONAL_STORAGE = Object.freeze({
+    portfolio: "stockTimingRadar.myPortfolio.v1",
+    screeners: "stockTimingRadar.screeners.v54",
+    watchlist: "stockTimingRadar.watchlist.v54",
+  });
+
+  function loadPersonalTickers() {
+    try {
+      const direct = localStorage.getItem(PERSONAL_STORAGE.portfolio);
+      if (direct !== null) {
+        const rows = JSON.parse(direct);
+        return new Set(asArray(rows).map(normaliseLogoTicker).filter(Boolean));
+      }
+    } catch (_) {}
+    try {
+      const screeners = JSON.parse(localStorage.getItem(PERSONAL_STORAGE.screeners) || "{}");
+      if (Array.isArray(screeners?.default?.watchlist)) {
+        return new Set(screeners.default.watchlist.map(normaliseLogoTicker).filter(Boolean));
+      }
+    } catch (_) {}
+    try {
+      const legacy = JSON.parse(localStorage.getItem(PERSONAL_STORAGE.watchlist) || "[]");
+      return new Set(asArray(legacy).map(normaliseLogoTicker).filter(Boolean));
+    } catch (_) {
+      return new Set();
+    }
   }
 
   function companyLogoMarkup(item, markClass = "company-logo-mark") {
@@ -168,7 +197,7 @@
   function visible(item, section) {
     if (hiddenToday(item)) return false;
     if (!state.preferences.showReviewed && actionState(item).reviewed) return false;
-    if (state.filter === "holdings" && item.portfolio_status !== "holding") return false;
+    if (state.filter === "holdings" && !state.personalTickers.has(normaliseLogoTicker(item.ticker))) return false;
     if (state.filter === "earnings" && item.event_type !== "earnings") return false;
     if (state.filter === "technical" && section !== "technical") return false;
     if (state.filter === "catalysts" && section !== "catalyst") return false;
@@ -332,8 +361,11 @@
 
   function summaryStrip(catalysts, technical) {
     const coverage = state.data?.coverage_status === "complete";
+    const matched = new Set(asArray(state.data?.items).concat(asArray(state.data?.technical_watch))
+      .map((item) => normaliseLogoTicker(item?.ticker))
+      .filter((ticker) => ticker && state.personalTickers.has(ticker))).size;
     return `<section class="p4-summary-strip" aria-label="สรุป Today">
-      <div><span>ติดตามทั้งหมด</span><strong>${Number(state.data?.total_monitored || 0)}</strong><small>หุ้นในพอร์ต</small></div>
+      <div><span>My Portfolio</span><strong>${state.personalTickers.size}</strong><small>${matched} ตัวมีรายการวันนี้</small></div>
       <div><span>เหตุการณ์สำคัญ</span><strong>${catalysts.length}</strong><small>รายการ</small></div>
       <div><span>จับตาทางเทคนิค</span><strong>${technical.length}</strong><small>รายการ</small></div>
       <div class="p4-summary-health ${coverage ? "complete" : "partial"}"><span>${coverage ? "ข้อมูลพร้อมครบ" : "ข้อมูลบางแหล่งยังไม่ครบ"}</span><strong>${coverage ? "พร้อมใช้งาน" : "Partial coverage"}</strong><small>${coverage ? "ตรวจแหล่งข้อมูลครบแล้ว" : "รายการยังใช้ได้ แต่ไม่ใช่ all-clear"}</small></div>
@@ -341,7 +373,7 @@
   }
 
   function toolbar() {
-    const filters = [["all", "ทั้งหมด"], ["catalysts", "เหตุการณ์สำคัญ"], ["technical", "เทคนิค"], ["holdings", "หุ้นในพอร์ต"], ["earnings", "งบการเงิน"]];
+    const filters = [["all", "ทั้งหมด"], ["catalysts", "เหตุการณ์สำคัญ"], ["technical", "เทคนิค"], ["holdings", "My Portfolio"], ["earnings", "งบการเงิน"]];
     return `<div class="p4-toolbar"><nav aria-label="ตัวกรอง Today">${filters.map(([key, label]) => `<button type="button" data-p4-filter="${key}" class="${state.filter === key ? "active" : ""}">${label}</button>`).join("")}</nav><label><input type="checkbox" data-p4-pref="showReviewed" ${state.preferences.showReviewed ? "checked" : ""}> แสดงรายการที่ตรวจแล้ว</label></div>`;
   }
 
@@ -361,6 +393,7 @@
       return;
     }
 
+    state.personalTickers = loadPersonalTickers();
     const catalysts = asArray(state.data.items)
       .filter((item) => visible(item, "catalyst"))
       .sort((a, b) => (PRIORITY_ORDER[a.priority] ?? 9) - (PRIORITY_ORDER[b.priority] ?? 9) || Number(b.personal_priority_score || 0) - Number(a.personal_priority_score || 0));
@@ -429,6 +462,8 @@
 
   function init() {
     installLogoFallback();
+    state.personalTickers = loadPersonalTickers();
+    state.filter = state.personalTickers.size ? "holdings" : "all";
     window.StockcheckCompanyLogo = Object.freeze({ version: "1.0.0", markup: companyLogoMarkup });
     ensurePage();
     document.addEventListener("click", (event) => {
@@ -453,6 +488,16 @@
       saveJson(PREFS_KEY, state.preferences);
       render();
     });
+    window.addEventListener("stockcheck:portfolio-change", () => {
+      state.personalTickers = loadPersonalTickers();
+      render();
+    });
+    window.addEventListener("storage", (event) => {
+      if (Object.values(PERSONAL_STORAGE).includes(event.key)) {
+        state.personalTickers = loadPersonalTickers();
+        render();
+      }
+    });
     load();
     window.StockcheckAttentionP4 = { version: VERSION, load, render };
   }
@@ -460,3 +505,4 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
 })();
+
