@@ -73,11 +73,11 @@
   }
 
   function loadEarningsRadar() {
-    loadScript("earnings-radar-pr4.js?v=10.5.1", "earningsRadarPr4Loader");
+    loadScript("earnings-radar-pr4.js?v=10.7.1", "earningsRadarPr4Loader");
   }
 
   function loadAttentionP4() {
-    loadScript("attention-pr4.js?v=10.7.0", "attentionPr4Loader", loadEarningsRadar);
+    loadScript("attention-pr4.js?v=10.7.1", "attentionPr4Loader", loadEarningsRadar);
   }
 
   function loadAttentionP3() {
