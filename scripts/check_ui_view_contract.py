@@ -202,6 +202,12 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
 app_js = read("site/app.js")
+for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change"):
+    if token not in app_js:
+        errors.append(f"My Portfolio adapter missing: {token}")
+if "state.watchlist = [...state.lastScanSymbols]" in app_js:
+    errors.append("Static watchlist universe must not overwrite My Portfolio")
+
 if "window.StockRadarDetailDialog?.open(select)" not in app_js:
     errors.append("Stock selection handler must open the desktop dialog directly")
 base_watchlist_match = re.search(r"const BASE_WATCHLIST = \[(.*?)\];", app_js)
@@ -213,4 +219,5 @@ if errors:
         print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print("UI view contract passed")
+
 
