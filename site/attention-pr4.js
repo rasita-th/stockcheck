@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.7.0";
+  const VERSION = "10.7.1";
   const DATA_URL = "data/attention_today.json";
   const ACTIONS_KEY = "stockcheck.attention.pr3.actions.v1";
   const PREFS_KEY = "stockcheck.attention.pr4.preferences.v1";
@@ -439,7 +439,7 @@
       .map((item) => normaliseLogoTicker(item?.ticker))
       .filter((ticker) => ticker && state.personalTickers.has(ticker))).size;
     return `<section class="p4-summary-strip" aria-label="สรุป Today">
-      <div><span>My Portfolio</span><strong>${state.personalTickers.size}</strong><small>${matched} ตัวมีรายการวันนี้</small></div>
+      <div><span>My Portfolio</span><strong>${state.personalTickers.size}</strong><small>${matched} ตัวมีรายการที่ควรดูวันนี้</small></div>
       <div><span>เหตุการณ์สำคัญ</span><strong>${catalysts.length}</strong><small>รายการ</small></div>
       <div><span>จับตาทางเทคนิค</span><strong>${technical.length}</strong><small>รายการ</small></div>
       <div class="p4-summary-health ${coverage ? "complete" : "partial"}"><span>${coverage ? "ข้อมูลพร้อมครบ" : "ข้อมูลบางแหล่งยังไม่ครบ"}</span><strong>${coverage ? "พร้อมใช้งาน" : "Partial coverage"}</strong><small>${coverage ? "ตรวจแหล่งข้อมูลครบแล้ว" : "รายการยังใช้ได้ แต่ไม่ใช่ all-clear"}</small></div>
@@ -480,10 +480,10 @@
     const secondary = catalysts.slice(1);
 
     page.innerHTML = `<div class="p4-shell">
-      <header class="p4-page-heading"><div><span>PR4 · DECISION-FIRST TODAY</span><h1>สิ่งที่ต้องจับตาวันนี้</h1><p>อัปเดตล่าสุด ${esc(formatTime(state.data.updated_at))}</p></div></header>
+      <header class="p4-page-heading"><div><span>สรุปสำหรับคุณ</span><h1>วันนี้มีอะไรเกี่ยวข้องกับหุ้นของคุณ</h1><p>รวมเหตุการณ์สำคัญ สัญญาณเทคนิค และวันประกาศงบจาก My Portfolio · อัปเดตล่าสุด ${esc(formatTime(state.data.updated_at))}</p></div></header>
       ${summaryStrip(catalysts, technical)}
       ${toolbar()}
-      ${showCatalysts ? `<section class="p4-section">${sectionHeader(ICONS.calendar, "เหตุการณ์สำคัญวันนี้", "งบการเงิน SEC ข่าวบริษัท และประกาศทางการ", catalysts.length)}${hero ? heroCatalyst(hero) : '<div class="p4-empty">ยังไม่มีเหตุการณ์สำคัญในตัวกรองนี้</div>'}${secondary.length ? `<div class="p4-catalyst-list">${secondary.map(compactCatalyst).join("")}</div>` : ""}</section>` : ""}
+      ${showCatalysts ? `<section class="p4-section">${sectionHeader(ICONS.calendar, "เหตุการณ์สำคัญวันนี้", "รวมงบการเงิน ข่าวบริษัท และประกาศจากแหล่งทางการ", catalysts.length)}${hero ? heroCatalyst(hero) : '<div class="p4-empty">ยังไม่มีเหตุการณ์สำคัญในตัวกรองนี้</div>'}${secondary.length ? `<div class="p4-catalyst-list">${secondary.map(compactCatalyst).join("")}</div>` : ""}</section>` : ""}
       ${showTechnical ? `<section class="p4-section">${sectionHeader(ICONS.activity, "จับตาทางเทคนิค", "ใช้ช่วยเลือกจังหวะเปิดกราฟ ไม่ใช่คำแนะนำซื้อหรือขาย", technical.length)}${technical.length ? `<div class="p4-technical-grid">${technical.map(technicalCard).join("")}</div>` : '<div class="p4-empty">ยังไม่มีรายการทางเทคนิคในตัวกรองนี้</div>'}</section>` : ""}
     </div>`;
 

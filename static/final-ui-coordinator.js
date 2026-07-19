@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.7.0";
+  const VERSION = "10.7.1";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   let frame = 0;

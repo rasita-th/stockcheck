@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.7.0"
+  TODAY_DEPLOY_VERSION: "10.7.1"
 
 jobs:
   build:
@@ -149,14 +149,14 @@ jobs:
           grep -Fq "memo-only-fix.css?v=${TODAY_DEPLOY_VERSION}" site/index.html
           grep -Fq 'attention-p0.js?v=10.2.0' site/memo-only-fix.js
           grep -Fq 'attention-pr3.js?v=10.3.0' site/memo-only-fix.js
-          grep -Fq 'attention-pr4.js?v=10.7.0' site/memo-only-fix.js
-          grep -Fq 'earnings-radar-pr4.js?v=10.5.1' site/memo-only-fix.js
+          grep -Fq 'attention-pr4.js?v=10.7.1' site/memo-only-fix.js
+          grep -Fq 'earnings-radar-pr4.js?v=10.7.1' site/memo-only-fix.js
           grep -Fq 'attention-p0.css?v=10.2.0' site/memo-only-fix.css
           grep -Fq 'today-view-isolation.css?v=10.2.2' site/memo-only-fix.css
           grep -Fq 'attention-pr3.css?v=10.3.0' site/memo-only-fix.css
           grep -Fq 'attention-pr4.css?v=10.4.4' site/memo-only-fix.css
           grep -Fq 'earnings-radar-pr4.css?v=10.5.1' site/memo-only-fix.css
-          grep -Fq 'PR4 · DECISION-FIRST TODAY' site/attention-pr4.js
+          grep -Fq 'สรุปสำหรับคุณ' site/attention-pr4.js
           grep -Fq 'StockcheckAttentionP4' site/attention-pr4.js
           grep -Fq 'stockTimingRadar.myPortfolio.v1' site/app.js
           grep -Fq 'syncMobileMyPortfolio' site/app.js
@@ -237,11 +237,11 @@ jobs:
 
             grep -Fq "memo-only-fix.js?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
             grep -Fq "memo-only-fix.css?v=${EXPECTED_VERSION}" /tmp/index.html || return 1
-            grep -Fq 'attention-pr4.js?v=10.7.0' /tmp/memo-only-fix.js || return 1
-            grep -Fq 'earnings-radar-pr4.js?v=10.5.1' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'attention-pr4.js?v=10.7.1' /tmp/memo-only-fix.js || return 1
+            grep -Fq 'earnings-radar-pr4.js?v=10.7.1' /tmp/memo-only-fix.js || return 1
             grep -Fq 'attention-pr4.css?v=10.4.4' /tmp/memo-only-fix.css || return 1
             grep -Fq 'earnings-radar-pr4.css?v=10.5.1' /tmp/memo-only-fix.css || return 1
-            grep -Fq 'PR4 · DECISION-FIRST TODAY' /tmp/attention-pr4.js || return 1
+            grep -Fq 'สรุปสำหรับคุณ' /tmp/attention-pr4.js || return 1
             grep -Fq 'StockcheckAttentionP4' /tmp/attention-pr4.js || return 1
             grep -Fq 'loadPersonalTickers' /tmp/attention-pr4.js || return 1
             grep -Fq 'stockTimingRadar.myPortfolio.v1' /tmp/attention-pr4.js || return 1

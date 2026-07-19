@@ -1,4 +1,4 @@
-/* Stock Timing Radar — v10.7.0 Stability & Data Integrity
+/* Stock Timing Radar — v10.7.1 Stability & Data Integrity
    Full v3.3 mock UI shell + original Python backend engine.
    Backend endpoints used: /api/scan, /api/quote, /api/health; analyst view links out to Yahoo Finance
 */
@@ -1197,7 +1197,7 @@ function playbookHtml(wrapped = true) {
 function setLoading(on, text = "") {
   state.loading = on;
   const subtitle = $("#scannerSubtitle");
-  if (subtitle) subtitle.textContent = text || (on ? "กำลังสแกนและอัปเดตข้อมูล…" : "เรียงจาก Score สูงสุด · คลิกหุ้นเพื่อดูกราฟ Setup และ Fundamental");
+  if (subtitle) subtitle.textContent = text || (on ? "กำลังสแกนและอัปเดตข้อมูล…" : "เรียงจากคะแนนสูงสุด · เลือกหุ้นเพื่อดู Technical, Setup และ Fundamental");
   ["#scanNowDesktop", "#mobileScanNow"].forEach(sel => { const b = $(sel); if (b) { b.disabled = on; b.textContent = on ? "Scanning…" : "◎ Scan Now"; } });
 }
 
@@ -1367,7 +1367,7 @@ async function scan(force = false, options = {}) {
     updateResultCount();
     showAlertToastIfNeeded(force);
     if (state.errors.length) console.warn("Scan errors", state.errors);
-    setLoading(false, `Showing ${currentStocks().length} pass filters / ${state.rows.length} loaded · ${data.generatedAt || "latest"}`);
+    setLoading(false, `ผ่านตัวกรอง ${currentStocks().length} จาก ${state.rows.length} หุ้น · อัปเดต ${data.generatedAt || "ล่าสุด"}`);
     renderStatus();
   } catch (err) {
     console.error(err);
@@ -2068,13 +2068,13 @@ function showAlertToastIfNeeded(force = false) {
 function renderStatus() {
   const subtitle = $("#scannerSubtitle");
   if (!subtitle || state.loading) return;
-  const err = state.errors?.length ? ` · ${state.errors.length} errors` : "";
-  const when = state.lastScanAt ? ` · Last scan ${state.lastScanAt}` : "";
+  const err = state.errors?.length ? ` · โหลดไม่สำเร็จ ${state.errors.length} รายการ` : "";
+  const when = state.lastScanAt ? ` · สแกนล่าสุด ${state.lastScanAt}` : "";
   if (state.portfolioIsFirstRun) {
-    subtitle.textContent = `ตัวอย่างเริ่มต้น ${state.watchlist.length} หุ้น · เพิ่มหุ้นแรกเพื่อสร้าง My Portfolio · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
+    subtitle.textContent = `กำลังแสดงหุ้นตัวอย่าง ${state.watchlist.length} ตัว (ยังไม่บันทึก) · เพิ่มหุ้นแรกเพื่อเริ่ม My Portfolio · เรียงตาม ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
     return;
   }
-  subtitle.textContent = `Showing ${currentStocks().length} pass / ${state.lastScanSymbols.length || state.rows.length || state.watchlist.length} watchlist · table keeps filtered rows dimmed · sort ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
+  subtitle.textContent = `ผ่านตัวกรอง ${currentStocks().length} จาก ${state.lastScanSymbols.length || state.rows.length || state.watchlist.length} หุ้นใน My Portfolio · แถวที่ไม่ผ่านจะแสดงจางลง · เรียงตาม ${state.sortKey}${state.sortAsc ? " ↑" : " ↓"}${when}${err}`;
   updateMobileSortLabel();
 }
 
@@ -4128,7 +4128,7 @@ if (state.staticMode || isStaticDeployHost()) {
   setTimeout(() => { if (mobile()) { ensureReserveRecords(); renderMobileReserveTabs(); } }, 0);
 })();
 
-/* v10.7.0 Stability & Data Integrity
+/* v10.7.1 Stability & Data Integrity
    Release goal: stop adding new surface area; make existing scanner/memo/screener/data states resilient.
    - Mobile uses stable fixed screeners: Default / Momentum / Thai / Port 1 / Port 2 / Port 3 / Settings.
    - Portfolio rendering is idempotent and no longer depends on dynamic mobile tab creation.
@@ -4137,7 +4137,7 @@ if (state.staticMode || isStaticDeployHost()) {
    - Exposes window.__stockcheckDiagnosticsV80() for quick support/debug checks.
 */
 (function v80StabilityRelease(){
-  const BUILD = "v10.7.0 Stability & Data Integrity";
+  const BUILD = "v10.7.1 Stability & Data Integrity";
   const MOBILE_QUERY = "(max-width: 767px)";
   const mobile = () => window.matchMedia && window.matchMedia(MOBILE_QUERY).matches;
   const fixedTabs = [

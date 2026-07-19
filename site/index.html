@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Stock Radar v10.7.0</title>
+  <title>Stock Radar v10.7.1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
 
   <link rel="stylesheet" href="scanner-layout-v9-3-7.css?v=9.3.7">
   <link rel="stylesheet" href="notification-phase2.css?v=9.5.1">
-  <link rel="stylesheet" href="final-ui-coordinator.css?v=10.7.0">
+  <link rel="stylesheet" href="final-ui-coordinator.css?v=10.7.1">
   <link rel="stylesheet" href="memo-only-fix.css?v=9.5.4">
 </head>
 <body>
@@ -58,14 +58,14 @@
 
     <section class="page-guide scanner-page-guide" id="scannerPageGuide" aria-label="วิธีใช้หน้า Scanner">
       <div class="page-guide-copy">
-        <span class="page-guide-kicker">เริ่มตรงนี้</span>
-        <strong>Scanner ช่วยคัดหุ้นจาก Watchlist ให้เหลือตัวที่น่าตรวจต่อ</strong>
-        <p>เลือก Screener หรือปรับ Filter แล้วคลิกชื่อหุ้นในตาราง เพื่อเปิด Technical, Setup, Fundamental และ Playbook ในหน้าต่างเดียว</p>
+        <span class="page-guide-kicker">เริ่มใช้งาน</span>
+        <strong>เริ่มจากหุ้นที่คุณสนใจ แล้ว Scanner จะช่วยจัดลำดับตัวที่ควรดูต่อ</strong>
+        <p>ครั้งแรกจะแสดงหุ้นตัวอย่าง 10 ตัวโดยยังไม่บันทึก เมื่อคุณเพิ่มหุ้นแรก ตัวอย่างจะถูกแทนที่และบันทึกเป็น My Portfolio ของคุณ</p>
       </div>
       <ol class="page-guide-steps" aria-label="ขั้นตอนใช้งาน">
-        <li><span>1</span>เลือกหุ้นตัวอย่าง 10 ตัวหรือเพิ่ม Watchlist</li>
-        <li><span>2</span>กด Scan Now เพื่ออัปเดตผล</li>
-        <li><span>3</span>คลิกหุ้นเพื่อดูรายละเอียด</li>
+        <li><span>1</span>เพิ่มหุ้นที่คุณสนใจลง My Portfolio</li>
+        <li><span>2</span>กด Scan Now เพื่ออัปเดตและเรียงผล</li>
+        <li><span>3</span>เลือกหุ้นเพื่อดู Technical, Setup และ Fundamental</li>
       </ol>
     </section>
 
@@ -154,7 +154,7 @@
           <div class="scanner-header">
             <div>
               <h2>ผลการคัดหุ้น</h2>
-              <p id="scannerSubtitle">เรียงจาก Score สูงสุด · คลิกหุ้นเพื่อดูกราฟ Setup และ Fundamental</p>
+              <p id="scannerSubtitle">เรียงจากคะแนนสูงสุด · เลือกหุ้นเพื่อดู Technical, Setup และ Fundamental</p>
             </div>
             <div class="scanner-actions">
               <div class="tab-switch" role="tablist" aria-label="Scanner mode">
@@ -391,7 +391,7 @@ META MSFT PLTR SOUN SEI"></textarea>
     <div class="alert-mobile-list" id="alertMobileList"></div>
     <button class="ghost-btn alert-clear-btn" type="button" data-dismiss-all-alerts>Clear all</button>
   </section>
-  <script src="app.js?v=10.7.0"></script>
+  <script src="app.js?v=10.7.1"></script>
   <script src="nav-fix-v9-2.js?v=9.2.3" defer></script>
   <script src="thai-time-v9-3-4.js?v=9.3.5" defer></script>
 
@@ -401,7 +401,7 @@ META MSFT PLTR SOUN SEI"></textarea>
 
   <script src="scanner-layout-v9-3-7.js?v=9.3.7" defer></script>
   <script src="notification-phase2.js?v=9.5.1" defer></script>
-  <script src="final-ui-coordinator.js?v=10.7.0" defer></script>
+  <script src="final-ui-coordinator.js?v=10.7.1" defer></script>
   <script src="memo-only-fix.js?v=9.5.4" defer></script>
 </body>
 </html>
