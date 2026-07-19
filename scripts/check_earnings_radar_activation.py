@@ -24,7 +24,7 @@ deploy = read(".github/workflows/deploy-pages.yml")
 for token in (
     'earnings-radar-pr4.js?v=10.5.1',
     "loadEarningsRadar",
-    'loadScript("attention-pr4.js?v=10.4.1", "attentionPr4Loader", loadEarningsRadar)',
+    'loadScript("attention-pr4.js?v=10.4.3", "attentionPr4Loader", loadEarningsRadar)',
 ):
     if token not in loader:
         errors.append(f"production loader missing: {token}")
@@ -32,7 +32,7 @@ if 'earnings-radar-pr4.css?v=10.5.1' not in styles:
     errors.append("production stylesheet does not import Earnings Radar 10.5.1")
 
 for token in (
-    'TODAY_DEPLOY_VERSION: "10.5.4"',
+    'TODAY_DEPLOY_VERSION: "10.5.5"',
     "node --check site/earnings-radar-pr4.js",
     "test -s site/earnings-radar-pr4.js",
     "test -s site/earnings-radar-pr4.css",
@@ -74,5 +74,4 @@ if errors:
         print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print("Earnings Radar activation contract passed")
-
 

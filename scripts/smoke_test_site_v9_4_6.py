@@ -80,7 +80,7 @@ def main() -> None:
     ))
     require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
     require_text(SITE / "memo-only-fix.js", (
-        "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.4.1",
+        "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.4.3",
         "loadAttentionP3", "loadAttentionP4",
     ))
     require_text(SITE / "memo-only-fix.css", (
@@ -100,6 +100,7 @@ def main() -> None:
         "PR4 · DECISION-FIRST TODAY", "attention-p4-ready", "p4-catalyst-hero", "p4-technical-grid",
         "validatePayload", "externalSources", "data-p4-action", "data-p4-filter", "StockcheckAttentionP4",
         "StockcheckCompanyLogo", "img.logo.dev/ticker/", "fallback=404",
+        "loadPersonalTickers", "stockTimingRadar.myPortfolio.v1", "state.personalTickers.has",
     ))
     require_text(SITE / "attention-pr4.css", (
         ".attention-p4-page", ".p4-summary-strip", ".p4-catalyst-hero", ".p4-technical-grid",
@@ -120,3 +121,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -55,8 +55,8 @@ if "attention-p0.js" not in memo_js or "10.2.0" not in memo_js:
     errors.append("Memo stability loader must load attention-p0.js v10.2.0 as fallback")
 if "attention-pr3.js?v=10.3.0" not in memo_js or "loadAttentionP3" not in memo_js:
     errors.append("Memo stability loader must load attention-pr3.js v10.3.0 after the fallback")
-if "attention-pr4.js?v=10.4.1" not in memo_js or "loadAttentionP4" not in memo_js:
-    errors.append("Memo stability loader must load attention-pr4.js v10.4.1 after PR3")
+if "attention-pr4.js?v=10.4.3" not in memo_js or "loadAttentionP4" not in memo_js:
+    errors.append("Memo stability loader must load attention-pr4.js v10.4.3 with My Portfolio support")
 if "attention-p0.css" not in memo_css or "10.2.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-p0.css v10.2.0")
 if "today-view-isolation.css" not in memo_css:
@@ -146,7 +146,7 @@ for token in (
     "data-p4-action",
     "data-p4-filter",
     "StockcheckAttentionP4",
-    'const VERSION = "10.4.1"',
+    'const VERSION = "10.4.3"',
     "StockcheckCompanyLogo",
     "img.logo.dev/ticker/",
     "fallback=404",
@@ -202,11 +202,14 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
 app_js = read("site/app.js")
-for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change"):
+for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change", "💼 My Portfolio"):
     if token not in app_js:
         errors.append(f"My Portfolio adapter missing: {token}")
 if "state.watchlist = [...state.lastScanSymbols]" in app_js:
     errors.append("Static watchlist universe must not overwrite My Portfolio")
+for token in ("loadPersonalTickers", "stockTimingRadar.myPortfolio.v1", "state.personalTickers.has", '["holdings", "My Portfolio"]'):
+    if token not in pr4_js:
+        errors.append(f"Today personal portfolio adapter missing: {token}")
 
 if "window.StockRadarDetailDialog?.open(select)" not in app_js:
     errors.append("Stock selection handler must open the desktop dialog directly")
@@ -219,5 +222,4 @@ if errors:
         print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print("UI view contract passed")
-
 
