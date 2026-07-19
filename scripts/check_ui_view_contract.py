@@ -155,7 +155,7 @@ for token in (
     "MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60",
     "LOGO_FAILURE_TTL_MS",
     "format=webp",
-    'loading="lazy"',
+    'const loading = detailRequest ? "eager" : "lazy"',
 ):
     if token not in pr4_js:
         errors.append(f"Today PR4 runtime missing: {token}")
@@ -184,7 +184,7 @@ for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-p
         errors.append(f"Usability coordinator missing: {token}")
 if 'requestAnimationFrame(() => openStockDetail(stock));\n    }, true);' not in coordinator_js:
     errors.append("Desktop stock detail click must be captured before app.js rerenders the selected row")
-for token in ('const VERSION = "9.6.3"', "window.StockRadarDetailDialog", "open: openStockDetail"):
+for token in ('const VERSION = "10.7.0"', "window.StockRadarDetailDialog", "open: openStockDetail"):
     if token not in coordinator_js:
         errors.append(f"Desktop stock detail API missing: {token}")
 for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)", ".stock-detail-company-logo", "object-fit: contain"):
