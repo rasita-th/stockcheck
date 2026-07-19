@@ -1,10 +1,13 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.4.0";
+  const VERSION = "10.4.1";
   const DATA_URL = "data/attention_today.json";
   const ACTIONS_KEY = "stockcheck.attention.pr3.actions.v1";
   const PREFS_KEY = "stockcheck.attention.pr4.preferences.v1";
+  const LOGO_DEV_TOKEN = "__LOGO_DEV_PUBLISHABLE_KEY__";
+  const missingLogoTickers = new Set();
+  let logoFallbackBound = false;
   const EXTERNAL_SOURCE_TYPES = new Set(["sec", "company_ir", "company_press_release", "regulator", "gdelt", "media"]);
   const PRIORITY_ORDER = { Critical: 0, Risk: 1, Action: 2, Watch: 3, Developing: 4 };
   const SOURCE_LABELS = {
@@ -73,6 +76,36 @@
   const num = (value) => Number.isFinite(Number(value)) ? Number(value) : null;
   const money = (value) => num(value) == null ? "—" : `$${num(value).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
   const signed = (value, digits = 1) => num(value) == null ? "—" : `${num(value) > 0 ? "+" : ""}${num(value).toFixed(digits)}%`;
+
+  function normaliseLogoTicker(value) {
+    return String(value || "")
+      .trim()
+      .replace(/^[$#]+/, "")
+      .toUpperCase()
+      .replace(/[^A-Z0-9.\-]/g, "");
+  }
+
+  function companyLogoMarkup(item, markClass = "company-logo-mark") {
+    const ticker = normaliseLogoTicker(item?.ticker);
+    const fallback = esc(String(ticker || "?").slice(0, 2));
+    if (!ticker || missingLogoTickers.has(ticker)) {
+      return `<span class="${markClass}" data-logo-shell><span data-logo-fallback>${fallback}</span></span>`;
+    }
+    const src = `https://img.logo.dev/ticker/${encodeURIComponent(ticker)}?token=${encodeURIComponent(LOGO_DEV_TOKEN)}&size=64&format=png&theme=dark&retina=true&fallback=404`;
+    return `<span class="${markClass}" data-logo-shell><img src="${src}" data-logo-ticker="${esc(ticker)}" alt="" aria-hidden="true" width="54" height="54" loading="lazy" decoding="async" fetchpriority="low"><span data-logo-fallback hidden>${fallback}</span></span>`;
+  }
+
+  function installLogoFallback() {
+    if (logoFallbackBound) return;
+    logoFallbackBound = true;
+    document.addEventListener("error", (event) => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement) || !image.dataset.logoTicker) return;
+      missingLogoTickers.add(image.dataset.logoTicker);
+      image.hidden = true;
+      image.nextElementSibling?.removeAttribute("hidden");
+    }, true);
+  }
 
   function loadJson(key, fallback) {
     try {
@@ -239,7 +272,7 @@
       <div class="p4-rail" aria-hidden="true"></div>
       <div class="p4-catalyst-main">
         <div class="p4-catalyst-top">
-          <div class="p4-ticker-block"><span class="p4-ticker-mark">${esc(String(item.ticker || "?").slice(0, 2))}</span><div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div></div>
+          <div class="p4-ticker-block">${companyLogoMarkup(item, "p4-ticker-mark")}<div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div></div>
           ${statusText(item)}
         </div>
         <p class="p4-kicker">${esc(eventLabel(item))}</p>
@@ -260,7 +293,7 @@
   function compactCatalyst(item) {
     return `<article class="p4-catalyst-row p4-tone-${tone(item)}">
       <div class="p4-rail" aria-hidden="true"></div>
-      <div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div>
+      <div class="p4-ticker-block compact">${companyLogoMarkup(item, "p4-ticker-mark")}<div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div></div>
       <div><span>${esc(eventLabel(item))}</span><strong>${esc(eventSummary(item))}</strong></div>
       <div><span>วันที่</span><strong>${esc(formatTime(item.event_time, false))}</strong></div>
       <div class="p4-row-actions">${sourceLink(item, true)}${chartLink(item, true)}${workflowMenu(item)}</div>
@@ -284,7 +317,7 @@
     const cardTone = tone(item, true);
     const scoreText = metrics.score == null ? "" : `${metrics.score.toFixed(0)}/100`;
     return `<article class="p4-technical-card p4-tone-${cardTone}">
-      <header><div class="p4-ticker-block compact"><span class="p4-ticker-mark">${esc(String(item.ticker || "?").slice(0, 2))}</span><div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div></div><div class="p4-price"><strong>${esc(money(item.price))}</strong><span class="${cardTone}">${esc(item.event_subtype === "technical_setup" ? "แนวโน้มแข็งแรง" : "แนวโน้มอ่อนแอ")}</span></div></header>
+      <header><div class="p4-ticker-block compact">${companyLogoMarkup(item, "p4-ticker-mark")}<div><strong>${esc(item.ticker)}</strong><span>${esc(item.name || "")}</span></div></div><div class="p4-price"><strong>${esc(money(item.price))}</strong><span class="${cardTone}">${esc(item.event_subtype === "technical_setup" ? "แนวโน้มแข็งแรง" : "แนวโน้มอ่อนแอ")}</span></div></header>
       <div class="p4-technical-label"><strong>${esc(eventLabel(item))}</strong>${scoreText ? `<span>คะแนน ${esc(scoreText)}</span>` : ""}</div>
       <p>${esc(metrics.signal || (item.event_subtype === "technical_setup" ? "โครงสร้างราคาแข็งแรงกว่าหุ้นอื่นในพอร์ต" : "โมเมนตัมและโครงสร้างราคายังอ่อนแอ"))}</p>
       <dl>
@@ -395,6 +428,8 @@
   }
 
   function init() {
+    installLogoFallback();
+    window.StockcheckCompanyLogo = Object.freeze({ version: "1.0.0", markup: companyLogoMarkup });
     ensurePage();
     document.addEventListener("click", (event) => {
       const filter = event.target.closest?.("[data-p4-filter]");
