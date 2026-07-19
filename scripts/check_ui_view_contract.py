@@ -63,7 +63,7 @@ if "today-view-isolation.css" not in memo_css:
     errors.append("Memo stability stylesheet must import today-view-isolation.css")
 if "attention-pr3.css?v=10.3.0" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-pr3.css v10.3.0")
-if "attention-pr4.css?v=10.4.2" not in memo_css:
+if "attention-pr4.css?v=10.4.4" not in memo_css:
     errors.append("Memo stability stylesheet must import attention-pr4.css v10.4.2")
 if "body.memo-active .attention-page" not in memo_css:
     errors.append("Memo CSS must explicitly hide the Today page")
@@ -207,6 +207,12 @@ for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortf
         errors.append(f"My Portfolio adapter missing: {token}")
 if "state.watchlist = [...state.lastScanSymbols]" in app_js:
     errors.append("Static watchlist universe must not overwrite My Portfolio")
+for token in ("LEGACY_MY_PORTFOLIO_LABELS", "syncMobileMyPortfolio", 'key === "default"', "normalizeTickers(loadMyPortfolio())"):
+    if token not in app_js:
+        errors.append(f"Mobile My Portfolio sync missing: {token}")
+for token in (".p4-toolbar nav::-webkit-scrollbar", "grid-template-columns: repeat(2, minmax(0, 1fr))", "env(safe-area-inset-bottom)"):
+    if token not in pr4_css:
+        errors.append(f"Mobile Today responsive guard missing: {token}")
 for token in ("loadPersonalTickers", "stockTimingRadar.myPortfolio.v1", "state.personalTickers.has", '["holdings", "My Portfolio"]'):
     if token not in pr4_js:
         errors.append(f"Today personal portfolio adapter missing: {token}")
