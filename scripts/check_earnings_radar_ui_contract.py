@@ -28,6 +28,19 @@ if site_css and static_css and site_css != static_css:
     errors.append("site/static mismatch: earnings-radar-pr4.css")
 
 for token in (
+    "PERSONAL_STORAGE",
+    "loadPersonalTickers",
+    "personaliseItem",
+    "personalisedItems",
+    "source_relation",
+    'window.addEventListener("stockcheck:portfolio-change"',
+    'window.addEventListener("storage"',
+    "state.personalTickers.size",
+):
+    if token not in site_js:
+        errors.append(f"missing local portfolio personalization: {token}")
+
+for token in (
     'const VERSION = "10.5.1"',
     'const DATA_URL = "data/earnings_radar.json"',
     "chooseInitialDate",
