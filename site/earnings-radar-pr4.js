@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.5.1";
+  const VERSION = "10.7.1";
   const DATA_URL = "data/earnings_radar.json";
   const PAGE_SIZE = 30;
   const FILTERS = [
@@ -11,7 +11,7 @@
     ["unknown", "ไม่ระบุเวลา"],
     ["portfolio", "หุ้นในพอร์ต"],
     ["related", "เกี่ยวข้องกับพอร์ต"],
-    ["coverage", "Coverage universe"],
+    ["coverage", "หุ้นอื่นในรายการ"],
   ];
   const TIME_LABELS = {
     before_market: "ก่อนตลาดเปิด",
@@ -22,7 +22,7 @@
   const RELATION_LABELS = {
     portfolio: "หุ้นในพอร์ต",
     related: "เกี่ยวข้องกับพอร์ต",
-    coverage: "Coverage universe",
+    coverage: "หุ้นอื่นในรายการ",
     market: "ตลาดทั่วไป",
   };
   const SOURCE_LABELS = {
@@ -193,11 +193,11 @@
     const coverage = state.data?.coverage || {};
     const days = Number(state.data?.window?.days_forward || 0) + Number(state.data?.window?.days_back || 0) + 1;
     return `<section class="er-radar" aria-labelledby="erRadarTitle">
-      <header><div><span class="er-line-icon">${ICONS.calendar}</span><div><h2 id="erRadarTitle">Earnings Radar</h2><p>ภาพรวมงบการเงินวันที่ ${esc(formatDate(state.selectedDate, true))}</p></div></div><button type="button" data-er-scroll-calendar>เปิดปฏิทินทั้งหมด${ICONS.chevron}</button></header>
+      <header><div><span class="er-line-icon">${ICONS.calendar}</span><div><h2 id="erRadarTitle">Earnings Radar</h2><p>ดูวันประกาศงบ พร้อมเน้นหุ้นใน My Portfolio และหุ้นที่เกี่ยวข้อง · ${esc(formatDate(state.selectedDate, true))}</p></div></div><button type="button" data-er-scroll-calendar>เปิดปฏิทินทั้งหมด${ICONS.chevron}</button></header>
       <div class="er-stat-grid">
         <div><span>บริษัทที่ประกาศงบ</span><strong>${Number(summary.total || 0).toLocaleString()}</strong><small>ก่อนตลาด ${Number(summary.before_market || 0)} · หลังตลาด ${Number(summary.after_market || 0)} · ไม่ระบุ ${Number(summary.unknown || 0)}</small></div>
-        <div class="actionable"><span>เกี่ยวข้องกับพอร์ตคุณ</span><strong>${Number(summary.related || 0).toLocaleString()}</strong><small>มี mapping ที่ตรวจสอบย้อนกลับได้</small></div>
-        <div><span>หุ้นในพอร์ตใกล้ประกาศ</span><strong>${Number(summary.portfolio || 0).toLocaleString()}</strong><small>จาก My Portfolio ${state.personalTickers.size} ตัว</small></div>
+        <div class="actionable"><span>เกี่ยวข้องกับหุ้นของคุณ</span><strong>${Number(summary.related || 0).toLocaleString()}</strong><small>เชื่อมโยงจากหุ้นใน My Portfolio</small></div>
+        <div><span>หุ้นในพอร์ตที่ใกล้ประกาศงบ</span><strong>${Number(summary.portfolio || 0).toLocaleString()}</strong><small>${state.personalTickers.size} หุ้นใน My Portfolio</small></div>
         <div><span>ข้อมูลในช่วง ${days} วัน</span><strong>${Number(coverage.published_rows || 0).toLocaleString()}</strong><small>จาก market source ${Number(coverage.market_source_rows || 0).toLocaleString()} แถว</small></div>
       </div>
     </section>`;
