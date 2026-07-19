@@ -61,3 +61,16 @@ body.attention-active .p0-technical-section .p0-action:not([href*="tradingview.c
 .p0-source-chain a:hover {
   color: var(--accent, #58a6ff);
 }
+
+/* Canonical Today ownership: show only the highest ready renderer. */
+body.attention-active .attention-page {
+  display: none !important;
+}
+
+body.attention-active.attention-p4-ready #attentionPageP4,
+body.attention-active:not(.attention-p4-ready).attention-p3-ready #attentionPageP3,
+body.attention-active:not(.attention-p4-ready):not(.attention-p3-ready).attention-p0-ready #attentionPageP0,
+body.attention-active:not(.attention-p4-ready):not(.attention-p3-ready):not(.attention-p0-ready) #attentionPage {
+  display: block !important;
+  width: 100%;
+}
