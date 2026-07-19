@@ -85,7 +85,7 @@ def main() -> None:
     ))
     require_text(SITE / "memo-only-fix.css", (
         "attention-p0.css?v=10.2.0", "today-view-isolation.css",
-        "attention-pr3.css?v=10.3.0", "attention-pr4.css?v=10.4.2",
+        "attention-pr3.css?v=10.3.0", "attention-pr4.css?v=10.4.4",
     ))
     require_text(SITE / "attention-p0.js", (
         "สิ่งที่ต้องจับตาวันนี้", "เหตุการณ์สำคัญวันนี้", "จับตาทางเทคนิค", "technical_watch",
