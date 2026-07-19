@@ -7,14 +7,20 @@ on:
       - ".github/workflows/refresh_finnhub_events.yml"
       - ".github/workflows/deploy-pages.yml"
       - "scripts/generate_earnings_radar.py"
+      - "scripts/harden_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
       - "scripts/check_earnings_radar_ui_contract.py"
       - "scripts/check_earnings_radar_activation.py"
       - "scripts/sync_attention_assets.py"
+      - "scripts/prepare_stable_site_v9_4_1.py"
+      - "scripts/preflight.sh"
       - "tests/test_earnings_radar.py"
+      - "tests/test_earnings_radar_hardening.py"
       - "data/earnings_relevance.json"
       - "site/earnings-radar-pr4.*"
+      - "site/earnings-radar-error-guard.js"
       - "static/earnings-radar-pr4.*"
+      - "static/earnings-radar-error-guard.js"
       - "site/memo-only-fix.*"
       - "static/memo-only-fix.*"
       - "site/data/earnings_radar.json"
@@ -23,11 +29,14 @@ on:
     branches: ["main"]
     paths:
       - "scripts/generate_earnings_radar.py"
+      - "scripts/harden_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
       - "scripts/check_earnings_radar_ui_contract.py"
       - "scripts/check_earnings_radar_activation.py"
       - "site/earnings-radar-pr4.*"
+      - "site/earnings-radar-error-guard.js"
       - "static/earnings-radar-pr4.*"
+      - "static/earnings-radar-error-guard.js"
       - "site/memo-only-fix.*"
       - ".github/workflows/deploy-pages.yml"
 
@@ -37,7 +46,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -50,23 +59,37 @@ jobs:
         run: |
           python -m py_compile \
             scripts/generate_earnings_radar.py \
+            scripts/harden_earnings_radar.py \
             scripts/validate_earnings_radar.py \
             scripts/check_earnings_radar_ui_contract.py \
             scripts/check_earnings_radar_activation.py \
-            scripts/sync_attention_assets.py
-      - name: Test earnings radar data contract
-        run: python -m unittest tests.test_earnings_radar -v
-      - name: Generate 45-day radar fixture
+            scripts/sync_attention_assets.py \
+            scripts/prepare_stable_site_v9_4_1.py
+      - name: Test earnings radar data and hardening contracts
+        run: |
+          python -m unittest tests.test_earnings_radar -v
+          python -m unittest tests.test_earnings_radar_hardening -v
+      - name: Generate and harden 45-day radar fixture
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
-        run: python scripts/generate_earnings_radar.py
-      - name: Sync runtime assets
+        run: |
+          python scripts/generate_earnings_radar.py
+          python scripts/harden_earnings_radar.py --write
+      - name: Sync runtime assets in clean checkout
         run: python scripts/sync_attention_assets.py
       - name: Validate JavaScript, schema, UI and activation contracts
         run: |
           node --check site/memo-only-fix.js
           node --check site/earnings-radar-pr4.js
+          node --check site/earnings-radar-error-guard.js
           python scripts/validate_earnings_radar.py
+          python scripts/harden_earnings_radar.py
           python scripts/check_earnings_radar_ui_contract.py
           python scripts/check_earnings_radar_activation.py
+      - name: Run production-equivalent preparation
+        run: |
+          python scripts/prepare_stable_site_v9_4_1.py
+          python scripts/sync_attention_assets.py
+          python scripts/harden_earnings_radar.py
+          python scripts/check_ui_view_contract.py
