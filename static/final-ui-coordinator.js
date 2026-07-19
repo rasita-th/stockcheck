@@ -1,13 +1,15 @@
 (() => {
   "use strict";
 
-  const VERSION = "9.6.3";
+  const VERSION = "10.7.0";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   let frame = 0;
   let detailReturnFocus = null;
+  const MAX_LOGO_ADAPTER_RETRIES = 12;
   let detailLogoFrame = 0;
   let detailLogoRetry = 0;
+  let detailLogoRetryCount = 0;
 
   function syncStockDetailLogos() {
     cancelAnimationFrame(detailLogoFrame);
@@ -15,14 +17,22 @@
       const identities = document.querySelectorAll(
         "body.stock-detail-open #detailPanel .detail-identity, #mobileDetailModal:not([hidden]) .detail-identity"
       );
-      if (!identities.length) return;
+      if (!identities.length) {
+        clearTimeout(detailLogoRetry);
+        detailLogoRetryCount = 0;
+        return;
+      }
       const adapter = window.StockcheckCompanyLogo;
       if (!adapter?.markup) {
         clearTimeout(detailLogoRetry);
-        detailLogoRetry = window.setTimeout(syncStockDetailLogos, 250);
+        if (detailLogoRetryCount < MAX_LOGO_ADAPTER_RETRIES) {
+          detailLogoRetryCount += 1;
+          detailLogoRetry = window.setTimeout(syncStockDetailLogos, 250);
+        }
         return;
       }
       clearTimeout(detailLogoRetry);
+      detailLogoRetryCount = 0;
       identities.forEach((identity) => {
         if (identity.querySelector("[data-logo-shell]")) return;
         const mark = identity.querySelector(".logo-box");
@@ -98,6 +108,7 @@
     if (restoreFocus && detailReturnFocus instanceof HTMLElement) detailReturnFocus.focus({ preventScroll: true });
     detailReturnFocus = null;
     clearTimeout(detailLogoRetry);
+    detailLogoRetryCount = 0;
   }
 
   function openStockDetail(trigger) {
@@ -110,6 +121,7 @@
     panel.setAttribute("aria-hidden", "false");
     backdrop.hidden = false;
     document.body.classList.add("stock-detail-open");
+    detailLogoRetryCount = 0;
     syncStockDetailLogos();
     requestAnimationFrame(() => panel.querySelector("[data-close-stock-detail]")?.focus());
   }
