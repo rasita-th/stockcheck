@@ -77,7 +77,7 @@
   }
 
   function loadAttentionP4() {
-    loadScript("attention-pr4.js?v=10.4.3", "attentionPr4Loader", loadEarningsRadar);
+    loadScript("attention-pr4.js?v=10.7.0", "attentionPr4Loader", loadEarningsRadar);
   }
 
   function loadAttentionP3() {
