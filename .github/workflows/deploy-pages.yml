@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.5.2"
+  TODAY_DEPLOY_VERSION: "10.5.3"
 
 jobs:
   build:
@@ -214,6 +214,8 @@ jobs:
             local nonce="$1"
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.js?smoke=${nonce}" -o /tmp/memo-only-fix.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/final-ui-coordinator.js || return 1
+            curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.css?smoke=${nonce}" -o /tmp/final-ui-coordinator.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/memo-only-fix.css?smoke=${nonce}" -o /tmp/memo-only-fix.css || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.js?smoke=${nonce}" -o /tmp/attention-pr4.js || return 1
             curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/attention-pr4.css?smoke=${nonce}" -o /tmp/attention-pr4.css || return 1
@@ -241,6 +243,9 @@ jobs:
             grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
           grep -Fq 'body.attention-active.attention-p4-ready #attentionPageP4' /tmp/today-view-isolation.css || return 1
           grep -Fq 'img.logo.dev/ticker/' /tmp/attention-pr4.js || return 1
+          grep -Fq 'syncStockDetailLogos' /tmp/final-ui-coordinator.js || return 1
+          grep -Fq 'StockcheckCompanyLogo' /tmp/final-ui-coordinator.js || return 1
+          grep -Fq '.stock-detail-company-logo' /tmp/final-ui-coordinator.css || return 1
           grep -Fq 'fallback=404' /tmp/attention-pr4.js || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
             grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
@@ -353,3 +358,4 @@ jobs:
           git commit -m "Record verified PR4 Earnings Radar deployment"
           git pull --rebase origin main
           git push origin HEAD:main
+
