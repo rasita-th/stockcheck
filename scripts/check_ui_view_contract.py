@@ -207,6 +207,14 @@ for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortf
         errors.append(f"My Portfolio adapter missing: {token}")
 if "state.watchlist = [...state.lastScanSymbols]" in app_js:
     errors.append("Static watchlist universe must not overwrite My Portfolio")
+for token in (
+    'previous !== serialized',
+    'if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist)',
+    'if (active === "default") saveMyPortfolio(state.watchlist)',
+    'if (key === "default") saveMyPortfolio(state.watchlist)',
+):
+    if token not in app_js:
+        errors.append(f"My Portfolio canonical write path missing: {token}")
 for token in ("LEGACY_MY_PORTFOLIO_LABELS", "syncMobileMyPortfolio", 'key === "default"', "normalizeTickers(loadMyPortfolio())"):
     if token not in app_js:
         errors.append(f"Mobile My Portfolio sync missing: {token}")
