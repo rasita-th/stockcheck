@@ -12,6 +12,8 @@ ASSETS = (
     "attention-p0.css",
     "attention-pr3.js",
     "attention-pr3.css",
+    "attention-pr4.js",
+    "attention-pr4.css",
     "today-view-isolation.css",
     "memo-only-fix.js",
     "memo-only-fix.css",
