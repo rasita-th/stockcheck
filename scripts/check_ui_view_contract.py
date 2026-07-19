@@ -208,6 +208,15 @@ for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortf
 if "state.watchlist = [...state.lastScanSymbols]" in app_js:
     errors.append("Static watchlist universe must not overwrite My Portfolio")
 for token in (
+    "hasPersistedPortfolio",
+    "portfolioIsFirstRun",
+    "replacingExamples",
+    'data-open-panel="quickScanSheet">เพิ่มหุ้นแรก',
+    "ตัวอย่างเริ่มต้น",
+):
+    if token not in app_js:
+        errors.append(f"First-run portfolio contract missing: {token}")
+for token in (
     'previous !== serialized',
     'if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist)',
     'if (active === "default") saveMyPortfolio(state.watchlist)',
