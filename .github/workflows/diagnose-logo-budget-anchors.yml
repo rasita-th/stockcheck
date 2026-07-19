@@ -1,0 +1,57 @@
+name: Diagnose Logo Budget Anchors
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/diagnose-logo-budget-anchors.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    if: github.head_ref == 'agent/pr4f-budgeted-company-logos-v4'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 1
+          show-progress: false
+      - name: Count exact anchors
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          checks = {
+            '.github/workflows/deploy-pages.yml': [
+              'TODAY_DEPLOY_VERSION: "10.5.6"',
+              'python -m py_compile scripts/prepare_stable_site_v9_4_1.py scripts/sync_attention_assets.py',
+              'python scripts/prepare_stable_site_v9_4_1.py\n          python scripts/sync_attention_assets.py',
+              '          python scripts/check_earnings_radar_activation.py',
+              'attention-pr4.js?v=10.4.3',
+              "          grep -Fq 'loadPersonalTickers' site/attention-pr4.js",
+              "            grep -Fq 'loadPersonalTickers' /tmp/attention-pr4.js || return 1",
+            ],
+            'scripts/check_earnings_radar_activation.py': [
+              'attention-pr4.js?v=10.4.3',
+              'TODAY_DEPLOY_VERSION: "10.5.6"',
+              '    "earnings_published_rows",',
+            ],
+            'scripts/check_ui_view_contract.py': [
+              'attention-pr4.js?v=10.4.3',
+              'const VERSION = "10.4.3"',
+              '    "fallback=404",\n    \'loading="lazy"\',',
+            ],
+            'scripts/smoke_test_site_v9_4_6.py': [
+              'attention-pr4.js?v=10.4.3',
+              '        "StockcheckCompanyLogo", "img.logo.dev/ticker/", "fallback=404",',
+            ],
+          }
+          for name, tokens in checks.items():
+            text = Path(name).read_text(encoding='utf-8')
+            print(f'FILE {name}')
+            for token in tokens:
+              print(f'{text.count(token)} :: {token!r}')
+          PY
