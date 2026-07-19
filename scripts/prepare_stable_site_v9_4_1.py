@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
+
+from generate_earnings_radar import generate as generate_earnings_radar
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -104,6 +107,27 @@ def prepare_market(path: Path) -> None:
     path.write_text(html, encoding="utf-8")
 
 
+def prepare_earnings_radar() -> None:
+    # This is a deterministic projection of repository state and makes no API
+    # calls. Rebuilding it here guarantees every Pages artifact carries the
+    # same 45-day contract even when a bot-generated data commit has not yet
+    # triggered another Pages run.
+    os.environ["EARNINGS_RADAR_DAYS_BACK"] = "1"
+    os.environ["EARNINGS_RADAR_DAYS_FORWARD"] = "45"
+    payload = generate_earnings_radar()
+    window = payload.get("window") if isinstance(payload.get("window"), dict) else {}
+    coverage = payload.get("coverage") if isinstance(payload.get("coverage"), dict) else {}
+    if int(window.get("days_forward") or 0) < 45:
+        raise SystemExit("earnings_radar.json is not a 45-day contract")
+    if int(coverage.get("market_source_rows") or 0) <= int(coverage.get("portfolio_total") or 0):
+        raise SystemExit("earnings_radar.json is not market-wide")
+    print(
+        "Prepared Earnings Radar: "
+        f"{coverage.get('published_rows', 0)} published rows / "
+        f"{coverage.get('market_source_rows', 0)} market-source rows"
+    )
+
+
 def validate_data() -> None:
     for name in ("technical.json", "fundamental.json"):
         path = SITE / "data" / name
@@ -118,6 +142,10 @@ def validate_data() -> None:
     if not pulse.exists() or pulse.stat().st_size < 100:
         raise SystemExit("market_pulse.json missing/empty; refusing stable deploy")
     json.loads(pulse.read_text(encoding="utf-8"))
+    radar = SITE / "data" / "earnings_radar.json"
+    if not radar.exists() or radar.stat().st_size < 100:
+        raise SystemExit("earnings_radar.json missing/empty; refusing stable deploy")
+    json.loads(radar.read_text(encoding="utf-8"))
 
 
 def validate_clean_html() -> None:
@@ -144,6 +172,7 @@ def validate_clean_html() -> None:
 def main() -> None:
     prepare_index(SITE / "index.html")
     prepare_market(SITE / "market.html")
+    prepare_earnings_radar()
     validate_data()
     validate_clean_html()
     print(f"Prepared clean single-runtime Pages artifact v{VERSION}")
