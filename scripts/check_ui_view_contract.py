@@ -201,6 +201,20 @@ for index_path in ("site/index.html", "static/index.html"):
         if asset not in index:
             errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
 
+memo_loader = read("site/memo-only-fix.js")
+for token in (
+    "StockcheckAttentionDataStore",
+    "ATTENTION_CACHE_WINDOW_MS",
+    "installAttentionDataStore",
+    "structuredClone",
+):
+    if token not in memo_loader:
+        errors.append(f"shared Today data store missing: {token}")
+for renderer in ("site/attention-p0.js", "site/attention-pr3.js", "site/attention-pr4.js"):
+    renderer_js = read(renderer)
+    if "StockcheckAttentionDataStore" not in renderer_js:
+        errors.append(f"{renderer} does not consume the shared Today data store")
+
 app_js = read("site/app.js")
 for token in ("stockTimingRadar.myPortfolio.v1", "loadMyPortfolio", "saveMyPortfolio", "default: loadMyPortfolio()", "stockcheck:portfolio-change", "💼 My Portfolio"):
     if token not in app_js:
