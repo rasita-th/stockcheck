@@ -147,3 +147,27 @@ body.stock-detail-open { overflow: hidden; }
   .stock-detail-backdrop,
   .stock-detail-close { display: none !important; }
 }
+
+
+/* v9.6.3: Logo.dev is requested only when a stock detail surface is open. */
+.stock-detail-company-logo {
+  overflow: hidden;
+}
+.stock-detail-company-logo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: inherit;
+}
+.stock-detail-company-logo img[hidden],
+.stock-detail-company-logo [data-logo-fallback][hidden] {
+  display: none !important;
+}
+.stock-detail-company-logo [data-logo-fallback] {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
