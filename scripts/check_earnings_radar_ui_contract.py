@@ -28,7 +28,7 @@ if site_css and static_css and site_css != static_css:
     errors.append("site/static mismatch: earnings-radar-pr4.css")
 
 for token in (
-    'const VERSION = "10.5.0"',
+    'const VERSION = "10.5.1"',
     'const DATA_URL = "data/earnings_radar.json"',
     "chooseInitialDate",
     "daily_summary",
@@ -42,6 +42,8 @@ for token in (
     "Earnings Calendar",
     "เกี่ยวข้องกับพอร์ตคุณ",
     "หุ้นในพอร์ตใกล้ประกาศ",
+    "StockcheckCompanyLogo",
+    "tickerMark",
 ):
     if token not in site_js:
         errors.append(f"Earnings Radar runtime missing: {token}")
