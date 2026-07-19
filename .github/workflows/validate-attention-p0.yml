@@ -1,4 +1,4 @@
-name: Validate Today Attention PR3
+name: Validate Today Attention PR4
 
 on:
   pull_request:
@@ -35,8 +35,10 @@ on:
       - "data/source_state/news.json"
       - "site/attention-p0.*"
       - "site/attention-pr3.*"
+      - "site/attention-pr4.*"
       - "static/attention-p0.*"
       - "static/attention-pr3.*"
+      - "static/attention-pr4.*"
       - "site/today-view-isolation.css"
       - "static/today-view-isolation.css"
       - "site/memo-only-fix.*"
@@ -106,9 +108,11 @@ jobs:
           node --check site/app-shell-v9-4-6.js
           node --check site/attention-p0.js
           node --check site/attention-pr3.js
+          node --check site/attention-pr4.js
           node --check site/memo-only-fix.js
           test -s site/today-view-isolation.css
           test -s site/attention-pr3.css
+          test -s site/attention-pr4.css
           python scripts/validate_static_data.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
