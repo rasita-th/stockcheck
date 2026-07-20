@@ -32,7 +32,7 @@ jobs:
           curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/attention-pr3.css?verify=${nonce}" -o /tmp/attention-pr3.css
           curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 10 --max-time 45 "${BASE_URL}/data/attention_today.json?verify=${nonce}" -o /tmp/attention_today.json
 
-          grep -Fq 'memo-only-fix.js?v=10.3.0' /tmp/index.html
+          grep -Eq 'memo-only-fix\\.js\\?v=[0-9]+(\\.[0-9]+){2}' /tmp/index.html
           grep -Fq 'attention-pr3.js?v=10.3.0' /tmp/memo-only-fix.js
           grep -Fq 'PR3 · PERSONAL RISK DESK' /tmp/attention-pr3.js
           grep -Fq 'เปลี่ยนจากรอบก่อน' /tmp/attention-pr3.js

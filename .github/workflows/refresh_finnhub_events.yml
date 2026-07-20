@@ -97,6 +97,7 @@ jobs:
           python scripts/validate_attention_pr3.py
           python scripts/validate_earnings_radar.py
           python scripts/validate_static_data.py
+          python scripts/sync_attention_assets.py
           python scripts/check_ui_view_contract.py
 
       - name: Publish Finnhub and Today contracts safely
