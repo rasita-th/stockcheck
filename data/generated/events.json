@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-20T16:46:09+00:00",
+  "generated_at": "2026-07-20T17:15:26+00:00",
   "row_count": 5,
   "events": [
     {
@@ -15,7 +15,7 @@
       "materiality": "medium",
       "urgency": "upcoming",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-20T16:44:11.199358+00:00",
+      "detected_at": "2026-07-20T17:13:15.630961+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -93,11 +93,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.5, +2.1% vs EMA20, +6.1% vs EMA200, volume 0.16x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 54.6, +1.8% vs EMA20, +5.8% vs EMA200, volume 0.26x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T16:46:09+00:00",
+      "detected_at": "2026-07-20T17:15:26+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -118,59 +118,15 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 55.45,
-      "pct_vs_ema20": 2.13,
-      "pct_vs_ema200": 6.13,
-      "volume_ratio20": 0.16,
+      "rsi14": 54.65,
+      "pct_vs_ema20": 1.8,
+      "pct_vs_ema200": 5.76,
+      "volume_ratio20": 0.26,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:AMZN:technical_setup:2026-07-20"
       ],
       "dedupe_key": "AMZN:technical_setup:7fe44103e33ebcc7",
-      "priority_score": 68,
-      "priority": "Action"
-    },
-    {
-      "event_id": "technical:ORCL:technical_risk:2026-07-20",
-      "ticker": "ORCL",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 27.4, -15.4% vs EMA20, -37.9% vs EMA200, volume 0.40x 20-day average.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T16:46:09+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-20"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-07-20"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
-      "rsi14": 27.43,
-      "pct_vs_ema20": -15.44,
-      "pct_vs_ema200": -37.87,
-      "volume_ratio20": 0.4,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:ORCL:technical_risk:2026-07-20"
-      ],
-      "dedupe_key": "ORCL:technical_risk:fd96ab38b1ffeb68",
       "priority_score": 68,
       "priority": "Action"
     },
@@ -181,11 +137,11 @@
       "event_subtype": "technical_risk",
       "headline": "Latest technical scan · 9/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 29.9, -14.4% vs EMA20, -27.4% vs EMA200, volume 0.38x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 30.5, -13.5% vs EMA20, -26.6% vs EMA200, volume 0.57x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T16:46:09+00:00",
+      "detected_at": "2026-07-20T17:15:26+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -206,15 +162,59 @@
       "technical_score": 9.0,
       "technical_signal": "AVOID / Turnaround only",
       "scan_age_days": 0,
-      "rsi14": 29.88,
-      "pct_vs_ema20": -14.41,
-      "pct_vs_ema200": -27.44,
-      "volume_ratio20": 0.38,
+      "rsi14": 30.53,
+      "pct_vs_ema20": -13.53,
+      "pct_vs_ema200": -26.63,
+      "volume_ratio20": 0.57,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:MP:technical_risk:2026-07-20"
       ],
       "dedupe_key": "MP:technical_risk:d70b7bfbd7bb3a82",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
+      "event_id": "technical:ORCL:technical_risk:2026-07-20",
+      "ticker": "ORCL",
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "headline": "Latest technical scan · 9/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 27.4, -15.4% vs EMA20, -37.9% vs EMA200, volume 0.57x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-20",
+      "detected_at": "2026-07-20T17:15:26+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-20"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-07-20"
+        }
+      ],
+      "technical_score": 9.0,
+      "technical_signal": "AVOID / Turnaround only",
+      "scan_age_days": 0,
+      "rsi14": 27.45,
+      "pct_vs_ema20": -15.41,
+      "pct_vs_ema200": -37.85,
+      "volume_ratio20": 0.57,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:ORCL:technical_risk:2026-07-20"
+      ],
+      "dedupe_key": "ORCL:technical_risk:fd96ab38b1ffeb68",
       "priority_score": 68,
       "priority": "Action"
     }
