@@ -1,10 +1,10 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-07-20T19:12:47.514664+00:00",
+  "generated_at": "2026-07-20T19:57:50.738490+00:00",
   "layers": {
     "quote": {
-      "status": "ok",
-      "age_minutes": 2.4,
+      "status": "stale",
+      "age_minutes": 47.4,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-20T19:10:26.117074+00:00",
       "row_count": 410,
@@ -22,7 +22,7 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-20T19:12:46+00:00",
+      "timestamp": "2026-07-20T19:57:49+00:00",
       "row_count": 2,
       "source": null,
       "coverage_status": "partial",
@@ -37,7 +37,7 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 66,
+          "rows": 83,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
         },
@@ -61,16 +61,16 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 2,
-          "partial": 8,
+          "ok": 0,
+          "partial": 10,
           "errors": 0
         },
         "gdelt": {
-          "status": "partial",
+          "status": "error",
           "source": "GDELT DOC 2.0",
           "checked": 10,
-          "ok": 1,
-          "errors": 9
+          "ok": 0,
+          "errors": 10
         },
         "regulators": {
           "status": "ok",
@@ -87,13 +87,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-20T19:12:46+00:00",
+      "timestamp": "2026-07-20T19:57:49+00:00",
       "row_count": 5,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 3436.0,
+      "age_minutes": 3481.0,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -109,7 +109,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 4494.8,
+      "age_minutes": 4539.8,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
