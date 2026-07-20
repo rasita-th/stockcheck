@@ -1,15 +1,15 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-20T13:37:09+00:00",
+  "updated_at": "2026-07-20T14:35:06+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 4,
+  "total_events": 5,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
-    "Risk": 0,
+    "Risk": 1,
     "Action": 1,
     "Watch": 0,
     "Developing": 0
@@ -43,15 +43,15 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
@@ -71,6 +71,106 @@
     }
   },
   "items": [
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "portfolio_status": "holding",
+      "role": "AI semiconductors",
+      "priority": "Risk",
+      "priority_score": 80,
+      "why_today": [
+        "A material agreement event was detected and requires source review."
+      ],
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "event_time": "2026-07-20T14:33:06+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+        "published_at": "2026-07-20T14:33:06+00:00",
+        "domain": "ir.amd.com"
+      },
+      "price": 517.49,
+      "day_change_pct": null,
+      "relative_volume": 0.11,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "company_ir:AMD:4455df9d4b05e144",
+          "ticker": "AMD",
+          "event_type": "corporate_event",
+          "event_subtype": "material_agreement",
+          "headline": "Microsoft to Deploy Next-Gen AMD Instinct and AMD EPYC Processors as the Companies Expand Their Long-Term Strategic Partnership",
+          "summary": "A material agreement event was detected and requires source review.",
+          "why_today": "A material agreement event was detected and requires source review.",
+          "materiality": "medium",
+          "reported_materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-07-20T14:33:06+00:00",
+          "detected_at": "2026-07-20T14:33:06+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:material_agreement:2026-07-20:65492f67ba04",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+            "published_at": "2026-07-20T14:33:06+00:00",
+            "domain": "ir.amd.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+              "published_at": "2026-07-20T14:33:06+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "company_ir:AMD:4455df9d4b05e144"
+          ],
+          "priority_score": 80,
+          "priority": "Risk"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+        "company_ir": "https://ir.amd.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "material_agreement",
+      "signals": [
+        "A material agreement event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-20T14:35:06+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 517.49,
+        "current_price": 517.49,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 93,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
+      ]
+    },
     {
       "ticker": "TSLA",
       "name": "Tesla, Inc.",
@@ -108,7 +208,7 @@
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-20T13:35:06.662975+00:00",
+          "detected_at": "2026-07-20T14:33:05.500380+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -362,77 +462,87 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "TSLA",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TE",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "INDI",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "NBIS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "TEM",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "MP",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     }
   ],
@@ -446,8 +556,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 0,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 1,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -510,7 +620,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T13:37:09+00:00",
+          "detected_at": "2026-07-20T14:35:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -556,9 +666,9 @@
         "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.3, +1.2% vs EMA20, +5.1% vs EMA200, volume 0.03x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-20T13:37:09+00:00",
         "active_days": 0
       },
@@ -610,7 +720,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T13:37:09+00:00",
+          "detected_at": "2026-07-20T14:35:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -655,9 +765,9 @@
         "Latest technical scan dated 2026-07-20: score 9/100, WEAK / Avoid, RSI 28.7, -14.1% vs EMA20, volume 0.08x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-20T13:37:09+00:00",
         "active_days": 0
       },
@@ -709,7 +819,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T13:37:09+00:00",
+          "detected_at": "2026-07-20T14:35:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -755,9 +865,9 @@
         "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.5, +0.9% vs EMA20, +6.5% vs EMA200, volume 0.05x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-20T13:37:09+00:00",
         "active_days": 0
       },
@@ -774,10 +884,10 @@
     }
   ],
   "changes_summary": {
-    "new": 3,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 1,
+    "ongoing": 4,
     "eased": 0,
     "resolved": 3
   },

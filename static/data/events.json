@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-20T13:37:09+00:00",
-  "row_count": 4,
+  "generated_at": "2026-07-20T14:35:06+00:00",
+  "row_count": 5,
   "events": [
     {
       "event_id": "earnings:TSLA:2026-07-22:confirmed",
@@ -15,7 +15,7 @@
       "materiality": "medium",
       "urgency": "upcoming",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-20T13:35:06.662975+00:00",
+      "detected_at": "2026-07-20T14:33:05.500380+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -45,6 +45,48 @@
       "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
     },
     {
+      "event_id": "company_ir:AMD:4455df9d4b05e144",
+      "ticker": "AMD",
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "headline": "Microsoft to Deploy Next-Gen AMD Instinct and AMD EPYC Processors as the Companies Expand Their Long-Term Strategic Partnership",
+      "summary": "A material agreement event was detected and requires source review.",
+      "why_today": "A material agreement event was detected and requires source review.",
+      "materiality": "medium",
+      "reported_materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-20T14:33:06+00:00",
+      "detected_at": "2026-07-20T14:33:06+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: AMD",
+      "dedupe_key": "AMD:material_agreement:2026-07-20:65492f67ba04",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+        "published_at": "2026-07-20T14:33:06+00:00",
+        "domain": "ir.amd.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1291/microsoft-to-deploy-next-gen-amd-instinct-and-amd-epyc-processors-as-the-companies-expand-their-long-term-strategic-partnership",
+          "published_at": "2026-07-20T14:33:06+00:00",
+          "domain": "ir.amd.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "company_ir:AMD:4455df9d4b05e144"
+      ],
+      "priority_score": 80,
+      "priority": "Risk"
+    },
+    {
       "event_id": "technical:NVDA:technical_setup:2026-07-20",
       "ticker": "NVDA",
       "event_type": "technical",
@@ -55,7 +97,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T13:37:09+00:00",
+      "detected_at": "2026-07-20T14:35:06+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -99,7 +141,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T13:37:09+00:00",
+      "detected_at": "2026-07-20T14:35:06+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -143,7 +185,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-20",
-      "detected_at": "2026-07-20T13:37:09+00:00",
+      "detected_at": "2026-07-20T14:35:06+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
