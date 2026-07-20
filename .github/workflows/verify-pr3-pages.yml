@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Verify public PR3 assets and payload
         env:
-          BASE_URL: "https://rasita2644-star.github.io/stockcheck"
+          BASE_URL: "https://rasita-th.github.io/stockcheck"
         run: |
           set -euo pipefail
           nonce="$(date +%s)"

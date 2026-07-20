@@ -331,6 +331,21 @@ def build_payload(
     market_rows = raw_market_rows(state)
     official_rows = legacy_calendar.get("items") if isinstance(legacy_calendar, dict) and isinstance(legacy_calendar.get("items"), list) else []
     merged = merge_calendar_rows(market_rows, official_rows)
+    market_window_keys = {
+        (item["ticker"], item["earnings_date"])
+        for raw in market_rows
+        if (item := normalize_market_row(raw)) is not None
+        and (event_date := parse_date(item["earnings_date"])) is not None
+        and start <= event_date <= end
+    }
+    official_window_keys = {
+        (item["ticker"], item["earnings_date"])
+        for raw in official_rows
+        if isinstance(raw, dict)
+        and (item := normalize_official_row(raw)) is not None
+        and (event_date := parse_date(item["earnings_date"])) is not None
+        and start <= event_date <= end
+    }
     decorated = [
         decorate_item(item, today, portfolio, profiles, covered, relations)
         for item in merged
@@ -367,7 +382,9 @@ def build_payload(
             "portfolio_total": len(portfolio),
             "coverage_universe_total": latest_universe_count(state, covered),
             "market_source_rows": len(market_rows),
+            "market_window_rows": len(market_window_keys),
             "published_rows": len(decorated),
+            "official_overlay_additions": len(official_window_keys - market_window_keys),
             "profile_names_known": sum(bool(item.get("name") and item.get("name") != item.get("ticker")) for item in decorated),
             "estimate_rows": sum(item.get("eps_estimate") is not None or item.get("revenue_estimate") is not None for item in decorated),
             "official_rows": sum(item.get("status") == "confirmed" for item in decorated),

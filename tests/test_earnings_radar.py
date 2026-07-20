@@ -13,6 +13,13 @@ radar = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = radar
 spec.loader.exec_module(radar)
 
+VALIDATOR_PATH = Path(__file__).resolve().parents[1] / "scripts" / "validate_earnings_radar.py"
+validator_spec = importlib.util.spec_from_file_location("validate_earnings_radar", VALIDATOR_PATH)
+assert validator_spec and validator_spec.loader
+validator = importlib.util.module_from_spec(validator_spec)
+sys.modules[validator_spec.name] = validator
+validator_spec.loader.exec_module(validator)
+
 
 class EarningsRadarTests(unittest.TestCase):
     def setUp(self):
@@ -105,7 +112,53 @@ class EarningsRadarTests(unittest.TestCase):
         self.assertEqual(tickers, {"TSLA", "TSM", "SMALL"})
         self.assertEqual(payload["summary"]["total"], 3)
         self.assertEqual(payload["coverage"]["market_source_rows"], 4)
+        self.assertEqual(payload["coverage"]["market_window_rows"], 3)
+        self.assertEqual(payload["coverage"]["official_overlay_additions"], 0)
         self.assertEqual(payload["coverage"]["coverage_universe_total"], 408)
+        validator.validate_coverage(payload["coverage"])
+
+    def test_official_row_can_expand_the_market_window(self):
+        official = {
+            "items": [
+                {
+                    "ticker": "OFFICIAL",
+                    "earnings_date": "2026-07-18",
+                    "status": "confirmed",
+                    "source_type": "company_ir",
+                    "source_url": "https://example.com/official-ir",
+                    "time": "after_market",
+                }
+            ]
+        }
+        payload = radar.build_payload(
+            self.state,
+            official,
+            self.portfolio,
+            self.relevance,
+            today=self.today,
+            days_back=0,
+            days_forward=0,
+        )
+        coverage = payload["coverage"]
+        self.assertEqual(coverage["market_window_rows"], 3)
+        self.assertEqual(coverage["official_overlay_additions"], 1)
+        self.assertEqual(coverage["published_rows"], 4)
+        validator.validate_coverage(coverage)
+
+    def test_unexplained_published_row_expansion_is_rejected(self):
+        coverage = {
+            "portfolio_total": 2,
+            "coverage_universe_total": 408,
+            "market_source_rows": 4,
+            "market_window_rows": 3,
+            "published_rows": 4,
+            "official_overlay_additions": 0,
+            "profile_names_known": 0,
+            "estimate_rows": 0,
+            "official_rows": 0,
+        }
+        with self.assertRaisesRegex(SystemExit, "official overlay additions"):
+            validator.validate_coverage(coverage)
 
     def test_confirmed_official_row_overrides_provider_date_row_and_keeps_estimates(self):
         official = {

@@ -23,6 +23,27 @@ def load() -> dict[str, Any]:
     return payload
 
 
+def validate_coverage(coverage: dict[str, Any]) -> None:
+    for key in (
+        "portfolio_total",
+        "coverage_universe_total",
+        "market_source_rows",
+        "market_window_rows",
+        "published_rows",
+        "official_overlay_additions",
+        "profile_names_known",
+        "estimate_rows",
+        "official_rows",
+    ):
+        require(isinstance(coverage.get(key), int) and coverage[key] >= 0, f"coverage.{key} must be a non-negative integer")
+    require(
+        coverage["published_rows"] == coverage["market_window_rows"] + coverage["official_overlay_additions"],
+        "published rows must equal unique market-window rows plus official overlay additions",
+    )
+    require(coverage["market_window_rows"] <= coverage["market_source_rows"], "market-window rows cannot exceed market source rows")
+    require(coverage["coverage_universe_total"] >= coverage["portfolio_total"], "coverage universe cannot be smaller than portfolio")
+
+
 def main() -> None:
     payload = load()
     require(str(payload.get("schema_version") or "").startswith("1.0"), "earnings radar schema must be 1.0")
@@ -62,18 +83,7 @@ def main() -> None:
     )
 
     coverage = payload["coverage"]
-    for key in (
-        "portfolio_total",
-        "coverage_universe_total",
-        "market_source_rows",
-        "published_rows",
-        "profile_names_known",
-        "estimate_rows",
-        "official_rows",
-    ):
-        require(isinstance(coverage.get(key), int) and coverage[key] >= 0, f"coverage.{key} must be a non-negative integer")
-    require(coverage["market_source_rows"] >= coverage["published_rows"], "published rows cannot exceed market source rows after official overlays")
-    require(coverage["coverage_universe_total"] >= coverage["portfolio_total"], "coverage universe cannot be smaller than portfolio")
+    validate_coverage(coverage)
 
     seen: set[tuple[str, str]] = set()
     today_count = 0
