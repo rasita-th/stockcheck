@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-20T14:35:06+00:00",
+  "updated_at": "2026-07-20T15:36:50+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 1
+      "accepted_events": 0
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 7,
-      "errors": 1
+      "ok": 1,
+      "partial": 9,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -93,9 +93,9 @@
         "published_at": "2026-07-20T14:33:06+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 517.49,
+      "price": 512.85,
       "day_change_pct": null,
-      "relative_volume": 0.11,
+      "relative_volume": 0.41,
       "trigger_level": null,
       "events": [
         {
@@ -153,17 +153,17 @@
         "A material agreement event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-07-20T14:35:06+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 517.49,
-        "current_price": 517.49,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 512.85,
+        "change_pct": -0.9,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.9%"
       },
       "personal_priority_score": 93,
       "personalization_reasons": [
@@ -192,9 +192,9 @@
         "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
         "published_at": "2026-07-02T00:00:00-04:00"
       },
-      "price": 382.08,
+      "price": 373.5,
       "day_change_pct": null,
-      "relative_volume": 0.04,
+      "relative_volume": 0.33,
       "trigger_level": null,
       "events": [
         {
@@ -208,7 +208,7 @@
           "materiality": "medium",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-20T14:33:05.500380+00:00",
+          "detected_at": "2026-07-20T15:34:39.023090+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -258,9 +258,9 @@
       },
       "impact": {
         "baseline_price": 381.35,
-        "current_price": 382.08,
-        "change_pct": 0.19,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 373.5,
+        "change_pct": -2.06,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.1%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
@@ -462,87 +462,87 @@
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "ORCL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TSLA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "GOOGL",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "EQT",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "EQT",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "TMDX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "TMDX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "EOSE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "UUUU",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "IR URL unavailable"
+    },
+    {
       "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     }
   ],
@@ -556,7 +556,7 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 1,
+    "newly_discovered_event_count": 0,
     "active_discovered_event_count": 1,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
@@ -578,8 +578,8 @@
     "personal_priority": true
   },
   "technical_summary": {
-    "risk": 1,
-    "setup": 2,
+    "risk": 2,
+    "setup": 1,
     "total": 3
   },
   "technical_watch": [
@@ -591,7 +591,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.3, +1.2% vs EMA20, +5.1% vs EMA200, volume 0.03x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.5, +2.1% vs EMA20, +6.1% vs EMA200, volume 0.16x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -604,9 +604,9 @@
         "url": "data/technical.json",
         "published_at": "2026-07-20"
       },
-      "price": 249.16,
+      "price": 251.55,
       "day_change_pct": null,
-      "relative_volume": 0.03,
+      "relative_volume": 0.16,
       "trigger_level": null,
       "events": [
         {
@@ -616,11 +616,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.3, +1.2% vs EMA20, +5.1% vs EMA200, volume 0.03x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.5, +2.1% vs EMA20, +6.1% vs EMA200, volume 0.16x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T14:35:06+00:00",
+          "detected_at": "2026-07-20T15:36:50+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -641,10 +641,10 @@
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
-          "rsi14": 53.26,
-          "pct_vs_ema20": 1.25,
-          "pct_vs_ema200": 5.14,
-          "volume_ratio20": 0.03,
+          "rsi14": 55.45,
+          "pct_vs_ema20": 2.13,
+          "pct_vs_ema200": 6.13,
+          "volume_ratio20": 0.16,
           "secondary_source_count": 1,
           "related_event_ids": [
             "technical:AMZN:technical_setup:2026-07-20"
@@ -663,7 +663,7 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.3, +1.2% vs EMA20, +5.1% vs EMA200, volume 0.03x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.5, +2.1% vs EMA20, +6.1% vs EMA200, volume 0.16x 20-day average."
       ],
       "change": {
         "status": "ongoing",
@@ -674,9 +674,9 @@
       },
       "impact": {
         "baseline_price": 249.16,
-        "current_price": 249.16,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 251.55,
+        "change_pct": 0.96,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.0%"
       },
       "personal_priority_score": 76,
       "personalization_reasons": [
@@ -684,14 +684,14 @@
       ]
     },
     {
-      "ticker": "NASA",
-      "name": "NASA",
+      "ticker": "MP",
+      "name": "MP Materials Corp.",
       "portfolio_status": "holding",
-      "role": "Special situation",
+      "role": "Critical minerals",
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-20: score 9/100, WEAK / Avoid, RSI 28.7, -14.1% vs EMA20, volume 0.08x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 29.9, -14.4% vs EMA20, -27.4% vs EMA200, volume 0.38x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_risk",
@@ -704,23 +704,23 @@
         "url": "data/technical.json",
         "published_at": "2026-07-20"
       },
-      "price": 23.03,
+      "price": 44.19,
       "day_change_pct": null,
-      "relative_volume": 0.08,
+      "relative_volume": 0.38,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NASA:technical_risk:2026-07-20",
-          "ticker": "NASA",
+          "event_id": "technical:MP:technical_risk:2026-07-20",
+          "ticker": "MP",
           "event_type": "technical",
           "event_subtype": "technical_risk",
           "headline": "Latest technical scan · 9/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-20: score 9/100, WEAK / Avoid, RSI 28.7, -14.1% vs EMA20, volume 0.08x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 29.9, -14.4% vs EMA20, -27.4% vs EMA200, volume 0.38x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T14:35:06+00:00",
+          "detected_at": "2026-07-20T15:36:50+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -739,41 +739,41 @@
             }
           ],
           "technical_score": 9.0,
-          "technical_signal": "WEAK / Avoid",
+          "technical_signal": "AVOID / Turnaround only",
           "scan_age_days": 0,
-          "rsi14": 28.71,
-          "pct_vs_ema20": -14.1,
-          "pct_vs_ema200": null,
-          "volume_ratio20": 0.08,
+          "rsi14": 29.88,
+          "pct_vs_ema20": -14.41,
+          "pct_vs_ema200": -27.44,
+          "volume_ratio20": 0.38,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NASA:technical_risk:2026-07-20"
+            "technical:MP:technical_risk:2026-07-20"
           ],
-          "dedupe_key": "NASA:technical_risk:f48032853018546a",
+          "dedupe_key": "MP:technical_risk:d70b7bfbd7bb3a82",
           "priority_score": 68,
           "priority": "Action"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NASA/",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-MP/",
         "raw_data": "data/technical.json"
       },
       "severity": "medium",
       "primary_trigger": "technical_risk",
       "signals": [
-        "Latest technical scan dated 2026-07-20: score 9/100, WEAK / Avoid, RSI 28.7, -14.1% vs EMA20, volume 0.08x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 29.9, -14.4% vs EMA20, -27.4% vs EMA200, volume 0.38x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-20T13:37:09+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-20T15:36:50+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 23.03,
-        "current_price": 23.03,
+        "baseline_price": 44.19,
+        "current_price": 44.19,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -783,17 +783,17 @@
       ]
     },
     {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
+      "ticker": "ORCL",
+      "name": "Oracle Corporation",
       "portfolio_status": "holding",
-      "role": "Core AI",
+      "role": "Cloud infrastructure",
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.5, +0.9% vs EMA20, +6.5% vs EMA200, volume 0.05x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 27.4, -15.4% vs EMA20, -37.9% vs EMA200, volume 0.40x 20-day average."
       ],
       "event_type": "technical",
-      "event_subtype": "technical_setup",
+      "event_subtype": "technical_risk",
       "event_time": "2026-07-20",
       "verification_status": "confirmed",
       "source_status": "internal",
@@ -803,23 +803,23 @@
         "url": "data/technical.json",
         "published_at": "2026-07-20"
       },
-      "price": 206.63,
+      "price": 122.11,
       "day_change_pct": null,
-      "relative_volume": 0.05,
+      "relative_volume": 0.4,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NVDA:technical_setup:2026-07-20",
-          "ticker": "NVDA",
+          "event_id": "technical:ORCL:technical_risk:2026-07-20",
+          "ticker": "ORCL",
           "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 93/100",
+          "event_subtype": "technical_risk",
+          "headline": "Latest technical scan · 9/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.5, +0.9% vs EMA20, +6.5% vs EMA200, volume 0.05x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 27.4, -15.4% vs EMA20, -37.9% vs EMA200, volume 0.40x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-20T14:35:06+00:00",
+          "detected_at": "2026-07-20T15:36:50+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -837,43 +837,42 @@
               "published_at": "2026-07-20"
             }
           ],
-          "technical_score": 93.0,
-          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "technical_score": 9.0,
+          "technical_signal": "AVOID / Turnaround only",
           "scan_age_days": 0,
-          "rsi14": 51.47,
-          "pct_vs_ema20": 0.89,
-          "pct_vs_ema200": 6.5,
-          "volume_ratio20": 0.05,
+          "rsi14": 27.43,
+          "pct_vs_ema20": -15.44,
+          "pct_vs_ema200": -37.87,
+          "volume_ratio20": 0.4,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NVDA:technical_setup:2026-07-20"
+            "technical:ORCL:technical_risk:2026-07-20"
           ],
-          "dedupe_key": "NVDA:technical_setup:a132f004b5f4c41f",
+          "dedupe_key": "ORCL:technical_risk:fd96ab38b1ffeb68",
           "priority_score": 68,
           "priority": "Action"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "company_ir": "https://investor.nvidia.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-ORCL/",
         "raw_data": "data/technical.json"
       },
       "severity": "medium",
-      "primary_trigger": "technical_setup",
+      "primary_trigger": "technical_risk",
       "signals": [
-        "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.5, +0.9% vs EMA20, +6.5% vs EMA200, volume 0.05x 20-day average."
+        "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 27.4, -15.4% vs EMA20, -37.9% vs EMA200, volume 0.40x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-20T13:37:09+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-20T15:36:50+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 206.63,
-        "current_price": 206.63,
+        "baseline_price": 122.11,
+        "current_price": 122.11,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -884,14 +883,30 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 2,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 4,
+    "ongoing": 3,
     "eased": 0,
-    "resolved": 3
+    "resolved": 5
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:NASA:technical_risk:2026-07-20",
+      "ticker": "NASA",
+      "event_subtype": "technical_risk",
+      "priority": "Action",
+      "resolved_at": "2026-07-20T15:36:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NVDA:technical_setup:2026-07-20",
+      "ticker": "NVDA",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-07-20T15:36:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:EOSE:technical_risk:2026-07-17",
       "ticker": "EOSE",
