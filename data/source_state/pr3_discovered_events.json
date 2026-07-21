@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-21T22:14:13+00:00",
-  "active_count": 4,
+  "updated_at": "2026-07-21T22:37:52+00:00",
+  "active_count": 5,
   "events": {
     "company_ir:AMD:4455df9d4b05e144": {
       "event": {
@@ -170,6 +170,48 @@
       "first_seen_at": "2026-07-21T16:43:37+00:00",
       "last_seen_at": "2026-07-21T16:43:37+00:00",
       "expires_at": "2026-07-28T16:43:37+00:00"
+    },
+    "gdelt:TMDX:8aad8d0028c7e44b": {
+      "event": {
+        "event_id": "gdelt:TMDX:8aad8d0028c7e44b",
+        "ticker": "TMDX",
+        "event_type": "earnings",
+        "event_subtype": "earnings_reported",
+        "headline": "TransMedics to Report Second Quarter 2026 Financial Results on August 4 , 2026",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-07-21T20:30:00+00:00",
+        "detected_at": "2026-07-21T22:35:57+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: TransMedics",
+        "dedupe_key": "TMDX:earnings_reported:2026-07-21:0d60dc9d7540",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "http://www.prnewswire.com/news-releases/transmedics-to-report-second-quarter-2026-financial-results-on-august-4-2026-302831235.html",
+          "published_at": "2026-07-21T20:30:00+00:00",
+          "domain": "www.prnewswire.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "http://www.prnewswire.com/news-releases/transmedics-to-report-second-quarter-2026-financial-results-on-august-4-2026-302831235.html",
+            "published_at": "2026-07-21T20:30:00+00:00",
+            "domain": "www.prnewswire.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-07-21T22:37:52+00:00",
+      "last_seen_at": "2026-07-21T22:37:52+00:00",
+      "expires_at": "2026-07-28T22:37:52+00:00"
     }
   }
 }

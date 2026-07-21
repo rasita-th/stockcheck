@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-21T22:14:13+00:00",
-  "row_count": 8,
+  "generated_at": "2026-07-21T22:37:52+00:00",
+  "row_count": 9,
   "events": [
     {
       "event_id": "earnings:TSLA:2026-07-22:confirmed",
@@ -15,7 +15,7 @@
       "materiality": "high",
       "urgency": "upcoming",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-21T22:12:26.852325+00:00",
+      "detected_at": "2026-07-21T22:35:57.314855+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -43,6 +43,48 @@
         "earnings:TSLA:2026-07-22:confirmed"
       ],
       "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
+    },
+    {
+      "event_id": "gdelt:TMDX:8aad8d0028c7e44b",
+      "ticker": "TMDX",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "TransMedics to Report Second Quarter 2026 Financial Results on August 4 , 2026",
+      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "materiality": "low",
+      "reported_materiality": "high",
+      "urgency": "developing",
+      "event_time": "2026-07-21T20:30:00+00:00",
+      "detected_at": "2026-07-21T22:35:57+00:00",
+      "verification_status": "unverified",
+      "verification_level": "unverified_report",
+      "verification_reason": "Primary source not yet located.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: TransMedics",
+      "dedupe_key": "TMDX:earnings_reported:2026-07-21:0d60dc9d7540",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "http://www.prnewswire.com/news-releases/transmedics-to-report-second-quarter-2026-financial-results-on-august-4-2026-302831235.html",
+        "published_at": "2026-07-21T20:30:00+00:00",
+        "domain": "www.prnewswire.com"
+      },
+      "source_chain": [
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "http://www.prnewswire.com/news-releases/transmedics-to-report-second-quarter-2026-financial-results-on-august-4-2026-302831235.html",
+          "published_at": "2026-07-21T20:30:00+00:00",
+          "domain": "www.prnewswire.com"
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "gdelt:TMDX:8aad8d0028c7e44b"
+      ],
+      "priority_score": 32,
+      "priority": "Watch"
     },
     {
       "event_id": "gdelt:NOW:dcbc17ad006bb8f6",
@@ -139,7 +181,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T22:14:13+00:00",
+      "detected_at": "2026-07-21T22:37:52+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -183,7 +225,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T22:14:13+00:00",
+      "detected_at": "2026-07-21T22:37:52+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -227,7 +269,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T22:14:13+00:00",
+      "detected_at": "2026-07-21T22:37:52+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
