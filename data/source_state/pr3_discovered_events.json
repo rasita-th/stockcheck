@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-21T16:05:14+00:00",
-  "active_count": 1,
+  "updated_at": "2026-07-21T16:43:37+00:00",
+  "active_count": 3,
   "events": {
     "company_ir:AMD:4455df9d4b05e144": {
       "event": {
@@ -44,6 +44,90 @@
       "first_seen_at": "2026-07-20T14:35:06+00:00",
       "last_seen_at": "2026-07-20T14:35:06+00:00",
       "expires_at": "2026-07-27T14:35:06+00:00"
+    },
+    "gdelt:TEM:041c59d1183fd730": {
+      "event": {
+        "event_id": "gdelt:TEM:041c59d1183fd730",
+        "ticker": "TEM",
+        "event_type": "corporate_event",
+        "event_subtype": "transaction",
+        "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-07-21T12:15:00+00:00",
+        "detected_at": "2026-07-21T16:41:36+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: Tempus AI",
+        "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+          "published_at": "2026-07-21T12:15:00+00:00",
+          "domain": "finance.yahoo.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+            "published_at": "2026-07-21T12:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-07-21T16:43:37+00:00",
+      "last_seen_at": "2026-07-21T16:43:37+00:00",
+      "expires_at": "2026-07-28T16:43:37+00:00"
+    },
+    "gdelt:TEM:c93fc43baf85e769": {
+      "event": {
+        "event_id": "gdelt:TEM:c93fc43baf85e769",
+        "ticker": "TEM",
+        "event_type": "corporate_event",
+        "event_subtype": "transaction",
+        "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-07-20T17:45:00+00:00",
+        "detected_at": "2026-07-21T16:41:36+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: Tempus AI",
+        "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+          "published_at": "2026-07-20T17:45:00+00:00",
+          "domain": "www.rttnews.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+            "published_at": "2026-07-20T17:45:00+00:00",
+            "domain": "www.rttnews.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-07-21T16:43:37+00:00",
+      "last_seen_at": "2026-07-21T16:43:37+00:00",
+      "expires_at": "2026-07-28T16:43:37+00:00"
     }
   }
 }

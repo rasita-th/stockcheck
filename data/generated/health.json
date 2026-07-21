@@ -1,10 +1,10 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-07-21T16:05:14.708788+00:00",
+  "generated_at": "2026-07-21T16:43:38.055007+00:00",
   "layers": {
     "quote": {
-      "status": "ok",
-      "age_minutes": 2.3,
+      "status": "stale",
+      "age_minutes": 40.7,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-21T16:02:54.868607+00:00",
       "row_count": 410,
@@ -22,8 +22,8 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-21T16:05:14+00:00",
-      "row_count": 2,
+      "timestamp": "2026-07-21T16:43:37+00:00",
+      "row_count": 3,
       "source": null,
       "coverage_status": "partial",
       "source_health": {
@@ -37,7 +37,7 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 85,
+          "rows": 86,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
         },
@@ -55,22 +55,22 @@
           "status": "partial",
           "source": "Free news discovery",
           "checked": 10,
-          "accepted_events": 0
+          "accepted_events": 2
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 5,
-          "partial": 4,
-          "errors": 1
+          "ok": 2,
+          "partial": 8,
+          "errors": 0
         },
         "gdelt": {
           "status": "partial",
           "source": "GDELT DOC 2.0",
           "checked": 10,
-          "ok": 2,
-          "errors": 8
+          "ok": 4,
+          "errors": 6
         },
         "regulators": {
           "status": "ok",
@@ -87,13 +87,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-21T16:05:14+00:00",
-      "row_count": 5,
+      "timestamp": "2026-07-21T16:43:37+00:00",
+      "row_count": 7,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 4688.4,
+      "age_minutes": 4726.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -109,7 +109,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 5747.2,
+      "age_minutes": 5785.6,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
