@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-21T20:23:38+00:00",
+  "updated_at": "2026-07-21T21:40:28+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 7,
+  "total_events": 8,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
     "Risk": 2,
     "Action": 0,
-    "Watch": 1,
+    "Watch": 2,
     "Developing": 0
   },
   "source_health": {
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "high",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-21T20:21:37.777531+00:00",
+          "detected_at": "2026-07-21T21:38:32.511657+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -266,6 +266,105 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
+      ]
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow, Inc.",
+      "portfolio_status": "holding",
+      "role": "Enterprise software",
+      "priority": "Watch",
+      "priority_score": 32,
+      "why_today": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "guidance",
+      "event_time": "2026-07-21T20:00:00+00:00",
+      "verification_status": "unverified",
+      "source_status": "secondary",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
+        "published_at": "2026-07-21T20:00:00+00:00",
+        "domain": "finance.yahoo.com"
+      },
+      "price": 102.06,
+      "day_change_pct": null,
+      "relative_volume": 0.91,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "gdelt:NOW:dcbc17ad006bb8f6",
+          "ticker": "NOW",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "ServiceNow seen delivering solid second quarter results with guidance increase possible",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-21T20:00:00+00:00",
+          "detected_at": "2026-07-21T21:38:33+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow",
+          "dedupe_key": "NOW:guidance:2026-07-21:8c1fb17cde47",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
+            "published_at": "2026-07-21T20:00:00+00:00",
+            "domain": "finance.yahoo.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
+              "published_at": "2026-07-21T20:00:00+00:00",
+              "domain": "finance.yahoo.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:NOW:dcbc17ad006bb8f6"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-NOW/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "guidance",
+      "signals": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-21T21:40:28+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 102.06,
+        "current_price": 102.06,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 48,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
       ]
     },
     {
@@ -603,97 +702,97 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "NOW",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -707,8 +806,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 3,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 4,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -771,7 +870,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T20:23:38+00:00",
+          "detected_at": "2026-07-21T21:40:28+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -870,7 +969,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T20:23:38+00:00",
+          "detected_at": "2026-07-21T21:40:28+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -970,7 +1069,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T20:23:38+00:00",
+          "detected_at": "2026-07-21T21:40:28+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1034,7 +1133,7 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
     "ongoing": 6,
