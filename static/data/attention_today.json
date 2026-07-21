@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-21T03:44:51+00:00",
+  "updated_at": "2026-07-21T08:45:46+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -9,8 +9,8 @@
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
-    "Risk": 1,
-    "Action": 1,
+    "Risk": 2,
+    "Action": 0,
     "Watch": 0,
     "Developing": 0
   },
@@ -49,8 +49,8 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 8,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
@@ -71,6 +71,103 @@
     }
   },
   "items": [
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "portfolio_status": "holding",
+      "role": "Growth platform",
+      "priority": "Risk",
+      "priority_score": 84,
+      "why_today": [
+        "Earnings are scheduled tomorrow (after market)."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "earnings_upcoming",
+      "event_time": "2026-07-22",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
+        "published_at": "2026-07-02T00:00:00-04:00"
+      },
+      "price": 370.5,
+      "day_change_pct": null,
+      "relative_volume": 0.66,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "earnings:TSLA:2026-07-22:confirmed",
+          "ticker": "TSLA",
+          "event_type": "earnings",
+          "event_subtype": "earnings_upcoming",
+          "headline": "Earnings tomorrow",
+          "summary": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
+          "why_today": "Earnings are scheduled tomorrow (after market).",
+          "materiality": "high",
+          "urgency": "upcoming",
+          "event_time": "2026-07-22",
+          "detected_at": "2026-07-21T08:43:51.478221+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
+            "published_at": "2026-07-02T00:00:00-04:00"
+          },
+          "earnings_status": "confirmed",
+          "earnings_timing": "after_market",
+          "days_to_event": 1,
+          "priority_score": 84,
+          "priority": "Risk",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
+              "published_at": "2026-07-02T00:00:00-04:00"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "earnings:TSLA:2026-07-22:confirmed"
+          ],
+          "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
+        "company_ir": "https://ir.tesla.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_upcoming",
+      "signals": [
+        "Earnings are scheduled tomorrow (after market)."
+      ],
+      "change": {
+        "status": "escalated",
+        "label_th": "สำคัญขึ้นจากรอบก่อน",
+        "previous_priority": "Action",
+        "first_seen_at": "2026-07-18T08:22:47+00:00",
+        "active_days": 3
+      },
+      "impact": {
+        "baseline_price": 381.35,
+        "current_price": 370.5,
+        "change_pct": -2.85,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.9%"
+      },
+      "personal_priority_score": 100,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
     {
       "ticker": "AMD",
       "name": "Advanced Micro Devices, Inc.",
@@ -169,103 +266,6 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "TSLA",
-      "name": "Tesla, Inc.",
-      "portfolio_status": "holding",
-      "role": "Growth platform",
-      "priority": "Action",
-      "priority_score": 67,
-      "why_today": [
-        "Earnings are scheduled within 2 days (after market)."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "earnings_upcoming",
-      "event_time": "2026-07-22",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-        "published_at": "2026-07-02T00:00:00-04:00"
-      },
-      "price": 370.5,
-      "day_change_pct": null,
-      "relative_volume": 0.66,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "earnings:TSLA:2026-07-22:confirmed",
-          "ticker": "TSLA",
-          "event_type": "earnings",
-          "event_subtype": "earnings_upcoming",
-          "headline": "Earnings in 2 days",
-          "summary": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
-          "why_today": "Earnings are scheduled within 2 days (after market).",
-          "materiality": "medium",
-          "urgency": "upcoming",
-          "event_time": "2026-07-22",
-          "detected_at": "2026-07-21T03:42:59.139558+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-            "published_at": "2026-07-02T00:00:00-04:00"
-          },
-          "earnings_status": "confirmed",
-          "earnings_timing": "after_market",
-          "days_to_event": 2,
-          "priority_score": 67,
-          "priority": "Action",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-              "published_at": "2026-07-02T00:00:00-04:00"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "earnings:TSLA:2026-07-22:confirmed"
-          ],
-          "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-        "company_ir": "https://ir.tesla.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "earnings_upcoming",
-      "signals": [
-        "Earnings are scheduled within 2 days (after market)."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-18T08:22:47+00:00",
-        "active_days": 3
-      },
-      "impact": {
-        "baseline_price": 381.35,
-        "current_price": 370.5,
-        "change_pct": -2.85,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.9%"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
       ]
     }
   ],
@@ -462,82 +462,92 @@
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "UUUU",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "RXRX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "RXRX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "SYM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -583,8 +593,8 @@
       "name": "Amazon.com, Inc.",
       "portfolio_status": "holding",
       "role": "Core growth",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.7, +1.4% vs EMA20, +5.3% vs EMA200, volume 0.34x 20-day average."
       ],
@@ -613,9 +623,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.7, +1.4% vs EMA20, +5.3% vs EMA200, volume 0.34x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-21T03:44:51+00:00",
+          "detected_at": "2026-07-21T08:45:46+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -635,7 +645,7 @@
           ],
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 53.71,
           "pct_vs_ema20": 1.43,
           "pct_vs_ema200": 5.33,
@@ -645,8 +655,8 @@
             "technical:AMZN:technical_setup:2026-07-20"
           ],
           "dedupe_key": "AMZN:technical_setup:7fe44103e33ebcc7",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -661,8 +671,8 @@
         "Latest technical scan dated 2026-07-20: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.7, +1.4% vs EMA20, +5.3% vs EMA200, volume 0.34x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-20T13:37:09+00:00",
         "active_days": 1
@@ -673,7 +683,7 @@
         "change_pct": 0.19,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -683,8 +693,8 @@
       "name": "MP Materials Corp.",
       "portfolio_status": "holding",
       "role": "Critical minerals",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 30.3, -13.9% vs EMA20, -26.9% vs EMA200, volume 0.73x 20-day average."
       ],
@@ -713,9 +723,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 30.3, -13.9% vs EMA20, -26.9% vs EMA200, volume 0.73x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-21T03:44:51+00:00",
+          "detected_at": "2026-07-21T08:45:46+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -735,7 +745,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 30.28,
           "pct_vs_ema20": -13.86,
           "pct_vs_ema200": -26.93,
@@ -745,8 +755,8 @@
             "technical:MP:technical_risk:2026-07-20"
           ],
           "dedupe_key": "MP:technical_risk:d70b7bfbd7bb3a82",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -760,8 +770,8 @@
         "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 30.3, -13.9% vs EMA20, -26.9% vs EMA200, volume 0.73x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-20T15:36:50+00:00",
         "active_days": 1
@@ -772,7 +782,7 @@
         "change_pct": 0.7,
         "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.7%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -782,8 +792,8 @@
       "name": "Power Solutions International, Inc.",
       "portfolio_status": "holding",
       "role": "Industrial power",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 28.6, -14.4% vs EMA20, -51.9% vs EMA200, volume 0.78x 20-day average."
       ],
@@ -812,9 +822,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 28.6, -14.4% vs EMA20, -51.9% vs EMA200, volume 0.78x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-20",
-          "detected_at": "2026-07-21T03:44:51+00:00",
+          "detected_at": "2026-07-21T08:45:46+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -834,7 +844,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 28.64,
           "pct_vs_ema20": -14.4,
           "pct_vs_ema200": -51.88,
@@ -844,8 +854,8 @@
             "technical:PSIX:technical_risk:2026-07-20"
           ],
           "dedupe_key": "PSIX:technical_risk:66498b9bb15d1497",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -859,8 +869,8 @@
         "Latest technical scan dated 2026-07-20: score 9/100, AVOID / Turnaround only, RSI 28.6, -14.4% vs EMA20, -51.9% vs EMA200, volume 0.78x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-20T19:12:46+00:00",
         "active_days": 1
@@ -871,7 +881,7 @@
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -879,10 +889,10 @@
   ],
   "changes_summary": {
     "new": 0,
-    "escalated": 0,
+    "escalated": 1,
     "updated": 0,
-    "ongoing": 5,
-    "eased": 0,
+    "ongoing": 1,
+    "eased": 3,
     "resolved": 6
   },
   "recently_resolved": [
