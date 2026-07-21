@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-21T14:27:11+00:00",
+  "generated_at": "2026-07-21T16:05:14+00:00",
   "row_count": 5,
   "events": [
     {
@@ -15,7 +15,7 @@
       "materiality": "high",
       "urgency": "upcoming",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-21T14:25:12.784591+00:00",
+      "detected_at": "2026-07-21T16:03:07.890411+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -45,17 +45,17 @@
       "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
     },
     {
-      "event_id": "technical:OSCR:technical_setup:2026-07-21",
-      "ticker": "OSCR",
+      "event_id": "technical:NVDA:technical_setup:2026-07-21",
+      "ticker": "NVDA",
       "event_type": "technical",
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-21: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.5, +3.1% vs EMA20, +49.5% vs EMA200, volume 0.08x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-07-21: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.1, +0.6% vs EMA20, +6.1% vs EMA200, volume 0.34x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T14:27:11+00:00",
+      "detected_at": "2026-07-21T16:05:14+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -76,10 +76,54 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 57.46,
-      "pct_vs_ema20": 3.06,
-      "pct_vs_ema200": 49.51,
-      "volume_ratio20": 0.08,
+      "rsi14": 51.07,
+      "pct_vs_ema20": 0.64,
+      "pct_vs_ema200": 6.09,
+      "volume_ratio20": 0.34,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:NVDA:technical_setup:2026-07-21"
+      ],
+      "dedupe_key": "NVDA:technical_setup:a880a7f6a8f15c57",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
+      "event_id": "technical:OSCR:technical_setup:2026-07-21",
+      "ticker": "OSCR",
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "headline": "Latest technical scan · 93/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-07-21: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.3, +2.9% vs EMA20, +49.3% vs EMA200, volume 0.16x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-21",
+      "detected_at": "2026-07-21T16:05:14+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-21"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-07-21"
+        }
+      ],
+      "technical_score": 93.0,
+      "technical_signal": "BUY ZONE / Trend Confirmed",
+      "scan_age_days": 0,
+      "rsi14": 57.27,
+      "pct_vs_ema20": 2.93,
+      "pct_vs_ema200": 49.27,
+      "volume_ratio20": 0.16,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:OSCR:technical_setup:2026-07-21"
@@ -95,11 +139,11 @@
       "event_subtype": "technical_risk",
       "headline": "Latest technical scan · 9/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-21: score 9/100, AVOID / Turnaround only, RSI 33.2, -10.4% vs EMA20, -24.5% vs EMA200, volume 0.27x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-07-21: score 9/100, AVOID / Turnaround only, RSI 34.8, -9.5% vs EMA20, -23.6% vs EMA200, volume 0.49x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T14:27:11+00:00",
+      "detected_at": "2026-07-21T16:05:14+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -120,59 +164,15 @@
       "technical_score": 9.0,
       "technical_signal": "AVOID / Turnaround only",
       "scan_age_days": 0,
-      "rsi14": 33.18,
-      "pct_vs_ema20": -10.43,
-      "pct_vs_ema200": -24.5,
-      "volume_ratio20": 0.27,
+      "rsi14": 34.77,
+      "pct_vs_ema20": -9.48,
+      "pct_vs_ema200": -23.63,
+      "volume_ratio20": 0.49,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:MP:technical_risk:2026-07-21"
       ],
       "dedupe_key": "MP:technical_risk:e2414d4f5f2213fa",
-      "priority_score": 68,
-      "priority": "Action"
-    },
-    {
-      "event_id": "technical:IONQ:technical_risk:2026-07-21",
-      "ticker": "IONQ",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-21: score 9/100, AVOID / Turnaround only, RSI 28.6, -18.9% vs EMA20, -27.9% vs EMA200, volume 0.26x 20-day average.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-07-21",
-      "detected_at": "2026-07-21T14:27:11+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-21"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-07-21"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
-      "rsi14": 28.62,
-      "pct_vs_ema20": -18.92,
-      "pct_vs_ema200": -27.89,
-      "volume_ratio20": 0.26,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:IONQ:technical_risk:2026-07-21"
-      ],
-      "dedupe_key": "IONQ:technical_risk:4ea37ea1316947dc",
       "priority_score": 68,
       "priority": "Action"
     },
