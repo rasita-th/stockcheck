@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-22T03:45:42+00:00",
+  "generated_at": "2026-07-22T08:45:39+00:00",
   "row_count": 9,
   "events": [
     {
       "event_id": "earnings:TSLA:2026-07-22:confirmed",
       "ticker": "TSLA",
       "event_type": "earnings",
-      "event_subtype": "earnings_upcoming",
-      "headline": "Earnings tomorrow",
+      "event_subtype": "earnings_today",
+      "headline": "Earnings today",
       "summary": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
-      "why_today": "Earnings are scheduled tomorrow (after market).",
+      "why_today": "Earnings are scheduled today (after market).",
       "materiality": "high",
-      "urgency": "upcoming",
+      "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T03:43:35.825541+00:00",
+      "detected_at": "2026-07-22T08:43:36.951551+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -25,9 +25,9 @@
       },
       "earnings_status": "confirmed",
       "earnings_timing": "after_market",
-      "days_to_event": 1,
-      "priority_score": 84,
-      "priority": "Risk",
+      "days_to_event": 0,
+      "priority_score": 100,
+      "priority": "Critical",
       "verification_level": "confirmed_primary",
       "verification_reason": "Matched a configured primary source.",
       "source_chain": [
@@ -42,7 +42,7 @@
       "related_event_ids": [
         "earnings:TSLA:2026-07-22:confirmed"
       ],
-      "dedupe_key": "TSLA:earnings_upcoming:37b9069ac544dbc8"
+      "dedupe_key": "TSLA:earnings_today:37b9069ac544dbc8"
     },
     {
       "event_id": "gdelt:TMDX:8aad8d0028c7e44b",
@@ -179,9 +179,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-21: score 93/100, BUY ZONE / Trend Confirmed, RSI 52.2, +1.2% vs EMA20, +6.8% vs EMA200, volume 0.78x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-22T03:45:42+00:00",
+      "detected_at": "2026-07-22T08:45:39+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -201,7 +201,7 @@
       ],
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 52.24,
       "pct_vs_ema20": 1.24,
       "pct_vs_ema200": 6.81,
@@ -211,8 +211,8 @@
         "technical:NVDA:technical_setup:2026-07-21"
       ],
       "dedupe_key": "NVDA:technical_setup:a880a7f6a8f15c57",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "technical:OSCR:technical_setup:2026-07-21",
@@ -223,9 +223,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-21: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.9, +3.4% vs EMA20, +50.1% vs EMA200, volume 0.59x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-22T03:45:42+00:00",
+      "detected_at": "2026-07-22T08:45:39+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -245,7 +245,7 @@
       ],
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 57.92,
       "pct_vs_ema20": 3.43,
       "pct_vs_ema200": 50.1,
@@ -255,8 +255,8 @@
         "technical:OSCR:technical_setup:2026-07-21"
       ],
       "dedupe_key": "OSCR:technical_setup:c0de24ee872e035a",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "technical:MP:technical_risk:2026-07-21",
@@ -267,9 +267,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-21: score 9/100, AVOID / Turnaround only, RSI 34.4, -9.7% vs EMA20, -23.8% vs EMA200, volume 0.96x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-21",
-      "detected_at": "2026-07-22T03:45:42+00:00",
+      "detected_at": "2026-07-22T08:45:39+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -289,7 +289,7 @@
       ],
       "technical_score": 9.0,
       "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 34.44,
       "pct_vs_ema20": -9.68,
       "pct_vs_ema200": -23.79,
@@ -299,8 +299,8 @@
         "technical:MP:technical_risk:2026-07-21"
       ],
       "dedupe_key": "MP:technical_risk:e2414d4f5f2213fa",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "gdelt:TEM:c93fc43baf85e769",
