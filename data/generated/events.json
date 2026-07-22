@@ -1,9 +1,58 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-22T22:18:31+00:00",
-  "row_count": 10,
+  "generated_at": "2026-07-22T23:17:31+00:00",
+  "row_count": 11,
   "events": [
+    {
+      "event_id": "event:RKLB:1e61c02729c33a19",
+      "ticker": "RKLB",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "Rocket Lab Announces Date of Second Quarter 2026 Financial Results",
+      "summary": "A earnings reported event was detected and requires source review.",
+      "why_today": "A earnings reported event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-07-22T23:15:33+00:00",
+      "detected_at": "2026-07-22T23:15:33+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "corroborated",
+      "verification_reason": "Matched a configured primary source and additional coverage.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:earnings_reported:2026-07-22:285528c21267",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+        "published_at": "2026-07-22T23:15:33+00:00",
+        "domain": "investors.rocketlabusa.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+          "published_at": "2026-07-22T23:15:33+00:00",
+          "domain": "investors.rocketlabusa.com"
+        },
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/events/event-details/second-quarter-2026-financial-results-update-and-conference-call",
+          "published_at": "2026-07-22T23:15:33+00:00",
+          "domain": "investors.rocketlabusa.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "event:RKLB:1e61c02729c33a19"
+      ],
+      "priority_score": 97,
+      "priority": "Critical"
+    },
     {
       "event_id": "company_ir:AMD:80607c6dd9d7c0f6",
       "ticker": "AMD",
@@ -57,7 +106,7 @@
       "materiality": "high",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T22:16:25.517441+00:00",
+      "detected_at": "2026-07-22T23:15:32.832190+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -97,7 +146,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T22:18:31+00:00",
+      "detected_at": "2026-07-22T23:17:31+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -141,7 +190,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T22:18:31+00:00",
+      "detected_at": "2026-07-22T23:17:31+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -185,7 +234,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T22:18:31+00:00",
+      "detected_at": "2026-07-22T23:17:31+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",

@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-22T22:18:31+00:00",
+  "updated_at": "2026-07-22T23:17:31+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 10,
+  "total_events": 11,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 1,
+    "Critical": 2,
     "Risk": 1,
     "Action": 0,
-    "Watch": 2,
+    "Watch": 1,
     "Developing": 0
   },
   "source_health": {
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 2
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
-      "status": "partial",
+      "status": "error",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 0,
+      "errors": 10
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T22:16:25.517441+00:00",
+          "detected_at": "2026-07-22T23:15:32.832190+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -163,6 +163,113 @@
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.7%"
       },
       "personal_priority_score": 116,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
+    {
+      "ticker": "RKLB",
+      "name": "Rocket Lab USA, Inc.",
+      "portfolio_status": "holding",
+      "role": "Space growth",
+      "priority": "Critical",
+      "priority_score": 97,
+      "why_today": [
+        "A earnings reported event was detected and requires source review."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-07-22T23:15:33+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+        "published_at": "2026-07-22T23:15:33+00:00",
+        "domain": "investors.rocketlabusa.com"
+      },
+      "price": 69.81,
+      "day_change_pct": null,
+      "relative_volume": 0.81,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "event:RKLB:1e61c02729c33a19",
+          "ticker": "RKLB",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Rocket Lab Announces Date of Second Quarter 2026 Financial Results",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-07-22T23:15:33+00:00",
+          "detected_at": "2026-07-22T23:15:33+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Rocket Lab",
+          "dedupe_key": "RKLB:earnings_reported:2026-07-22:285528c21267",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+            "published_at": "2026-07-22T23:15:33+00:00",
+            "domain": "investors.rocketlabusa.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+              "published_at": "2026-07-22T23:15:33+00:00",
+              "domain": "investors.rocketlabusa.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.rocketlabusa.com/events/event-details/second-quarter-2026-financial-results-update-and-conference-call",
+              "published_at": "2026-07-22T23:15:33+00:00",
+              "domain": "investors.rocketlabusa.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "event:RKLB:1e61c02729c33a19"
+          ],
+          "priority_score": 97,
+          "priority": "Critical"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+        "company_ir": "https://investors.rocketlabusa.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RKLB/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-22T23:17:31+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 69.81,
+        "current_price": 69.81,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 113,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "earnings +8"
@@ -408,147 +515,6 @@
         "หุ้นในพอร์ต +8",
         "earnings +8"
       ]
-    },
-    {
-      "ticker": "TEM",
-      "name": "Tempus AI, Inc.",
-      "portfolio_status": "holding",
-      "role": "Healthcare AI",
-      "priority": "Watch",
-      "priority_score": 32,
-      "why_today": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "transaction",
-      "event_time": "2026-07-21T12:15:00+00:00",
-      "verification_status": "unverified",
-      "source_status": "secondary",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-        "published_at": "2026-07-21T12:15:00+00:00",
-        "domain": "finance.yahoo.com"
-      },
-      "price": 46.69,
-      "day_change_pct": null,
-      "relative_volume": 0.59,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "gdelt:TEM:041c59d1183fd730",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-21T12:15:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-            "published_at": "2026-07-21T12:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-              "published_at": "2026-07-21T12:15:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:041c59d1183fd730"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:TEM:c93fc43baf85e769",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-20T17:45:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-            "published_at": "2026-07-20T17:45:00+00:00",
-            "domain": "www.rttnews.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-              "published_at": "2026-07-20T17:45:00+00:00",
-              "domain": "www.rttnews.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:c93fc43baf85e769"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "transaction",
-      "signals": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-21T16:43:37+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 49.42,
-        "current_price": 46.69,
-        "change_pct": -5.52,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 5.5%"
-      },
-      "personal_priority_score": 45,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
-      ]
     }
   ],
   "errors": [
@@ -744,97 +710,82 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -848,8 +799,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 6,
+    "newly_discovered_event_count": 2,
+    "active_discovered_event_count": 8,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -912,7 +863,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T22:18:31+00:00",
+          "detected_at": "2026-07-22T23:17:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1011,7 +962,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T22:18:31+00:00",
+          "detected_at": "2026-07-22T23:17:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1110,7 +1061,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T22:18:31+00:00",
+          "detected_at": "2026-07-22T23:17:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1175,14 +1126,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
-    "resolved": 14
+    "resolved": 15
   },
   "recently_resolved": [
+    {
+      "history_key": "gdelt:TEM:041c59d1183fd730",
+      "ticker": "TEM",
+      "event_subtype": "transaction",
+      "priority": "Watch",
+      "resolved_at": "2026-07-22T23:17:31+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:OSCR:technical_setup:2026-07-22",
       "ticker": "OSCR",
@@ -1253,14 +1212,6 @@
       "event_subtype": "technical_risk",
       "priority": "Action",
       "resolved_at": "2026-07-20T19:12:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NASA:technical_risk:2026-07-20",
-      "ticker": "NASA",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-20T15:36:50+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
