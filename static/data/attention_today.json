@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-22T13:46:17+00:00",
+  "updated_at": "2026-07-22T14:23:17+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 9,
+  "total_events": 10,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 5,
-      "partial": 4,
-      "errors": 1
+      "ok": 2,
+      "partial": 8,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T13:44:12.160271+00:00",
+          "detected_at": "2026-07-22T14:21:15.648665+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -236,6 +236,48 @@
           ],
           "priority_score": 80,
           "priority": "Risk"
+        },
+        {
+          "event_id": "company_ir:AMD:80607c6dd9d7c0f6",
+          "ticker": "AMD",
+          "event_type": "corporate_event",
+          "event_subtype": "material_agreement",
+          "headline": "AMD and Anthropic Announce Strategic Partnership to Deploy Up to 2 Gigawatts of AMD Instinct MI450 Series GPUs",
+          "summary": "A material agreement event was detected and requires source review.",
+          "why_today": "A material agreement event was detected and requires source review.",
+          "materiality": "medium",
+          "reported_materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-07-22T14:21:16+00:00",
+          "detected_at": "2026-07-22T14:21:16+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:material_agreement:2026-07-22:5448c815887d",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+            "published_at": "2026-07-22T14:21:16+00:00",
+            "domain": "ir.amd.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+              "published_at": "2026-07-22T14:21:16+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "company_ir:AMD:80607c6dd9d7c0f6"
+          ],
+          "priority_score": 80,
+          "priority": "Risk"
         }
       ],
       "actions": {
@@ -250,8 +292,8 @@
         "A material agreement event was detected and requires source review."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-20T14:35:06+00:00",
         "active_days": 2
@@ -701,73 +743,83 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
-      "message": "GDELT response unavailable"
-    },
-    {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "TEM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "MP",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "IONQ",
       "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TSLA",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "ORCL",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EQT",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TMDX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "TMDX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EOSE",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     }
   ],
@@ -781,8 +833,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 5,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 6,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -845,7 +897,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T13:46:17+00:00",
+          "detected_at": "2026-07-22T14:23:17+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -890,9 +942,9 @@
         "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 30.3, -16.2% vs EMA20, -26.5% vs EMA200, volume 0.08x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
         "active_days": 0
       },
@@ -944,7 +996,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T13:46:17+00:00",
+          "detected_at": "2026-07-22T14:23:17+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -990,9 +1042,9 @@
         "Latest technical scan dated 2026-07-22: score 93/100, BUY ZONE / Trend Confirmed, RSI 51.2, +0.7% vs EMA20, +6.2% vs EMA200, volume 0.04x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
         "active_days": 0
       },
@@ -1044,7 +1096,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T13:46:17+00:00",
+          "detected_at": "2026-07-22T14:23:17+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1089,9 +1141,9 @@
         "Latest technical scan dated 2026-07-22: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.5, +1.7% vs EMA20, +47.2% vs EMA200, volume 0.02x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
         "active_days": 0
       },
@@ -1108,10 +1160,10 @@
     }
   ],
   "changes_summary": {
-    "new": 3,
+    "new": 0,
     "escalated": 0,
-    "updated": 0,
-    "ongoing": 4,
+    "updated": 1,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 13
   },

@@ -1,9 +1,51 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-22T13:46:17+00:00",
-  "row_count": 9,
+  "generated_at": "2026-07-22T14:23:17+00:00",
+  "row_count": 10,
   "events": [
+    {
+      "event_id": "company_ir:AMD:80607c6dd9d7c0f6",
+      "ticker": "AMD",
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "headline": "AMD and Anthropic Announce Strategic Partnership to Deploy Up to 2 Gigawatts of AMD Instinct MI450 Series GPUs",
+      "summary": "A material agreement event was detected and requires source review.",
+      "why_today": "A material agreement event was detected and requires source review.",
+      "materiality": "medium",
+      "reported_materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-22T14:21:16+00:00",
+      "detected_at": "2026-07-22T14:21:16+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: AMD",
+      "dedupe_key": "AMD:material_agreement:2026-07-22:5448c815887d",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+        "published_at": "2026-07-22T14:21:16+00:00",
+        "domain": "ir.amd.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+          "published_at": "2026-07-22T14:21:16+00:00",
+          "domain": "ir.amd.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "company_ir:AMD:80607c6dd9d7c0f6"
+      ],
+      "priority_score": 80,
+      "priority": "Risk"
+    },
     {
       "event_id": "earnings:TSLA:2026-07-22:confirmed",
       "ticker": "TSLA",
@@ -15,7 +57,7 @@
       "materiality": "high",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T13:44:12.160271+00:00",
+      "detected_at": "2026-07-22T14:21:15.648665+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "company_ir",
@@ -55,7 +97,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T13:46:17+00:00",
+      "detected_at": "2026-07-22T14:23:17+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -99,7 +141,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T13:46:17+00:00",
+      "detected_at": "2026-07-22T14:23:17+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -143,7 +185,7 @@
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-07-22",
-      "detected_at": "2026-07-22T13:46:17+00:00",
+      "detected_at": "2026-07-22T14:23:17+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
