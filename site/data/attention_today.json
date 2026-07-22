@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-21T23:42:44+00:00",
+  "updated_at": "2026-07-22T03:45:42+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -25,7 +25,7 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 86,
+      "rows": 89,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
     },
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 2,
-      "errors": 8
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "high",
           "urgency": "upcoming",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-21T23:40:54.732517+00:00",
+          "detected_at": "2026-07-22T03:43:35.825541+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -154,7 +154,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
-        "active_days": 3
+        "active_days": 4
       },
       "impact": {
         "baseline_price": 381.35,
@@ -254,7 +254,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-20T14:35:06+00:00",
-        "active_days": 1
+        "active_days": 2
       },
       "impact": {
         "baseline_price": 517.49,
@@ -353,7 +353,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-07-21T21:40:28+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 102.06,
@@ -494,7 +494,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-07-21T16:43:37+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 49.42,
@@ -702,92 +702,77 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -865,7 +850,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T23:42:44+00:00",
+          "detected_at": "2026-07-22T03:45:42+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -914,7 +899,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-21T14:27:11+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 45.88,
@@ -964,7 +949,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T23:42:44+00:00",
+          "detected_at": "2026-07-22T03:45:42+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1014,7 +999,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-21T16:05:14+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 205.93,
@@ -1064,7 +1049,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-21",
-          "detected_at": "2026-07-21T23:42:44+00:00",
+          "detected_at": "2026-07-22T03:45:42+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1113,7 +1098,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-21T14:27:11+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 30.65,
