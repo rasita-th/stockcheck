@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-23T16:53:06+00:00",
+  "updated_at": "2026-07-23T18:07:06+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 7,
-      "errors": 1
+      "ok": 1,
+      "partial": 9,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 4,
-      "errors": 6
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -93,9 +93,9 @@
         "published_at": "2026-07-22T23:15:33+00:00",
         "domain": "investors.rocketlabusa.com"
       },
-      "price": 69.25,
+      "price": 69.49,
       "day_change_pct": null,
-      "relative_volume": 0.38,
+      "relative_volume": 0.42,
       "trigger_level": null,
       "events": [
         {
@@ -168,9 +168,9 @@
       },
       "impact": {
         "baseline_price": 69.81,
-        "current_price": 69.25,
-        "change_pct": -0.8,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.8%"
+        "current_price": 69.49,
+        "change_pct": -0.46,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 113,
       "personalization_reasons": [
@@ -200,9 +200,9 @@
         "published_at": "2026-07-20T14:33:06+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 538.22,
+      "price": 533.18,
       "day_change_pct": null,
-      "relative_volume": 0.45,
+      "relative_volume": 0.63,
       "trigger_level": null,
       "events": [
         {
@@ -310,9 +310,9 @@
       },
       "impact": {
         "baseline_price": 517.49,
-        "current_price": 538.22,
-        "change_pct": 4.01,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 4.0%"
+        "current_price": 533.18,
+        "change_pct": 3.03,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 3.0%"
       },
       "personal_priority_score": 93,
       "personalization_reasons": [
@@ -342,9 +342,9 @@
         "published_at": "2026-07-23T00:45:00+00:00",
         "domain": "www.thestar.com.my"
       },
-      "price": 94.75,
+      "price": 93.58,
       "day_change_pct": null,
-      "relative_volume": 1.43,
+      "relative_volume": 1.61,
       "trigger_level": null,
       "events": [
         {
@@ -451,9 +451,9 @@
       },
       "impact": {
         "baseline_price": 95.71,
-        "current_price": 94.75,
-        "change_pct": -1.0,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.0%"
+        "current_price": 93.58,
+        "change_pct": -2.23,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.2%"
       },
       "personal_priority_score": 48,
       "personalization_reasons": [
@@ -483,9 +483,9 @@
         "published_at": "2026-07-21T12:15:00+00:00",
         "domain": "finance.yahoo.com"
       },
-      "price": 45.69,
+      "price": 45.95,
       "day_change_pct": null,
-      "relative_volume": 0.43,
+      "relative_volume": 0.49,
       "trigger_level": null,
       "events": [
         {
@@ -592,9 +592,9 @@
       },
       "impact": {
         "baseline_price": 46.69,
-        "current_price": 45.69,
-        "change_pct": -2.14,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.1%"
+        "current_price": 45.95,
+        "change_pct": -1.58,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.6%"
       },
       "personal_priority_score": 45,
       "personalization_reasons": [
@@ -796,73 +796,83 @@
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TEM",
+      "ticker": "EOSE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "UUUU",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "CIFR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "IR URL unavailable"
     }
   ],
   "data_quality": {
@@ -910,7 +920,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 0.81x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.9, +16.4% vs EMA20, +43.8% vs EMA200, volume 0.95x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -923,9 +933,9 @@
         "url": "data/technical.json",
         "published_at": "2026-07-23"
       },
-      "price": 25.59,
+      "price": 25.97,
       "day_change_pct": null,
-      "relative_volume": 0.81,
+      "relative_volume": 0.95,
       "trigger_level": null,
       "events": [
         {
@@ -935,11 +945,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 0.81x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.9, +16.4% vs EMA20, +43.8% vs EMA200, volume 0.95x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T16:53:06+00:00",
+          "detected_at": "2026-07-23T18:07:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -960,10 +970,10 @@
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
-          "rsi14": 59.08,
-          "pct_vs_ema20": 14.86,
-          "pct_vs_ema200": 41.69,
-          "volume_ratio20": 0.81,
+          "rsi14": 59.87,
+          "pct_vs_ema20": 16.35,
+          "pct_vs_ema200": 43.8,
+          "volume_ratio20": 0.95,
           "secondary_source_count": 1,
           "related_event_ids": [
             "technical:CIFR:technical_setup:2026-07-23"
@@ -981,7 +991,7 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 0.81x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.9, +16.4% vs EMA20, +43.8% vs EMA200, volume 0.95x 20-day average."
       ],
       "change": {
         "status": "ongoing",
@@ -992,9 +1002,9 @@
       },
       "impact": {
         "baseline_price": 25.24,
-        "current_price": 25.59,
-        "change_pct": 1.39,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.4%"
+        "current_price": 25.97,
+        "change_pct": 2.89,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.9%"
       },
       "personal_priority_score": 76,
       "personalization_reasons": [
@@ -1009,7 +1019,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.5, -22.1% vs EMA20, -57.8% vs EMA200, volume 0.70x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.6, -21.9% vs EMA20, -57.7% vs EMA200, volume 0.77x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_risk",
@@ -1022,9 +1032,9 @@
         "url": "data/technical.json",
         "published_at": "2026-07-23"
       },
-      "price": 3.71,
+      "price": 3.72,
       "day_change_pct": null,
-      "relative_volume": 0.7,
+      "relative_volume": 0.77,
       "trigger_level": null,
       "events": [
         {
@@ -1034,11 +1044,11 @@
           "event_subtype": "technical_risk",
           "headline": "Latest technical scan · 9/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.5, -22.1% vs EMA20, -57.8% vs EMA200, volume 0.70x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.6, -21.9% vs EMA20, -57.7% vs EMA200, volume 0.77x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T16:53:06+00:00",
+          "detected_at": "2026-07-23T18:07:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1059,10 +1069,10 @@
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
           "scan_age_days": 0,
-          "rsi14": 28.54,
-          "pct_vs_ema20": -22.06,
-          "pct_vs_ema200": -57.79,
-          "volume_ratio20": 0.7,
+          "rsi14": 28.62,
+          "pct_vs_ema20": -21.85,
+          "pct_vs_ema200": -57.68,
+          "volume_ratio20": 0.77,
           "secondary_source_count": 1,
           "related_event_ids": [
             "technical:EOSE:technical_risk:2026-07-23"
@@ -1080,7 +1090,7 @@
       "severity": "medium",
       "primary_trigger": "technical_risk",
       "signals": [
-        "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.5, -22.1% vs EMA20, -57.8% vs EMA200, volume 0.70x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.6, -21.9% vs EMA20, -57.7% vs EMA200, volume 0.77x 20-day average."
       ],
       "change": {
         "status": "ongoing",
@@ -1091,9 +1101,9 @@
       },
       "impact": {
         "baseline_price": 3.69,
-        "current_price": 3.71,
-        "change_pct": 0.54,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.5%"
+        "current_price": 3.72,
+        "change_pct": 0.81,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.8%"
       },
       "personal_priority_score": 76,
       "personalization_reasons": [
@@ -1108,7 +1118,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.8, +1.9% vs EMA20, +7.9% vs EMA200, volume 0.42x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 52.9, +1.5% vs EMA20, +7.4% vs EMA200, volume 0.49x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -1121,9 +1131,9 @@
         "url": "data/technical.json",
         "published_at": "2026-07-23"
       },
-      "price": 209.68,
+      "price": 208.78,
       "day_change_pct": null,
-      "relative_volume": 0.42,
+      "relative_volume": 0.49,
       "trigger_level": null,
       "events": [
         {
@@ -1133,11 +1143,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.8, +1.9% vs EMA20, +7.9% vs EMA200, volume 0.42x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 52.9, +1.5% vs EMA20, +7.4% vs EMA200, volume 0.49x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T16:53:06+00:00",
+          "detected_at": "2026-07-23T18:07:06+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1158,10 +1168,10 @@
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
-          "rsi14": 53.79,
-          "pct_vs_ema20": 1.86,
-          "pct_vs_ema200": 7.87,
-          "volume_ratio20": 0.42,
+          "rsi14": 52.94,
+          "pct_vs_ema20": 1.46,
+          "pct_vs_ema200": 7.41,
+          "volume_ratio20": 0.49,
           "secondary_source_count": 1,
           "related_event_ids": [
             "technical:NVDA:technical_setup:2026-07-23"
@@ -1180,19 +1190,19 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.8, +1.9% vs EMA20, +7.9% vs EMA200, volume 0.42x 20-day average."
+        "Latest technical scan dated 2026-07-23: score 93/100, BUY ZONE / Trend Confirmed, RSI 52.9, +1.5% vs EMA20, +7.4% vs EMA200, volume 0.49x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-07-23T16:53:06+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 209.68,
-        "current_price": 209.68,
-        "change_pct": 0.0,
+        "current_price": 208.78,
+        "change_pct": -0.43,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 76,
@@ -1202,10 +1212,10 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
