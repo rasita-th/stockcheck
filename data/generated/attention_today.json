@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-22T23:17:31+00:00",
+  "updated_at": "2026-07-23T00:17:27+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 2
+      "accepted_events": 0
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -108,7 +108,7 @@
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T23:15:32.832190+00:00",
+          "detected_at": "2026-07-23T00:15:10.485314+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "company_ir",
@@ -154,7 +154,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-07-18T08:22:47+00:00",
-        "active_days": 4
+        "active_days": 5
       },
       "impact": {
         "baseline_price": 381.35,
@@ -257,11 +257,11 @@
         "A earnings reported event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-07-22T23:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 69.81,
@@ -403,7 +403,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-20T14:35:06+00:00",
-        "active_days": 2
+        "active_days": 3
       },
       "impact": {
         "baseline_price": 517.49,
@@ -502,7 +502,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-07-21T21:40:28+00:00",
-        "active_days": 1
+        "active_days": 2
       },
       "impact": {
         "baseline_price": 102.06,
@@ -710,82 +710,87 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "TSLA",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TE",
+      "ticker": "NBIS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "INDI",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "TEM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     }
   ],
@@ -799,7 +804,7 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 2,
+    "newly_discovered_event_count": 0,
     "active_discovered_event_count": 8,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
@@ -863,7 +868,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T23:17:31+00:00",
+          "detected_at": "2026-07-23T00:17:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -912,7 +917,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 35.91,
@@ -962,7 +967,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T23:17:31+00:00",
+          "detected_at": "2026-07-23T00:17:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1011,7 +1016,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T16:59:42+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 46.34,
@@ -1061,7 +1066,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-22T23:17:31+00:00",
+          "detected_at": "2026-07-23T00:17:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1111,7 +1116,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 206.27,
@@ -1126,10 +1131,10 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 15
   },
