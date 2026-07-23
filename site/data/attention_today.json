@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-23T03:44:41+00:00",
+  "updated_at": "2026-07-23T08:46:55+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -8,10 +8,10 @@
   "total_events": 11,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 2,
+    "Critical": 1,
     "Risk": 1,
     "Action": 0,
-    "Watch": 1,
+    "Watch": 2,
     "Developing": 0
   },
   "source_health": {
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -71,103 +71,6 @@
     }
   },
   "items": [
-    {
-      "ticker": "TSLA",
-      "name": "Tesla, Inc.",
-      "portfolio_status": "holding",
-      "role": "Growth platform",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "Earnings are scheduled today (after market)."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "earnings_today",
-      "event_time": "2026-07-22",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-        "published_at": "2026-07-02T00:00:00-04:00"
-      },
-      "price": 374.86,
-      "day_change_pct": null,
-      "relative_volume": 0.49,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "earnings:TSLA:2026-07-22:confirmed",
-          "ticker": "TSLA",
-          "event_type": "earnings",
-          "event_subtype": "earnings_today",
-          "headline": "Earnings today",
-          "summary": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
-          "why_today": "Earnings are scheduled today (after market).",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-07-22",
-          "detected_at": "2026-07-23T03:42:46.953899+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-            "published_at": "2026-07-02T00:00:00-04:00"
-          },
-          "earnings_status": "confirmed",
-          "earnings_timing": "after_market",
-          "days_to_event": 0,
-          "priority_score": 100,
-          "priority": "Critical",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-              "published_at": "2026-07-02T00:00:00-04:00"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "earnings:TSLA:2026-07-22:confirmed"
-          ],
-          "dedupe_key": "TSLA:earnings_today:37b9069ac544dbc8"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
-        "company_ir": "https://ir.tesla.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TSLA/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "earnings_today",
-      "signals": [
-        "Earnings are scheduled today (after market)."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-07-18T08:22:47+00:00",
-        "active_days": 5
-      },
-      "impact": {
-        "baseline_price": 381.35,
-        "current_price": 374.86,
-        "change_pct": -1.7,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.7%"
-      },
-      "personal_priority_score": 116,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
-    },
     {
       "ticker": "RKLB",
       "name": "Rocket Lab USA, Inc.",
@@ -429,21 +332,63 @@
       ],
       "event_type": "earnings",
       "event_subtype": "guidance",
-      "event_time": "2026-07-21T20:00:00+00:00",
+      "event_time": "2026-07-23T00:45:00+00:00",
       "verification_status": "unverified",
       "source_status": "secondary",
       "source": {
         "type": "gdelt",
         "quality": "secondary",
-        "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
-        "published_at": "2026-07-21T20:00:00+00:00",
-        "domain": "finance.yahoo.com"
+        "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+        "published_at": "2026-07-23T00:45:00+00:00",
+        "domain": "www.thestar.com.my"
       },
       "price": 95.71,
       "day_change_pct": null,
       "relative_volume": 1.48,
       "trigger_level": null,
       "events": [
+        {
+          "event_id": "gdelt:NOW:36db8505b0676ae4",
+          "ticker": "NOW",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "ServiceNow raises annual subscription revenue forecast again on AI - driven demand",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-23T00:45:00+00:00",
+          "detected_at": "2026-07-23T08:44:48+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow",
+          "dedupe_key": "NOW:guidance:2026-07-23:42f41140388f",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+            "published_at": "2026-07-23T00:45:00+00:00",
+            "domain": "www.thestar.com.my"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+              "published_at": "2026-07-23T00:45:00+00:00",
+              "domain": "www.thestar.com.my"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:NOW:36db8505b0676ae4"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
         {
           "event_id": "gdelt:NOW:dcbc17ad006bb8f6",
           "ticker": "NOW",
@@ -488,7 +433,7 @@
         }
       ],
       "actions": {
-        "primary_source": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
+        "primary_source": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
         "tradingview": "https://www.tradingview.com/symbols/NYSE-NOW/",
         "raw_data": "data/technical.json"
       },
@@ -498,22 +443,163 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-21T21:40:28+00:00",
-        "active_days": 2
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-23T08:46:55+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 102.06,
+        "baseline_price": 95.71,
         "current_price": 95.71,
-        "change_pct": -6.22,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.2%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 48,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "earnings +8"
+      ]
+    },
+    {
+      "ticker": "TEM",
+      "name": "Tempus AI, Inc.",
+      "portfolio_status": "holding",
+      "role": "Healthcare AI",
+      "priority": "Watch",
+      "priority_score": 32,
+      "why_today": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "corporate_event",
+      "event_subtype": "transaction",
+      "event_time": "2026-07-21T12:15:00+00:00",
+      "verification_status": "unverified",
+      "source_status": "secondary",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+        "published_at": "2026-07-21T12:15:00+00:00",
+        "domain": "finance.yahoo.com"
+      },
+      "price": 46.69,
+      "day_change_pct": null,
+      "relative_volume": 0.59,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "gdelt:TEM:041c59d1183fd730",
+          "ticker": "TEM",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-21T12:15:00+00:00",
+          "detected_at": "2026-07-21T16:41:36+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Tempus AI",
+          "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+            "published_at": "2026-07-21T12:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+              "published_at": "2026-07-21T12:15:00+00:00",
+              "domain": "finance.yahoo.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:TEM:041c59d1183fd730"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:TEM:c93fc43baf85e769",
+          "ticker": "TEM",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-20T17:45:00+00:00",
+          "detected_at": "2026-07-21T16:41:36+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Tempus AI",
+          "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+            "published_at": "2026-07-20T17:45:00+00:00",
+            "domain": "www.rttnews.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+              "published_at": "2026-07-20T17:45:00+00:00",
+              "domain": "www.rttnews.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:TEM:c93fc43baf85e769"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "transaction",
+      "signals": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-23T08:46:55+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 46.69,
+        "current_price": 46.69,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 45,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
       ]
     }
   ],
@@ -710,97 +796,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -814,8 +895,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 8,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 9,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -846,8 +927,8 @@
       "name": "IonQ, Inc.",
       "portfolio_status": "holding",
       "role": "Quantum computing",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 28.3, -18.6% vs EMA20, -28.8% vs EMA200, volume 0.56x 20-day average."
       ],
@@ -876,9 +957,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 28.3, -18.6% vs EMA20, -28.8% vs EMA200, volume 0.56x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-23T03:44:41+00:00",
+          "detected_at": "2026-07-23T08:46:55+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -898,7 +979,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 28.29,
           "pct_vs_ema20": -18.62,
           "pct_vs_ema200": -28.77,
@@ -908,8 +989,8 @@
             "technical:IONQ:technical_risk:2026-07-22"
           ],
           "dedupe_key": "IONQ:technical_risk:df4d9fcffe9e23ac",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -923,8 +1004,8 @@
         "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 28.3, -18.6% vs EMA20, -28.8% vs EMA200, volume 0.56x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
         "active_days": 1
@@ -935,7 +1016,7 @@
         "change_pct": -3.15,
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 3.1%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -945,8 +1026,8 @@
       "name": "MP Materials Corp.",
       "portfolio_status": "holding",
       "role": "Critical minerals",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 33.0, -10.4% vs EMA20, -25.0% vs EMA200, volume 0.70x 20-day average."
       ],
@@ -975,9 +1056,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 33.0, -10.4% vs EMA20, -25.0% vs EMA200, volume 0.70x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-23T03:44:41+00:00",
+          "detected_at": "2026-07-23T08:46:55+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -997,7 +1078,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 33.05,
           "pct_vs_ema20": -10.39,
           "pct_vs_ema200": -25.03,
@@ -1007,8 +1088,8 @@
             "technical:MP:technical_risk:2026-07-22"
           ],
           "dedupe_key": "MP:technical_risk:b94e57e7c0acc07e",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -1022,8 +1103,8 @@
         "Latest technical scan dated 2026-07-22: score 9/100, AVOID / Turnaround only, RSI 33.0, -10.4% vs EMA20, -25.0% vs EMA200, volume 0.70x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T16:59:42+00:00",
         "active_days": 1
@@ -1034,7 +1115,7 @@
         "change_pct": -1.96,
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.0%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -1044,8 +1125,8 @@
       "name": "NVIDIA Corporation",
       "portfolio_status": "holding",
       "role": "Core AI",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-22: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.7, +3.5% vs EMA20, +9.5% vs EMA200, volume 0.80x 20-day average."
       ],
@@ -1074,9 +1155,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-22: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.7, +3.5% vs EMA20, +9.5% vs EMA200, volume 0.80x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-22",
-          "detected_at": "2026-07-23T03:44:41+00:00",
+          "detected_at": "2026-07-23T08:46:55+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1096,7 +1177,7 @@
           ],
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 56.69,
           "pct_vs_ema20": 3.51,
           "pct_vs_ema200": 9.5,
@@ -1106,8 +1187,8 @@
             "technical:NVDA:technical_setup:2026-07-22"
           ],
           "dedupe_key": "NVDA:technical_setup:1cd508c38aa5f7e0",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -1122,8 +1203,8 @@
         "Latest technical scan dated 2026-07-22: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.7, +3.5% vs EMA20, +9.5% vs EMA200, volume 0.80x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-22T13:46:17+00:00",
         "active_days": 1
@@ -1134,21 +1215,37 @@
         "change_pct": 3.13,
         "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 3.1%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 2,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
-    "eased": 0,
-    "resolved": 15
+    "ongoing": 2,
+    "eased": 3,
+    "resolved": 17
   },
   "recently_resolved": [
+    {
+      "history_key": "earnings:TSLA:2026-07-22:confirmed",
+      "ticker": "TSLA",
+      "event_subtype": "earnings_today",
+      "priority": "Critical",
+      "resolved_at": "2026-07-23T08:46:55+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "gdelt:NOW:dcbc17ad006bb8f6",
+      "ticker": "NOW",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-23T08:46:55+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "gdelt:TEM:041c59d1183fd730",
       "ticker": "TEM",
@@ -1211,22 +1308,6 @@
       "event_subtype": "technical_risk",
       "priority": "Watch",
       "resolved_at": "2026-07-21T14:27:11+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:PSIX:technical_risk:2026-07-20",
-      "ticker": "PSIX",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-07-21T14:27:11+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ORCL:technical_risk:2026-07-20",
-      "ticker": "ORCL",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-20T19:12:46+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],

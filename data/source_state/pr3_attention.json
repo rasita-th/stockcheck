@@ -1,19 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-23T03:44:41+00:00",
+  "updated_at": "2026-07-23T08:46:55+00:00",
   "items": {
-    "earnings:TSLA:2026-07-22:confirmed": {
-      "ticker": "TSLA",
-      "event_subtype": "earnings_today",
-      "priority": "Critical",
-      "priority_score": 100,
-      "personal_priority_score": 116,
-      "first_seen_at": "2026-07-18T08:22:47+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
-      "event_count": 1,
-      "baseline_price": 381.35,
-      "current_price": 374.86
-    },
     "event:RKLB:1e61c02729c33a19": {
       "ticker": "RKLB",
       "event_subtype": "earnings_reported",
@@ -21,7 +9,7 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-07-22T23:17:31+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
       "event_count": 1,
       "baseline_price": 69.81,
       "current_price": 69.81
@@ -33,31 +21,43 @@
       "priority_score": 80,
       "personal_priority_score": 93,
       "first_seen_at": "2026-07-20T14:35:06+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
       "event_count": 2,
       "baseline_price": 517.49,
       "current_price": 555.29
     },
-    "gdelt:NOW:dcbc17ad006bb8f6": {
+    "gdelt:NOW:36db8505b0676ae4": {
       "ticker": "NOW",
       "event_subtype": "guidance",
       "priority": "Watch",
       "priority_score": 32,
       "personal_priority_score": 48,
-      "first_seen_at": "2026-07-21T21:40:28+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
-      "event_count": 1,
-      "baseline_price": 102.06,
+      "first_seen_at": "2026-07-23T08:46:55+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
+      "event_count": 2,
+      "baseline_price": 95.71,
       "current_price": 95.71
+    },
+    "gdelt:TEM:041c59d1183fd730": {
+      "ticker": "TEM",
+      "event_subtype": "transaction",
+      "priority": "Watch",
+      "priority_score": 32,
+      "personal_priority_score": 45,
+      "first_seen_at": "2026-07-23T08:46:55+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
+      "event_count": 2,
+      "baseline_price": 46.69,
+      "current_price": 46.69
     },
     "technical:IONQ:technical_risk:2026-07-22": {
       "ticker": "IONQ",
       "event_subtype": "technical_risk",
-      "priority": "Action",
-      "priority_score": 68,
-      "personal_priority_score": 76,
+      "priority": "Watch",
+      "priority_score": 48,
+      "personal_priority_score": 56,
       "first_seen_at": "2026-07-22T13:46:17+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
       "event_count": 1,
       "baseline_price": 35.91,
       "current_price": 34.78
@@ -65,11 +65,11 @@
     "technical:MP:technical_risk:2026-07-22": {
       "ticker": "MP",
       "event_subtype": "technical_risk",
-      "priority": "Action",
-      "priority_score": 68,
-      "personal_priority_score": 76,
+      "priority": "Watch",
+      "priority_score": 48,
+      "personal_priority_score": 56,
       "first_seen_at": "2026-07-22T16:59:42+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
       "event_count": 1,
       "baseline_price": 46.34,
       "current_price": 45.43
@@ -77,17 +77,33 @@
     "technical:NVDA:technical_setup:2026-07-22": {
       "ticker": "NVDA",
       "event_subtype": "technical_setup",
-      "priority": "Action",
-      "priority_score": 68,
-      "personal_priority_score": 76,
+      "priority": "Watch",
+      "priority_score": 48,
+      "personal_priority_score": 56,
       "first_seen_at": "2026-07-22T13:46:17+00:00",
-      "last_seen_at": "2026-07-23T03:44:41+00:00",
+      "last_seen_at": "2026-07-23T08:46:55+00:00",
       "event_count": 1,
       "baseline_price": 206.27,
       "current_price": 212.73
     }
   },
   "resolved": [
+    {
+      "history_key": "earnings:TSLA:2026-07-22:confirmed",
+      "ticker": "TSLA",
+      "event_subtype": "earnings_today",
+      "priority": "Critical",
+      "resolved_at": "2026-07-23T08:46:55+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "gdelt:NOW:dcbc17ad006bb8f6",
+      "ticker": "NOW",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-23T08:46:55+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "gdelt:TEM:041c59d1183fd730",
       "ticker": "TEM",
