@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-23T22:16:55+00:00",
+  "updated_at": "2026-07-23T22:54:32+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 11,
+  "total_events": 12,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 2
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -348,7 +348,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "gdelt:NOW:36db8505b0676ae4",
+          "event_id": "event:NOW:213c2c40afd30cfc",
           "ticker": "NOW",
           "event_type": "earnings",
           "event_subtype": "guidance",
@@ -361,8 +361,8 @@
           "event_time": "2026-07-23T00:45:00+00:00",
           "detected_at": "2026-07-23T08:44:48+00:00",
           "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
+          "verification_level": "corroborated_secondary",
+          "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
           "entity_confidence": "high",
           "entity_confidence_reason": "headline contains alias: ServiceNow",
           "dedupe_key": "NOW:guidance:2026-07-23:42f41140388f",
@@ -380,11 +380,60 @@
               "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
               "published_at": "2026-07-23T00:45:00+00:00",
               "domain": "www.thestar.com.my"
+            },
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
+              "published_at": "2026-07-23T17:30:00+00:00",
+              "domain": "www.proactiveinvestors.com"
+            }
+          ],
+          "secondary_source_count": 2,
+          "related_event_ids": [
+            "event:NOW:213c2c40afd30cfc"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:NOW:3573fdce18d8e9a6",
+          "ticker": "NOW",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "ServiceNow Analysts Increase Their Forecasts After Better - Than - Expected Q2 Earnings - ServiceNow ( NYSE : NO",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-23T14:45:00+00:00",
+          "detected_at": "2026-07-23T22:52:27+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow",
+          "dedupe_key": "NOW:guidance:2026-07-23:02f3f030201b",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
+            "published_at": "2026-07-23T14:45:00+00:00",
+            "domain": "www.benzinga.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
+              "published_at": "2026-07-23T14:45:00+00:00",
+              "domain": "www.benzinga.com"
             }
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "gdelt:NOW:36db8505b0676ae4"
+            "gdelt:NOW:3573fdce18d8e9a6"
           ],
           "priority_score": 32,
           "priority": "Watch"
@@ -443,17 +492,17 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-23T08:46:55+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-23T22:54:32+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 95.71,
+        "baseline_price": 91.88,
         "current_price": 91.88,
-        "change_pct": -4.0,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 4.0%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 48,
       "personalization_reasons": [
@@ -796,102 +845,77 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TMC",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OSCR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -905,8 +929,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 9,
+    "newly_discovered_event_count": 2,
+    "active_discovered_event_count": 11,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -969,7 +993,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T22:16:55+00:00",
+          "detected_at": "2026-07-23T22:54:32+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1068,7 +1092,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T22:16:55+00:00",
+          "detected_at": "2026-07-23T22:54:32+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1167,7 +1191,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T22:16:55+00:00",
+          "detected_at": "2026-07-23T22:54:32+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1231,14 +1255,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "gdelt:NOW:36db8505b0676ae4",
+      "ticker": "NOW",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-23T22:54:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NVDA:technical_setup:2026-07-23",
       "ticker": "NVDA",
@@ -1309,14 +1341,6 @@
       "event_subtype": "technical_setup",
       "priority": "Action",
       "resolved_at": "2026-07-22T16:59:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:MP:technical_risk:2026-07-21",
-      "ticker": "MP",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-07-22T13:46:17+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
