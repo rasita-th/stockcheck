@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-23T20:47:23+00:00",
+  "updated_at": "2026-07-23T21:48:33+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 5,
-      "partial": 4,
-      "errors": 1
+      "ok": 2,
+      "partial": 8,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 3,
-      "errors": 7
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -795,63 +795,88 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
-      "message": "GDELT response unavailable"
-    },
-    {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "TEM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TSLA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "ORCL",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "ORCL",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EQT",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TMDX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "TMDX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EOSE",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     }
   ],
@@ -929,7 +954,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T20:47:23+00:00",
+          "detected_at": "2026-07-23T21:48:33+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1028,7 +1053,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T20:47:23+00:00",
+          "detected_at": "2026-07-23T21:48:33+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1127,7 +1152,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-23T20:47:23+00:00",
+          "detected_at": "2026-07-23T21:48:33+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
