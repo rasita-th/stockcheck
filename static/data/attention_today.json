@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-24T22:44:11+00:00",
+  "updated_at": "2026-07-24T23:46:25+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 14,
+  "total_events": 15,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
-      "errors": 0
+      "ok": 5,
+      "partial": 4,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -79,7 +79,8 @@
       "priority": "Critical",
       "priority_score": 97,
       "why_today": [
-        "A earnings reported event was detected and requires source review."
+        "A earnings reported event was detected and requires source review.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "event_type": "earnings",
       "event_subtype": "earnings_reported",
@@ -146,6 +147,48 @@
           ],
           "priority_score": 97,
           "priority": "Critical"
+        },
+        {
+          "event_id": "gdelt:RKLB:8a5530458aaf47c0",
+          "ticker": "RKLB",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Iridium Reports 4 % Revenue Growth in Q2 Amid Rocket Lab Acquisition Deal",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-24T14:15:00+00:00",
+          "detected_at": "2026-07-24T23:44:27+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Rocket Lab",
+          "dedupe_key": "RKLB:transaction:2026-07-24:e267c64538b5",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.satellitetoday.com/finance/2026/07/22/iridium-reports-4-revenue-growth-in-q2-amid-rocket-lab-acquisition-deal",
+            "published_at": "2026-07-24T14:15:00+00:00",
+            "domain": "www.satellitetoday.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.satellitetoday.com/finance/2026/07/22/iridium-reports-4-revenue-growth-in-q2-amid-rocket-lab-acquisition-deal",
+              "published_at": "2026-07-24T14:15:00+00:00",
+              "domain": "www.satellitetoday.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:RKLB:8a5530458aaf47c0"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -157,11 +200,12 @@
       "severity": "high",
       "primary_trigger": "earnings_reported",
       "signals": [
-        "A earnings reported event was detected and requires source review."
+        "A earnings reported event was detected and requires source review.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
         "previous_priority": "Critical",
         "first_seen_at": "2026-07-22T23:17:31+00:00",
         "active_days": 2
@@ -930,98 +974,63 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
-      "message": "IR URL unavailable"
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RR",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ZETA",
+      "ticker": "ASTS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ZETA",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "TSLA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BEAM",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "BEAM",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NOW",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "INDI",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "INDI",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     }
   ],
@@ -1035,8 +1044,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 13,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 14,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1099,7 +1108,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-24T22:44:11+00:00",
+          "detected_at": "2026-07-24T23:46:25+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1198,7 +1207,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-24T22:44:11+00:00",
+          "detected_at": "2026-07-24T23:46:25+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1297,7 +1306,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-24T22:44:11+00:00",
+          "detected_at": "2026-07-24T23:46:25+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1363,8 +1372,8 @@
   "changes_summary": {
     "new": 0,
     "escalated": 0,
-    "updated": 0,
-    "ongoing": 7,
+    "updated": 1,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
