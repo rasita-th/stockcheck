@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-24T03:43:28+00:00",
+  "updated_at": "2026-07-24T08:44:05+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "partial",
+      "status": "error",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 0,
+      "errors": 10
     },
     "regulators": {
       "status": "ok",
@@ -889,92 +889,102 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "TE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "INDI",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -1020,8 +1030,8 @@
       "name": "Cipher Mining Inc.",
       "portfolio_status": "holding",
       "role": "Digital infrastructure",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-23: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 1.10x 20-day average."
       ],
@@ -1050,9 +1060,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-23: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 1.10x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-24T03:43:28+00:00",
+          "detected_at": "2026-07-24T08:44:05+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1072,7 +1082,7 @@
           ],
           "technical_score": 97.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 59.09,
           "pct_vs_ema20": 14.86,
           "pct_vs_ema200": 41.69,
@@ -1082,8 +1092,8 @@
             "technical:CIFR:technical_setup:2026-07-23"
           ],
           "dedupe_key": "CIFR:technical_setup:f6f878c56654dc55",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -1097,8 +1107,8 @@
         "Latest technical scan dated 2026-07-23: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.1, +14.9% vs EMA20, +41.7% vs EMA200, volume 1.10x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-23T15:17:07+00:00",
         "active_days": 1
@@ -1109,7 +1119,7 @@
         "change_pct": 1.39,
         "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.4%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -1119,8 +1129,8 @@
       "name": "Eos Energy Enterprises, Inc.",
       "portfolio_status": "holding",
       "role": "Energy storage",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.8, -21.2% vs EMA20, -57.3% vs EMA200, volume 0.89x 20-day average."
       ],
@@ -1149,9 +1159,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.8, -21.2% vs EMA20, -57.3% vs EMA200, volume 0.89x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-24T03:43:28+00:00",
+          "detected_at": "2026-07-24T08:44:05+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1171,7 +1181,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 28.83,
           "pct_vs_ema20": -21.22,
           "pct_vs_ema200": -57.34,
@@ -1181,8 +1191,8 @@
             "technical:EOSE:technical_risk:2026-07-23"
           ],
           "dedupe_key": "EOSE:technical_risk:3e260d3f6c6cc9e3",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -1196,8 +1206,8 @@
         "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 28.8, -21.2% vs EMA20, -57.3% vs EMA200, volume 0.89x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-23T15:17:07+00:00",
         "active_days": 1
@@ -1208,7 +1218,7 @@
         "change_pct": 1.63,
         "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.6%"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -1218,8 +1228,8 @@
       "name": "Opendoor Technologies Inc.",
       "portfolio_status": "holding",
       "role": "Proptech",
-      "priority": "Action",
-      "priority_score": 68,
+      "priority": "Watch",
+      "priority_score": 48,
       "why_today": [
         "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 34.6, -15.7% vs EMA20, -28.9% vs EMA200, volume 0.86x 20-day average."
       ],
@@ -1248,9 +1258,9 @@
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
           "why_today": "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 34.6, -15.7% vs EMA20, -28.9% vs EMA200, volume 0.86x 20-day average.",
           "materiality": "medium",
-          "urgency": "today",
+          "urgency": "developing",
           "event_time": "2026-07-23",
-          "detected_at": "2026-07-24T03:43:28+00:00",
+          "detected_at": "2026-07-24T08:44:05+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1270,7 +1280,7 @@
           ],
           "technical_score": 9.0,
           "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
+          "scan_age_days": 1,
           "rsi14": 34.62,
           "pct_vs_ema20": -15.67,
           "pct_vs_ema200": -28.86,
@@ -1280,8 +1290,8 @@
             "technical:OPEN:technical_risk:2026-07-23"
           ],
           "dedupe_key": "OPEN:technical_risk:61419e7a7c6113e6",
-          "priority_score": 68,
-          "priority": "Action"
+          "priority_score": 48,
+          "priority": "Watch"
         }
       ],
       "actions": {
@@ -1295,8 +1305,8 @@
         "Latest technical scan dated 2026-07-23: score 9/100, AVOID / Turnaround only, RSI 34.6, -15.7% vs EMA20, -28.9% vs EMA200, volume 0.86x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "eased",
+        "label_th": "ความเร่งด่วนลดลง",
         "previous_priority": "Action",
         "first_seen_at": "2026-07-23T19:51:41+00:00",
         "active_days": 1
@@ -1307,7 +1317,7 @@
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 56,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -1317,8 +1327,8 @@
     "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
-    "eased": 0,
+    "ongoing": 4,
+    "eased": 3,
     "resolved": 20
   },
   "recently_resolved": [
