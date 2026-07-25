@@ -7,7 +7,7 @@ on:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
 
 concurrency:
   group: audit-pr3-refresh
@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Collect workflow outcome and failed steps
         uses: actions/github-script@v7
@@ -73,7 +73,8 @@ jobs:
               jobs: jobSummary,
               failed_steps: failedSteps,
             };
-            fs.writeFileSync('.github/refresh-receipt.json', JSON.stringify(receipt, null, 2) + '\n');
+            fs.mkdirSync('artifacts', { recursive: true });
+            fs.writeFileSync('artifacts/refresh-receipt.json', JSON.stringify(receipt, null, 2) + '\n');
 
       - name: Add repository data evidence
         run: |
@@ -81,7 +82,7 @@ jobs:
           import json
           from pathlib import Path
 
-          receipt_path = Path('.github/refresh-receipt.json')
+          receipt_path = Path('artifacts/refresh-receipt.json')
           receipt = json.loads(receipt_path.read_text(encoding='utf-8'))
           attention_path = Path('data/generated/attention_today.json')
           state_path = Path('data/source_state/pr3_discovered_events.json')
@@ -117,25 +118,10 @@ jobs:
           receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
 
-      - name: Commit refresh audit receipt
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/refresh-receipt.json
-          if git diff --cached --quiet; then
-            echo "Refresh receipt is unchanged."
-            exit 0
-          fi
-          git commit -m "Record PR3 refresh workflow result"
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            git rebase --abort 2>/dev/null || true
-            sleep $((attempt * 3))
-          done
-          echo "Unable to publish PR3 refresh receipt."
-          exit 1
+      - name: Upload refresh audit receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr3-refresh-audit-${{ github.event.workflow_run.id }}
+          path: artifacts/refresh-receipt.json
+          if-no-files-found: error
+          retention-days: 30
