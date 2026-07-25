@@ -120,5 +120,8 @@ jobs:
         run: |
           set -euo pipefail
           git diff --binary HEAD -- data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > /tmp/market-pulse.patch
-          test -s /tmp/market-pulse.patch
+          if [ ! -s /tmp/market-pulse.patch ]; then
+            echo "Validated candidate matches the checked-in Market Pulse data; no-op is valid."
+            exit 0
+          fi
           git apply --check /tmp/market-pulse.patch
