@@ -3,14 +3,13 @@ name: Refresh Finnhub Analyst Features
 on:
   workflow_dispatch:
   schedule:
-    # Every 6 hours. Recommendation changes are slow; each run advances the queue.
     - cron: "37 */6 * * *"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: stockcheck-data-publisher
+  group: finnhub-analyst-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -20,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -42,37 +41,35 @@ jobs:
           python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
           python scripts/validate_static_data.py
 
-      - name: Publish analyst contracts safely
+      - name: Build immutable production patch
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p publish-artifact
+          git diff --binary HEAD -- \
+            data/finnhub \
+            data/recommendation_trends.json \
+            data/finnhub_features.json \
+            site/data/recommendation_trends.json \
+            site/data/finnhub_features.json \
+            static/data/recommendation_trends.json \
+            static/data/finnhub_features.json \
+            > publish-artifact/production-data.patch
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path('publish-artifact/metadata.json').write_text(json.dumps({
+              'schema_version': '1.0',
+              'producer': os.environ['GITHUB_WORKFLOW'],
+              'producer_run_id': os.environ['GITHUB_RUN_ID'],
+              'producer_sha': os.environ['GITHUB_SHA'],
+          }, indent=2) + '\n', encoding='utf-8')
+          PY
 
-          git add data/finnhub data/recommendation_trends.json data/finnhub_features.json \
-                  site/data/recommendation_trends.json site/data/finnhub_features.json \
-                  static/data/recommendation_trends.json static/data/finnhub_features.json
-
-          if git diff --cached --quiet; then
-            echo "No analyst data changes."
-            exit 0
-          fi
-
-          git commit -m "Refresh Finnhub analyst features"
-          git reset --hard HEAD
-          git clean -fd
-          test -z "$(git status --porcelain)"
-
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if ! git rebase origin/main; then
-              git rebase --abort 2>/dev/null || true
-              exit 1
-            fi
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            echo "Push race on attempt ${attempt}; retrying."
-            sleep $((attempt * 3))
-          done
-          exit 1
+      - name: Upload production patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-data-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 2
