@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-25T06:33:10+00:00",
+  "updated_at": "2026-07-25T08:25:37+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 3,
-      "errors": 7
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -975,88 +975,78 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RR",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
     }
   ],
   "data_quality": {
@@ -1133,7 +1123,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-25T06:33:10+00:00",
+          "detected_at": "2026-07-25T08:25:37+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1178,9 +1168,9 @@
         "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 32.4, -12.4% vs EMA20, -46.2% vs EMA200, volume 0.89x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-24T20:20:58+00:00",
         "active_days": 1
       },
@@ -1232,7 +1222,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-25T06:33:10+00:00",
+          "detected_at": "2026-07-25T08:25:37+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1277,9 +1267,9 @@
         "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 34.4, -10.9% vs EMA20, -35.2% vs EMA200, volume 0.92x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-24T20:20:58+00:00",
         "active_days": 1
       },
@@ -1331,7 +1321,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-25T06:33:10+00:00",
+          "detected_at": "2026-07-25T08:25:37+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1376,9 +1366,9 @@
         "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 31.3, -13.1% vs EMA20, -31.3% vs EMA200, volume 0.82x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-24T20:20:58+00:00",
         "active_days": 1
       },
@@ -1398,8 +1388,8 @@
     "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 4,
-    "eased": 3,
+    "ongoing": 7,
+    "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
