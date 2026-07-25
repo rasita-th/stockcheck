@@ -7,29 +7,62 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
+
+
+class VerificationError(ValueError):
+    """Deterministic production contract failure."""
 
 
 def load_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
-        raise SystemExit(f"{path}: expected JSON object")
+        raise VerificationError(f"{path}: expected JSON object")
     return payload
 
 
+def validate_identity(manifest: dict[str, Any], receipt: dict[str, Any]) -> str:
+    if manifest.get("schema_version") != "1.0":
+        raise VerificationError("unsupported release manifest schema")
+    release = str(manifest.get("release") or "")
+    base_url = str(manifest.get("production_base_url") or "").rstrip("/")
+    assets = manifest.get("assets")
+    contracts = manifest.get("data_contracts")
+    if not release or not base_url.startswith("https://"):
+        raise VerificationError("release manifest identity is incomplete")
+    if not isinstance(assets, dict) or not isinstance(contracts, dict):
+        raise VerificationError("release manifest assets or contracts are missing")
+    if str(receipt.get("asset_version") or "") != release:
+        raise VerificationError("deployment receipt release mismatch")
+    if receipt.get("status") != "verified" or receipt.get("production_smoke_passed") is not True:
+        raise VerificationError("deployment receipt is not verified")
+    source_commit = str(receipt.get("source_commit") or "")
+    if len(source_commit) < 7:
+        raise VerificationError("deployment receipt source commit missing")
+    return base_url
+
+
 def fetch(url: str) -> bytes:
-    request = urllib.request.Request(url, headers={"Cache-Control": "no-cache", "User-Agent": "stockcheck-production-verifier/1.0"})
+    request = urllib.request.Request(
+        url,
+        headers={"Cache-Control": "no-cache", "User-Agent": "stockcheck-production-verifier/1.1"},
+    )
     with urllib.request.urlopen(request, timeout=30) as response:
         return response.read()
 
 
-def verify_once(base_url: str, manifest: dict[str, Any], receipt: dict[str, Any], nonce: str) -> None:
+def verify_once(
+    base_url: str,
+    manifest: dict[str, Any],
+    nonce: str,
+    fetcher: Callable[[str], bytes] = fetch,
+) -> None:
     assets = manifest["assets"]
-    index = fetch(f"{base_url}/index.html?verify={nonce}").decode("utf-8")
-    loader_js = fetch(f"{base_url}/memo-only-fix.js?verify={nonce}").decode("utf-8")
-    loader_css = fetch(f"{base_url}/memo-only-fix.css?verify={nonce}").decode("utf-8")
-    attention = json.loads(fetch(f"{base_url}/data/attention_today.json?verify={nonce}"))
-    earnings = json.loads(fetch(f"{base_url}/data/earnings_radar.json?verify={nonce}"))
+    index = fetcher(f"{base_url}/index.html?verify={nonce}").decode("utf-8")
+    loader_js = fetcher(f"{base_url}/memo-only-fix.js?verify={nonce}").decode("utf-8")
+    loader_css = fetcher(f"{base_url}/memo-only-fix.css?verify={nonce}").decode("utf-8")
+    attention = json.loads(fetcher(f"{base_url}/data/attention_today.json?verify={nonce}"))
+    earnings = json.loads(fetcher(f"{base_url}/data/earnings_radar.json?verify={nonce}"))
 
     required = {
         f"memo-only-fix.js?v={assets['memo_only_fix_js']}": index,
@@ -41,26 +74,39 @@ def verify_once(base_url: str, manifest: dict[str, Any], receipt: dict[str, Any]
     }
     for token, text in required.items():
         if token not in text:
-            raise ValueError(f"missing release token {token}")
+            raise VerificationError(f"missing release token {token}")
 
     expected_attention = str(manifest["data_contracts"]["attention_today"])
     expected_earnings = str(manifest["data_contracts"]["earnings_radar"])
     if not str(attention.get("contract_version") or "").startswith(expected_attention):
-        raise ValueError("attention_today contract mismatch")
+        raise VerificationError("attention_today contract mismatch")
     if not str(earnings.get("schema_version") or "").startswith(expected_earnings):
-        raise ValueError("earnings_radar contract mismatch")
+        raise VerificationError("earnings_radar contract mismatch")
     if not isinstance(attention.get("items"), list) or not isinstance(attention.get("technical_watch"), list):
-        raise ValueError("attention_today required sections missing")
+        raise VerificationError("attention_today required sections missing")
     if not isinstance(earnings.get("items"), list) or not isinstance(earnings.get("daily_summary"), list):
-        raise ValueError("earnings_radar required sections missing")
+        raise VerificationError("earnings_radar required sections missing")
 
-    release = str(manifest["release"])
-    if str(receipt.get("asset_version") or "") != release:
-        raise ValueError("deployment receipt release mismatch")
-    if receipt.get("status") != "verified" or receipt.get("production_smoke_passed") is not True:
-        raise ValueError("deployment receipt is not verified")
-    if not str(receipt.get("source_commit") or ""):
-        raise ValueError("deployment receipt source commit missing")
+
+def verify_with_retries(
+    base_url: str,
+    manifest: dict[str, Any],
+    attempts: int,
+    sleep_seconds: int,
+    fetcher: Callable[[str], bytes] = fetch,
+    sleeper: Callable[[float], None] = time.sleep,
+) -> None:
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            verify_once(base_url, manifest, f"{int(time.time())}-{attempt}", fetcher=fetcher)
+            return
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, UnicodeDecodeError, VerificationError) as exc:
+            last_error = exc
+            print(f"attempt {attempt}/{attempts} failed: {exc}")
+            if attempt < attempts:
+                sleeper(sleep_seconds)
+    raise VerificationError(f"production verification failed: {last_error}")
 
 
 def main() -> None:
@@ -73,22 +119,9 @@ def main() -> None:
 
     manifest = load_json(Path(args.manifest))
     receipt = load_json(Path(args.receipt))
-    base_url = str(manifest.get("production_base_url") or "").rstrip("/")
-    if not base_url.startswith("https://"):
-        raise SystemExit("release manifest production_base_url must be HTTPS")
-
-    last_error: Exception | None = None
-    for attempt in range(1, args.attempts + 1):
-        try:
-            verify_once(base_url, manifest, receipt, f"{int(time.time())}-{attempt}")
-            print(json.dumps({"status": "verified", "release": manifest["release"], "source_commit": receipt["source_commit"]}))
-            return
-        except (urllib.error.URLError, TimeoutError, ValueError, json.JSONDecodeError) as exc:
-            last_error = exc
-            print(f"attempt {attempt}/{args.attempts} failed: {exc}")
-            if attempt < args.attempts:
-                time.sleep(args.sleep_seconds)
-    raise SystemExit(f"production verification failed: {last_error}")
+    base_url = validate_identity(manifest, receipt)
+    verify_with_retries(base_url, manifest, args.attempts, args.sleep_seconds)
+    print(json.dumps({"status": "verified", "release": manifest["release"], "source_commit": receipt["source_commit"]}))
 
 
 if __name__ == "__main__":

@@ -9,6 +9,8 @@ on:
       - "scripts/validate_production_artifact.py"
       - "scripts/verify_production_deployment.py"
       - "tests/test_production_artifact_contract.py"
+      - "tests/test_production_verifier.py"
+      - "docs/PRODUCTION_PIPELINE_RUNBOOK.md"
       - "data/publisher-state.json"
   push:
     branches: ["main"]
@@ -19,6 +21,8 @@ on:
       - "scripts/validate_production_artifact.py"
       - "scripts/verify_production_deployment.py"
       - "tests/test_production_artifact_contract.py"
+      - "tests/test_production_verifier.py"
+      - "docs/PRODUCTION_PIPELINE_RUNBOOK.md"
       - "data/publisher-state.json"
 
 permissions:
@@ -38,6 +42,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import re
           from pathlib import Path
           payload = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
           assert payload['schema_version'] == '1.0'
@@ -46,8 +51,13 @@ jobs:
           required = {'memo_only_fix_js', 'memo_only_fix_css', 'attention_pr4_js', 'attention_pr4_css', 'earnings_radar_pr4_js', 'earnings_radar_pr4_css'}
           missing = required - set(payload['assets'])
           assert not missing, f'missing release assets: {sorted(missing)}'
+          deploy = Path('.github/workflows/deploy-pages.yml').read_text(encoding='utf-8')
+          match = re.search(r'TODAY_DEPLOY_VERSION:\s*"([^"]+)"', deploy)
+          assert match and match.group(1) == payload['release'], 'deploy release must match release manifest'
           PY
       - name: Test production artifact contract
         run: python -m unittest tests.test_production_artifact_contract -v
+      - name: Test production verifier fault handling
+        run: python -m unittest tests.test_production_verifier -v
       - name: Enforce repository workflow topology
         run: python scripts/check_workflow_topology.py
