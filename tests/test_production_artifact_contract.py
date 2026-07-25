@@ -31,6 +31,12 @@ class ProductionArtifactContractTests(unittest.TestCase):
             contract.validate_paths("Refresh Market Pulse v9.6", ["site/data/scanner.json"])
         self.assertIn("REJECTED_PATH", str(raised.exception))
 
+    def test_fundamental_paths_are_narrow(self) -> None:
+        contract.validate_paths("Update static fundamental data", ["site/data/fundamental.json"])
+        with self.assertRaises(SystemExit) as raised:
+            contract.validate_paths("Update static fundamental data", ["site/data/technical.json"])
+        self.assertIn("REJECTED_PATH", str(raised.exception))
+
     def test_blocked_workflow_path(self) -> None:
         with self.assertRaises(SystemExit) as raised:
             contract.validate_paths("Refresh Finnhub Earnings Events", [".github/workflows/deploy-pages.yml"])
