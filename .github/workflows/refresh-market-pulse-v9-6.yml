@@ -40,20 +40,16 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
-
       - name: Install data dependencies
         run: python -m pip install --upgrade pip pandas yfinance
-
       - name: Validate narrative engine
         run: |
           python -m py_compile scripts/generate_market_pulse.py scripts/test_market_pulse_narrative.py scripts/validate_market_pulse.py
           python scripts/test_market_pulse_narrative.py
-
       - name: Backup last-known-good JSON
         shell: bash
         run: |
@@ -62,7 +58,6 @@ jobs:
           for f in data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
             [ -f "$f" ] && cp --parents "$f" .deploy-backup/
           done
-
       - name: Upload pre-refresh backup
         uses: actions/upload-artifact@v4
         with:
@@ -70,16 +65,13 @@ jobs:
           path: .deploy-backup
           if-no-files-found: warn
           retention-days: 30
-
       - name: Generate candidate JSON
         run: python scripts/generate_market_pulse.py
-
       - name: Validate candidate
         run: |
           python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
           cmp data/market_pulse.json site/data/market_pulse.json
           cmp data/market_pulse.json static/data/market_pulse.json
-
       - name: Upload validated candidate
         uses: actions/upload-artifact@v4
         with:
@@ -89,22 +81,14 @@ jobs:
             site/data/market_pulse.json
             static/data/market_pulse.json
           retention-days: 30
-
       - name: Build immutable production patch
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- \
-            data/market_pulse.json \
-            site/data/market_pulse.json \
-            static/data/market_pulse.json \
-            > publish-artifact/production-data.patch
-          python scripts/validate_production_artifact.py create-metadata \
-            --patch publish-artifact/production-data.patch \
-            --metadata publish-artifact/metadata.json
-
+          git diff --binary HEAD -- data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > publish-artifact/production-data.patch
+          python scripts/validate_production_artifact.py create-metadata --patch publish-artifact/production-data.patch --metadata publish-artifact/metadata.json
       - name: Upload production patch
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
@@ -113,15 +97,17 @@ jobs:
           path: publish-artifact
           if-no-files-found: error
           retention-days: 7
-
       - name: Rehearse immutable artifact contract
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           git diff --binary HEAD -- data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > /tmp/market-pulse.patch
-          if [ ! -s /tmp/market-pulse.patch ]; then
-            echo "Validated candidate matches the checked-in Market Pulse data; no-op is valid."
-            exit 0
-          fi
-          git apply --check /tmp/market-pulse.patch
+          python - <<'PY'
+          from pathlib import Path
+          from scripts.validate_production_artifact import patch_paths, validate_paths
+          patch = Path('/tmp/market-pulse.patch')
+          paths = patch_paths(patch)
+          validate_paths('Refresh Market Pulse v9.6', paths)
+          print(f'Validated Market Pulse PR artifact paths: {paths or ["NO_CHANGES"]}')
+          PY
