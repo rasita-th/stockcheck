@@ -6,12 +6,10 @@ on:
     - cron: "23 11 * * *"
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: "stockcheck-pages-data-update"
+  group: fundamental-data-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -22,18 +20,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
 
       - name: Install Python dependencies
         run: |
@@ -49,63 +42,34 @@ jobs:
           SEC_GUIDANCE_MAX_DOCUMENTS_PER_FILING: "8"
         run: python scripts/update_fundamental_data.py
 
-      - name: Commit updated fundamental data
+      - name: Validate fundamental output
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/data/fundamental.json
-          if git diff --cached --quiet; then
-            echo "No fundamental data changes to commit."
-          else
-            git commit -m "Update static fundamental data"
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
-          fi
-
-      - name: Generate fresh technical data for this deploy
-        env:
-          INCLUDE_FUNDAMENTALS: "0"
-          TECHNICAL_RANGE: "1y"
-          TECHNICAL_INTERVAL: "1d"
-          TECHNICAL_SCAN_WORKERS: "8"
-        run: python scripts/update_technical_data.py
-
-      - name: Prepare clean single-runtime Pages artifact
-        run: |
-          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
-          python scripts/prepare_stable_site_v9_4_1.py
-
-      - name: Validate JavaScript and static data
-        run: |
-          node --check site/app.js
-          node --check site/app-shell-v9-4-6.js
-          node --check site/market.js
+          python -m py_compile scripts/update_fundamental_data.py scripts/validate_production_artifact.py
           python scripts/validate_static_data.py
-          grep -q 'app-shell-v9-4-6.js?v=9.4.6' site/index.html
-          if grep -Eq 'scanner-dashboard|scanner-layout-v9-3|shared-app-shell-v9-3|nav-fix-v9-2|runtime-guard-v9-4-1' site/index.html site/market.html; then
-            echo 'Legacy runtime found in data workflow artifact'
-            exit 1
-          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('site/data/fundamental.json')
+          if not path.exists():
+              raise SystemExit('site/data/fundamental.json was not generated')
+          json.loads(path.read_text(encoding='utf-8'))
+          print('Fundamental JSON is present and valid.')
+          PY
 
-      - name: Add nojekyll marker
-        run: touch site/.nojekyll
+      - name: Build immutable production artifact
+        run: |
+          set -euo pipefail
+          mkdir -p publish-artifact
+          git diff --binary HEAD -- site/data/fundamental.json \
+            > publish-artifact/production-data.patch
+          python scripts/validate_production_artifact.py create-metadata \
+            --patch publish-artifact/production-data.patch \
+            --metadata publish-artifact/metadata.json
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload production artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: site
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: production-data-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 7
