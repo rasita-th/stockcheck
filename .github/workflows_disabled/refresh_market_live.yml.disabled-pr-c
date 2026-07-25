@@ -1,0 +1,20 @@
+# Disabled by PR-C.
+#
+# This workflow was a manual legacy writer for technical, scanner and old Today
+# data. It was not a Market Pulse producer and duplicated the active Live Data
+# pipeline. Re-enable only by restoring it through a reviewed migration that
+# routes its outputs through Publish Production Data; never restore its direct
+# git push behavior.
+
+name: Legacy Refresh Live Market Data (disabled)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  disabled:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "This legacy workflow is archived."
+          exit 1
