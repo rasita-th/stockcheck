@@ -136,9 +136,9 @@ def validate_linkage(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-url", default="https://rasita2644-star.github.io/stockcheck")
-    parser.add_argument("--attempts", type=int, default=36)
-    parser.add_argument("--sleep-seconds", type=float, default=10)
+    parser.add_argument("--base-url", default="https://rasita-th.github.io/stockcheck")
+    parser.add_argument("--attempts", type=int, default=18)
+    parser.add_argument("--sleep-seconds", type=float, default=5)
     args = parser.parse_args()
 
     expected_features = load_json(ROOT / "site/data/finnhub_features.json")
