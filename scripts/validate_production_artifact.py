@@ -27,6 +27,10 @@ PRODUCERS: dict[str, dict[str, Any]] = {
         "events": {"workflow_dispatch"},
         "paths": ("data/finnhub/**", "data/earnings_calendar.json", "data/eps_surprises.json", "data/recommendation_trends.json", "data/finnhub_features.json", "site/data/earnings_calendar.json", "site/data/eps_surprises.json", "site/data/recommendation_trends.json", "site/data/finnhub_features.json", "static/data/earnings_calendar.json", "static/data/eps_surprises.json", "static/data/recommendation_trends.json", "static/data/finnhub_features.json"),
     },
+    "Refresh Live Data v10 PR3": {
+        "events": {"schedule", "workflow_dispatch", "push"},
+        "paths": ("data/generated/**", "data/source_state/**", "site/data/**", "static/data/**"),
+    },
 }
 BLOCKED_PATTERNS = (".github/**", "scripts/**", "tests/**", "requirements.txt", "site/*.js", "site/*.css", "static/*.js", "static/*.css")
 
