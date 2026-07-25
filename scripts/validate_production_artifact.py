@@ -31,6 +31,10 @@ PRODUCERS: dict[str, dict[str, Any]] = {
         "events": {"schedule", "workflow_dispatch", "push"},
         "paths": ("data/generated/**", "data/source_state/**", "site/data/**", "static/data/**"),
     },
+    "Refresh Market Pulse v9.6": {
+        "events": {"schedule", "workflow_dispatch", "push"},
+        "paths": ("data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"),
+    },
 }
 BLOCKED_PATTERNS = (".github/**", "scripts/**", "tests/**", "requirements.txt", "site/*.js", "site/*.css", "static/*.js", "static/*.css")
 
@@ -139,7 +143,6 @@ def validate_artifact(args: argparse.Namespace) -> None:
         fail(f"workflow {args.workflow_name!r} is not allowed", "REJECTED_UNKNOWN_PRODUCER")
     if args.repository != REPOSITORY or args.branch != "main" or args.event not in config["events"]:
         fail("repository, branch or event is not allowed", "REJECTED_SOURCE")
-
     actual_hash = sha256(patch)
     paths = patch_paths(patch)
     if schema == SCHEMA_VERSION:
@@ -154,7 +157,6 @@ def validate_artifact(args: argparse.Namespace) -> None:
         if metadata.get("changed_paths") != paths:
             fail("changed_paths do not match patch content", "REJECTED_PATH")
     validate_paths(producer, paths)
-
     previous = load_ledger(Path(args.ledger))["producers"].get(producer, {})
     produced_at = parse_time(metadata.get("produced_at"))
     previous_at = parse_time(previous.get("last_produced_at"))

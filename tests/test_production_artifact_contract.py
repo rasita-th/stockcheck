@@ -15,36 +15,25 @@ from scripts import validate_production_artifact as contract
 
 class ProductionArtifactContractTests(unittest.TestCase):
     def test_allowed_event_path(self) -> None:
-        contract.validate_paths(
-            "Refresh Finnhub Earnings Events",
-            ["data/earnings_calendar.json", "site/data/attention_today.json"],
-        )
+        contract.validate_paths("Refresh Finnhub Earnings Events", ["data/earnings_calendar.json", "site/data/attention_today.json"])
 
     def test_allowed_live_data_paths(self) -> None:
-        contract.validate_paths(
-            "Refresh Live Data v10 PR3",
-            [
-                "data/generated/attention_today.json",
-                "data/source_state/attention.json",
-                "site/data/technical.json",
-                "static/data/scanner.json",
-            ],
-        )
+        contract.validate_paths("Refresh Live Data v10 PR3", ["data/generated/attention_today.json", "data/source_state/attention.json", "site/data/technical.json", "static/data/scanner.json"])
 
     def test_live_data_cannot_publish_runtime_assets(self) -> None:
         with self.assertRaises(SystemExit) as raised:
-            contract.validate_paths(
-                "Refresh Live Data v10 PR3",
-                ["static/attention-pr3.js"],
-            )
+            contract.validate_paths("Refresh Live Data v10 PR3", ["static/attention-pr3.js"])
+        self.assertIn("REJECTED_PATH", str(raised.exception))
+
+    def test_market_pulse_paths_are_narrow(self) -> None:
+        contract.validate_paths("Refresh Market Pulse v9.6", ["data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"])
+        with self.assertRaises(SystemExit) as raised:
+            contract.validate_paths("Refresh Market Pulse v9.6", ["site/data/scanner.json"])
         self.assertIn("REJECTED_PATH", str(raised.exception))
 
     def test_blocked_workflow_path(self) -> None:
         with self.assertRaises(SystemExit) as raised:
-            contract.validate_paths(
-                "Refresh Finnhub Earnings Events",
-                [".github/workflows/deploy-pages.yml"],
-            )
+            contract.validate_paths("Refresh Finnhub Earnings Events", [".github/workflows/deploy-pages.yml"])
         self.assertIn("REJECTED_PATH", str(raised.exception))
 
     def test_unknown_producer(self) -> None:
@@ -75,39 +64,18 @@ class ProductionArtifactContractTests(unittest.TestCase):
             patch_path.write_text(subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=root, text=True), encoding="utf-8")
             digest = contract.sha256(patch_path)
             metadata = {
-                "schema_version": "2.0",
-                "repository": contract.REPOSITORY,
-                "producer": "Refresh Finnhub Earnings Events",
-                "producer_run_id": "42",
-                "producer_run_attempt": 1,
-                "producer_event": "schedule",
-                "producer_branch": "main",
-                "producer_sha": "abc",
-                "base_sha": "base",
-                "produced_at": "2026-07-25T12:00:00+00:00",
-                "patch_sha256": digest,
-                "changed_paths": ["data/earnings_calendar.json"],
+                "schema_version": "2.0", "repository": contract.REPOSITORY,
+                "producer": "Refresh Finnhub Earnings Events", "producer_run_id": "42",
+                "producer_run_attempt": 1, "producer_event": "schedule", "producer_branch": "main",
+                "producer_sha": "abc", "base_sha": "base", "produced_at": "2026-07-25T12:00:00+00:00",
+                "patch_sha256": digest, "changed_paths": ["data/earnings_calendar.json"],
             }
             metadata_path = root / "metadata.json"
             metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
             ledger_path = root / "ledger.json"
-            ledger_path.write_text(json.dumps({
-                "schema_version": "1.0",
-                "producers": {
-                    "Refresh Finnhub Earnings Events": {
-                        "last_run_id": 42,
-                        "last_run_attempt": 1,
-                        "last_patch_sha256": digest,
-                        "last_produced_at": "2026-07-25T12:00:00+00:00",
-                    }
-                },
-            }), encoding="utf-8")
+            ledger_path.write_text(json.dumps({"schema_version": "1.0", "producers": {"Refresh Finnhub Earnings Events": {"last_run_id": 42, "last_run_attempt": 1, "last_patch_sha256": digest, "last_produced_at": "2026-07-25T12:00:00+00:00"}}}), encoding="utf-8")
             output_path = root / "outputs"
-            args = Namespace(
-                patch=str(patch_path), metadata=str(metadata_path), ledger=str(ledger_path),
-                repository=contract.REPOSITORY, workflow_name="Refresh Finnhub Earnings Events",
-                run_id="42", run_attempt="1", source_sha="abc", branch="main", event="schedule",
-            )
+            args = Namespace(patch=str(patch_path), metadata=str(metadata_path), ledger=str(ledger_path), repository=contract.REPOSITORY, workflow_name="Refresh Finnhub Earnings Events", run_id="42", run_attempt="1", source_sha="abc", branch="main", event="schedule")
             previous = Path.cwd()
             os.chdir(root)
             try:

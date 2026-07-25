@@ -12,14 +12,10 @@ PRODUCERS = {
     "refresh-consensus-v9-1.yml",
     "refresh_finnhub_bundle.yml",
     "refresh-live-v9-1.yml",
-}
-# Temporary, explicit migration debt. PR-C and PR-D must remove these names;
-# new exceptions are forbidden.
-LEGACY_WRITER_EXCEPTIONS = {
-    "refresh_market_live.yml",
     "refresh-market-pulse-v9-6.yml",
-    "update-fundamental.yml",
 }
+# Temporary migration debt. PR-D must remove this final automatic writer.
+LEGACY_WRITER_EXCEPTIONS = {"update-fundamental.yml"}
 DISPATCH_ALLOWLIST = {PUBLISHER}
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
 
@@ -33,6 +29,8 @@ def main() -> None:
         failures.append(f"missing protected producer workflows: {sorted(missing)}")
     if "deploy-pages-after-pr3.yml" in names:
         failures.append("deploy-pages-after-pr3.yml: obsolete PR3 Pages bridge must be removed")
+    if "refresh_market_live.yml" in names:
+        failures.append("refresh_market_live.yml: legacy live writer must remain disabled")
 
     for path in workflows:
         text = path.read_text(encoding="utf-8")
@@ -66,25 +64,30 @@ def main() -> None:
             failures.append(f"{name}: references obsolete production hostname")
 
     publisher = (WORKFLOW_DIR / PUBLISHER).read_text(encoding="utf-8")
-    required = (
+    for token in (
         "group: production-publisher",
         "cancel-in-progress: false",
         '"Refresh Live Data v10 PR3"',
+        '"Refresh Market Pulse v9.6"',
         "validate_production_artifact.py validate",
         "data/publisher-state.json",
         "git push origin HEAD:main",
         "Publish result summary",
-    )
-    for token in required:
+    ):
         if token not in publisher:
             failures.append(f"{PUBLISHER}: missing contract token {token!r}")
 
+    rollback = (WORKFLOW_DIR / ROLLBACK).read_text(encoding="utf-8")
+    for token in ("workflow_dispatch:", "confirm:", "inputs.confirm == 'ROLLBACK'", "group: production-publisher", "cancel-in-progress: false"):
+        if token not in rollback:
+            failures.append(f"{ROLLBACK}: missing rollback safety token {token!r}")
+    for forbidden in ("schedule:", "workflow_run:"):
+        if forbidden in rollback:
+            failures.append(f"{ROLLBACK}: rollback must be manual only; found {forbidden!r}")
+
     if failures:
         raise SystemExit("Workflow topology violations:\n- " + "\n- ".join(failures))
-    print(
-        "Workflow topology is valid. Temporary legacy writer exceptions: "
-        + ", ".join(sorted(LEGACY_WRITER_EXCEPTIONS))
-    )
+    print("Workflow topology is valid. Temporary legacy writer exceptions: " + ", ".join(sorted(LEGACY_WRITER_EXCEPTIONS)))
 
 
 if __name__ == "__main__":
