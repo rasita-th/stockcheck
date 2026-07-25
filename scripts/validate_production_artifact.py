@@ -35,6 +35,10 @@ PRODUCERS: dict[str, dict[str, Any]] = {
         "events": {"schedule", "workflow_dispatch", "push"},
         "paths": ("data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"),
     },
+    "Update static fundamental data": {
+        "events": {"schedule", "workflow_dispatch"},
+        "paths": ("site/data/fundamental.json",),
+    },
 }
 BLOCKED_PATTERNS = (".github/**", "scripts/**", "tests/**", "requirements.txt", "site/*.js", "site/*.css", "static/*.js", "static/*.css")
 
