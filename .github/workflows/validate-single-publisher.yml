@@ -4,16 +4,20 @@ on:
   pull_request:
     paths:
       - ".github/workflows/**"
+      - "config/release-manifest.json"
       - "scripts/check_workflow_topology.py"
       - "scripts/validate_production_artifact.py"
+      - "scripts/verify_production_deployment.py"
       - "tests/test_production_artifact_contract.py"
       - "data/publisher-state.json"
   push:
     branches: ["main"]
     paths:
       - ".github/workflows/**"
+      - "config/release-manifest.json"
       - "scripts/check_workflow_topology.py"
       - "scripts/validate_production_artifact.py"
+      - "scripts/verify_production_deployment.py"
       - "tests/test_production_artifact_contract.py"
       - "data/publisher-state.json"
 
@@ -28,8 +32,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Compile publisher controls
-        run: python -m py_compile scripts/check_workflow_topology.py scripts/validate_production_artifact.py
+      - name: Compile publisher and release controls
+        run: python -m py_compile scripts/check_workflow_topology.py scripts/validate_production_artifact.py scripts/verify_production_deployment.py
+      - name: Validate release manifest
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
+          assert payload['schema_version'] == '1.0'
+          assert payload['release']
+          assert payload['production_base_url'].startswith('https://')
+          required = {'memo_only_fix_js', 'memo_only_fix_css', 'attention_pr4_js', 'attention_pr4_css', 'earnings_radar_pr4_js', 'earnings_radar_pr4_css'}
+          missing = required - set(payload['assets'])
+          assert not missing, f'missing release assets: {sorted(missing)}'
+          PY
       - name: Test production artifact contract
         run: python -m unittest tests.test_production_artifact_contract -v
       - name: Enforce repository workflow topology

@@ -7,6 +7,7 @@ from pathlib import Path
 WORKFLOW_DIR = Path(".github/workflows")
 PUBLISHER = "publish-production-data.yml"
 ROLLBACK = "rollback-market-pulse.yml"
+VERIFIER = "verify-production-deployment.yml"
 PRODUCERS = {
     "refresh_finnhub_events.yml",
     "refresh-consensus-v9-1.yml",
@@ -17,6 +18,7 @@ PRODUCERS = {
 }
 DISPATCH_ALLOWLIST = {PUBLISHER}
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
+LEGACY_VERIFIERS = {"verify-pr3-pages.yml", "verify-finnhub-today.yml"}
 
 
 def main() -> None:
@@ -26,6 +28,11 @@ def main() -> None:
     missing = PRODUCERS - names
     if missing:
         failures.append(f"missing protected producer workflows: {sorted(missing)}")
+    if VERIFIER not in names:
+        failures.append(f"missing unified production verifier: {VERIFIER}")
+    active_legacy = LEGACY_VERIFIERS & names
+    if active_legacy:
+        failures.append(f"legacy production verifiers must be removed: {sorted(active_legacy)}")
     if "deploy-pages-after-pr3.yml" in names:
         failures.append("deploy-pages-after-pr3.yml: obsolete PR3 Pages bridge must be removed")
     if "refresh_market_live.yml" in names:
@@ -83,6 +90,22 @@ def main() -> None:
         if token not in publisher:
             failures.append(f"{PUBLISHER}: missing contract token {token!r}")
 
+    verifier = (WORKFLOW_DIR / VERIFIER).read_text(encoding="utf-8")
+    for token in (
+        'workflows: ["Deploy GitHub Pages"]',
+        "actions: read",
+        "cancel-in-progress: false",
+        "production-deploy-receipt-",
+        "config/release-manifest.json",
+        "verify_production_deployment.py",
+    ):
+        if token not in verifier:
+            failures.append(f"{VERIFIER}: missing verifier contract token {token!r}")
+
+    for required_path in (Path("config/release-manifest.json"), Path("scripts/verify_production_deployment.py")):
+        if not required_path.exists():
+            failures.append(f"missing release contract file: {required_path}")
+
     rollback = (WORKFLOW_DIR / ROLLBACK).read_text(encoding="utf-8")
     for token in ("workflow_dispatch:", "confirm:", "inputs.confirm == 'ROLLBACK'", "group: production-publisher", "cancel-in-progress: false"):
         if token not in rollback:
@@ -93,7 +116,7 @@ def main() -> None:
 
     if failures:
         raise SystemExit("Workflow topology violations:\n- " + "\n- ".join(failures))
-    print("Workflow topology is valid. Automatic production writers: Publish Production Data only; manual exception: Roll back Market Pulse data.")
+    print("Workflow topology is valid. One automatic writer, one manual rollback, and one receipt-backed production verifier are active.")
 
 
 if __name__ == "__main__":
