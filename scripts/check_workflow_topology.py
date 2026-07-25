@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Enforce the production workflow topology during the staged migration."""
+"""Enforce the production workflow topology."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -13,9 +13,8 @@ PRODUCERS = {
     "refresh_finnhub_bundle.yml",
     "refresh-live-v9-1.yml",
     "refresh-market-pulse-v9-6.yml",
+    "update-fundamental.yml",
 }
-# Temporary migration debt. PR-D must remove this final automatic writer.
-LEGACY_WRITER_EXCEPTIONS = {"update-fundamental.yml"}
 DISPATCH_ALLOWLIST = {PUBLISHER}
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
 
@@ -32,6 +31,7 @@ def main() -> None:
     if "refresh_market_live.yml" in names:
         failures.append("refresh_market_live.yml: legacy live writer must remain disabled")
 
+    automatic_writers: list[str] = []
     for path in workflows:
         text = path.read_text(encoding="utf-8")
         name = path.name
@@ -55,13 +55,18 @@ def main() -> None:
             if "validate_production_artifact.py create-metadata" not in text:
                 failures.append(f"{name}: producer does not emit schema 2 metadata")
 
-        writer_allowed = name in {PUBLISHER, ROLLBACK} | LEGACY_WRITER_EXCEPTIONS
-        if (has_write or has_commit or has_push) and not writer_allowed:
-            failures.append(f"{name}: unapproved repository writer")
+        if has_write or has_commit or has_push:
+            if name not in {PUBLISHER, ROLLBACK}:
+                failures.append(f"{name}: unapproved repository writer")
+            elif name == PUBLISHER:
+                automatic_writers.append(name)
         if dispatches_pages and name not in DISPATCH_ALLOWLIST:
             failures.append(f"{name}: unapproved Pages dispatcher")
         if OLD_HOSTNAME in text:
             failures.append(f"{name}: references obsolete production hostname")
+
+    if automatic_writers != [PUBLISHER]:
+        failures.append(f"automatic production writers must be exactly [{PUBLISHER!r}], got {automatic_writers}")
 
     publisher = (WORKFLOW_DIR / PUBLISHER).read_text(encoding="utf-8")
     for token in (
@@ -69,6 +74,7 @@ def main() -> None:
         "cancel-in-progress: false",
         '"Refresh Live Data v10 PR3"',
         '"Refresh Market Pulse v9.6"',
+        '"Update static fundamental data"',
         "validate_production_artifact.py validate",
         "data/publisher-state.json",
         "git push origin HEAD:main",
@@ -87,7 +93,7 @@ def main() -> None:
 
     if failures:
         raise SystemExit("Workflow topology violations:\n- " + "\n- ".join(failures))
-    print("Workflow topology is valid. Temporary legacy writer exceptions: " + ", ".join(sorted(LEGACY_WRITER_EXCEPTIONS)))
+    print("Workflow topology is valid. Automatic production writers: Publish Production Data only; manual exception: Roll back Market Pulse data.")
 
 
 if __name__ == "__main__":
