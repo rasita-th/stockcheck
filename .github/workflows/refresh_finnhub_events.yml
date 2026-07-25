@@ -112,6 +112,9 @@ jobs:
             data/source_state \
             site/data \
             static/data \
+            ':(exclude)data/generated/market_pulse.json' \
+            ':(exclude)site/data/market_pulse.json' \
+            ':(exclude)static/data/market_pulse.json' \
             > publish-artifact/production-data.patch
           python - <<'PY'
           import json, os
