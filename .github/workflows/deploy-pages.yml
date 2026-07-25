@@ -4,27 +4,21 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths-ignore:
-      - ".github/deploy-receipt.json"
-  workflow_run:
-    workflows: ["Refresh Market Pulse v9.6 (safe)"]
-    types: [completed]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: stockcheck-pages-deploy
-  cancel-in-progress: true
+  group: production-publisher
+  cancel-in-progress: false
 
 env:
   TODAY_DEPLOY_VERSION: "10.7.1"
 
 jobs:
   build:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -251,15 +245,15 @@ jobs:
             grep -Fq 'er-relation-portfolio' /tmp/earnings-radar-pr4.css || return 1
             grep -Fq 'body.attention-active .workspace' /tmp/today-view-isolation.css || return 1
             grep -Fq 'body.attention-active .decision-screener' /tmp/today-view-isolation.css || return 1
-          grep -Fq 'body.attention-active.attention-p4-ready #attentionPageP4' /tmp/today-view-isolation.css || return 1
-          grep -Fq 'img.logo.dev/ticker/' /tmp/attention-pr4.js || return 1
-          grep -Fq 'syncStockDetailLogos' /tmp/final-ui-coordinator.js || return 1
-          grep -Fq 'StockcheckCompanyLogo' /tmp/final-ui-coordinator.js || return 1
-          grep -Fq '.stock-detail-company-logo' /tmp/final-ui-coordinator.css || return 1
-          grep -Fq 'fallback=404' /tmp/attention-pr4.js || return 1
-          grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' /tmp/attention-pr4.js || return 1
-          grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' /tmp/attention-pr4.js || return 1
-          grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' /tmp/attention-pr4.js || return 1
+            grep -Fq 'body.attention-active.attention-p4-ready #attentionPageP4' /tmp/today-view-isolation.css || return 1
+            grep -Fq 'img.logo.dev/ticker/' /tmp/attention-pr4.js || return 1
+            grep -Fq 'syncStockDetailLogos' /tmp/final-ui-coordinator.js || return 1
+            grep -Fq 'StockcheckCompanyLogo' /tmp/final-ui-coordinator.js || return 1
+            grep -Fq '.stock-detail-company-logo' /tmp/final-ui-coordinator.css || return 1
+            grep -Fq 'fallback=404' /tmp/attention-pr4.js || return 1
+            grep -Fq 'MAX_UNIQUE_LOGOS_PER_PAGE = 6' /tmp/attention-pr4.js || return 1
+            grep -Fq 'MAX_NON_DETAIL_LOGOS_PER_PAGE = 5' /tmp/attention-pr4.js || return 1
+            grep -Fq 'MAX_LOGO_ATTEMPTS_PER_BROWSER_MONTH = 60' /tmp/attention-pr4.js || return 1
             grep -Fq 'id="marketBriefing"' /tmp/market.html || return 1
             grep -Fq 'normaliseNarrative' /tmp/market.js || return 1
             ! grep -Fq 'Unverified report' /tmp/attention-pr4.js || return 1
@@ -281,6 +275,7 @@ jobs:
             exit 1
           fi
 
+          mkdir -p artifacts
           python - <<'PY'
           import json
           import os
@@ -318,7 +313,6 @@ jobs:
           health = attention.get('source_health') if isinstance(attention.get('source_health'), dict) else {}
           selected_date = str(radar.get('selected_date') or '')
           selected_summary = next((row for row in daily_summary if row.get('date') == selected_date), {})
-
           receipt = {
               'schema_version': '1.0',
               'status': 'verified',
@@ -340,7 +334,7 @@ jobs:
               'earnings_window_days_forward': int(window.get('days_forward') or 0),
               'production_smoke_passed': True,
           }
-          Path('/tmp/deploy-receipt.json').write_text(
+          Path('artifacts/deploy-receipt.json').write_text(
               json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
               encoding='utf-8',
           )
@@ -350,25 +344,10 @@ jobs:
           )
           PY
 
-      - name: Checkout main for deployment receipt
-        uses: actions/checkout@v4
+      - name: Upload verified deployment receipt
+        uses: actions/upload-artifact@v4
         with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Record verified production deployment
-        shell: bash
-        run: |
-          set -euo pipefail
-          cp /tmp/deploy-receipt.json .github/deploy-receipt.json
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/deploy-receipt.json
-          if git diff --cached --quiet; then
-            echo "Deployment receipt is unchanged."
-            exit 0
-          fi
-          git commit -m "Record verified PR4 Earnings Radar deployment"
-          git pull --rebase origin main
-          git push origin HEAD:main
-
+          name: production-deploy-receipt-${{ github.run_id }}
+          path: artifacts/deploy-receipt.json
+          if-no-files-found: error
+          retention-days: 30
