@@ -5,6 +5,7 @@ on:
     workflows:
       - "Refresh Finnhub Earnings Events"
       - "Refresh Finnhub Analyst Features"
+      - "Refresh Finnhub Full Backfill"
     types: [completed]
 
 permissions:
@@ -36,57 +37,56 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Validate producer metadata
-        shell: bash
+      - name: Validate source, hash, paths and replay state
+        id: contract
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          path = Path('/tmp/production-data/metadata.json')
-          metadata = json.loads(path.read_text(encoding='utf-8'))
-          expected_id = str(os.environ['SOURCE_RUN_ID'])
-          expected_sha = os.environ['SOURCE_SHA']
-          if metadata.get('schema_version') != '1.0':
-              raise SystemExit('Unsupported production artifact schema')
-          if str(metadata.get('producer_run_id')) != expected_id:
-              raise SystemExit('Producer run ID mismatch')
-          if metadata.get('producer_sha') != expected_sha:
-              raise SystemExit('Producer SHA mismatch')
-          print(f"Verified artifact from {metadata.get('producer')} run {expected_id}")
-          PY
-        env:
-          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
-          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          python scripts/validate_production_artifact.py validate \
+            --patch /tmp/production-data/production-data.patch \
+            --metadata /tmp/production-data/metadata.json \
+            --ledger data/publisher-state.json \
+            --repository "${{ github.repository }}" \
+            --workflow-name "${{ github.event.workflow_run.name }}" \
+            --run-id "${{ github.event.workflow_run.id }}" \
+            --run-attempt "${{ github.event.workflow_run.run_attempt }}" \
+            --source-sha "${{ github.event.workflow_run.head_sha }}" \
+            --branch "${{ github.event.workflow_run.head_branch }}" \
+            --event "${{ github.event.workflow_run.event }}"
 
       - name: Apply production patch atomically
         id: apply
-        shell: bash
+        if: steps.contract.outputs.status == 'READY'
         run: |
           set -euo pipefail
           patch=/tmp/production-data/production-data.patch
-          test -f "$patch"
-          if [ ! -s "$patch" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Producer completed with no data changes."
-            exit 0
-          fi
           git apply --check --3way "$patch"
           git apply --index --3way "$patch"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Validate merged production tree
-        if: steps.apply.outputs.changed == 'true'
+        if: steps.contract.outputs.status == 'READY'
         run: |
           python scripts/validate_static_data.py
           python scripts/validate_generated_data_v9_1.py
           python scripts/validate_attention_pr3.py
           python scripts/validate_earnings_radar.py
 
+      - name: Record publisher ledger
+        if: steps.contract.outputs.status == 'READY'
+        run: |
+          python scripts/validate_production_artifact.py record \
+            --ledger data/publisher-state.json \
+            --producer "${{ steps.contract.outputs.producer }}" \
+            --run-id "${{ steps.contract.outputs.run_id }}" \
+            --run-attempt "${{ steps.contract.outputs.run_attempt }}" \
+            --produced-at "${{ steps.contract.outputs.produced_at }}" \
+            --patch-sha256 "${{ steps.contract.outputs.patch_sha256 }}" \
+            --source-sha "${{ github.event.workflow_run.head_sha }}"
+          git add data/publisher-state.json
+
       - name: Commit and push through the single writer
-        if: steps.apply.outputs.changed == 'true'
+        if: steps.contract.outputs.status == 'READY'
         id: push
-        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -96,6 +96,7 @@ jobs:
             git fetch origin main
             if git rebase origin/main && git push origin HEAD:main; then
               echo "published=true" >> "$GITHUB_OUTPUT"
+              echo "published_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             git rebase --abort 2>/dev/null || true
@@ -115,4 +116,30 @@ jobs:
               workflow_id: 'deploy-pages.yml',
               ref: 'main',
             });
-            core.info('Dispatched deploy-pages.yml after the single publisher pushed main.');
+            core.info('Dispatched deploy-pages.yml after the hardened publisher pushed main.');
+
+      - name: Publish result summary
+        if: always()
+        env:
+          STATUS: ${{ steps.contract.outputs.status || 'REJECTED_OR_FAILED' }}
+          REASON: ${{ steps.contract.outputs.reason || 'artifact validation or publishing failed' }}
+          PRODUCER: ${{ steps.contract.outputs.producer || github.event.workflow_run.name }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          CHANGED_COUNT: ${{ steps.contract.outputs.changed_count || '0' }}
+          PATCH_SHA: ${{ steps.contract.outputs.patch_sha256 || 'unavailable' }}
+          PUBLISHED_SHA: ${{ steps.push.outputs.published_sha || 'none' }}
+          PAGES: ${{ steps.push.outputs.published == 'true' && 'yes' || 'no' }}
+        run: |
+          {
+            echo "## Production publisher result"
+            echo
+            echo "- Result: \`$STATUS\`"
+            echo "- Reason: $REASON"
+            echo "- Producer: $PRODUCER"
+            echo "- Producer run: $RUN_ID / attempt $RUN_ATTEMPT"
+            echo "- Changed paths: $CHANGED_COUNT"
+            echo "- Patch SHA-256: \`$PATCH_SHA\`"
+            echo "- Published commit: \`$PUBLISHED_SHA\`"
+            echo "- Pages dispatched: $PAGES"
+          } >> "$GITHUB_STEP_SUMMARY"

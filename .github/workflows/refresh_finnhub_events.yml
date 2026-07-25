@@ -31,19 +31,15 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
       - name: Seed canonical generated layer
         run: python scripts/build_generated_layer.py
-
       - name: Refresh free-tier Finnhub events with key A
         env:
           FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
@@ -51,20 +47,17 @@ jobs:
           FINNHUB_CALENDAR_TTL_HOURS: "3"
           FINNHUB_MIN_DELAY_SECONDS: "1.25"
         run: python scripts/run_finnhub_free_tier.py --mode events
-
       - name: Promote Finnhub contracts to canonical generated data
         run: |
           mkdir -p data/generated
           cp data/earnings_calendar.json data/generated/earnings_calendar.json
           cp data/eps_surprises.json data/generated/eps_surprises.json
           cp data/finnhub_features.json data/generated/finnhub_features.json
-
       - name: Generate market-wide earnings radar contract
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
         run: python scripts/generate_earnings_radar.py
-
       - name: Regenerate PR3 Today from refreshed earnings
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
@@ -75,17 +68,10 @@ jobs:
           ATTENTION_MAX_ITEMS: "7"
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
-
       - name: Test generated contracts
         run: |
-          python -m py_compile \
-            scripts/run_finnhub_free_tier.py \
-            scripts/generate_earnings_radar.py \
-            scripts/validate_earnings_radar.py
-          python -m unittest \
-            tests.test_finnhub_pipeline \
-            tests.test_finnhub_free_tier \
-            tests.test_earnings_radar
+          python -m py_compile scripts/run_finnhub_free_tier.py scripts/generate_earnings_radar.py scripts/validate_earnings_radar.py scripts/validate_production_artifact.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_earnings_radar
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python scripts/test_publish_generated_data.py
@@ -97,40 +83,20 @@ jobs:
           python scripts/validate_static_data.py
           python scripts/sync_attention_assets.py
           python scripts/check_ui_view_contract.py
-
-      - name: Build immutable production patch
-        shell: bash
+      - name: Build immutable production artifact
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- \
-            data/finnhub \
-            data/earnings_calendar.json \
-            data/eps_surprises.json \
-            data/finnhub_features.json \
-            data/generated \
-            data/source_state \
-            site/data \
-            static/data \
-            ':(exclude)data/generated/market_pulse.json' \
-            ':(exclude)site/data/market_pulse.json' \
-            ':(exclude)static/data/market_pulse.json' \
+          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data \
+            ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' \
             > publish-artifact/production-data.patch
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          Path('publish-artifact/metadata.json').write_text(json.dumps({
-              'schema_version': '1.0',
-              'producer': os.environ['GITHUB_WORKFLOW'],
-              'producer_run_id': os.environ['GITHUB_RUN_ID'],
-              'producer_sha': os.environ['GITHUB_SHA'],
-          }, indent=2) + '\n', encoding='utf-8')
-          PY
-
-      - name: Upload production patch
+          python scripts/validate_production_artifact.py create-metadata \
+            --patch publish-artifact/production-data.patch \
+            --metadata publish-artifact/metadata.json
+      - name: Upload production artifact
         uses: actions/upload-artifact@v4
         with:
           name: production-data-${{ github.run_id }}
           path: publish-artifact
           if-no-files-found: error
-          retention-days: 2
+          retention-days: 7

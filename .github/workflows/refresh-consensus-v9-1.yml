@@ -21,55 +21,36 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-
       - run: pip install -r requirements.txt
-
       - name: Refresh free-tier analyst queue with key B
         env:
           FINNHUB_API_KEY_ANALYST: ${{ secrets.FINNHUB_API_KEY_ANALYST || secrets.FINNHUB_API_KEY_2 || secrets.FINNHUB_API_KEY }}
           FINNHUB_ANALYST_MAX_CALLS_PER_RUN: "48"
           FINNHUB_MIN_DELAY_SECONDS: "1.25"
         run: python scripts/run_finnhub_free_tier.py --mode analyst
-
       - name: Validate analyst contracts
         run: |
-          python -m py_compile scripts/run_finnhub_free_tier.py
+          python -m py_compile scripts/run_finnhub_free_tier.py scripts/validate_production_artifact.py
           python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier
           python scripts/validate_static_data.py
-
-      - name: Build immutable production patch
-        shell: bash
+      - name: Build immutable production artifact
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- \
-            data/finnhub \
-            data/recommendation_trends.json \
-            data/finnhub_features.json \
-            site/data/recommendation_trends.json \
-            site/data/finnhub_features.json \
-            static/data/recommendation_trends.json \
-            static/data/finnhub_features.json \
+          git diff --binary HEAD -- data/finnhub data/recommendation_trends.json data/finnhub_features.json \
+            site/data/recommendation_trends.json site/data/finnhub_features.json \
+            static/data/recommendation_trends.json static/data/finnhub_features.json \
             > publish-artifact/production-data.patch
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          Path('publish-artifact/metadata.json').write_text(json.dumps({
-              'schema_version': '1.0',
-              'producer': os.environ['GITHUB_WORKFLOW'],
-              'producer_run_id': os.environ['GITHUB_RUN_ID'],
-              'producer_sha': os.environ['GITHUB_SHA'],
-          }, indent=2) + '\n', encoding='utf-8')
-          PY
-
-      - name: Upload production patch
+          python scripts/validate_production_artifact.py create-metadata \
+            --patch publish-artifact/production-data.patch \
+            --metadata publish-artifact/metadata.json
+      - name: Upload production artifact
         uses: actions/upload-artifact@v4
         with:
           name: production-data-${{ github.run_id }}
           path: publish-artifact
           if-no-files-found: error
-          retention-days: 2
+          retention-days: 7
