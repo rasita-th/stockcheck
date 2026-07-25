@@ -1,0 +1,57 @@
+name: Validate Single Production Publisher
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/refresh_finnhub_events.yml"
+      - ".github/workflows/refresh-consensus-v9-1.yml"
+      - ".github/workflows/publish-production-data.yml"
+      - ".github/workflows/validate-single-publisher.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/refresh_finnhub_events.yml"
+      - ".github/workflows/refresh-consensus-v9-1.yml"
+      - ".github/workflows/publish-production-data.yml"
+      - ".github/workflows/validate-single-publisher.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enforce single-writer contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          producers = [
+              Path('.github/workflows/refresh_finnhub_events.yml'),
+              Path('.github/workflows/refresh-consensus-v9-1.yml'),
+          ]
+          forbidden = ('contents: write', 'git push', 'git commit')
+          for path in producers:
+              text = path.read_text(encoding='utf-8')
+              for token in forbidden:
+                  if token in text:
+                      raise SystemExit(f'{path}: producer contains forbidden writer token {token!r}')
+              if 'actions/upload-artifact@v4' not in text:
+                  raise SystemExit(f'{path}: producer does not upload an immutable artifact')
+
+          publisher = Path('.github/workflows/publish-production-data.yml').read_text(encoding='utf-8')
+          required = (
+              'name: Publish Production Data',
+              'group: production-publisher',
+              'contents: write',
+              'git push origin HEAD:main',
+              "workflow_id: 'deploy-pages.yml'",
+          )
+          for token in required:
+              if token not in publisher:
+                  raise SystemExit(f'publisher contract missing {token!r}')
+          print('Single Finnhub production publisher contract is valid.')
+          PY

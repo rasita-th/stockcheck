@@ -13,15 +13,13 @@ on:
       - ".github/workflows/refresh_finnhub_events.yml"
       - ".github/refresh-finnhub-now"
   schedule:
-    # Batch calendar plus priority earnings queue every 3 hours.
     - cron: "17 */3 * * *"
 
 permissions:
-  contents: write
+  contents: read
 
-# Share the PR3 publisher lock so an event refresh cannot overwrite a live Today run.
 concurrency:
-  group: stockcheck-v10-live-${{ github.ref_name }}
+  group: finnhub-events-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -78,7 +76,7 @@ jobs:
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
 
-      - name: Test and publish generated contracts
+      - name: Test generated contracts
         run: |
           python -m py_compile \
             scripts/run_finnhub_free_tier.py \
@@ -100,44 +98,39 @@ jobs:
           python scripts/sync_attention_assets.py
           python scripts/check_ui_view_contract.py
 
-      - name: Publish Finnhub and Today contracts safely
+      - name: Build immutable production patch
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p publish-artifact
+          git diff --binary HEAD -- \
+            data/finnhub \
+            data/earnings_calendar.json \
+            data/eps_surprises.json \
+            data/finnhub_features.json \
+            data/generated \
+            data/source_state \
+            site/data \
+            static/data \
+            ':(exclude)data/generated/market_pulse.json' \
+            ':(exclude)site/data/market_pulse.json' \
+            ':(exclude)static/data/market_pulse.json' \
+            > publish-artifact/production-data.patch
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path('publish-artifact/metadata.json').write_text(json.dumps({
+              'schema_version': '1.0',
+              'producer': os.environ['GITHUB_WORKFLOW'],
+              'producer_run_id': os.environ['GITHUB_RUN_ID'],
+              'producer_sha': os.environ['GITHUB_SHA'],
+          }, indent=2) + '\n', encoding='utf-8')
+          PY
 
-          git add data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json
-          git add data/generated data/source_state site/data static/data
-          git reset -- data/generated/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json 2>/dev/null || true
-
-          if git diff --cached --quiet; then
-            echo "No Finnhub, earnings radar, or Today data changes."
-            exit 0
-          fi
-
-          git commit -m "Refresh Finnhub earnings radar and Today data"
-
-          # Tests and generators may leave untracked caches. Clean them before
-          # rebasing so Pages receipt commits cannot make git pull fail.
-          git reset --hard HEAD
-          git clean -fd
-          test -z "$(git status --porcelain)"
-
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if ! git rebase origin/main; then
-              git rebase --abort 2>/dev/null || true
-              echo "Rebase failed on attempt ${attempt}."
-              exit 1
-            fi
-            if git push origin HEAD:main; then
-              echo "Finnhub, earnings radar, and Today data pushed on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push race on attempt ${attempt}; retrying."
-            sleep $((attempt * 3))
-          done
-
-          echo "Unable to publish Finnhub, earnings radar, and Today data after three attempts."
-          exit 1
+      - name: Upload production patch
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-data-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 2
