@@ -20,6 +20,25 @@ class ProductionArtifactContractTests(unittest.TestCase):
             ["data/earnings_calendar.json", "site/data/attention_today.json"],
         )
 
+    def test_allowed_live_data_paths(self) -> None:
+        contract.validate_paths(
+            "Refresh Live Data v10 PR3",
+            [
+                "data/generated/attention_today.json",
+                "data/source_state/attention.json",
+                "site/data/technical.json",
+                "static/data/scanner.json",
+            ],
+        )
+
+    def test_live_data_cannot_publish_runtime_assets(self) -> None:
+        with self.assertRaises(SystemExit) as raised:
+            contract.validate_paths(
+                "Refresh Live Data v10 PR3",
+                ["static/attention-pr3.js"],
+            )
+        self.assertIn("REJECTED_PATH", str(raised.exception))
+
     def test_blocked_workflow_path(self) -> None:
         with self.assertRaises(SystemExit) as raised:
             contract.validate_paths(

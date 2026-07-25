@@ -11,16 +11,16 @@ PRODUCERS = {
     "refresh_finnhub_events.yml",
     "refresh-consensus-v9-1.yml",
     "refresh_finnhub_bundle.yml",
+    "refresh-live-v9-1.yml",
 }
-# Temporary, explicit migration debt. PR-B through PR-D must remove these names;
+# Temporary, explicit migration debt. PR-C and PR-D must remove these names;
 # new exceptions are forbidden.
 LEGACY_WRITER_EXCEPTIONS = {
-    "refresh-live-v9-1.yml",
     "refresh_market_live.yml",
     "refresh-market-pulse-v9-6.yml",
     "update-fundamental.yml",
 }
-DISPATCH_ALLOWLIST = {PUBLISHER, "deploy-pages-after-pr3.yml"}
+DISPATCH_ALLOWLIST = {PUBLISHER}
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
 
 
@@ -31,6 +31,8 @@ def main() -> None:
     missing = PRODUCERS - names
     if missing:
         failures.append(f"missing protected producer workflows: {sorted(missing)}")
+    if "deploy-pages-after-pr3.yml" in names:
+        failures.append("deploy-pages-after-pr3.yml: obsolete PR3 Pages bridge must be removed")
 
     for path in workflows:
         text = path.read_text(encoding="utf-8")
@@ -67,6 +69,7 @@ def main() -> None:
     required = (
         "group: production-publisher",
         "cancel-in-progress: false",
+        '"Refresh Live Data v10 PR3"',
         "validate_production_artifact.py validate",
         "data/publisher-state.json",
         "git push origin HEAD:main",

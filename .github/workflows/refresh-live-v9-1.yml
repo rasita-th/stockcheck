@@ -11,13 +11,11 @@ on:
     - cron: "17 */2 * * 0,6"
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: stockcheck-v10-live-${{ github.ref_name }}
-  cancel-in-progress: true
+  group: live-data-producer-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   refresh:
@@ -47,6 +45,7 @@ jobs:
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
@@ -98,11 +97,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
 
-      - name: Sync Today runtime assets
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/sync_attention_assets.py
-
-      - name: Generate health and publish
+      - name: Generate, publish and validate data mirrors
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
           python scripts/test_publish_generated_data.py
@@ -111,46 +106,32 @@ jobs:
           python scripts/validate_generated_data_v9_1.py
           python scripts/validate_attention_pr2.py
           python scripts/validate_attention_pr3.py
+          python scripts/validate_static_data.py
           python scripts/check_ui_view_contract.py
 
-      - name: Commit canonical generated data and runtime mirrors
+      - name: Build immutable live-data patch
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/generated data/source_state site/data static/data
-          git add static/attention-p0.js static/attention-p0.css static/attention-pr3.js static/attention-pr3.css
-          git add static/memo-only-fix.js static/memo-only-fix.css static/today-view-isolation.css
-          git reset -- data/generated/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No data or runtime mirror changes."
-            exit 0
-          fi
-          git commit -m "Refresh PR3 attention workflow data"
+          mkdir -p publish-artifact
+          git diff --binary HEAD -- \
+            data/generated \
+            data/source_state \
+            site/data \
+            static/data \
+            ':(exclude)data/generated/market_pulse.json' \
+            ':(exclude)site/data/market_pulse.json' \
+            ':(exclude)static/data/market_pulse.json' \
+            > publish-artifact/production-data.patch
+          python scripts/validate_production_artifact.py create-metadata \
+            --patch publish-artifact/production-data.patch \
+            --metadata publish-artifact/metadata.json
 
-          # The generated-data commit now contains every intended publication.
-          # Discard intentionally excluded working-tree changes (for example
-          # market_pulse.json) so Git can rebase cleanly onto receipt commits.
-          echo "Working tree before cleanup:"
-          git status --short
-          git reset --hard HEAD
-          git clean -fd
-          test -z "$(git status --porcelain)"
-
-          # Pages or audit workflows may write receipt commits while this slower
-          # refresh is running. Rebase the generated-data commit onto the latest
-          # branch before pushing so those receipts cannot reject the refresh.
-          for attempt in 1 2 3; do
-            git fetch origin "${GITHUB_REF_NAME}"
-            git rebase "origin/${GITHUB_REF_NAME}"
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
-              echo "Refresh data pushed successfully on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push race on attempt ${attempt}; retrying after fetching latest main."
-            git rebase --abort 2>/dev/null || true
-            sleep $((attempt * 3))
-          done
-          echo "Unable to push refreshed data after three attempts."
-          exit 1
+      - name: Upload immutable live-data artifact
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-data-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 7
