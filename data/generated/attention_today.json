@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-26T21:14:55+00:00",
+  "updated_at": "2026-07-26T22:14:18+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 16,
+  "total_events": 18,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 4
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
-      "errors": 0
+      "ok": 5,
+      "partial": 4,
+      "errors": 1
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -508,10 +508,10 @@
       ]
     },
     {
-      "ticker": "NOW",
-      "name": "ServiceNow, Inc.",
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
       "portfolio_status": "holding",
-      "role": "Enterprise software",
+      "role": "Core quality",
       "priority": "Watch",
       "priority_score": 32,
       "why_today": [
@@ -519,158 +519,124 @@
       ],
       "event_type": "earnings",
       "event_subtype": "guidance",
-      "event_time": "2026-07-23T00:45:00+00:00",
+      "event_time": "2026-07-26T21:30:00+00:00",
       "verification_status": "unverified",
       "source_status": "secondary",
       "source": {
         "type": "gdelt",
         "quality": "secondary",
-        "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-        "published_at": "2026-07-23T00:45:00+00:00",
-        "domain": "www.thestar.com.my"
+        "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+        "published_at": "2026-07-26T21:30:00+00:00",
+        "domain": "www.irishsun.com"
       },
-      "price": 98.78,
+      "price": 319.74,
       "day_change_pct": null,
-      "relative_volume": 1.19,
+      "relative_volume": 0.93,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "event:NOW:213c2c40afd30cfc",
-          "ticker": "NOW",
+          "event_id": "event:GOOGL:f67f75178c255e9c",
+          "ticker": "GOOGL",
           "event_type": "earnings",
           "event_subtype": "guidance",
-          "headline": "ServiceNow raises annual subscription revenue forecast again on AI - driven demand",
+          "headline": "Verizon lifts outlook as Google signs $1 billion fiber pact",
           "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
           "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
           "materiality": "low",
           "reported_materiality": "high",
           "urgency": "developing",
-          "event_time": "2026-07-23T00:45:00+00:00",
-          "detected_at": "2026-07-23T08:44:48+00:00",
+          "event_time": "2026-07-26T21:30:00+00:00",
+          "detected_at": "2026-07-26T22:12:26+00:00",
           "verification_status": "unverified",
           "verification_level": "corroborated_secondary",
           "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
           "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: ServiceNow",
-          "dedupe_key": "NOW:guidance:2026-07-23:42f41140388f",
+          "entity_confidence_reason": "headline contains alias: Google",
+          "dedupe_key": "GOOGL:guidance:2026-07-26:ac16081ab881",
           "source": {
             "type": "gdelt",
             "quality": "secondary",
-            "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-            "published_at": "2026-07-23T00:45:00+00:00",
-            "domain": "www.thestar.com.my"
+            "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+            "published_at": "2026-07-26T21:30:00+00:00",
+            "domain": "www.irishsun.com"
           },
           "source_chain": [
             {
               "type": "gdelt",
               "quality": "secondary",
-              "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-              "published_at": "2026-07-23T00:45:00+00:00",
-              "domain": "www.thestar.com.my"
+              "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:30:00+00:00",
+              "domain": "www.irishsun.com"
             },
             {
               "type": "gdelt",
               "quality": "secondary",
-              "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
-              "published_at": "2026-07-23T17:30:00+00:00",
-              "domain": "www.proactiveinvestors.com"
+              "url": "http://www.albuquerqueexpress.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:45:00+00:00",
+              "domain": "www.albuquerqueexpress.com"
+            },
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "http://www.newzealandstar.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:30:00+00:00",
+              "domain": "www.newzealandstar.com"
             }
           ],
-          "secondary_source_count": 2,
+          "secondary_source_count": 3,
           "related_event_ids": [
-            "event:NOW:213c2c40afd30cfc"
+            "event:GOOGL:f67f75178c255e9c"
           ],
           "priority_score": 32,
           "priority": "Watch"
         },
         {
-          "event_id": "gdelt:NOW:3573fdce18d8e9a6",
-          "ticker": "NOW",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "ServiceNow Analysts Increase Their Forecasts After Better - Than - Expected Q2 Earnings - ServiceNow ( NYSE : NO",
+          "event_id": "gdelt:GOOGL:39f34c885517df85",
+          "ticker": "GOOGL",
+          "event_type": "regulatory",
+          "event_subtype": "regulatory",
+          "headline": "Trump calls EU Google fine illegal , orders US investigation",
           "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
           "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
           "materiality": "low",
           "reported_materiality": "high",
           "urgency": "developing",
-          "event_time": "2026-07-23T14:45:00+00:00",
-          "detected_at": "2026-07-23T22:52:27+00:00",
+          "event_time": "2026-07-26T21:45:00+00:00",
+          "detected_at": "2026-07-26T22:12:26+00:00",
           "verification_status": "unverified",
           "verification_level": "unverified_report",
           "verification_reason": "Primary source not yet located.",
           "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: ServiceNow",
-          "dedupe_key": "NOW:guidance:2026-07-23:02f3f030201b",
+          "entity_confidence_reason": "headline contains alias: Google",
+          "dedupe_key": "GOOGL:regulatory:2026-07-26:48557db1a4ac",
           "source": {
             "type": "gdelt",
             "quality": "secondary",
-            "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
-            "published_at": "2026-07-23T14:45:00+00:00",
-            "domain": "www.benzinga.com"
+            "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
+            "published_at": "2026-07-26T21:45:00+00:00",
+            "domain": "www.texasguardian.com"
           },
           "source_chain": [
             {
               "type": "gdelt",
               "quality": "secondary",
-              "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
-              "published_at": "2026-07-23T14:45:00+00:00",
-              "domain": "www.benzinga.com"
+              "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
+              "published_at": "2026-07-26T21:45:00+00:00",
+              "domain": "www.texasguardian.com"
             }
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "gdelt:NOW:3573fdce18d8e9a6"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:NOW:dcbc17ad006bb8f6",
-          "ticker": "NOW",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "ServiceNow seen delivering solid second quarter results with guidance increase possible",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-21T20:00:00+00:00",
-          "detected_at": "2026-07-21T21:38:33+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: ServiceNow",
-          "dedupe_key": "NOW:guidance:2026-07-21:8c1fb17cde47",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
-            "published_at": "2026-07-21T20:00:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-seen-delivering-solid-second-192200819.html",
-              "published_at": "2026-07-21T20:00:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:NOW:dcbc17ad006bb8f6"
+            "gdelt:GOOGL:39f34c885517df85"
           ],
           "priority_score": 32,
           "priority": "Watch"
         }
       ],
       "actions": {
-        "primary_source": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-NOW/",
+        "primary_source": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+        "company_ir": "https://abc.xyz/investor/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
         "raw_data": "data/technical.json"
       },
       "severity": "medium",
@@ -679,17 +645,17 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-23T22:54:32+00:00",
-        "active_days": 3
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-26T22:14:18+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 91.88,
-        "current_price": 98.78,
-        "change_pct": 7.51,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.5%"
+        "baseline_price": 319.74,
+        "current_price": 319.74,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 48,
       "personalization_reasons": [
@@ -890,103 +856,63 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RR",
+      "ticker": "ASTS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ZETA",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ZETA",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
-      "message": "GDELT response unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BEAM",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "BEAM",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NOW",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "INDI",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "INDI",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     }
   ],
@@ -1000,8 +926,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 15,
+    "newly_discovered_event_count": 4,
+    "active_discovered_event_count": 19,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1064,7 +990,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T21:14:55+00:00",
+          "detected_at": "2026-07-26T22:14:18+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1163,7 +1089,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T21:14:55+00:00",
+          "detected_at": "2026-07-26T22:14:18+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1262,7 +1188,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T21:14:55+00:00",
+          "detected_at": "2026-07-26T22:14:18+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1326,14 +1252,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "event:NOW:213c2c40afd30cfc",
+      "ticker": "NOW",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-26T22:14:18+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "gdelt:TEM:041c59d1183fd730",
       "ticker": "TEM",
@@ -1401,14 +1335,6 @@
     {
       "history_key": "technical:EOSE:technical_risk:2026-07-23",
       "ticker": "EOSE",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-07-24T14:07:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OPEN:technical_risk:2026-07-23",
-      "ticker": "OPEN",
       "event_subtype": "technical_risk",
       "priority": "Watch",
       "resolved_at": "2026-07-24T14:07:22+00:00",
