@@ -125,10 +125,8 @@ jobs:
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: python scripts/validate_static_data.py
 
-      - name: Validate UI data contract
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/check_ui_view_contract.py
-
+      # Runtime JS/CSS contracts are validated in PR CI and Pages preflight.
+      # This producer owns generated data only and must not sync runtime assets.
       - name: Build immutable live-data patch
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
