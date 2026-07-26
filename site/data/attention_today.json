@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-26T16:16:39+00:00",
+  "updated_at": "2026-07-26T17:19:19+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 15,
+  "total_events": 16,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,30 +43,30 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 4,
+      "errors": 6
     },
     "regulators": {
-      "status": "partial",
+      "status": "ok",
       "source": "Official regulator pages",
       "checked": 4,
-      "ok": 3,
+      "ok": 4,
       "partial": 0,
-      "errors": 1,
+      "errors": 0,
       "accepted_events": 0
     }
   },
@@ -409,6 +409,105 @@
       ]
     },
     {
+      "ticker": "ASTS",
+      "name": "AST SpaceMobile, Inc.",
+      "portfolio_status": "holding",
+      "role": "Space communications",
+      "priority": "Watch",
+      "priority_score": 50,
+      "why_today": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "corporate_event",
+      "event_subtype": "capital_raise",
+      "event_time": "2026-07-26T15:30:00+00:00",
+      "verification_status": "unverified",
+      "source_status": "secondary",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.foreignpolicyjournal.com/2026/07/26/ast-spacemobile-nasdaq-asts-drops-after-closing-1b-convertible-note-offering-as-fair-value-debate-intensifies",
+        "published_at": "2026-07-26T15:30:00+00:00",
+        "domain": "www.foreignpolicyjournal.com"
+      },
+      "price": 56.2,
+      "day_change_pct": null,
+      "relative_volume": 0.59,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "gdelt:ASTS:77d3f984a384e9f9",
+          "ticker": "ASTS",
+          "event_type": "corporate_event",
+          "event_subtype": "capital_raise",
+          "headline": "AST SpaceMobile ( NASDAQ : ASTS ) Drops After Closing $1B Convertible Note Offering As Fair Value Debate Intensifies",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-26T15:30:00+00:00",
+          "detected_at": "2026-07-26T17:17:20+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AST SpaceMobile",
+          "dedupe_key": "ASTS:capital_raise:2026-07-26:c39e1dd85d9e",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.foreignpolicyjournal.com/2026/07/26/ast-spacemobile-nasdaq-asts-drops-after-closing-1b-convertible-note-offering-as-fair-value-debate-intensifies",
+            "published_at": "2026-07-26T15:30:00+00:00",
+            "domain": "www.foreignpolicyjournal.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.foreignpolicyjournal.com/2026/07/26/ast-spacemobile-nasdaq-asts-drops-after-closing-1b-convertible-note-offering-as-fair-value-debate-intensifies",
+              "published_at": "2026-07-26T15:30:00+00:00",
+              "domain": "www.foreignpolicyjournal.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:ASTS:77d3f984a384e9f9"
+          ],
+          "priority_score": 50,
+          "priority": "Risk"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://www.foreignpolicyjournal.com/2026/07/26/ast-spacemobile-nasdaq-asts-drops-after-closing-1b-convertible-note-offering-as-fair-value-debate-intensifies",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "capital_raise",
+      "signals": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-26T17:19:19+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 56.2,
+        "current_price": 56.2,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 63,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
+      ]
+    },
+    {
       "ticker": "NOW",
       "name": "ServiceNow, Inc.",
       "portfolio_status": "holding",
@@ -596,189 +695,6 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "earnings +8"
-      ]
-    },
-    {
-      "ticker": "TEM",
-      "name": "Tempus AI, Inc.",
-      "portfolio_status": "holding",
-      "role": "Healthcare AI",
-      "priority": "Watch",
-      "priority_score": 32,
-      "why_today": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "transaction",
-      "event_time": "2026-07-21T12:15:00+00:00",
-      "verification_status": "unverified",
-      "source_status": "secondary",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-        "published_at": "2026-07-21T12:15:00+00:00",
-        "domain": "finance.yahoo.com"
-      },
-      "price": 42.69,
-      "day_change_pct": null,
-      "relative_volume": 1.04,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "gdelt:TEM:041c59d1183fd730",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-21T12:15:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-            "published_at": "2026-07-21T12:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-              "published_at": "2026-07-21T12:15:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:041c59d1183fd730"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:TEM:5792584a5b1b7500",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "M & A : Tempus AI to Acquire Personalis for $1 . 5B to Expand Precision Oncology and MRD Monitoring",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-24T07:30:00+00:00",
-          "detected_at": "2026-07-24T11:11:30+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-24:2edd493fb1b1",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://hitconsultant.net/2026/07/20/tempus-ai-acquires-personalis-1-5-billion-precision-oncology-mrd",
-            "published_at": "2026-07-24T07:30:00+00:00",
-            "domain": "hitconsultant.net"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://hitconsultant.net/2026/07/20/tempus-ai-acquires-personalis-1-5-billion-precision-oncology-mrd",
-              "published_at": "2026-07-24T07:30:00+00:00",
-              "domain": "hitconsultant.net"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:5792584a5b1b7500"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:TEM:c93fc43baf85e769",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-20T17:45:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-            "published_at": "2026-07-20T17:45:00+00:00",
-            "domain": "www.rttnews.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-              "published_at": "2026-07-20T17:45:00+00:00",
-              "domain": "www.rttnews.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:c93fc43baf85e769"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "transaction",
-      "signals": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-23T08:46:55+00:00",
-        "active_days": 3
-      },
-      "impact": {
-        "baseline_price": 46.69,
-        "current_price": 42.69,
-        "change_pct": -8.57,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.6%"
-      },
-      "personal_priority_score": 45,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
       ]
     }
   ],
@@ -975,88 +891,73 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "TSLA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
+      "ticker": "NBIS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TEM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TE",
+      "ticker": "MP",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "INDI",
+      "ticker": "IONQ",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
+      "ticker": "IONQ",
       "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RKLB",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "IREN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "IREN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "regulator",
-      "ticker": "OKLO,MP,EQT,EOSE,UUUU,PSIX,TMC,TE",
-      "message": "U.S. Department of Energy source unavailable"
     }
   ],
   "data_quality": {
@@ -1069,8 +970,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 14,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 15,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1133,7 +1034,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T16:16:39+00:00",
+          "detected_at": "2026-07-26T17:19:19+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1232,7 +1133,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T16:16:39+00:00",
+          "detected_at": "2026-07-26T17:19:19+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1331,7 +1232,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-24",
-          "detected_at": "2026-07-26T16:16:39+00:00",
+          "detected_at": "2026-07-26T17:19:19+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1395,14 +1296,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "gdelt:TEM:041c59d1183fd730",
+      "ticker": "TEM",
+      "event_subtype": "transaction",
+      "priority": "Watch",
+      "resolved_at": "2026-07-26T17:19:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:CIFR:technical_setup:2026-07-24",
       "ticker": "CIFR",
@@ -1473,14 +1382,6 @@
       "event_subtype": "technical_risk",
       "priority": "Watch",
       "resolved_at": "2026-07-24T14:07:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "gdelt:NOW:36db8505b0676ae4",
-      "ticker": "NOW",
-      "event_subtype": "guidance",
-      "priority": "Watch",
-      "resolved_at": "2026-07-23T22:54:32+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
