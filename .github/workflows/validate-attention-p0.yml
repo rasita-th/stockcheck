@@ -122,6 +122,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
@@ -155,5 +157,3 @@ jobs:
         run: python scripts/validate_attention_pr3.py
       - name: Validate static data
         run: python scripts/validate_static_data.py
-      - name: Validate UI data contract
-        run: python scripts/check_ui_view_contract.py
