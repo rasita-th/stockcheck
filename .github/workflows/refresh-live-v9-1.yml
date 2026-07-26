@@ -97,17 +97,37 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
 
-      - name: Generate, publish and validate data mirrors
+      - name: Test generated-data publication
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: |
-          python scripts/test_publish_generated_data.py
-          python scripts/generate_health.py
-          python scripts/publish_generated_data.py
-          python scripts/validate_generated_data_v9_1.py
-          python scripts/validate_attention_pr2.py
-          python scripts/validate_attention_pr3.py
-          python scripts/validate_static_data.py
-          python scripts/check_ui_view_contract.py
+        run: python scripts/test_publish_generated_data.py
+
+      - name: Generate data health
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/generate_health.py
+
+      - name: Publish generated mirrors
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/publish_generated_data.py
+
+      - name: Validate generated-data contract
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/validate_generated_data_v9_1.py
+
+      - name: Validate legacy PR2 compatibility
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/validate_attention_pr2.py
+
+      - name: Validate current PR3 contract
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/validate_attention_pr3.py
+
+      - name: Validate static data
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/validate_static_data.py
+
+      - name: Validate UI data contract
+        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/check_ui_view_contract.py
 
       - name: Build immutable live-data patch
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
