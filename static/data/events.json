@@ -1,9 +1,183 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-27T15:14:47+00:00",
-  "row_count": 17,
+  "generated_at": "2026-07-27T16:03:41+00:00",
+  "row_count": 18,
   "events": [
+    {
+      "event_id": "company_ir:RKLB:dcaab389569d1ef4",
+      "ticker": "RKLB",
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "headline": "Rocket Lab Awarded Record $266M Missile Defense Contract with U.S. Space Force for Suborbital Launches",
+      "summary": "A material agreement event was detected and requires source review.",
+      "why_today": "A material agreement event was detected and requires source review.",
+      "materiality": "medium",
+      "reported_materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-27T16:01:08+00:00",
+      "detected_at": "2026-07-27T16:01:08+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:material_agreement:2026-07-27:9ab91732ba24",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
+        "published_at": "2026-07-27T16:01:08+00:00",
+        "domain": "investors.rocketlabusa.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
+          "published_at": "2026-07-27T16:01:08+00:00",
+          "domain": "investors.rocketlabusa.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "company_ir:RKLB:dcaab389569d1ef4"
+      ],
+      "priority_score": 80,
+      "priority": "Risk"
+    },
+    {
+      "event_id": "technical:TSLA:technical_risk:2026-07-27",
+      "ticker": "TSLA",
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "headline": "Latest technical scan · 9/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 27.3, -17.0% vs EMA20, -23.3% vs EMA200, volume 0.52x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-27",
+      "detected_at": "2026-07-27T16:03:41+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-27"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-07-27"
+        }
+      ],
+      "technical_score": 9.0,
+      "technical_signal": "AVOID / Turnaround only",
+      "scan_age_days": 0,
+      "rsi14": 27.27,
+      "pct_vs_ema20": -16.97,
+      "pct_vs_ema200": -23.28,
+      "volume_ratio20": 0.52,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:TSLA:technical_risk:2026-07-27"
+      ],
+      "dedupe_key": "TSLA:technical_risk:b35a5192e995daf1",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
+      "event_id": "technical:EOSE:technical_risk:2026-07-27",
+      "ticker": "EOSE",
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "headline": "Latest technical scan · 9/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 27.2, -22.7% vs EMA20, -60.0% vs EMA200, volume 0.51x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-27",
+      "detected_at": "2026-07-27T16:03:41+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-27"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-07-27"
+        }
+      ],
+      "technical_score": 9.0,
+      "technical_signal": "AVOID / Turnaround only",
+      "scan_age_days": 0,
+      "rsi14": 27.18,
+      "pct_vs_ema20": -22.74,
+      "pct_vs_ema200": -59.95,
+      "volume_ratio20": 0.51,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:EOSE:technical_risk:2026-07-27"
+      ],
+      "dedupe_key": "EOSE:technical_risk:e59a22354ac5119e",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
+      "event_id": "technical:OKLO:technical_risk:2026-07-27",
+      "ticker": "OKLO",
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "headline": "Latest technical scan · 9/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 32.7, -12.4% vs EMA20, -44.9% vs EMA200, volume 0.47x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-07-27",
+      "detected_at": "2026-07-27T16:03:41+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-27"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-07-27"
+        }
+      ],
+      "technical_score": 9.0,
+      "technical_signal": "AVOID / Turnaround only",
+      "scan_age_days": 0,
+      "rsi14": 32.66,
+      "pct_vs_ema20": -12.42,
+      "pct_vs_ema200": -44.85,
+      "volume_ratio20": 0.47,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:OKLO:technical_risk:2026-07-27"
+      ],
+      "dedupe_key": "OKLO:technical_risk:26200fe2c55c53ec",
+      "priority_score": 68,
+      "priority": "Action"
+    },
     {
       "event_id": "gdelt:GOOGL:39f34c885517df85",
       "ticker": "GOOGL",
@@ -226,138 +400,6 @@
         "gdelt:TEM:5792584a5b1b7500"
       ],
       "priority_score": 32,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "technical:TMC:technical_risk:2026-07-24",
-      "ticker": "TMC",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 34.4, -10.9% vs EMA20, -35.2% vs EMA200, volume 0.92x 20-day average.",
-      "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-07-24",
-      "detected_at": "2026-07-27T15:14:47+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-24"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-07-24"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 3,
-      "rsi14": 34.43,
-      "pct_vs_ema20": -10.92,
-      "pct_vs_ema200": -35.16,
-      "volume_ratio20": 0.92,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:TMC:technical_risk:2026-07-24"
-      ],
-      "dedupe_key": "TMC:technical_risk:73c884fef0ae2af6",
-      "priority_score": 48,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "technical:RR:technical_risk:2026-07-24",
-      "ticker": "RR",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 32.4, -12.4% vs EMA20, -46.2% vs EMA200, volume 0.89x 20-day average.",
-      "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-07-24",
-      "detected_at": "2026-07-27T15:14:47+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-24"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-07-24"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 3,
-      "rsi14": 32.43,
-      "pct_vs_ema20": -12.43,
-      "pct_vs_ema200": -46.18,
-      "volume_ratio20": 0.89,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:RR:technical_risk:2026-07-24"
-      ],
-      "dedupe_key": "RR:technical_risk:5530be0e3b4b90a7",
-      "priority_score": 48,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "technical:UUUU:technical_risk:2026-07-24",
-      "ticker": "UUUU",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-07-24: score 9/100, AVOID / Turnaround only, RSI 31.3, -13.1% vs EMA20, -31.3% vs EMA200, volume 0.82x 20-day average.",
-      "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-07-24",
-      "detected_at": "2026-07-27T15:14:47+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-24"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-07-24"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 3,
-      "rsi14": 31.29,
-      "pct_vs_ema20": -13.08,
-      "pct_vs_ema200": -31.27,
-      "volume_ratio20": 0.82,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:UUUU:technical_risk:2026-07-24"
-      ],
-      "dedupe_key": "UUUU:technical_risk:7bf9d659f8257a94",
-      "priority_score": 48,
       "priority": "Watch"
     },
     {
