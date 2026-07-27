@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-27T20:52:21+00:00",
-  "active_count": 20,
+  "updated_at": "2026-07-27T22:04:20+00:00",
+  "active_count": 21,
   "events": {
     "company_ir:AMD:80607c6dd9d7c0f6": {
       "event": {
@@ -128,6 +128,48 @@
       "first_seen_at": "2026-07-26T17:19:19+00:00",
       "last_seen_at": "2026-07-26T17:19:19+00:00",
       "expires_at": "2026-08-02T17:19:19+00:00"
+    },
+    "gdelt:COST:1db038cf7e87931b": {
+      "event": {
+        "event_id": "gdelt:COST:1db038cf7e87931b",
+        "ticker": "COST",
+        "event_type": "litigation",
+        "event_subtype": "litigation",
+        "headline": "Costco reaches $14 million settlement over misleading promo emails",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "medium",
+        "urgency": "developing",
+        "event_time": "2026-07-27T13:15:00+00:00",
+        "detected_at": "2026-07-27T22:02:14+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: Costco",
+        "dedupe_key": "COST:litigation:2026-07-27:5442faa0e281",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
+          "published_at": "2026-07-27T13:15:00+00:00",
+          "domain": "finance.yahoo.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
+            "published_at": "2026-07-27T13:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-07-27T22:04:20+00:00",
+      "last_seen_at": "2026-07-27T22:04:20+00:00",
+      "expires_at": "2026-08-10T22:04:20+00:00"
     },
     "gdelt:GOOGL:0782cea33921de2a": {
       "event": {
