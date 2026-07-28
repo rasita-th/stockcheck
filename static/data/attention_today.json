@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-28T13:21:31+00:00",
+  "updated_at": "2026-07-28T21:24:31+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 21,
+  "total_events": 19,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 1
+      "accepted_events": 0
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
-      "errors": 0
+      "ok": 5,
+      "partial": 4,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 2,
-      "errors": 8
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -547,7 +547,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T13:21:31+00:00",
+          "detected_at": "2026-07-28T21:24:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -578,48 +578,6 @@
           ],
           "dedupe_key": "TEM:technical_risk:9b1b988ecc3d88d0",
           "priority_score": 48,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:TEM:041c59d1183fd730",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-21T12:15:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-            "published_at": "2026-07-21T12:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
-              "published_at": "2026-07-21T12:15:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:041c59d1183fd730"
-          ],
-          "priority_score": 32,
           "priority": "Watch"
         },
         {
@@ -663,48 +621,6 @@
           ],
           "priority_score": 32,
           "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:TEM:c93fc43baf85e769",
-          "ticker": "TEM",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-20T17:45:00+00:00",
-          "detected_at": "2026-07-21T16:41:36+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Tempus AI",
-          "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-            "published_at": "2026-07-20T17:45:00+00:00",
-            "domain": "www.rttnews.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.rttnews.com/story.aspx?Id=3668435",
-              "published_at": "2026-07-20T17:45:00+00:00",
-              "domain": "www.rttnews.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:TEM:c93fc43baf85e769"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
         }
       ],
       "actions": {
@@ -719,9 +635,9 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-28T13:21:31+00:00",
         "active_days": 0
       },
@@ -774,7 +690,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T13:21:31+00:00",
+          "detected_at": "2026-07-28T21:24:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1229,94 +1145,74 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RR",
+      "ticker": "ASTS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ZETA",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ZETA",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "TSLA",
       "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "COST",
-      "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "BEAM",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "INDI",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
     }
   ],
   "data_quality": {
@@ -1329,8 +1225,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 1,
-    "active_discovered_event_count": 22,
+    "newly_discovered_event_count": 0,
+    "active_discovered_event_count": 20,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1393,7 +1289,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T13:21:31+00:00",
+          "detected_at": "2026-07-28T21:24:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1457,10 +1353,10 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
