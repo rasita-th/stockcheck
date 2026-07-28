@@ -65,9 +65,9 @@ jobs:
             tests.test_finnhub_free_tier \
             tests.test_finnhub_compaction \
             tests.test_earnings_radar
-      - name: Compact current Finnhub data in dry-run mode
-        run: python scripts/compact_finnhub_state.py --check
-      - name: Enforce current repository size budgets
+      - name: Rehearse Finnhub compaction on current data
+        run: python scripts/compact_finnhub_state.py --write
+      - name: Enforce compacted repository size budgets
         run: |
           python scripts/check_generated_file_sizes.py \
             data/finnhub/state.json \
