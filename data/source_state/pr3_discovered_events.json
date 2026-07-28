@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-28T11:36:49+00:00",
-  "active_count": 21,
+  "updated_at": "2026-07-28T13:21:31+00:00",
+  "active_count": 22,
   "events": {
     "company_ir:AMD:80607c6dd9d7c0f6": {
       "event": {
@@ -674,6 +674,48 @@
       "first_seen_at": "2026-07-24T23:46:25+00:00",
       "last_seen_at": "2026-07-24T23:46:25+00:00",
       "expires_at": "2026-07-31T23:46:25+00:00"
+    },
+    "gdelt:TE:dc7582183fddbccb": {
+      "event": {
+        "event_id": "gdelt:TE:dc7582183fddbccb",
+        "ticker": "TE",
+        "event_type": "corporate_event",
+        "event_subtype": "transaction",
+        "headline": "T1 Energy Inc .: T1 Announces Acquisition of Advanced Solar Intellectual Property Rights from Evervolt",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-07-28T10:45:00+00:00",
+        "detected_at": "2026-07-28T13:19:10+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: T1 Energy Inc.",
+        "dedupe_key": "TE:transaction:2026-07-28:cb27bbf86ed2",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.finanznachrichten.de/nachrichten-2026-07/69142212-t1-energy-inc-t1-announces-acquisition-of-advanced-solar-intellectual-property-rights-from-evervolt-399.htm",
+          "published_at": "2026-07-28T10:45:00+00:00",
+          "domain": "www.finanznachrichten.de"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.finanznachrichten.de/nachrichten-2026-07/69142212-t1-energy-inc-t1-announces-acquisition-of-advanced-solar-intellectual-property-rights-from-evervolt-399.htm",
+            "published_at": "2026-07-28T10:45:00+00:00",
+            "domain": "www.finanznachrichten.de"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-07-28T13:21:31+00:00",
+      "last_seen_at": "2026-07-28T13:21:31+00:00",
+      "expires_at": "2026-08-04T13:21:31+00:00"
     },
     "gdelt:TEM:041c59d1183fd730": {
       "event": {

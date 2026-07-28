@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-28T11:36:49+00:00",
+  "updated_at": "2026-07-28T13:21:31+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 20,
+  "total_events": 21,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
     "Risk": 1,
     "Action": 0,
-    "Watch": 3,
+    "Watch": 4,
     "Developing": 0
   },
   "source_health": {
@@ -43,14 +43,14 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
@@ -510,6 +510,233 @@
       ]
     },
     {
+      "ticker": "TEM",
+      "name": "Tempus AI, Inc.",
+      "portfolio_status": "holding",
+      "role": "Healthcare AI",
+      "priority": "Watch",
+      "priority_score": 48,
+      "why_today": [
+        "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 33.3, -16.1% vs EMA20, -29.3% vs EMA200, volume 0.79x 20-day average.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "event_time": "2026-07-27",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-07-27"
+      },
+      "price": 42.87,
+      "day_change_pct": null,
+      "relative_volume": 0.79,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:TEM:technical_risk:2026-07-27",
+          "ticker": "TEM",
+          "event_type": "technical",
+          "event_subtype": "technical_risk",
+          "headline": "Latest technical scan · 9/100",
+          "summary": "Technical context from the latest market scan; this is not a recommendation.",
+          "why_today": "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 33.3, -16.1% vs EMA20, -29.3% vs EMA200, volume 0.79x 20-day average.",
+          "materiality": "medium",
+          "urgency": "developing",
+          "event_time": "2026-07-27",
+          "detected_at": "2026-07-28T13:21:31+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": "2026-07-27"
+          },
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": "2026-07-27"
+            }
+          ],
+          "technical_score": 9.0,
+          "technical_signal": "AVOID / Turnaround only",
+          "scan_age_days": 1,
+          "rsi14": 33.29,
+          "pct_vs_ema20": -16.14,
+          "pct_vs_ema200": -29.28,
+          "volume_ratio20": 0.79,
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TEM:technical_risk:2026-07-27"
+          ],
+          "dedupe_key": "TEM:technical_risk:9b1b988ecc3d88d0",
+          "priority_score": 48,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:TEM:041c59d1183fd730",
+          "ticker": "TEM",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Tempus AI acquires Personalis in $1 . 5bn precision oncology - focused deal",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-21T12:15:00+00:00",
+          "detected_at": "2026-07-21T16:41:36+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Tempus AI",
+          "dedupe_key": "TEM:transaction:2026-07-21:f519cb070a09",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+            "published_at": "2026-07-21T12:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-acquires-personalis-1-114332140.html",
+              "published_at": "2026-07-21T12:15:00+00:00",
+              "domain": "finance.yahoo.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:TEM:041c59d1183fd730"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:TEM:5792584a5b1b7500",
+          "ticker": "TEM",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "M & A : Tempus AI to Acquire Personalis for $1 . 5B to Expand Precision Oncology and MRD Monitoring",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-24T07:30:00+00:00",
+          "detected_at": "2026-07-24T11:11:30+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Tempus AI",
+          "dedupe_key": "TEM:transaction:2026-07-24:2edd493fb1b1",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://hitconsultant.net/2026/07/20/tempus-ai-acquires-personalis-1-5-billion-precision-oncology-mrd",
+            "published_at": "2026-07-24T07:30:00+00:00",
+            "domain": "hitconsultant.net"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://hitconsultant.net/2026/07/20/tempus-ai-acquires-personalis-1-5-billion-precision-oncology-mrd",
+              "published_at": "2026-07-24T07:30:00+00:00",
+              "domain": "hitconsultant.net"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:TEM:5792584a5b1b7500"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:TEM:c93fc43baf85e769",
+          "ticker": "TEM",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Personalis Stock Falls 10 % After Agreeing To Acquisition Deal By Tempus AI",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-20T17:45:00+00:00",
+          "detected_at": "2026-07-21T16:41:36+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Tempus AI",
+          "dedupe_key": "TEM:transaction:2026-07-20:d457c97b6208",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+            "published_at": "2026-07-20T17:45:00+00:00",
+            "domain": "www.rttnews.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.rttnews.com/story.aspx?Id=3668435",
+              "published_at": "2026-07-20T17:45:00+00:00",
+              "domain": "www.rttnews.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:TEM:c93fc43baf85e769"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "technical_risk",
+      "signals": [
+        "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 33.3, -16.1% vs EMA20, -29.3% vs EMA200, volume 0.79x 20-day average.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-28T13:21:31+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 42.87,
+        "current_price": 42.87,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 56,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
       "ticker": "TSLA",
       "name": "Tesla, Inc.",
       "portfolio_status": "holding",
@@ -547,7 +774,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T11:36:49+00:00",
+          "detected_at": "2026-07-28T13:21:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1003,87 +1230,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -1097,8 +1329,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 21,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 22,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1119,110 +1351,11 @@
     "personal_priority": true
   },
   "technical_summary": {
-    "risk": 2,
+    "risk": 1,
     "setup": 0,
-    "total": 2
+    "total": 1
   },
   "technical_watch": [
-    {
-      "ticker": "MP",
-      "name": "MP Materials Corp.",
-      "portfolio_status": "holding",
-      "role": "Critical minerals",
-      "priority": "Watch",
-      "priority_score": 48,
-      "why_today": [
-        "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 32.1, -11.9% vs EMA20, -28.6% vs EMA200, volume 0.73x 20-day average."
-      ],
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "event_time": "2026-07-27",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-27"
-      },
-      "price": 42.87,
-      "day_change_pct": null,
-      "relative_volume": 0.73,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:MP:technical_risk:2026-07-27",
-          "ticker": "MP",
-          "event_type": "technical",
-          "event_subtype": "technical_risk",
-          "headline": "Latest technical scan · 9/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 32.1, -11.9% vs EMA20, -28.6% vs EMA200, volume 0.73x 20-day average.",
-          "materiality": "medium",
-          "urgency": "developing",
-          "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T11:36:49+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": "2026-07-27"
-          },
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": "2026-07-27"
-            }
-          ],
-          "technical_score": 9.0,
-          "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 1,
-          "rsi14": 32.13,
-          "pct_vs_ema20": -11.95,
-          "pct_vs_ema200": -28.61,
-          "volume_ratio20": 0.73,
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:MP:technical_risk:2026-07-27"
-          ],
-          "dedupe_key": "MP:technical_risk:eeaf5d7720b98fca",
-          "priority_score": 48,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-MP/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "technical_risk",
-      "signals": [
-        "Latest technical scan dated 2026-07-27: score 9/100, AVOID / Turnaround only, RSI 32.1, -11.9% vs EMA20, -28.6% vs EMA200, volume 0.73x 20-day average."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-27T19:23:56+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 42.87,
-        "current_price": 42.87,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 56,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
     {
       "ticker": "RR",
       "name": "Richtech Robotics Inc.",
@@ -1260,7 +1393,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-28T11:36:49+00:00",
+          "detected_at": "2026-07-28T13:21:31+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1324,14 +1457,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:MP:technical_risk:2026-07-27",
+      "ticker": "MP",
+      "event_subtype": "technical_risk",
+      "priority": "Watch",
+      "resolved_at": "2026-07-28T13:21:31+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:EOSE:technical_risk:2026-07-27",
       "ticker": "EOSE",
@@ -1402,14 +1543,6 @@
       "event_subtype": "transaction",
       "priority": "Watch",
       "resolved_at": "2026-07-26T17:19:19+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:technical_setup:2026-07-24",
-      "ticker": "CIFR",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-07-24T20:20:58+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
