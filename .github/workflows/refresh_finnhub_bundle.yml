@@ -25,8 +25,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Test unified Finnhub pipeline
         run: |
-          python -m py_compile scripts/finnhub_pipeline.py scripts/validate_production_artifact.py
-          python -m unittest tests.test_finnhub_pipeline
+          python -m py_compile scripts/finnhub_pipeline.py scripts/compact_finnhub_state.py scripts/check_generated_file_sizes.py scripts/validate_production_artifact.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_compaction
       - name: Run full dual-key backfill
         env:
           FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
@@ -35,6 +35,15 @@ jobs:
           FINNHUB_ANALYST_MAX_CALLS_PER_RUN: "48"
           FINNHUB_MIN_DELAY_SECONDS: "1.25"
         run: python scripts/finnhub_pipeline.py --mode all
+      - name: Compact Finnhub state and public projection
+        run: python scripts/compact_finnhub_state.py --write
+      - name: Enforce Finnhub output size budgets
+        run: |
+          python scripts/check_generated_file_sizes.py \
+            data/finnhub/state.json \
+            data/finnhub_features.json \
+            site/data/finnhub_features.json \
+            static/data/finnhub_features.json
       - name: Validate backfill contracts
         run: python scripts/validate_static_data.py
       - name: Build immutable production artifact
@@ -45,6 +54,7 @@ jobs:
             site/data/earnings_calendar.json site/data/eps_surprises.json site/data/recommendation_trends.json site/data/finnhub_features.json \
             static/data/earnings_calendar.json static/data/eps_surprises.json static/data/recommendation_trends.json static/data/finnhub_features.json \
             > publish-artifact/production-data.patch
+          python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
           python scripts/validate_production_artifact.py create-metadata \
             --patch publish-artifact/production-data.patch \
             --metadata publish-artifact/metadata.json
