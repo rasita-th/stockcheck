@@ -66,6 +66,15 @@ jobs:
           git apply --index --3way "$patch"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
+      - name: Enforce generated-file size budgets
+        if: steps.contract.outputs.status == 'READY'
+        run: |
+          set -euo pipefail
+          mapfile -t changed_paths < <(git diff --cached --name-only --diff-filter=ACMR)
+          if [ "${#changed_paths[@]}" -gt 0 ]; then
+            python scripts/check_generated_file_sizes.py "${changed_paths[@]}"
+          fi
+
       - name: Validate merged production tree
         if: steps.contract.outputs.status == 'READY'
         run: |
