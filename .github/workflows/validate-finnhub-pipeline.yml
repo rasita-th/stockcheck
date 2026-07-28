@@ -6,6 +6,7 @@ on:
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
+      - "scripts/finnhub_sharded_state.py"
       - "scripts/check_generated_file_sizes.py"
       - "scripts/verify_finnhub_today_deploy.py"
       - "scripts/generate_earnings_radar.py"
@@ -14,6 +15,7 @@ on:
       - "tests/test_finnhub_pipeline.py"
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
+      - "tests/test_finnhub_sharded_state.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/refresh_finnhub*.yml"
       - ".github/workflows/refresh-consensus-v9-1.yml"
@@ -27,6 +29,7 @@ on:
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
+      - "scripts/finnhub_sharded_state.py"
       - "scripts/check_generated_file_sizes.py"
       - "scripts/verify_finnhub_today_deploy.py"
       - "scripts/generate_earnings_radar.py"
@@ -35,6 +38,7 @@ on:
       - "tests/test_finnhub_pipeline.py"
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
+      - "tests/test_finnhub_sharded_state.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/publish-production-data.yml"
       - ".github/workflows/validate-finnhub-pipeline.yml"
@@ -56,6 +60,7 @@ jobs:
             scripts/finnhub_pipeline.py \
             scripts/run_finnhub_free_tier.py \
             scripts/compact_finnhub_state.py \
+            scripts/finnhub_sharded_state.py \
             scripts/check_generated_file_sizes.py \
             scripts/verify_finnhub_today_deploy.py \
             scripts/generate_earnings_radar.py \
@@ -64,13 +69,26 @@ jobs:
             tests.test_finnhub_pipeline \
             tests.test_finnhub_free_tier \
             tests.test_finnhub_compaction \
+            tests.test_finnhub_sharded_state \
             tests.test_earnings_radar
-      - name: Rehearse Finnhub compaction on current data
-        run: python scripts/compact_finnhub_state.py --write
-      - name: Enforce compacted repository size budgets
+      - name: Rehearse legacy-to-sharded migration on current data
         run: |
+          python scripts/compact_finnhub_state.py --write
+          python scripts/finnhub_sharded_state.py shard --delete-legacy
+          test ! -e data/finnhub/state.json
+          test -f data/finnhub/state/index.json
+      - name: Rehearse sharded-to-working-state hydration
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          test -f data/finnhub/state.json
+          python scripts/compact_finnhub_state.py --write
+          python scripts/finnhub_sharded_state.py shard --delete-legacy
+          test ! -e data/finnhub/state.json
+      - name: Enforce sharded repository size budgets
+        run: |
+          mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
           python scripts/check_generated_file_sizes.py \
-            data/finnhub/state.json \
+            "${shard_files[@]}" \
             data/finnhub_features.json \
             site/data/finnhub_features.json \
             static/data/finnhub_features.json

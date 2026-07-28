@@ -8,6 +8,7 @@ on:
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/finnhub_pipeline.py"
       - "scripts/compact_finnhub_state.py"
+      - "scripts/finnhub_sharded_state.py"
       - "scripts/check_generated_file_sizes.py"
       - "scripts/generate_earnings_radar.py"
       - "scripts/validate_earnings_radar.py"
@@ -42,6 +43,8 @@ jobs:
           pip install -r requirements.txt
       - name: Seed canonical generated layer
         run: python scripts/build_generated_layer.py
+      - name: Hydrate ephemeral Finnhub working state
+        run: python scripts/finnhub_sharded_state.py hydrate
       - name: Refresh free-tier Finnhub events with key A
         env:
           FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
@@ -51,10 +54,13 @@ jobs:
         run: python scripts/run_finnhub_free_tier.py --mode events
       - name: Compact Finnhub state and public projection
         run: python scripts/compact_finnhub_state.py --write
+      - name: Publish sharded Finnhub state
+        run: python scripts/finnhub_sharded_state.py shard --delete-legacy
       - name: Enforce Finnhub output size budgets
         run: |
+          mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
           python scripts/check_generated_file_sizes.py \
-            data/finnhub/state.json \
+            "${shard_files[@]}" \
             data/finnhub_features.json \
             site/data/finnhub_features.json \
             static/data/finnhub_features.json
@@ -81,8 +87,10 @@ jobs:
         run: python scripts/generate_attention_pr3.py
       - name: Test generated contracts
         run: |
-          python -m py_compile scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/check_generated_file_sizes.py scripts/generate_earnings_radar.py scripts/validate_earnings_radar.py scripts/validate_production_artifact.py
-          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_earnings_radar
+          python -m py_compile scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/finnhub_sharded_state.py scripts/check_generated_file_sizes.py scripts/generate_earnings_radar.py scripts/validate_earnings_radar.py scripts/validate_production_artifact.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_finnhub_sharded_state tests.test_earnings_radar
+          test ! -e data/finnhub/state.json
+          test -f data/finnhub/state/index.json
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python scripts/test_publish_generated_data.py
