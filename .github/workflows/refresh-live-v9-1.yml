@@ -41,8 +41,6 @@ jobs:
         if: steps.window.outputs.event_open != 'true' && github.event_name != 'workflow_dispatch' && github.event_name != 'push'
         run: echo "Outside event window at ${{ steps.window.outputs.now }}; publishing an explicit no-op artifact."
 
-      # Checkout and Python setup always run so every successful producer run can
-      # upload a provenance-bearing artifact, including closed-window no-ops.
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -78,6 +76,15 @@ jobs:
           cp site/data/technical.json data/generated/technical.json
           cp site/data/scanner.json data/generated/scanner.json
 
+      - name: Enforce fresh technical output
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          python scripts/check_data_freshness.py site/data/technical.json \
+            --timestamp-field generatedAtTechnical \
+            --timestamp-field generatedAt \
+            --max-age-minutes 30 \
+            --min-rows 1
+
       - name: Refresh PR3 personal Today desk
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
@@ -96,6 +103,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
+          python -m unittest discover -s tests -p "test_data_freshness.py" -v
 
       - name: Test generated-data publication
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
@@ -125,8 +133,6 @@ jobs:
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: python scripts/validate_static_data.py
 
-      # Runtime JS/CSS contracts are validated in PR CI and Pages preflight.
-      # This producer owns generated data only and must not sync runtime assets.
       - name: Build immutable live-data artifact
         run: |
           set -euo pipefail
