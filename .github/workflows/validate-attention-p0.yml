@@ -95,8 +95,14 @@ jobs:
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "14"
+          STOCKCHECK_ATTENTION_OFFLINE: "1"
+          ATTENTION_NEWS_ENABLED: "0"
+          ATTENTION_REGULATORS_ENABLED: "0"
+          ATTENTION_MAX_ITEMS: "7"
         run: |
+          python scripts/finnhub_sharded_state.py hydrate
           python scripts/generate_earnings_radar.py
+          rm -f data/finnhub/state.json
           python scripts/generate_attention_pr3.py
       - name: Sync Today runtime assets
         run: python scripts/sync_attention_assets.py
