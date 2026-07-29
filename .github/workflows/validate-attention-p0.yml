@@ -7,6 +7,9 @@ on:
       - ".github/workflows/validate-attention-p0.yml"
       - ".github/workflows/deploy-pages.yml"
       - ".github/workflows/deploy-pages-after-pr3.yml"
+      - "scripts/update_technical_data.py"
+      - "scripts/technical_shards.py"
+      - "scripts/generate_earnings_radar.py"
       - "scripts/generate_attention_p0.py"
       - "scripts/generate_attention_pr2.py"
       - "scripts/generate_attention_pr3.py"
@@ -22,6 +25,7 @@ on:
       - "scripts/smoke_test_site_v9_4_6.py"
       - "scripts/prepare_stable_site_v9_4_1.py"
       - "scripts/check_ui_view_contract.py"
+      - "tests/test_technical_shards.py"
       - "tests/test_attention_p0.py"
       - "tests/test_attention_news.py"
       - "tests/test_attention_pr3.py"
@@ -63,8 +67,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Compile attention and Pages scripts
+      - name: Compile attention, technical and Pages scripts
         run: |
+          python -m py_compile scripts/update_technical_data.py
+          python -m py_compile scripts/technical_shards.py
+          python -m py_compile scripts/generate_earnings_radar.py
           python -m py_compile scripts/generate_attention_p0.py
           python -m py_compile scripts/generate_attention_pr2.py
           python -m py_compile scripts/generate_attention_pr3.py
@@ -78,18 +85,25 @@ jobs:
           python -m py_compile scripts/validate_static_data.py
           python -m py_compile scripts/smoke_test_site_v9_4_6.py
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
-      - name: Run attention unit tests
+      - name: Run attention and technical unit tests
         run: |
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
-      - name: Build offline PR3 attention fixture
+          python -m unittest tests.test_technical_shards -v
+      - name: Build deterministic market-wide fixtures
         env:
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
           STOCKCHECK_ATTENTION_OFFLINE: "1"
           ATTENTION_NEWS_ENABLED: "0"
           ATTENTION_REGULATORS_ENABLED: "0"
           ATTENTION_MAX_ITEMS: "7"
-        run: python scripts/generate_attention_pr3.py
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          python scripts/generate_earnings_radar.py
+          rm -f data/finnhub/state.json
+          python scripts/generate_attention_pr3.py
       - name: Sync Today runtime assets
         run: python scripts/sync_attention_assets.py
       - name: Validate generated schema and UI isolation
