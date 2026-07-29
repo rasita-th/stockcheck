@@ -14,24 +14,20 @@ EXACT_LIMITS = {
     "data/finnhub_features.json": (3 * MIB, 5 * MIB),
     "site/data/finnhub_features.json": (3 * MIB, 5 * MIB),
     "static/data/finnhub_features.json": (3 * MIB, 5 * MIB),
-    # The technical and scanner contracts contain the full one-year indicator
-    # series for the complete watchlist. Keep a narrow exception above the
-    # generic JSON ceiling so a normal universe expansion cannot block prices,
-    # while still warning at 25 MiB and rejecting unexpected growth at 30 MiB.
-    "data/generated/technical.json": (25 * MIB, 30 * MIB),
-    "site/data/technical.json": (25 * MIB, 30 * MIB),
-    "static/data/technical.json": (25 * MIB, 30 * MIB),
-    "data/generated/scanner.json": (25 * MIB, 30 * MIB),
-    "site/data/scanner.json": (25 * MIB, 30 * MIB),
-    "static/data/scanner.json": (25 * MIB, 30 * MIB),
 }
 DEFAULT_JSON_LIMIT = (10 * MIB, 25 * MIB)
+TECHNICAL_INDEX_LIMIT = (3 * MIB, 5 * MIB)
+TECHNICAL_SHARD_LIMIT = (512 * 1024, 1 * MIB)
 PATCH_LIMIT = (25 * MIB, 40 * MIB)
 
 
 def budget_for(path: str, patch_hard_limit_mib: int | None = None) -> tuple[int, int] | None:
     if path in EXACT_LIMITS:
         return EXACT_LIMITS[path]
+    if path.endswith("/technical/index.json"):
+        return TECHNICAL_INDEX_LIMIT
+    if "/technical/symbols/" in path and path.endswith(".json"):
+        return TECHNICAL_SHARD_LIMIT
     if path.endswith(".json") and (path.startswith("data/") or path.startswith("site/data/") or path.startswith("static/data/")):
         return DEFAULT_JSON_LIMIT
     if path.endswith("production-data.patch"):

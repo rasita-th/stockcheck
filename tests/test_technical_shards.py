@@ -5,7 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.technical_shards import build_index, build_shards, write_outputs
+from scripts.check_generated_file_sizes import MIB, budget_for
+from scripts.technical_shards import build_index, build_legacy_summary, build_shards, write_outputs
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -34,6 +35,14 @@ class TechnicalShardTests(unittest.TestCase):
         self.assertEqual(index["count"], 1)
         self.assertNotIn("quotes", index)
         self.assertEqual(index["rows"][0]["symbol"], "NVDA")
+
+    def test_legacy_fallback_does_not_duplicate_full_history(self):
+        summary = build_legacy_summary(self.sample(), mode="test-summary")
+        self.assertEqual(summary["schema_version"], "2.0-summary")
+        self.assertEqual(summary["quotes"], {})
+        self.assertEqual(summary["rows"][0]["symbol"], "NVDA")
+        self.assertEqual(summary["detailContract"], "technical/symbols/{symbol}.json")
+        self.assertNotIn("series", json.dumps(summary))
 
     def test_shard_preserves_latest_series_and_meta(self):
         shards = build_shards(self.sample())
@@ -75,6 +84,12 @@ class TechnicalShardTests(unittest.TestCase):
             "shardRequests = new Map()",
         ):
             self.assertIn(token, text)
+
+    def test_monolith_exception_is_removed_and_shards_are_bounded(self):
+        self.assertEqual(budget_for("site/data/technical.json"), (10 * MIB, 25 * MIB))
+        self.assertEqual(budget_for("site/data/scanner.json"), (10 * MIB, 25 * MIB))
+        self.assertEqual(budget_for("site/data/technical/index.json"), (3 * MIB, 5 * MIB))
+        self.assertEqual(budget_for("site/data/technical/symbols/NVDA.json"), (512 * 1024, 1 * MIB))
 
 
 if __name__ == "__main__":
