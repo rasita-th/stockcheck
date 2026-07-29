@@ -63,12 +63,14 @@ class FinnhubBinaryPatchTests(unittest.TestCase):
                 root / "data/finnhub/state/index.json",
                 {"schema_version": "2.0.0", "endpoints": {}, "batch": {}, "runs": []},
             )
+            self.git(root, "add", "-N", "data/finnhub/state")
 
             patch_path = root / "migration.patch"
             result = self.git(root, "diff", "--binary", "HEAD", "--", ".", capture=True)
             patch_path.write_text(result.stdout, encoding="utf-8")
 
             self.assertIn("GIT binary patch", result.stdout)
+            self.assertIn("data/finnhub/state/index.json", result.stdout)
             self.assertLess(patch_path.stat().st_size, 5 * 1024 * 1024)
 
             clone = Path(tmp) / "clone"
