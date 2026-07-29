@@ -30,11 +30,11 @@ class FinnhubBinaryPatchTests(unittest.TestCase):
             self.git(root, "config", "user.email", "test@example.com")
 
             attributes = "\n".join([
-                "data/finnhub/state.json -text diff",
-                "/data/finnhub_features.json -text diff",
-                "/site/data/finnhub_features.json -text diff",
-                "/static/data/finnhub_features.json -text diff",
-                "/data/generated/finnhub_features.json -text diff",
+                "data/finnhub/state.json binary",
+                "/data/finnhub_features.json binary",
+                "/site/data/finnhub_features.json binary",
+                "/static/data/finnhub_features.json binary",
+                "/data/generated/finnhub_features.json binary",
                 "",
             ])
             (root / ".gitattributes").write_text(attributes, encoding="utf-8")
