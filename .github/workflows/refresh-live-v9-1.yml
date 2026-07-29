@@ -85,6 +85,14 @@ jobs:
             --max-age-minutes 30 \
             --min-rows 1
 
+      - name: Enforce source market freshness
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: |
+          python scripts/check_source_market_freshness.py site/data/technical.json \
+            --report data/generated/source_freshness.json \
+            --max-business-day-lag 1 \
+            --min-coverage 0.80
+
       - name: Refresh PR3 personal Today desk
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
@@ -104,6 +112,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest discover -s tests -p "test_data_freshness.py" -v
+          python -m unittest discover -s tests -p "test_source_market_freshness.py" -v
           python -m unittest discover -s tests -p "test_generate_health.py" -v
           python -m unittest tests.test_technical_shards -v
 

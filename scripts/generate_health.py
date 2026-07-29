@@ -12,6 +12,7 @@ OUT = DATA / "health.json"
 FILES = {
     "quote": ("quote_latest.json", 30),
     "technical": ("technical.json", 1440),
+    "source_market": ("source_freshness.json", 30),
     "attention": ("attention_today.json", 90),
     "events": ("events.json", 90),
     "consensus": ("recommendation_trends.json", 1440),
@@ -35,13 +36,15 @@ def parse_dt(value: Any):
 
 def inspect(path: Path, stale_after: int) -> dict[str, Any]:
     if not path.exists() or path.stat().st_size == 0:
-        return {"status": "missing", "age_minutes": None, "stale_after_minutes": stale_after}
+        status = "unavailable" if path.name == "source_freshness.json" else "missing"
+        return {"status": status, "age_minutes": None, "stale_after_minutes": stale_after}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         return {"status": "invalid", "error": str(exc), "age_minutes": None, "stale_after_minutes": stale_after}
     stamp = (
         data.get("market_as_of")
+        or data.get("checked_at")
         or data.get("generated_at")
         or data.get("generatedAtTechnical")
         or data.get("generatedAtFundamental")
@@ -65,6 +68,15 @@ def inspect(path: Path, stale_after: int) -> dict[str, Any]:
         "row_count": row_count,
         "source": data.get("source"),
     }
+    if path.name == "source_freshness.json":
+        source_status = data.get("status")
+        if source_status in {"fresh", "source_partial", "source_stale", "invalid"}:
+            result["status"] = source_status
+        for key in (
+            "expected_market_date", "oldest_market_date", "newest_market_date",
+            "timestamp_coverage", "stale_count", "stale_ratio", "missing_timestamp_count",
+        ):
+            result[key] = data.get(key)
     if path.name == "attention_today.json":
         result["row_count"] = len(data.get("items", [])) if isinstance(data.get("items"), list) else None
         result["coverage_status"] = data.get("coverage_status")
@@ -78,12 +90,14 @@ def inspect(path: Path, stale_after: int) -> dict[str, Any]:
 
 def main() -> None:
     payload = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "layers": {name: inspect(DATA / filename, ttl) for name, (filename, ttl) in FILES.items()},
     }
     statuses = [layer["status"] for layer in payload["layers"].values()]
-    payload["status"] = "error" if any(status in {"missing", "invalid"} for status in statuses) else "stale" if "stale" in statuses else "partial" if "partial" in statuses else "ok"
+    error_states = {"missing", "invalid", "source_stale"}
+    partial_states = {"partial", "source_partial"}
+    payload["status"] = "error" if any(status in error_states for status in statuses) else "stale" if "stale" in statuses else "partial" if any(status in partial_states for status in statuses) else "ok"
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("wrote", OUT)
