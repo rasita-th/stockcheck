@@ -106,9 +106,11 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
+          git add -N -- data/finnhub/state
           git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data \
             ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' \
             > publish-artifact/production-data.patch
+          grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
           python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
           python scripts/validate_production_artifact.py create-metadata \
             --patch publish-artifact/production-data.patch \
