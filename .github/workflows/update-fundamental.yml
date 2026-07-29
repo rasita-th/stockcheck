@@ -2,6 +2,10 @@ name: Update static fundamental data
 
 on:
   workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/refresh-fundamental-now"
   schedule:
     - cron: "23 11 * * *"
 
@@ -44,7 +48,7 @@ jobs:
 
       - name: Validate fundamental output
         run: |
-          python -m py_compile scripts/update_fundamental_data.py scripts/validate_production_artifact.py
+          python -m py_compile scripts/update_fundamental_data.py scripts/check_data_freshness.py scripts/validate_production_artifact.py
           python scripts/validate_static_data.py
           python - <<'PY'
           import json
@@ -55,6 +59,11 @@ jobs:
           json.loads(path.read_text(encoding='utf-8'))
           print('Fundamental JSON is present and valid.')
           PY
+          python scripts/check_data_freshness.py site/data/fundamental.json \
+            --timestamp-field generatedAtFundamental \
+            --timestamp-field generatedAt \
+            --max-age-minutes 30 \
+            --min-rows 1
 
       - name: Build immutable production artifact
         run: |
