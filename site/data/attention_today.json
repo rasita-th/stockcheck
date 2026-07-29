@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-29T12:22:05+00:00",
+  "updated_at": "2026-07-29T14:33:27+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 18,
+  "total_events": 17,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
-    "Risk": 1,
+    "Risk": 0,
     "Action": 0,
-    "Watch": 4,
+    "Watch": 5,
     "Developing": 0
   },
   "source_health": {
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -267,150 +267,6 @@
       ]
     },
     {
-      "ticker": "AMD",
-      "name": "Advanced Micro Devices, Inc.",
-      "portfolio_status": "holding",
-      "role": "AI semiconductors",
-      "priority": "Risk",
-      "priority_score": 80,
-      "why_today": [
-        "A material agreement event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "material_agreement",
-      "event_time": "2026-07-22T14:21:16+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
-        "published_at": "2026-07-22T14:21:16+00:00",
-        "domain": "ir.amd.com"
-      },
-      "price": 493.44,
-      "day_change_pct": null,
-      "relative_volume": 0.94,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "company_ir:AMD:80607c6dd9d7c0f6",
-          "ticker": "AMD",
-          "event_type": "corporate_event",
-          "event_subtype": "material_agreement",
-          "headline": "AMD and Anthropic Announce Strategic Partnership to Deploy Up to 2 Gigawatts of AMD Instinct MI450 Series GPUs",
-          "summary": "A material agreement event was detected and requires source review.",
-          "why_today": "A material agreement event was detected and requires source review.",
-          "materiality": "medium",
-          "reported_materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-07-22T14:21:16+00:00",
-          "detected_at": "2026-07-22T14:21:16+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:material_agreement:2026-07-22:5448c815887d",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
-            "published_at": "2026-07-22T14:21:16+00:00",
-            "domain": "ir.amd.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
-              "published_at": "2026-07-22T14:21:16+00:00",
-              "domain": "ir.amd.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "company_ir:AMD:80607c6dd9d7c0f6"
-          ],
-          "priority_score": 80,
-          "priority": "Risk"
-        },
-        {
-          "event_id": "gdelt:AMD:5e370a0e157053b1",
-          "ticker": "AMD",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Agentic AI Runs Where Enterprise Software Runs : Embedded LLM Launches TokenVisor Spaces for AMD - Powered AI Clouds at AMD Advancing AI 2026",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "developing",
-          "event_time": "2026-07-23T19:30:00+00:00",
-          "detected_at": "2026-07-23T23:56:12+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:product:2026-07-23:ed4e1282cd20",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.manilatimes.net/2026/07/24/tmt-newswire/globenewswire/agentic-ai-runs-where-enterprise-software-runs-embedded-llm-launches-tokenvisor-spaces-for-amd-powered-ai-clouds-at-amd-advancing-ai-2026/2390636",
-            "published_at": "2026-07-23T19:30:00+00:00",
-            "domain": "www.manilatimes.net"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.manilatimes.net/2026/07/24/tmt-newswire/globenewswire/agentic-ai-runs-where-enterprise-software-runs-embedded-llm-launches-tokenvisor-spaces-for-amd-powered-ai-clouds-at-amd-advancing-ai-2026/2390636",
-              "published_at": "2026-07-23T19:30:00+00:00",
-              "domain": "www.manilatimes.net"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:AMD:5e370a0e157053b1"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
-        "company_ir": "https://ir.amd.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "material_agreement",
-      "signals": [
-        "A material agreement event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-07-27T15:14:47+00:00",
-        "active_days": 2
-      },
-      "impact": {
-        "baseline_price": 521.95,
-        "current_price": 493.44,
-        "change_pct": -5.46,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 5.5%"
-      },
-      "personal_priority_score": 93,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
-      ]
-    },
-    {
       "ticker": "ASTS",
       "name": "AST SpaceMobile, Inc.",
       "portfolio_status": "holding",
@@ -547,7 +403,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-29T12:22:05+00:00",
+          "detected_at": "2026-07-29T14:33:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -690,7 +546,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-29T12:22:05+00:00",
+          "detected_at": "2026-07-29T14:33:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -951,6 +807,154 @@
         "หุ้นในพอร์ต +8",
         "earnings +8"
       ]
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow, Inc.",
+      "portfolio_status": "holding",
+      "role": "Enterprise software",
+      "priority": "Watch",
+      "priority_score": 32,
+      "why_today": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "guidance",
+      "event_time": "2026-07-23T00:45:00+00:00",
+      "verification_status": "unverified",
+      "source_status": "secondary",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+        "published_at": "2026-07-23T00:45:00+00:00",
+        "domain": "www.thestar.com.my"
+      },
+      "price": 106.26,
+      "day_change_pct": null,
+      "relative_volume": 1.15,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "event:NOW:213c2c40afd30cfc",
+          "ticker": "NOW",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "ServiceNow raises annual subscription revenue forecast again on AI - driven demand",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-23T00:45:00+00:00",
+          "detected_at": "2026-07-23T08:44:48+00:00",
+          "verification_status": "unverified",
+          "verification_level": "corroborated_secondary",
+          "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow",
+          "dedupe_key": "NOW:guidance:2026-07-23:42f41140388f",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+            "published_at": "2026-07-23T00:45:00+00:00",
+            "domain": "www.thestar.com.my"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+              "published_at": "2026-07-23T00:45:00+00:00",
+              "domain": "www.thestar.com.my"
+            },
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
+              "published_at": "2026-07-23T17:30:00+00:00",
+              "domain": "www.proactiveinvestors.com"
+            }
+          ],
+          "secondary_source_count": 2,
+          "related_event_ids": [
+            "event:NOW:213c2c40afd30cfc"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:NOW:3573fdce18d8e9a6",
+          "ticker": "NOW",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "ServiceNow Analysts Increase Their Forecasts After Better - Than - Expected Q2 Earnings - ServiceNow ( NYSE : NO",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-23T14:45:00+00:00",
+          "detected_at": "2026-07-23T22:52:27+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow",
+          "dedupe_key": "NOW:guidance:2026-07-23:02f3f030201b",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
+            "published_at": "2026-07-23T14:45:00+00:00",
+            "domain": "www.benzinga.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/07/60637159/servicenow-analysts-increase-their-forecasts-after-better-than-expected-q2-earnings",
+              "published_at": "2026-07-23T14:45:00+00:00",
+              "domain": "www.benzinga.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:NOW:3573fdce18d8e9a6"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-NOW/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "guidance",
+      "signals": [
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-29T14:33:27+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 106.26,
+        "current_price": 106.26,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 48,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
     }
   ],
   "errors": [
@@ -1146,97 +1150,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -1251,7 +1250,7 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 19,
+    "active_discovered_event_count": 18,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1314,7 +1313,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-27",
-          "detected_at": "2026-07-29T12:22:05+00:00",
+          "detected_at": "2026-07-29T14:33:27+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1378,14 +1377,22 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "company_ir:AMD:80607c6dd9d7c0f6",
+      "ticker": "AMD",
+      "event_subtype": "material_agreement",
+      "priority": "Risk",
+      "resolved_at": "2026-07-29T14:33:27+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:MP:technical_risk:2026-07-27",
       "ticker": "MP",
@@ -1456,14 +1463,6 @@
       "event_subtype": "guidance",
       "priority": "Watch",
       "resolved_at": "2026-07-26T22:14:18+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "gdelt:TEM:041c59d1183fd730",
-      "ticker": "TEM",
-      "event_subtype": "transaction",
-      "priority": "Watch",
-      "resolved_at": "2026-07-26T17:19:19+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
