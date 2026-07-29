@@ -3,6 +3,7 @@ name: Validate Finnhub Pipeline
 on:
   pull_request:
     paths:
+      - ".gitattributes"
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
@@ -16,6 +17,7 @@ on:
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
       - "tests/test_finnhub_sharded_state.py"
+      - "tests/test_finnhub_binary_patch.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/refresh_finnhub*.yml"
       - ".github/workflows/refresh-consensus-v9-1.yml"
@@ -26,6 +28,7 @@ on:
   push:
     branches: ["main"]
     paths:
+      - ".gitattributes"
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
@@ -39,13 +42,12 @@ on:
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
       - "tests/test_finnhub_sharded_state.py"
+      - "tests/test_finnhub_binary_patch.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/publish-production-data.yml"
       - ".github/workflows/validate-finnhub-pipeline.yml"
-
 permissions:
   contents: read
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -56,27 +58,25 @@ jobs:
           python-version: "3.13"
       - name: Unit, integration and syntax tests
         run: |
-          python -m py_compile \
-            scripts/finnhub_pipeline.py \
-            scripts/run_finnhub_free_tier.py \
-            scripts/compact_finnhub_state.py \
-            scripts/finnhub_sharded_state.py \
-            scripts/check_generated_file_sizes.py \
-            scripts/verify_finnhub_today_deploy.py \
-            scripts/generate_earnings_radar.py \
-            scripts/validate_earnings_radar.py
-          python -m unittest \
-            tests.test_finnhub_pipeline \
-            tests.test_finnhub_free_tier \
-            tests.test_finnhub_compaction \
-            tests.test_finnhub_sharded_state \
-            tests.test_earnings_radar
+          python -m py_compile scripts/finnhub_pipeline.py scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/finnhub_sharded_state.py scripts/check_generated_file_sizes.py scripts/verify_finnhub_today_deploy.py scripts/generate_earnings_radar.py scripts/validate_earnings_radar.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_finnhub_sharded_state tests.test_finnhub_binary_patch tests.test_earnings_radar
       - name: Rehearse legacy-to-sharded migration on current data
         run: |
           python scripts/compact_finnhub_state.py --write
           python scripts/finnhub_sharded_state.py shard --delete-legacy
           test ! -e data/finnhub/state.json
           test -f data/finnhub/state/index.json
+      - name: Verify current migration patch transport budget
+        run: |
+          mkdir -p publish-artifact
+          git add -N -- data/finnhub/state
+          git diff --binary HEAD -- data/finnhub data/finnhub_features.json site/data/finnhub_features.json static/data/finnhub_features.json data/generated/finnhub_features.json > publish-artifact/production-data.patch
+          grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
+          python scripts/check_generated_file_sizes.py --patch-hard-limit-mib 50 publish-artifact/production-data.patch
+      - name: Verify migration patch applies to a clean base
+        run: |
+          git worktree add /tmp/finnhub-migration-base HEAD
+          git -C /tmp/finnhub-migration-base apply --check --3way "$GITHUB_WORKSPACE/publish-artifact/production-data.patch"
       - name: Rehearse sharded-to-working-state hydration
         run: |
           python scripts/finnhub_sharded_state.py hydrate
@@ -87,11 +87,7 @@ jobs:
       - name: Enforce sharded repository size budgets
         run: |
           mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
-          python scripts/check_generated_file_sizes.py \
-            "${shard_files[@]}" \
-            data/finnhub_features.json \
-            site/data/finnhub_features.json \
-            static/data/finnhub_features.json
+          python scripts/check_generated_file_sizes.py "${shard_files[@]}" data/finnhub_features.json site/data/finnhub_features.json static/data/finnhub_features.json
       - name: Generate and validate earnings radar offline
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"

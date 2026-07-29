@@ -99,6 +99,23 @@ class FinnhubCompactionTests(unittest.TestCase):
             finally:
                 sizes.ROOT = old_root
 
+    def test_patch_override_is_scoped_and_does_not_change_default(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            old_root = sizes.ROOT
+            try:
+                sizes.ROOT = Path(tmp)
+                path = sizes.ROOT / "publish-artifact" / "production-data.patch"
+                path.parent.mkdir(parents=True)
+                path.write_bytes(b"x" * (45 * sizes.MIB))
+                with self.assertRaises(SystemExit):
+                    sizes.inspect(["publish-artifact/production-data.patch"])
+                sizes.inspect(
+                    ["publish-artifact/production-data.patch"],
+                    patch_hard_limit_mib=50,
+                )
+            finally:
+                sizes.ROOT = old_root
+
 
 if __name__ == "__main__":
     unittest.main()

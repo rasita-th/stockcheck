@@ -2,14 +2,11 @@ name: Refresh Finnhub Full Backfill
 
 on:
   workflow_dispatch:
-
 permissions:
   contents: read
-
 concurrency:
   group: finnhub-backfill-${{ github.ref_name }}
   cancel-in-progress: false
-
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -44,11 +41,7 @@ jobs:
       - name: Enforce Finnhub output size budgets
         run: |
           mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
-          python scripts/check_generated_file_sizes.py \
-            "${shard_files[@]}" \
-            data/finnhub_features.json \
-            site/data/finnhub_features.json \
-            static/data/finnhub_features.json
+          python scripts/check_generated_file_sizes.py "${shard_files[@]}" data/finnhub_features.json site/data/finnhub_features.json static/data/finnhub_features.json
       - name: Validate backfill contracts
         run: |
           test ! -e data/finnhub/state.json
@@ -58,14 +51,15 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/recommendation_trends.json data/finnhub_features.json \
-            site/data/earnings_calendar.json site/data/eps_surprises.json site/data/recommendation_trends.json site/data/finnhub_features.json \
-            static/data/earnings_calendar.json static/data/eps_surprises.json static/data/recommendation_trends.json static/data/finnhub_features.json \
-            > publish-artifact/production-data.patch
-          python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
-          python scripts/validate_production_artifact.py create-metadata \
-            --patch publish-artifact/production-data.patch \
-            --metadata publish-artifact/metadata.json
+          git add -N -- data/finnhub/state
+          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/recommendation_trends.json data/finnhub_features.json site/data/earnings_calendar.json site/data/eps_surprises.json site/data/recommendation_trends.json site/data/finnhub_features.json static/data/earnings_calendar.json static/data/eps_surprises.json static/data/recommendation_trends.json static/data/finnhub_features.json > publish-artifact/production-data.patch
+          grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
+          if grep -q 'a/data/finnhub/state.json b/data/finnhub/state.json' publish-artifact/production-data.patch; then
+            python scripts/check_generated_file_sizes.py --patch-hard-limit-mib 50 publish-artifact/production-data.patch
+          else
+            python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
+          fi
+          python scripts/validate_production_artifact.py create-metadata --patch publish-artifact/production-data.patch --metadata publish-artifact/metadata.json
       - name: Upload production artifact
         uses: actions/upload-artifact@v4
         with:
