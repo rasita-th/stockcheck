@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-29T16:41:58+00:00",
+  "updated_at": "2026-07-29T17:04:03+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 17,
+  "total_events": 18,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -43,22 +43,22 @@
       "status": "partial",
       "source": "Free news discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -598,6 +598,48 @@
           "priority": "Watch"
         },
         {
+          "event_id": "gdelt:NOW:16b9b1b70631c9ad",
+          "ticker": "NOW",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Healthcare of Ontario Pension Plan Trust Fund Acquires 40 , 189 Shares of ServiceNow , Inc . $NOW",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-29T09:45:00+00:00",
+          "detected_at": "2026-07-29T17:01:49+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: ServiceNow, Inc.",
+          "dedupe_key": "NOW:transaction:2026-07-29:2c1866440034",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.themarketsdaily.com/2026/07/29/healthcare-of-ontario-pension-plan-trust-fund-acquires-40189-shares-of-servicenow-inc-now.html",
+            "published_at": "2026-07-29T09:45:00+00:00",
+            "domain": "www.themarketsdaily.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.themarketsdaily.com/2026/07/29/healthcare-of-ontario-pension-plan-trust-fund-acquires-40189-shares-of-servicenow-inc-now.html",
+              "published_at": "2026-07-29T09:45:00+00:00",
+              "domain": "www.themarketsdaily.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:NOW:16b9b1b70631c9ad"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
           "event_id": "gdelt:NOW:3573fdce18d8e9a6",
           "ticker": "NOW",
           "event_type": "earnings",
@@ -651,8 +693,8 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
         "previous_priority": "Watch",
         "first_seen_at": "2026-07-29T14:33:27+00:00",
         "active_days": 0
@@ -863,97 +905,67 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OSCR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -967,8 +979,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 18,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 19,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 3,
@@ -1031,7 +1043,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-29T16:41:58+00:00",
+          "detected_at": "2026-07-29T17:04:03+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1130,7 +1142,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-29T16:41:58+00:00",
+          "detected_at": "2026-07-29T17:04:03+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1229,7 +1241,7 @@
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-29T16:41:58+00:00",
+          "detected_at": "2026-07-29T17:04:03+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1295,8 +1307,8 @@
   "changes_summary": {
     "new": 0,
     "escalated": 0,
-    "updated": 0,
-    "ongoing": 7,
+    "updated": 1,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
