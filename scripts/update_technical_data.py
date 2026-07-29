@@ -11,6 +11,7 @@ WATCHLIST = ROOT / "watchlist.txt"
 OUTPUT_DIRS = [ROOT / "data", ROOT / "site" / "data", ROOT / "static" / "data"]
 sys.path.insert(0, str(ROOT))
 from app import scan_symbols  # noqa: E402
+from scripts.technical_shards import write_outputs as write_sharded_outputs  # noqa: E402
 
 def read_watchlist() -> list[str]:
     if not WATCHLIST.exists():
@@ -38,5 +39,7 @@ def main() -> None:
     payload.update({"mode":"github-pages-live-v9","dataLayer":"technical","generatedAt":generated,"generatedAtTechnical":generated,"range":range_,"interval":interval,"durationSeconds":round(time.time()-started,2)})
     scanner=dict(payload); scanner["mode"]="github-pages-live-scanner-v9"
     write_all("technical.json",payload); write_all("scanner.json",scanner)
+    shard_counts = write_sharded_outputs(payload)
+    print("wrote technical v2 shards", json.dumps(shard_counts, sort_keys=True))
     print(f"Generated {len(rows)} rows with {len(payload.get('errors',[]))} errors")
 if __name__=="__main__": main()
