@@ -66,16 +66,7 @@ class FinnhubBinaryPatchTests(unittest.TestCase):
             self.git(root, "add", "-N", "data/finnhub/state")
 
             patch_path = root / "migration.patch"
-            result = self.git(
-                root,
-                "diff",
-                "--binary",
-                "--irreversible-delete",
-                "HEAD",
-                "--",
-                ".",
-                capture=True,
-            )
+            result = self.git(root, "diff", "--binary", "HEAD", "--", ".", capture=True)
             patch_path.write_text(result.stdout, encoding="utf-8")
 
             self.assertIn("GIT binary patch", result.stdout)
