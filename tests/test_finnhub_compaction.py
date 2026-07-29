@@ -99,6 +99,31 @@ class FinnhubCompactionTests(unittest.TestCase):
             finally:
                 sizes.ROOT = old_root
 
+    def test_technical_size_budget_is_scoped_to_known_contracts(self):
+        self.assertEqual(
+            sizes.budget_for("site/data/technical.json"),
+            (25 * sizes.MIB, 30 * sizes.MIB),
+        )
+        self.assertEqual(
+            sizes.budget_for("site/data/unrelated.json"),
+            sizes.DEFAULT_JSON_LIMIT,
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            old_root = sizes.ROOT
+            try:
+                sizes.ROOT = Path(tmp)
+                technical = sizes.ROOT / "site" / "data" / "technical.json"
+                unrelated = sizes.ROOT / "site" / "data" / "unrelated.json"
+                technical.parent.mkdir(parents=True)
+                technical.write_bytes(b"x" * (26 * sizes.MIB))
+                unrelated.write_bytes(b"x" * (26 * sizes.MIB))
+                sizes.inspect(["site/data/technical.json"])
+                with self.assertRaises(SystemExit) as ctx:
+                    sizes.inspect(["site/data/unrelated.json"])
+                self.assertIn("REJECTED_FILE_TOO_LARGE", str(ctx.exception))
+            finally:
+                sizes.ROOT = old_root
+
     def test_patch_override_is_scoped_and_does_not_change_default(self):
         with tempfile.TemporaryDirectory() as tmp:
             old_root = sizes.ROOT
