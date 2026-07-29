@@ -12,7 +12,8 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "10.7.2"
+VERSION = "10.7.1"
+TECHNICAL_RUNTIME_VERSION = "10.7.2"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -34,7 +35,6 @@ LEGACY_ASSETS = (
 RUNTIME_ASSETS = (
     "styles.css",
     "app.js",
-    "technical-shards-v2.js",
     "notification-phase2.css",
     "notification-phase2.js",
     "final-ui-coordinator.css",
@@ -80,7 +80,7 @@ def prepare_index(path: Path) -> None:
     html = inject_once(
         html,
         r'\s*<script[^>]+technical-shards-v2\.js[^>]*></script>',
-        f'<script src="technical-shards-v2.js?v={VERSION}" defer></script>',
+        f'<script src="technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" defer></script>',
         r'</body>',
     )
     html = inject_once(
@@ -184,6 +184,8 @@ def validate_clean_html() -> None:
     for asset in RUNTIME_ASSETS:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
+    if f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" not in index:
+        raise SystemExit("technical v2 runtime missing cache-busted reference")
     for asset in ("market.css", "market.js"):
         if f"{asset}?v={VERSION}" not in market:
             raise SystemExit(f"market asset missing cache-busted reference: {asset}")
