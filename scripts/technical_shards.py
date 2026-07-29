@@ -40,6 +40,25 @@ def build_index(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def build_legacy_summary(payload: dict[str, Any], *, mode: str) -> dict[str, Any]:
+    """Keep the old filenames as small summary fallbacks during rollout."""
+    index = build_index(payload)
+    return {
+        "schema_version": "2.0-summary",
+        "generatedAt": index["generatedAt"],
+        "generatedAtTechnical": index["generatedAtTechnical"],
+        "count": index["count"],
+        "rows": index["rows"],
+        "errors": index["errors"],
+        "range": index["range"],
+        "interval": index["interval"],
+        "mode": mode,
+        "dataLayer": "technical",
+        "quotes": {},
+        "detailContract": "technical/symbols/{symbol}.json",
+    }
+
+
 def build_shards(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
     quotes = payload.get("quotes") if isinstance(payload.get("quotes"), dict) else {}
     generated = payload.get("generatedAtTechnical") or payload.get("generatedAt")
