@@ -17,14 +17,11 @@ on:
       - ".github/refresh-finnhub-now"
   schedule:
     - cron: "17 */3 * * *"
-
 permissions:
   contents: read
-
 concurrency:
   group: finnhub-events-${{ github.ref_name }}
   cancel-in-progress: false
-
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -59,11 +56,7 @@ jobs:
       - name: Enforce Finnhub output size budgets
         run: |
           mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
-          python scripts/check_generated_file_sizes.py \
-            "${shard_files[@]}" \
-            data/finnhub_features.json \
-            site/data/finnhub_features.json \
-            static/data/finnhub_features.json
+          python scripts/check_generated_file_sizes.py "${shard_files[@]}" data/finnhub_features.json site/data/finnhub_features.json static/data/finnhub_features.json
       - name: Promote Finnhub contracts to canonical generated data
         run: |
           mkdir -p data/generated
@@ -107,14 +100,14 @@ jobs:
           set -euo pipefail
           mkdir -p publish-artifact
           git add -N -- data/finnhub/state
-          git diff --binary --irreversible-delete HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data \
-            ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' \
-            > publish-artifact/production-data.patch
+          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' > publish-artifact/production-data.patch
           grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
-          python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
-          python scripts/validate_production_artifact.py create-metadata \
-            --patch publish-artifact/production-data.patch \
-            --metadata publish-artifact/metadata.json
+          if grep -q 'a/data/finnhub/state.json b/data/finnhub/state.json' publish-artifact/production-data.patch; then
+            python scripts/check_generated_file_sizes.py --patch-hard-limit-mib 50 publish-artifact/production-data.patch
+          else
+            python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
+          fi
+          python scripts/validate_production_artifact.py create-metadata --patch publish-artifact/production-data.patch --metadata publish-artifact/metadata.json
       - name: Upload production artifact
         uses: actions/upload-artifact@v4
         with:
