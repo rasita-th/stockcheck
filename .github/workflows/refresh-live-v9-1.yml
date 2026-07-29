@@ -97,7 +97,7 @@ jobs:
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
 
-      - name: Run attention unit tests
+      - name: Run attention and technical contract tests
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
@@ -105,6 +105,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest discover -s tests -p "test_data_freshness.py" -v
           python -m unittest discover -s tests -p "test_generate_health.py" -v
+          python -m unittest tests.test_technical_shards -v
 
       - name: Test generated-data publication
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
@@ -141,6 +142,7 @@ jobs:
           if [ "${{ steps.window.outputs.event_open }}" = "true" ] || \
              [ "${{ github.event_name }}" = "workflow_dispatch" ] || \
              [ "${{ github.event_name }}" = "push" ]; then
+            git add -N -- data/generated/technical site/data/technical static/data/technical
             git diff --binary HEAD -- \
               data/generated \
               data/source_state \
