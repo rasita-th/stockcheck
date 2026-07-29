@@ -1,18 +1,18 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-07-29T07:49:10.272531+00:00",
+  "generated_at": "2026-07-29T11:37:03.220225+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 2187.4,
+      "age_minutes": 2415.3,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-27T19:21:45.130233+00:00",
       "row_count": 410,
       "source": "Yahoo Finance via yfinance"
     },
     "technical": {
-      "status": "unknown",
-      "age_minutes": null,
+      "status": "stale",
+      "age_minutes": 2415.2,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-27 19:21:51 UTC",
       "row_count": 407,
@@ -22,7 +22,7 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-29T07:49:09+00:00",
+      "timestamp": "2026-07-29T11:37:02+00:00",
       "row_count": 6,
       "source": null,
       "coverage_status": "partial",
@@ -37,7 +37,7 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 101,
+          "rows": 110,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
         },
@@ -55,15 +55,15 @@
           "status": "partial",
           "source": "Free news discovery",
           "checked": 10,
-          "accepted_events": 1
+          "accepted_events": 0
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 4,
-          "partial": 6,
-          "errors": 0
+          "ok": 2,
+          "partial": 7,
+          "errors": 1
         },
         "gdelt": {
           "status": "partial",
@@ -87,21 +87,21 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-29T07:49:09+00:00",
+      "timestamp": "2026-07-29T11:37:02+00:00",
       "row_count": 18,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 15712.3,
+      "age_minutes": 15940.2,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
       "source": "finnhub_recommendation_trends"
     },
     "fundamental": {
-      "status": "unknown",
-      "age_minutes": null,
+      "status": "ok",
+      "age_minutes": 20078.8,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -109,7 +109,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 16771.1,
+      "age_minutes": 16999.0,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
