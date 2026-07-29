@@ -36,7 +36,8 @@ def parse_dt(value: Any):
 
 def inspect(path: Path, stale_after: int) -> dict[str, Any]:
     if not path.exists() or path.stat().st_size == 0:
-        return {"status": "missing", "age_minutes": None, "stale_after_minutes": stale_after}
+        status = "unavailable" if path.name == "source_freshness.json" else "missing"
+        return {"status": status, "age_minutes": None, "stale_after_minutes": stale_after}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
