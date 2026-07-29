@@ -9,6 +9,7 @@ on:
       - ".github/workflows/deploy-pages-after-pr3.yml"
       - "scripts/update_technical_data.py"
       - "scripts/technical_shards.py"
+      - "scripts/generate_earnings_radar.py"
       - "scripts/generate_attention_p0.py"
       - "scripts/generate_attention_pr2.py"
       - "scripts/generate_attention_pr3.py"
@@ -70,6 +71,7 @@ jobs:
         run: |
           python -m py_compile scripts/update_technical_data.py
           python -m py_compile scripts/technical_shards.py
+          python -m py_compile scripts/generate_earnings_radar.py
           python -m py_compile scripts/generate_attention_p0.py
           python -m py_compile scripts/generate_attention_pr2.py
           python -m py_compile scripts/generate_attention_pr3.py
@@ -89,13 +91,13 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest tests.test_technical_shards -v
-      - name: Build offline PR3 attention fixture
+      - name: Build deterministic market-wide fixtures
         env:
-          STOCKCHECK_ATTENTION_OFFLINE: "1"
-          ATTENTION_NEWS_ENABLED: "0"
-          ATTENTION_REGULATORS_ENABLED: "0"
-          ATTENTION_MAX_ITEMS: "7"
-        run: python scripts/generate_attention_pr3.py
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
+        run: |
+          python scripts/generate_earnings_radar.py
+          python scripts/generate_attention_pr3.py
       - name: Sync Today runtime assets
         run: python scripts/sync_attention_assets.py
       - name: Validate generated schema and UI isolation
