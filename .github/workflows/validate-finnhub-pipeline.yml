@@ -3,6 +3,7 @@ name: Validate Finnhub Pipeline
 on:
   pull_request:
     paths:
+      - ".gitattributes"
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
@@ -16,6 +17,7 @@ on:
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
       - "tests/test_finnhub_sharded_state.py"
+      - "tests/test_finnhub_binary_patch.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/refresh_finnhub*.yml"
       - ".github/workflows/refresh-consensus-v9-1.yml"
@@ -26,6 +28,7 @@ on:
   push:
     branches: ["main"]
     paths:
+      - ".gitattributes"
       - "scripts/finnhub_pipeline.py"
       - "scripts/run_finnhub_free_tier.py"
       - "scripts/compact_finnhub_state.py"
@@ -39,6 +42,7 @@ on:
       - "tests/test_finnhub_free_tier.py"
       - "tests/test_finnhub_compaction.py"
       - "tests/test_finnhub_sharded_state.py"
+      - "tests/test_finnhub_binary_patch.py"
       - "tests/test_earnings_radar.py"
       - ".github/workflows/publish-production-data.yml"
       - ".github/workflows/validate-finnhub-pipeline.yml"
@@ -70,6 +74,7 @@ jobs:
             tests.test_finnhub_free_tier \
             tests.test_finnhub_compaction \
             tests.test_finnhub_sharded_state \
+            tests.test_finnhub_binary_patch \
             tests.test_earnings_radar
       - name: Rehearse legacy-to-sharded migration on current data
         run: |
@@ -77,6 +82,15 @@ jobs:
           python scripts/finnhub_sharded_state.py shard --delete-legacy
           test ! -e data/finnhub/state.json
           test -f data/finnhub/state/index.json
+      - name: Verify current migration patch transport budget
+        run: |
+          mkdir -p publish-artifact
+          git diff --binary HEAD -- data/finnhub data/finnhub_features.json \
+            site/data/finnhub_features.json static/data/finnhub_features.json \
+            data/generated/finnhub_features.json \
+            > publish-artifact/production-data.patch
+          python scripts/check_generated_file_sizes.py publish-artifact/production-data.patch
+          git apply --check --3way publish-artifact/production-data.patch
       - name: Rehearse sharded-to-working-state hydration
         run: |
           python scripts/finnhub_sharded_state.py hydrate
