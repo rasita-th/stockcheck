@@ -1,0 +1,7 @@
+# Large generated Finnhub JSON files use Git binary patches during migrations.
+# They remain normal JSON files in the worktree and are not stored with Git LFS.
+data/finnhub/state.json -text diff
+/data/finnhub_features.json -text diff
+/site/data/finnhub_features.json -text diff
+/static/data/finnhub_features.json -text diff
+/data/generated/finnhub_features.json -text diff
