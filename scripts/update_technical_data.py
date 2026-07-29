@@ -11,7 +11,8 @@ WATCHLIST = ROOT / "watchlist.txt"
 OUTPUT_DIRS = [ROOT / "data", ROOT / "site" / "data", ROOT / "static" / "data"]
 sys.path.insert(0, str(ROOT))
 from app import scan_symbols  # noqa: E402
-from scripts.technical_shards import write_outputs as write_sharded_outputs  # noqa: E402
+from scripts.technical_shards import build_legacy_summary, write_outputs as write_sharded_outputs  # noqa: E402
+
 
 def read_watchlist() -> list[str]:
     if not WATCHLIST.exists():
@@ -22,12 +23,14 @@ def read_watchlist() -> list[str]:
         if t and not t.startswith("#") and t not in out: out.append(t)
     return out
 
+
 def write_all(name: str, payload: dict) -> None:
     text=json.dumps(payload,ensure_ascii=False,separators=(",",":"))
     for d in OUTPUT_DIRS:
         d.mkdir(parents=True,exist_ok=True)
         (d/name).write_text(text,encoding="utf-8")
         print("wrote",d/name)
+
 
 def main() -> None:
     symbols=read_watchlist(); started=time.time()
@@ -37,9 +40,18 @@ def main() -> None:
     if not rows: raise SystemExit("No technical rows generated; refusing to overwrite live data")
     generated=payload.get("generatedAt") or datetime.now(timezone.utc).isoformat()
     payload.update({"mode":"github-pages-live-v9","dataLayer":"technical","generatedAt":generated,"generatedAtTechnical":generated,"range":range_,"interval":interval,"durationSeconds":round(time.time()-started,2)})
-    scanner=dict(payload); scanner["mode"]="github-pages-live-scanner-v9"
-    write_all("technical.json",payload); write_all("scanner.json",scanner)
+
+    # Full histories live only in ticker shards. Keep the old filenames as small
+    # summary fallbacks so older clients can still render the Scanner table.
     shard_counts = write_sharded_outputs(payload)
+    technical_summary = build_legacy_summary(payload, mode="github-pages-technical-summary-v2")
+    scanner_summary = build_legacy_summary(payload, mode="github-pages-scanner-summary-v2")
+    write_all("technical.json", technical_summary)
+    write_all("scanner.json", scanner_summary)
+
     print("wrote technical v2 shards", json.dumps(shard_counts, sort_keys=True))
     print(f"Generated {len(rows)} rows with {len(payload.get('errors',[]))} errors")
-if __name__=="__main__": main()
+
+
+if __name__=="__main__":
+    main()
