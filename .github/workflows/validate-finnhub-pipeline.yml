@@ -86,7 +86,7 @@ jobs:
         run: |
           mkdir -p publish-artifact
           git add -N -- data/finnhub/state
-          git diff --binary HEAD -- data/finnhub data/finnhub_features.json \
+          git diff --binary --irreversible-delete HEAD -- data/finnhub data/finnhub_features.json \
             site/data/finnhub_features.json static/data/finnhub_features.json \
             data/generated/finnhub_features.json \
             > publish-artifact/production-data.patch
