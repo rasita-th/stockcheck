@@ -37,6 +37,8 @@ on:
       - "data/regulator_sources.json"
       - "data/attention_preferences.json"
       - "data/source_state/news.json"
+      - "site/technical-shards-v2.js"
+      - "static/technical-shards-v2.js"
       - "site/attention-p0.*"
       - "site/attention-pr3.*"
       - "site/attention-pr4.*"
@@ -85,6 +87,8 @@ jobs:
           python -m py_compile scripts/validate_static_data.py
           python -m py_compile scripts/smoke_test_site_v9_4_6.py
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
+          node --check site/technical-shards-v2.js
+          node --check static/technical-shards-v2.js
       - name: Run attention and technical unit tests
         run: |
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
@@ -119,11 +123,13 @@ jobs:
         run: |
           python scripts/prepare_stable_site_v9_4_1.py
           node --check site/app.js
+          node --check site/technical-shards-v2.js
           node --check site/app-shell-v9-4-6.js
           node --check site/attention-p0.js
           node --check site/attention-pr3.js
           node --check site/attention-pr4.js
           node --check site/memo-only-fix.js
+          grep -F 'technical-shards-v2.js?v=10.7.2' site/index.html
           test -s site/today-view-isolation.css
           test -s site/attention-pr3.css
           test -s site/attention-pr4.css

@@ -13,6 +13,7 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 VERSION = "10.7.1"
+TECHNICAL_RUNTIME_VERSION = "10.7.2"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -78,6 +79,12 @@ def prepare_index(path: Path) -> None:
     )
     html = inject_once(
         html,
+        r'\s*<script[^>]+technical-shards-v2\.js[^>]*></script>',
+        f'<script src="technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" defer></script>',
+        r'</body>',
+    )
+    html = inject_once(
+        html,
         r'\s*<script[^>]+app-shell-v9-4-6\.js[^>]*></script>',
         f'<script src="app-shell-v9-4-6.js?v={VERSION}" defer></script>',
         r'</body>',
@@ -110,8 +117,6 @@ def prepare_market(path: Path) -> None:
 
 
 def prepare_earnings_radar() -> None:
-    # Pages builds run after Finnhub state migration, so hydrate an ephemeral
-    # legacy working file from the published shards when necessary.
     had_legacy = FINNHUB_LEGACY_PATH.exists()
     if not had_legacy:
         hydrate_finnhub_state()
@@ -136,15 +141,23 @@ def prepare_earnings_radar() -> None:
 
 
 def validate_data() -> None:
-    for name in ("technical.json", "fundamental.json"):
-        path = SITE / "data" / name
-        data = json.loads(path.read_text(encoding="utf-8"))
+    technical_index = SITE / "data" / "technical" / "index.json"
+    if technical_index.exists():
+        data = json.loads(technical_index.read_text(encoding="utf-8"))
         rows = data.get("rows")
-        if not isinstance(rows, list):
-            raise SystemExit(f"{name}: rows must be a list")
-        if name == "technical.json" and not rows:
+        if data.get("schema_version") != "2.0" or not isinstance(rows, list) or not rows:
+            raise SystemExit("technical/index.json invalid; refusing stable deploy")
+        print(f"technical/index.json: {len(rows)} rows")
+    else:
+        data = json.loads((SITE / "data" / "technical.json").read_text(encoding="utf-8"))
+        rows = data.get("rows")
+        if not isinstance(rows, list) or not rows:
             raise SystemExit("technical.json is empty; refusing stable deploy")
-        print(f"{name}: {len(rows)} rows")
+        print(f"technical.json: {len(rows)} rows")
+    fundamental = json.loads((SITE / "data" / "fundamental.json").read_text(encoding="utf-8"))
+    if not isinstance(fundamental.get("rows"), list):
+        raise SystemExit("fundamental.json: rows must be a list")
+    print(f"fundamental.json: {len(fundamental['rows'])} rows")
     pulse = SITE / "data" / "market_pulse.json"
     if not pulse.exists() or pulse.stat().st_size < 100:
         raise SystemExit("market_pulse.json missing/empty; refusing stable deploy")
@@ -171,6 +184,8 @@ def validate_clean_html() -> None:
     for asset in RUNTIME_ASSETS:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
+    if f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" not in index:
+        raise SystemExit("technical v2 runtime missing cache-busted reference")
     for asset in ("market.css", "market.js"):
         if f"{asset}?v={VERSION}" not in market:
             raise SystemExit(f"market asset missing cache-busted reference: {asset}")
