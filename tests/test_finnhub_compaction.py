@@ -99,27 +99,22 @@ class FinnhubCompactionTests(unittest.TestCase):
             finally:
                 sizes.ROOT = old_root
 
-    def test_technical_size_budget_is_scoped_to_known_contracts(self):
+    def test_technical_size_budget_uses_shard_contracts(self):
+        self.assertEqual(sizes.budget_for("site/data/technical.json"), sizes.DEFAULT_JSON_LIMIT)
+        self.assertEqual(sizes.budget_for("site/data/technical/index.json"), sizes.TECHNICAL_INDEX_LIMIT)
         self.assertEqual(
-            sizes.budget_for("site/data/technical.json"),
-            (25 * sizes.MIB, 30 * sizes.MIB),
-        )
-        self.assertEqual(
-            sizes.budget_for("site/data/unrelated.json"),
-            sizes.DEFAULT_JSON_LIMIT,
+            sizes.budget_for("site/data/technical/symbols/NVDA.json"),
+            sizes.TECHNICAL_SHARD_LIMIT,
         )
         with tempfile.TemporaryDirectory() as tmp:
             old_root = sizes.ROOT
             try:
                 sizes.ROOT = Path(tmp)
-                technical = sizes.ROOT / "site" / "data" / "technical.json"
-                unrelated = sizes.ROOT / "site" / "data" / "unrelated.json"
-                technical.parent.mkdir(parents=True)
-                technical.write_bytes(b"x" * (26 * sizes.MIB))
-                unrelated.write_bytes(b"x" * (26 * sizes.MIB))
-                sizes.inspect(["site/data/technical.json"])
+                shard = sizes.ROOT / "site" / "data" / "technical" / "symbols" / "NVDA.json"
+                shard.parent.mkdir(parents=True)
+                shard.write_bytes(b"x" * (sizes.MIB + 1))
                 with self.assertRaises(SystemExit) as ctx:
-                    sizes.inspect(["site/data/unrelated.json"])
+                    sizes.inspect(["site/data/technical/symbols/NVDA.json"])
                 self.assertIn("REJECTED_FILE_TOO_LARGE", str(ctx.exception))
             finally:
                 sizes.ROOT = old_root
