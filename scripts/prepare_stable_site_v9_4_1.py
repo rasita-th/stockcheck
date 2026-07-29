@@ -81,7 +81,7 @@ def prepare_index(path: Path) -> None:
         html,
         r'\s*<script[^>]+technical-shards-v2\.js[^>]*></script>',
         f'<script src="technical-shards-v2.js?v={VERSION}" defer></script>',
-        r'<script[^>]+app-shell-v9-4-6\.js[^>]*></script>',
+        r'</body>',
     )
     html = inject_once(
         html,
