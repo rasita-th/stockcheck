@@ -14,6 +14,16 @@ EXACT_LIMITS = {
     "data/finnhub_features.json": (3 * MIB, 5 * MIB),
     "site/data/finnhub_features.json": (3 * MIB, 5 * MIB),
     "static/data/finnhub_features.json": (3 * MIB, 5 * MIB),
+    # The technical and scanner contracts contain the full one-year indicator
+    # series for the complete watchlist. Keep a narrow exception above the
+    # generic JSON ceiling so a normal universe expansion cannot block prices,
+    # while still warning at 25 MiB and rejecting unexpected growth at 30 MiB.
+    "data/generated/technical.json": (25 * MIB, 30 * MIB),
+    "site/data/technical.json": (25 * MIB, 30 * MIB),
+    "static/data/technical.json": (25 * MIB, 30 * MIB),
+    "data/generated/scanner.json": (25 * MIB, 30 * MIB),
+    "site/data/scanner.json": (25 * MIB, 30 * MIB),
+    "static/data/scanner.json": (25 * MIB, 30 * MIB),
 }
 DEFAULT_JSON_LIMIT = (10 * MIB, 25 * MIB)
 PATCH_LIMIT = (25 * MIB, 40 * MIB)
