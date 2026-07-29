@@ -61,11 +61,11 @@ jobs:
         run: python scripts/build_generated_layer.py
 
       - name: Refresh latest quotes
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: python scripts/update_quote_data.py
 
       - name: Refresh technical layer
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -77,7 +77,7 @@ jobs:
           cp site/data/scanner.json data/generated/scanner.json
 
       - name: Enforce fresh technical output
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
           python scripts/check_data_freshness.py site/data/technical.json \
             --timestamp-field generatedAtTechnical \
@@ -104,6 +104,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest discover -s tests -p "test_data_freshness.py" -v
+          python -m unittest discover -s tests -p "test_generate_health.py" -v
 
       - name: Test generated-data publication
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
