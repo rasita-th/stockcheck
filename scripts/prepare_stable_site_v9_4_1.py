@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 
 from generate_earnings_radar import generate as generate_earnings_radar
+from finnhub_sharded_state import LEGACY_PATH as FINNHUB_LEGACY_PATH
+from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -108,13 +110,18 @@ def prepare_market(path: Path) -> None:
 
 
 def prepare_earnings_radar() -> None:
-    # This is a deterministic projection of repository state and makes no API
-    # calls. Rebuilding it here guarantees every Pages artifact carries the
-    # same 45-day contract even when a bot-generated data commit has not yet
-    # triggered another Pages run.
-    os.environ["EARNINGS_RADAR_DAYS_BACK"] = "1"
-    os.environ["EARNINGS_RADAR_DAYS_FORWARD"] = "45"
-    payload = generate_earnings_radar()
+    # Pages builds run after Finnhub state migration, so hydrate an ephemeral
+    # legacy working file from the published shards when necessary.
+    had_legacy = FINNHUB_LEGACY_PATH.exists()
+    if not had_legacy:
+        hydrate_finnhub_state()
+    try:
+        os.environ["EARNINGS_RADAR_DAYS_BACK"] = "1"
+        os.environ["EARNINGS_RADAR_DAYS_FORWARD"] = "45"
+        payload = generate_earnings_radar()
+    finally:
+        if not had_legacy:
+            FINNHUB_LEGACY_PATH.unlink(missing_ok=True)
     window = payload.get("window") if isinstance(payload.get("window"), dict) else {}
     coverage = payload.get("coverage") if isinstance(payload.get("coverage"), dict) else {}
     if int(window.get("days_forward") or 0) < 45:
