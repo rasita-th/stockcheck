@@ -48,6 +48,7 @@ release_assets = release_manifest.get("assets") if isinstance(release_manifest.g
 production_runtime_version = str(release_assets.get("app_js") or release_manifest.get("release") or "")
 technical_runtime_version = str(release_assets.get("technical_shards_js") or production_runtime_version)
 storage_guard_version = str(release_assets.get("storage_guard_js") or production_runtime_version)
+storage_guard_reference = f"storage-guard-v{storage_guard_version.replace('.', '-')}.js?v={storage_guard_version}"
 
 for label, site_path, static_path in PAIRS:
     site_text = read(site_path)
@@ -222,13 +223,15 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing usability UI: {token}")
     if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
         errors.append(f"{index_path} still renders duplicated desktop detail cards")
-    if index_path == "site/index.html":
+
+    prepared_site = index_path == "site/index.html" and storage_guard_reference in index
+    if prepared_site:
         production_assets = (
             f"app.js?v={production_runtime_version}",
             f"final-ui-coordinator.css?v={production_runtime_version}",
             f"final-ui-coordinator.js?v={production_runtime_version}",
             f"technical-shards-v2.js?v={technical_runtime_version}",
-            f"storage-guard-v{storage_guard_version.replace('.', '-')}.js?v={storage_guard_version}",
+            storage_guard_reference,
         )
         for asset in production_assets:
             if asset not in index:
