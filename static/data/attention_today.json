@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-30T08:50:18+00:00",
+  "updated_at": "2026-07-30T11:05:45+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 3,
-      "errors": 7
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -552,9 +552,9 @@
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-30T08:50:18+00:00",
         "active_days": 0
       },
@@ -764,67 +764,82 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "INDI",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
+      "ticker": "TSLA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "BMNR",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "NBIS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TEM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "MP",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     }
   ],
@@ -902,7 +917,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-30T08:50:18+00:00",
+          "detected_at": "2026-07-30T11:05:45+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -947,9 +962,9 @@
         "Latest technical scan dated 2026-07-29: score 9/100, AVOID / Turnaround only, RSI 30.3, -19.0% vs EMA20, -33.2% vs EMA200, volume 0.62x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-29T14:44:41+00:00",
         "active_days": 1
       },
@@ -1001,7 +1016,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-30T08:50:18+00:00",
+          "detected_at": "2026-07-30T11:05:45+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1046,9 +1061,9 @@
         "Latest technical scan dated 2026-07-29: score 9/100, AVOID / Turnaround only, RSI 27.3, -18.8% vs EMA20, -35.2% vs EMA200, volume 0.55x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-29T16:15:11+00:00",
         "active_days": 1
       },
@@ -1100,7 +1115,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-29",
-          "detected_at": "2026-07-30T08:50:18+00:00",
+          "detected_at": "2026-07-30T11:05:45+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1145,9 +1160,9 @@
         "Latest technical scan dated 2026-07-29: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.6, +5.9% vs EMA20, +14.4% vs EMA200, volume 0.43x 20-day average."
       ],
       "change": {
-        "status": "eased",
-        "label_th": "ความเร่งด่วนลดลง",
-        "previous_priority": "Action",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Watch",
         "first_seen_at": "2026-07-29T14:44:41+00:00",
         "active_days": 1
       },
@@ -1164,11 +1179,11 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 3,
-    "eased": 3,
+    "ongoing": 7,
+    "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
