@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-07-30T18:17:17.555297+00:00",
+  "generated_at": "2026-07-30T19:52:37.298493+00:00",
   "layers": {
     "quote": {
-      "status": "ok",
-      "age_minutes": 2.5,
+      "status": "stale",
+      "age_minutes": 97.9,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-30T18:14:45.429941+00:00",
       "row_count": 410,
@@ -12,32 +12,22 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 2.4,
+      "age_minutes": 97.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-30 18:14:52 UTC",
       "row_count": 407,
       "source": null
     },
     "source_market": {
-      "status": "fresh",
-      "age_minutes": 2.4,
-      "stale_after_minutes": 30,
-      "timestamp": "2026-07-30T18:14:54.172026+00:00",
-      "row_count": 407,
-      "source": null,
-      "expected_market_date": "2026-07-30",
-      "oldest_market_date": "2026-07-30",
-      "newest_market_date": "2026-07-30",
-      "timestamp_coverage": 1.0,
-      "stale_count": 0,
-      "stale_ratio": 0.0,
-      "missing_timestamp_count": 0
+      "status": "unavailable",
+      "age_minutes": null,
+      "stale_after_minutes": 30
     },
     "attention": {
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-30T18:17:16+00:00",
+      "timestamp": "2026-07-30T19:52:36+00:00",
       "row_count": 4,
       "source": null,
       "coverage_status": "partial",
@@ -52,7 +42,7 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 112,
+          "rows": 115,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
         },
@@ -76,16 +66,16 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 4,
-          "partial": 6,
-          "errors": 0
+          "ok": 2,
+          "partial": 7,
+          "errors": 1
         },
         "gdelt": {
           "status": "partial",
           "source": "GDELT DOC 2.0",
           "checked": 10,
-          "ok": 3,
-          "errors": 7
+          "ok": 1,
+          "errors": 9
         },
         "regulators": {
           "status": "ok",
@@ -102,13 +92,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-30T18:17:16+00:00",
+      "timestamp": "2026-07-30T19:52:36+00:00",
       "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 17780.4,
+      "age_minutes": 17875.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -116,7 +106,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 21919.1,
+      "age_minutes": 22014.4,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -124,7 +114,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 18839.2,
+      "age_minutes": 18934.6,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
