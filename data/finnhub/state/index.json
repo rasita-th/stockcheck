@@ -777,7 +777,11 @@
       "KO": "endpoints/company_profile/KO.json",
       "KRC": "endpoints/company_profile/KRC.json",
       "KTOS": "endpoints/company_profile/KTOS.json",
-      "LBRT": "endpoints/company_profile/LBRT.json"
+      "LBRT": "endpoints/company_profile/LBRT.json",
+      "LDOS": "endpoints/company_profile/LDOS.json",
+      "LHX": "endpoints/company_profile/LHX.json",
+      "LIN": "endpoints/company_profile/LIN.json",
+      "LITE": "endpoints/company_profile/LITE.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1088,50 +1092,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-07-27T04:00:49+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-27T04:00:22+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2052,9 +2012,70 @@
       "mode": "events",
       "started_at": "2026-07-30T03:25:50+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY",
+            "AEHR",
+            "AEP",
+            "AFRM",
+            "AIQ"
+          ],
+          "company_profile": [
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE"
+          ],
+          "recommendation_trends": [
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-07-30T03:46:00+00:00",
+      "mode": "analyst",
+      "started_at": "2026-07-30T03:45:11+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-30T03:26:17+00:00"
+  "updated_at": "2026-07-30T03:46:01+00:00"
 }
