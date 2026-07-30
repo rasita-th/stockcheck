@@ -1,34 +1,44 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-07-30T14:33:44.718439+00:00",
+  "generated_at": "2026-07-30T15:13:21.140115+00:00",
   "layers": {
     "quote": {
-      "status": "stale",
-      "age_minutes": 1341.0,
+      "status": "ok",
+      "age_minutes": 2.1,
       "stale_after_minutes": 30,
-      "timestamp": "2026-07-29T16:12:44.780420+00:00",
+      "timestamp": "2026-07-30T15:11:13.851923+00:00",
       "row_count": 410,
       "source": "Yahoo Finance via yfinance"
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 1340.8,
+      "age_minutes": 1.9,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-07-29 16:12:55 UTC",
+      "timestamp": "2026-07-30 15:11:27 UTC",
       "row_count": 407,
       "source": null
     },
     "source_market": {
-      "status": "unavailable",
-      "age_minutes": null,
-      "stale_after_minutes": 30
+      "status": "fresh",
+      "age_minutes": 1.9,
+      "stale_after_minutes": 30,
+      "timestamp": "2026-07-30T15:11:29.609235+00:00",
+      "row_count": 407,
+      "source": null,
+      "expected_market_date": "2026-07-30",
+      "oldest_market_date": "2026-07-30",
+      "newest_market_date": "2026-07-30",
+      "timestamp_coverage": 1.0,
+      "stale_count": 0,
+      "stale_ratio": 0.0,
+      "missing_timestamp_count": 0
     },
     "attention": {
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-30T14:33:43+00:00",
-      "row_count": 4,
+      "timestamp": "2026-07-30T15:13:20+00:00",
+      "row_count": 5,
       "source": null,
       "coverage_status": "partial",
       "source_health": {
@@ -66,16 +76,16 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 5,
-          "partial": 4,
-          "errors": 1
+          "ok": 2,
+          "partial": 8,
+          "errors": 0
         },
         "gdelt": {
-          "status": "partial",
+          "status": "error",
           "source": "GDELT DOC 2.0",
           "checked": 10,
-          "ok": 3,
-          "errors": 7
+          "ok": 0,
+          "errors": 10
         },
         "regulators": {
           "status": "ok",
@@ -92,13 +102,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-07-30T14:33:43+00:00",
+      "timestamp": "2026-07-30T15:13:20+00:00",
       "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 17556.9,
+      "age_minutes": 17596.5,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -106,7 +116,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 21695.5,
+      "age_minutes": 21735.1,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -114,7 +124,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 18615.7,
+      "age_minutes": 18655.3,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-30T14:33:43+00:00",
+  "updated_at": "2026-07-30T15:13:20+00:00",
   "items": {
     "company_ir:RKLB:dcaab389569d1ef4": {
       "ticker": "RKLB",
@@ -9,10 +9,22 @@
       "priority_score": 80,
       "personal_priority_score": 93,
       "first_seen_at": "2026-07-30T00:14:17+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 2,
       "baseline_price": 60.05,
-      "current_price": 60.05
+      "current_price": 63.18
+    },
+    "technical:TSLA:technical_risk:2026-07-30": {
+      "ticker": "TSLA",
+      "event_subtype": "technical_risk",
+      "priority": "Action",
+      "priority_score": 68,
+      "personal_priority_score": 76,
+      "first_seen_at": "2026-07-30T15:13:20+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
+      "event_count": 2,
+      "baseline_price": 305.61,
+      "current_price": 305.61
     },
     "gdelt:ASTS:77d3f984a384e9f9": {
       "ticker": "ASTS",
@@ -21,10 +33,10 @@
       "priority_score": 50,
       "personal_priority_score": 63,
       "first_seen_at": "2026-07-26T17:19:19+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 1,
       "baseline_price": 56.2,
-      "current_price": 54.41
+      "current_price": 56.47
     },
     "event:GOOGL:f67f75178c255e9c": {
       "ticker": "GOOGL",
@@ -33,10 +45,10 @@
       "priority_score": 32,
       "personal_priority_score": 48,
       "first_seen_at": "2026-07-26T22:14:18+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 2,
       "baseline_price": 319.74,
-      "current_price": 334.71
+      "current_price": 331.75
     },
     "gdelt:AMD:5e370a0e157053b1": {
       "ticker": "AMD",
@@ -45,49 +57,61 @@
       "priority_score": 32,
       "personal_priority_score": 45,
       "first_seen_at": "2026-07-30T08:50:18+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 1,
       "baseline_price": 425.97,
-      "current_price": 425.97
+      "current_price": 486.0
     },
-    "technical:IONQ:technical_risk:2026-07-29": {
-      "ticker": "IONQ",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "priority_score": 48,
-      "personal_priority_score": 56,
-      "first_seen_at": "2026-07-29T14:44:41+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
-      "event_count": 1,
-      "baseline_price": 32.65,
-      "current_price": 32.19
-    },
-    "technical:MP:technical_risk:2026-07-29": {
+    "technical:MP:technical_risk:2026-07-30": {
       "ticker": "MP",
       "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "priority_score": 48,
-      "personal_priority_score": 56,
-      "first_seen_at": "2026-07-29T16:15:11+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "priority": "Action",
+      "priority_score": 68,
+      "personal_priority_score": 76,
+      "first_seen_at": "2026-07-30T15:13:20+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 1,
-      "baseline_price": 38.78,
-      "current_price": 38.78
+      "baseline_price": 39.86,
+      "current_price": 39.86
     },
-    "technical:ZETA:technical_setup:2026-07-29": {
-      "ticker": "ZETA",
+    "technical:OSCR:technical_setup:2026-07-30": {
+      "ticker": "OSCR",
       "event_subtype": "technical_setup",
-      "priority": "Watch",
-      "priority_score": 48,
-      "personal_priority_score": 56,
-      "first_seen_at": "2026-07-29T14:44:41+00:00",
-      "last_seen_at": "2026-07-30T14:33:43+00:00",
+      "priority": "Action",
+      "priority_score": 68,
+      "personal_priority_score": 76,
+      "first_seen_at": "2026-07-30T15:13:20+00:00",
+      "last_seen_at": "2026-07-30T15:13:20+00:00",
       "event_count": 1,
-      "baseline_price": 22.18,
-      "current_price": 22.08
+      "baseline_price": 30.33,
+      "current_price": 30.33
     }
   },
   "resolved": [
+    {
+      "history_key": "technical:IONQ:technical_risk:2026-07-29",
+      "ticker": "IONQ",
+      "event_subtype": "technical_risk",
+      "priority": "Watch",
+      "resolved_at": "2026-07-30T15:13:20+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:MP:technical_risk:2026-07-29",
+      "ticker": "MP",
+      "event_subtype": "technical_risk",
+      "priority": "Watch",
+      "resolved_at": "2026-07-30T15:13:20+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ZETA:technical_setup:2026-07-29",
+      "ticker": "ZETA",
+      "event_subtype": "technical_setup",
+      "priority": "Watch",
+      "resolved_at": "2026-07-30T15:13:20+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "event:NOW:213c2c40afd30cfc",
       "ticker": "NOW",
@@ -222,30 +246,6 @@
       "event_subtype": "transaction",
       "priority": "Watch",
       "resolved_at": "2026-07-26T17:19:19+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:technical_setup:2026-07-24",
-      "ticker": "CIFR",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-07-24T20:20:58+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:technical_risk:2026-07-24",
-      "ticker": "OKLO",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-24T20:20:58+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ORCL:technical_risk:2026-07-24",
-      "ticker": "ORCL",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-24T20:20:58+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ]
