@@ -789,7 +789,11 @@
       "MAR": "endpoints/company_profile/MAR.json",
       "MARA": "endpoints/company_profile/MARA.json",
       "MCHP": "endpoints/company_profile/MCHP.json",
-      "MDB": "endpoints/company_profile/MDB.json"
+      "MDB": "endpoints/company_profile/MDB.json",
+      "MDLZ": "endpoints/company_profile/MDLZ.json",
+      "MELI": "endpoints/company_profile/MELI.json",
+      "META": "endpoints/company_profile/META.json",
+      "MNDY": "endpoints/company_profile/MNDY.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1100,50 +1104,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-07-28T03:33:45+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-28T03:33:17+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2081,9 +2041,70 @@
       "mode": "events",
       "started_at": "2026-07-30T19:49:59+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO"
+          ],
+          "company_profile": [
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY"
+          ],
+          "recommendation_trends": [
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT",
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST",
+            "FATE",
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG",
+            "FTNT",
+            "FUTU"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-07-30T20:06:50+00:00",
+      "mode": "analyst",
+      "started_at": "2026-07-30T20:06:02+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-30T19:50:29+00:00"
+  "updated_at": "2026-07-30T20:06:51+00:00"
 }
