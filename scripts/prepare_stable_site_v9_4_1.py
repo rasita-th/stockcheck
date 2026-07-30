@@ -12,8 +12,9 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "10.7.1"
-TECHNICAL_RUNTIME_VERSION = "10.7.2"
+VERSION = "10.7.3"
+TECHNICAL_RUNTIME_VERSION = "10.7.3"
+STORAGE_GUARD_ASSET = "storage-guard-v10-7-3.js"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -65,12 +66,33 @@ def inject_once(html: str, pattern: str, tag: str, before: str) -> str:
     return re.sub(before, f"\n  {tag}\n{before}", html, count=1, flags=re.I)
 
 
+def inject_storage_guard(html: str) -> str:
+    html = re.sub(
+        rf"\s*<script[^>]+{re.escape(STORAGE_GUARD_ASSET)}[^>]*></script>",
+        "",
+        html,
+        flags=re.I,
+    )
+    app_pattern = r'(\s*<script[^>]+src=["\']app\.js(?:\?[^"\']*)?["\'][^>]*></script>)'
+    if re.search(app_pattern, html, flags=re.I) is None:
+        raise SystemExit("app.js script tag is missing; cannot inject storage guard")
+    guard = f'<script src="{STORAGE_GUARD_ASSET}?v={VERSION}"></script>'
+    return re.sub(
+        app_pattern,
+        lambda match: f"\n  {guard}{match.group(1)}",
+        html,
+        count=1,
+        flags=re.I,
+    )
+
+
 def prepare_index(path: Path) -> None:
     html = strip_legacy_markup(path.read_text(encoding="utf-8"))
     for asset in LEGACY_ASSETS:
         html = strip_asset(html, asset)
     for asset in RUNTIME_ASSETS:
         html = cache_bust(html, asset)
+    html = inject_storage_guard(html)
     html = inject_once(
         html,
         r'\s*<link[^>]+app-shell-v9-4-6\.css[^>]*>',
@@ -140,6 +162,34 @@ def prepare_earnings_radar() -> None:
     )
 
 
+def validate_technical_runtime(data: dict) -> None:
+    rows = data.get("rows")
+    if not isinstance(rows, list) or not rows:
+        raise SystemExit("technical rows are empty; refusing stable deploy")
+    nvda = next((row for row in rows if str(row.get("symbol") or row.get("ticker")).upper() == "NVDA"), None)
+    if not isinstance(nvda, dict):
+        raise SystemExit("technical index is missing NVDA runtime verification row")
+    for key in ("close", "ema20", "rsi14"):
+        value = nvda.get(key)
+        if not isinstance(value, (int, float)):
+            raise SystemExit(f"technical NVDA {key} is not numeric")
+    if float(nvda["close"]) <= 0:
+        raise SystemExit("technical NVDA close is not positive")
+
+    shard_path = SITE / "data" / "technical" / "symbols" / "NVDA.json"
+    if not shard_path.exists():
+        raise SystemExit("technical NVDA shard is missing; charts would be empty")
+    shard = json.loads(shard_path.read_text(encoding="utf-8"))
+    series = shard.get("series")
+    if shard.get("schema_version") != "2.0" or shard.get("symbol") != "NVDA":
+        raise SystemExit("technical NVDA shard contract is invalid")
+    if not isinstance(series, list) or len(series) < 30:
+        raise SystemExit("technical NVDA shard has insufficient chart history")
+    if not isinstance((shard.get("latest") or {}).get("close"), (int, float)):
+        raise SystemExit("technical NVDA shard latest close is missing")
+    print(f"technical runtime verified: NVDA close={nvda['close']} series={len(series)}")
+
+
 def validate_data() -> None:
     technical_index = SITE / "data" / "technical" / "index.json"
     if technical_index.exists():
@@ -154,6 +204,8 @@ def validate_data() -> None:
         if not isinstance(rows, list) or not rows:
             raise SystemExit("technical.json is empty; refusing stable deploy")
         print(f"technical.json: {len(rows)} rows")
+    validate_technical_runtime(data)
+
     fundamental = json.loads((SITE / "data" / "fundamental.json").read_text(encoding="utf-8"))
     if not isinstance(fundamental.get("rows"), list):
         raise SystemExit("fundamental.json: rows must be a list")
@@ -184,6 +236,15 @@ def validate_clean_html() -> None:
     for asset in RUNTIME_ASSETS:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
+    guard_ref = f"{STORAGE_GUARD_ASSET}?v={VERSION}"
+    app_ref = f"app.js?v={VERSION}"
+    guard_position = index.find(guard_ref)
+    app_position = index.find(app_ref)
+    if guard_position < 0 or app_position < 0 or guard_position > app_position:
+        raise SystemExit("storage guard must load before app.js")
+    guard_path = SITE / STORAGE_GUARD_ASSET
+    if not guard_path.exists() or "__stockcheckStorageMode" not in guard_path.read_text(encoding="utf-8"):
+        raise SystemExit("storage compatibility guard is missing or invalid")
     if f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" not in index:
         raise SystemExit("technical v2 runtime missing cache-busted reference")
     for asset in ("market.css", "market.js"):
