@@ -66,19 +66,19 @@ def inject_once(html: str, pattern: str, tag: str, before: str) -> str:
     return re.sub(before, f"\n  {tag}\n{before}", html, count=1, flags=re.I)
 
 
-def inject_storage_guard(html: str) -> str:
+def inject_storage_guard(html: str, bootstrap_asset: str) -> str:
     html = re.sub(
         rf"\s*<script[^>]+{re.escape(STORAGE_GUARD_ASSET)}[^>]*></script>",
         "",
         html,
         flags=re.I,
     )
-    app_pattern = r'(\s*<script[^>]+src=["\']app\.js(?:\?[^"\']*)?["\'][^>]*></script>)'
-    if re.search(app_pattern, html, flags=re.I) is None:
-        raise SystemExit("app.js script tag is missing; cannot inject storage guard")
+    bootstrap_pattern = rf'(\s*<script[^>]+src=["\']{re.escape(bootstrap_asset)}(?:\?[^"\']*)?["\'][^>]*></script>)'
+    if re.search(bootstrap_pattern, html, flags=re.I) is None:
+        raise SystemExit(f"{bootstrap_asset} script tag is missing; cannot inject storage guard")
     guard = f'<script src="{STORAGE_GUARD_ASSET}?v={VERSION}"></script>'
     return re.sub(
-        app_pattern,
+        bootstrap_pattern,
         lambda match: f"\n  {guard}{match.group(1)}",
         html,
         count=1,
@@ -92,7 +92,7 @@ def prepare_index(path: Path) -> None:
         html = strip_asset(html, asset)
     for asset in RUNTIME_ASSETS:
         html = cache_bust(html, asset)
-    html = inject_storage_guard(html)
+    html = inject_storage_guard(html, "app.js")
     html = inject_once(
         html,
         r'\s*<link[^>]+app-shell-v9-4-6\.css[^>]*>',
@@ -120,6 +120,7 @@ def prepare_market(path: Path) -> None:
         html = strip_asset(html, asset)
     html = cache_bust(html, "market.css")
     html = cache_bust(html, "market.js")
+    html = inject_storage_guard(html, "market.js")
     clean_nav = (
         '<nav class="topnav" aria-label="Primary">'
         '<a href="index.html#scanner">Scanner</a>'
@@ -220,6 +221,15 @@ def validate_data() -> None:
     json.loads(radar.read_text(encoding="utf-8"))
 
 
+def validate_guard_order(html: str, bootstrap_asset: str, page_name: str) -> None:
+    guard_ref = f"{STORAGE_GUARD_ASSET}?v={VERSION}"
+    bootstrap_ref = f"{bootstrap_asset}?v={VERSION}"
+    guard_position = html.find(guard_ref)
+    bootstrap_position = html.find(bootstrap_ref)
+    if guard_position < 0 or bootstrap_position < 0 or guard_position > bootstrap_position:
+        raise SystemExit(f"storage guard must load before {bootstrap_asset} on {page_name}")
+
+
 def validate_clean_html() -> None:
     index = (SITE / "index.html").read_text(encoding="utf-8")
     market = (SITE / "market.html").read_text(encoding="utf-8")
@@ -236,12 +246,8 @@ def validate_clean_html() -> None:
     for asset in RUNTIME_ASSETS:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
-    guard_ref = f"{STORAGE_GUARD_ASSET}?v={VERSION}"
-    app_ref = f"app.js?v={VERSION}"
-    guard_position = index.find(guard_ref)
-    app_position = index.find(app_ref)
-    if guard_position < 0 or app_position < 0 or guard_position > app_position:
-        raise SystemExit("storage guard must load before app.js")
+    validate_guard_order(index, "app.js", "index.html")
+    validate_guard_order(market, "market.js", "market.html")
     guard_path = SITE / STORAGE_GUARD_ASSET
     if not guard_path.exists() or "__stockcheckStorageMode" not in guard_path.read_text(encoding="utf-8"):
         raise SystemExit("storage compatibility guard is missing or invalid")
