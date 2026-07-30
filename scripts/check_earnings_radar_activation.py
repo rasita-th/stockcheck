@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,35 +18,64 @@ def read(path: str) -> str:
     return target.read_text(encoding="utf-8")
 
 
+def require(text: str, token: str, message: str) -> None:
+    if token not in text:
+        errors.append(message)
+
+
+def require_regex(text: str, pattern: str, message: str) -> None:
+    if re.search(pattern, text) is None:
+        errors.append(message)
+
+
 loader = read("site/memo-only-fix.js")
 styles = read("site/memo-only-fix.css")
+radar_runtime = read("site/earnings-radar-pr4.js")
 deploy = read(".github/workflows/deploy-pages.yml")
 
-for token in (
-    'earnings-radar-pr4.js?v=10.7.1',
-    "loadEarningsRadar",
-    'loadScript("attention-pr4.js?v=10.7.1", "attentionPr4Loader", loadEarningsRadar)',
-):
-    if token not in loader:
-        errors.append(f"production loader missing: {token}")
-if 'earnings-radar-pr4.css?v=10.5.1' not in styles:
-    errors.append("production stylesheet does not import Earnings Radar 10.5.1")
+# Runtime activation: accept any semantic asset version instead of pinning the
+# validator to one historical release string.
+require_regex(
+    loader,
+    r"earnings-radar-pr4\.js\?v=\d+\.\d+\.\d+",
+    "production loader does not reference a versioned Earnings Radar runtime",
+)
+require(loader, "loadEarningsRadar", "production loader missing loadEarningsRadar")
+require(loader, "loadScript(", "production loader missing dynamic script activation")
+require_regex(
+    styles,
+    r"earnings-radar-pr4\.css\?v=\d+\.\d+\.\d+",
+    "production stylesheet does not import a versioned Earnings Radar stylesheet",
+)
+require(radar_runtime, "StockcheckEarningsRadarP4", "Earnings Radar runtime export is missing")
+require(radar_runtime, 'data/earnings_radar.json', "Earnings Radar production data URL is missing")
+require(radar_runtime, "data-er-date-input", "Earnings Radar date input contract is missing")
+require(radar_runtime, "data-er-export", "Earnings Radar export contract is missing")
 
-for token in (
-    'TODAY_DEPLOY_VERSION: "10.7.1"',
-    "node --check site/earnings-radar-pr4.js",
-    "test -s site/earnings-radar-pr4.js",
-    "test -s site/earnings-radar-pr4.css",
-    "test -s site/data/earnings_radar.json",
-    "earnings-radar-pr4.js?smoke=",
-    "earnings-radar-pr4.css?smoke=",
-    "earnings_radar.json?smoke=",
-    "StockcheckEarningsRadarP4",
-    "earnings_radar_schema",
-    "earnings_published_rows",
+# Deployment topology and immutable production verification. These checks are
+# intentionally semantic: wording and individual smoke-test implementation may
+# evolve without breaking deployment activation.
+require_regex(
+    deploy,
+    r'TODAY_DEPLOY_VERSION:\s*["\']\d+\.\d+\.\d+["\']',
+    "Pages workflow does not declare a semantic deploy version",
+)
+for token, message in (
+    ("statuses: write", "Pages workflow cannot publish verified commit status"),
+    ("group: pages-production", "Pages workflow is not isolated from publisher concurrency"),
+    ("cancel-in-progress: true", "Pages workflow does not supersede stale deployments"),
+    ("node --check site/earnings-radar-pr4.js", "Pages workflow does not syntax-check Earnings Radar"),
+    ("python scripts/validate_earnings_radar.py", "Pages workflow does not validate Earnings Radar data"),
+    ('Path("site/build.json")', "Pages workflow does not stamp immutable build identity"),
+    ("actions/upload-pages-artifact@v3", "Pages workflow does not upload a Pages artifact"),
+    ("actions/deploy-pages@v4", "Pages workflow does not deploy through GitHub Pages"),
+    ("Verify deployed commit and data identity", "Pages workflow lacks production identity verification"),
+    ("build.get('source_commit')", "Pages workflow does not compare the deployed commit"),
+    ("attention identity mismatch", "Pages workflow does not compare deployed attention data"),
+    ("market identity mismatch", "Pages workflow does not compare deployed market data"),
+    ("production/stockcheck-pages", "Pages workflow does not expose verified production status"),
 ):
-    if token not in deploy:
-        errors.append(f"Pages activation guard missing: {token}")
+    require(deploy, token, message)
 
 for relative in (
     "data/generated/earnings_radar.json",
@@ -74,4 +104,3 @@ if errors:
         print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print("Earnings Radar activation contract passed")
-
