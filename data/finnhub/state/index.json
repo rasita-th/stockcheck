@@ -781,7 +781,11 @@
       "LDOS": "endpoints/company_profile/LDOS.json",
       "LHX": "endpoints/company_profile/LHX.json",
       "LIN": "endpoints/company_profile/LIN.json",
-      "LITE": "endpoints/company_profile/LITE.json"
+      "LITE": "endpoints/company_profile/LITE.json",
+      "LLY": "endpoints/company_profile/LLY.json",
+      "LMT": "endpoints/company_profile/LMT.json",
+      "LRCX": "endpoints/company_profile/LRCX.json",
+      "LUNR": "endpoints/company_profile/LUNR.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1092,50 +1096,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-07-27T10:08:24+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "IZRL",
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS",
-            "LBRT",
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE",
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-27T10:07:55+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2056,9 +2016,70 @@
       "mode": "events",
       "started_at": "2026-07-30T08:47:46+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC"
+          ],
+          "company_profile": [
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR"
+          ],
+          "recommendation_trends": [
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR",
+            "BRK-B",
+            "BTDR",
+            "BW",
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-07-30T09:18:27+00:00",
+      "mode": "analyst",
+      "started_at": "2026-07-30T09:17:41+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-30T08:48:13+00:00"
+  "updated_at": "2026-07-30T09:18:28+00:00"
 }
