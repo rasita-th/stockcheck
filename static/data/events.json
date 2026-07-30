@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-07-30T03:28:14+00:00",
+  "generated_at": "2026-07-30T08:50:18+00:00",
   "row_count": 17,
   "events": [
     {
@@ -55,9 +55,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-29: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.6, +5.9% vs EMA20, +14.4% vs EMA200, volume 0.43x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-29",
-      "detected_at": "2026-07-30T03:28:14+00:00",
+      "detected_at": "2026-07-30T08:50:18+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -77,7 +77,7 @@
       ],
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 57.65,
       "pct_vs_ema20": 5.9,
       "pct_vs_ema200": 14.4,
@@ -87,8 +87,8 @@
         "technical:ZETA:technical_setup:2026-07-29"
       ],
       "dedupe_key": "ZETA:technical_setup:d75fa8a6783d4e9d",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "technical:IONQ:technical_risk:2026-07-29",
@@ -99,9 +99,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-29: score 9/100, AVOID / Turnaround only, RSI 30.3, -19.0% vs EMA20, -33.2% vs EMA200, volume 0.62x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-29",
-      "detected_at": "2026-07-30T03:28:14+00:00",
+      "detected_at": "2026-07-30T08:50:18+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -121,7 +121,7 @@
       ],
       "technical_score": 9.0,
       "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 30.29,
       "pct_vs_ema20": -19.04,
       "pct_vs_ema200": -33.22,
@@ -131,8 +131,8 @@
         "technical:IONQ:technical_risk:2026-07-29"
       ],
       "dedupe_key": "IONQ:technical_risk:c1e8c53c5120bdaa",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "technical:MP:technical_risk:2026-07-29",
@@ -143,9 +143,9 @@
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
       "why_today": "Latest technical scan dated 2026-07-29: score 9/100, AVOID / Turnaround only, RSI 27.3, -18.8% vs EMA20, -35.2% vs EMA200, volume 0.55x 20-day average.",
       "materiality": "medium",
-      "urgency": "today",
+      "urgency": "developing",
       "event_time": "2026-07-29",
-      "detected_at": "2026-07-30T03:28:14+00:00",
+      "detected_at": "2026-07-30T08:50:18+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -165,7 +165,7 @@
       ],
       "technical_score": 9.0,
       "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
+      "scan_age_days": 1,
       "rsi14": 27.3,
       "pct_vs_ema20": -18.82,
       "pct_vs_ema200": -35.19,
@@ -175,8 +175,8 @@
         "technical:MP:technical_risk:2026-07-29"
       ],
       "dedupe_key": "MP:technical_risk:ea0571643d63e378",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 48,
+      "priority": "Watch"
     },
     {
       "event_id": "gdelt:TE:736c55c4fab3c855",
@@ -655,6 +655,48 @@
       "priority": "Watch"
     },
     {
+      "event_id": "gdelt:NOW:c8308a9f235053c8",
+      "ticker": "NOW",
+      "event_type": "earnings",
+      "event_subtype": "guidance",
+      "headline": "ServiceNow raises annual forecast after AI - driven bookings surge",
+      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "materiality": "low",
+      "reported_materiality": "high",
+      "urgency": "developing",
+      "event_time": "2026-07-23T17:30:00+00:00",
+      "detected_at": "2026-07-23T22:52:27+00:00",
+      "verification_status": "unverified",
+      "verification_level": "unverified_report",
+      "verification_reason": "Primary source not yet located.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: ServiceNow",
+      "dedupe_key": "NOW:guidance:2026-07-23:069ba302e34a",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
+        "published_at": "2026-07-23T17:30:00+00:00",
+        "domain": "www.proactiveinvestors.com"
+      },
+      "source_chain": [
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
+          "published_at": "2026-07-23T17:30:00+00:00",
+          "domain": "www.proactiveinvestors.com"
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "gdelt:NOW:c8308a9f235053c8"
+      ],
+      "priority_score": 32,
+      "priority": "Watch"
+    },
+    {
       "event_id": "gdelt:NOW:3573fdce18d8e9a6",
       "ticker": "NOW",
       "event_type": "earnings",
@@ -692,55 +734,6 @@
       "secondary_source_count": 1,
       "related_event_ids": [
         "gdelt:NOW:3573fdce18d8e9a6"
-      ],
-      "priority_score": 32,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "event:NOW:213c2c40afd30cfc",
-      "ticker": "NOW",
-      "event_type": "earnings",
-      "event_subtype": "guidance",
-      "headline": "ServiceNow raises annual subscription revenue forecast again on AI - driven demand",
-      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "materiality": "low",
-      "reported_materiality": "high",
-      "urgency": "developing",
-      "event_time": "2026-07-23T00:45:00+00:00",
-      "detected_at": "2026-07-23T08:44:48+00:00",
-      "verification_status": "unverified",
-      "verification_level": "corroborated_secondary",
-      "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
-      "entity_confidence": "high",
-      "entity_confidence_reason": "headline contains alias: ServiceNow",
-      "dedupe_key": "NOW:guidance:2026-07-23:42f41140388f",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-        "published_at": "2026-07-23T00:45:00+00:00",
-        "domain": "www.thestar.com.my"
-      },
-      "source_chain": [
-        {
-          "type": "gdelt",
-          "quality": "secondary",
-          "url": "https://www.thestar.com.my/tech/tech-news/2026/07/23/servicenow-raises-annual-subscription-revenue-forecast-again-on-ai-driven-demand",
-          "published_at": "2026-07-23T00:45:00+00:00",
-          "domain": "www.thestar.com.my"
-        },
-        {
-          "type": "gdelt",
-          "quality": "secondary",
-          "url": "https://www.proactiveinvestors.com/companies/news/1095945/servicenow-raises-annual-forecast-after-ai-driven-bookings-surge-1095945.html",
-          "published_at": "2026-07-23T17:30:00+00:00",
-          "domain": "www.proactiveinvestors.com"
-        }
-      ],
-      "secondary_source_count": 2,
-      "related_event_ids": [
-        "event:NOW:213c2c40afd30cfc"
       ],
       "priority_score": 32,
       "priority": "Watch"
