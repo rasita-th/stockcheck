@@ -39,6 +39,7 @@ on:
       - "data/source_state/news.json"
       - "site/technical-shards-v2.js"
       - "static/technical-shards-v2.js"
+      - "site/storage-guard-*.js"
       - "site/attention-p0.*"
       - "site/attention-pr3.*"
       - "site/attention-pr4.*"
@@ -89,6 +90,7 @@ jobs:
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
           node --check site/technical-shards-v2.js
           node --check static/technical-shards-v2.js
+          node --check site/storage-guard-v10-7-3.js
       - name: Run attention and technical unit tests
         run: |
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
@@ -124,12 +126,38 @@ jobs:
           python scripts/prepare_stable_site_v9_4_1.py
           node --check site/app.js
           node --check site/technical-shards-v2.js
+          node --check site/storage-guard-v10-7-3.js
           node --check site/app-shell-v9-4-6.js
           node --check site/attention-p0.js
           node --check site/attention-pr3.js
           node --check site/attention-pr4.js
           node --check site/memo-only-fix.js
-          grep -F 'technical-shards-v2.js?v=10.7.2' site/index.html
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          source = Path("scripts/prepare_stable_site_v9_4_1.py").read_text(encoding="utf-8")
+          index = Path("site/index.html").read_text(encoding="utf-8")
+          runtime_match = re.search(r'^VERSION = "([^"]+)"$', source, flags=re.MULTILINE)
+          technical_match = re.search(r'^TECHNICAL_RUNTIME_VERSION = "([^"]+)"$', source, flags=re.MULTILINE)
+          guard_match = re.search(r'^STORAGE_GUARD_ASSET = "([^"]+)"$', source, flags=re.MULTILINE)
+          if not runtime_match or not technical_match or not guard_match:
+              raise SystemExit("runtime version declarations are missing")
+          runtime_version = runtime_match.group(1)
+          technical_version = technical_match.group(1)
+          guard_asset = guard_match.group(1)
+          required = (
+              f"app.js?v={runtime_version}",
+              f"technical-shards-v2.js?v={technical_version}",
+              f"{guard_asset}?v={runtime_version}",
+          )
+          missing = [token for token in required if token not in index]
+          if missing:
+              raise SystemExit(f"prepared Pages runtime references are missing: {missing}")
+          if index.find(f"{guard_asset}?v={runtime_version}") > index.find(f"app.js?v={runtime_version}"):
+              raise SystemExit("storage guard does not precede app.js")
+          print(f"Pages runtime preflight passed: app={runtime_version}, technical={technical_version}")
+          PY
           test -s site/today-view-isolation.css
           test -s site/attention-pr3.css
           test -s site/attention-pr4.css
