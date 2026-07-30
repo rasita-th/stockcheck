@@ -60,6 +60,11 @@ require_regex(
     r'TODAY_DEPLOY_VERSION:\s*["\']\d+\.\d+\.\d+["\']',
     "Pages workflow does not declare a semantic deploy version",
 )
+require_regex(
+    deploy,
+    r"- name:\s*Verify deployed[^\n]+",
+    "Pages workflow lacks a deployed-production verification step",
+)
 for token, message in (
     ("statuses: write", "Pages workflow cannot publish verified commit status"),
     ("group: pages-production", "Pages workflow is not isolated from publisher concurrency"),
@@ -69,10 +74,11 @@ for token, message in (
     ('Path("site/build.json")', "Pages workflow does not stamp immutable build identity"),
     ("actions/upload-pages-artifact@v3", "Pages workflow does not upload a Pages artifact"),
     ("actions/deploy-pages@v4", "Pages workflow does not deploy through GitHub Pages"),
-    ("Verify deployed commit and data identity", "Pages workflow lacks production identity verification"),
     ("build.get('source_commit')", "Pages workflow does not compare the deployed commit"),
     ("attention identity mismatch", "Pages workflow does not compare deployed attention data"),
     ("market identity mismatch", "Pages workflow does not compare deployed market data"),
+    ("technical identity mismatch", "Pages workflow does not compare deployed technical data"),
+    ("deployed NVDA chart history is missing", "Pages workflow does not verify chart history"),
     ("production/stockcheck-pages", "Pages workflow does not expose verified production status"),
 ):
     require(deploy, token, message)

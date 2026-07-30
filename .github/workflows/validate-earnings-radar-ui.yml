@@ -56,11 +56,14 @@ jobs:
             scripts/sync_attention_assets.py
       - name: Test earnings radar data contract
         run: python -m unittest tests.test_earnings_radar -v
-      - name: Generate 45-day radar fixture
+      - name: Generate market-wide 45-day radar fixture
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
-        run: python scripts/generate_earnings_radar.py
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          python scripts/generate_earnings_radar.py
+          rm -f data/finnhub/state.json
       - name: Sync runtime assets
         run: python scripts/sync_attention_assets.py
       - name: Validate JavaScript, schema, UI and activation contracts

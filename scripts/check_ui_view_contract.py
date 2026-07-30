@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 from pathlib import Path
 import re
 import sys
@@ -29,6 +30,25 @@ def read(relative_path: str) -> str:
         return ""
     return path.read_text(encoding="utf-8")
 
+
+def load_release_manifest() -> dict:
+    path = ROOT / "config/release-manifest.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(f"invalid release manifest: {exc}")
+        return {}
+    if not re.fullmatch(r"\d+\.\d+\.\d+", str(payload.get("release") or "")):
+        errors.append("release manifest must declare a semantic release")
+    return payload
+
+
+release_manifest = load_release_manifest()
+release_assets = release_manifest.get("assets") if isinstance(release_manifest.get("assets"), dict) else {}
+production_runtime_version = str(release_assets.get("app_js") or release_manifest.get("release") or "")
+technical_runtime_version = str(release_assets.get("technical_shards_js") or production_runtime_version)
+storage_guard_version = str(release_assets.get("storage_guard_js") or production_runtime_version)
+storage_guard_reference = f"storage-guard-v{storage_guard_version.replace('.', '-')}.js?v={storage_guard_version}"
 
 for label, site_path, static_path in PAIRS:
     site_text = read(site_path)
@@ -192,6 +212,7 @@ for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px 
         errors.append(f"Usability stylesheet missing: {token}")
 if legacy_workflow.exists():
     errors.append("legacy self-mutating CSS workflow still exists")
+
 for index_path in ("site/index.html", "static/index.html"):
     index = read(index_path)
     for asset in ("notification-phase2.css", "notification-phase2.js", "final-ui-coordinator.css", "final-ui-coordinator.js", "memo-only-fix.css", "memo-only-fix.js"):
@@ -202,9 +223,27 @@ for index_path in ("site/index.html", "static/index.html"):
             errors.append(f"{index_path} missing usability UI: {token}")
     if 'id="setupSummary"' in index or 'id="fundamentalDashboard"' in index or 'id="playbookCards"' in index:
         errors.append(f"{index_path} still renders duplicated desktop detail cards")
-    for asset in ("app.js?v=10.7.1", "final-ui-coordinator.css?v=10.7.1", "final-ui-coordinator.js?v=10.7.1"):
-        if asset not in index:
-            errors.append(f"{index_path} missing popup cache-bust asset: {asset}")
+
+    prepared_site = index_path == "site/index.html" and storage_guard_reference in index
+    if prepared_site:
+        production_assets = (
+            f"app.js?v={production_runtime_version}",
+            f"final-ui-coordinator.css?v={production_runtime_version}",
+            f"final-ui-coordinator.js?v={production_runtime_version}",
+            f"technical-shards-v2.js?v={technical_runtime_version}",
+            storage_guard_reference,
+        )
+        for asset in production_assets:
+            if asset not in index:
+                errors.append(f"{index_path} missing release-manifest asset: {asset}")
+    else:
+        for pattern, label in (
+            (r"app\.js\?v=\d+\.\d+\.\d+", "app.js"),
+            (r"final-ui-coordinator\.css\?v=\d+\.\d+\.\d+", "final-ui-coordinator.css"),
+            (r"final-ui-coordinator\.js\?v=\d+\.\d+\.\d+", "final-ui-coordinator.js"),
+        ):
+            if re.search(pattern, index) is None:
+                errors.append(f"{index_path} missing semantic cache-bust asset: {label}")
 
 memo_loader = read("site/memo-only-fix.js")
 for token in (
@@ -269,4 +308,3 @@ if errors:
         print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print("UI view contract passed")
-
