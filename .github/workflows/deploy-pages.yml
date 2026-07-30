@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.7.2"
+  TODAY_DEPLOY_VERSION: "10.7.3"
 
 jobs:
   build:
@@ -71,7 +71,9 @@ jobs:
       - name: Validate deployable application and data
         run: |
           set -euo pipefail
+          node --check site/storage-guard-v10-7-3.js
           node --check site/app.js
+          node --check site/technical-shards-v2.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
           node --check site/notification-phase2.js
@@ -98,14 +100,24 @@ jobs:
 
           attention = json.loads(Path("site/data/attention_today.json").read_text(encoding="utf-8"))
           market = json.loads(Path("site/data/market_pulse.json").read_text(encoding="utf-8"))
+          technical = json.loads(Path("site/data/technical/index.json").read_text(encoding="utf-8"))
+          nvda = next(
+              row for row in technical["rows"]
+              if str(row.get("symbol") or row.get("ticker")).upper() == "NVDA"
+          )
+          nvda_shard = json.loads(Path("site/data/technical/symbols/NVDA.json").read_text(encoding="utf-8"))
           identity = {
-              "schema_version": "1.0",
+              "schema_version": "1.1",
               "repository": os.environ["GITHUB_REPOSITORY"],
               "source_commit": os.environ["GITHUB_SHA"],
               "run_id": os.environ["GITHUB_RUN_ID"],
               "built_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
               "attention_updated_at": attention.get("updated_at"),
               "market_generated_at": market.get("generated_at"),
+              "technical_generated_at": technical.get("generatedAtTechnical") or technical.get("generatedAt"),
+              "technical_count": len(technical.get("rows") or []),
+              "nvda_close": nvda.get("close"),
+              "nvda_series_points": len(nvda_shard.get("series") or []),
               "asset_version": os.environ["TODAY_DEPLOY_VERSION"],
           }
           Path("site/build.json").write_text(
@@ -138,10 +150,11 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify deployed commit and data identity
+      - name: Verify deployed prices technical data and charts
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          EXPECTED_VERSION: ${{ env.TODAY_DEPLOY_VERSION }}
         run: |
           set -euo pipefail
           BASE="${PAGE_URL%/}"
@@ -152,7 +165,14 @@ jobs:
             if curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/build.json?smoke=${nonce}" -o /tmp/build.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html; then
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/index.json?smoke=${nonce}" -o /tmp/technical_index.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/NVDA.json?smoke=${nonce}" -o /tmp/nvda.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.html?smoke=${nonce}" -o /tmp/market.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/app.js?smoke=${nonce}" -o /tmp/app.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/market.js?smoke=${nonce}" -o /tmp/market.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/storage-guard-v10-7-3.js?smoke=${nonce}" -o /tmp/storage-guard.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/technical-shards-v2.js?smoke=${nonce}" -o /tmp/technical-shards-v2.js; then
               if python - <<'PY'
           import json
           import os
@@ -162,21 +182,92 @@ jobs:
           build = json.loads(Path('/tmp/build.json').read_text(encoding='utf-8'))
           attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
           market = json.loads(Path('/tmp/market_pulse.json').read_text(encoding='utf-8'))
-          expected = os.environ['GITHUB_SHA']
-          if build.get('source_commit') != expected:
-              raise SystemExit(f"commit mismatch: {build.get('source_commit')} != {expected}")
+          technical = json.loads(Path('/tmp/technical_index.json').read_text(encoding='utf-8'))
+          nvda_shard = json.loads(Path('/tmp/nvda.json').read_text(encoding='utf-8'))
+          index = Path('/tmp/index.html').read_text(encoding='utf-8')
+          market_html = Path('/tmp/market.html').read_text(encoding='utf-8')
+          app = Path('/tmp/app.js').read_text(encoding='utf-8')
+          market_runtime = Path('/tmp/market.js').read_text(encoding='utf-8')
+          guard = Path('/tmp/storage-guard.js').read_text(encoding='utf-8')
+          shard_runtime = Path('/tmp/technical-shards-v2.js').read_text(encoding='utf-8')
+
+          expected_commit = os.environ['GITHUB_SHA']
+          expected_version = os.environ['EXPECTED_VERSION']
+          if build.get('source_commit') != expected_commit:
+              raise SystemExit(f"commit mismatch: {build.get('source_commit')} != {expected_commit}")
+          if build.get('asset_version') != expected_version:
+              raise SystemExit('asset version mismatch')
           if build.get('attention_updated_at') != attention.get('updated_at'):
               raise SystemExit('attention identity mismatch')
           if build.get('market_generated_at') != market.get('generated_at'):
               raise SystemExit('market identity mismatch')
+          technical_stamp = technical.get('generatedAtTechnical') or technical.get('generatedAt')
+          if build.get('technical_generated_at') != technical_stamp:
+              raise SystemExit('technical identity mismatch')
+
+          guard_ref = f'storage-guard-v10-7-3.js?v={expected_version}'
+          app_ref = f'app.js?v={expected_version}'
+          market_ref = f'market.js?v={expected_version}'
+          technical_ref = f'technical-shards-v2.js?v={expected_version}'
+          for html, bootstrap_ref, page in (
+              (index, app_ref, 'index.html'),
+              (market_html, market_ref, 'market.html'),
+          ):
+              if guard_ref not in html or bootstrap_ref not in html:
+                  raise SystemExit(f'{page} runtime references are missing')
+              if html.find(guard_ref) > html.find(bootstrap_ref):
+                  raise SystemExit(f'{page} storage guard loads after bootstrap')
+          if technical_ref not in index:
+              raise SystemExit('technical shard runtime reference is missing')
+          if '__stockcheckStorageMode' not in guard or 'Object.defineProperty(window, "localStorage"' not in guard:
+              raise SystemExit('storage fallback runtime is invalid')
+          for token in ('loadStaticData', 'fetchStaticLayer', 'mergeStaticPayloads', 'renderAll'):
+              if token not in app:
+                  raise SystemExit(f'app runtime missing {token}')
+          if 'loadTechnicalShard' not in shard_runtime or 'data/technical/symbols/' not in shard_runtime:
+              raise SystemExit('technical shard loader runtime is invalid')
+          if 'localStorage' not in market_runtime:
+              raise SystemExit('unexpected Market Pulse runtime contract')
+
+          rows = technical.get('rows')
+          if technical.get('schema_version') != '2.0' or not isinstance(rows, list) or not rows:
+              raise SystemExit('deployed technical index is invalid')
+          nvda = next((row for row in rows if str(row.get('symbol') or row.get('ticker')).upper() == 'NVDA'), None)
+          if not isinstance(nvda, dict):
+              raise SystemExit('NVDA missing from deployed technical index')
+          for key in ('close', 'ema20', 'rsi14'):
+              if not isinstance(nvda.get(key), (int, float)):
+                  raise SystemExit(f'NVDA {key} is missing from deployed technical index')
+          if float(nvda['close']) <= 0:
+              raise SystemExit('NVDA deployed price is invalid')
+          series = nvda_shard.get('series')
+          latest = nvda_shard.get('latest') or {}
+          if nvda_shard.get('schema_version') != '2.0' or nvda_shard.get('symbol') != 'NVDA':
+              raise SystemExit('deployed NVDA shard contract is invalid')
+          if not isinstance(series, list) or len(series) < 30:
+              raise SystemExit('deployed NVDA chart history is missing')
+          if not isinstance(latest.get('close'), (int, float)):
+              raise SystemExit('deployed NVDA shard price is missing')
+          if abs(float(nvda['close']) - float(latest['close'])) > 0.01:
+              raise SystemExit('NVDA summary and chart prices disagree')
+          if build.get('technical_count') != len(rows):
+              raise SystemExit('technical row-count identity mismatch')
+          if build.get('nvda_close') != nvda.get('close'):
+              raise SystemExit('NVDA price identity mismatch')
+          if build.get('nvda_series_points') != len(series):
+              raise SystemExit('NVDA chart identity mismatch')
+
           stamp = str(attention.get('updated_at') or '')
           updated = datetime.fromisoformat(stamp.replace('Z', '+00:00'))
           age_hours = (datetime.now(timezone.utc) - updated).total_seconds() / 3600
           if age_hours < -0.25 or age_hours > 6:
               raise SystemExit(f'attention data is stale: {age_hours:.2f} hours')
-          if Path('/tmp/index.html').stat().st_size < 1000:
-              raise SystemExit('index.html is unexpectedly small')
-          print(f"Verified production commit {expected}; attention age {age_hours:.2f}h")
+          if len(index) < 1000 or len(app) < 1000:
+              raise SystemExit('production application assets are unexpectedly small')
+          print(
+              f"Verified production {expected_commit}: {len(rows)} technical rows, "
+              f"NVDA ${nvda['close']}, {len(series)} chart points, attention age {age_hours:.2f}h"
+          )
           PY
               then
                 ready=true
@@ -186,7 +277,7 @@ jobs:
             sleep 5
           done
           if [ "$ready" != "true" ]; then
-            echo "Production did not serve commit ${GITHUB_SHA} with matching current data" >&2
+            echo "Production did not serve commit ${GITHUB_SHA} with working prices, technical data and charts" >&2
             exit 1
           fi
 
@@ -218,7 +309,7 @@ jobs:
               state: ok ? 'success' : 'failure',
               context: 'production/stockcheck-pages',
               description: ok
-                ? 'Pages deployed and production identity verified'
+                ? 'Pages verified: prices, technical data and charts available'
                 : `Pages failed: build=${buildResult}, deploy=${deployResult}`,
               target_url: targetUrl,
             });
