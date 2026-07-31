@@ -20,13 +20,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: live-data-producer-${{ github.event_name }}-${{ github.event.schedule || inputs.full_technical || 'fast' }}
+  group: live-data-producer-main
   cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 18
     steps:
       - name: Resolve fast and full refresh modes
         id: window
@@ -83,12 +83,14 @@ jobs:
         if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/build_generated_layer.py
 
-      - name: Refresh latest quotes concurrently
+      - name: Refresh latest quotes in bounded batches
         if: steps.window.outputs.run_refresh == 'true'
         env:
           QUOTE_REFRESH_WORKERS: "16"
+          QUOTE_BATCH_SIZE: "80"
+          QUOTE_REQUEST_TIMEOUT: "8"
           QUOTE_MIN_COVERAGE: "0.80"
-        run: python scripts/update_quote_data.py
+        run: timeout --signal=TERM 10m python scripts/update_quote_data.py
 
       - name: Refresh full technical indicators and ticker shards
         if: steps.window.outputs.run_refresh == 'true' && steps.window.outputs.full_technical == 'true'

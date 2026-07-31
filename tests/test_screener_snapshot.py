@@ -4,10 +4,11 @@ import ast
 import json
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from scripts.build_screener_snapshot import build_snapshot
+from scripts.update_quote_data import select_quote_values
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -138,11 +139,35 @@ class ScreenerSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
 
-    def test_intraday_workflow_uses_fast_quotes_and_isolates_full_technical_scan(self):
+    def test_batch_quote_values_use_intraday_price_and_prior_daily_close(self):
+        price, previous_close, quote_mode = select_quote_values(
+            [492.50, 493.23],
+            date(2026, 7, 31),
+            [490.00, 493.00],
+            date(2026, 7, 31),
+        )
+
+        self.assertEqual(price, 493.23)
+        self.assertEqual(previous_close, 490.0)
+        self.assertEqual(quote_mode, "intraday")
+
+    def test_batch_quote_values_use_latest_daily_when_intraday_missing(self):
+        price, previous_close, quote_mode = select_quote_values(
+            [],
+            None,
+            [490.00, 493.00],
+            date(2026, 7, 31),
+        )
+
+        self.assertEqual(price, 493.0)
+        self.assertEqual(previous_close, 490.0)
+        self.assertEqual(quote_mode, "daily_close")
+
+    def test_intraday_workflow_uses_bounded_quotes_and_isolates_full_technical_scan(self):
         workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
             encoding="utf-8"
         )
-        quote_step = workflow.find("Refresh latest quotes concurrently")
+        quote_step = workflow.find("Refresh latest quotes in bounded batches")
         technical_step = workflow.find("Refresh full technical indicators and ticker shards")
         snapshot_step = workflow.find("Build canonical intraday screener snapshot")
         artifact_step = workflow.find("Build immutable core-data artifact")
@@ -155,7 +180,11 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertIn('cron: "35 21 * * 1-5"', workflow)
         self.assertIn("full_technical:", workflow)
         self.assertIn("steps.window.outputs.full_technical == 'true'", workflow)
+        self.assertIn("group: live-data-producer-main", workflow)
         self.assertIn("cancel-in-progress: true", workflow)
+        self.assertIn("QUOTE_BATCH_SIZE", workflow)
+        self.assertIn("QUOTE_REQUEST_TIMEOUT", workflow)
+        self.assertIn("timeout --signal=TERM 10m python scripts/update_quote_data.py", workflow)
         self.assertIn("python scripts/build_screener_snapshot.py", workflow)
         self.assertIn("python scripts/verify_screener_snapshot.py", workflow)
         self.assertNotIn("Refresh PR3 personal Today desk", workflow)
@@ -166,20 +195,25 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
         self.assertNotIn("--allow-stale", workflow)
 
-    def test_quote_refresh_is_parallel_atomic_and_writes_deployable_mirrors(self):
+    def test_quote_refresh_is_batched_bounded_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
         ast.parse(source, filename="scripts/update_quote_data.py")
         for token in (
-            "ThreadPoolExecutor",
-            "as_completed",
+            "yf.download",
             "QUOTE_REFRESH_WORKERS",
+            "QUOTE_BATCH_SIZE",
+            "QUOTE_REQUEST_TIMEOUT",
             "QUOTE_MIN_COVERAGE",
+            'group_by="ticker"',
+            "timeout=timeout_seconds",
             'ROOT / "site" / "data" / "quote_latest.json"',
             'ROOT / "static" / "data" / "quote_latest.json"',
             "temporary.replace(path)",
             "quote coverage below minimum",
         ):
             self.assertIn(token, source)
+        self.assertNotIn("ThreadPoolExecutor", source)
+        self.assertNotIn("fast_info", source)
         self.assertNotIn("for symbol in symbols:\n        try:\n            t = yf.Ticker", source)
 
 
