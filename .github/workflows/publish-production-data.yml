@@ -78,16 +78,65 @@ jobs:
       - name: Validate merged production tree
         if: steps.contract.outputs.status == 'READY'
         run: |
-          python scripts/validate_static_data.py
+          set -euo pipefail
+          producer="${{ steps.contract.outputs.producer }}"
+          if [ "$producer" = "Refresh Live Data v10 PR3" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+
+          roots = (Path('data/generated'), Path('site/data'), Path('static/data'))
+          names = ('quote_latest.json', 'scanner.json', 'technical.json')
+          payloads = {}
+          for root in roots:
+              for name in names:
+                  path = root / name
+                  if not path.exists():
+                      raise SystemExit(f'missing live-data file after apply: {path}')
+                  try:
+                      payload = json.loads(path.read_text(encoding='utf-8'))
+                  except json.JSONDecodeError as exc:
+                      raise SystemExit(f'invalid JSON in {path}: {exc}') from exc
+                  if not isinstance(payload, dict):
+                      raise SystemExit(f'{path}: root must be an object')
+                  rows = payload.get('rows')
+                  if not isinstance(rows, list) or not rows:
+                      raise SystemExit(f'{path}: rows must be a non-empty list')
+                  payloads[(str(root), name)] = payload
+
+          for name in names:
+              canonical = (Path('data/generated') / name).read_bytes()
+              for mirror in (Path('site/data') / name, Path('static/data') / name):
+                  if mirror.read_bytes() != canonical:
+                      raise SystemExit(f'live-data mirror mismatch: {mirror} vs data/generated/{name}')
+
+          quote = payloads[('data/generated', 'quote_latest.json')]
+          technical = payloads[('data/generated', 'technical.json')]
+          scanner = payloads[('data/generated', 'scanner.json')]
+          quote_symbols = {str(row.get('ticker') or row.get('symbol') or '').upper() for row in quote['rows']}
+          technical_symbols = {str(row.get('ticker') or row.get('symbol') or '').upper() for row in technical['rows']}
+          scanner_symbols = {str(row.get('ticker') or row.get('symbol') or '').upper() for row in scanner['rows']}
+          if len(quote_symbols) < 1 or len(technical_symbols) < 1 or len(scanner_symbols) < 1:
+              raise SystemExit('live-data symbol sets are empty')
+          if scanner_symbols != technical_symbols:
+              raise SystemExit('scanner and technical symbol sets differ')
+          coverage = len(quote_symbols & technical_symbols) / len(technical_symbols)
+          if coverage < 0.80:
+              raise SystemExit(f'live quote coverage below publisher minimum: {coverage:.1%}')
+          print(f'Live-data domain validation passed: {len(technical_symbols)} technical rows, quote coverage={coverage:.1%}')
+          PY
+          else
+            python scripts/validate_static_data.py
+          fi
           python scripts/validate_generated_data_v9_1.py
           python scripts/validate_attention_pr3.py
           python scripts/validate_earnings_radar.py
-          if [ "${{ steps.contract.outputs.producer }}" = "Refresh Market Pulse v9.6" ]; then
+          if [ "$producer" = "Refresh Market Pulse v9.6" ]; then
             python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
             cmp data/market_pulse.json site/data/market_pulse.json
             cmp data/market_pulse.json static/data/market_pulse.json
           fi
-          if [ "${{ steps.contract.outputs.producer }}" = "Update static fundamental data" ]; then
+          if [ "$producer" = "Update static fundamental data" ]; then
             python - <<'PY'
           import json
           from pathlib import Path
