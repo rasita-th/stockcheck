@@ -87,8 +87,15 @@
 
   currentQuoteFor = function currentQuoteForV2(symbol) {
     const ticker = safeTicker(symbol);
+    const selectedTicker = safeTicker(state.selected);
     const existing = legacyCurrentQuoteFor(ticker);
-    if (ticker && state.staticMode && state.staticLoaded && !hasSeries(state.quotes[ticker])) {
+    if (
+      ticker &&
+      ticker === selectedTicker &&
+      state.staticMode &&
+      state.staticLoaded &&
+      !hasSeries(state.quotes[ticker])
+    ) {
       void loadTechnicalShard(ticker);
     }
     return existing;
