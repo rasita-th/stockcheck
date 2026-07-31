@@ -1,0 +1,33 @@
+name: Report Live Producer Status
+
+on:
+  workflow_run:
+    workflows:
+      - "Refresh Live Data v10 PR3"
+    types: [completed]
+
+permissions:
+  statuses: write
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish producer receipt
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const state = run.conclusion === 'success' ? 'success' : 'failure';
+            const description = `Live producer ${run.conclusion || 'completed'} (run ${run.id})`.slice(0, 140);
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: run.head_sha,
+              state,
+              context: 'producer/stockcheck-core',
+              description,
+              target_url: run.html_url,
+            });
+            core.info(`${description}: ${run.html_url}`);
