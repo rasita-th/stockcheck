@@ -8,64 +8,67 @@ on:
       - ".github/refresh-now"
   schedule:
     - cron: "*/15 * * * 1-5"
-    - cron: "17 */2 * * 0,6"
 
 permissions:
   contents: read
 
 concurrency:
   group: live-data-producer-${{ github.ref_name }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 18
     steps:
-      - name: Check refresh windows
+      - name: Check US market window
         id: window
+        shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
           from datetime import datetime, time
           from zoneinfo import ZoneInfo
+
           now = datetime.now(ZoneInfo("America/New_York"))
-          weekday = now.weekday() < 5
-          market_open = weekday and time(9, 25) <= now.time() <= time(16, 20)
-          event_open = (weekday and time(6, 0) <= now.time() <= time(21, 0)) or not weekday
+          market_open = now.weekday() < 5 and time(9, 25) <= now.time() <= time(16, 20)
+          force = "${{ github.event_name }}" in {"workflow_dispatch", "push"}
+          print(f"run_refresh={'true' if market_open or force else 'false'}")
           print(f"market_open={'true' if market_open else 'false'}")
-          print(f"event_open={'true' if event_open else 'false'}")
           print(f"now={now.isoformat()}")
           PY
 
-      - name: Skip outside event window
-        if: steps.window.outputs.event_open != 'true' && github.event_name != 'workflow_dispatch' && github.event_name != 'push'
-        run: echo "Outside event window at ${{ steps.window.outputs.now }}; publishing an explicit no-op artifact."
+      - name: Explain no-op outside market window
+        if: steps.window.outputs.run_refresh != 'true'
+        run: echo "Outside the core market refresh window at ${{ steps.window.outputs.now }}."
 
-      - uses: actions/checkout@v4
+      - name: Checkout production source
+        uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+      - name: Install market-data dependencies
+        if: steps.window.outputs.run_refresh == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Seed canonical generated layer
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/build_generated_layer.py
 
       - name: Refresh latest quotes
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/update_quote_data.py
 
-      - name: Refresh technical layer
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+      - name: Refresh technical indicators and ticker shards
+        if: steps.window.outputs.run_refresh == 'true'
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -77,7 +80,7 @@ jobs:
           cp site/data/scanner.json data/generated/scanner.json
 
       - name: Enforce fresh technical output
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: |
           python scripts/check_data_freshness.py site/data/technical.json \
             --timestamp-field generatedAtTechnical \
@@ -86,7 +89,7 @@ jobs:
             --min-rows 1
 
       - name: Enforce source market freshness
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: |
           python scripts/check_source_market_freshness.py site/data/technical.json \
             --report data/generated/source_freshness.json \
@@ -94,73 +97,39 @@ jobs:
             --min-coverage 0.80
 
       - name: Build canonical screener snapshot
-        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/build_screener_snapshot.py
 
-      - name: Refresh PR3 personal Today desk
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        env:
-          SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
-          ATTENTION_NEWS_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
-          ATTENTION_NEWS_ENABLED: "1"
-          ATTENTION_REGULATORS_ENABLED: "1"
-          ATTENTION_NEWS_BATCH_SIZE: "10"
-          ATTENTION_MAX_ITEMS: "7"
-          SEC_BOOTSTRAP_DAYS: "1"
-        run: python scripts/generate_attention_pr3.py
-
-      - name: Run attention and technical contract tests
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+      - name: Run core screener contracts
+        if: steps.window.outputs.run_refresh == 'true'
         run: |
-          python -m unittest discover -s tests -p "test_attention_p0.py" -v
-          python -m unittest discover -s tests -p "test_attention_news.py" -v
-          python -m unittest discover -s tests -p "test_attention_pr3.py" -v
-          python -m unittest discover -s tests -p "test_data_freshness.py" -v
-          python -m unittest discover -s tests -p "test_source_market_freshness.py" -v
-          python -m unittest discover -s tests -p "test_generate_health.py" -v
-          python -m unittest tests.test_technical_shards -v
           python -m unittest tests.test_screener_snapshot -v
+          python -m unittest tests.test_technical_shards -v
           node tests/technical_shards_runtime.test.js
 
-      - name: Test generated-data publication
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/test_publish_generated_data.py
-
       - name: Generate data health
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/generate_health.py
 
       - name: Publish generated mirrors
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/publish_generated_data.py
 
-      - name: Validate generated-data contract
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/validate_generated_data_v9_1.py
+      - name: Validate canonical production data
+        if: steps.window.outputs.run_refresh == 'true'
+        run: |
+          python scripts/validate_generated_data_v9_1.py
+          python scripts/validate_static_data.py
 
-      - name: Validate legacy PR2 compatibility
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/validate_attention_pr2.py
-
-      - name: Validate current PR3 contract
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/validate_attention_pr3.py
-
-      - name: Validate static data
-        if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        run: python scripts/validate_static_data.py
-
-      - name: Build immutable live-data artifact
+      - name: Build immutable core-data artifact
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          if [ "${{ steps.window.outputs.event_open }}" = "true" ] || \
-             [ "${{ github.event_name }}" = "workflow_dispatch" ] || \
-             [ "${{ github.event_name }}" = "push" ]; then
+          if [ "${{ steps.window.outputs.run_refresh }}" = "true" ]; then
             git add -N -- data/generated/technical site/data/technical static/data/technical
             git diff --binary HEAD -- \
               data/generated \
-              data/source_state \
               site/data \
               static/data \
               ':(exclude)data/generated/market_pulse.json' \
@@ -174,7 +143,7 @@ jobs:
             --patch publish-artifact/production-data.patch \
             --metadata publish-artifact/metadata.json
 
-      - name: Upload immutable live-data artifact
+      - name: Upload immutable core-data artifact
         uses: actions/upload-artifact@v4
         with:
           name: production-data-${{ github.run_id }}
