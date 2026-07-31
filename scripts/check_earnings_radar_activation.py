@@ -78,7 +78,9 @@ for token, message in (
     ("attention identity mismatch", "Pages workflow does not compare deployed attention data"),
     ("market identity mismatch", "Pages workflow does not compare deployed market data"),
     ("technical identity mismatch", "Pages workflow does not compare deployed technical data"),
-    ("deployed NVDA chart history is missing", "Pages workflow does not verify chart history"),
+    ("for symbol, shard in shards.items()", "Pages workflow does not verify multiple ticker shards"),
+    ("'CIFR': json.loads", "Pages workflow does not verify CIFR chart history"),
+    ("len(series) < 30", "Pages workflow does not verify chart history"),
     ("production/stockcheck-pages", "Pages workflow does not expose verified production status"),
 ):
     require(deploy, token, message)
