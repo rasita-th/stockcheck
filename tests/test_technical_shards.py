@@ -85,6 +85,14 @@ class TechnicalShardTests(unittest.TestCase):
         ):
             self.assertIn(token, text)
 
+    def test_runtime_does_not_treat_summary_or_fundamental_quote_as_loaded_series(self):
+        text = (ROOT / "site" / "technical-shards-v2.js").read_text(encoding="utf-8")
+        self.assertIn("function hasSeries(quote)", text)
+        self.assertIn("if (hasSeries(cached)) return cached;", text)
+        self.assertIn("!hasSeries(state.quotes[ticker])", text)
+        self.assertIn("fundamental: existing.fundamental || {}", text)
+        self.assertNotIn("if (state.quotes[ticker]) return state.quotes[ticker];", text)
+
     def test_monolith_exception_is_removed_and_shards_are_bounded(self):
         self.assertEqual(budget_for("site/data/technical.json"), (10 * MIB, 25 * MIB))
         self.assertEqual(budget_for("site/data/scanner.json"), (10 * MIB, 25 * MIB))
