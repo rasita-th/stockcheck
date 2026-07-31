@@ -1,0 +1,129 @@
+name: Refresh Core Screener
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/refresh-core-now"
+  schedule:
+    - cron: "*/15 * * * 1-5"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: core-screener-producer
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check US market window
+        id: window
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime, time
+          from zoneinfo import ZoneInfo
+
+          now = datetime.now(ZoneInfo("America/New_York"))
+          market_open = now.weekday() < 5 and time(9, 25) <= now.time() <= time(16, 20)
+          force = "${{ github.event_name }}" in {"workflow_dispatch", "push"}
+          print(f"run_refresh={'true' if market_open or force else 'false'}")
+          print(f"market_open={'true' if market_open else 'false'}")
+          print(f"now={now.isoformat()}")
+          PY
+
+      - name: Explain no-op outside market window
+        if: steps.window.outputs.run_refresh != 'true'
+        run: echo "Outside the core screener refresh window at ${{ steps.window.outputs.now }}."
+
+      - name: Checkout production source
+        if: steps.window.outputs.run_refresh == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        if: steps.window.outputs.run_refresh == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install quote dependencies
+        if: steps.window.outputs.run_refresh == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Seed generated mirrors
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python scripts/build_generated_layer.py
+
+      - name: Refresh latest market quotes
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python scripts/update_quote_data.py
+
+      - name: Validate technical baseline freshness
+        if: steps.window.outputs.run_refresh == 'true'
+        run: |
+          python scripts/check_source_market_freshness.py site/data/technical.json \
+            --report data/generated/source_freshness.json \
+            --max-business-day-lag 1 \
+            --min-coverage 0.80
+
+      - name: Build canonical screener snapshot
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python scripts/build_screener_snapshot.py
+
+      - name: Run canonical screener contracts
+        if: steps.window.outputs.run_refresh == 'true'
+        run: |
+          python -m unittest tests.test_screener_snapshot -v
+          node tests/technical_shards_runtime.test.js
+
+      - name: Generate data health
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python scripts/generate_health.py
+
+      - name: Publish generated mirrors
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python scripts/publish_generated_data.py
+
+      - name: Validate canonical generated data
+        if: steps.window.outputs.run_refresh == 'true'
+        run: |
+          python scripts/validate_generated_data_v9_1.py
+          python scripts/validate_static_data.py
+
+      - name: Build immutable core artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p publish-artifact
+          if [ "${{ steps.window.outputs.run_refresh }}" = "true" ]; then
+            git add -N -- data/generated site/data static/data
+            git diff --binary HEAD -- \
+              data/generated \
+              site/data \
+              static/data \
+              > publish-artifact/production-data.patch
+          else
+            : > publish-artifact/production-data.patch
+          fi
+          python scripts/validate_production_artifact.py create-metadata \
+            --patch publish-artifact/production-data.patch \
+            --metadata publish-artifact/metadata.json
+
+      - name: Upload immutable core artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-data-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 7
