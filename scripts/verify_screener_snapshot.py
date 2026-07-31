@@ -6,7 +6,6 @@ import argparse
 import json
 import math
 import os
-import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -94,11 +93,19 @@ def main() -> None:
         if isinstance(row, dict) and symbol_of(row)
     }
 
+    quote_identity = str(quotes.get("market_as_of") or quotes.get("generated_at") or "")
+    fail(bool(quote_identity), "quote_latest timestamp is missing")
+    fail(snapshot.get("quote_generated_at") == quote_identity, "snapshot does not identify the deployed quote generation")
+    baseline_identity = str(technical.get("technical_generated_at") or technical.get("generatedAtTechnical") or technical.get("generatedAt") or "")
+    fail(snapshot.get("technical_generated_at") == baseline_identity, "snapshot technical baseline identity mismatch")
+
     seen: set[str] = set()
     live_count = 0
     price_mismatches: list[str] = []
     mirror_mismatches: list[str] = []
     invalid_rows: list[str] = []
+    indicator_counts = {key: 0 for key in ("ema5", "ema20", "ema89", "ema200", "rsi14")}
+
     for item in rows:
         fail(isinstance(item, dict), "snapshot contains a non-object row")
         symbol = symbol_of(item)
@@ -109,11 +116,20 @@ def main() -> None:
         status = item.get("snapshotStatus")
         if status not in {"live_quote", "technical_fallback"}:
             invalid_rows.append(f"{symbol}:status")
-        for key in ("price", "close", "ema5", "ema20", "ema89", "ema200", "rsi14", "score"):
+        for key in ("price", "close", "rsi14", "score"):
             if number(item.get(key)) is None:
                 invalid_rows.append(f"{symbol}:{key}")
         if not str(item.get("signal") or "").strip():
             invalid_rows.append(f"{symbol}:signal")
+
+        for indicator in indicator_counts:
+            indicator_value = number(item.get(indicator))
+            if indicator_value is not None:
+                indicator_counts[indicator] += 1
+                if indicator.startswith("ema"):
+                    distance = number(item.get(f"pctVs{indicator.upper().replace('EMA', 'Ema')}"))
+                    if distance is None:
+                        invalid_rows.append(f"{symbol}:pctVs{indicator}")
 
         mirrored = technical_map.get(symbol)
         if not isinstance(mirrored, dict):
@@ -144,23 +160,42 @@ def main() -> None:
     fail(abs(computed_coverage - declared_coverage) <= 0.000001, "snapshot live quote coverage identity mismatch")
     fail(computed_coverage >= 0.80, f"snapshot live quote coverage too low: {computed_coverage:.1%}")
 
-    generated = parse_time(snapshot.get("generated_at") or snapshot.get("generatedAt"))
-    fail(generated is not None, "snapshot generated timestamp is invalid")
+    indicator_coverage = {key: count / len(rows) for key, count in indicator_counts.items()}
+    minimum_indicator_coverage = {
+        "ema5": 0.95,
+        "ema20": 0.95,
+        "ema89": 0.85,
+        "ema200": 0.75,
+        "rsi14": 0.95,
+    }
+    for key, minimum in minimum_indicator_coverage.items():
+        fail(
+            indicator_coverage[key] >= minimum,
+            f"{key} market coverage too low: {indicator_coverage[key]:.1%} < {minimum:.1%}",
+        )
+
+    quote_time = parse_time(quote_identity)
+    snapshot_time = parse_time(snapshot.get("generated_at") or snapshot.get("generatedAt"))
+    fail(quote_time is not None, "quote generation timestamp is invalid")
+    fail(snapshot_time is not None, "snapshot generation timestamp is invalid")
     now = datetime.now(timezone.utc)
-    age_minutes = (now - generated.astimezone(timezone.utc)).total_seconds() / 60.0
+    quote_age_minutes = (now - quote_time.astimezone(timezone.utc)).total_seconds() / 60.0
+    snapshot_age_minutes = (now - snapshot_time.astimezone(timezone.utc)).total_seconds() / 60.0
     ttl = int(snapshot.get("stale_after_minutes") or 0)
     fail(ttl > 0, "snapshot TTL is invalid")
-    fail(age_minutes >= -5, f"snapshot timestamp is too far in the future: {age_minutes:.1f}m")
-    fail(age_minutes <= ttl, f"snapshot is stale: {age_minutes:.1f}m > {ttl}m")
+    fail(quote_age_minutes >= -5, f"quote timestamp is too far in the future: {quote_age_minutes:.1f}m")
+    fail(snapshot_age_minutes >= -5, f"snapshot timestamp is too far in the future: {snapshot_age_minutes:.1f}m")
+    fail(quote_age_minutes <= ttl, f"deployed quotes are stale: {quote_age_minutes:.1f}m > {ttl}m")
+    fail(snapshot_age_minutes <= ttl, f"snapshot is stale: {snapshot_age_minutes:.1f}m > {ttl}m")
 
     runtime_tokens = (
-        'data/screener_snapshot.json',
-        'function snapshotIsFresh',
-        'function mapCanonicalScreenerRow',
-        'function buildCanonicalAlertItems',
-        'if (state.staticMode && !snapshotIsFresh()) return [];',
-        'function projectSeriesToSnapshot',
-        'data/technical/symbols/',
+        "data/screener_snapshot.json",
+        "function snapshotIsFresh",
+        "function mapCanonicalScreenerRow",
+        "function buildCanonicalAlertItems",
+        "if (state.staticMode && !snapshotIsFresh()) return [];",
+        "function projectSeriesToSnapshot",
+        "data/technical/symbols/",
     )
     missing_tokens = [token for token in runtime_tokens if token not in runtime]
     fail(not missing_tokens, f"runtime is missing canonical screener tokens: {missing_tokens}")
@@ -195,7 +230,9 @@ def main() -> None:
         "quote_row_count": len(quote_rows),
         "live_quote_count": live_count,
         "live_quote_coverage": round(computed_coverage, 6),
-        "snapshot_age_minutes": round(age_minutes, 2),
+        "indicator_coverage": {key: round(value, 6) for key, value in indicator_coverage.items()},
+        "quote_age_minutes": round(quote_age_minutes, 2),
+        "snapshot_age_minutes": round(snapshot_age_minutes, 2),
         "stale_after_minutes": ttl,
         "runtime_version": args.expected_runtime,
         "sample_shards": shard_summary,
