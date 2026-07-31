@@ -9,9 +9,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-import pandas as pd
-import yfinance as yf
-
 ROOT = Path(__file__).resolve().parents[1]
 WATCHLIST = ROOT / "watchlist.txt"
 OUT_PATHS = (
@@ -49,7 +46,9 @@ def chunks(values: list[str], size: int) -> Iterable[list[str]]:
         yield values[start : start + size]
 
 
-def ticker_frame(payload: pd.DataFrame | None, symbol: str) -> pd.DataFrame | None:
+def ticker_frame(payload: Any, symbol: str) -> Any:
+    import pandas as pd
+
     if payload is None or payload.empty:
         return None
     if not isinstance(payload.columns, pd.MultiIndex):
@@ -70,13 +69,15 @@ def ticker_frame(payload: pd.DataFrame | None, symbol: str) -> pd.DataFrame | No
     return None
 
 
-def close_series(payload: pd.DataFrame | None, symbol: str) -> pd.Series:
+def close_series(payload: Any, symbol: str) -> Any:
+    import pandas as pd
+
     frame = ticker_frame(payload, symbol)
     if frame is None or frame.empty:
         return pd.Series(dtype="float64")
 
     columns = frame.columns
-    selected: pd.Series | None = None
+    selected = None
     if isinstance(columns, pd.MultiIndex):
         for column in columns:
             if any(str(part).lower() == "close" for part in column):
@@ -93,41 +94,60 @@ def close_series(payload: pd.DataFrame | None, symbol: str) -> pd.Series:
 
 
 def index_date(value: Any):
+    import pandas as pd
+
     try:
         return pd.Timestamp(value).date()
     except Exception:
         return None
 
 
-def row_from_downloads(
-    symbol: str,
-    intraday: pd.DataFrame | None,
-    daily: pd.DataFrame | None,
-) -> dict[str, Any]:
-    minute_closes = close_series(intraday, symbol)
-    daily_closes = close_series(daily, symbol)
+def select_quote_values(
+    minute_values: list[Any],
+    minute_date: Any,
+    daily_values: list[Any],
+    daily_date: Any,
+) -> tuple[float, float | None, str]:
+    minute_prices = [value for raw in minute_values if (value := num(raw)) is not None]
+    daily_prices = [value for raw in daily_values if (value := num(raw)) is not None]
 
     quote_mode = "intraday"
-    if len(minute_closes):
-        price = num(minute_closes.iloc[-1])
-        price_date = index_date(minute_closes.index[-1])
-        if len(daily_closes):
-            daily_last_date = index_date(daily_closes.index[-1])
-            if price_date is not None and daily_last_date == price_date and len(daily_closes) >= 2:
-                previous_close = num(daily_closes.iloc[-2])
+    if minute_prices:
+        price = minute_prices[-1]
+        if daily_prices:
+            if (
+                minute_date is not None
+                and daily_date == minute_date
+                and len(daily_prices) >= 2
+            ):
+                previous_close = daily_prices[-2]
             else:
-                previous_close = num(daily_closes.iloc[-1])
+                previous_close = daily_prices[-1]
         else:
             previous_close = None
-    elif len(daily_closes):
+    elif daily_prices:
         quote_mode = "daily_close"
-        price = num(daily_closes.iloc[-1])
-        previous_close = num(daily_closes.iloc[-2]) if len(daily_closes) >= 2 else None
+        price = daily_prices[-1]
+        previous_close = daily_prices[-2] if len(daily_prices) >= 2 else None
     else:
         raise ValueError("latest market price is unavailable")
 
-    if price is None or price <= 0:
+    if price <= 0:
         raise ValueError("latest market price is unavailable")
+    return price, previous_close, quote_mode
+
+
+def row_from_downloads(symbol: str, intraday: Any, daily: Any) -> dict[str, Any]:
+    minute_closes = close_series(intraday, symbol)
+    daily_closes = close_series(daily, symbol)
+    minute_date = index_date(minute_closes.index[-1]) if len(minute_closes) else None
+    daily_date = index_date(daily_closes.index[-1]) if len(daily_closes) else None
+    price, previous_close, quote_mode = select_quote_values(
+        list(minute_closes),
+        minute_date,
+        list(daily_closes),
+        daily_date,
+    )
 
     day_change = None if previous_close in (None, 0) else price - previous_close
     day_change_pct = (
@@ -152,7 +172,9 @@ def download_batch(
     interval: str,
     workers: int,
     timeout_seconds: float,
-) -> pd.DataFrame | None:
+) -> Any:
+    import yfinance as yf
+
     try:
         return yf.download(
             tickers=symbols,
@@ -179,7 +201,9 @@ def download_batch(
 def build_payload(symbols: list[str]) -> dict[str, Any]:
     workers = max(1, min(int(os.environ.get("QUOTE_REFRESH_WORKERS", "16")), 32))
     batch_size = max(10, min(int(os.environ.get("QUOTE_BATCH_SIZE", "80")), 150))
-    timeout_seconds = max(1.0, min(float(os.environ.get("QUOTE_REQUEST_TIMEOUT", "8")), 30.0))
+    timeout_seconds = max(
+        1.0, min(float(os.environ.get("QUOTE_REQUEST_TIMEOUT", "8")), 30.0)
+    )
     minimum_coverage = float(os.environ.get("QUOTE_MIN_COVERAGE", "0.80"))
     rows_by_symbol: dict[str, dict[str, Any]] = {}
     errors_by_symbol: dict[str, str] = {}
