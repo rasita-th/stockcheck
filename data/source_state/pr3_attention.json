@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-07-31T16:59:32+00:00",
+  "updated_at": "2026-07-31T19:53:19+00:00",
   "items": {
     "company_ir:RKLB:dcaab389569d1ef4": {
       "ticker": "RKLB",
@@ -9,10 +9,22 @@
       "priority_score": 80,
       "personal_priority_score": 93,
       "first_seen_at": "2026-07-30T00:14:17+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
       "event_count": 2,
       "baseline_price": 60.05,
-      "current_price": 64.25
+      "current_price": 65.38
+    },
+    "technical:GOOGL:price-move:2026-07-31": {
+      "ticker": "GOOGL",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-07-31T19:53:19+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
+      "event_count": 3,
+      "baseline_price": 355.33,
+      "current_price": 355.33
     },
     "gdelt:ASTS:77d3f984a384e9f9": {
       "ticker": "ASTS",
@@ -21,22 +33,10 @@
       "priority_score": 50,
       "personal_priority_score": 63,
       "first_seen_at": "2026-07-26T17:19:19+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
       "event_count": 1,
       "baseline_price": 56.2,
-      "current_price": 57.67
-    },
-    "event:GOOGL:f67f75178c255e9c": {
-      "ticker": "GOOGL",
-      "event_subtype": "guidance",
-      "priority": "Watch",
-      "priority_score": 32,
-      "personal_priority_score": 48,
-      "first_seen_at": "2026-07-26T22:14:18+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
-      "event_count": 2,
-      "baseline_price": 319.74,
-      "current_price": 353.36
+      "current_price": 59.34
     },
     "gdelt:COST:1db038cf7e87931b": {
       "ticker": "COST",
@@ -45,34 +45,34 @@
       "priority_score": 32,
       "personal_priority_score": 44,
       "first_seen_at": "2026-07-31T03:50:53+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
       "event_count": 1,
       "baseline_price": 951.76,
-      "current_price": 951.92
+      "current_price": 953.18
     },
-    "technical:EOSE:technical_risk:2026-07-31": {
+    "technical:AMZN:price-move:2026-07-31": {
+      "ticker": "AMZN",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-07-31T19:53:19+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
+      "event_count": 1,
+      "baseline_price": 271.11,
+      "current_price": 271.11
+    },
+    "technical:EOSE:price-drop:2026-07-31": {
       "ticker": "EOSE",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "priority_score": 68,
-      "personal_priority_score": 76,
-      "first_seen_at": "2026-07-31T15:03:06+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-07-31T19:53:19+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
       "event_count": 1,
-      "baseline_price": 3.38,
-      "current_price": 3.33
-    },
-    "technical:OSCR:technical_setup:2026-07-31": {
-      "ticker": "OSCR",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "priority_score": 68,
-      "personal_priority_score": 76,
-      "first_seen_at": "2026-07-31T15:03:06+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
-      "event_count": 1,
-      "baseline_price": 30.93,
-      "current_price": 31.21
+      "baseline_price": 3.375,
+      "current_price": 3.375
     },
     "technical:ZETA:technical_setup:2026-07-31": {
       "ticker": "ZETA",
@@ -81,13 +81,37 @@
       "priority_score": 68,
       "personal_priority_score": 76,
       "first_seen_at": "2026-07-31T16:49:55+00:00",
-      "last_seen_at": "2026-07-31T16:59:32+00:00",
+      "last_seen_at": "2026-07-31T19:53:19+00:00",
       "event_count": 1,
       "baseline_price": 21.38,
-      "current_price": 21.38
+      "current_price": 21.59
     }
   },
   "resolved": [
+    {
+      "history_key": "event:GOOGL:f67f75178c255e9c",
+      "ticker": "GOOGL",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:technical_risk:2026-07-31",
+      "ticker": "EOSE",
+      "event_subtype": "technical_risk",
+      "priority": "Action",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:OSCR:technical_setup:2026-07-31",
+      "ticker": "OSCR",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NASA:technical_risk:2026-07-31",
       "ticker": "NASA",
@@ -222,30 +246,6 @@
       "event_subtype": "technical_risk",
       "priority": "Watch",
       "resolved_at": "2026-07-28T13:21:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:EOSE:technical_risk:2026-07-27",
-      "ticker": "EOSE",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-27T19:23:56+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:technical_risk:2026-07-27",
-      "ticker": "IONQ",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-27T19:23:56+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:technical_risk:2026-07-27",
-      "ticker": "OKLO",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-27T17:50:09+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ]

@@ -1117,67 +1117,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE"
-          ],
-          "company_profile": [
-            "KO",
-            "KRC",
-            "KTOS",
-            "LBRT"
-          ],
-          "recommendation_trends": [
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD",
-            "AMGN"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-07-29T19:58:23+00:00",
-      "mode": "analyst",
-      "started_at": "2026-07-29T19:57:34+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2131,9 +2070,53 @@
       "mode": "events",
       "started_at": "2026-07-31T16:56:58+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-07-31T19:51:13+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-07-31T19:50:45+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-31T16:57:26+00:00"
+  "updated_at": "2026-07-31T19:51:13+00:00"
 }

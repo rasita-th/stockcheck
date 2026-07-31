@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-31T16:59:32+00:00",
+  "updated_at": "2026-07-31T19:53:19+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 13,
+  "total_events": 14,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
-    "Risk": 1,
+    "Risk": 2,
     "Action": 0,
-    "Watch": 3,
+    "Watch": 2,
     "Developing": 0
   },
   "source_health": {
@@ -25,7 +25,7 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 115,
+      "rows": 122,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
     },
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 2,
-      "errors": 8
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -94,8 +94,8 @@
         "published_at": "2026-07-27T16:01:08+00:00",
         "domain": "investors.rocketlabusa.com"
       },
-      "price": 64.25,
-      "day_change_pct": null,
+      "price": 65.38,
+      "day_change_pct": 1.0822,
       "relative_volume": 0.46,
       "trigger_level": null,
       "events": [
@@ -205,14 +205,207 @@
       },
       "impact": {
         "baseline_price": 60.05,
-        "current_price": 64.25,
-        "change_pct": 6.99,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.0%"
+        "current_price": 65.38,
+        "change_pct": 8.88,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.9%"
       },
       "personal_priority_score": 93,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
+      ]
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "portfolio_status": "holding",
+      "role": "Core quality",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +6.5% today.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-07-31T19:51:15.313734+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 355.33,
+      "day_change_pct": 6.4946,
+      "relative_volume": 0.73,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:GOOGL:price-move:2026-07-31",
+          "ticker": "GOOGL",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +6.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +6.5% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-07-31T19:51:15.313734+00:00",
+          "detected_at": "2026-07-31T19:51:15.313743+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:GOOGL:price-move:2026-07-31"
+          ],
+          "dedupe_key": "GOOGL:price_move:ff5ff711d9d135a0"
+        },
+        {
+          "event_id": "event:GOOGL:f67f75178c255e9c",
+          "ticker": "GOOGL",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "Verizon lifts outlook as Google signs $1 billion fiber pact",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-26T21:30:00+00:00",
+          "detected_at": "2026-07-26T22:12:26+00:00",
+          "verification_status": "unverified",
+          "verification_level": "corroborated_secondary",
+          "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Google",
+          "dedupe_key": "GOOGL:guidance:2026-07-26:ac16081ab881",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+            "published_at": "2026-07-26T21:30:00+00:00",
+            "domain": "www.irishsun.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:30:00+00:00",
+              "domain": "www.irishsun.com"
+            },
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "http://www.albuquerqueexpress.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:45:00+00:00",
+              "domain": "www.albuquerqueexpress.com"
+            },
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "http://www.newzealandstar.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
+              "published_at": "2026-07-26T21:30:00+00:00",
+              "domain": "www.newzealandstar.com"
+            }
+          ],
+          "secondary_source_count": 3,
+          "related_event_ids": [
+            "event:GOOGL:f67f75178c255e9c"
+          ],
+          "priority_score": 39,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:GOOGL:39f34c885517df85",
+          "ticker": "GOOGL",
+          "event_type": "regulatory",
+          "event_subtype": "regulatory",
+          "headline": "Trump calls EU Google fine illegal , orders US investigation",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-07-26T21:45:00+00:00",
+          "detected_at": "2026-07-26T22:12:26+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Google",
+          "dedupe_key": "GOOGL:regulatory:2026-07-26:48557db1a4ac",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
+            "published_at": "2026-07-26T21:45:00+00:00",
+            "domain": "www.texasguardian.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
+              "published_at": "2026-07-26T21:45:00+00:00",
+              "domain": "www.texasguardian.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "gdelt:GOOGL:39f34c885517df85"
+          ],
+          "priority_score": 39,
+          "priority": "Watch"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "company_ir": "https://abc.xyz/investor/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +6.5% today.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-31T19:53:19+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 355.33,
+        "current_price": 355.33,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
       ]
     },
     {
@@ -237,8 +430,8 @@
         "published_at": "2026-07-26T15:30:00+00:00",
         "domain": "www.foreignpolicyjournal.com"
       },
-      "price": 57.67,
-      "day_change_pct": null,
+      "price": 59.34,
+      "day_change_pct": 1.54,
       "relative_volume": 0.41,
       "trigger_level": null,
       "events": [
@@ -304,170 +497,14 @@
       },
       "impact": {
         "baseline_price": 56.2,
-        "current_price": 57.67,
-        "change_pct": 2.62,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.6%"
+        "current_price": 59.34,
+        "change_pct": 5.59,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.6%"
       },
       "personal_priority_score": 63,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "GOOGL",
-      "name": "Alphabet Inc.",
-      "portfolio_status": "holding",
-      "role": "Core quality",
-      "priority": "Watch",
-      "priority_score": 32,
-      "why_today": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "guidance",
-      "event_time": "2026-07-26T21:30:00+00:00",
-      "verification_status": "unverified",
-      "source_status": "secondary",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-        "published_at": "2026-07-26T21:30:00+00:00",
-        "domain": "www.irishsun.com"
-      },
-      "price": 353.36,
-      "day_change_pct": null,
-      "relative_volume": 0.73,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "event:GOOGL:f67f75178c255e9c",
-          "ticker": "GOOGL",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "Verizon lifts outlook as Google signs $1 billion fiber pact",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-26T21:30:00+00:00",
-          "detected_at": "2026-07-26T22:12:26+00:00",
-          "verification_status": "unverified",
-          "verification_level": "corroborated_secondary",
-          "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Google",
-          "dedupe_key": "GOOGL:guidance:2026-07-26:ac16081ab881",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-            "published_at": "2026-07-26T21:30:00+00:00",
-            "domain": "www.irishsun.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:30:00+00:00",
-              "domain": "www.irishsun.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.albuquerqueexpress.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:45:00+00:00",
-              "domain": "www.albuquerqueexpress.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.newzealandstar.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:30:00+00:00",
-              "domain": "www.newzealandstar.com"
-            }
-          ],
-          "secondary_source_count": 3,
-          "related_event_ids": [
-            "event:GOOGL:f67f75178c255e9c"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:GOOGL:39f34c885517df85",
-          "ticker": "GOOGL",
-          "event_type": "regulatory",
-          "event_subtype": "regulatory",
-          "headline": "Trump calls EU Google fine illegal , orders US investigation",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-26T21:45:00+00:00",
-          "detected_at": "2026-07-26T22:12:26+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Google",
-          "dedupe_key": "GOOGL:regulatory:2026-07-26:48557db1a4ac",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
-            "published_at": "2026-07-26T21:45:00+00:00",
-            "domain": "www.texasguardian.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.texasguardian.com/news/279208003/trump-calls-eu-google-fine-illegal-orders-us-investigation",
-              "published_at": "2026-07-26T21:45:00+00:00",
-              "domain": "www.texasguardian.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:GOOGL:39f34c885517df85"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-        "company_ir": "https://abc.xyz/investor/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "guidance",
-      "signals": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-26T22:14:18+00:00",
-        "active_days": 5
-      },
-      "impact": {
-        "baseline_price": 319.74,
-        "current_price": 353.36,
-        "change_pct": 10.51,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 10.5%"
-      },
-      "personal_priority_score": 48,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
       ]
     },
     {
@@ -492,8 +529,8 @@
         "published_at": "2026-07-27T13:15:00+00:00",
         "domain": "finance.yahoo.com"
       },
-      "price": 951.92,
-      "day_change_pct": null,
+      "price": 953.18,
+      "day_change_pct": -0.1038,
       "relative_volume": 0.32,
       "trigger_level": null,
       "events": [
@@ -559,8 +596,8 @@
       },
       "impact": {
         "baseline_price": 951.76,
-        "current_price": 951.92,
-        "change_pct": 0.02,
+        "current_price": 953.18,
+        "change_pct": 0.15,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 44,
@@ -763,92 +800,67 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
+      "ticker": "TE",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMC",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -866,7 +878,7 @@
     "active_discovered_event_count": 12,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 3,
+    "technical_fill_count": 1,
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3
   },
@@ -884,80 +896,166 @@
     "personal_priority": true
   },
   "technical_summary": {
-    "risk": 1,
-    "setup": 2,
+    "risk": 0,
+    "setup": 1,
     "total": 3
   },
   "technical_watch": [
     {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
       "portfolio_status": "holding",
-      "role": "Energy storage",
-      "priority": "Action",
-      "priority_score": 68,
+      "role": "Core growth",
+      "priority": "Critical",
+      "priority_score": 99,
       "why_today": [
-        "Latest technical scan dated 2026-07-31: score 9/100, AVOID / Turnaround only, RSI 32.7, -19.8% vs EMA20, -61.2% vs EMA200, volume 0.60x 20-day average."
+        "The stock moved +15.1% today."
       ],
       "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "event_time": "2026-07-31",
+      "event_subtype": "price_move",
+      "event_time": "2026-07-31T19:51:15.149859+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": "2026-07-31"
+        "published_at": ""
       },
-      "price": 3.33,
-      "day_change_pct": null,
-      "relative_volume": 0.6,
+      "price": 271.11,
+      "day_change_pct": 15.121,
+      "relative_volume": 1.89,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:EOSE:technical_risk:2026-07-31",
-          "ticker": "EOSE",
+          "event_id": "technical:AMZN:price-move:2026-07-31",
+          "ticker": "AMZN",
           "event_type": "technical",
-          "event_subtype": "technical_risk",
-          "headline": "Latest technical scan · 9/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-31: score 9/100, AVOID / Turnaround only, RSI 32.7, -19.8% vs EMA20, -61.2% vs EMA200, volume 0.60x 20-day average.",
-          "materiality": "medium",
+          "event_subtype": "price_move",
+          "headline": "Price +15.1%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +15.1% today.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-07-31",
-          "detected_at": "2026-07-31T16:59:32+00:00",
+          "event_time": "2026-07-31T19:51:15.149859+00:00",
+          "detected_at": "2026-07-31T19:51:15.149867+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
             "url": "data/technical.json",
-            "published_at": "2026-07-31"
+            "published_at": ""
           },
+          "priority_score": 99,
+          "priority": "Critical",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
               "type": "technical_json",
               "quality": "internal",
               "url": "data/technical.json",
-              "published_at": "2026-07-31"
+              "published_at": ""
             }
           ],
-          "technical_score": 9.0,
-          "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
-          "rsi14": 32.66,
-          "pct_vs_ema20": -19.76,
-          "pct_vs_ema200": -61.23,
-          "volume_ratio20": 0.6,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:EOSE:technical_risk:2026-07-31"
+            "technical:AMZN:price-move:2026-07-31"
           ],
-          "dedupe_key": "EOSE:technical_risk:6500f1ba32989b46",
-          "priority_score": 68,
-          "priority": "Action"
+          "dedupe_key": "AMZN:price_move:fbb6c71e4ede3eb4"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "company_ir": "https://ir.aboutamazon.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +15.1% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-31T19:53:19+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 271.11,
+        "current_price": 271.11,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -6.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-07-31T19:51:15.343191+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 3.375,
+      "day_change_pct": -6.5097,
+      "relative_volume": 0.6,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-drop:2026-07-31",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -6.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -6.5% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-07-31T19:51:15.343191+00:00",
+          "detected_at": "2026-07-31T19:51:15.343199+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-drop:2026-07-31"
+          ],
+          "dedupe_key": "EOSE:price_drop:a539484f27820274"
         }
       ],
       "actions": {
@@ -965,124 +1063,25 @@
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
         "raw_data": "data/technical.json"
       },
-      "severity": "medium",
-      "primary_trigger": "technical_risk",
+      "severity": "high",
+      "primary_trigger": "price_drop",
       "signals": [
-        "Latest technical scan dated 2026-07-31: score 9/100, AVOID / Turnaround only, RSI 32.7, -19.8% vs EMA20, -61.2% vs EMA200, volume 0.60x 20-day average."
+        "The stock moved -6.5% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-31T15:03:06+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-31T19:53:19+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 3.38,
-        "current_price": 3.33,
-        "change_pct": -1.48,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.5%"
+        "baseline_price": 3.375,
+        "current_price": 3.375,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "OSCR",
-      "name": "Oscar Health, Inc.",
-      "portfolio_status": "holding",
-      "role": "Insurtech",
-      "priority": "Action",
-      "priority_score": 68,
-      "why_today": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.6, +4.2% vs EMA20, +47.7% vs EMA200, volume 0.27x 20-day average."
-      ],
-      "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "event_time": "2026-07-31",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-07-31"
-      },
-      "price": 31.21,
-      "day_change_pct": null,
-      "relative_volume": 0.27,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:OSCR:technical_setup:2026-07-31",
-          "ticker": "OSCR",
-          "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 93/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.6, +4.2% vs EMA20, +47.7% vs EMA200, volume 0.27x 20-day average.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-07-31",
-          "detected_at": "2026-07-31T16:59:32+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": "2026-07-31"
-          },
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": "2026-07-31"
-            }
-          ],
-          "technical_score": 93.0,
-          "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
-          "rsi14": 57.62,
-          "pct_vs_ema20": 4.17,
-          "pct_vs_ema200": 47.7,
-          "volume_ratio20": 0.27,
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:OSCR:technical_setup:2026-07-31"
-          ],
-          "dedupe_key": "OSCR:technical_setup:0e6767e6890b77fb",
-          "priority_score": 68,
-          "priority": "Action"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-OSCR/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "technical_setup",
-      "signals": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.6, +4.2% vs EMA20, +47.7% vs EMA200, volume 0.27x 20-day average."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-31T15:03:06+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 30.93,
-        "current_price": 31.21,
-        "change_pct": 0.91,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.9%"
-      },
-      "personal_priority_score": 76,
+      "personal_priority_score": 83,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -1095,7 +1094,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +1.7% vs EMA20, +10.3% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -1108,8 +1107,8 @@
         "url": "data/technical.json",
         "published_at": "2026-07-31"
       },
-      "price": 21.38,
-      "day_change_pct": null,
+      "price": 21.59,
+      "day_change_pct": 1.0295,
       "relative_volume": 0.32,
       "trigger_level": null,
       "events": [
@@ -1120,11 +1119,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +1.7% vs EMA20, +10.3% vs EMA200, volume 0.32x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-31",
-          "detected_at": "2026-07-31T16:59:32+00:00",
+          "detected_at": "2026-07-31T19:53:19+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1146,8 +1145,8 @@
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
           "rsi14": 53.13,
-          "pct_vs_ema20": 1.66,
-          "pct_vs_ema200": 10.26,
+          "pct_vs_ema20": 2.66,
+          "pct_vs_ema200": 11.35,
           "volume_ratio20": 0.32,
           "secondary_source_count": 1,
           "related_event_ids": [
@@ -1166,7 +1165,7 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +1.7% vs EMA20, +10.3% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average."
       ],
       "change": {
         "status": "ongoing",
@@ -1177,9 +1176,9 @@
       },
       "impact": {
         "baseline_price": 21.38,
-        "current_price": 21.38,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 21.59,
+        "change_pct": 0.98,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.0%"
       },
       "personal_priority_score": 76,
       "personalization_reasons": [
@@ -1188,14 +1187,38 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 3,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 4,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "event:GOOGL:f67f75178c255e9c",
+      "ticker": "GOOGL",
+      "event_subtype": "guidance",
+      "priority": "Watch",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:technical_risk:2026-07-31",
+      "ticker": "EOSE",
+      "event_subtype": "technical_risk",
+      "priority": "Action",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:OSCR:technical_setup:2026-07-31",
+      "ticker": "OSCR",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-07-31T19:53:19+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NASA:technical_risk:2026-07-31",
       "ticker": "NASA",
@@ -1250,30 +1273,6 @@
       "event_subtype": "technical_risk",
       "priority": "Watch",
       "resolved_at": "2026-07-30T15:13:20+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:MP:technical_risk:2026-07-29",
-      "ticker": "MP",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-07-30T15:13:20+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ZETA:technical_setup:2026-07-29",
-      "ticker": "ZETA",
-      "event_subtype": "technical_setup",
-      "priority": "Watch",
-      "resolved_at": "2026-07-30T15:13:20+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "event:NOW:213c2c40afd30cfc",
-      "ticker": "NOW",
-      "event_subtype": "guidance",
-      "priority": "Watch",
-      "resolved_at": "2026-07-30T08:50:18+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
