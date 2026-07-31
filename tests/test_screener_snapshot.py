@@ -170,12 +170,12 @@ class ScreenerSnapshotTests(unittest.TestCase):
         for token in (
             "ThreadPoolExecutor",
             "as_completed",
-            'QUOTE_REFRESH_WORKERS",
-            'QUOTE_MIN_COVERAGE",
+            "QUOTE_REFRESH_WORKERS",
+            "QUOTE_MIN_COVERAGE",
             'ROOT / "site" / "data" / "quote_latest.json"',
             'ROOT / "static" / "data" / "quote_latest.json"',
-            'temporary.replace(path)',
-            'quote coverage below minimum',
+            "temporary.replace(path)",
+            "quote coverage below minimum",
         ):
             self.assertIn(token, source)
         self.assertNotIn("for symbol in symbols:\n        try:\n            t = yf.Ticker", source)
