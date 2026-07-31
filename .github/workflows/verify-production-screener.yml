@@ -1,0 +1,102 @@
+name: Verify Production Screener
+
+on:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: verify-production-screener
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout deployed production commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Verify market-wide production screener contract
+        id: core
+        continue-on-error: true
+        env:
+          BASE_URL: https://rasita-th.github.io/stockcheck
+          EXPECTED_COMMIT: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/stockcheck-core/shards
+          nonce="${GITHUB_RUN_ID}-$(date +%s)"
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/build.json?core=${nonce}" -o /tmp/stockcheck-core/build.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/data/screener_snapshot.json?core=${nonce}" -o /tmp/stockcheck-core/screener_snapshot.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/data/quote_latest.json?core=${nonce}" -o /tmp/stockcheck-core/quote_latest.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/data/technical.json?core=${nonce}" -o /tmp/stockcheck-core/technical.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/technical-shards-v2.js?core=${nonce}" -o /tmp/stockcheck-core/technical-shards-v2.js
+          for symbol in AMD ZETA NVDA CIFR; do
+            curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+              "${BASE_URL}/data/technical/symbols/${symbol}.json?core=${nonce}" \
+              -o "/tmp/stockcheck-core/shards/${symbol}.json"
+          done
+          python scripts/verify_screener_snapshot.py \
+            --snapshot /tmp/stockcheck-core/screener_snapshot.json \
+            --quotes /tmp/stockcheck-core/quote_latest.json \
+            --technical /tmp/stockcheck-core/technical.json \
+            --runtime /tmp/stockcheck-core/technical-shards-v2.js \
+            --build /tmp/stockcheck-core/build.json \
+            --expected-commit "$EXPECTED_COMMIT" \
+            --expected-runtime 10.7.5 \
+            --shard /tmp/stockcheck-core/shards/AMD.json \
+            --shard /tmp/stockcheck-core/shards/ZETA.json \
+            --shard /tmp/stockcheck-core/shards/NVDA.json \
+            --shard /tmp/stockcheck-core/shards/CIFR.json \
+            --summary-output /tmp/stockcheck-core/verification.json
+
+      - name: Publish core production status
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          VERIFY_OUTCOME: ${{ steps.core.outcome }}
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+          DEPLOY_RUN_URL: ${{ github.event.workflow_run.html_url }}
+        with:
+          script: |
+            const ok = process.env.VERIFY_OUTCOME === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: process.env.DEPLOYED_SHA,
+              state: ok ? 'success' : 'failure',
+              context: 'production/stockcheck-core',
+              description: ok
+                ? 'Core verified: fresh screener, filters and alerts share canonical data'
+                : 'Core failed: canonical screener production contract is not valid',
+              target_url: process.env.DEPLOY_RUN_URL,
+            });
+            if (!ok) core.setFailed('Production screener verification failed');
+
+      - name: Upload core verification receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-screener-receipt-${{ github.run_id }}
+          path: /tmp/stockcheck-core
+          if-no-files-found: warn
+          retention-days: 30
