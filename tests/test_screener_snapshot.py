@@ -137,26 +137,48 @@ class ScreenerSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
 
-    def test_live_workflow_is_core_only_and_builds_snapshot_before_artifact(self):
+    def test_intraday_workflow_uses_fast_quotes_and_isolates_full_technical_scan(self):
         workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
             encoding="utf-8"
         )
-        quote_step = workflow.find("Refresh latest quotes")
-        technical_step = workflow.find("Refresh technical indicators and ticker shards")
-        snapshot_step = workflow.find("Build canonical screener snapshot")
+        quote_step = workflow.find("Refresh latest quotes concurrently")
+        technical_step = workflow.find("Refresh full technical indicators and ticker shards")
+        snapshot_step = workflow.find("Build canonical intraday screener snapshot")
         artifact_step = workflow.find("Build immutable core-data artifact")
 
         self.assertGreaterEqual(quote_step, 0)
         self.assertGreater(technical_step, quote_step)
         self.assertGreater(snapshot_step, technical_step)
         self.assertGreater(artifact_step, snapshot_step)
+        self.assertIn('cron: "*/15 * * * 1-5"', workflow)
+        self.assertIn('cron: "35 21 * * * 1-5"', workflow)
+        self.assertIn("full_technical:", workflow)
+        self.assertIn("steps.window.outputs.full_technical == 'true'", workflow)
         self.assertIn("cancel-in-progress: true", workflow)
         self.assertIn("python scripts/build_screener_snapshot.py", workflow)
+        self.assertIn("python scripts/verify_screener_snapshot.py", workflow)
         self.assertNotIn("Refresh PR3 personal Today desk", workflow)
         self.assertNotIn("ATTENTION_NEWS_ENABLED", workflow)
         self.assertNotIn("SEC_USER_AGENT", workflow)
+        self.assertNotIn("python scripts/publish_generated_data.py", workflow)
+        self.assertNotIn("python scripts/validate_static_data.py", workflow)
         self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
         self.assertNotIn("--allow-stale", workflow)
+
+    def test_quote_refresh_is_parallel_atomic_and_writes_deployable_mirrors(self):
+        source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
+        for token in (
+            "ThreadPoolExecutor",
+            "as_completed",
+            'QUOTE_REFRESH_WORKERS",
+            'QUOTE_MIN_COVERAGE",
+            'ROOT / "site" / "data" / "quote_latest.json"',
+            'ROOT / "static" / "data" / "quote_latest.json"',
+            'temporary.replace(path)',
+            'quote coverage below minimum',
+        ):
+            self.assertIn(token, source)
+        self.assertNotIn("for symbol in symbols:\n        try:\n            t = yf.Ticker", source)
 
 
 if __name__ == "__main__":
