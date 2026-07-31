@@ -7,7 +7,10 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pandas as pd
+
 from scripts.build_screener_snapshot import build_snapshot
+from scripts.update_quote_data import row_from_downloads
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -138,11 +141,38 @@ class ScreenerSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
 
-    def test_intraday_workflow_uses_fast_quotes_and_isolates_full_technical_scan(self):
+    def test_batch_quote_parser_uses_intraday_price_and_prior_daily_close(self):
+        intraday_index = pd.to_datetime(
+            ["2026-07-31T14:59:00Z", "2026-07-31T15:00:00Z"]
+        )
+        daily_index = pd.to_datetime(["2026-07-30", "2026-07-31"])
+        columns = pd.MultiIndex.from_tuples([("AMD", "Close")])
+        intraday = pd.DataFrame([[492.50], [493.23]], index=intraday_index, columns=columns)
+        daily = pd.DataFrame([[490.00], [493.00]], index=daily_index, columns=columns)
+
+        row = row_from_downloads("AMD", intraday, daily)
+
+        self.assertEqual(row["price"], 493.23)
+        self.assertEqual(row["previous_close"], 490.0)
+        self.assertEqual(row["quote_mode"], "intraday")
+        self.assertAlmostEqual(row["day_change_pct"], (493.23 / 490.0 - 1) * 100)
+
+    def test_batch_quote_parser_falls_back_to_latest_daily_close(self):
+        daily_index = pd.to_datetime(["2026-07-30", "2026-07-31"])
+        columns = pd.MultiIndex.from_tuples([("AMD", "Close")])
+        daily = pd.DataFrame([[490.00], [493.00]], index=daily_index, columns=columns)
+
+        row = row_from_downloads("AMD", None, daily)
+
+        self.assertEqual(row["price"], 493.0)
+        self.assertEqual(row["previous_close"], 490.0)
+        self.assertEqual(row["quote_mode"], "daily_close")
+
+    def test_intraday_workflow_uses_bounded_quotes_and_isolates_full_technical_scan(self):
         workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
             encoding="utf-8"
         )
-        quote_step = workflow.find("Refresh latest quotes concurrently")
+        quote_step = workflow.find("Refresh latest quotes in bounded batches")
         technical_step = workflow.find("Refresh full technical indicators and ticker shards")
         snapshot_step = workflow.find("Build canonical intraday screener snapshot")
         artifact_step = workflow.find("Build immutable core-data artifact")
@@ -155,7 +185,11 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertIn('cron: "35 21 * * 1-5"', workflow)
         self.assertIn("full_technical:", workflow)
         self.assertIn("steps.window.outputs.full_technical == 'true'", workflow)
+        self.assertIn("group: live-data-producer-main", workflow)
         self.assertIn("cancel-in-progress: true", workflow)
+        self.assertIn("QUOTE_BATCH_SIZE", workflow)
+        self.assertIn("QUOTE_REQUEST_TIMEOUT", workflow)
+        self.assertIn("timeout --signal=TERM 10m python scripts/update_quote_data.py", workflow)
         self.assertIn("python scripts/build_screener_snapshot.py", workflow)
         self.assertIn("python scripts/verify_screener_snapshot.py", workflow)
         self.assertNotIn("Refresh PR3 personal Today desk", workflow)
@@ -166,20 +200,25 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
         self.assertNotIn("--allow-stale", workflow)
 
-    def test_quote_refresh_is_parallel_atomic_and_writes_deployable_mirrors(self):
+    def test_quote_refresh_is_batched_bounded_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
         ast.parse(source, filename="scripts/update_quote_data.py")
         for token in (
-            "ThreadPoolExecutor",
-            "as_completed",
+            "yf.download",
             "QUOTE_REFRESH_WORKERS",
+            "QUOTE_BATCH_SIZE",
+            "QUOTE_REQUEST_TIMEOUT",
             "QUOTE_MIN_COVERAGE",
+            'group_by="ticker"',
+            "timeout=timeout_seconds",
             'ROOT / "site" / "data" / "quote_latest.json"',
             'ROOT / "static" / "data" / "quote_latest.json"',
             "temporary.replace(path)",
             "quote coverage below minimum",
         ):
             self.assertIn(token, source)
+        self.assertNotIn("ThreadPoolExecutor", source)
+        self.assertNotIn("fast_info", source)
         self.assertNotIn("for symbol in symbols:\n        try:\n            t = yf.Ticker", source)
 
 
