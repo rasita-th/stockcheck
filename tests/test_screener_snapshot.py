@@ -137,15 +137,24 @@ class ScreenerSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
 
-    def test_live_workflow_builds_snapshot_before_today_and_without_fixture_bypass(self):
+    def test_live_workflow_is_core_only_and_builds_snapshot_before_artifact(self):
         workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
             encoding="utf-8"
         )
+        quote_step = workflow.find("Refresh latest quotes")
+        technical_step = workflow.find("Refresh technical indicators and ticker shards")
         snapshot_step = workflow.find("Build canonical screener snapshot")
-        attention_step = workflow.find("Refresh PR3 personal Today desk")
-        self.assertGreaterEqual(snapshot_step, 0)
-        self.assertGreater(attention_step, snapshot_step)
+        artifact_step = workflow.find("Build immutable core-data artifact")
+
+        self.assertGreaterEqual(quote_step, 0)
+        self.assertGreater(technical_step, quote_step)
+        self.assertGreater(snapshot_step, technical_step)
+        self.assertGreater(artifact_step, snapshot_step)
+        self.assertIn("cancel-in-progress: true", workflow)
         self.assertIn("python scripts/build_screener_snapshot.py", workflow)
+        self.assertNotIn("Refresh PR3 personal Today desk", workflow)
+        self.assertNotIn("ATTENTION_NEWS_ENABLED", workflow)
+        self.assertNotIn("SEC_USER_AGENT", workflow)
         self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
         self.assertNotIn("--allow-stale", workflow)
 
