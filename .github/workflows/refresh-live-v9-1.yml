@@ -93,6 +93,10 @@ jobs:
             --max-business-day-lag 1 \
             --min-coverage 0.80
 
+      - name: Build canonical screener snapshot
+        if: steps.window.outputs.market_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: python scripts/build_screener_snapshot.py
+
       - name: Refresh PR3 personal Today desk
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
@@ -115,6 +119,8 @@ jobs:
           python -m unittest discover -s tests -p "test_source_market_freshness.py" -v
           python -m unittest discover -s tests -p "test_generate_health.py" -v
           python -m unittest tests.test_technical_shards -v
+          python -m unittest tests.test_screener_snapshot -v
+          node tests/technical_shards_runtime.test.js
 
       - name: Test generated-data publication
         if: steps.window.outputs.event_open == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
