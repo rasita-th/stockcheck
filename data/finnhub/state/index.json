@@ -1113,67 +1113,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA"
-          ],
-          "company_profile": [
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC"
-          ],
-          "recommendation_trends": [
-            "TWST",
-            "TXG",
-            "TXN",
-            "TXT",
-            "U",
-            "UFO",
-            "UNH",
-            "UUUU",
-            "VCYT",
-            "VICR",
-            "VRSK",
-            "VRT",
-            "VRTX",
-            "VSAT",
-            "VST",
-            "WBD",
-            "WDAY",
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-07-29T14:58:14+00:00",
-      "mode": "analyst",
-      "started_at": "2026-07-29T14:57:25+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2127,9 +2066,53 @@
       "mode": "analyst",
       "started_at": "2026-07-31T09:31:02+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-07-31T11:36:51+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT",
+            "TMC",
+            "TMDX",
+            "TMUS",
+            "TOST",
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO",
+            "TWST",
+            "TXG"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-07-31T11:36:26+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-31T09:31:52+00:00"
+  "updated_at": "2026-07-31T11:36:52+00:00"
 }
