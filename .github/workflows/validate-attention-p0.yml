@@ -7,9 +7,11 @@ on:
       - ".github/workflows/validate-attention-p0.yml"
       - ".github/workflows/deploy-pages.yml"
       - ".github/workflows/deploy-pages-after-pr3.yml"
+      - ".github/workflows/verify-production-screener.yml"
       - "scripts/update_technical_data.py"
       - "scripts/technical_shards.py"
       - "scripts/build_screener_snapshot.py"
+      - "scripts/verify_screener_snapshot.py"
       - "scripts/generate_earnings_radar.py"
       - "scripts/generate_attention_p0.py"
       - "scripts/generate_attention_pr2.py"
@@ -79,6 +81,7 @@ jobs:
           python -m py_compile scripts/update_technical_data.py
           python -m py_compile scripts/technical_shards.py
           python -m py_compile scripts/build_screener_snapshot.py
+          python -m py_compile scripts/verify_screener_snapshot.py
           python -m py_compile scripts/generate_earnings_radar.py
           python -m py_compile scripts/generate_attention_p0.py
           python -m py_compile scripts/generate_attention_pr2.py
