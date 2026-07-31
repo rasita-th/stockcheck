@@ -4,13 +4,11 @@ import ast
 import json
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
-import pandas as pd
-
 from scripts.build_screener_snapshot import build_snapshot
-from scripts.update_quote_data import row_from_downloads
+from scripts.update_quote_data import select_quote_values
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -141,32 +139,29 @@ class ScreenerSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
 
-    def test_batch_quote_parser_uses_intraday_price_and_prior_daily_close(self):
-        intraday_index = pd.to_datetime(
-            ["2026-07-31T14:59:00Z", "2026-07-31T15:00:00Z"]
+    def test_batch_quote_values_use_intraday_price_and_prior_daily_close(self):
+        price, previous_close, quote_mode = select_quote_values(
+            [492.50, 493.23],
+            date(2026, 7, 31),
+            [490.00, 493.00],
+            date(2026, 7, 31),
         )
-        daily_index = pd.to_datetime(["2026-07-30", "2026-07-31"])
-        columns = pd.MultiIndex.from_tuples([("AMD", "Close")])
-        intraday = pd.DataFrame([[492.50], [493.23]], index=intraday_index, columns=columns)
-        daily = pd.DataFrame([[490.00], [493.00]], index=daily_index, columns=columns)
 
-        row = row_from_downloads("AMD", intraday, daily)
+        self.assertEqual(price, 493.23)
+        self.assertEqual(previous_close, 490.0)
+        self.assertEqual(quote_mode, "intraday")
 
-        self.assertEqual(row["price"], 493.23)
-        self.assertEqual(row["previous_close"], 490.0)
-        self.assertEqual(row["quote_mode"], "intraday")
-        self.assertAlmostEqual(row["day_change_pct"], (493.23 / 490.0 - 1) * 100)
+    def test_batch_quote_values_use_latest_daily_when_intraday_missing(self):
+        price, previous_close, quote_mode = select_quote_values(
+            [],
+            None,
+            [490.00, 493.00],
+            date(2026, 7, 31),
+        )
 
-    def test_batch_quote_parser_falls_back_to_latest_daily_close(self):
-        daily_index = pd.to_datetime(["2026-07-30", "2026-07-31"])
-        columns = pd.MultiIndex.from_tuples([("AMD", "Close")])
-        daily = pd.DataFrame([[490.00], [493.00]], index=daily_index, columns=columns)
-
-        row = row_from_downloads("AMD", None, daily)
-
-        self.assertEqual(row["price"], 493.0)
-        self.assertEqual(row["previous_close"], 490.0)
-        self.assertEqual(row["quote_mode"], "daily_close")
+        self.assertEqual(price, 493.0)
+        self.assertEqual(previous_close, 490.0)
+        self.assertEqual(quote_mode, "daily_close")
 
     def test_intraday_workflow_uses_bounded_quotes_and_isolates_full_technical_scan(self):
         workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
