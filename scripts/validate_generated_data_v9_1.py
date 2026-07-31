@@ -7,7 +7,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "generated"
-REQUIRED = ["quote_latest.json", "technical.json", "attention_today.json", "events.json", "health.json"]
+REQUIRED = ["quote_latest.json", "technical.json", "screener_snapshot.json", "attention_today.json", "events.json", "health.json"]
 PRIORITIES = {"Critical", "Risk", "Action", "Watch", "Developing"}
 VERIFICATION = {"confirmed", "estimated", "unverified", "unknown"}
 
@@ -28,6 +28,40 @@ def load(name: str) -> dict[str, Any]:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise SystemExit(message)
+
+
+def symbol_of(row: dict[str, Any]) -> str:
+    return str(row.get("ticker") or row.get("symbol") or "").strip().upper()
+
+
+def validate_screener_snapshot(data: dict[str, Any], quotes: dict[str, Any]) -> None:
+    require(data.get("schema_version") == "1.0", "screener snapshot schema must be 1.0")
+    require(data.get("contract") == "canonical-screener-snapshot", "screener snapshot contract is invalid")
+    rows = data.get("rows")
+    require(isinstance(rows, list) and bool(rows), "screener snapshot rows must be non-empty")
+    require(data.get("row_count") == len(rows), "screener snapshot row_count mismatch")
+    require(float(data.get("live_quote_coverage") or 0) >= 0.80, "screener snapshot quote coverage is below 80%")
+    require(int(data.get("stale_after_minutes") or 0) > 0, "screener snapshot TTL is invalid")
+
+    quote_map = {
+        symbol_of(row): row
+        for row in quotes.get("rows", [])
+        if isinstance(row, dict) and symbol_of(row)
+    }
+    seen: set[str] = set()
+    for index, row in enumerate(rows):
+        require(isinstance(row, dict), f"screener row {index} must be an object")
+        symbol = symbol_of(row)
+        require(bool(symbol), f"screener row {index} missing symbol")
+        require(symbol not in seen, f"duplicate screener symbol: {symbol}")
+        seen.add(symbol)
+        require(row.get("snapshotStatus") in {"live_quote", "technical_fallback"}, f"{symbol} snapshot status invalid")
+        if row.get("snapshotStatus") == "live_quote":
+            quote = quote_map.get(symbol)
+            require(isinstance(quote, dict), f"{symbol} live row missing quote source")
+            require(abs(float(row.get("price")) - float(quote.get("price"))) <= 0.0001, f"{symbol} snapshot price does not match quote_latest")
+            for key in ("pctVsEma5", "pctVsEma20", "pctVsEma89", "pctVsEma200"):
+                require(row.get(key) is None or isinstance(row.get(key), (int, float)), f"{symbol} {key} is invalid")
 
 
 def validate_attention(data: dict[str, Any]) -> None:
@@ -85,6 +119,7 @@ def main() -> None:
     docs = {name: load(name) for name in REQUIRED}
     require(isinstance(docs["quote_latest.json"].get("rows"), list) and docs["quote_latest.json"]["rows"], "quote_latest rows must be a non-empty list")
     require(isinstance(docs["technical.json"].get("rows"), list) and docs["technical.json"]["rows"], "technical rows must be a non-empty list")
+    validate_screener_snapshot(docs["screener_snapshot.json"], docs["quote_latest.json"])
     validate_attention(docs["attention_today.json"])
     validate_events(docs["events.json"])
     require(docs["health.json"].get("status") != "error", "health status is error")
