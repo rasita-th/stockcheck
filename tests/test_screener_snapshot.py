@@ -8,6 +8,8 @@ from pathlib import Path
 
 from scripts.build_screener_snapshot import build_snapshot
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 class ScreenerSnapshotTests(unittest.TestCase):
     NOW = datetime(2026, 7, 31, 15, 5, tzinfo=timezone.utc)
@@ -134,6 +136,18 @@ class ScreenerSnapshotTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(SystemExit, "coverage too low"):
                 build_snapshot(self.quote_payload(), technical, Path(tmp), now=self.NOW)
+
+    def test_live_workflow_builds_snapshot_before_today_and_without_fixture_bypass(self):
+        workflow = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
+            encoding="utf-8"
+        )
+        snapshot_step = workflow.find("Build canonical screener snapshot")
+        attention_step = workflow.find("Refresh PR3 personal Today desk")
+        self.assertGreaterEqual(snapshot_step, 0)
+        self.assertGreater(attention_step, snapshot_step)
+        self.assertIn("python scripts/build_screener_snapshot.py", workflow)
+        self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
+        self.assertNotIn("--allow-stale", workflow)
 
 
 if __name__ == "__main__":
