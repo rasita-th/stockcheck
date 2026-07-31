@@ -36,10 +36,20 @@ const snapshot = {
   rows: [
     {
       symbol: "AMD",
-      close: 492.52,
+      close: 493.23,
       price: 493.23,
       regularMarketPrice: 493.23,
       dayPct: 0.6592,
+      snapshotStatus: "live_quote",
+    },
+    {
+      symbol: "CIFR",
+      close: 22.645,
+      price: 22.645,
+      regularMarketPrice: 22.645,
+      dayPct: -0.64,
+      score: 81,
+      signal: "BUY ZONE / Trend Confirmed",
       snapshotStatus: "live_quote",
     },
   ],
@@ -50,8 +60,8 @@ const shard = {
   symbol: "CIFR",
   latest: { symbol: "CIFR", close: 22.79, ema20: 21.89, rsi14: 51.71 },
   series: [
-    { date: "2026-07-30", close: 24.08 },
-    { date: "2026-07-31", close: 22.79 },
+    { date: "2026-07-30", close: 24.08, high: 24.5, low: 23.5 },
+    { date: "2026-07-31", close: 22.79, high: 24.53, low: 21.98 },
   ],
   meta: { source: "runtime-test" },
 };
@@ -131,7 +141,10 @@ vm.runInContext(`
   const loaded = await context.window.StockcheckTechnicalV2.loadTechnicalShard("CIFR");
   assert.equal(shardFetchCount, 1, "selected summary-only quote must fetch its technical shard once");
   assert.equal(loaded.series.length, 2);
-  assert.equal(loaded.latest.close, 22.79);
+  assert.equal(loaded.latest.close, 22.645, "detail header must retain canonical live price");
+  assert.equal(loaded.series.at(-1).close, 22.645, "last chart candle must project canonical live price");
+  assert.equal(loaded.series.at(-1).__snapshotProjected, true);
+  assert.equal(loaded.latest.score, 81, "detail score must match screener snapshot");
   assert.equal(loaded.latest.pe, 31.2, "technical merge must preserve existing latest fields");
   assert.equal(loaded.fundamental.revenue, 151000000, "technical merge must preserve fundamentals");
   assert.equal(loaded.__technicalV2Loaded, true);
@@ -145,7 +158,7 @@ vm.runInContext(`
   assert.equal(context.window.StockcheckTechnicalV2.snapshotIsFresh(), false);
   assert.equal(context.__runtimeBuildAlertItems().length, 0, "stale snapshot must suppress technical alerts");
 
-  console.log("canonical screener runtime test passed: live summary + lazy detail + stale alert gate");
+  console.log("canonical screener runtime test passed: live overview + consistent lazy detail + stale alert gate");
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
