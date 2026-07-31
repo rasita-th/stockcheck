@@ -152,7 +152,7 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertGreater(snapshot_step, technical_step)
         self.assertGreater(artifact_step, snapshot_step)
         self.assertIn('cron: "*/15 * * * 1-5"', workflow)
-        self.assertIn('cron: "35 21 * * * 1-5"', workflow)
+        self.assertIn('cron: "35 21 * * 1-5"', workflow)
         self.assertIn("full_technical:", workflow)
         self.assertIn("steps.window.outputs.full_technical == 'true'", workflow)
         self.assertIn("cancel-in-progress: true", workflow)
