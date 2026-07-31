@@ -16,6 +16,10 @@ const state = {
   selected: "CIFR",
   staticPayloads: { technical: { __technicalV2: true } },
   quotes: {
+    NVDA: {
+      latest: { pe: 44.1 },
+      fundamental: { revenue: 130000000000 },
+    },
     CIFR: {
       latest: { pe: 31.2 },
       fundamental: { revenue: 151000000 },
@@ -65,11 +69,15 @@ vm.runInContext(`
 `, context, { filename: "technical-shards-v2.js" });
 
 (async () => {
+  const tableQuote = context.__runtimeCurrentQuoteFor("NVDA");
+  assert.equal(tableQuote.fundamental.revenue, 130000000000);
+  assert.equal(fetchCount, 0, "rendering a non-selected table row must not fetch its shard");
+
   const summary = context.__runtimeCurrentQuoteFor("CIFR");
   assert.equal(summary.fundamental.revenue, 151000000);
 
   const loaded = await context.window.StockcheckTechnicalV2.loadTechnicalShard("CIFR");
-  assert.equal(fetchCount, 1, "summary-only quote must still fetch its technical shard");
+  assert.equal(fetchCount, 1, "selected summary-only quote must fetch its technical shard once");
   assert.equal(loaded.series.length, 2);
   assert.equal(loaded.latest.close, 22.79);
   assert.equal(loaded.latest.pe, 31.2, "technical merge must preserve existing latest fields");
@@ -81,7 +89,7 @@ vm.runInContext(`
   assert.equal(cached.series.length, 2);
   assert.equal(fetchCount, 1, "loaded series must be cached for the page session");
 
-  console.log("technical shard runtime test passed: summary quote upgraded to CIFR series");
+  console.log("technical shard runtime test passed: only selected CIFR upgraded to series");
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
