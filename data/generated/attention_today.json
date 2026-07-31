@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-31T19:53:19+00:00",
+  "updated_at": "2026-07-31T22:17:56+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 14,
+  "total_events": 15,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
     "Risk": 2,
     "Action": 0,
-    "Watch": 2,
+    "Watch": 1,
     "Developing": 0
   },
   "source_health": {
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
-      "status": "partial",
+      "status": "error",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 3,
-      "errors": 7
+      "ok": 0,
+      "errors": 10
     },
     "regulators": {
       "status": "ok",
@@ -94,8 +94,8 @@
         "published_at": "2026-07-27T16:01:08+00:00",
         "domain": "investors.rocketlabusa.com"
       },
-      "price": 65.38,
-      "day_change_pct": 1.0822,
+      "price": 64.98,
+      "day_change_pct": 0.4638,
       "relative_volume": 0.46,
       "trigger_level": null,
       "events": [
@@ -205,9 +205,9 @@
       },
       "impact": {
         "baseline_price": 60.05,
-        "current_price": 65.38,
-        "change_pct": 8.88,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.9%"
+        "current_price": 64.98,
+        "change_pct": 8.21,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.2%"
       },
       "personal_priority_score": 93,
       "personalization_reasons": [
@@ -223,12 +223,12 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved +6.5% today.",
+        "The stock moved +6.8% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-07-31T19:51:15.313734+00:00",
+      "event_time": "2026-07-31T22:16:04.256528+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -237,8 +237,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 355.33,
-      "day_change_pct": 6.4946,
+      "price": 356.43,
+      "day_change_pct": 6.8243,
       "relative_volume": 0.73,
       "trigger_level": null,
       "events": [
@@ -247,13 +247,13 @@
           "ticker": "GOOGL",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +6.5%",
+          "headline": "Price +6.8%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.5% today.",
+          "why_today": "The stock moved +6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-07-31T19:51:15.313734+00:00",
-          "detected_at": "2026-07-31T19:51:15.313743+00:00",
+          "event_time": "2026-07-31T22:16:04.256528+00:00",
+          "detected_at": "2026-07-31T22:16:04.256533+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -387,20 +387,20 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +6.5% today.",
+        "The stock moved +6.8% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 355.33,
-        "current_price": 355.33,
-        "change_pct": 0.0,
+        "current_price": 356.43,
+        "change_pct": 0.31,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 83,
@@ -430,8 +430,8 @@
         "published_at": "2026-07-26T15:30:00+00:00",
         "domain": "www.foreignpolicyjournal.com"
       },
-      "price": 59.34,
-      "day_change_pct": 1.54,
+      "price": 58.99,
+      "day_change_pct": 0.9411,
       "relative_volume": 0.41,
       "trigger_level": null,
       "events": [
@@ -497,113 +497,14 @@
       },
       "impact": {
         "baseline_price": 56.2,
-        "current_price": 59.34,
-        "change_pct": 5.59,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.6%"
+        "current_price": 58.99,
+        "change_pct": 4.96,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.0%"
       },
       "personal_priority_score": 63,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "COST",
-      "name": "Costco Wholesale Corporation",
-      "portfolio_status": "holding",
-      "role": "Core quality",
-      "priority": "Watch",
-      "priority_score": 32,
-      "why_today": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "litigation",
-      "event_subtype": "litigation",
-      "event_time": "2026-07-27T13:15:00+00:00",
-      "verification_status": "unverified",
-      "source_status": "secondary",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-        "published_at": "2026-07-27T13:15:00+00:00",
-        "domain": "finance.yahoo.com"
-      },
-      "price": 953.18,
-      "day_change_pct": -0.1038,
-      "relative_volume": 0.32,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "gdelt:COST:1db038cf7e87931b",
-          "ticker": "COST",
-          "event_type": "litigation",
-          "event_subtype": "litigation",
-          "headline": "Costco reaches $14 million settlement over misleading promo emails",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "medium",
-          "urgency": "developing",
-          "event_time": "2026-07-27T13:15:00+00:00",
-          "detected_at": "2026-07-27T22:02:14+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Costco",
-          "dedupe_key": "COST:litigation:2026-07-27:5442faa0e281",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-            "published_at": "2026-07-27T13:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-              "published_at": "2026-07-27T13:15:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:COST:1db038cf7e87931b"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-COST/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "litigation",
-      "signals": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Watch",
-        "first_seen_at": "2026-07-31T03:50:53+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 951.76,
-        "current_price": 953.18,
-        "change_pct": 0.15,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 44,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "litigation +4"
       ]
     }
   ],
@@ -800,67 +701,92 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "ASTS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "TSLA",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "GOOGL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "INDI",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "NBIS",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TEM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "TEM",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "MP",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "MP",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "IONQ",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     }
   ],
@@ -898,7 +824,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 1,
-    "total": 3
+    "total": 4
   },
   "technical_watch": [
     {
@@ -909,11 +835,11 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +15.1% today."
+        "The stock moved +15.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-07-31T19:51:15.149859+00:00",
+      "event_time": "2026-07-31T22:16:04.204557+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -922,8 +848,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 271.11,
-      "day_change_pct": 15.121,
+      "price": 271.86,
+      "day_change_pct": 15.4395,
       "relative_volume": 1.89,
       "trigger_level": null,
       "events": [
@@ -932,13 +858,13 @@
           "ticker": "AMZN",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +15.1%",
+          "headline": "Price +15.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +15.1% today.",
+          "why_today": "The stock moved +15.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-07-31T19:51:15.149859+00:00",
-          "detected_at": "2026-07-31T19:51:15.149867+00:00",
+          "event_time": "2026-07-31T22:16:04.204557+00:00",
+          "detected_at": "2026-07-31T22:16:04.204566+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -974,19 +900,19 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +15.1% today."
+        "The stock moved +15.4% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 271.11,
-        "current_price": 271.11,
-        "change_pct": 0.0,
+        "current_price": 271.86,
+        "change_pct": 0.28,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
@@ -1002,11 +928,11 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved -6.5% today."
+        "The stock moved -6.1% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-07-31T19:51:15.343191+00:00",
+      "event_time": "2026-07-31T22:16:04.273313+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1015,8 +941,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 3.375,
-      "day_change_pct": -6.5097,
+      "price": 3.39,
+      "day_change_pct": -6.0942,
       "relative_volume": 0.6,
       "trigger_level": null,
       "events": [
@@ -1025,13 +951,13 @@
           "ticker": "EOSE",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -6.5%",
+          "headline": "Price -6.1%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -6.5% today.",
+          "why_today": "The stock moved -6.1% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-07-31T19:51:15.343191+00:00",
-          "detected_at": "2026-07-31T19:51:15.343199+00:00",
+          "event_time": "2026-07-31T22:16:04.273313+00:00",
+          "detected_at": "2026-07-31T22:16:04.273320+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1066,18 +992,110 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -6.5% today."
+        "The stock moved -6.1% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 3.375,
-        "current_price": 3.375,
+        "current_price": 3.39,
+        "change_pct": 0.44,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "OKLO",
+      "name": "Oklo Inc.",
+      "portfolio_status": "holding",
+      "role": "Advanced nuclear",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -5.2% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-07-31T22:16:04.241386+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 38.95,
+      "day_change_pct": -5.2081,
+      "relative_volume": 0.45,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:OKLO:price-drop:2026-07-31",
+          "ticker": "OKLO",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -5.2%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -5.2% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-07-31T22:16:04.241386+00:00",
+          "detected_at": "2026-07-31T22:16:04.241392+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:OKLO:price-drop:2026-07-31"
+          ],
+          "dedupe_key": "OKLO:price_drop:80b13573050e8315"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-OKLO/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -5.2% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-07-31T22:17:56+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 38.95,
+        "current_price": 38.95,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -1094,7 +1112,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -1107,8 +1125,8 @@
         "url": "data/technical.json",
         "published_at": "2026-07-31"
       },
-      "price": 21.59,
-      "day_change_pct": 1.0295,
+      "price": 21.6,
+      "day_change_pct": 1.0763,
       "relative_volume": 0.32,
       "trigger_level": null,
       "events": [
@@ -1119,11 +1137,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-31",
-          "detected_at": "2026-07-31T19:53:19+00:00",
+          "detected_at": "2026-07-31T22:17:56+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1145,8 +1163,8 @@
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
           "rsi14": 53.13,
-          "pct_vs_ema20": 2.66,
-          "pct_vs_ema200": 11.35,
+          "pct_vs_ema20": 2.71,
+          "pct_vs_ema200": 11.4,
           "volume_ratio20": 0.32,
           "secondary_source_count": 1,
           "related_event_ids": [
@@ -1165,7 +1183,7 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.3% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average."
       ],
       "change": {
         "status": "ongoing",
@@ -1176,8 +1194,8 @@
       },
       "impact": {
         "baseline_price": 21.38,
-        "current_price": 21.59,
-        "change_pct": 0.98,
+        "current_price": 21.6,
+        "change_pct": 1.03,
         "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.0%"
       },
       "personal_priority_score": 76,
@@ -1187,14 +1205,22 @@
     }
   ],
   "changes_summary": {
-    "new": 3,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 4,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "gdelt:COST:1db038cf7e87931b",
+      "ticker": "COST",
+      "event_subtype": "litigation",
+      "priority": "Watch",
+      "resolved_at": "2026-07-31T22:17:56+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "event:GOOGL:f67f75178c255e9c",
       "ticker": "GOOGL",
@@ -1265,14 +1291,6 @@
       "event_subtype": "technical_risk",
       "priority": "Action",
       "resolved_at": "2026-07-30T18:17:16+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:technical_risk:2026-07-29",
-      "ticker": "IONQ",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-07-30T15:13:20+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
