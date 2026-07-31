@@ -25,10 +25,12 @@ python3 -m py_compile \
   scripts/check_ui_view_contract.py
 node --check site/app.js
 node --check site/market.js
+node --check site/technical-shards-v2.js
 node --check site/app-shell-v9-4-6.js
 node --check site/notification-phase2.js
 node --check site/final-ui-coordinator.js
 node --check site/memo-only-fix.js
+node tests/technical_shards_runtime.test.js
 python3 scripts/check_ui_view_contract.py
 
 echo "== Build clean artifact in temporary directory =="
@@ -43,6 +45,7 @@ fi
 (
   cd "$TMP/repo"
   python3 scripts/prepare_stable_site_v9_4_1.py
+  node tests/technical_shards_runtime.test.js
   python3 scripts/validate_static_data.py
   python3 scripts/preflight_check.py --site site
   python3 scripts/check_ui_view_contract.py

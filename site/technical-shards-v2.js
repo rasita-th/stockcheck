@@ -25,10 +25,16 @@
     return /^[A-Z0-9._-]{1,32}$/.test(ticker) ? ticker : "";
   }
 
+  function hasSeries(quote) {
+    return Array.isArray(quote?.series) && quote.series.length > 0;
+  }
+
   async function loadTechnicalShard(symbol) {
     const ticker = safeTicker(symbol);
     if (!ticker || !state.staticMode) return null;
-    if (state.quotes[ticker]) return state.quotes[ticker];
+
+    const cached = state.quotes[ticker];
+    if (hasSeries(cached)) return cached;
     if (shardRequests.has(ticker)) return shardRequests.get(ticker);
 
     const request = fetchJsonNoStore(`data/technical/symbols/${encodeURIComponent(ticker)}.json`)
@@ -36,11 +42,16 @@
         if (!payload || payload.schema_version !== "2.0" || safeTicker(payload.symbol) !== ticker) {
           throw new Error(`Invalid technical shard contract for ${ticker}`);
         }
+
+        const existing = state.quotes[ticker] || {};
         state.quotes[ticker] = {
+          ...existing,
           symbol: ticker,
-          latest: payload.latest || {},
+          latest: { ...(existing.latest || {}), ...(payload.latest || {}) },
+          fundamental: existing.fundamental || {},
           series: Array.isArray(payload.series) ? payload.series : [],
-          meta: payload.meta || {},
+          meta: { ...(existing.meta || {}), ...(payload.meta || {}) },
+          __technicalV2Loaded: true,
         };
         if (typeof renderAll === "function") renderAll();
         return state.quotes[ticker];
@@ -76,8 +87,17 @@
 
   currentQuoteFor = function currentQuoteForV2(symbol) {
     const ticker = safeTicker(symbol);
+    const selectedTicker = safeTicker(state.selected);
     const existing = legacyCurrentQuoteFor(ticker);
-    if (!existing && ticker && state.staticMode && state.staticLoaded) void loadTechnicalShard(ticker);
+    if (
+      ticker &&
+      ticker === selectedTicker &&
+      state.staticMode &&
+      state.staticLoaded &&
+      !hasSeries(state.quotes[ticker])
+    ) {
+      void loadTechnicalShard(ticker);
+    }
     return existing;
   };
 
@@ -89,6 +109,7 @@
 
   window.StockcheckTechnicalV2 = Object.freeze({
     loadTechnicalShard,
+    hasSeries,
     isActive: () => Boolean(state.staticPayloads?.technical?.__technicalV2),
   });
 })();
