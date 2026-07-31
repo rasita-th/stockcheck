@@ -32,6 +32,12 @@
     return Array.isArray(quote?.series) && quote.series.length > 0;
   }
 
+  function snapshotRowFor(symbol) {
+    const ticker = safeTicker(symbol);
+    const rows = Array.isArray(screenerSnapshot?.rows) ? screenerSnapshot.rows : [];
+    return rows.find((row) => safeTicker(row?.symbol || row?.ticker) === ticker) || null;
+  }
+
   function parseTimestamp(value) {
     const raw = String(value || "").trim();
     if (!raw) return null;
@@ -52,7 +58,7 @@
   }
 
   function freshnessMessage() {
-    if (!screenerSnapshot) return "ยังไม่ได้โหลด canonical screener snapshot";
+    if (!screenerSnapshot) return "ยังไม่ได้โหลด canonical screener snapshot · ปิด technical alerts ชั่วคราว";
     const age = snapshotAgeMinutes();
     const ttl = Number(screenerSnapshot.stale_after_minutes || 30);
     if (snapshotIsFresh()) {
@@ -79,7 +85,24 @@
     notice.style.borderColor = fresh ? "rgba(46,160,67,.55)" : "rgba(248,81,73,.65)";
     notice.style.color = fresh ? "#7ee787" : "#ff7b72";
     const subtitle = document.getElementById("alertSubtitle");
-    if (subtitle && !fresh) subtitle.textContent = "Technical alerts paused: screener snapshot is stale";
+    if (subtitle && !fresh) subtitle.textContent = "Technical alerts paused: canonical screener data is unavailable or stale";
+  }
+
+  function projectSeriesToSnapshot(payload, summary) {
+    const series = Array.isArray(payload?.series)
+      ? payload.series.map((point) => ({ ...(point || {}) }))
+      : [];
+    const livePrice = Number(summary?.price ?? summary?.regularMarketPrice ?? summary?.close);
+    if (series.length && Number.isFinite(livePrice) && summary?.snapshotStatus === "live_quote") {
+      const last = series[series.length - 1];
+      const high = Number(last.high);
+      const low = Number(last.low);
+      last.close = livePrice;
+      last.high = Number.isFinite(high) ? Math.max(high, livePrice) : livePrice;
+      last.low = Number.isFinite(low) ? Math.min(low, livePrice) : livePrice;
+      last.__snapshotProjected = true;
+    }
+    return series;
   }
 
   async function loadTechnicalShard(symbol) {
@@ -97,13 +120,14 @@
         }
 
         const existing = state.quotes[ticker] || {};
+        const summary = snapshotRowFor(ticker) || {};
         state.quotes[ticker] = {
           ...existing,
           symbol: ticker,
-          latest: { ...(existing.latest || {}), ...(payload.latest || {}) },
+          latest: { ...(payload.latest || {}), ...(existing.latest || {}), ...summary },
           fundamental: existing.fundamental || {},
-          series: Array.isArray(payload.series) ? payload.series : [],
-          meta: { ...(existing.meta || {}), ...(payload.meta || {}) },
+          series: projectSeriesToSnapshot(payload, summary),
+          meta: { ...(existing.meta || {}), ...(payload.meta || {}), screenerSnapshot: summary.snapshotStatus || "unavailable" },
           __technicalV2Loaded: true,
         };
         if (typeof renderAll === "function") renderAll();
@@ -184,7 +208,7 @@
 
   if (legacyBuildAlertItems) {
     buildAlertItems = function buildCanonicalAlertItems() {
-      if (state.staticMode && screenerSnapshot && !snapshotIsFresh()) return [];
+      if (state.staticMode && !snapshotIsFresh()) return [];
       return legacyBuildAlertItems();
     };
   }
