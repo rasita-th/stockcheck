@@ -7,7 +7,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "generated"
-REQUIRED = ["quote_latest.json", "technical.json", "screener_snapshot.json", "attention_today.json", "events.json", "health.json"]
+REQUIRED = ["quote_latest.json", "technical.json", "attention_today.json", "events.json", "health.json"]
 PRIORITIES = {"Critical", "Risk", "Action", "Watch", "Developing"}
 VERIFICATION = {"confirmed", "estimated", "unverified", "unknown"}
 
@@ -34,7 +34,11 @@ def symbol_of(row: dict[str, Any]) -> str:
     return str(row.get("ticker") or row.get("symbol") or "").strip().upper()
 
 
-def validate_screener_snapshot(data: dict[str, Any], quotes: dict[str, Any]) -> None:
+def validate_screener_snapshot(
+    data: dict[str, Any],
+    quotes: dict[str, Any],
+    technical: dict[str, Any],
+) -> None:
     require(data.get("schema_version") == "1.0", "screener snapshot schema must be 1.0")
     require(data.get("contract") == "canonical-screener-snapshot", "screener snapshot contract is invalid")
     rows = data.get("rows")
@@ -43,9 +47,22 @@ def validate_screener_snapshot(data: dict[str, Any], quotes: dict[str, Any]) -> 
     require(float(data.get("live_quote_coverage") or 0) >= 0.80, "screener snapshot quote coverage is below 80%")
     require(int(data.get("stale_after_minutes") or 0) > 0, "screener snapshot TTL is invalid")
 
+    technical_rows = technical.get("rows")
+    require(isinstance(technical_rows, list) and bool(technical_rows), "canonical technical rows must be non-empty")
+    require(
+        technical.get("contract") == "canonical-screener-snapshot",
+        "technical.json must declare canonical-screener-snapshot when the snapshot exists",
+    )
+    require(len(technical_rows) == len(rows), "canonical technical and screener row counts differ")
+
     quote_map = {
         symbol_of(row): row
         for row in quotes.get("rows", [])
+        if isinstance(row, dict) and symbol_of(row)
+    }
+    technical_map = {
+        symbol_of(row): row
+        for row in technical_rows
         if isinstance(row, dict) and symbol_of(row)
     }
     seen: set[str] = set()
@@ -56,6 +73,12 @@ def validate_screener_snapshot(data: dict[str, Any], quotes: dict[str, Any]) -> 
         require(symbol not in seen, f"duplicate screener symbol: {symbol}")
         seen.add(symbol)
         require(row.get("snapshotStatus") in {"live_quote", "technical_fallback"}, f"{symbol} snapshot status invalid")
+
+        mirrored = technical_map.get(symbol)
+        require(isinstance(mirrored, dict), f"{symbol} missing from canonical technical mirror")
+        for key in ("price", "close", "score", "signal", "snapshotStatus"):
+            require(mirrored.get(key) == row.get(key), f"{symbol} {key} differs between snapshot and technical mirror")
+
         if row.get("snapshotStatus") == "live_quote":
             quote = quote_map.get(symbol)
             require(isinstance(quote, dict), f"{symbol} live row missing quote source")
@@ -84,7 +107,7 @@ def validate_attention(data: dict[str, Any]) -> None:
         require(item.get("priority") in PRIORITIES, f"{prefix} has invalid priority")
         require(isinstance(item.get("priority_score"), int), f"{prefix} priority_score must be an integer")
         require(isinstance(item.get("why_today"), list) and item["why_today"], f"{prefix} why_today must be a non-empty list")
-        require(item.get("verification_status") in VERIFICATION, f"{prefix} verification_status is invalid")
+        require(item.get("verification_status") in VERIFICATION, f"{prefix} has invalid verification status")
         require(isinstance(item.get("events"), list) and item["events"], f"{prefix} events must be a non-empty list")
         source = item.get("source") or {}
         require(str(source.get("type") or "").lower() != "finnhub", f"{prefix} must not use Finnhub as a source")
@@ -107,19 +130,28 @@ def validate_events(data: dict[str, Any]) -> None:
         require(bool(event.get("ticker")), f"{prefix} missing ticker")
         require(bool(event.get("event_type")), f"{prefix} missing event_type")
         require(bool(event.get("event_subtype")), f"{prefix} missing event_subtype")
-        require(event.get("verification_status") in VERIFICATION, f"{prefix} verification_status is invalid")
+        require(event.get("verification_status") in VERIFICATION, f"{prefix} has invalid verification status")
         source = event.get("source") or {}
         require(str(source.get("type") or "").lower() != "finnhub", f"{prefix} must not use Finnhub as a source")
         require(bool(source.get("type")), f"{prefix} missing source type")
         if event.get("verification_status") == "confirmed" and source.get("quality") == "primary":
-            require(bool(source.get("url")), f"{prefix} confirmed primary source must have a URL")
+            require(bool(source.get("url")), f"{prefix} confirmed primary source must have a source URL")
 
 
 def main() -> None:
     docs = {name: load(name) for name in REQUIRED}
-    require(isinstance(docs["quote_latest.json"].get("rows"), list) and docs["quote_latest.json"]["rows"], "quote_latest rows must be a non-empty list")
-    require(isinstance(docs["technical.json"].get("rows"), list) and docs["technical.json"]["rows"], "technical rows must be a non-empty list")
-    validate_screener_snapshot(docs["screener_snapshot.json"], docs["quote_latest.json"])
+    quote = docs["quote_latest.json"]
+    technical = docs["technical.json"]
+    require(isinstance(quote.get("rows"), list) and quote["rows"], "quote_latest rows must be a non-empty list")
+    require(isinstance(technical.get("rows"), list) and technical["rows"], "technical rows must be a non-empty list")
+
+    snapshot_path = DATA / "screener_snapshot.json"
+    canonical_declared = technical.get("contract") == "canonical-screener-snapshot"
+    if canonical_declared or snapshot_path.exists():
+        validate_screener_snapshot(load("screener_snapshot.json"), quote, technical)
+    else:
+        print("Legacy/offline fixture: canonical screener snapshot not declared; compatibility validation only")
+
     validate_attention(docs["attention_today.json"])
     validate_events(docs["events.json"])
     require(docs["health.json"].get("status") != "error", "health status is error")
