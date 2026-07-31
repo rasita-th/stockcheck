@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import json
 import tempfile
 import unittest
@@ -167,6 +168,7 @@ class ScreenerSnapshotTests(unittest.TestCase):
 
     def test_quote_refresh_is_parallel_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
+        ast.parse(source, filename="scripts/update_quote_data.py")
         for token in (
             "ThreadPoolExecutor",
             "as_completed",
