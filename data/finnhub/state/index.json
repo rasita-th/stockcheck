@@ -801,7 +801,11 @@
       "MRCY": "endpoints/company_profile/MRCY.json",
       "MRVL": "endpoints/company_profile/MRVL.json",
       "MSFT": "endpoints/company_profile/MSFT.json",
-      "MSTR": "endpoints/company_profile/MSTR.json"
+      "MSTR": "endpoints/company_profile/MSTR.json",
+      "MTLS": "endpoints/company_profile/MTLS.json",
+      "MU": "endpoints/company_profile/MU.json",
+      "NASA": "endpoints/company_profile/NASA.json",
+      "NBIS": "endpoints/company_profile/NBIS.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1112,50 +1116,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-07-29T17:01:46+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-29T17:01:18+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2110,9 +2070,70 @@
       "mode": "events",
       "started_at": "2026-07-31T14:33:20+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR"
+          ],
+          "company_profile": [
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS"
+          ],
+          "recommendation_trends": [
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR",
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-07-31T15:08:22+00:00",
+      "mode": "analyst",
+      "started_at": "2026-07-31T15:07:33+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-31T14:33:48+00:00"
+  "updated_at": "2026-07-31T15:08:23+00:00"
 }
