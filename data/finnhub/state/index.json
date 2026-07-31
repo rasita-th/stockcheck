@@ -797,7 +797,11 @@
       "MNST": "endpoints/company_profile/MNST.json",
       "MP": "endpoints/company_profile/MP.json",
       "MPWR": "endpoints/company_profile/MPWR.json",
-      "MRAM": "endpoints/company_profile/MRAM.json"
+      "MRAM": "endpoints/company_profile/MRAM.json",
+      "MRCY": "endpoints/company_profile/MRCY.json",
+      "MRVL": "endpoints/company_profile/MRVL.json",
+      "MSFT": "endpoints/company_profile/MSFT.json",
+      "MSTR": "endpoints/company_profile/MSTR.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1108,50 +1112,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-07-29T14:31:15+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-29T14:30:40+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2106,9 +2066,70 @@
       "mode": "events",
       "started_at": "2026-07-31T09:15:34+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR",
+            "BRK-B",
+            "BTDR",
+            "BW"
+          ],
+          "company_profile": [
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR"
+          ],
+          "recommendation_trends": [
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-07-31T09:31:51+00:00",
+      "mode": "analyst",
+      "started_at": "2026-07-31T09:31:02+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-07-31T09:16:03+00:00"
+  "updated_at": "2026-07-31T09:31:52+00:00"
 }
