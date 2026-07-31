@@ -2,42 +2,62 @@ name: Refresh Live Data v10 PR3
 
 on:
   workflow_dispatch:
+    inputs:
+      full_technical:
+        description: "Refresh full technical history and shards before publishing"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: ["main"]
     paths:
       - ".github/refresh-now"
   schedule:
     - cron: "*/15 * * * 1-5"
+    - cron: "35 21 * * * 1-5"
 
 permissions:
   contents: read
 
 concurrency:
-  group: live-data-producer-${{ github.ref_name }}
+  group: live-data-producer-${{ github.event_name }}-${{ github.event.schedule || inputs.full_technical || 'fast' }}
   cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 25
     steps:
-      - name: Check US market window
+      - name: Resolve fast and full refresh modes
         id: window
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
+          FULL_TECHNICAL_INPUT: ${{ inputs.full_technical || 'false' }}
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
           from datetime import datetime, time
           from zoneinfo import ZoneInfo
 
           now = datetime.now(ZoneInfo("America/New_York"))
+          event_name = os.environ.get("EVENT_NAME", "")
+          event_schedule = os.environ.get("EVENT_SCHEDULE", "")
+          requested_full = os.environ.get("FULL_TECHNICAL_INPUT", "false").lower() == "true"
+          scheduled_full = event_name == "schedule" and event_schedule == "35 21 * * * 1-5"
+          full_technical = requested_full or scheduled_full
           market_open = now.weekday() < 5 and time(9, 25) <= now.time() <= time(16, 20)
-          force = "${{ github.event_name }}" in {"workflow_dispatch", "push"}
-          print(f"run_refresh={'true' if market_open or force else 'false'}")
+          force_fast = event_name in {"workflow_dispatch", "push"}
+          run_refresh = market_open or force_fast or full_technical
+
+          print(f"run_refresh={'true' if run_refresh else 'false'}")
           print(f"market_open={'true' if market_open else 'false'}")
+          print(f"full_technical={'true' if full_technical else 'false'}")
           print(f"now={now.isoformat()}")
           PY
 
-      - name: Explain no-op outside market window
+      - name: Explain no-op outside refresh window
         if: steps.window.outputs.run_refresh != 'true'
         run: echo "Outside the core market refresh window at ${{ steps.window.outputs.now }}."
 
@@ -63,12 +83,15 @@ jobs:
         if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/build_generated_layer.py
 
-      - name: Refresh latest quotes
+      - name: Refresh latest quotes concurrently
         if: steps.window.outputs.run_refresh == 'true'
+        env:
+          QUOTE_REFRESH_WORKERS: "16"
+          QUOTE_MIN_COVERAGE: "0.80"
         run: python scripts/update_quote_data.py
 
-      - name: Refresh technical indicators and ticker shards
-        if: steps.window.outputs.run_refresh == 'true'
+      - name: Refresh full technical indicators and ticker shards
+        if: steps.window.outputs.run_refresh == 'true' && steps.window.outputs.full_technical == 'true'
         env:
           INCLUDE_FUNDAMENTALS: "0"
           TECHNICAL_RANGE: "1y"
@@ -79,8 +102,8 @@ jobs:
           cp site/data/technical.json data/generated/technical.json
           cp site/data/scanner.json data/generated/scanner.json
 
-      - name: Enforce fresh technical output
-        if: steps.window.outputs.run_refresh == 'true'
+      - name: Enforce fresh full-technical output
+        if: steps.window.outputs.run_refresh == 'true' && steps.window.outputs.full_technical == 'true'
         run: |
           python scripts/check_data_freshness.py site/data/technical.json \
             --timestamp-field generatedAtTechnical \
@@ -88,7 +111,7 @@ jobs:
             --max-age-minutes 30 \
             --min-rows 1
 
-      - name: Enforce source market freshness
+      - name: Validate technical baseline market date
         if: steps.window.outputs.run_refresh == 'true'
         run: |
           python scripts/check_source_market_freshness.py site/data/technical.json \
@@ -96,7 +119,7 @@ jobs:
             --max-business-day-lag 1 \
             --min-coverage 0.80
 
-      - name: Build canonical screener snapshot
+      - name: Build canonical intraday screener snapshot
         if: steps.window.outputs.run_refresh == 'true'
         run: python scripts/build_screener_snapshot.py
 
@@ -106,20 +129,16 @@ jobs:
           python -m unittest tests.test_screener_snapshot -v
           python -m unittest tests.test_technical_shards -v
           node tests/technical_shards_runtime.test.js
-
-      - name: Generate data health
-        if: steps.window.outputs.run_refresh == 'true'
-        run: python scripts/generate_health.py
-
-      - name: Publish generated mirrors
-        if: steps.window.outputs.run_refresh == 'true'
-        run: python scripts/publish_generated_data.py
-
-      - name: Validate canonical production data
-        if: steps.window.outputs.run_refresh == 'true'
-        run: |
-          python scripts/validate_generated_data_v9_1.py
-          python scripts/validate_static_data.py
+          python scripts/verify_screener_snapshot.py \
+            --snapshot site/data/screener_snapshot.json \
+            --quotes site/data/quote_latest.json \
+            --technical site/data/technical.json \
+            --runtime site/technical-shards-v2.js \
+            --expected-runtime 10.7.5 \
+            --shard site/data/technical/symbols/AMD.json \
+            --shard site/data/technical/symbols/ZETA.json \
+            --shard site/data/technical/symbols/NVDA.json \
+            --shard site/data/technical/symbols/CIFR.json
 
       - name: Build immutable core-data artifact
         shell: bash
