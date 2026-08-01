@@ -57,13 +57,37 @@
     return Number.isFinite(ttl) && snapshotAgeMinutes(snapshot) <= ttl;
   }
 
+  function newYorkSessionState(now = new Date()) {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).formatToParts(now);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    const weekday = values.weekday || "";
+    const minutes = Number(values.hour || 0) * 60 + Number(values.minute || 0);
+    const businessDay = !["Sat", "Sun"].includes(weekday);
+    const marketOpen = businessDay && minutes >= 9 * 60 + 25 && minutes <= 16 * 60 + 20;
+    return { businessDay, marketOpen };
+  }
+
+  function snapshotCanDriveAlerts(snapshot = screenerSnapshot) {
+    if (snapshotIsFresh(snapshot)) return true;
+    if (!snapshot || snapshot.contract !== "canonical-screener-snapshot") return false;
+    const session = newYorkSessionState();
+    if (session.marketOpen) return false;
+    const retentionMinutes = session.businessDay ? 18 * 60 : 72 * 60;
+    return snapshotAgeMinutes(snapshot) <= retentionMinutes;
+  }
+
   function freshnessMessage() {
     if (!screenerSnapshot) return "ยังไม่ได้โหลด canonical screener snapshot · ปิด technical alerts ชั่วคราว";
     const age = snapshotAgeMinutes();
     const ttl = Number(screenerSnapshot.stale_after_minutes || 30);
-    if (snapshotIsFresh()) {
-      return `ข้อมูล Screener ล่าสุด ${Math.round(age)} นาที · ราคา/filters/alerts ใช้ snapshot เดียวกัน`;
-    }
+    if (snapshotIsFresh()) return `ข้อมูล Screener ล่าสุด ${Math.round(age)} นาที · ราคา/filters/alerts ใช้ snapshot เดียวกัน`;
+    if (snapshotCanDriveAlerts()) return `ตลาดปิด · คง alerts จาก session ล่าสุด (${Math.round(age)} นาที) จนกว่าจะมี snapshot รอบตลาดถัดไป`;
     return `ข้อมูลตลาดล่าช้า ${Math.round(age)} นาที (เกณฑ์ ${ttl} นาที) · ปิด technical alerts ชั่วคราว`;
   }
 
@@ -80,18 +104,21 @@
       host.prepend(notice);
     }
     const fresh = snapshotIsFresh();
+    const usableForAlerts = snapshotCanDriveAlerts();
     notice.textContent = freshnessMessage();
     notice.dataset.fresh = fresh ? "true" : "false";
-    notice.style.borderColor = fresh ? "rgba(46,160,67,.55)" : "rgba(248,81,73,.65)";
-    notice.style.color = fresh ? "#7ee787" : "#ff7b72";
+    notice.dataset.alertsUsable = usableForAlerts ? "true" : "false";
+    notice.style.borderColor = fresh ? "rgba(46,160,67,.55)" : usableForAlerts ? "rgba(210,153,34,.55)" : "rgba(248,81,73,.65)";
+    notice.style.color = fresh ? "#7ee787" : usableForAlerts ? "#e3b341" : "#ff7b72";
     const subtitle = document.getElementById("alertSubtitle");
-    if (subtitle && !fresh) subtitle.textContent = "Technical alerts paused: canonical screener data is unavailable or stale";
+    if (subtitle) {
+      if (!usableForAlerts) subtitle.textContent = "Technical alerts paused: canonical screener data is unavailable or stale";
+      else if (!fresh) subtitle.textContent = "Latest completed market session · alerts remain available until the next session refresh";
+    }
   }
 
   function projectSeriesToSnapshot(payload, summary) {
-    const series = Array.isArray(payload?.series)
-      ? payload.series.map((point) => ({ ...(point || {}) }))
-      : [];
+    const series = Array.isArray(payload?.series) ? payload.series.map((point) => ({ ...(point || {}) })) : [];
     const livePrice = Number(summary?.price ?? summary?.regularMarketPrice ?? summary?.close);
     if (series.length && Number.isFinite(livePrice) && summary?.snapshotStatus === "live_quote") {
       const last = series[series.length - 1];
@@ -108,17 +135,12 @@
   async function loadTechnicalShard(symbol) {
     const ticker = safeTicker(symbol);
     if (!ticker || !state.staticMode) return null;
-
     const cached = state.quotes[ticker];
     if (hasSeries(cached)) return cached;
     if (shardRequests.has(ticker)) return shardRequests.get(ticker);
-
     const request = fetchJsonNoStore(`data/technical/symbols/${encodeURIComponent(ticker)}.json`)
       .then((payload) => {
-        if (!payload || payload.schema_version !== "2.0" || safeTicker(payload.symbol) !== ticker) {
-          throw new Error(`Invalid technical shard contract for ${ticker}`);
-        }
-
+        if (!payload || payload.schema_version !== "2.0" || safeTicker(payload.symbol) !== ticker) throw new Error(`Invalid technical shard contract for ${ticker}`);
         const existing = state.quotes[ticker] || {};
         const summary = snapshotRowFor(ticker) || {};
         state.quotes[ticker] = {
@@ -133,12 +155,8 @@
         if (typeof renderAll === "function") renderAll();
         return state.quotes[ticker];
       })
-      .catch((error) => {
-        console.warn(`Technical shard unavailable for ${ticker}; detail remains summary-only`, error);
-        return null;
-      })
+      .catch((error) => { console.warn(`Technical shard unavailable for ${ticker}; detail remains summary-only`, error); return null; })
       .finally(() => shardRequests.delete(ticker));
-
     shardRequests.set(ticker, request);
     return request;
   }
@@ -147,40 +165,16 @@
     if (layer !== "technical") return legacyFetchStaticLayer(layer);
     try {
       const snapshot = await fetchJsonNoStore("data/screener_snapshot.json");
-      if (
-        !snapshot ||
-        snapshot.schema_version !== "1.0" ||
-        snapshot.contract !== "canonical-screener-snapshot" ||
-        !Array.isArray(snapshot.rows) ||
-        !snapshot.rows.length
-      ) {
-        throw new Error("Invalid canonical screener snapshot contract");
-      }
+      if (!snapshot || snapshot.schema_version !== "1.0" || snapshot.contract !== "canonical-screener-snapshot" || !Array.isArray(snapshot.rows) || !snapshot.rows.length) throw new Error("Invalid canonical screener snapshot contract");
       screenerSnapshot = snapshot;
-      return {
-        ...snapshot,
-        quotes: {},
-        watchlist: snapshot.rows.map((row) => row.symbol || row.ticker).filter(Boolean),
-        __technicalV2: true,
-        __screenerSnapshot: true,
-        __screenerFresh: snapshotIsFresh(snapshot),
-      };
+      return { ...snapshot, quotes: {}, watchlist: snapshot.rows.map((row) => row.symbol || row.ticker).filter(Boolean), __technicalV2: true, __screenerSnapshot: true, __screenerFresh: snapshotIsFresh(snapshot) };
     } catch (snapshotError) {
       console.warn("Canonical screener snapshot unavailable; falling back to technical index", snapshotError);
       try {
         const index = await fetchJsonNoStore("data/technical/index.json");
-        if (!index || index.schema_version !== "2.0" || !Array.isArray(index.rows)) {
-          throw new Error("Invalid technical index v2 contract");
-        }
+        if (!index || index.schema_version !== "2.0" || !Array.isArray(index.rows)) throw new Error("Invalid technical index v2 contract");
         screenerSnapshot = null;
-        return {
-          ...index,
-          quotes: {},
-          watchlist: index.rows.map((row) => row.symbol || row.ticker).filter(Boolean),
-          __technicalV2: true,
-          __screenerSnapshot: false,
-          __screenerFresh: false,
-        };
+        return { ...index, quotes: {}, watchlist: index.rows.map((row) => row.symbol || row.ticker).filter(Boolean), __technicalV2: true, __screenerSnapshot: false, __screenerFresh: false };
       } catch (error) {
         console.warn("Technical index v2 unavailable; falling back to legacy technical.json", error);
         screenerSnapshot = null;
@@ -192,12 +186,8 @@
   if (legacyMapRow) {
     mapRow = function mapCanonicalScreenerRow(row = {}) {
       const mapped = legacyMapRow(row);
-      const livePrice = typeof toNum === "function"
-        ? toNum(row.price ?? row.regularMarketPrice ?? row.close)
-        : Number(row.price ?? row.regularMarketPrice ?? row.close);
-      const liveDayPct = typeof toNum === "function"
-        ? toNum(row.dayPct ?? row.day_change_pct)
-        : Number(row.dayPct ?? row.day_change_pct);
+      const livePrice = typeof toNum === "function" ? toNum(row.price ?? row.regularMarketPrice ?? row.close) : Number(row.price ?? row.regularMarketPrice ?? row.close);
+      const liveDayPct = typeof toNum === "function" ? toNum(row.dayPct ?? row.day_change_pct) : Number(row.dayPct ?? row.day_change_pct);
       if (Number.isFinite(livePrice)) mapped.price = livePrice;
       if (Number.isFinite(liveDayPct)) mapped.dayPct = liveDayPct;
       mapped.screenerSnapshotFresh = snapshotIsFresh();
@@ -208,7 +198,7 @@
 
   if (legacyBuildAlertItems) {
     buildAlertItems = function buildCanonicalAlertItems() {
-      if (state.staticMode && !snapshotIsFresh()) return [];
+      if (state.staticMode && !snapshotCanDriveAlerts()) return [];
       return legacyBuildAlertItems();
     };
   }
@@ -217,15 +207,7 @@
     const ticker = safeTicker(symbol);
     const selectedTicker = safeTicker(state.selected);
     const existing = legacyCurrentQuoteFor(ticker);
-    if (
-      ticker &&
-      ticker === selectedTicker &&
-      state.staticMode &&
-      state.staticLoaded &&
-      !hasSeries(state.quotes[ticker])
-    ) {
-      void loadTechnicalShard(ticker);
-    }
+    if (ticker && ticker === selectedTicker && state.staticMode && state.staticLoaded && !hasSeries(state.quotes[ticker])) void loadTechnicalShard(ticker);
     return existing;
   };
 
@@ -236,16 +218,7 @@
     renderFreshnessNotice();
   };
 
-  if (typeof setInterval === "function") {
-    setInterval(renderFreshnessNotice, 60000);
-  }
+  if (typeof setInterval === "function") setInterval(renderFreshnessNotice, 60000);
 
-  window.StockcheckTechnicalV2 = Object.freeze({
-    loadTechnicalShard,
-    hasSeries,
-    snapshotAgeMinutes,
-    snapshotIsFresh,
-    getSnapshot: () => screenerSnapshot,
-    isActive: () => Boolean(state.staticPayloads?.technical?.__technicalV2),
-  });
+  window.StockcheckTechnicalV2 = Object.freeze({ loadTechnicalShard, hasSeries, snapshotAgeMinutes, snapshotIsFresh, snapshotCanDriveAlerts, getSnapshot: () => screenerSnapshot, isActive: () => Boolean(state.staticPayloads?.technical?.__technicalV2) });
 })();
