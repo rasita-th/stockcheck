@@ -82,6 +82,54 @@
     return snapshotAgeMinutes(snapshot) <= retentionMinutes;
   }
 
+  function alertSessionKey(snapshot = screenerSnapshot) {
+    const stamp = parseTimestamp(snapshot?.generated_at || snapshot?.generatedAt);
+    const instant = stamp === null ? new Date() : new Date(stamp);
+    const parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/New_York",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(instant);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    return `${values.year || "0000"}-${values.month || "00"}-${values.day || "00"}`;
+  }
+
+  function migrateLegacyAlertDismissals() {
+    if (!(state.dismissedAlerts instanceof Set)) return;
+    let changed = false;
+    for (const storedId of Array.from(state.dismissedAlerts)) {
+      const id = String(storedId || "");
+      if (id && !id.startsWith("memo-") && !id.includes("@")) {
+        state.dismissedAlerts.delete(storedId);
+        changed = true;
+      }
+    }
+    if (changed) {
+      try {
+        localStorage.setItem(
+          "stockTimingRadar.alertDismissed.v62",
+          JSON.stringify(Array.from(state.dismissedAlerts))
+        );
+      } catch (_) {
+        // Storage can be unavailable; the in-memory migration is still enough.
+      }
+    }
+  }
+
+  function scopeAlertToSession(alert) {
+    if (!alert || typeof alert !== "object") return alert;
+    const id = String(alert.id || "");
+    if (!id || id.startsWith("memo-") || id.includes("@")) return alert;
+    const sessionKey = alertSessionKey();
+    return {
+      ...alert,
+      id: `${id}@${sessionKey}`,
+      baseId: id,
+      sessionKey,
+    };
+  }
+
   function freshnessMessage() {
     if (!screenerSnapshot) return "ยังไม่ได้โหลด canonical screener snapshot · ปิด technical alerts ชั่วคราว";
     const age = snapshotAgeMinutes();
@@ -180,6 +228,7 @@
         throw new Error("Invalid canonical screener snapshot contract");
       }
       screenerSnapshot = snapshot;
+      migrateLegacyAlertDismissals();
       return {
         ...snapshot,
         quotes: {},
@@ -226,7 +275,8 @@
   if (legacyBuildAlertItems) {
     buildAlertItems = function buildCanonicalAlertItems() {
       if (state.staticMode && !snapshotCanDriveAlerts()) return [];
-      return legacyBuildAlertItems();
+      migrateLegacyAlertDismissals();
+      return legacyBuildAlertItems().map(scopeAlertToSession);
     };
   }
 
@@ -253,6 +303,7 @@
     snapshotAgeMinutes,
     snapshotIsFresh,
     snapshotCanDriveAlerts,
+    alertSessionKey,
     getSnapshot: () => screenerSnapshot,
     isActive: () => Boolean(state.staticPayloads?.technical?.__technicalV2),
   });
