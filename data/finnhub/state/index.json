@@ -813,7 +813,11 @@
       "NOW": "endpoints/company_profile/NOW.json",
       "NTLA": "endpoints/company_profile/NTLA.json",
       "NTRA": "endpoints/company_profile/NTRA.json",
-      "NU": "endpoints/company_profile/NU.json"
+      "NU": "endpoints/company_profile/NU.json",
+      "NVDA": "endpoints/company_profile/NVDA.json",
+      "NVTS": "endpoints/company_profile/NVTS.json",
+      "NXPI": "endpoints/company_profile/NXPI.json",
+      "ODFL": "endpoints/company_profile/ODFL.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1124,67 +1128,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ"
-          ],
-          "company_profile": [
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB"
-          ],
-          "recommendation_trends": [
-            "COIN",
-            "COPX",
-            "CORZ",
-            "COST",
-            "CPRT",
-            "CRCL",
-            "CRDO",
-            "CRM",
-            "CRSP",
-            "CRWD",
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG",
-            "DE",
-            "DELL",
-            "DKNG"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-07-30T14:54:47+00:00",
-      "mode": "analyst",
-      "started_at": "2026-07-30T14:54:00+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2122,9 +2065,70 @@
       "mode": "events",
       "started_at": "2026-08-01T13:52:43+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "CRWV",
+            "CSCO",
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH",
+            "CVX",
+            "CW"
+          ],
+          "company_profile": [
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL"
+          ],
+          "recommendation_trends": [
+            "SAIC",
+            "SATL",
+            "SBUX",
+            "SDGR",
+            "SE",
+            "SEI",
+            "SHOP",
+            "SIDU",
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK",
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-01T14:11:10+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-01T14:10:19+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-01T13:53:11+00:00"
+  "updated_at": "2026-08-01T14:11:11+00:00"
 }
