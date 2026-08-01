@@ -15,6 +15,7 @@ SITE = ROOT / "site"
 VERSION = "10.7.3"
 TECHNICAL_RUNTIME_VERSION = "10.7.6"
 STORAGE_GUARD_ASSET = "storage-guard-v10-7-3.js"
+CANONICAL_BOOTSTRAP_ASSET = "canonical-screener-bootstrap-v10-7-7.js"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -103,6 +104,12 @@ def prepare_index(path: Path) -> None:
         html,
         r'\s*<script[^>]+technical-shards-v2\.js[^>]*></script>',
         f'<script src="technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" defer></script>',
+        r'</body>',
+    )
+    html = inject_once(
+        html,
+        rf'\s*<script[^>]+{re.escape(CANONICAL_BOOTSTRAP_ASSET)}[^>]*></script>',
+        f'<script src="{CANONICAL_BOOTSTRAP_ASSET}" defer></script>',
         r'</body>',
     )
     html = inject_once(
@@ -251,8 +258,17 @@ def validate_clean_html() -> None:
     guard_path = SITE / STORAGE_GUARD_ASSET
     if not guard_path.exists() or "__stockcheckStorageMode" not in guard_path.read_text(encoding="utf-8"):
         raise SystemExit("storage compatibility guard is missing or invalid")
-    if f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}" not in index:
+    technical_ref = f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}"
+    bootstrap_ref = CANONICAL_BOOTSTRAP_ASSET
+    if technical_ref not in index:
         raise SystemExit("technical v2 runtime missing cache-busted reference")
+    if bootstrap_ref not in index:
+        raise SystemExit("canonical screener bootstrap is missing from Pages artifact")
+    if index.find(technical_ref) > index.find(bootstrap_ref):
+        raise SystemExit("canonical screener bootstrap must load after technical v2 runtime")
+    bootstrap_path = SITE / CANONICAL_BOOTSTRAP_ASSET
+    if not bootstrap_path.exists() or "canonical snapshot did not become active" not in bootstrap_path.read_text(encoding="utf-8"):
+        raise SystemExit("canonical screener bootstrap asset is missing or invalid")
     for asset in ("market.css", "market.js"):
         if f"{asset}?v={VERSION}" not in market:
             raise SystemExit(f"market asset missing cache-busted reference: {asset}")
