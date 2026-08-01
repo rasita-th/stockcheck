@@ -817,7 +817,11 @@
       "NVDA": "endpoints/company_profile/NVDA.json",
       "NVTS": "endpoints/company_profile/NVTS.json",
       "NXPI": "endpoints/company_profile/NXPI.json",
-      "ODFL": "endpoints/company_profile/ODFL.json"
+      "ODFL": "endpoints/company_profile/ODFL.json",
+      "OKLO": "endpoints/company_profile/OKLO.json",
+      "ONDS": "endpoints/company_profile/ONDS.json",
+      "OPEN": "endpoints/company_profile/OPEN.json",
+      "ORCL": "endpoints/company_profile/ORCL.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1128,67 +1132,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO"
-          ],
-          "company_profile": [
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY"
-          ],
-          "recommendation_trends": [
-            "DLO",
-            "DNA",
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT",
-            "ETN",
-            "EVTL",
-            "EXC",
-            "FANG",
-            "FAST",
-            "FATE",
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG",
-            "FTNT",
-            "FUTU"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-07-30T20:06:50+00:00",
-      "mode": "analyst",
-      "started_at": "2026-07-30T20:06:02+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2126,9 +2069,70 @@
       "mode": "events",
       "started_at": "2026-08-01T19:32:00+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA"
+          ],
+          "company_profile": [
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL"
+          ],
+          "recommendation_trends": [
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT",
+            "TMC",
+            "TMDX",
+            "TMUS",
+            "TOST",
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO",
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-01T19:51:04+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-01T19:50:18+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-01T19:32:26+00:00"
+  "updated_at": "2026-08-01T19:51:05+00:00"
 }
