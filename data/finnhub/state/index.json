@@ -805,7 +805,11 @@
       "MTLS": "endpoints/company_profile/MTLS.json",
       "MU": "endpoints/company_profile/MU.json",
       "NASA": "endpoints/company_profile/NASA.json",
-      "NBIS": "endpoints/company_profile/NBIS.json"
+      "NBIS": "endpoints/company_profile/NBIS.json",
+      "NFLX": "endpoints/company_profile/NFLX.json",
+      "NICE": "endpoints/company_profile/NICE.json",
+      "NNDM": "endpoints/company_profile/NNDM.json",
+      "NOC": "endpoints/company_profile/NOC.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1116,67 +1120,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ"
-          ],
-          "company_profile": [
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE"
-          ],
-          "recommendation_trends": [
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-07-30T03:46:00+00:00",
-      "mode": "analyst",
-      "started_at": "2026-07-30T03:45:11+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2114,9 +2057,70 @@
       "mode": "events",
       "started_at": "2026-08-01T03:48:06+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX"
+          ],
+          "company_profile": [
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC"
+          ],
+          "recommendation_trends": [
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB",
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS",
+            "PL"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-01T04:05:24+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-01T04:04:36+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-01T03:48:33+00:00"
+  "updated_at": "2026-08-01T04:05:25+00:00"
 }
