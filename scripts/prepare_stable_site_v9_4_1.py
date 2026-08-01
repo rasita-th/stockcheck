@@ -13,7 +13,7 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 VERSION = "10.7.3"
-TECHNICAL_RUNTIME_VERSION = "10.7.5"
+TECHNICAL_RUNTIME_VERSION = "10.7.6"
 STORAGE_GUARD_ASSET = "storage-guard-v10-7-3.js"
 
 LEGACY_ASSETS = (
