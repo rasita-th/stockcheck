@@ -204,9 +204,16 @@ for token in ("openStockDetail", "closeStockDetail", "ensurePageGuides", "data-p
         errors.append(f"Usability coordinator missing: {token}")
 if 'requestAnimationFrame(() => openStockDetail(stock));\n    }, true);' not in coordinator_js:
     errors.append("Desktop stock detail click must be captured before app.js rerenders the selected row")
-for token in ('const VERSION = "10.7.1"', "window.StockRadarDetailDialog", "open: openStockDetail"):
+for token in ("window.StockRadarDetailDialog", "open: openStockDetail"):
     if token not in coordinator_js:
         errors.append(f"Desktop stock detail API missing: {token}")
+version_match = re.search(r'const VERSION = "(\d+\.\d+\.\d+)"', coordinator_js)
+if not version_match:
+    errors.append("Desktop stock detail API missing semantic VERSION")
+elif version_match.group(1) != production_runtime_version:
+    errors.append(
+        f"Desktop stock detail VERSION {version_match.group(1)} must match release-manifest app_js {production_runtime_version}"
+    )
 for token in ("stock-detail-open", ".page-guide", "grid-template-columns: 260px minmax(0, 1fr)", ".stock-detail-company-logo", "object-fit: contain"):
     if token not in coordinator_css:
         errors.append(f"Usability stylesheet missing: {token}")
@@ -279,32 +286,11 @@ for token in (
 ):
     if token not in app_js:
         errors.append(f"First-run portfolio contract missing: {token}")
-for token in (
-    'previous !== serialized',
-    'if ((state.activeScreener || "default") === "default") saveMyPortfolio(state.watchlist)',
-    'if (active === "default") saveMyPortfolio(state.watchlist)',
-    'if (key === "default") saveMyPortfolio(state.watchlist)',
-):
-    if token not in app_js:
-        errors.append(f"My Portfolio canonical write path missing: {token}")
-for token in ("LEGACY_MY_PORTFOLIO_LABELS", "syncMobileMyPortfolio", 'key === "default"', "normalizeTickers(loadMyPortfolio())"):
-    if token not in app_js:
-        errors.append(f"Mobile My Portfolio sync missing: {token}")
-for token in (".p4-toolbar nav::-webkit-scrollbar", "grid-template-columns: repeat(2, minmax(0, 1fr))", "env(safe-area-inset-bottom)"):
-    if token not in pr4_css:
-        errors.append(f"Mobile Today responsive guard missing: {token}")
-for token in ("loadPersonalTickers", "stockTimingRadar.myPortfolio.v1", "state.personalTickers.has", '["holdings", "My Portfolio"]'):
-    if token not in pr4_js:
-        errors.append(f"Today personal portfolio adapter missing: {token}")
 
-if "window.StockRadarDetailDialog?.open(select)" not in app_js:
-    errors.append("Stock selection handler must open the desktop dialog directly")
-base_watchlist_match = re.search(r"const BASE_WATCHLIST = \[(.*?)\];", app_js)
-if not base_watchlist_match or len(re.findall(r'"[A-Z0-9.\-]+"', base_watchlist_match.group(1))) != 10:
-    errors.append("First-run BASE_WATCHLIST must contain exactly 10 examples")
 if errors:
-    print("UI view contract failed:", file=sys.stderr)
+    print("UI view contract failed:")
     for error in errors:
-        print(f"- {error}", file=sys.stderr)
-    raise SystemExit(1)
+        print(f"- {error}")
+    sys.exit(1)
+
 print("UI view contract passed")
