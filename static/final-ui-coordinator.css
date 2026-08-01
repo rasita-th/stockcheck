@@ -148,7 +148,6 @@ body.stock-detail-open { overflow: hidden; }
   .stock-detail-close { display: none !important; }
 }
 
-
 /* v9.6.3: Logo.dev is requested only when a stock detail surface is open. */
 .stock-detail-company-logo {
   overflow: hidden;
@@ -171,3 +170,90 @@ body.stock-detail-open { overflow: hidden; }
   place-items: center;
 }
 
+/* v10.8.0: responsive drawdown panel, shared by desktop and mobile detail surfaces. */
+.drawdown-panel {
+  min-width: 0;
+}
+.drawdown-title {
+  align-items: baseline;
+  gap: 12px;
+}
+.drawdown-title > span {
+  text-align: right;
+}
+.drawdown-current {
+  color: #f85149;
+  font-weight: 600;
+}
+.drawdown-chart-wrap {
+  position: relative;
+  min-width: 0;
+  padding-right: 42px;
+}
+.drawdown-chart {
+  width: 100%;
+  height: clamp(170px, 24vw, 250px);
+  display: block;
+}
+.drawdown-grid {
+  stroke: rgba(139, 148, 158, 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+}
+.drawdown-line {
+  fill: none;
+  stroke: #f85149;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.drawdown-y-axis {
+  position: absolute;
+  inset: 8px 0 8px auto;
+  width: 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: var(--muted, #8b949e);
+  font: 500 11px/1.2 var(--mono, monospace);
+  pointer-events: none;
+}
+.drawdown-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 10px;
+  color: var(--muted, #8b949e);
+  font-size: 11px;
+}
+
+@media (max-width: 767px) {
+  .drawdown-title {
+    align-items: flex-start;
+  }
+  .drawdown-title > span {
+    max-width: 62%;
+    text-align: right;
+    line-height: 1.45;
+  }
+  .drawdown-chart-wrap {
+    padding-right: 34px;
+  }
+  .drawdown-chart {
+    height: 190px;
+  }
+  .drawdown-y-axis {
+    width: 30px;
+    font-size: 10px;
+  }
+  .drawdown-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .drawdown-meta span:last-child {
+    grid-column: 1 / -1;
+  }
+}
