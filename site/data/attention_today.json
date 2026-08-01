@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-01T10:51:01+00:00",
+  "updated_at": "2026-08-01T13:54:56+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -25,7 +25,7 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 122,
+      "rows": 124,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
     },
@@ -49,16 +49,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 5,
-      "partial": 4,
-      "errors": 1
+      "ok": 2,
+      "partial": 8,
+      "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -184,7 +184,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-01T10:48:47.259199+00:00",
+      "event_time": "2026-08-01T13:53:12.986623+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -208,8 +208,8 @@
           "why_today": "The stock moved +6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-01T10:48:47.259199+00:00",
-          "detected_at": "2026-08-01T10:48:47.259208+00:00",
+          "event_time": "2026-08-01T13:53:12.986623+00:00",
+          "detected_at": "2026-08-01T13:53:12.986631+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -656,78 +656,88 @@
       "message": "CIK unavailable"
     },
     {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "HOOD",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
-      "message": "GDELT response unavailable"
-    },
-    {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "NBIS",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "TEM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "MP",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "IONQ",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TSLA",
+      "ticker": "IONQ",
       "message": "GDELT response unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "GOOGL",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "ORCL",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EQT",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "EQT",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TMDX",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "TMDX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EOSE",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     }
   ],
@@ -780,7 +790,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-01T10:48:47.205976+00:00",
+      "event_time": "2026-08-01T13:53:12.744960+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -804,8 +814,8 @@
           "why_today": "The stock moved +15.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-01T10:48:47.205976+00:00",
-          "detected_at": "2026-08-01T10:48:47.206027+00:00",
+          "event_time": "2026-08-01T13:53:12.744960+00:00",
+          "detected_at": "2026-08-01T13:53:12.744969+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -873,7 +883,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-01T10:48:47.275611+00:00",
+      "event_time": "2026-08-01T13:53:13.130573+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -897,8 +907,8 @@
           "why_today": "The stock moved -6.0% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-01T10:48:47.275611+00:00",
-          "detected_at": "2026-08-01T10:48:47.275619+00:00",
+          "event_time": "2026-08-01T13:53:13.130573+00:00",
+          "detected_at": "2026-08-01T13:53:13.130582+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -965,7 +975,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-01T10:48:47.240488+00:00",
+      "event_time": "2026-08-01T13:53:12.873862+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -989,8 +999,8 @@
           "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-01T10:48:47.240488+00:00",
-          "detected_at": "2026-08-01T10:48:47.240496+00:00",
+          "event_time": "2026-08-01T13:53:12.873862+00:00",
+          "detected_at": "2026-08-01T13:53:12.873871+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1082,7 +1092,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-31",
-          "detected_at": "2026-08-01T10:51:01+00:00",
+          "detected_at": "2026-08-01T13:54:56+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
