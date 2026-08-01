@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-07-31T22:17:56+00:00",
+  "updated_at": "2026-08-01T03:50:35+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 15,
+  "total_events": 14,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
@@ -49,9 +49,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 7,
-      "errors": 1
+      "ok": 1,
+      "partial": 9,
+      "errors": 0
     },
     "gdelt": {
       "status": "error",
@@ -79,8 +79,7 @@
       "priority": "Risk",
       "priority_score": 80,
       "why_today": [
-        "A material agreement event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
+        "A material agreement event was detected and requires source review."
       ],
       "event_type": "corporate_event",
       "event_subtype": "material_agreement",
@@ -94,9 +93,9 @@
         "published_at": "2026-07-27T16:01:08+00:00",
         "domain": "investors.rocketlabusa.com"
       },
-      "price": 64.98,
-      "day_change_pct": 0.4638,
-      "relative_volume": 0.46,
+      "price": 64.94,
+      "day_change_pct": 0.402,
+      "relative_volume": 0.71,
       "trigger_level": null,
       "events": [
         {
@@ -140,48 +139,6 @@
           ],
           "priority_score": 80,
           "priority": "Risk"
-        },
-        {
-          "event_id": "gdelt:RKLB:8a5530458aaf47c0",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Iridium Reports 4 % Revenue Growth in Q2 Amid Rocket Lab Acquisition Deal",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-24T14:15:00+00:00",
-          "detected_at": "2026-07-24T23:44:27+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:transaction:2026-07-24:e267c64538b5",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.satellitetoday.com/finance/2026/07/22/iridium-reports-4-revenue-growth-in-q2-amid-rocket-lab-acquisition-deal",
-            "published_at": "2026-07-24T14:15:00+00:00",
-            "domain": "www.satellitetoday.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.satellitetoday.com/finance/2026/07/22/iridium-reports-4-revenue-growth-in-q2-amid-rocket-lab-acquisition-deal",
-              "published_at": "2026-07-24T14:15:00+00:00",
-              "domain": "www.satellitetoday.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "gdelt:RKLB:8a5530458aaf47c0"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
         }
       ],
       "actions": {
@@ -193,21 +150,20 @@
       "severity": "high",
       "primary_trigger": "material_agreement",
       "signals": [
-        "A material agreement event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
+        "A material agreement event was detected and requires source review."
       ],
       "change": {
         "status": "ongoing",
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-30T00:14:17+00:00",
-        "active_days": 1
+        "active_days": 2
       },
       "impact": {
         "baseline_price": 60.05,
-        "current_price": 64.98,
-        "change_pct": 8.21,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.2%"
+        "current_price": 64.94,
+        "change_pct": 8.14,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.1%"
       },
       "personal_priority_score": 93,
       "personalization_reasons": [
@@ -228,7 +184,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-07-31T22:16:04.256528+00:00",
+      "event_time": "2026-08-01T03:48:35.217374+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -237,9 +193,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 356.43,
-      "day_change_pct": 6.8243,
-      "relative_volume": 0.73,
+      "price": 356.33,
+      "day_change_pct": 6.7943,
+      "relative_volume": 1.54,
       "trigger_level": null,
       "events": [
         {
@@ -252,8 +208,8 @@
           "why_today": "The stock moved +6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-07-31T22:16:04.256528+00:00",
-          "detected_at": "2026-07-31T22:16:04.256533+00:00",
+          "event_time": "2026-08-01T03:48:35.217374+00:00",
+          "detected_at": "2026-08-01T03:48:35.217386+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -395,12 +351,12 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 355.33,
-        "current_price": 356.43,
-        "change_pct": 0.31,
+        "current_price": 356.33,
+        "change_pct": 0.28,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 83,
@@ -430,9 +386,9 @@
         "published_at": "2026-07-26T15:30:00+00:00",
         "domain": "www.foreignpolicyjournal.com"
       },
-      "price": 58.99,
-      "day_change_pct": 0.9411,
-      "relative_volume": 0.41,
+      "price": 58.93,
+      "day_change_pct": 0.8385,
+      "relative_volume": 0.64,
       "trigger_level": null,
       "events": [
         {
@@ -493,13 +449,13 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-07-26T17:19:19+00:00",
-        "active_days": 5
+        "active_days": 6
       },
       "impact": {
         "baseline_price": 56.2,
-        "current_price": 58.99,
-        "change_pct": 4.96,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.0%"
+        "current_price": 58.93,
+        "change_pct": 4.86,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 4.9%"
       },
       "personal_priority_score": 63,
       "personalization_reasons": [
@@ -701,92 +657,97 @@
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TSLA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "GOOGL",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "EOSE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "UUUU",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "IR URL unavailable"
+    },
+    {
       "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "RXRX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     }
   ],
@@ -801,7 +762,7 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 12,
+    "active_discovered_event_count": 11,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
@@ -835,11 +796,11 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +15.4% today."
+        "The stock moved +15.3% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-07-31T22:16:04.204557+00:00",
+      "event_time": "2026-08-01T03:48:35.059421+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -848,9 +809,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 271.86,
-      "day_change_pct": 15.4395,
-      "relative_volume": 1.89,
+      "price": 271.61,
+      "day_change_pct": 15.3333,
+      "relative_volume": 2.77,
       "trigger_level": null,
       "events": [
         {
@@ -858,13 +819,13 @@
           "ticker": "AMZN",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +15.4%",
+          "headline": "Price +15.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +15.4% today.",
+          "why_today": "The stock moved +15.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-07-31T22:16:04.204557+00:00",
-          "detected_at": "2026-07-31T22:16:04.204566+00:00",
+          "event_time": "2026-08-01T03:48:35.059421+00:00",
+          "detected_at": "2026-08-01T03:48:35.059430+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -900,19 +861,19 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +15.4% today."
+        "The stock moved +15.3% today."
       ],
       "change": {
         "status": "ongoing",
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 271.11,
-        "current_price": 271.86,
-        "change_pct": 0.28,
+        "current_price": 271.61,
+        "change_pct": 0.18,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
@@ -928,11 +889,11 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved -6.1% today."
+        "The stock moved -6.0% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-07-31T22:16:04.273313+00:00",
+      "event_time": "2026-08-01T03:48:35.272421+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -941,9 +902,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 3.39,
-      "day_change_pct": -6.0942,
-      "relative_volume": 0.6,
+      "price": 3.395,
+      "day_change_pct": -5.9557,
+      "relative_volume": 0.89,
       "trigger_level": null,
       "events": [
         {
@@ -951,13 +912,13 @@
           "ticker": "EOSE",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -6.1%",
+          "headline": "Price -6.0%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -6.1% today.",
+          "why_today": "The stock moved -6.0% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-07-31T22:16:04.273313+00:00",
-          "detected_at": "2026-07-31T22:16:04.273320+00:00",
+          "event_time": "2026-08-01T03:48:35.272421+00:00",
+          "detected_at": "2026-08-01T03:48:35.272428+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -992,20 +953,20 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -6.1% today."
+        "The stock moved -6.0% today."
       ],
       "change": {
         "status": "ongoing",
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-31T19:53:19+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 3.375,
-        "current_price": 3.39,
-        "change_pct": 0.44,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 3.395,
+        "change_pct": 0.59,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.6%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
@@ -1020,11 +981,11 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved -5.2% today."
+        "The stock moved -5.5% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-07-31T22:16:04.241386+00:00",
+      "event_time": "2026-08-01T03:48:35.160952+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1033,9 +994,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 38.95,
-      "day_change_pct": -5.2081,
-      "relative_volume": 0.45,
+      "price": 38.84,
+      "day_change_pct": -5.4758,
+      "relative_volume": 0.75,
       "trigger_level": null,
       "events": [
         {
@@ -1043,13 +1004,13 @@
           "ticker": "OKLO",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -5.2%",
+          "headline": "Price -5.5%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -5.2% today.",
+          "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-07-31T22:16:04.241386+00:00",
-          "detected_at": "2026-07-31T22:16:04.241392+00:00",
+          "event_time": "2026-08-01T03:48:35.160952+00:00",
+          "detected_at": "2026-08-01T03:48:35.160961+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1084,19 +1045,19 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -5.2% today."
+        "The stock moved -5.5% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-07-31T22:17:56+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 38.95,
-        "current_price": 38.95,
-        "change_pct": 0.0,
+        "current_price": 38.84,
+        "change_pct": -0.28,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 83,
@@ -1105,14 +1066,14 @@
       ]
     },
     {
-      "ticker": "ZETA",
-      "name": "Zeta Global Holdings Corp.",
+      "ticker": "OSCR",
+      "name": "Oscar Health, Inc.",
       "portfolio_status": "holding",
-      "role": "Marketing technology",
+      "role": "Insurtech",
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.7, +4.2% vs EMA20, +47.9% vs EMA200, volume 0.79x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -1125,23 +1086,23 @@
         "url": "data/technical.json",
         "published_at": "2026-07-31"
       },
-      "price": 21.6,
-      "day_change_pct": 1.0763,
-      "relative_volume": 0.32,
+      "price": 31.22,
+      "day_change_pct": -0.032,
+      "relative_volume": 0.79,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:ZETA:technical_setup:2026-07-31",
-          "ticker": "ZETA",
+          "event_id": "technical:OSCR:technical_setup:2026-07-31",
+          "ticker": "OSCR",
           "event_type": "technical",
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.7, +4.2% vs EMA20, +47.9% vs EMA200, volume 0.79x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-07-31",
-          "detected_at": "2026-07-31T22:17:56+00:00",
+          "detected_at": "2026-08-01T03:50:35+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1162,41 +1123,41 @@
           "technical_score": 93.0,
           "technical_signal": "BUY ZONE / Trend Confirmed",
           "scan_age_days": 0,
-          "rsi14": 53.13,
-          "pct_vs_ema20": 2.71,
-          "pct_vs_ema200": 11.4,
-          "volume_ratio20": 0.32,
+          "rsi14": 57.67,
+          "pct_vs_ema20": 4.21,
+          "pct_vs_ema200": 47.89,
+          "volume_ratio20": 0.79,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:ZETA:technical_setup:2026-07-31"
+            "technical:OSCR:technical_setup:2026-07-31"
           ],
-          "dedupe_key": "ZETA:technical_setup:6656858fe3f19c87",
+          "dedupe_key": "OSCR:technical_setup:0e6767e6890b77fb",
           "priority_score": 68,
           "priority": "Action"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-OSCR/",
         "raw_data": "data/technical.json"
       },
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 53.1, +2.7% vs EMA20, +11.4% vs EMA200, volume 0.32x 20-day average."
+        "Latest technical scan dated 2026-07-31: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.7, +4.2% vs EMA20, +47.9% vs EMA200, volume 0.79x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-07-31T16:49:55+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-01T03:50:35+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 21.38,
-        "current_price": 21.6,
-        "change_pct": 1.03,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.0%"
+        "baseline_price": 31.22,
+        "current_price": 31.22,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 76,
       "personalization_reasons": [
@@ -1213,6 +1174,14 @@
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:ZETA:technical_setup:2026-07-31",
+      "ticker": "ZETA",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-08-01T03:50:35+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "gdelt:COST:1db038cf7e87931b",
       "ticker": "COST",
@@ -1283,14 +1252,6 @@
       "event_subtype": "product",
       "priority": "Watch",
       "resolved_at": "2026-07-31T03:50:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TSLA:technical_risk:2026-07-30",
-      "ticker": "TSLA",
-      "event_subtype": "technical_risk",
-      "priority": "Action",
-      "resolved_at": "2026-07-30T18:17:16+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
