@@ -114,11 +114,14 @@ jobs:
           technical = json.loads(Path('site/data/technical/index.json').read_text(encoding='utf-8'))
           manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
           rows = technical.get('rows') or []
-          samples = {}
+          technical_samples = {}
           for symbol in ('NVDA', 'CIFR'):
               row = next(item for item in rows if str(item.get('symbol') or item.get('ticker')).upper() == symbol)
               shard = json.loads(Path(f'site/data/technical/symbols/{symbol}.json').read_text(encoding='utf-8'))
-              samples[symbol] = {'close': row.get('close'), 'series_points': len(shard.get('series') or [])}
+              technical_samples[symbol] = {
+                  'close': row.get('close'),
+                  'series_points': len(shard.get('series') or []),
+              }
           identity = {
               'schema_version': '1.2',
               'repository': os.environ['GITHUB_REPOSITORY'],
@@ -130,11 +133,14 @@ jobs:
               'technical_generated_at': technical.get('generatedAtTechnical') or technical.get('generatedAt'),
               'technical_count': len(rows),
               'technical_asset_version': manifest['assets']['technical_shards_js'],
-              'technical_samples': samples,
+              'technical_samples': technical_samples,
               'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
               'drawdown_runtime': '10.8.0',
           }
-          Path('site/build.json').write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          Path("site/build.json").write_text(
+              json.dumps(identity, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
           print(json.dumps(identity, ensure_ascii=False))
           PY
 
@@ -161,7 +167,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify deployed Drawdown runtime
+      - name: Verify deployed prices technical data and Drawdown runtime
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -171,16 +177,36 @@ jobs:
           for attempt in $(seq 1 30); do
             nonce="$(date +%s)-${attempt}"
             if curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/build.json?smoke=${nonce}" -o /tmp/build.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/index.json?smoke=${nonce}" -o /tmp/technical_index.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/NVDA.json?smoke=${nonce}" -o /tmp/nvda.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/CIFR.json?smoke=${nonce}" -o /tmp/cifr.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js; then
               if python - <<'PY'
-          import json, os
+          import json
+          import os
           from pathlib import Path
           build = json.loads(Path('/tmp/build.json').read_text(encoding='utf-8'))
+          attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
+          market = json.loads(Path('/tmp/market_pulse.json').read_text(encoding='utf-8'))
+          technical = json.loads(Path('/tmp/technical_index.json').read_text(encoding='utf-8'))
+          shards = {
+              'NVDA': json.loads(Path('/tmp/nvda.json').read_text(encoding='utf-8')),
+              'CIFR': json.loads(Path('/tmp/cifr.json').read_text(encoding='utf-8')),
+          }
           index = Path('/tmp/index.html').read_text(encoding='utf-8')
           runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
           if build.get('source_commit') != os.environ['GITHUB_SHA']:
-              raise SystemExit('production commit mismatch')
+              raise SystemExit('commit mismatch')
+          if build.get('attention_updated_at') != attention.get('updated_at'):
+              raise SystemExit('attention identity mismatch')
+          if build.get('market_generated_at') != market.get('generated_at'):
+              raise SystemExit('market identity mismatch')
+          technical_stamp = technical.get('generatedAtTechnical') or technical.get('generatedAt')
+          if build.get('technical_generated_at') != technical_stamp:
+              raise SystemExit('technical identity mismatch')
           if build.get('asset_version') != '10.8.0':
               raise SystemExit('production asset version mismatch')
           if 'final-ui-coordinator.js?v=10.8.0' not in index:
@@ -188,7 +214,24 @@ jobs:
           for token in ('const VERSION = "10.8.0"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown'):
               if token not in runtime:
                   raise SystemExit(f'production drawdown runtime missing: {token}')
-          print('Verified production Drawdown runtime 10.8.0')
+          rows = technical.get('rows') or []
+          samples = build.get('technical_samples') or {}
+          for symbol, shard in shards.items():
+              row = next((item for item in rows if str(item.get('symbol') or item.get('ticker')).upper() == symbol), None)
+              if not isinstance(row, dict):
+                  raise SystemExit(f'{symbol} missing from deployed technical index')
+              series = shard.get('series')
+              if not isinstance(series, list) or len(series) < 30:
+                  raise SystemExit(f'{symbol} chart history is missing')
+              latest = shard.get('latest') or {}
+              if not isinstance(latest.get('close'), (int, float)):
+                  raise SystemExit(f'{symbol} shard price is missing')
+              if abs(float(row.get('close')) - float(latest.get('close'))) > 0.01:
+                  raise SystemExit(f'{symbol} summary and chart prices disagree')
+              sample = samples.get(symbol) or {}
+              if sample.get('series_points') != len(series):
+                  raise SystemExit(f'{symbol} chart identity mismatch')
+          print('Verified production Drawdown runtime 10.8.0 with NVDA and CIFR chart history')
           PY
               then
                 ready=true
@@ -198,3 +241,25 @@ jobs:
             sleep 5
           done
           test "$ready" = "true"
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    if: always()
+    steps:
+      - name: Publish verified deployment status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ needs.deploy.result }}
+        run: |
+          state=failure
+          description="Production deployment failed"
+          if [ "$RESULT" = "success" ]; then
+            state=success
+            description="Production deployment verified"
+          fi
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+            -f state="$state" \
+            -f context="production/stockcheck-pages" \
+            -f description="$description" \
+            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
