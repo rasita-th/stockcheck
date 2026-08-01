@@ -1,0 +1,200 @@
+name: Deploy GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  statuses: write
+
+concurrency:
+  group: pages-production
+  cancel-in-progress: true
+
+env:
+  TODAY_DEPLOY_VERSION: "10.8.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact production commit
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Align artifact builder to release manifest
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/prepare_stable_site_v9_4_1.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'VERSION = "10.7.3"'
+          new = 'VERSION = "10.8.0"'
+          if old not in text and new not in text:
+              raise SystemExit('prepare script VERSION contract not found')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Prepare clean Pages artifact
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py scripts/sync_attention_assets.py
+          python scripts/prepare_stable_site_v9_4_1.py
+          python scripts/sync_attention_assets.py
+
+      - name: Inject optional Logo.dev publishable token
+        env:
+          LOGO_DEV_TOKEN: ${{ secrets.LOGO_DEV }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          token = os.environ.get('LOGO_DEV_TOKEN', '').strip()
+          replacement = token if token.startswith('pk_') else ''
+          placeholder = '__LOGO_DEV_PUBLISHABLE_KEY__'
+          for relative in ('site/attention-pr4.js', 'static/attention-pr4.js'):
+              path = Path(relative)
+              text = path.read_text(encoding='utf-8')
+              count = text.count(placeholder)
+              if count > 1:
+                  raise SystemExit(f'{relative}: duplicate Logo.dev placeholders')
+              if count == 1:
+                  path.write_text(text.replace(placeholder, replacement), encoding='utf-8')
+          PY
+
+      - name: Validate deployable application and data
+        run: |
+          set -euo pipefail
+          node --check site/storage-guard-v10-7-3.js
+          node --check site/app.js
+          node --check site/technical-shards-v2.js
+          node tests/technical_shards_runtime.test.js
+          node --check site/app-shell-v9-4-6.js
+          node --check site/market.js
+          node --check site/notification-phase2.js
+          node --check site/final-ui-coordinator.js
+          node --check site/memo-only-fix.js
+          node --check site/attention-p0.js
+          node --check site/attention-pr3.js
+          node --check site/attention-pr4.js
+          node --check site/earnings-radar-pr4.js
+          python scripts/validate_static_data.py
+          python scripts/validate_earnings_radar.py
+          python scripts/smoke_test_site_v9_4_6.py
+          python scripts/check_ui_view_contract.py
+          python scripts/check_earnings_radar_ui_contract.py
+          python scripts/check_earnings_radar_activation.py
+          grep -F 'final-ui-coordinator.js?v=10.8.0' site/index.html
+          grep -F 'final-ui-coordinator.css?v=10.8.0' site/index.html
+
+      - name: Stamp immutable production identity
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          attention = json.loads(Path('site/data/attention_today.json').read_text(encoding='utf-8'))
+          market = json.loads(Path('site/data/market_pulse.json').read_text(encoding='utf-8'))
+          technical = json.loads(Path('site/data/technical/index.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
+          rows = technical.get('rows') or []
+          samples = {}
+          for symbol in ('NVDA', 'CIFR'):
+              row = next(item for item in rows if str(item.get('symbol') or item.get('ticker')).upper() == symbol)
+              shard = json.loads(Path(f'site/data/technical/symbols/{symbol}.json').read_text(encoding='utf-8'))
+              samples[symbol] = {'close': row.get('close'), 'series_points': len(shard.get('series') or [])}
+          identity = {
+              'schema_version': '1.2',
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'source_commit': os.environ['GITHUB_SHA'],
+              'run_id': os.environ['GITHUB_RUN_ID'],
+              'built_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+              'attention_updated_at': attention.get('updated_at'),
+              'market_generated_at': market.get('generated_at'),
+              'technical_generated_at': technical.get('generatedAtTechnical') or technical.get('generatedAt'),
+              'technical_count': len(rows),
+              'technical_asset_version': manifest['assets']['technical_shards_js'],
+              'technical_samples': samples,
+              'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
+              'drawdown_runtime': '10.8.0',
+          }
+          Path('site/build.json').write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(identity, ensure_ascii=False))
+          PY
+
+      - name: Add nojekyll marker
+        run: touch site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 18
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployed Drawdown runtime
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          BASE="${PAGE_URL%/}"
+          ready=false
+          for attempt in $(seq 1 30); do
+            nonce="$(date +%s)-${attempt}"
+            if curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/build.json?smoke=${nonce}" -o /tmp/build.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js; then
+              if python - <<'PY'
+          import json, os
+          from pathlib import Path
+          build = json.loads(Path('/tmp/build.json').read_text(encoding='utf-8'))
+          index = Path('/tmp/index.html').read_text(encoding='utf-8')
+          runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
+          if build.get('source_commit') != os.environ['GITHUB_SHA']:
+              raise SystemExit('production commit mismatch')
+          if build.get('asset_version') != '10.8.0':
+              raise SystemExit('production asset version mismatch')
+          if 'final-ui-coordinator.js?v=10.8.0' not in index:
+              raise SystemExit('production HTML missing coordinator v10.8.0')
+          for token in ('const VERSION = "10.8.0"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown'):
+              if token not in runtime:
+                  raise SystemExit(f'production drawdown runtime missing: {token}')
+          print('Verified production Drawdown runtime 10.8.0')
+          PY
+              then
+                ready=true
+                break
+              fi
+            fi
+            sleep 5
+          done
+          test "$ready" = "true"
