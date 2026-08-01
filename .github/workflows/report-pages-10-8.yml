@@ -1,0 +1,37 @@
+name: Report Pages 10.8 Status
+
+on:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+
+permissions:
+  statuses: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish deployment status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          state=failure
+          description="Pages 10.8 deployment failed"
+          if [ "$CONCLUSION" = "success" ]; then
+            state=success
+            description="Pages 10.8 deployment verified"
+          elif [ "$CONCLUSION" = "cancelled" ]; then
+            state=error
+            description="Pages 10.8 deployment cancelled"
+          fi
+          gh api --method POST "repos/${REPO}/statuses/${SHA}" \
+            -f state="$state" \
+            -f context="production/stockcheck-pages-v10-8" \
+            -f description="$description" \
+            -f target_url="$RUN_URL"
