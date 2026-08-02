@@ -833,7 +833,11 @@
       "PDD": "endpoints/company_profile/PDD.json",
       "PEP": "endpoints/company_profile/PEP.json",
       "PERI": "endpoints/company_profile/PERI.json",
-      "PINS": "endpoints/company_profile/PINS.json"
+      "PINS": "endpoints/company_profile/PINS.json",
+      "PL": "endpoints/company_profile/PL.json",
+      "PLTR": "endpoints/company_profile/PLTR.json",
+      "PRCT": "endpoints/company_profile/PRCT.json",
+      "PRME": "endpoints/company_profile/PRME.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1144,50 +1148,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-01T03:48:33+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA",
-            "CDNS",
-            "CEG",
-            "CHTR",
-            "CIFR",
-            "CLFD",
-            "CLPT",
-            "CLSK",
-            "CMCSA",
-            "COHR",
-            "COIN",
-            "COPX",
-            "CORZ",
-            "COST",
-            "CPRT",
-            "CRCL"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-01T03:48:06+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2142,9 +2102,70 @@
       "mode": "events",
       "started_at": "2026-08-02T19:32:45+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "GEV",
+            "GH",
+            "GILD",
+            "GILT",
+            "GLXY",
+            "GOOG",
+            "GOOGL",
+            "GRMN"
+          ],
+          "company_profile": [
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME"
+          ],
+          "recommendation_trends": [
+            "BRK-B",
+            "BTDR",
+            "BW",
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL",
+            "CRDO"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-02T19:50:29+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-02T19:49:43+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-02T19:33:12+00:00"
+  "updated_at": "2026-08-02T19:50:30+00:00"
 }
