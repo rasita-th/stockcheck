@@ -71,19 +71,14 @@ def snapshot_ready(driver: webdriver.Chrome, item_selector: str, metric_selector
 
 def reset_scanner_filters(driver: webdriver.Chrome) -> None:
     changed = driver.execute_script("""
-      const roots = [...document.querySelectorAll('aside, section, div')]
-        .filter(el => /SCAN FILTERS/i.test(el.textContent || '') && el.querySelector('input'))
-        .sort((a, b) => a.querySelectorAll('input').length - b.querySelectorAll('input').length);
-      const root = roots[0];
-      if (!root) return 0;
       let count = 0;
-      root.querySelectorAll('input[type="range"]').forEach(input => {
+      document.querySelectorAll('input[type="range"]').forEach(input => {
         input.value = input.min || '0';
         input.dispatchEvent(new Event('input', {bubbles: true}));
         input.dispatchEvent(new Event('change', {bubbles: true}));
         count += 1;
       });
-      root.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      document.querySelectorAll('input[type="checkbox"]').forEach(input => {
         if (!['desktopDrawdownEnabled', 'sheetDrawdownEnabled'].includes(input.id) && input.checked) {
           input.click();
           count += 1;
