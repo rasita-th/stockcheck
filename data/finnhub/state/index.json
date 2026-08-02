@@ -825,7 +825,11 @@
       "ORLY": "endpoints/company_profile/ORLY.json",
       "OSCR": "endpoints/company_profile/OSCR.json",
       "OSS": "endpoints/company_profile/OSS.json",
-      "PACB": "endpoints/company_profile/PACB.json"
+      "PACB": "endpoints/company_profile/PACB.json",
+      "PANW": "endpoints/company_profile/PANW.json",
+      "PATH": "endpoints/company_profile/PATH.json",
+      "PAYX": "endpoints/company_profile/PAYX.json",
+      "PCAR": "endpoints/company_profile/PCAR.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1136,50 +1140,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-07-31T11:36:51+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER",
-            "TGT",
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST",
-            "TRI",
-            "TRMB",
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-31T11:36:26+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2117,9 +2077,70 @@
       "mode": "events",
       "started_at": "2026-08-02T08:36:25+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "EOSE",
+            "EQT",
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST",
+            "FATE"
+          ],
+          "company_profile": [
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR"
+          ],
+          "recommendation_trends": [
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY",
+            "AEHR",
+            "AEP",
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-02T08:59:06+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-02T08:58:19+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-02T08:36:52+00:00"
+  "updated_at": "2026-08-02T08:59:07+00:00"
 }
