@@ -92,6 +92,7 @@ jobs:
       - name: Verify production identity Drawdown data and browser flow
         run: |
           python -m py_compile \
+            scripts/verify_production_deployment.py \
             scripts/verify_drawdown_production.py \
             scripts/verify_drawdown_browser.py
           python -m unittest tests.test_drawdown_production_verifier -v
@@ -112,7 +113,6 @@ jobs:
           base = os.environ['BASE_URL'].rstrip('/')
           receipt = json.loads(Path('/tmp/deploy-receipt/deploy-receipt.json').read_text(encoding='utf-8'))
           expected = str(receipt.get('source_commit') or '')
-          last = None
           for attempt in range(1, 19):
               try:
                   request = urllib.request.Request(
@@ -127,7 +127,6 @@ jobs:
                   print(json.dumps({'status': 'verified', 'source_commit': actual}, ensure_ascii=False))
                   break
               except Exception as exc:
-                  last = exc
                   print(f'attempt {attempt}/18 failed: {exc}')
                   if attempt == 18:
                       raise
