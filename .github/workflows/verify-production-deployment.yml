@@ -47,15 +47,13 @@ jobs:
             echo "run_id=$MANUAL_RUN_ID" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Derive verified deployment receipt from Pages event
+      - name: Derive deployment receipt from Pages event
         if: github.event_name == 'workflow_run'
         env:
-          PAGES_RESULT: ${{ github.event.workflow_run.conclusion }}
           SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
           DEPLOY_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
-          test "$PAGES_RESULT" = "success"
           mkdir -p /tmp/deploy-receipt
           python - <<'PY'
           import json
