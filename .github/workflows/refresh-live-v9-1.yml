@@ -123,13 +123,19 @@ jobs:
 
       - name: Build canonical intraday screener snapshot
         if: steps.window.outputs.run_refresh == 'true'
-        run: python scripts/build_screener_snapshot.py
+        run: |
+          python scripts/build_screener_snapshot.py
+          python scripts/enrich_drawdown_snapshot.py
 
       - name: Run core screener contracts
         if: steps.window.outputs.run_refresh == 'true'
         run: |
           python -m unittest tests.test_screener_snapshot -v
+          python -m unittest tests.test_drawdown_snapshot -v
           python -m unittest tests.test_technical_shards -v
+          node --check site/drawdown-screener-v10-9.js
+          cmp site/drawdown-screener-v10-9.js static/drawdown-screener-v10-9.js
+          cmp site/drawdown-screener-v10-9.css static/drawdown-screener-v10-9.css
           node tests/technical_shards_runtime.test.js
           python scripts/verify_screener_snapshot.py \
             --snapshot site/data/screener_snapshot.json \
