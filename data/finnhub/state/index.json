@@ -821,7 +821,11 @@
       "OKLO": "endpoints/company_profile/OKLO.json",
       "ONDS": "endpoints/company_profile/ONDS.json",
       "OPEN": "endpoints/company_profile/OPEN.json",
-      "ORCL": "endpoints/company_profile/ORCL.json"
+      "ORCL": "endpoints/company_profile/ORCL.json",
+      "ORLY": "endpoints/company_profile/ORLY.json",
+      "OSCR": "endpoints/company_profile/OSCR.json",
+      "OSS": "endpoints/company_profile/OSS.json",
+      "PACB": "endpoints/company_profile/PACB.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1132,50 +1136,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-07-31T09:16:02+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "SDGR",
-            "SE",
-            "SEI",
-            "SHOP",
-            "SIDU",
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-31T09:15:34+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2113,9 +2073,70 @@
       "mode": "events",
       "started_at": "2026-08-02T03:50:42+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH"
+          ],
+          "company_profile": [
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB"
+          ],
+          "recommendation_trends": [
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD",
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI",
+            "AAPL",
+            "ABBV",
+            "ABCL"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-02T04:09:16+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-02T04:08:29+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-02T03:51:09+00:00"
+  "updated_at": "2026-08-02T04:09:17+00:00"
 }
