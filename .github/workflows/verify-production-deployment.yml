@@ -56,9 +56,20 @@ jobs:
 
       - name: Verify release identity and production data linkage
         run: |
-          python -m py_compile scripts/verify_production_deployment.py
+          python -m py_compile scripts/verify_production_deployment.py scripts/verify_drawdown_production.py
+          python -m unittest tests.test_production_verifier tests.test_drawdown_production_verifier -v
           python scripts/verify_production_deployment.py \
             --manifest config/release-manifest.json \
             --receipt /tmp/deploy-receipt/deploy-receipt.json \
+            --attempts 18 \
+            --sleep-seconds 5
+          python scripts/verify_drawdown_production.py \
+            --base-url "$(python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
+          print(str(manifest['production_base_url']).rstrip('/'))
+          PY
+          )" \
             --attempts 18 \
             --sleep-seconds 5
