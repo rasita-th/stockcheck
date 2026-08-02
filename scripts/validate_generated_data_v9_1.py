@@ -11,7 +11,14 @@ DATA = ROOT / "data" / "generated"
 REQUIRED = ["quote_latest.json", "technical.json", "attention_today.json", "events.json", "health.json"]
 PRIORITIES = {"Critical", "Risk", "Action", "Watch", "Developing"}
 VERIFICATION = {"confirmed", "estimated", "unverified", "unknown"}
-DRAWDOWN_STATUSES = {"complete", "partial-history", "unavailable", "invalid-series", "stale"}
+DRAWDOWN_STATUSES = {"complete", "partial-history", "unavailable"}
+DRAWDOWN_FLAT_KEYS = (
+    "drawdownCurrentPct",
+    "drawdownMaxPct",
+    "drawdownDaysSincePeak",
+    "drawdownAsOf",
+    "drawdownStatus",
+)
 
 
 def load(name: str) -> dict[str, Any]:
@@ -44,31 +51,42 @@ def finite_number(value: Any) -> float | None:
     return parsed if math.isfinite(parsed) else None
 
 
-def validate_drawdown_row(row: dict[str, Any], symbol: str) -> None:
-    drawdown = row.get("drawdown")
-    require(isinstance(drawdown, dict), f"{symbol} drawdown payload missing")
-    require(str(drawdown.get("schemaVersion") or "") == "1.0", f"{symbol} drawdown schema must be 1.0")
-    status = str(drawdown.get("status") or "")
-    require(status in DRAWDOWN_STATUSES, f"{symbol} drawdown status invalid")
-    require(str(drawdown.get("window") or "") == "3y", f"{symbol} drawdown window must be 3y")
+def validate_drawdown_row(row: dict[str, Any], symbol: str) -> bool:
+    metric = row.get("drawdown")
+    require(isinstance(metric, dict), f"{symbol} drawdown payload missing")
+    require(str(metric.get("schemaVersion") or "") == "1.0", f"{symbol} drawdown schema must be 1.0")
 
-    if status in {"complete", "partial-history", "stale"}:
-        current = finite_number(drawdown.get("currentPct"))
-        maximum = finite_number(drawdown.get("maxPct"))
-        observations = drawdown.get("observations")
-        days_since_peak = drawdown.get("daysSincePeak")
+    status = str(metric.get("status") or "")
+    require(status in DRAWDOWN_STATUSES, f"{symbol} drawdown status invalid")
+    require(str(metric.get("window") or "") == "up-to-756-sessions", f"{symbol} drawdown window invalid")
+    require(str(metric.get("source") or "") == "adjusted_close_then_close", f"{symbol} drawdown source invalid")
+
+    flattened = {
+        "drawdownCurrentPct": metric.get("currentPct"),
+        "drawdownMaxPct": metric.get("maxPct"),
+        "drawdownDaysSincePeak": metric.get("daysSincePeak"),
+        "drawdownAsOf": metric.get("asOf"),
+        "drawdownStatus": metric.get("status"),
+    }
+    for key, expected in flattened.items():
+        require(row.get(key) == expected, f"{symbol} {key} differs from drawdown payload")
+
+    if status in {"complete", "partial-history"}:
+        current = finite_number(metric.get("currentPct"))
+        maximum = finite_number(metric.get("maxPct"))
+        observations = metric.get("observations")
+        days_since_peak = metric.get("daysSincePeak")
         require(current is not None and maximum is not None, f"{symbol} drawdown percentages are invalid")
         require(-100.0 <= maximum <= current <= 0.0, f"{symbol} drawdown percentage domain is invalid")
         require(isinstance(observations, int) and observations >= 2, f"{symbol} drawdown observations invalid")
         require(isinstance(days_since_peak, int) and days_since_peak >= 0, f"{symbol} daysSincePeak invalid")
-        require(bool(drawdown.get("asOf")), f"{symbol} drawdown asOf missing")
-        require(str(drawdown.get("source") or "") in {"adjusted_close", "close"}, f"{symbol} drawdown source invalid")
-        require(finite_number(row.get("drawdownPct")) == current, f"{symbol} flattened drawdownPct mismatch")
-        require(finite_number(row.get("maxDrawdownPct")) == maximum, f"{symbol} flattened maxDrawdownPct mismatch")
-        require(row.get("daysSincePeak") == days_since_peak, f"{symbol} flattened daysSincePeak mismatch")
-    else:
-        require(drawdown.get("currentPct") is None, f"{symbol} unavailable drawdown must not expose currentPct")
-        require(row.get("drawdownPct") is None, f"{symbol} unavailable drawdown must not flatten to zero")
+        require(bool(metric.get("asOf")), f"{symbol} drawdown asOf missing")
+        return True
+
+    require(metric.get("currentPct") is None, f"{symbol} unavailable drawdown must not expose currentPct")
+    require(metric.get("maxPct") is None, f"{symbol} unavailable drawdown must not expose maxPct")
+    require(row.get("drawdownCurrentPct") is None, f"{symbol} unavailable drawdown must not flatten to zero")
+    return False
 
 
 def validate_screener_snapshot(
@@ -86,9 +104,11 @@ def validate_screener_snapshot(
     require(int(data.get("stale_after_minutes") or 0) > 0, "screener snapshot TTL is invalid")
 
     if schema == "1.1":
-        require(str(data.get("drawdown_metric_version") or "") == "1.0", "drawdown metric version must be 1.0")
-        declared = finite_number(data.get("drawdown_coverage"))
-        require(declared is not None and 0.0 <= declared <= 1.0, "drawdown coverage is invalid")
+        require(str(data.get("drawdown_schema_version") or "") == "1.0", "drawdown schema version must be 1.0")
+        declared_count = data.get("drawdown_available_count")
+        declared_coverage = finite_number(data.get("drawdown_coverage"))
+        require(isinstance(declared_count, int) and declared_count >= 0, "drawdown available count is invalid")
+        require(declared_coverage is not None and 0.0 <= declared_coverage <= 1.0, "drawdown coverage is invalid")
 
     technical_rows = technical.get("rows")
     require(isinstance(technical_rows, list) and bool(technical_rows), "canonical technical rows must be non-empty")
@@ -110,6 +130,7 @@ def validate_screener_snapshot(
     }
     seen: set[str] = set()
     drawdown_available = 0
+
     for index, row in enumerate(rows):
         require(isinstance(row, dict), f"screener row {index} must be an object")
         symbol = symbol_of(row)
@@ -124,10 +145,10 @@ def validate_screener_snapshot(
             require(mirrored.get(key) == row.get(key), f"{symbol} {key} differs between snapshot and technical mirror")
 
         if schema == "1.1":
-            validate_drawdown_row(row, symbol)
-            require(mirrored.get("drawdown") == row.get("drawdown"), f"{symbol} drawdown differs between snapshot and technical mirror")
-            if str(row["drawdown"].get("status") or "") in {"complete", "partial-history", "stale"}:
+            if validate_drawdown_row(row, symbol):
                 drawdown_available += 1
+            for key in ("drawdown", *DRAWDOWN_FLAT_KEYS):
+                require(mirrored.get(key) == row.get(key), f"{symbol} {key} differs between snapshot and technical mirror")
 
         if row.get("snapshotStatus") == "live_quote":
             quote = quote_map.get(symbol)
@@ -137,10 +158,11 @@ def validate_screener_snapshot(
                 require(row.get(key) is None or isinstance(row.get(key), (int, float)), f"{symbol} {key} is invalid")
 
     if schema == "1.1":
-        computed = drawdown_available / len(rows)
-        declared = float(data.get("drawdown_coverage"))
-        require(abs(computed - declared) <= 0.000001, "drawdown coverage identity mismatch")
-        require(computed >= 0.80, f"drawdown coverage is below 80%: {computed:.1%}")
+        computed_coverage = drawdown_available / len(rows)
+        require(data.get("drawdown_available_count") == drawdown_available, "drawdown available count mismatch")
+        declared_coverage = float(data.get("drawdown_coverage"))
+        require(abs(computed_coverage - declared_coverage) <= 0.000001, "drawdown coverage identity mismatch")
+        require(computed_coverage >= 0.80, f"drawdown coverage is below 80%: {computed_coverage:.1%}")
 
 
 def validate_attention(data: dict[str, Any]) -> None:
