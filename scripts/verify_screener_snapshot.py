@@ -193,7 +193,6 @@ def main() -> None:
         "function snapshotIsFresh",
         "function mapCanonicalScreenerRow",
         "function buildCanonicalAlertItems",
-        "if (state.staticMode && !snapshotIsFresh()) return [];",
         "function projectSeriesToSnapshot",
         "data/technical/symbols/",
     )
