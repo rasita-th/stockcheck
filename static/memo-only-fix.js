@@ -4,6 +4,7 @@
   const VIEW_KEY = "stockTimingRadar.appView.v55";
   const ATTENTION_DATA_URL = "data/attention_today.json";
   const ATTENTION_CACHE_WINDOW_MS = 15 * 1000;
+  const DRAWDOWN_VERSION = "10.9.0";
 
   function installAttentionDataStore() {
     if (window.StockcheckAttentionDataStore?.load) return window.StockcheckAttentionDataStore;
@@ -72,6 +73,21 @@
     document.head.appendChild(script);
   }
 
+  function loadStylesheet(href, datasetKey) {
+    if (document.querySelector(`link[data-${datasetKey}]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset[datasetKey] = "true";
+    link.addEventListener("error", () => console.error(`Could not load ${href}`), { once: true });
+    document.head.appendChild(link);
+  }
+
+  function loadDrawdownScreener() {
+    loadStylesheet(`drawdown-screener-v10-9.css?v=${DRAWDOWN_VERSION}`, "drawdownScreenerStyle");
+    loadScript(`drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}`, "drawdownScreenerLoader");
+  }
+
   function loadEarningsRadar() {
     loadScript("earnings-radar-pr4.js?v=10.7.1", "earningsRadarPr4Loader");
   }
@@ -104,6 +120,7 @@
   function boot() {
     enforceExclusiveView();
     installAttentionDataStore();
+    loadDrawdownScreener();
     loadAttentionP0();
     document.addEventListener("click", (event) => {
       const control = event.target.closest?.("[data-app-view]");
@@ -120,4 +137,3 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
   else boot();
 })();
-

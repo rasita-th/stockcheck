@@ -1,0 +1,74 @@
+/* v10.9.0: additive drawdown controls for the existing Scanner surfaces. */
+.drawdown-filter-block {
+  display: grid;
+  gap: 9px;
+  padding-top: 12px;
+  margin-top: 2px;
+  border-top: 1px solid var(--border-soft, rgba(48, 54, 61, 0.68));
+}
+.drawdown-filter-head { min-width: 0; }
+.drawdown-filter-toggle { padding: 0; }
+.drawdown-presets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.drawdown-presets button {
+  min-width: 0;
+  padding-inline: 7px;
+  font-size: 11px;
+}
+.drawdown-presets button:disabled { opacity: 0.46; cursor: not-allowed; }
+.drawdown-helper {
+  margin: 0;
+  color: var(--muted, #8b949e);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.drawdown-sheet-heading { margin: 18px 0 0; }
+.drawdown-value {
+  white-space: nowrap;
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.drawdown-near { color: var(--text, #e6edf3); }
+.drawdown-moderate { color: #d29922; }
+.drawdown-deep { color: #db6d28; }
+.drawdown-severe { color: #f85149; }
+.drawdown-unavailable { color: var(--muted, #8b949e); font-weight: 400; }
+.drawdown-filter-hidden { display: none !important; }
+.drawdown-card-metric {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 12px;
+  align-items: baseline;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border-soft, rgba(48, 54, 61, 0.68));
+}
+.drawdown-card-metric > span {
+  color: var(--muted, #8b949e);
+  font-size: 11px;
+}
+.drawdown-card-metric > small {
+  grid-column: 1 / -1;
+  color: var(--muted, #8b949e);
+  font-size: 10px;
+}
+th[data-sort-drawdown] { cursor: pointer; }
+th[data-sort-drawdown]:focus-visible {
+  outline: 2px solid var(--accent, #58a6ff);
+  outline-offset: -2px;
+}
+
+@media (max-width: 767px) {
+  #filtersSheet .drawdown-filter-block {
+    padding: 12px;
+    border: 1px solid rgba(88, 166, 255, 0.24);
+    border-radius: 12px;
+    background: rgba(13, 17, 23, 0.42);
+  }
+  .drawdown-presets { gap: 5px; }
+  .drawdown-presets button { min-height: 38px; }
+}
