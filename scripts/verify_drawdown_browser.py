@@ -53,7 +53,7 @@ def parse_depth(text: str) -> float | None:
 
 
 def read_items(driver: webdriver.Chrome, item_selector: str, metric_selector: str) -> list[tuple[bool, float]]:
-    """Read fresh elements and discard them before the next render cycle."""
+    """Read a coherent DOM snapshot, retrying while the Scanner rerenders."""
     last_error: Exception | None = None
     for _ in range(20):
         try:
