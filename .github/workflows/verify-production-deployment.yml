@@ -22,7 +22,7 @@ jobs:
   verify:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,22 +54,38 @@ jobs:
           run-id: ${{ steps.deploy.outputs.run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verify release identity and production data linkage
+      - name: Install production browser dependency
+        run: python -m pip install --disable-pip-version-check "selenium>=4,<5"
+
+      - name: Verify release identity production data and Drawdown browser flow
         run: |
-          python -m py_compile scripts/verify_production_deployment.py scripts/verify_drawdown_production.py
+          python -m py_compile \
+            scripts/verify_production_deployment.py \
+            scripts/verify_drawdown_production.py \
+            scripts/verify_drawdown_browser.py
           python -m unittest tests.test_production_verifier tests.test_drawdown_production_verifier -v
+          BASE_URL="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
+          print(str(manifest['production_base_url']).rstrip('/'))
+          PY
+          )"
           python scripts/verify_production_deployment.py \
             --manifest config/release-manifest.json \
             --receipt /tmp/deploy-receipt/deploy-receipt.json \
             --attempts 18 \
             --sleep-seconds 5
           python scripts/verify_drawdown_production.py \
-            --base-url "$(python - <<'PY'
-          import json
-          from pathlib import Path
-          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
-          print(str(manifest['production_base_url']).rstrip('/'))
-          PY
-          )" \
+            --base-url "$BASE_URL" \
             --attempts 18 \
             --sleep-seconds 5
+          python scripts/verify_drawdown_browser.py --base-url "$BASE_URL"
+
+      - name: Upload browser failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: drawdown-production-browser-failures-${{ github.run_id }}
+          path: /tmp/drawdown-*-failure.png
+          if-no-files-found: ignore
