@@ -137,8 +137,12 @@ jobs:
           cmp site/drawdown-screener-v10-9.js static/drawdown-screener-v10-9.js
           cmp site/drawdown-screener-v10-9.css static/drawdown-screener-v10-9.css
           node tests/technical_shards_runtime.test.js
-          python scripts/verify_screener_snapshot.py \
+          python scripts/verify_drawdown_snapshot.py \
             --snapshot site/data/screener_snapshot.json \
+            --technical site/data/technical.json \
+            --compat-output /tmp/screener_snapshot_v1_compat.json
+          python scripts/verify_screener_snapshot.py \
+            --snapshot /tmp/screener_snapshot_v1_compat.json \
             --quotes site/data/quote_latest.json \
             --technical site/data/technical.json \
             --runtime site/technical-shards-v2.js \
