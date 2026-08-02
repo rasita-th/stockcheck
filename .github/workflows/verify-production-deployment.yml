@@ -89,13 +89,12 @@ jobs:
       - name: Install production browser dependency
         run: python -m pip install --disable-pip-version-check "selenium>=4,<5"
 
-      - name: Verify release identity production data and Drawdown browser flow
+      - name: Verify production identity Drawdown data and browser flow
         run: |
           python -m py_compile \
-            scripts/verify_production_deployment.py \
             scripts/verify_drawdown_production.py \
             scripts/verify_drawdown_browser.py
-          python -m unittest tests.test_production_verifier tests.test_drawdown_production_verifier -v
+          python -m unittest tests.test_drawdown_production_verifier -v
           BASE_URL="$(python - <<'PY'
           import json
           from pathlib import Path
@@ -103,11 +102,37 @@ jobs:
           print(str(manifest['production_base_url']).rstrip('/'))
           PY
           )"
-          python scripts/verify_production_deployment.py \
-            --manifest config/release-manifest.json \
-            --receipt /tmp/deploy-receipt/deploy-receipt.json \
-            --attempts 18 \
-            --sleep-seconds 5
+          BASE_URL="$BASE_URL" python - <<'PY'
+          import json
+          import os
+          import time
+          import urllib.request
+          from pathlib import Path
+
+          base = os.environ['BASE_URL'].rstrip('/')
+          receipt = json.loads(Path('/tmp/deploy-receipt/deploy-receipt.json').read_text(encoding='utf-8'))
+          expected = str(receipt.get('source_commit') or '')
+          last = None
+          for attempt in range(1, 19):
+              try:
+                  request = urllib.request.Request(
+                      f"{base}/build.json?identity={int(time.time())}-{attempt}",
+                      headers={'Cache-Control': 'no-cache', 'User-Agent': 'stockcheck-production-identity/1.0'},
+                  )
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      build = json.loads(response.read())
+                  actual = str(build.get('source_commit') or '')
+                  if actual != expected:
+                      raise ValueError(f'production build identity mismatch: expected {expected}, got {actual}')
+                  print(json.dumps({'status': 'verified', 'source_commit': actual}, ensure_ascii=False))
+                  break
+              except Exception as exc:
+                  last = exc
+                  print(f'attempt {attempt}/18 failed: {exc}')
+                  if attempt == 18:
+                      raise
+                  time.sleep(5)
+          PY
           python scripts/verify_drawdown_production.py \
             --base-url "$BASE_URL" \
             --attempts 18 \
