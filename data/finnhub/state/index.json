@@ -829,7 +829,11 @@
       "PANW": "endpoints/company_profile/PANW.json",
       "PATH": "endpoints/company_profile/PATH.json",
       "PAYX": "endpoints/company_profile/PAYX.json",
-      "PCAR": "endpoints/company_profile/PCAR.json"
+      "PCAR": "endpoints/company_profile/PCAR.json",
+      "PDD": "endpoints/company_profile/PDD.json",
+      "PEP": "endpoints/company_profile/PEP.json",
+      "PERI": "endpoints/company_profile/PERI.json",
+      "PINS": "endpoints/company_profile/PINS.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1140,50 +1144,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-07-31T16:57:25+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-07-31T16:56:58+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2121,9 +2081,70 @@
       "mode": "events",
       "started_at": "2026-08-02T13:52:29+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG",
+            "FTNT",
+            "FUTU",
+            "GD",
+            "GEHC"
+          ],
+          "company_profile": [
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS"
+          ],
+          "recommendation_trends": [
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE",
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-02T14:13:32+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-02T14:12:46+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-02T13:52:55+00:00"
+  "updated_at": "2026-08-02T14:13:33+00:00"
 }
