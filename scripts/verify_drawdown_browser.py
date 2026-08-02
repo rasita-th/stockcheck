@@ -5,16 +5,14 @@ import argparse
 import json
 import re
 import time
-from dataclasses import dataclass
-from typing import Iterable
+from dataclasses import asdict, dataclass
 
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-
-PRESETS: dict[str, tuple[float, float]] = {
+PRESETS = {
     "0-5": (0.0, 5.0),
     "5-15": (5.0, 15.0),
     "15-30": (15.0, 30.0),
@@ -31,17 +29,20 @@ class PresetResult:
 
 def chrome() -> webdriver.Chrome:
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--disable-background-networking")
-    options.add_argument("--disable-default-apps")
-    options.add_argument("--disable-extensions")
-    options.add_argument("--disable-sync")
-    options.add_argument("--metrics-recording-only")
-    options.add_argument("--no-first-run")
-    options.add_argument("--hide-scrollbars")
+    for flag in (
+        "--headless=new",
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-background-networking",
+        "--disable-default-apps",
+        "--disable-extensions",
+        "--disable-sync",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--hide-scrollbars",
+    ):
+        options.add_argument(flag)
     options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
     return webdriver.Chrome(options=options)
 
@@ -51,18 +52,35 @@ def parse_depth(text: str) -> float | None:
     return float(match.group(1)) if match else None
 
 
-def is_drawdown_visible(element) -> bool:
-    return "drawdown-filter-hidden" not in (element.get_attribute("class") or "").split()
+def read_items(driver: webdriver.Chrome, item_selector: str, metric_selector: str) -> list[tuple[bool, float]]:
+    """Read a coherent DOM snapshot, retrying while the Scanner rerenders."""
+    last_error: Exception | None = None
+    for _ in range(20):
+        try:
+            result: list[tuple[bool, float]] = []
+            for item in driver.find_elements(By.CSS_SELECTOR, item_selector):
+                metric = item.find_element(By.CSS_SELECTOR, metric_selector)
+                value = parse_depth(metric.text)
+                if value is None:
+                    raise AssertionError("Drawdown metric is unavailable in a production Scanner row/card")
+                hidden = "drawdown-filter-hidden" in (item.get_attribute("class") or "").split()
+                result.append((not hidden, value))
+            return result
+        except StaleElementReferenceException as exc:
+            last_error = exc
+            time.sleep(0.1)
+    raise AssertionError(f"Scanner kept re-rendering before a coherent DOM snapshot could be read: {last_error}")
 
 
-def depths(elements: Iterable, metric_selector: str) -> list[float]:
-    values: list[float] = []
-    for element in elements:
-        value = parse_depth(element.find_element(By.CSS_SELECTOR, metric_selector).text)
-        if value is None:
-            raise AssertionError("Drawdown metric is unavailable in a production Scanner row/card")
-        values.append(value)
-    return values
+def snapshot_ready(driver: webdriver.Chrome, item_selector: str, metric_selector: str) -> bool:
+    try:
+        return bool(read_items(driver, item_selector, metric_selector))
+    except (AssertionError, StaleElementReferenceException):
+        return False
+
+
+def visible_count(items: list[tuple[bool, float]]) -> int:
+    return sum(1 for visible, _ in items if visible)
 
 
 def expected_count(values: list[float], preset: str) -> int:
@@ -84,8 +102,7 @@ def wait_runtime(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
     wait.until(
         lambda current: current.execute_script(
             "return document.documentElement.dataset.drawdownScreener || ''"
-        )
-        == "10.9.0"
+        ) == "10.9.0"
     )
 
 
@@ -95,76 +112,65 @@ def clear_storage(driver: webdriver.Chrome, url: str) -> None:
     driver.refresh()
 
 
+def verify_presets(
+    driver: webdriver.Chrome,
+    wait: WebDriverWait,
+    item_selector: str,
+    metric_selector: str,
+    control_root: str,
+    values: list[float],
+) -> list[PresetResult]:
+    results: list[PresetResult] = []
+    for preset in choose_presets(values):
+        button = driver.find_element(
+            By.CSS_SELECTOR,
+            f'{control_root} [data-drawdown-preset="{preset}"]',
+        )
+        driver.execute_script("arguments[0].click()", button)
+        expected = expected_count(values, preset)
+        wait.until(
+            lambda current, expected=expected: visible_count(
+                read_items(current, item_selector, metric_selector)
+            ) == expected
+        )
+        filtered = read_items(driver, item_selector, metric_selector)
+        visible_values = [value for visible, value in filtered if visible]
+        minimum, maximum = PRESETS[preset]
+        if not all(minimum <= value < maximum for value in visible_values):
+            raise AssertionError(f"Preset {preset} exposed values outside its range: {visible_values[:12]}")
+        results.append(PresetResult(preset, expected, visible_count(filtered)))
+    return results
+
+
 def run_desktop(base_url: str) -> dict:
     driver = chrome()
     driver.set_window_size(1440, 1000)
     wait = WebDriverWait(driver, 45)
+    item_selector = "#technicalTableBody tr"
+    metric_selector = "[data-drawdown-cell]"
     try:
         clear_storage(driver, f"{base_url}/index.html?browser_smoke={int(time.time())}-desktop")
         wait_runtime(driver, wait)
-        wait.until(lambda current: len(current.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")) > 0)
-        wait.until(
-            lambda current: all(
-                row.find_elements(By.CSS_SELECTOR, "[data-drawdown-cell]")
-                for row in current.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")
-            )
-        )
-
-        rows = driver.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")
-        baseline = len([row for row in rows if is_drawdown_visible(row)])
-        values = depths(rows, "[data-drawdown-cell]")
-        if baseline != len(rows):
-            raise AssertionError(f"Desktop Drawdown filter should start disabled: {baseline}/{len(rows)} visible")
-
-        presets = choose_presets(values)
-        toggle = driver.find_element(By.ID, "desktopDrawdownEnabled")
-        driver.execute_script("arguments[0].click()", toggle)
-        wait.until(lambda current: current.find_element(By.ID, "desktopDrawdownEnabled").is_selected())
-
-        results: list[PresetResult] = []
-        for preset in presets:
-            button = driver.find_element(
-                By.CSS_SELECTOR,
-                f'[data-drawdown-filter="desktop"] [data-drawdown-preset="{preset}"]',
-            )
-            driver.execute_script("arguments[0].click()", button)
-            expected = expected_count(values, preset)
-            wait.until(
-                lambda current, expected=expected: len(
-                    [
-                        row
-                        for row in current.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")
-                        if is_drawdown_visible(row)
-                    ]
-                )
-                == expected
-            )
-            visible_rows = [
-                row
-                for row in driver.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")
-                if is_drawdown_visible(row)
-            ]
-            actual_values = depths(visible_rows, "[data-drawdown-cell]")
-            minimum, maximum = PRESETS[preset]
-            if not all(minimum <= value < maximum for value in actual_values):
-                raise AssertionError(f"Desktop preset {preset} exposed values outside its range: {actual_values[:12]}")
-            results.append(PresetResult(preset, expected, len(visible_rows)))
+        wait.until(lambda current: snapshot_ready(current, item_selector, metric_selector))
+        baseline_items = read_items(driver, item_selector, metric_selector)
+        baseline = visible_count(baseline_items)
+        values = [value for _, value in baseline_items]
+        if baseline != len(baseline_items):
+            raise AssertionError(f"Desktop filter should start disabled: {baseline}/{len(baseline_items)} visible")
 
         driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "desktopDrawdownEnabled"))
-        wait.until(
-            lambda current: len(
-                [
-                    row
-                    for row in current.find_elements(By.CSS_SELECTOR, "#technicalTableBody tr")
-                    if is_drawdown_visible(row)
-                ]
-            )
-            == baseline
+        wait.until(lambda current: current.find_element(By.ID, "desktopDrawdownEnabled").is_selected())
+        results = verify_presets(
+            driver, wait, item_selector, metric_selector,
+            '[data-drawdown-filter="desktop"]', values,
         )
+
+        driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "desktopDrawdownEnabled"))
+        wait.until(lambda current: visible_count(read_items(current, item_selector, metric_selector)) == baseline)
         return {
             "viewport": "desktop",
             "baseline": baseline,
-            "presets": [result.__dict__ for result in results],
+            "presets": [asdict(result) for result in results],
             "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener"),
         }
     except Exception:
@@ -178,69 +184,40 @@ def run_mobile(base_url: str) -> dict:
     driver = chrome()
     driver.set_window_size(390, 844)
     wait = WebDriverWait(driver, 45)
+    item_selector = "#technicalMobileCards > *"
+    metric_selector = "[data-drawdown-card-metric] strong"
     try:
         clear_storage(driver, f"{base_url}/index.html?browser_smoke={int(time.time())}-mobile")
         wait_runtime(driver, wait)
-        wait.until(lambda current: len(current.find_elements(By.CSS_SELECTOR, "#technicalMobileCards > *")) > 0)
-        wait.until(
-            lambda current: all(
-                card.find_elements(By.CSS_SELECTOR, "[data-drawdown-card-metric] strong")
-                for card in current.find_elements(By.CSS_SELECTOR, "#technicalMobileCards > *")
-            )
+        wait.until(lambda current: snapshot_ready(current, item_selector, metric_selector))
+        baseline_items = read_items(driver, item_selector, metric_selector)
+        baseline = visible_count(baseline_items)
+        values = [value for _, value in baseline_items]
+        if baseline != len(baseline_items):
+            raise AssertionError(f"Mobile filter should start disabled: {baseline}/{len(baseline_items)} visible")
+
+        driver.execute_script(
+            "arguments[0].click()",
+            driver.find_element(By.CSS_SELECTOR, '[data-open-panel="filters"]'),
         )
-
-        cards = driver.find_elements(By.CSS_SELECTOR, "#technicalMobileCards > *")
-        baseline = len([card for card in cards if is_drawdown_visible(card)])
-        values = depths(cards, "[data-drawdown-card-metric] strong")
-        if baseline != len(cards):
-            raise AssertionError(f"Mobile Drawdown filter should start disabled: {baseline}/{len(cards)} visible")
-
-        open_filters = driver.find_element(By.CSS_SELECTOR, '[data-open-panel="filters"]')
-        driver.execute_script("arguments[0].click()", open_filters)
         wait.until(lambda current: current.find_element(By.ID, "filtersSheet").is_displayed())
         wait.until(lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_displayed())
-
-        toggle = driver.find_element(By.ID, "sheetDrawdownEnabled")
-        driver.execute_script("arguments[0].click()", toggle)
+        driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "sheetDrawdownEnabled"))
         wait.until(lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_selected())
 
-        presets = choose_presets(values)
-        results: list[PresetResult] = []
-        for preset in presets:
-            button = driver.find_element(
-                By.CSS_SELECTOR,
-                f'[data-drawdown-filter="sheet"] [data-drawdown-preset="{preset}"]',
-            )
-            driver.execute_script("arguments[0].click()", button)
-            expected = expected_count(values, preset)
-            wait.until(
-                lambda current, expected=expected: len(
-                    [
-                        card
-                        for card in current.find_elements(By.CSS_SELECTOR, "#technicalMobileCards > *")
-                        if is_drawdown_visible(card)
-                    ]
-                )
-                == expected
-            )
-            visible_cards = [
-                card
-                for card in driver.find_elements(By.CSS_SELECTOR, "#technicalMobileCards > *")
-                if is_drawdown_visible(card)
-            ]
-            actual_values = depths(visible_cards, "[data-drawdown-card-metric] strong")
-            minimum, maximum = PRESETS[preset]
-            if not all(minimum <= value < maximum for value in actual_values):
-                raise AssertionError(f"Mobile preset {preset} exposed values outside its range: {actual_values[:12]}")
-            results.append(PresetResult(preset, expected, len(visible_cards)))
-
-        close_sheet = driver.find_element(By.CSS_SELECTOR, "#filtersSheet [data-close-sheet]")
-        driver.execute_script("arguments[0].click()", close_sheet)
+        results = verify_presets(
+            driver, wait, item_selector, metric_selector,
+            '[data-drawdown-filter="sheet"]', values,
+        )
+        driver.execute_script(
+            "arguments[0].click()",
+            driver.find_element(By.CSS_SELECTOR, "#filtersSheet [data-close-sheet]"),
+        )
         wait.until(lambda current: not current.find_element(By.ID, "filtersSheet").is_displayed())
         return {
             "viewport": "mobile",
             "baseline": baseline,
-            "presets": [result.__dict__ for result in results],
+            "presets": [asdict(result) for result in results],
             "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener"),
         }
     except Exception:
@@ -254,12 +231,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--base-url", required=True)
     args = parser.parse_args()
-    base_url = args.base_url.rstrip("/")
     try:
-        results = [run_desktop(base_url), run_mobile(base_url)]
+        flows = [run_desktop(args.base_url.rstrip("/")), run_mobile(args.base_url.rstrip("/"))]
     except TimeoutException as exc:
         raise SystemExit(f"Production Drawdown browser smoke timed out: {exc}") from exc
-    print(json.dumps({"status": "verified", "flows": results}, ensure_ascii=False))
+    print(json.dumps({"status": "verified", "flows": flows}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
