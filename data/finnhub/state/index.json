@@ -845,7 +845,11 @@
       "PYPL": "endpoints/company_profile/PYPL.json",
       "QCOM": "endpoints/company_profile/QCOM.json",
       "QQQI": "endpoints/company_profile/QQQI.json",
-      "RACE": "endpoints/company_profile/RACE.json"
+      "RACE": "endpoints/company_profile/RACE.json",
+      "RBLX": "endpoints/company_profile/RBLX.json",
+      "RBRK": "endpoints/company_profile/RBRK.json",
+      "RDW": "endpoints/company_profile/RDW.json",
+      "REGN": "endpoints/company_profile/REGN.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1156,50 +1160,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-01T13:53:10+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "FTNT",
-            "FUTU",
-            "GD",
-            "GEHC",
-            "GEV",
-            "GH",
-            "GILD",
-            "GILT",
-            "GLXY",
-            "GOOG",
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-01T13:52:43+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2171,9 +2131,81 @@
       "mode": "analyst",
       "started_at": "2026-08-03T10:26:31+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [
+          {
+            "endpoint": "recommendation_trends",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "IZRL",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "recommendation_trends",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "JEPQ",
+            "type": "timeout"
+          }
+        ],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "IREN",
+            "ISRG",
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP",
+            "KHC"
+          ],
+          "company_profile": [
+            "RBLX",
+            "RBRK",
+            "RDW",
+            "REGN"
+          ],
+          "recommendation_trends": [
+            "GOOG",
+            "GOOGL",
+            "GRMN",
+            "GSAT",
+            "HEI",
+            "HIMS",
+            "HON",
+            "HOOD",
+            "HUT",
+            "HWM",
+            "IDXX",
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "JMIA"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-03T15:32:14+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-03T15:30:22+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-03T10:27:40+00:00"
+  "updated_at": "2026-08-03T15:32:15+00:00"
 }
