@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-02T22:11:42+00:00",
+  "updated_at": "2026-08-03T03:54:40+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 13,
+  "total_events": 12,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
@@ -25,7 +25,7 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 124,
+      "rows": 128,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."
     },
@@ -49,9 +49,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 7,
-      "errors": 1
+      "ok": 1,
+      "partial": 9,
+      "errors": 0
     },
     "gdelt": {
       "status": "partial",
@@ -157,7 +157,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-07-30T00:14:17+00:00",
-        "active_days": 3
+        "active_days": 4
       },
       "impact": {
         "baseline_price": 60.05,
@@ -184,7 +184,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-02T22:09:45.621590+00:00",
+      "event_time": "2026-08-03T03:52:58.425859+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -208,8 +208,8 @@
           "why_today": "The stock moved +6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-02T22:09:45.621590+00:00",
-          "detected_at": "2026-08-02T22:09:45.621596+00:00",
+          "event_time": "2026-08-03T03:52:58.425859+00:00",
+          "detected_at": "2026-08-03T03:52:58.425864+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -234,62 +234,6 @@
             "technical:GOOGL:price-move:2026-08-02"
           ],
           "dedupe_key": "GOOGL:price_move:6f1aa81e38aa9bf2"
-        },
-        {
-          "event_id": "event:GOOGL:f67f75178c255e9c",
-          "ticker": "GOOGL",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "Verizon lifts outlook as Google signs $1 billion fiber pact",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-07-26T21:30:00+00:00",
-          "detected_at": "2026-07-26T22:12:26+00:00",
-          "verification_status": "unverified",
-          "verification_level": "corroborated_secondary",
-          "verification_reason": "Multiple independent domains reported a similar event, but no primary source was matched.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Google",
-          "dedupe_key": "GOOGL:guidance:2026-07-26:ac16081ab881",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-            "published_at": "2026-07-26T21:30:00+00:00",
-            "domain": "www.irishsun.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.irishsun.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:30:00+00:00",
-              "domain": "www.irishsun.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.albuquerqueexpress.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:45:00+00:00",
-              "domain": "www.albuquerqueexpress.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "http://www.newzealandstar.com/news/279207999/verizon-lifts-outlook-as-google-signs-usd1-billion-fiber-pact",
-              "published_at": "2026-07-26T21:30:00+00:00",
-              "domain": "www.newzealandstar.com"
-            }
-          ],
-          "secondary_source_count": 3,
-          "related_event_ids": [
-            "event:GOOGL:f67f75178c255e9c"
-          ],
-          "priority_score": 39,
-          "priority": "Watch"
         },
         {
           "event_id": "gdelt:GOOGL:39f34c885517df85",
@@ -351,7 +295,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-08-02T08:38:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 356.33,
@@ -449,7 +393,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-08-02T19:35:03+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 951.88,
@@ -657,87 +601,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ASTS",
+      "ticker": "ORCL",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OKLO",
+      "ticker": "EQT",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "TSLA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "GOOGL",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BMNR",
+      "ticker": "TMDX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "EOSE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NBIS",
+      "ticker": "EOSE",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "PLTR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "UUUU",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "CIFR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RXRX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
+      "ticker": "RXRX",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     }
   ],
@@ -752,7 +701,7 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 10,
+    "active_discovered_event_count": 7,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
@@ -790,7 +739,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-02T22:09:45.559113+00:00",
+      "event_time": "2026-08-03T03:52:58.373375+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -814,8 +763,8 @@
           "why_today": "The stock moved +15.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-02T22:09:45.559113+00:00",
-          "detected_at": "2026-08-02T22:09:45.559120+00:00",
+          "event_time": "2026-08-03T03:52:58.373375+00:00",
+          "detected_at": "2026-08-03T03:52:58.373382+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -858,7 +807,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-02T08:38:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 271.61,
@@ -883,7 +832,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-02T22:09:45.636862+00:00",
+      "event_time": "2026-08-03T03:52:58.451394+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -907,8 +856,8 @@
           "why_today": "The stock moved -6.0% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-02T22:09:45.636862+00:00",
-          "detected_at": "2026-08-02T22:09:45.636868+00:00",
+          "event_time": "2026-08-03T03:52:58.451394+00:00",
+          "detected_at": "2026-08-03T03:52:58.451398+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -950,7 +899,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-08-02T08:38:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 3.395,
@@ -975,7 +924,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-02T22:09:45.606190+00:00",
+      "event_time": "2026-08-03T03:52:58.411320+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -999,8 +948,8 @@
           "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-02T22:09:45.606190+00:00",
-          "detected_at": "2026-08-02T22:09:45.606198+00:00",
+          "event_time": "2026-08-03T03:52:58.411320+00:00",
+          "detected_at": "2026-08-03T03:52:58.411326+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1042,7 +991,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-08-02T08:38:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 38.84,
@@ -1092,7 +1041,7 @@
           "materiality": "medium",
           "urgency": "developing",
           "event_time": "2026-07-31",
-          "detected_at": "2026-08-02T22:11:42+00:00",
+          "detected_at": "2026-08-03T03:54:40+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1141,7 +1090,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Watch",
         "first_seen_at": "2026-08-01T03:50:35+00:00",
-        "active_days": 1
+        "active_days": 2
       },
       "impact": {
         "baseline_price": 31.22,
