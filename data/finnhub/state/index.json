@@ -849,7 +849,11 @@
       "RBLX": "endpoints/company_profile/RBLX.json",
       "RBRK": "endpoints/company_profile/RBRK.json",
       "RDW": "endpoints/company_profile/RDW.json",
-      "REGN": "endpoints/company_profile/REGN.json"
+      "REGN": "endpoints/company_profile/REGN.json",
+      "RGNX": "endpoints/company_profile/RGNX.json",
+      "RIOT": "endpoints/company_profile/RIOT.json",
+      "RKLB": "endpoints/company_profile/RKLB.json",
+      "ROKU": "endpoints/company_profile/ROKU.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1160,67 +1164,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW"
-          ],
-          "company_profile": [
-            "NVDA",
-            "NVTS",
-            "NXPI",
-            "ODFL"
-          ],
-          "recommendation_trends": [
-            "SAIC",
-            "SATL",
-            "SBUX",
-            "SDGR",
-            "SE",
-            "SEI",
-            "SHOP",
-            "SIDU",
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-01T14:11:10+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-01T14:10:19+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2203,9 +2146,70 @@
       "mode": "analyst",
       "started_at": "2026-08-03T15:30:22+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN"
+          ],
+          "company_profile": [
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU"
+          ],
+          "recommendation_trends": [
+            "IZRL",
+            "JEPQ",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-03T20:21:57+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-03T20:20:56+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-03T15:32:15+00:00"
+  "updated_at": "2026-08-03T20:21:58+00:00"
 }
