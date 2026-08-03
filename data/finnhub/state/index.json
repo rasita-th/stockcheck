@@ -841,7 +841,11 @@
       "PRNT": "endpoints/company_profile/PRNT.json",
       "PSIX": "endpoints/company_profile/PSIX.json",
       "PUMP": "endpoints/company_profile/PUMP.json",
-      "PWR": "endpoints/company_profile/PWR.json"
+      "PWR": "endpoints/company_profile/PWR.json",
+      "PYPL": "endpoints/company_profile/PYPL.json",
+      "QCOM": "endpoints/company_profile/QCOM.json",
+      "QQQI": "endpoints/company_profile/QQQI.json",
+      "RACE": "endpoints/company_profile/RACE.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1152,50 +1156,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-01T10:48:45+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT",
-            "ETN",
-            "EVTL",
-            "EXC",
-            "FANG",
-            "FAST",
-            "FATE",
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-01T10:48:17+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2150,9 +2110,70 @@
       "mode": "analyst",
       "started_at": "2026-08-03T04:20:10+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM"
+          ],
+          "company_profile": [
+            "PYPL",
+            "QCOM",
+            "QQQI",
+            "RACE"
+          ],
+          "recommendation_trends": [
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT",
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST",
+            "FATE",
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG",
+            "FTNT",
+            "FUTU",
+            "GD",
+            "GEHC",
+            "GEV",
+            "GH",
+            "GILD",
+            "GILT",
+            "GLXY"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-03T10:27:39+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-03T10:26:31+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-03T04:21:01+00:00"
+  "updated_at": "2026-08-03T10:27:40+00:00"
 }
