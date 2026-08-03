@@ -5,6 +5,7 @@
   const ATTENTION_DATA_URL = "data/attention_today.json";
   const ATTENTION_CACHE_WINDOW_MS = 15 * 1000;
   const DRAWDOWN_VERSION = "10.9.0";
+  const SCANNER_GUARD_VERSION = "1.0.0";
 
   function installAttentionDataStore() {
     if (window.StockcheckAttentionDataStore?.load) return window.StockcheckAttentionDataStore;
@@ -83,6 +84,10 @@
     document.head.appendChild(link);
   }
 
+  function loadScannerGuard() {
+    loadScript(`scanner-loading-guard.js?v=${SCANNER_GUARD_VERSION}`, "scannerLoadingGuardLoader");
+  }
+
   function loadDrawdownScreener() {
     loadStylesheet(`drawdown-screener-v10-9.css?v=${DRAWDOWN_VERSION}`, "drawdownScreenerStyle");
     loadScript(`drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}`, "drawdownScreenerLoader");
@@ -120,6 +125,7 @@
   function boot() {
     enforceExclusiveView();
     installAttentionDataStore();
+    loadScannerGuard();
     loadDrawdownScreener();
     loadAttentionP0();
     document.addEventListener("click", (event) => {
