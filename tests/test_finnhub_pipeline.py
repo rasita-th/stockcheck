@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest import mock
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "finnhub_pipeline.py"
+sys.path.insert(0, str(MODULE_PATH.parent))
 spec = importlib.util.spec_from_file_location("finnhub_pipeline", MODULE_PATH)
 assert spec and spec.loader
 pipeline = importlib.util.module_from_spec(spec)
