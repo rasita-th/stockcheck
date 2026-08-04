@@ -1,0 +1,33 @@
+name: Validate Canonical Dual Read
+
+on:
+  pull_request:
+    paths:
+      - "scripts/generate_earnings_radar_p3.py"
+      - "scripts/generate_attention_pr3_p3.py"
+      - "tests/test_canonical_dual_read.py"
+      - ".github/workflows/validate-canonical-dual-read.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/generate_earnings_radar_p3.py"
+      - "scripts/generate_attention_pr3_p3.py"
+      - "tests/test_canonical_dual_read.py"
+      - ".github/workflows/validate-canonical-dual-read.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile adapters
+        run: python -m py_compile scripts/generate_earnings_radar_p3.py scripts/generate_attention_pr3_p3.py
+      - name: Run dual-read contract tests
+        run: python -m unittest tests.test_canonical_dual_read -v
