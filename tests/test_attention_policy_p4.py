@@ -1,12 +1,14 @@
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from contracts.attention_policy import evaluate_attention_event, filter_attention_events  # noqa: E402
 from contracts.source_policy import Decision  # noqa: E402
+import generate_attention_p4 as p4  # noqa: E402
 
 
 class AttentionPolicyP4Tests(unittest.TestCase):
@@ -61,6 +63,35 @@ class AttentionPolicyP4Tests(unittest.TestCase):
         result = evaluate_attention_event(event)
         self.assertTrue(result.allowed)
         self.assertEqual(result.decision, Decision.ALLOW_UNVERIFIED)
+
+    def test_complete_event_set_is_gated_before_section_build(self):
+        events = [
+            {
+                "event_id": "news:TEST:retained",
+                "ticker": "TEST",
+                "event_type": "news",
+                "source": {"type": "gdelt"},
+            },
+            {
+                "event_id": "news:BAD:retained",
+                "ticker": "BAD",
+                "event_type": "news",
+                "source": {"type": "mystery"},
+            },
+        ]
+        captured = {}
+
+        def fake_build_sections(filtered, *args, **kwargs):
+            captured["events"] = filtered
+            return (filtered, [], [], 0)
+
+        with patch.object(p4, "_ORIGINAL_BUILD_SECTIONS", fake_build_sections):
+            result = p4.build_sections_with_policy(events)
+
+        self.assertEqual([event["event_id"] for event in captured["events"]], ["news:TEST:retained"])
+        self.assertEqual(result[0][0]["attention_policy_decision"], "allow_unverified")
+        self.assertEqual(p4._LAST_EVENT_METRICS["evaluated_events"], 2)
+        self.assertEqual(p4._LAST_EVENT_METRICS["rejected_events"], 1)
 
 
 if __name__ == "__main__":
