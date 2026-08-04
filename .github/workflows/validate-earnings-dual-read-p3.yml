@@ -1,0 +1,44 @@
+name: Validate Earnings Dual Read P3
+
+on:
+  pull_request:
+    paths:
+      - "scripts/contracts/earnings_reader.py"
+      - "scripts/generate_earnings_radar_p3.py"
+      - "scripts/generate_attention_p3.py"
+      - "tests/test_earnings_dual_read_p3.py"
+      - ".github/workflows/validate-earnings-dual-read-p3.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/contracts/earnings_reader.py"
+      - "scripts/generate_earnings_radar_p3.py"
+      - "scripts/generate_attention_p3.py"
+      - "tests/test_earnings_dual_read_p3.py"
+      - ".github/workflows/validate-earnings-dual-read-p3.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile P3 readers
+        run: |
+          python -m py_compile scripts/contracts/earnings_reader.py scripts/generate_earnings_radar_p3.py scripts/generate_attention_p3.py
+      - name: Run P3 contract tests
+        run: python -m unittest tests.test_earnings_dual_read_p3 -v
+      - name: Generate Earnings Radar through P3 reader
+        env:
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          python scripts/generate_earnings_radar_p3.py
+          python scripts/validate_earnings_radar.py
