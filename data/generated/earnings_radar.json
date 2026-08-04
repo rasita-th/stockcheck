@@ -671,7 +671,7 @@
     }
   ],
   "display_timezone": "Asia/Bangkok",
-  "generated_at": "2026-08-04T20:02:23+00:00",
+  "generated_at": "2026-08-04T21:54:08+00:00",
   "items": [
     {
       "confidence": "medium",
@@ -4008,17 +4008,21 @@
     "missing_values": "Missing EPS, revenue, company name and event time remain null or ticker-only; values are never fabricated",
     "official_override": "Company IR / SEC confirmed rows override provider estimates for the same ticker and date",
     "relevance": "Portfolio relations are explicit and auditable through data/earnings_relevance.json",
-    "source_policy_phase": "P3 observes canonical domain decisions; P4 will enforce the centralized gate"
+    "source_policy_phase": "P5 canonical-only policy enforcement"
   },
   "schema_version": "1.0",
   "selected_date": "2026-08-04",
   "source_contract": {
+    "calendar_rows": 136,
     "canonical_rows": 136,
+    "legacy_fallback_retired": true,
     "legacy_fallback_rows": 0,
-    "policy_enforced": false,
+    "phase": "P5",
+    "policy_enforced": true,
     "policy_reject_rows": 0,
-    "read_order": "canonical_first_legacy_fallback",
-    "rows": 136
+    "read_order": "canonical_only",
+    "rows": 136,
+    "state_rows": 0
   },
   "summary": {
     "after_market": 0,
