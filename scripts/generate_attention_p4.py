@@ -10,6 +10,7 @@ from contracts.earnings_reader import EarningsRead, read_earnings_row, read_metr
 from contracts.source_policy import Domain, allows
 
 _ORIGINAL_LOAD_EARNINGS = base.pr2.p0.load_earnings_calendar
+_ORIGINAL_BUILD_SECTIONS = base.pr2._build_sections
 _LAST_READS: list[EarningsRead] = []
 _LAST_EVENT_METRICS: dict[str, Any] = {}
 
@@ -21,15 +22,26 @@ def load_earnings_calendar() -> list[dict[str, Any]]:
     return [read.row for read in _LAST_READS if allows(read.decision)]
 
 
-def attention_eligible_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def build_sections_with_policy(
+    events: list[dict[str, Any]],
+    *args: Any,
+    **kwargs: Any,
+) -> Any:
+    """Apply the P4 gate to the complete event set before section construction.
+
+    PR3 combines persisted/generated events with newly discovered and retained
+    discovery events immediately before ``_build_sections``. Gating at this
+    boundary guarantees every event that can be published is evaluated exactly
+    once, including events restored from discovery state.
+    """
     global _LAST_EVENT_METRICS
     accepted, _LAST_EVENT_METRICS = filter_attention_events(events)
-    return accepted
+    return _ORIGINAL_BUILD_SECTIONS(accepted, *args, **kwargs)
 
 
 def generate() -> dict[str, Any]:
     base.pr2.p0.load_earnings_calendar = load_earnings_calendar
-    base._attention_eligible_events = attention_eligible_events
+    base.pr2._build_sections = build_sections_with_policy
     output = base.generate()
     earnings_metrics = read_metrics(_LAST_READS)
     allowed_earnings = sum(allows(read.decision) for read in _LAST_READS)
