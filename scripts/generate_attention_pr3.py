@@ -33,6 +33,22 @@ def _technical_summary(rows: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
+def _attention_eligible_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Exclude discovery-only Finnhub rows from the verified Attention contract.
+
+    Finnhub remains the source for the separate earnings-radar contract, but Today
+    Attention only accepts internal technical evidence or independently verifiable
+    public/primary sources.
+    """
+    eligible: list[dict[str, Any]] = []
+    for event in events:
+        source = event.get("source") if isinstance(event.get("source"), dict) else {}
+        if str(source.get("type") or "").strip().lower() == "finnhub":
+            continue
+        eligible.append(event)
+    return eligible
+
+
 def generate() -> dict[str, Any]:
     old_discovered_state = pr2.p0.load_json(DISCOVERED_EVENTS_STATE_PATH, {}) or {}
     base_output = pr2.p0.generate()
@@ -69,7 +85,7 @@ def generate() -> dict[str, Any]:
     )
 
     merged_events, catalyst_items, technical_watch, technical_fill_count = pr2._build_sections(
-        pr2._load_events() + active_discovered_events,
+        _attention_eligible_events(pr2._load_events()) + active_discovered_events,
         portfolio,
         technical_map,
         portfolio_map,
