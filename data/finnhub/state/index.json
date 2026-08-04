@@ -861,7 +861,11 @@
       "RXRX": "endpoints/company_profile/RXRX.json",
       "SAIC": "endpoints/company_profile/SAIC.json",
       "SATL": "endpoints/company_profile/SATL.json",
-      "SBUX": "endpoints/company_profile/SBUX.json"
+      "SBUX": "endpoints/company_profile/SBUX.json",
+      "SDGR": "endpoints/company_profile/SDGR.json",
+      "SE": "endpoints/company_profile/SE.json",
+      "SEI": "endpoints/company_profile/SEI.json",
+      "SHOP": "endpoints/company_profile/SHOP.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1172,50 +1176,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-02T08:36:51+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT",
-            "RKLB",
-            "ROKU",
-            "ROP",
-            "ROST",
-            "RR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-02T08:36:25+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2215,9 +2175,70 @@
       "mode": "events",
       "started_at": "2026-08-04T14:34:01+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA"
+          ],
+          "company_profile": [
+            "SDGR",
+            "SE",
+            "SEI",
+            "SHOP"
+          ],
+          "recommendation_trends": [
+            "PUMP",
+            "PWR",
+            "PYPL",
+            "QCOM",
+            "QQQI",
+            "RACE",
+            "RBLX",
+            "RBRK",
+            "RDW",
+            "REGN",
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU",
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX",
+            "RXRX",
+            "SAIC",
+            "SATL",
+            "SBUX",
+            "SDGR",
+            "SE"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-04T15:08:34+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-04T15:07:46+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-04T14:34:28+00:00"
+  "updated_at": "2026-08-04T15:08:35+00:00"
 }
