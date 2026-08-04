@@ -34,12 +34,7 @@ def _technical_summary(rows: list[dict[str, Any]]) -> dict[str, int]:
 
 
 def _attention_eligible_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Exclude discovery-only Finnhub rows from the verified Attention contract.
-
-    Finnhub remains the source for the separate earnings-radar contract, but Today
-    Attention only accepts internal technical evidence or independently verifiable
-    public/primary sources.
-    """
+    """Exclude discovery-only Finnhub rows from the verified Attention contract."""
     eligible: list[dict[str, Any]] = []
     for event in events:
         source = event.get("source") if isinstance(event.get("source"), dict) else {}
@@ -47,6 +42,81 @@ def _attention_eligible_events(events: list[dict[str, Any]]) -> list[dict[str, A
             continue
         eligible.append(event)
     return eligible
+
+
+def _first_number(row: dict[str, Any], *keys: str) -> float | None:
+    for key in keys:
+        value = pr2.p0.to_float(row.get(key))
+        if value is not None:
+            return value
+    return None
+
+
+def _hydrate_technical_watch_metrics(
+    rows: list[dict[str, Any]],
+    technical_map: dict[str, dict[str, Any]],
+) -> int:
+    """Fill legacy/incomplete Attention events from the canonical technical row.
+
+    Older Attention artifacts may contain the correct ticker and volume but omit
+    RSI and EMA-distance fields, or carry placeholder zeroes. The current UI reads
+    event-level snake_case fields, while the canonical scanner uses camelCase.
+    Hydrate only technical events, preserve valid event values, and use the latest
+    canonical scanner row as the authoritative fallback.
+    """
+    repaired = 0
+    for item in rows:
+        ticker = str(item.get("ticker") or "").strip().upper()
+        source_row = technical_map.get(ticker)
+        events = item.get("events") if isinstance(item.get("events"), list) else []
+        if not ticker or not isinstance(source_row, dict) or not events:
+            continue
+        event = next(
+            (row for row in events if isinstance(row, dict) and row.get("event_type") == "technical"),
+            None,
+        )
+        if not isinstance(event, dict):
+            continue
+
+        canonical = {
+            "technical_score": _first_number(source_row, "score", "technical_score"),
+            "rsi14": _first_number(source_row, "rsi14", "rsi", "RSI14"),
+            "pct_vs_ema20": _first_number(source_row, "pctVsEma20", "pct_vs_ema20"),
+            "pct_vs_ema200": _first_number(source_row, "pctVsEma200", "pct_vs_ema200"),
+            "volume_ratio20": _first_number(
+                source_row,
+                "volumeRatio20",
+                "relativeVolume",
+                "relVolume",
+                "volumeRatio",
+            ),
+        }
+        signal = str(source_row.get("signal") or source_row.get("technical_signal") or "").strip()
+        if signal:
+            canonical["technical_signal"] = signal
+
+        changed = False
+        for key, value in canonical.items():
+            if value is None or value == "":
+                continue
+            current = event.get(key)
+            current_number = pr2.p0.to_float(current) if key != "technical_signal" else None
+            missing = current in (None, "")
+            placeholder_zero = (
+                key in {"pct_vs_ema20", "pct_vs_ema200"}
+                and current_number == 0.0
+                and float(value) != 0.0
+                and pr2.p0.to_float(event.get("rsi14")) is None
+            )
+            if missing or placeholder_zero:
+                event[key] = value
+                changed = True
+
+        item["relative_volume"] = canonical.get("volume_ratio20") or item.get("relative_volume")
+        if changed:
+            event["technical_metrics_source"] = "canonical_technical_snapshot"
+            repaired += 1
+    return repaired
 
 
 def generate() -> dict[str, Any]:
@@ -91,6 +161,7 @@ def generate() -> dict[str, Any]:
         portfolio_map,
         contexts,
     )
+    technical_metric_repair_count = _hydrate_technical_watch_metrics(technical_watch, technical_map)
 
     source_health = dict(base_output.get("source_health") or {})
     source_health.pop("news", None)
@@ -119,6 +190,7 @@ def generate() -> dict[str, Any]:
                 "discovered_event_retention": True,
                 "technical_watch": True,
                 "technical_scan_fill": technical_fill_count > 0,
+                "technical_metric_hydration": True,
                 "thai_friendly_ui": True,
             },
             "total_events": len(merged_events),
@@ -143,6 +215,8 @@ def generate() -> dict[str, Any]:
         "attention_policy": "company catalysts remain above technical-only context",
         "technical_policy": "technical-only rows remain in technical_watch and never fill the main catalyst list",
         "technical_fill_count": technical_fill_count,
+        "technical_metric_repair_count": technical_metric_repair_count,
+        "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
         "technical_watch_minimum": pr2.TECHNICAL_WATCH_MIN,
         "technical_max_age_days": pr2.MAX_TECHNICAL_AGE_DAYS,
     }
