@@ -1,2281 +1,5779 @@
 {
+  "contract_metrics": {
+    "canonical_provenance_rows": 134,
+    "item_count": 134,
+    "unknown_source_rows": 0
+  },
+  "features": {
+    "canonical_provenance": true,
+    "dual_write": true,
+    "legacy_fields_preserved": true
+  },
+  "item_contract_version": "1.0.0",
   "items": [
     {
       "confidence": "high",
       "confirmed_at": "2026-07-02T00:00:00-04:00",
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow",
+        "technical_watch": "reject",
+        "today_catalyst": "allow"
+      },
       "earnings_date": "2026-07-22",
       "event_time": "2026-07-22T17:30:00-04:00",
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-07-22",
+        "event_id": "earnings:TSLA:2026-07-22",
+        "ticker": "TSLA"
+      },
       "note": "Tesla ยืนยันว่าจะประกาศผลประกอบการไตรมาส 2 ปี 2026 หลังตลาดปิดวันที่ 22 กรกฎาคม และจัด Q&A เวลา 17:30 น. ET",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "company_disclosure",
+          "provider": "company_ir",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "primary",
+          "source_url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments"
+        }
+      ],
       "source_type": "company_ir",
       "source_url": "https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments",
       "status": "confirmed",
       "ticker": "TSLA",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [
+          "company_ir"
+        ],
+        "level": "confirmed",
+        "status": "confirmed"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-06",
       "eps_actual": null,
       "eps_estimate": 0.0153,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-06",
+        "event_id": "earnings:AAOI:2026-08-06",
+        "ticker": "AAOI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 194287968.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AAOI",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-06",
       "eps_actual": null,
       "eps_estimate": 1.2766,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-06",
+        "event_id": "earnings:ABNB:2026-08-06",
+        "ticker": "ABNB"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 3645758429.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ABNB",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-07",
       "eps_actual": null,
       "eps_estimate": 0.3362,
       "event_time": null,
       "fiscal_quarter": "Q1 2027",
+      "identity": {
+        "earnings_date": "2026-08-07",
+        "event_id": "earnings:TTWO:2026-08-07",
+        "ticker": "TTWO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1433960880.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TTWO",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-07",
       "eps_actual": null,
       "eps_estimate": 2.1297,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-07",
+        "event_id": "earnings:VST:2026-08-07",
+        "ticker": "VST"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 5982562896.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "VST",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.3337,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:ACHR:2026-08-10",
+        "ticker": "ACHR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2002984.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ACHR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.6325,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:AMPH:2026-08-10",
+        "ticker": "AMPH"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 185696100.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AMPH",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.2856,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:ASTS:2026-08-10",
+        "ticker": "ASTS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 35677050.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ASTS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.0258,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:BW:2026-08-10",
+        "ticker": "BW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 202875670.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BW",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.7746,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:CAMT:2026-08-10",
+        "ticker": "CAMT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 132783141.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CAMT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.2924,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:CLPT:2026-08-10",
+        "ticker": "CLPT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 12987996.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CLPT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.2226,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:CRCL:2026-08-10",
+        "ticker": "CRCL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 743333843.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRCL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -1.2127,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:CRSP:2026-08-10",
+        "ticker": "CRSP"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 7328700.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRSP",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.0505,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:DDD:2026-08-10",
+        "ticker": "DDD"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 94698862.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "DDD",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.2735,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:EDIT:2026-08-10",
+        "ticker": "EDIT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2856102.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "EDIT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.2732,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:FATE:2026-08-10",
+        "ticker": "FATE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1393146.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "FATE",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.0143,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:HIMS:2026-08-10",
+        "ticker": "HIMS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 713886953.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "HIMS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 1.1366,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:MNDY:2026-08-10",
+        "ticker": "MNDY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 362405020.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MNDY",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.4046,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:MRCY:2026-08-10",
+        "ticker": "MRCY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 271856407.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MRCY",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.1641,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:OKLO:2026-08-10",
+        "ticker": "OKLO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 128775.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "OKLO",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.0918,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:ONDS:2026-08-10",
+        "ticker": "ONDS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 69329277.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ONDS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.2057,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:PERI:2026-08-10",
+        "ticker": "PERI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 98453633.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PERI",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.0796,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:SATL:2026-08-10",
+        "ticker": "SATL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 9781800.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SATL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": 0.8008,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:SE:2026-08-10",
+        "ticker": "SE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 7276857639.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SE",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-10",
       "eps_actual": null,
       "eps_estimate": -0.0606,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-10",
+        "event_id": "earnings:TMC:2026-08-10",
+        "ticker": "TMC"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 0.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TMC",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -1.1285,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:BEAM:2026-08-11",
+        "ticker": "BEAM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 16697226.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BEAM",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.2388,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:CIFR:2026-08-11",
+        "ticker": "CIFR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 33556051.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CIFR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.2924,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:CLPT:2026-08-11",
+        "ticker": "CLPT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 12987996.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CLPT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.2904,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:CLSK:2026-08-11",
+        "ticker": "CLSK"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 154626747.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CLSK",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 1.6474,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:COHR:2026-08-11",
+        "ticker": "COHR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2025210510.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "COHR",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -1.2221,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:CRWV:2026-08-11",
+        "ticker": "CRWV"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2612061308.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRWV",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 1.1937,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:CSCO:2026-08-11",
+        "ticker": "CSCO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 17159212935.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CSCO",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.0262,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:GLXY:2026-08-11",
+        "ticker": "GLXY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 11648716812.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "GLXY",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 3.0312,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:LITE:2026-08-11",
+        "ticker": "LITE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1007650288.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "LITE",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.2057,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:PERI:2026-08-11",
+        "ticker": "PERI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 98453633.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PERI",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.2387,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:RXRX:2026-08-11",
+        "ticker": "RXRX"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 12185603.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "RXRX",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 0.8008,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:SE:2026-08-11",
+        "ticker": "SE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 7276857639.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SE",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 0.9767,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:SMCI:2026-08-11",
+        "ticker": "SMCI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 11782281660.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SMCI",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": -0.3953,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:SPIR:2026-08-11",
+        "ticker": "SPIR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 18501780.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SPIR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 0.0077,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:SSYS:2026-08-11",
+        "ticker": "SSYS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 141247560.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SSYS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 10.5206,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:TDG:2026-08-11",
+        "ticker": "TDG"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2702364494.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TDG",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-11",
       "eps_actual": null,
       "eps_estimate": 0.2049,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-11",
+        "event_id": "earnings:TOST:2026-08-11",
+        "ticker": "TOST"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1908781243.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TOST",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": 0.0673,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:AVEX:2026-08-12",
+        "ticker": "AVEX"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 162900762.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AVEX",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.175,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:CBRS:2026-08-12",
+        "ticker": "CBRS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 198086488.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CBRS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": 1.6474,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:COHR:2026-08-12",
+        "ticker": "COHR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2025408135.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "COHR",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": 0.2607,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:DOCN:2026-08-12",
+        "ticker": "DOCN"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 283325185.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "DOCN",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.2938,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:IONQ:2026-08-12",
+        "ticker": "IONQ"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 66659448.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "IONQ",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.0765,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:JMIA:2026-08-12",
+        "ticker": "JMIA"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 53606100.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "JMIA",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.2384,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:JOBY:2026-08-12",
+        "ticker": "JOBY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 30989344.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "JOBY",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": 0.3844,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:MARA:2026-08-12",
+        "ticker": "MARA"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 206424540.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MARA",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.7082,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:NBIS:2026-08-12",
+        "ticker": "NBIS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 592351821.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NBIS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": 0.2087,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:NU:2026-08-12",
+        "ticker": "NU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 5383451384.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NU",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.1717,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:RDW:2026-08-12",
+        "ticker": "RDW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 108371697.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "RDW",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": null,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:SIDU:2026-08-12",
+        "ticker": "SIDU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": null,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SIDU",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.6557,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:SPCE:2026-08-12",
+        "ticker": "SPCE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 129203.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SPCE",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.3953,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:SPIR:2026-08-12",
+        "ticker": "SPIR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 18501780.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SPIR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-12",
       "eps_actual": null,
       "eps_estimate": -0.3086,
       "event_time": null,
       "fiscal_quarter": "Q1 2027",
+      "identity": {
+        "earnings_date": "2026-08-12",
+        "event_id": "earnings:VSAT:2026-08-12",
+        "ticker": "VSAT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1223720265.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "VSAT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 3.462,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:AMAT:2026-08-13",
+        "ticker": "AMAT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 9168915088.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AMAT",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 0.1074,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:BLSH:2026-08-13",
+        "ticker": "BLSH"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 90211972.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BLSH",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 1.6474,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:COHR:2026-08-13",
+        "ticker": "COHR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2025210510.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "COHR",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": -1.1903,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:CRWV:2026-08-13",
+        "ticker": "CRWV"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2613443245.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRWV",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 0.192,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:DLO:2026-08-13",
+        "ticker": "DLO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 370528095.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "DLO",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": -0.4248,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:EVTL:2026-08-13",
+        "ticker": "EVTL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 0.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "EVTL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": -0.102,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:LUNR:2026-08-13",
+        "ticker": "LUNR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 220654335.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "LUNR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 0.2087,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:NU:2026-08-13",
+        "ticker": "NU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 5383451384.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NU",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": -0.0884,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:ONDS:2026-08-13",
+        "ticker": "ONDS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 69329277.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ONDS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": 0.0077,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:SSYS:2026-08-13",
+        "ticker": "SSYS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 141247560.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SSYS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-13",
       "eps_actual": null,
       "eps_estimate": -1.1501,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-13",
+        "event_id": "earnings:TSAT:2026-08-13",
+        "ticker": "TSAT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 81077250.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TSAT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": -0.2856,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:ASTS:2026-08-17",
+        "ticker": "ASTS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 35677050.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ASTS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": -0.3701,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:BTDR:2026-08-17",
+        "ticker": "BTDR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 238964988.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BTDR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": 1.1366,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:MNDY:2026-08-17",
+        "ticker": "MNDY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 362405020.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MNDY",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": -0.0918,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:ONDS:2026-08-17",
+        "ticker": "ONDS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 69329277.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ONDS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": 0.9934,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:PANW:2026-08-17",
+        "ticker": "PANW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 3416862595.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PANW",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-17",
       "eps_actual": null,
       "eps_estimate": -0.0606,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-17",
+        "event_id": "earnings:TMC:2026-08-17",
+        "ticker": "TMC"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 0.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TMC",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": 3.3703,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:ADI:2026-08-18",
+        "ticker": "ADI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 3956507754.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ADI",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": 0.2226,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:CRCL:2026-08-18",
+        "ticker": "CRCL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 743333843.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRCL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": -1.1344,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:CRWV:2026-08-18",
+        "ticker": "CRWV"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2615792621.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRWV",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": 21.3027,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:FUTU:2026-08-18",
+        "ticker": "FUTU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 6478655796.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "FUTU",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": -0.102,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:LUNR:2026-08-18",
+        "ticker": "LUNR"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 220654335.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "LUNR",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": 0.3933,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:MRCY:2026-08-18",
+        "ticker": "MRCY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 271856407.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MRCY",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": null,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:NNDM:2026-08-18",
+        "ticker": "NNDM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": null,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NNDM",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": 0.2087,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:NU:2026-08-18",
+        "ticker": "NU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 5383451384.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NU",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": -0.1586,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:OKLO:2026-08-18",
+        "ticker": "OKLO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 128775.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "OKLO",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-18",
       "eps_actual": null,
       "eps_estimate": -0.1049,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-18",
+        "event_id": "earnings:TE:2026-08-18",
+        "ticker": "TE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 202209600.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TE",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 3.3681,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:ADI:2026-08-19",
+        "ticker": "ADI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 3958820462.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ADI",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 0.7187,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:BILL:2026-08-19",
+        "ticker": "BILL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 439163570.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BILL",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 1.1937,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:CSCO:2026-08-19",
+        "ticker": "CSCO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 17159212935.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CSCO",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 3.6542,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:INTU:2026-08-19",
+        "ticker": "INTU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 4354545770.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "INTU",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 1.9603,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:ROST:2026-08-19",
+        "ticker": "ROST"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 6285274924.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ROST",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 3.7394,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:SNPS:2026-08-19",
+        "ticker": "SNPS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2486419891.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SNPS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": null,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:TGT:2026-08-19",
+        "ticker": "TGT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": null,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "TGT",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-19",
       "eps_actual": null,
       "eps_estimate": 2.6613,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-19",
+        "event_id": "earnings:WDAY:2026-08-19",
+        "ticker": "WDAY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2688872704.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "WDAY",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 0.3504,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:AFRM:2026-08-20",
+        "ticker": "AFRM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1127441842.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AFRM",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 0.7185,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:BILL:2026-08-20",
+        "ticker": "BILL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 439038508.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "BILL",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 4.8353,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:DE:2026-08-20",
+        "ticker": "DE"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 11085921693.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "DE",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 3.6542,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:INTU:2026-08-20",
+        "ticker": "INTU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 4354545770.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "INTU",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 0.939,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:MRVL:2026-08-20",
+        "ticker": "MRVL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2756646022.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MRVL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 2.6613,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:WDAY:2026-08-20",
+        "ticker": "WDAY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2688872704.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "WDAY",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-20",
       "eps_actual": null,
       "eps_estimate": 0.7497,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-20",
+        "event_id": "earnings:WMT:2026-08-20",
+        "ticker": "WMT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 188842391690.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "WMT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-24",
       "eps_actual": null,
       "eps_estimate": 1.5161,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-24",
+        "event_id": "earnings:HEI:2026-08-24",
+        "ticker": "HEI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1357879966.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "HEI",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-24",
       "eps_actual": null,
       "eps_estimate": 1.6134,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-24",
+        "event_id": "earnings:MDB:2026-08-24",
+        "ticker": "MDB"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 739204062.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MDB",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-24",
       "eps_actual": null,
       "eps_estimate": 0.9934,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-24",
+        "event_id": "earnings:PANW:2026-08-24",
+        "ticker": "PANW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 3416862595.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PANW",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-24",
       "eps_actual": null,
       "eps_estimate": 18.3978,
       "event_time": null,
       "fiscal_quarter": "Q2 2026",
+      "identity": {
+        "earnings_date": "2026-08-24",
+        "event_id": "earnings:PDD:2026-08-24",
+        "ticker": "PDD"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 117513190788.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PDD",
-      "time": "before_market"
+      "time": "before_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-25",
       "eps_actual": null,
       "eps_estimate": 0.2984,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-25",
+        "event_id": "earnings:CRWD:2026-08-25",
+        "ticker": "CRWD"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1468832374.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRWD",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-25",
       "eps_actual": null,
       "eps_estimate": 3.6542,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-25",
+        "event_id": "earnings:INTU:2026-08-25",
+        "ticker": "INTU"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 4354545770.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "INTU",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-25",
       "eps_actual": null,
       "eps_estimate": 0.4554,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-25",
+        "event_id": "earnings:SNOW:2026-08-25",
+        "ticker": "SNOW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1511567814.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SNOW",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 3.1811,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:ADSK:2026-08-26",
+        "ticker": "ADSK"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2051344684.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ADSK",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 0.3504,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:AFRM:2026-08-26",
+        "ticker": "AFRM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1127441842.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AFRM",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 3.3057,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:CRM:2026-08-26",
+        "ticker": "CRM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 11432284970.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRM",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": -0.5042,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:IREN:2026-08-26",
+        "ticker": "IREN"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 145165930.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "IREN",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 0.939,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:MRVL:2026-08-26",
+        "ticker": "MRVL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2756646022.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MRVL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 2.1274,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:NVDA:2026-08-26",
+        "ticker": "NVDA"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 93606383310.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "NVDA",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 0.4554,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:SNOW:2026-08-26",
+        "ticker": "SNOW"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1511567814.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SNOW",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-26",
       "eps_actual": null,
       "eps_estimate": 3.7394,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-26",
+        "event_id": "earnings:SNPS:2026-08-26",
+        "ticker": "SNPS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2486419891.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SNPS",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-27",
       "eps_actual": null,
       "eps_estimate": 0.1639,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-27",
+        "event_id": "earnings:IOT:2026-08-27",
+        "ticker": "IOT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 488062199.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "IOT",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-27",
       "eps_actual": null,
       "eps_estimate": 1.6134,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-27",
+        "event_id": "earnings:MDB:2026-08-27",
+        "ticker": "MDB"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 739204062.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MDB",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-27",
       "eps_actual": null,
       "eps_estimate": 0.939,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-27",
+        "event_id": "earnings:MRVL:2026-08-27",
+        "ticker": "MRVL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2756646022.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "MRVL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-27",
       "eps_actual": null,
       "eps_estimate": 2.6613,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-08-27",
+        "event_id": "earnings:WDAY:2026-08-27",
+        "ticker": "WDAY"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 2688872704.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "WDAY",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-31",
       "eps_actual": null,
       "eps_estimate": 1.5161,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-08-31",
+        "event_id": "earnings:HEI:2026-08-31",
+        "ticker": "HEI"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1357879966.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "HEI",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-08-31",
       "eps_actual": null,
       "eps_estimate": 1.1177,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-08-31",
+        "event_id": "earnings:ZS:2026-08-31",
+        "ticker": "ZS"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 903708239.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ZS",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-01",
       "eps_actual": null,
       "eps_estimate": 1.1855,
       "event_time": null,
       "fiscal_quarter": "Q1 2027",
+      "identity": {
+        "earnings_date": "2026-09-01",
+        "event_id": "earnings:CRDO:2026-09-01",
+        "ticker": "CRDO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 479841323.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRDO",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-01",
       "eps_actual": null,
       "eps_estimate": 3.3057,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-01",
+        "event_id": "earnings:CRM:2026-09-01",
+        "ticker": "CRM"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 11432284970.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRM",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-02",
       "eps_actual": null,
       "eps_estimate": 3.3012,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-09-02",
+        "event_id": "earnings:AVGO:2026-09-02",
+        "ticker": "AVGO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 29947978596.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AVGO",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-02",
       "eps_actual": null,
       "eps_estimate": 0.3942,
       "event_time": null,
       "fiscal_quarter": "Q4 2026",
+      "identity": {
+        "earnings_date": "2026-09-02",
+        "event_id": "earnings:CPRT:2026-09-02",
+        "ticker": "CPRT"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1167697193.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CPRT",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-02",
       "eps_actual": null,
       "eps_estimate": 0.2984,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-02",
+        "event_id": "earnings:CRWD:2026-09-02",
+        "ticker": "CRWD"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1468832374.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "CRWD",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-02",
       "eps_actual": null,
       "eps_estimate": 0.1512,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-02",
+        "event_id": "earnings:PATH:2026-09-02",
+        "ticker": "PATH"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 405904695.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PATH",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-02",
       "eps_actual": null,
       "eps_estimate": 2.3546,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-02",
+        "event_id": "earnings:SAIC:2026-09-02",
+        "ticker": "SAIC"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1801506211.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SAIC",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-03",
       "eps_actual": null,
       "eps_estimate": 3.3012,
       "event_time": null,
       "fiscal_quarter": "Q3 2026",
+      "identity": {
+        "earnings_date": "2026-09-03",
+        "event_id": "earnings:AVGO:2026-09-03",
+        "ticker": "AVGO"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 29947978596.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AVGO",
-      "time": "after_market"
+      "time": "after_market",
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-03",
       "eps_actual": null,
       "eps_estimate": 4.9897,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-03",
+        "event_id": "earnings:DELL:2026-09-03",
+        "ticker": "DELL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 45746068740.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "DELL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-03",
       "eps_actual": null,
       "eps_estimate": 2.3546,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-03",
+        "event_id": "earnings:SAIC:2026-09-03",
+        "ticker": "SAIC"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 1801506211.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "SAIC",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-07",
       "eps_actual": null,
       "eps_estimate": 0.2949,
       "event_time": null,
       "fiscal_quarter": "Q1 2027",
+      "identity": {
+        "earnings_date": "2026-09-07",
+        "event_id": "earnings:AVAV:2026-09-07",
+        "ticker": "AVAV"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 467720041.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "AVAV",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-07",
       "eps_actual": null,
       "eps_estimate": 1.7745,
       "event_time": null,
       "fiscal_quarter": "Q1 2027",
+      "identity": {
+        "earnings_date": "2026-09-07",
+        "event_id": "earnings:ORCL:2026-09-07",
+        "ticker": "ORCL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 19522037203.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "ORCL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-07",
       "eps_actual": null,
       "eps_estimate": -0.0235,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-07",
+        "event_id": "earnings:PL:2026-09-07",
+        "ticker": "PL"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 107567710.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "PL",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     },
     {
       "confidence": "medium",
       "confirmed_at": null,
+      "contract_version": "1.0.0",
+      "domain_policy": {
+        "earnings_radar": "allow_estimated",
+        "technical_watch": "reject",
+        "today_catalyst": "reject"
+      },
       "earnings_date": "2026-09-07",
       "eps_actual": null,
       "eps_estimate": 0.0402,
       "event_time": null,
       "fiscal_quarter": "Q2 2027",
+      "identity": {
+        "earnings_date": "2026-09-07",
+        "event_id": "earnings:RBRK:2026-09-07",
+        "ticker": "RBRK"
+      },
       "note": "Finnhub earnings calendar; company IR/SEC confirmation takes precedence.",
+      "provenance": [
+        {
+          "contract_version": "1.0.0",
+          "evidence_kind": "market_estimate",
+          "provider": "finnhub",
+          "retrieved_at": "2026-08-04T12:19:20+00:00",
+          "source_class": "discovery",
+          "source_url": null
+        }
+      ],
       "revenue_actual": null,
       "revenue_estimate": 404147878.0,
       "source_type": "finnhub",
       "source_url": null,
       "status": "estimated",
       "ticker": "RBRK",
-      "time": null
+      "time": null,
+      "verification": {
+        "confirmed_by": [],
+        "level": "estimated",
+        "status": "estimated"
+      }
     }
   ],
   "policy": "Company IR/SEC confirmed dates override Finnhub estimates. Missing values remain null and are never fabricated.",
   "schema_version": "2.0",
-  "updated_at": "2026-08-04T12:01:45+00:00"
+  "source_policy_contract_version": "1.0.0",
+  "updated_at": "2026-08-04T12:19:20+00:00"
 }
