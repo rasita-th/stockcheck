@@ -1,0 +1,47 @@
+name: Validate Attention Policy P4
+
+on:
+  pull_request:
+    paths:
+      - "scripts/contracts/attention_policy.py"
+      - "scripts/generate_attention_p4.py"
+      - "tests/test_attention_policy_p4.py"
+      - ".github/workflows/validate-attention-policy-p4.yml"
+      - ".github/workflows/refresh_finnhub_events.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/contracts/attention_policy.py"
+      - "scripts/generate_attention_p4.py"
+      - "tests/test_attention_policy_p4.py"
+      - ".github/workflows/validate-attention-policy-p4.yml"
+      - ".github/workflows/refresh_finnhub_events.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile P4 policy gate
+        run: python -m py_compile scripts/contracts/attention_policy.py scripts/generate_attention_p4.py
+      - name: Run P4 policy tests
+        run: python -m unittest tests.test_attention_policy_p4 -v
+      - name: Verify producer remains read-only
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('.github/workflows/refresh_finnhub_events.yml').read_text(encoding='utf-8')
+          assert 'permissions:\n  contents: read' in text
+          forbidden = ('contents:' + ' write', 'git ' + 'push', 'git ' + 'commit', 'persist-credentials:' + ' true')
+          found = [token for token in forbidden if token in text]
+          assert not found, f'producer contains forbidden tokens: {found}'
+          PY
