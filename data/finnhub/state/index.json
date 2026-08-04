@@ -865,7 +865,11 @@
       "SDGR": "endpoints/company_profile/SDGR.json",
       "SE": "endpoints/company_profile/SE.json",
       "SEI": "endpoints/company_profile/SEI.json",
-      "SHOP": "endpoints/company_profile/SHOP.json"
+      "SHOP": "endpoints/company_profile/SHOP.json",
+      "SIDU": "endpoints/company_profile/SIDU.json",
+      "SITM": "endpoints/company_profile/SITM.json",
+      "SMCI": "endpoints/company_profile/SMCI.json",
+      "SMH": "endpoints/company_profile/SMH.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1176,67 +1180,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG",
-            "FTNT",
-            "FUTU",
-            "GD",
-            "GEHC"
-          ],
-          "company_profile": [
-            "PDD",
-            "PEP",
-            "PERI",
-            "PINS"
-          ],
-          "recommendation_trends": [
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-02T14:13:32+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-02T14:12:46+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2219,9 +2162,91 @@
       "mode": "events",
       "started_at": "2026-08-04T20:01:56+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [
+          {
+            "endpoint": "company_profile",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "SIDU",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "basic_financials",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "NBIS",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "company_profile",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "SITM",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "basic_financials",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "NICE",
+            "type": "timeout"
+          }
+        ],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "NFLX",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA"
+          ],
+          "company_profile": [
+            "SMCI",
+            "SMH"
+          ],
+          "recommendation_trends": [
+            "SEI",
+            "SHOP",
+            "SIDU",
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK",
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-04T20:14:07+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-04T20:12:32+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-04T20:02:22+00:00"
+  "updated_at": "2026-08-04T20:14:08+00:00"
 }
