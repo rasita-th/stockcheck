@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-04T17:05:56+00:00",
+  "updated_at": "2026-08-04T17:59:34+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -28,11 +28,14 @@
       "rows": 136,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
+      "phase": "P4",
       "read_order": "canonical_first_legacy_fallback",
-      "policy_enforced": false,
+      "policy_enforced": true,
       "canonical_rows": 136,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 135
+      "policy_reject_rows": 135,
+      "allowed_rows": 1,
+      "rejected_rows": 135
     },
     "market_data": {
       "status": "ok",
@@ -54,16 +57,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
-      "partial": 6,
-      "errors": 0
+      "ok": 2,
+      "partial": 7,
+      "errors": 1
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 3,
+      "errors": 7
     },
     "regulators": {
       "status": "ok",
@@ -89,7 +92,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.774657+00:00",
+      "event_time": "2026-08-04T17:57:39.493658+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -113,8 +116,8 @@
           "why_today": "The stock moved +18.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.774657+00:00",
-          "detected_at": "2026-08-04T17:03:49.774659+00:00",
+          "event_time": "2026-08-04T17:57:39.493658+00:00",
+          "detected_at": "2026-08-04T17:57:39.493659+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -124,6 +127,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -176,6 +180,7 @@
             }
           ],
           "secondary_source_count": 1,
+          "attention_policy_decision": "allow_unverified",
           "related_event_ids": [
             "gdelt:TE:736c55c4fab3c855"
           ],
@@ -406,77 +411,77 @@
     },
     {
       "source": "ir",
-      "ticker": "COST",
+      "ticker": "ASTS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OKLO",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "COST",
+      "ticker": "OKLO",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "IR URL unavailable"
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "BEAM",
+      "ticker": "TSLA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "NOW",
+      "ticker": "BMNR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
+      "ticker": "NBIS",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TEM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TE",
+      "ticker": "TEM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "INDI",
+      "ticker": "MP",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "INDI",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RKLB",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMZN",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "NVDA",
+      "ticker": "MP",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "IONQ",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IREN",
+      "ticker": "IONQ",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMD",
       "message": "GDELT response unavailable"
     }
   ],
@@ -500,13 +505,24 @@
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
     "earnings_contract_read": {
-      "phase": "P3",
+      "phase": "P4",
       "read_order": "canonical_first_legacy_fallback",
-      "policy_enforced": false,
+      "policy_enforced": true,
       "rows": 136,
       "canonical_rows": 136,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 135
+      "policy_reject_rows": 135,
+      "allowed_rows": 1,
+      "rejected_rows": 135
+    },
+    "attention_policy_gate": {
+      "phase": "P4",
+      "owner": "scripts/contracts/attention_policy.py",
+      "policy_enforced": true,
+      "evaluated_events": 23,
+      "accepted_events": 23,
+      "rejected_events": 0,
+      "reject_reasons": []
     }
   },
   "contract_version": "3.0-attention-workflow",
@@ -541,7 +557,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.774549+00:00",
+      "event_time": "2026-08-04T17:57:39.493569+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -565,8 +581,8 @@
           "why_today": "The stock moved +8.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.774549+00:00",
-          "detected_at": "2026-08-04T17:03:49.774552+00:00",
+          "event_time": "2026-08-04T17:57:39.493569+00:00",
+          "detected_at": "2026-08-04T17:57:39.493571+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -576,6 +592,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -640,7 +657,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.748440+00:00",
+      "event_time": "2026-08-04T17:57:39.476549+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -664,8 +681,8 @@
           "why_today": "The stock moved +11.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.748440+00:00",
-          "detected_at": "2026-08-04T17:03:49.748442+00:00",
+          "event_time": "2026-08-04T17:57:39.476549+00:00",
+          "detected_at": "2026-08-04T17:57:39.476552+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -675,6 +692,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -739,7 +757,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.707768+00:00",
+      "event_time": "2026-08-04T17:57:39.418129+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -763,8 +781,8 @@
           "why_today": "The stock moved +8.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.707768+00:00",
-          "detected_at": "2026-08-04T17:03:49.707776+00:00",
+          "event_time": "2026-08-04T17:57:39.418129+00:00",
+          "detected_at": "2026-08-04T17:57:39.418143+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -774,6 +792,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -838,7 +857,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.722199+00:00",
+      "event_time": "2026-08-04T17:57:39.438672+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -862,8 +881,8 @@
           "why_today": "The stock moved +11.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.722199+00:00",
-          "detected_at": "2026-08-04T17:03:49.722235+00:00",
+          "event_time": "2026-08-04T17:57:39.438672+00:00",
+          "detected_at": "2026-08-04T17:57:39.438681+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -873,6 +892,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -937,7 +957,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.748404+00:00",
+      "event_time": "2026-08-04T17:57:39.476488+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -961,8 +981,8 @@
           "why_today": "The stock moved +9.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.748404+00:00",
-          "detected_at": "2026-08-04T17:03:49.748409+00:00",
+          "event_time": "2026-08-04T17:57:39.476488+00:00",
+          "detected_at": "2026-08-04T17:57:39.476499+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -972,6 +992,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
@@ -1036,7 +1057,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-04T17:03:49.649126+00:00",
+      "event_time": "2026-08-04T17:57:39.292631+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1060,8 +1081,8 @@
           "why_today": "The stock moved +8.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-04T17:03:49.649126+00:00",
-          "detected_at": "2026-08-04T17:03:49.649129+00:00",
+          "event_time": "2026-08-04T17:57:39.292631+00:00",
+          "detected_at": "2026-08-04T17:57:39.292634+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1071,6 +1092,7 @@
           },
           "priority_score": 99,
           "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
