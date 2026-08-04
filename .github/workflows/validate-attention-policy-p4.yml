@@ -37,7 +37,11 @@ jobs:
         run: python -m unittest tests.test_attention_policy_p4 -v
       - name: Verify producer remains read-only
         run: |
-          grep -q '^permissions:$' .github/workflows/refresh_finnhub_events.yml
-          grep -q '  contents: read' .github/workflows/refresh_finnhub_events.yml
-          ! grep -q 'contents: write' .github/workflows/refresh_finnhub_events.yml
-          ! grep -q 'git push' .github/workflows/refresh_finnhub_events.yml
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('.github/workflows/refresh_finnhub_events.yml').read_text(encoding='utf-8')
+          assert 'permissions:\n  contents: read' in text
+          forbidden = ('contents:' + ' write', 'git ' + 'push', 'git ' + 'commit', 'persist-credentials:' + ' true')
+          found = [token for token in forbidden if token in text]
+          assert not found, f'producer contains forbidden tokens: {found}'
+          PY
