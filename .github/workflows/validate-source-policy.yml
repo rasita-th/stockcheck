@@ -1,0 +1,33 @@
+name: Validate Source Policy Contract
+
+on:
+  pull_request:
+    paths:
+      - "scripts/contracts/**"
+      - "tests/test_source_policy_contract.py"
+      - "docs/adr/0001-source-provenance-domain-policy.md"
+      - ".github/workflows/validate-source-policy.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/contracts/**"
+      - "tests/test_source_policy_contract.py"
+      - "docs/adr/0001-source-provenance-domain-policy.md"
+      - ".github/workflows/validate-source-policy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile contract module
+        run: python -m py_compile scripts/contracts/source_policy.py
+      - name: Run source policy contract tests
+        run: python -m unittest tests.test_source_policy_contract -v
