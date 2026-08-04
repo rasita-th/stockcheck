@@ -16,6 +16,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
+from contracts.earnings_contract import enrich_earnings_document
+
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_DIRS = [ROOT / "data", ROOT / "site" / "data", ROOT / "static" / "data"]
 PRIVATE_DIR = ROOT / "data" / "finnhub"
@@ -426,11 +428,15 @@ def public_contracts(state: dict[str, Any], universe: list[str]) -> dict[str, di
     }
     old_calendar = load_json(ROOT / "data" / "earnings_calendar.json", {})
     old_items = old_calendar.get("items") if isinstance(old_calendar, dict) and isinstance(old_calendar.get("items"), list) else []
-    calendar = {
-        "schema_version": LEGACY_CALENDAR_VERSION, "updated_at": generated,
-        "items": merge_earnings_items(old_items, finnhub_calendar_items(state, set(universe))),
-        "policy": "Company IR/SEC confirmed dates override Finnhub estimates. Missing values remain null and are never fabricated.",
-    }
+    calendar = enrich_earnings_document(
+        {
+            "schema_version": LEGACY_CALENDAR_VERSION,
+            "updated_at": generated,
+            "items": merge_earnings_items(old_items, finnhub_calendar_items(state, set(universe))),
+            "policy": "Company IR/SEC confirmed dates override Finnhub estimates. Missing values remain null and are never fabricated.",
+        },
+        generated_at=generated,
+    )
     feature_endpoints = {
         endpoint: entries for endpoint, entries in state.get("endpoints", {}).items()
         if endpoint in ENDPOINTS and isinstance(entries, dict)
