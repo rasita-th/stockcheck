@@ -7,6 +7,7 @@
     return;
   }
 
+  const SCREENER_SNAPSHOT_SCHEMA = "1.1";
   const legacyFetchStaticLayer = fetchStaticLayer;
   const legacyLoadStaticData = loadStaticData;
   const legacyCurrentQuoteFor = currentQuoteFor;
@@ -176,8 +177,8 @@
     if (layer !== "technical") return legacyFetchStaticLayer(layer);
     try {
       const snapshot = await fetchJsonNoStore("data/screener_snapshot.json");
-      if (!snapshot || snapshot.schema_version !== "1.0" || snapshot.contract !== "canonical-screener-snapshot" || !Array.isArray(snapshot.rows) || !snapshot.rows.length) {
-        throw new Error("Invalid canonical screener snapshot contract");
+      if (!snapshot || snapshot.schema_version !== SCREENER_SNAPSHOT_SCHEMA || snapshot.contract !== "canonical-screener-snapshot" || !Array.isArray(snapshot.rows) || !snapshot.rows.length) {
+        throw new Error(`Invalid canonical screener snapshot contract: expected schema ${SCREENER_SNAPSHOT_SCHEMA}`);
       }
       screenerSnapshot = snapshot;
       return {
@@ -248,6 +249,8 @@
   if (typeof setInterval === "function") setInterval(renderFreshnessNotice, 60000);
 
   window.StockcheckTechnicalV2 = Object.freeze({
+    version: "10.7.7",
+    snapshotSchema: SCREENER_SNAPSHOT_SCHEMA,
     loadTechnicalShard,
     hasSeries,
     snapshotAgeMinutes,
