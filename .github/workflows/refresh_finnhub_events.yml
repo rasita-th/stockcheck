@@ -11,12 +11,15 @@ on:
       - "scripts/finnhub_sharded_state.py"
       - "scripts/check_generated_file_sizes.py"
       - "scripts/contracts/earnings_reader.py"
+      - "scripts/contracts/attention_policy.py"
       - "scripts/generate_earnings_radar.py"
       - "scripts/generate_earnings_radar_p3.py"
       - "scripts/validate_earnings_radar.py"
       - "scripts/generate_attention_pr3.py"
       - "scripts/generate_attention_p3.py"
+      - "scripts/generate_attention_p4.py"
       - "tests/test_attention_source_policy.py"
+      - "tests/test_attention_policy_p4.py"
       - "tests/test_earnings_dual_read_p3.py"
       - "data/earnings_relevance.json"
       - ".github/workflows/refresh_finnhub_events.yml"
@@ -74,7 +77,7 @@ jobs:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "45"
         run: python scripts/generate_earnings_radar_p3.py
-      - name: Regenerate Today through P3 dual-read
+      - name: Regenerate Today through P4 centralized policy gate
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
           ATTENTION_NEWS_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
@@ -83,11 +86,11 @@ jobs:
           ATTENTION_NEWS_BATCH_SIZE: "10"
           ATTENTION_MAX_ITEMS: "7"
           SEC_BOOTSTRAP_DAYS: "1"
-        run: python scripts/generate_attention_p3.py
+        run: python scripts/generate_attention_p4.py
       - name: Test generated contracts
         run: |
-          python -m py_compile scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/finnhub_sharded_state.py scripts/check_generated_file_sizes.py scripts/contracts/earnings_reader.py scripts/generate_earnings_radar.py scripts/generate_earnings_radar_p3.py scripts/validate_earnings_radar.py scripts/validate_production_artifact.py scripts/generate_attention_pr3.py scripts/generate_attention_p3.py
-          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_finnhub_sharded_state tests.test_earnings_radar tests.test_attention_source_policy tests.test_earnings_dual_read_p3
+          python -m py_compile scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/finnhub_sharded_state.py scripts/check_generated_file_sizes.py scripts/contracts/earnings_reader.py scripts/contracts/attention_policy.py scripts/generate_earnings_radar.py scripts/generate_earnings_radar_p3.py scripts/validate_earnings_radar.py scripts/validate_production_artifact.py scripts/generate_attention_pr3.py scripts/generate_attention_p3.py scripts/generate_attention_p4.py
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_finnhub_sharded_state tests.test_earnings_radar tests.test_attention_source_policy tests.test_attention_policy_p4 tests.test_earnings_dual_read_p3
           test ! -e data/finnhub/state.json
           test -f data/finnhub/state/index.json
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
