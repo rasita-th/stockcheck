@@ -853,7 +853,11 @@
       "RGNX": "endpoints/company_profile/RGNX.json",
       "RIOT": "endpoints/company_profile/RIOT.json",
       "RKLB": "endpoints/company_profile/RKLB.json",
-      "ROKU": "endpoints/company_profile/ROKU.json"
+      "ROKU": "endpoints/company_profile/ROKU.json",
+      "ROP": "endpoints/company_profile/ROP.json",
+      "ROST": "endpoints/company_profile/ROST.json",
+      "RR": "endpoints/company_profile/RR.json",
+      "RTX": "endpoints/company_profile/RTX.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1164,50 +1168,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-01T16:12:51+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "IZRL",
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-01T16:12:23+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2207,9 +2167,70 @@
       "mode": "analyst",
       "started_at": "2026-08-03T20:20:56+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP"
+          ],
+          "company_profile": [
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX"
+          ],
+          "recommendation_trends": [
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR",
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-04T03:54:28+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-04T03:53:39+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-03T20:21:58+00:00"
+  "updated_at": "2026-08-04T03:54:29+00:00"
 }
