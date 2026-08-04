@@ -857,7 +857,11 @@
       "ROP": "endpoints/company_profile/ROP.json",
       "ROST": "endpoints/company_profile/ROST.json",
       "RR": "endpoints/company_profile/RR.json",
-      "RTX": "endpoints/company_profile/RTX.json"
+      "RTX": "endpoints/company_profile/RTX.json",
+      "RXRX": "endpoints/company_profile/RXRX.json",
+      "SAIC": "endpoints/company_profile/SAIC.json",
+      "SATL": "endpoints/company_profile/SATL.json",
+      "SBUX": "endpoints/company_profile/SBUX.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1168,50 +1172,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-01T19:32:25+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "LBRT",
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE",
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-01T19:32:00+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2228,9 +2188,70 @@
       "mode": "analyst",
       "started_at": "2026-08-04T03:53:39+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR"
+          ],
+          "company_profile": [
+            "RXRX",
+            "SAIC",
+            "SATL",
+            "SBUX"
+          ],
+          "recommendation_trends": [
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB",
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS",
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-04T09:26:04+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-04T09:25:17+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-04T03:54:29+00:00"
+  "updated_at": "2026-08-04T09:26:05+00:00"
 }
