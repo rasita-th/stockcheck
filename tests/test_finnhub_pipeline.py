@@ -55,7 +55,61 @@ class FinnhubPipelineTests(unittest.TestCase):
         self.assertIn("NVDA", recommendation)
         self.assertEqual(recommendation["items"]["NVDA"]["rows"][0]["period"], "2026-07-01")
         self.assertIn("surprises", contracts["eps_surprises.json"])
-        self.assertEqual(contracts["earnings_calendar.json"]["schema_version"], "2.0")
+        calendar = contracts["earnings_calendar.json"]
+        self.assertEqual(calendar["schema_version"], "2.0")
+        self.assertTrue(calendar["features"]["canonical_provenance"])
+        self.assertTrue(calendar["features"]["legacy_fields_preserved"])
+        self.assertEqual(calendar["contract_metrics"]["canonical_provenance_rows"], len(calendar["items"]))
+
+    def test_public_calendar_dual_write_enriches_official_and_provider_rows(self):
+        state = pipeline.default_state()
+        state["batch"]["earnings_calendar"] = {
+            "status": "ok",
+            "updated_at": "2026-08-04T12:00:00+00:00",
+            "data": [
+                {
+                    "symbol": "NVDA",
+                    "date": "2026-08-26",
+                    "quarter": 2,
+                    "year": 2027,
+                    "hour": "amc",
+                    "epsEstimate": 1.23,
+                },
+                {
+                    "symbol": "TSLA",
+                    "date": "2026-07-22",
+                    "quarter": 2,
+                    "year": 2026,
+                    "hour": "amc",
+                },
+            ],
+        }
+        legacy_calendar = {
+            "items": [
+                {
+                    "ticker": "TSLA",
+                    "earnings_date": "2026-07-22",
+                    "status": "confirmed",
+                    "source_type": "company_ir",
+                    "source_url": "https://example.com/tesla-ir",
+                }
+            ]
+        }
+        with mock.patch.object(pipeline, "load_json", return_value=legacy_calendar):
+            calendar = pipeline.public_contracts(state, ["NVDA", "TSLA"])["earnings_calendar.json"]
+        by_ticker = {row["ticker"]: row for row in calendar["items"]}
+
+        nvda = by_ticker["NVDA"]
+        self.assertEqual(nvda["source_type"], "finnhub")
+        self.assertEqual(nvda["domain_policy"]["earnings_radar"], "allow_estimated")
+        self.assertEqual(nvda["domain_policy"]["today_catalyst"], "reject")
+        self.assertEqual(nvda["verification"]["level"], "estimated")
+
+        tsla = by_ticker["TSLA"]
+        self.assertEqual(tsla["source_type"], "company_ir")
+        self.assertEqual(tsla["domain_policy"]["today_catalyst"], "allow")
+        self.assertEqual(tsla["verification"]["level"], "confirmed")
+        self.assertEqual(tsla["provenance"][0]["provider"], "company_ir")
 
     def test_secret_validation_rejects_leak(self):
         with self.assertRaises(RuntimeError):
