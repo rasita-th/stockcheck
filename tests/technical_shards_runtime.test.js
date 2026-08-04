@@ -29,7 +29,7 @@ const state = {
 };
 
 const snapshot = {
-  schema_version: "1.0",
+  schema_version: "1.1",
   contract: "canonical-screener-snapshot",
   generated_at: new Date().toISOString(),
   stale_after_minutes: 30,
@@ -120,10 +120,12 @@ vm.runInContext(`
 
 (async () => {
   const technical = await context.__runtimeFetchStaticLayer("technical");
-  assert.equal(snapshotFetchCount, 1, "screener must load the canonical snapshot first");
+  assert.equal(snapshotFetchCount, 1, "schema 1.1 snapshot must activate without a reload loop");
   assert.equal(technical.__screenerSnapshot, true);
   assert.equal(technical.__screenerFresh, true);
   assert.equal(technical.rows[0].price, 493.23);
+  assert.equal(context.window.StockcheckTechnicalV2.version, "10.7.7");
+  assert.equal(context.window.StockcheckTechnicalV2.snapshotSchema, "1.1");
 
   const mapped = context.__runtimeMapRow(technical.rows[0]);
   assert.equal(mapped.price, 493.23, "canonical live price must override technical close");
@@ -158,7 +160,7 @@ vm.runInContext(`
   assert.equal(context.window.StockcheckTechnicalV2.snapshotIsFresh(), false);
   assert.equal(context.__runtimeBuildAlertItems().length, 0, "stale snapshot must suppress technical alerts");
 
-  console.log("canonical screener runtime test passed: live overview + consistent lazy detail + stale alert gate");
+  console.log("canonical screener runtime test passed: schema 1.1 + single fetch + live overview + lazy detail");
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
