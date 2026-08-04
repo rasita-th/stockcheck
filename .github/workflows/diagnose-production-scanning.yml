@@ -1,0 +1,96 @@
+name: Diagnose Production Scanning
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/diagnose-production-scanning.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install Selenium
+        run: python -m pip install --disable-pip-version-check 'selenium>=4,<5'
+      - name: Open production and capture runtime evidence
+        run: |
+          python - <<'PY'
+          import json
+          import time
+          import urllib.request
+          from pathlib import Path
+          from selenium import webdriver
+          from selenium.webdriver.common.by import By
+
+          base = 'https://rasita-th.github.io/stockcheck'
+          with urllib.request.urlopen(f'{base}/build.json?diagnostic={int(time.time())}', timeout=30) as response:
+              print('BUILD_JSON', response.read().decode('utf-8'))
+
+          options = webdriver.ChromeOptions()
+          for flag in ('--headless=new','--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--window-size=1440,1000'):
+              options.add_argument(flag)
+          options.set_capability('goog:loggingPrefs', {'browser':'ALL','performance':'ALL'})
+          driver = webdriver.Chrome(options=options)
+          try:
+              url = f'{base}/index.html?production_diagnostic={int(time.time())}'
+              driver.get(url)
+              for elapsed in (2, 5, 10, 20, 35):
+                  target = elapsed - (0 if elapsed == 2 else previous)
+                  time.sleep(target)
+                  previous = elapsed
+                  state = driver.execute_script('''
+                    const buttons = [...document.querySelectorAll('#scanNowDesktop,#mobileScanNow')].map(b => ({id:b.id,text:b.textContent,disabled:b.disabled}));
+                    const subtitle = document.querySelector('#scannerSubtitle')?.textContent || '';
+                    const rows = document.querySelectorAll('#technicalTableBody tr').length;
+                    const cards = document.querySelectorAll('#technicalMobileCards > *').length;
+                    const scripts = [...document.scripts].map(s => s.src).filter(Boolean);
+                    return {
+                      readyState: document.readyState,
+                      buttons,
+                      subtitle,
+                      rows,
+                      cards,
+                      guardVersion: window.StockcheckScannerLoadingGuard?.version || null,
+                      drawdownRuntime: document.documentElement.dataset.drawdownScreener || null,
+                      scripts: scripts.filter(src => /app\.js|memo-only-fix|scanner-loading-timeout|drawdown/.test(src)),
+                      bodyClasses: document.body.className,
+                      visibility: document.visibilityState,
+                    };
+                  ''')
+                  print('STATE', elapsed, json.dumps(state, ensure_ascii=False))
+              probe = driver.execute_async_script('''
+                const done = arguments[arguments.length - 1];
+                const urls = ['data/technical.json','data/fundamental.json','data/screener_snapshot.json'];
+                Promise.all(urls.map(async url => {
+                  const controller = new AbortController();
+                  const timer = setTimeout(() => controller.abort(), 12000);
+                  try {
+                    const r = await fetch(url + '?probe=' + Date.now(), {cache:'no-store', signal:controller.signal});
+                    const text = await r.text();
+                    return {url,status:r.status,ok:r.ok,length:text.length,prefix:text.slice(0,80)};
+                  } catch (e) {
+                    return {url,error:String(e)};
+                  } finally { clearTimeout(timer); }
+                })).then(done);
+              ''')
+              print('FETCH_PROBE', json.dumps(probe, ensure_ascii=False))
+              resources = driver.execute_script('''return performance.getEntriesByType('resource').map(r => ({name:r.name, duration:r.duration, transferSize:r.transferSize, decodedBodySize:r.decodedBodySize})).filter(r => /data\/|\.js|build\.json/.test(r.name));''')
+              print('RESOURCES', json.dumps(resources, ensure_ascii=False))
+              for entry in driver.get_log('browser'):
+                  print('BROWSER_LOG', json.dumps(entry, ensure_ascii=False))
+              driver.save_screenshot('/tmp/production-scanning-diagnostic.png')
+          finally:
+              driver.quit()
+          PY
+      - name: Upload production screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-scanning-diagnostic
+          path: /tmp/production-scanning-diagnostic.png
