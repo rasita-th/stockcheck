@@ -96,6 +96,7 @@ def _hydrate_technical_watch_metrics(
             canonical["technical_signal"] = signal
 
         changed = False
+        legacy_missing_rsi = pr2.p0.to_float(event.get("rsi14")) is None
         for key, value in canonical.items():
             if value is None or value == "":
                 continue
@@ -106,7 +107,7 @@ def _hydrate_technical_watch_metrics(
                 key in {"pct_vs_ema20", "pct_vs_ema200"}
                 and current_number == 0.0
                 and float(value) != 0.0
-                and pr2.p0.to_float(event.get("rsi14")) is None
+                and legacy_missing_rsi
             )
             if missing or placeholder_zero:
                 event[key] = value
