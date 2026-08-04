@@ -671,7 +671,7 @@
     }
   ],
   "display_timezone": "Asia/Bangkok",
-  "generated_at": "2026-08-04T12:19:21+00:00",
+  "generated_at": "2026-08-04T13:37:54+00:00",
   "items": [
     {
       "confidence": "medium",
@@ -3955,10 +3955,19 @@
     "market_wide_source": "Finnhub earnings calendar batch",
     "missing_values": "Missing EPS, revenue, company name and event time remain null or ticker-only; values are never fabricated",
     "official_override": "Company IR / SEC confirmed rows override provider estimates for the same ticker and date",
-    "relevance": "Portfolio relations are explicit and auditable through data/earnings_relevance.json"
+    "relevance": "Portfolio relations are explicit and auditable through data/earnings_relevance.json",
+    "source_policy_phase": "P3 observes canonical domain decisions; P4 will enforce the centralized gate"
   },
   "schema_version": "1.0",
   "selected_date": "2026-08-04",
+  "source_contract": {
+    "canonical_rows": 134,
+    "legacy_fallback_rows": 0,
+    "policy_enforced": false,
+    "policy_reject_rows": 0,
+    "read_order": "canonical_first_legacy_fallback",
+    "rows": 134
+  },
   "summary": {
     "after_market": 0,
     "before_market": 0,
