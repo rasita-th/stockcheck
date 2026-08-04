@@ -1,0 +1,64 @@
+name: Validate Earnings Canonical Only P5
+
+on:
+  pull_request:
+    paths:
+      - "scripts/contracts/earnings_reader.py"
+      - "scripts/generate_earnings_radar_p5.py"
+      - "scripts/generate_attention_p5.py"
+      - "tests/test_earnings_canonical_only_p5.py"
+      - ".github/workflows/validate-earnings-canonical-only-p5.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/contracts/earnings_reader.py"
+      - "scripts/generate_earnings_radar_p5.py"
+      - "scripts/generate_attention_p5.py"
+      - "tests/test_earnings_canonical_only_p5.py"
+      - ".github/workflows/validate-earnings-canonical-only-p5.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile P5 readers
+        run: |
+          python -m py_compile scripts/contracts/earnings_reader.py scripts/generate_earnings_radar_p5.py scripts/generate_attention_p5.py
+      - name: Run P5 contract tests
+        run: python -m unittest tests.test_earnings_canonical_only_p5 -v
+      - name: Generate canonical-only contracts
+        env:
+          EARNINGS_RADAR_DAYS_BACK: "1"
+          EARNINGS_RADAR_DAYS_FORWARD: "14"
+          ATTENTION_NEWS_ENABLED: "0"
+          ATTENTION_REGULATORS_ENABLED: "0"
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          python scripts/generate_earnings_radar_p5.py
+          python scripts/validate_earnings_radar.py
+          python scripts/generate_attention_p5.py
+          python scripts/validate_attention_pr3.py
+      - name: Verify legacy fallback is retired
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          radar = json.loads(Path('data/generated/earnings_radar.json').read_text())
+          today = json.loads(Path('data/generated/attention_today.json').read_text())
+          assert radar['source_contract']['phase'] == 'P5'
+          assert radar['source_contract']['read_order'] == 'canonical_only'
+          assert radar['source_contract']['legacy_fallback_rows'] == 0
+          metrics = today['data_quality']['earnings_contract_read']
+          assert metrics['phase'] == 'P5'
+          assert metrics['read_order'] == 'canonical_only'
+          assert metrics['legacy_fallback_rows'] == 0
+          assert metrics['legacy_fallback_retired'] is True
+          PY
