@@ -1194,67 +1194,6 @@
           "company_profile",
           "basic_financials"
         ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM"
-          ],
-          "company_profile": [
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE"
-          ],
-          "recommendation_trends": [
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT",
-            "ETN",
-            "EVTL",
-            "EXC",
-            "FANG",
-            "FAST",
-            "FATE",
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG",
-            "FTNT",
-            "FUTU",
-            "GD",
-            "GEHC",
-            "GEV",
-            "GH",
-            "GILD",
-            "GILT",
-            "GLXY"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-03T10:27:39+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-03T10:26:31+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
         "errors": [
           {
             "endpoint": "recommendation_trends",
@@ -2250,9 +2189,53 @@
       "mode": "analyst",
       "started_at": "2026-08-05T09:22:47+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-05T11:28:57+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO",
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH",
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-05T11:28:31+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-05T09:23:37+00:00"
+  "updated_at": "2026-08-05T11:28:58+00:00"
 }
