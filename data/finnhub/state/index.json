@@ -869,7 +869,9 @@
       "SIDU": "endpoints/company_profile/SIDU.json",
       "SITM": "endpoints/company_profile/SITM.json",
       "SMCI": "endpoints/company_profile/SMCI.json",
-      "SMH": "endpoints/company_profile/SMH.json"
+      "SMH": "endpoints/company_profile/SMH.json",
+      "SNDK": "endpoints/company_profile/SNDK.json",
+      "SNOW": "endpoints/company_profile/SNOW.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1180,50 +1182,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-02T22:09:43+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD",
-            "AMGN",
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-02T22:09:17+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2227,9 +2185,70 @@
       "mode": "events",
       "started_at": "2026-08-05T03:30:29+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "NBIS",
+            "NICE",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO"
+          ],
+          "company_profile": [
+            "SIDU",
+            "SITM",
+            "SNDK",
+            "SNOW"
+          ],
+          "recommendation_trends": [
+            "TMC",
+            "TMDX",
+            "TMUS",
+            "TOST",
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO",
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH",
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-05T03:49:12+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-05T03:48:24+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-05T03:30:57+00:00"
+  "updated_at": "2026-08-05T03:49:13+00:00"
 }
