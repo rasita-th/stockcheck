@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-05T16:54:20+00:00",
-  "row_count": 15,
+  "generated_at": "2026-08-05T20:04:26+00:00",
+  "row_count": 17,
   "events": [
     {
       "event_id": "technical:INDI:price-drop:2026-08-05",
       "ticker": "INDI",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -6.2%",
+      "headline": "Price -6.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -6.2% today.",
+      "why_today": "The stock moved -6.6% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.329195+00:00",
-      "detected_at": "2026-08-05T16:52:29.329197+00:00",
+      "event_time": "2026-08-05T20:01:37.918156+00:00",
+      "detected_at": "2026-08-05T20:01:37.918158+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -41,26 +41,64 @@
         "technical:INDI:price-drop:2026-08-05"
       ],
       "dedupe_key": "INDI:price_drop:7158ff23fc993e2c",
-      "technical_score": 37.0,
+      "technical_score": 32.0,
       "rsi14": 48.04,
-      "pct_vs_ema20": -6.18,
-      "pct_vs_ema200": -14.63,
+      "pct_vs_ema20": -6.59,
+      "pct_vs_ema200": -15.0,
       "volume_ratio20": 1.07,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:TE:price-drop:2026-08-05",
+      "ticker": "TE",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -8.1%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -8.1% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T20:01:37.918143+00:00",
+      "detected_at": "2026-08-05T20:01:37.918145+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:TE:price-drop:2026-08-05"
+      ],
+      "dedupe_key": "TE:price_drop:ba780b822f9d2dd9"
     },
     {
       "event_id": "technical:OPEN:price-drop:2026-08-05",
       "ticker": "OPEN",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -6.1%",
+      "headline": "Price -7.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -6.1% today.",
+      "why_today": "The stock moved -7.9% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.329169+00:00",
-      "detected_at": "2026-08-05T16:52:29.329170+00:00",
+      "event_time": "2026-08-05T20:01:37.918119+00:00",
+      "detected_at": "2026-08-05T20:01:37.918121+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -88,8 +126,8 @@
       "dedupe_key": "OPEN:price_drop:5fdaaa8308bd3115",
       "technical_score": 28.0,
       "rsi14": 46.58,
-      "pct_vs_ema20": -7.46,
-      "pct_vs_ema200": -28.1,
+      "pct_vs_ema20": -9.21,
+      "pct_vs_ema200": -29.46,
       "volume_ratio20": 0.74,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
@@ -99,13 +137,13 @@
       "ticker": "ZETA",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +11.9%",
+      "headline": "Price +12.1%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +11.9% today.",
+      "why_today": "The stock moved +12.1% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.329159+00:00",
-      "detected_at": "2026-08-05T16:52:29.329161+00:00",
+      "event_time": "2026-08-05T20:01:37.918108+00:00",
+      "detected_at": "2026-08-05T20:01:37.918110+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -133,8 +171,8 @@
       "dedupe_key": "ZETA:price_move:bd0cb8212e576ebc",
       "technical_score": 94.0,
       "rsi14": 66.35,
-      "pct_vs_ema20": 26.3,
-      "pct_vs_ema200": 39.19,
+      "pct_vs_ema20": 26.59,
+      "pct_vs_ema200": 39.51,
       "volume_ratio20": 2.32,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "technical_metrics_source": "canonical_technical_snapshot"
@@ -144,13 +182,13 @@
       "ticker": "RR",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -5.7%",
+      "headline": "Price -7.2%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -5.7% today.",
+      "why_today": "The stock moved -7.2% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.329144+00:00",
-      "detected_at": "2026-08-05T16:52:29.329149+00:00",
+      "event_time": "2026-08-05T20:01:37.918097+00:00",
+      "detected_at": "2026-08-05T20:01:37.918099+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -175,13 +213,51 @@
       "related_event_ids": [
         "technical:RR:price-drop:2026-08-05"
       ],
-      "dedupe_key": "RR:price_drop:3c410dead32ba0bc",
-      "technical_score": 33.0,
-      "rsi14": 47.62,
-      "pct_vs_ema20": -3.99,
-      "pct_vs_ema200": -44.7,
-      "volume_ratio20": 1.0,
-      "technical_signal": "AVOID / Turnaround only",
+      "dedupe_key": "RR:price_drop:3c410dead32ba0bc"
+    },
+    {
+      "event_id": "technical:CIFR:price-drop:2026-08-05",
+      "ticker": "CIFR",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -6.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -6.4% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-05T20:01:37.918050+00:00",
+      "detected_at": "2026-08-05T20:01:37.918058+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:CIFR:price-drop:2026-08-05"
+      ],
+      "dedupe_key": "CIFR:price_drop:8b36d857e22bba3e",
+      "technical_score": 65.0,
+      "rsi14": 46.53,
+      "pct_vs_ema20": -12.94,
+      "pct_vs_ema200": 3.5,
+      "volume_ratio20": 2.03,
+      "technical_signal": "NEUTRAL / Wait",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
@@ -189,13 +265,13 @@
       "ticker": "EOSE",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -11.4%",
+      "headline": "Price -12.8%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -11.4% today.",
+      "why_today": "The stock moved -12.8% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.249874+00:00",
-      "detected_at": "2026-08-05T16:52:29.249876+00:00",
+      "event_time": "2026-08-05T20:01:37.904129+00:00",
+      "detected_at": "2026-08-05T20:01:37.904132+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -221,10 +297,10 @@
         "technical:EOSE:price-drop:2026-08-05"
       ],
       "dedupe_key": "EOSE:price_drop:67241c13c00ed679",
-      "technical_score": 40.0,
+      "technical_score": 35.0,
       "rsi14": 48.91,
-      "pct_vs_ema20": -6.88,
-      "pct_vs_ema200": -55.02,
+      "pct_vs_ema20": -8.33,
+      "pct_vs_ema200": -55.72,
       "volume_ratio20": 1.68,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
@@ -234,13 +310,13 @@
       "ticker": "TMDX",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -9.2%",
+      "headline": "Price -7.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -9.2% today.",
-      "materiality": "high",
+      "why_today": "The stock moved -7.5% today.",
+      "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.249858+00:00",
-      "detected_at": "2026-08-05T16:52:29.249861+00:00",
+      "event_time": "2026-08-05T20:01:37.904107+00:00",
+      "detected_at": "2026-08-05T20:01:37.904112+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -248,7 +324,7 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 99,
+      "priority_score": 75,
       "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
@@ -265,27 +341,20 @@
       "related_event_ids": [
         "technical:TMDX:price-drop:2026-08-05"
       ],
-      "dedupe_key": "TMDX:price_drop:0bcf02b8d53b7c35",
-      "technical_score": 45.0,
-      "rsi14": 62.36,
-      "pct_vs_ema20": -2.77,
-      "pct_vs_ema200": -27.57,
-      "volume_ratio20": 1.5,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "TMDX:price_drop:0bcf02b8d53b7c35"
     },
     {
       "event_id": "technical:AMD:price-drop:2026-08-05",
       "ticker": "AMD",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -6.5%",
+      "headline": "Price -5.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -6.5% today.",
+      "why_today": "The stock moved -5.9% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-05T16:52:29.249808+00:00",
-      "detected_at": "2026-08-05T16:52:29.249818+00:00",
+      "event_time": "2026-08-05T20:01:37.904046+00:00",
+      "detected_at": "2026-08-05T20:01:37.904058+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -351,6 +420,49 @@
       "attention_policy_decision": "allow_unverified",
       "related_event_ids": [
         "gdelt:TSLA:98e226d862a86471"
+      ],
+      "priority_score": 32,
+      "priority": "Watch"
+    },
+    {
+      "event_id": "gdelt:NOW:1a99a209577a6403",
+      "ticker": "NOW",
+      "event_type": "corporate_event",
+      "event_subtype": "product",
+      "headline": "Autonomize AI Launches Fraud , Waste , and Abuse AI - native App in the ServiceNow Store",
+      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "materiality": "low",
+      "reported_materiality": "low",
+      "urgency": "developing",
+      "event_time": "2026-08-05T13:00:00+00:00",
+      "detected_at": "2026-08-05T20:01:37+00:00",
+      "verification_status": "unverified",
+      "verification_level": "unverified_report",
+      "verification_reason": "Primary source not yet located.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: ServiceNow",
+      "dedupe_key": "NOW:product:2026-08-05:c864bd47be60",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
+        "published_at": "2026-08-05T13:00:00+00:00",
+        "domain": "www.manilatimes.net"
+      },
+      "source_chain": [
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
+          "published_at": "2026-08-05T13:00:00+00:00",
+          "domain": "www.manilatimes.net"
+        }
+      ],
+      "secondary_source_count": 1,
+      "attention_policy_decision": "allow_unverified",
+      "related_event_ids": [
+        "gdelt:NOW:1a99a209577a6403"
       ],
       "priority_score": 32,
       "priority": "Watch"
@@ -444,8 +556,8 @@
       "related_event_ids": [
         "regulator:TE:8042127c5d54d751"
       ],
-      "priority_score": 64,
-      "priority": "Action"
+      "priority_score": 78,
+      "priority": "Risk"
     },
     {
       "event_id": "technical:GOOGL:technical_setup:2026-08-04",
@@ -454,11 +566,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 97/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-04: score 97/100, BUY ZONE / Trend Confirmed, RSI 62.6, +8.1% vs EMA20, +18.5% vs EMA200, volume 1.14x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-08-04: score 97/100, BUY ZONE / Trend Confirmed, RSI 62.6, +3.3% vs EMA20, +13.3% vs EMA200, volume 1.14x 20-day average.",
       "materiality": "medium",
       "urgency": "developing",
       "event_time": "2026-08-04",
-      "detected_at": "2026-08-05T16:54:20+00:00",
+      "detected_at": "2026-08-05T20:04:26+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -480,8 +592,8 @@
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 1,
       "rsi14": 62.56,
-      "pct_vs_ema20": 8.06,
-      "pct_vs_ema200": 18.54,
+      "pct_vs_ema20": 3.26,
+      "pct_vs_ema200": 13.28,
       "volume_ratio20": 1.14,
       "secondary_source_count": 1,
       "related_event_ids": [
@@ -489,49 +601,6 @@
       ],
       "dedupe_key": "GOOGL:technical_setup:b33ff3b152e00469",
       "priority_score": 48,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "gdelt:NOW:16b9b1b70631c9ad",
-      "ticker": "NOW",
-      "event_type": "corporate_event",
-      "event_subtype": "transaction",
-      "headline": "Healthcare of Ontario Pension Plan Trust Fund Acquires 40 , 189 Shares of ServiceNow , Inc . $NOW",
-      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "materiality": "low",
-      "reported_materiality": "high",
-      "urgency": "developing",
-      "event_time": "2026-07-29T09:45:00+00:00",
-      "detected_at": "2026-07-29T17:01:49+00:00",
-      "verification_status": "unverified",
-      "verification_level": "unverified_report",
-      "verification_reason": "Primary source not yet located.",
-      "entity_confidence": "high",
-      "entity_confidence_reason": "headline contains alias: ServiceNow, Inc.",
-      "dedupe_key": "NOW:transaction:2026-07-29:2c1866440034",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://www.themarketsdaily.com/2026/07/29/healthcare-of-ontario-pension-plan-trust-fund-acquires-40189-shares-of-servicenow-inc-now.html",
-        "published_at": "2026-07-29T09:45:00+00:00",
-        "domain": "www.themarketsdaily.com"
-      },
-      "source_chain": [
-        {
-          "type": "gdelt",
-          "quality": "secondary",
-          "url": "https://www.themarketsdaily.com/2026/07/29/healthcare-of-ontario-pension-plan-trust-fund-acquires-40189-shares-of-servicenow-inc-now.html",
-          "published_at": "2026-07-29T09:45:00+00:00",
-          "domain": "www.themarketsdaily.com"
-        }
-      ],
-      "secondary_source_count": 1,
-      "attention_policy_decision": "allow_unverified",
-      "related_event_ids": [
-        "gdelt:NOW:16b9b1b70631c9ad"
-      ],
-      "priority_score": 32,
       "priority": "Watch"
     },
     {

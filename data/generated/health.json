@@ -1,20 +1,20 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-05T16:54:20.852111+00:00",
+  "generated_at": "2026-08-05T20:04:27.142844+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 79.4,
+      "age_minutes": 73.9,
       "stale_after_minutes": 30,
-      "timestamp": "2026-08-05T15:34:58+00:00",
+      "timestamp": "2026-08-05T18:50:31+00:00",
       "row_count": 408,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download"
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 79.4,
+      "age_minutes": 73.9,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-08-05T15:34:58+00:00",
+      "timestamp": "2026-08-05T18:50:32+00:00",
       "row_count": 407,
       "source": "technical indicators + quote_latest live-price projection"
     },
@@ -27,8 +27,8 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-05T16:54:20+00:00",
-      "row_count": 1,
+      "timestamp": "2026-08-05T20:04:26+00:00",
+      "row_count": 2,
       "source": null,
       "coverage_status": "partial",
       "source_health": {
@@ -69,22 +69,22 @@
           "status": "partial",
           "source": "Free news discovery",
           "checked": 10,
-          "accepted_events": 0
+          "accepted_events": 1
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 1,
-          "partial": 9,
+          "ok": 0,
+          "partial": 10,
           "errors": 0
         },
         "gdelt": {
           "status": "partial",
           "source": "GDELT DOC 2.0",
           "checked": 10,
-          "ok": 2,
-          "errors": 8
+          "ok": 3,
+          "errors": 7
         },
         "regulators": {
           "status": "ok",
@@ -101,13 +101,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-05T16:54:20+00:00",
-      "row_count": 15,
+      "timestamp": "2026-08-05T20:04:26+00:00",
+      "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 26337.5,
+      "age_minutes": 26527.6,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -115,7 +115,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 30476.1,
+      "age_minutes": 30666.2,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -123,7 +123,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 27396.3,
+      "age_minutes": 27586.4,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,

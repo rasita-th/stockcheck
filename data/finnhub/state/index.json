@@ -1191,67 +1191,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR"
-          ],
-          "company_profile": [
-            "RXRX",
-            "SAIC",
-            "SATL",
-            "SBUX"
-          ],
-          "recommendation_trends": [
-            "NXPI",
-            "ODFL",
-            "OKLO",
-            "ONDS",
-            "OPEN",
-            "ORCL",
-            "ORLY",
-            "OSCR",
-            "OSS",
-            "PACB",
-            "PANW",
-            "PATH",
-            "PAYX",
-            "PCAR",
-            "PDD",
-            "PEP",
-            "PERI",
-            "PINS",
-            "PL",
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-04T09:26:04+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-04T09:25:17+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2192,9 +2131,53 @@
       "mode": "events",
       "started_at": "2026-08-05T16:52:00+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-08-05T20:01:35+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-05T20:01:09+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-05T16:52:27+00:00"
+  "updated_at": "2026-08-05T20:01:36+00:00"
 }
