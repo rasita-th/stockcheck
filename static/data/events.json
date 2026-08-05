@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-04T22:23:48+00:00",
-  "row_count": 25,
+  "generated_at": "2026-08-05T03:33:01+00:00",
+  "row_count": 28,
   "events": [
     {
       "event_id": "technical:INDI:price-move:2026-08-04",
       "ticker": "INDI",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.3%",
+      "headline": "Price +7.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.3% today.",
+      "why_today": "The stock moved +7.4% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165911+00:00",
-      "detected_at": "2026-08-04T22:22:02.165914+00:00",
+      "event_time": "2026-08-05T03:30:58.457181+00:00",
+      "detected_at": "2026-08-05T03:30:58.457183+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -47,13 +47,13 @@
       "ticker": "NASA",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.6%",
+      "headline": "Price +7.3%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.6% today.",
+      "why_today": "The stock moved +7.3% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165900+00:00",
-      "detected_at": "2026-08-04T22:22:02.165902+00:00",
+      "event_time": "2026-08-05T03:30:58.457170+00:00",
+      "detected_at": "2026-08-05T03:30:58.457172+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -85,13 +85,13 @@
       "ticker": "TE",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +18.7%",
+      "headline": "Price +9.7%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +18.7% today.",
+      "why_today": "The stock moved +9.7% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165888+00:00",
-      "detected_at": "2026-08-04T22:22:02.165890+00:00",
+      "event_time": "2026-08-05T03:30:58.457158+00:00",
+      "detected_at": "2026-08-05T03:30:58.457160+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -119,131 +119,17 @@
       "dedupe_key": "TE:price_move:087ac1879f1a2add"
     },
     {
-      "event_id": "technical:RR:price-move:2026-08-04",
-      "ticker": "RR",
+      "event_id": "technical:BEAM:price-move:2026-08-04",
+      "ticker": "BEAM",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.7%",
+      "headline": "Price +9.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.7% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165852+00:00",
-      "detected_at": "2026-08-04T22:22:02.165854+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:RR:price-move:2026-08-04"
-      ],
-      "dedupe_key": "RR:price_move:49bc7d2652fd0188"
-    },
-    {
-      "event_id": "technical:SYM:price-move:2026-08-04",
-      "ticker": "SYM",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.5% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165825+00:00",
-      "detected_at": "2026-08-04T22:22:02.165827+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:SYM:price-move:2026-08-04"
-      ],
-      "dedupe_key": "SYM:price_move:e7bead33f37ed60f"
-    },
-    {
-      "event_id": "technical:RXRX:price-move:2026-08-04",
-      "ticker": "RXRX",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.1%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.1% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165808+00:00",
-      "detected_at": "2026-08-04T22:22:02.165810+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:RXRX:price-move:2026-08-04"
-      ],
-      "dedupe_key": "RXRX:price_move:68aa090d8bbfb24a"
-    },
-    {
-      "event_id": "technical:CIFR:price-move:2026-08-04",
-      "ticker": "CIFR",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.2%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.2% today.",
+      "why_today": "The stock moved +9.4% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165794+00:00",
-      "detected_at": "2026-08-04T22:22:02.165796+00:00",
+      "event_time": "2026-08-05T03:30:58.457141+00:00",
+      "detected_at": "2026-08-05T03:30:58.457143+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -266,15 +152,250 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:CIFR:price-move:2026-08-04"
+        "technical:BEAM:price-move:2026-08-04"
       ],
-      "dedupe_key": "CIFR:price_move:db8a17742ebd487c",
-      "technical_score": 100.0,
-      "rsi14": 54.53,
-      "pct_vs_ema20": 9.47,
-      "pct_vs_ema200": 31.3,
-      "volume_ratio20": 1.3,
-      "technical_signal": "BUY ZONE / Trend Confirmed",
+      "dedupe_key": "BEAM:price_move:e258d198aafb1bce",
+      "technical_score": 68.0,
+      "rsi14": 48.62,
+      "pct_vs_ema20": 0.93,
+      "pct_vs_ema200": 2.83,
+      "volume_ratio20": 0.96,
+      "technical_signal": "NEUTRAL / Wait",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:ZETA:price-move:2026-08-04",
+      "ticker": "ZETA",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +7.5%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +7.5% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457119+00:00",
+      "detected_at": "2026-08-05T03:30:58.457121+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:ZETA:price-move:2026-08-04"
+      ],
+      "dedupe_key": "ZETA:price_move:ab1a78e9a8618d82"
+    },
+    {
+      "event_id": "technical:RR:price-move:2026-08-04",
+      "ticker": "RR",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +8.9%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +8.9% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457107+00:00",
+      "detected_at": "2026-08-05T03:30:58.457109+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Critical",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:RR:price-move:2026-08-04"
+      ],
+      "dedupe_key": "RR:price_move:49bc7d2652fd0188"
+    },
+    {
+      "event_id": "technical:COPX:price-move:2026-08-04",
+      "ticker": "COPX",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.8%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.8% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457095+00:00",
+      "detected_at": "2026-08-05T03:30:58.457097+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:COPX:price-move:2026-08-04"
+      ],
+      "dedupe_key": "COPX:price_move:08975665f798e154"
+    },
+    {
+      "event_id": "technical:TMC:price-move:2026-08-04",
+      "ticker": "TMC",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +7.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +7.4% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457077+00:00",
+      "detected_at": "2026-08-05T03:30:58.457080+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:TMC:price-move:2026-08-04"
+      ],
+      "dedupe_key": "TMC:price_move:41bc6f67eccbd168"
+    },
+    {
+      "event_id": "technical:CIFR:price-drop:2026-08-04",
+      "ticker": "CIFR",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -15.6%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -15.6% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457048+00:00",
+      "detected_at": "2026-08-05T03:30:58.457050+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:CIFR:price-drop:2026-08-04"
+      ],
+      "dedupe_key": "CIFR:price_drop:49b2db3b8b4cee8d"
+    },
+    {
+      "event_id": "technical:PSIX:price-move:2026-08-04",
+      "ticker": "PSIX",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +21.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +21.4% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.457035+00:00",
+      "detected_at": "2026-08-05T03:30:58.457037+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Critical",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:PSIX:price-move:2026-08-04"
+      ],
+      "dedupe_key": "PSIX:price_move:87e6b6532be97fbd",
+      "technical_score": 50.0,
+      "rsi14": 54.86,
+      "pct_vs_ema20": 10.92,
+      "pct_vs_ema200": -40.96,
+      "volume_ratio20": 1.89,
+      "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
@@ -282,13 +403,13 @@
       "ticker": "UUUU",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.3%",
+      "headline": "Price +6.1%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.3% today.",
+      "why_today": "The stock moved +6.1% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.165762+00:00",
-      "detected_at": "2026-08-04T22:22:02.165771+00:00",
+      "event_time": "2026-08-05T03:30:58.457019+00:00",
+      "detected_at": "2026-08-05T03:30:58.457022+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -316,17 +437,62 @@
       "dedupe_key": "UUUU:price_move:bbd545234fff6e34"
     },
     {
+      "event_id": "technical:PLTR:price-move:2026-08-04",
+      "ticker": "PLTR",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +29.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +29.4% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.456987+00:00",
+      "detected_at": "2026-08-05T03:30:58.456996+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Critical",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:PLTR:price-move:2026-08-04"
+      ],
+      "dedupe_key": "PLTR:price_move:7bb1364101139388",
+      "technical_score": 67.0,
+      "rsi14": 72.8,
+      "pct_vs_ema20": 24.89,
+      "pct_vs_ema200": 8.35,
+      "volume_ratio20": 4.09,
+      "technical_signal": "NEUTRAL / Wait",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
       "event_id": "technical:EOSE:price-move:2026-08-04",
       "ticker": "EOSE",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +11.2%",
+      "headline": "Price +15.7%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +11.2% today.",
+      "why_today": "The stock moved +15.7% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.148494+00:00",
-      "detected_at": "2026-08-04T22:22:02.148497+00:00",
+      "event_time": "2026-08-05T03:30:58.439629+00:00",
+      "detected_at": "2026-08-05T03:30:58.439631+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -352,64 +518,26 @@
         "technical:EOSE:price-move:2026-08-04"
       ],
       "dedupe_key": "EOSE:price_move:7913b7e3ffde869f",
-      "technical_score": 29.0,
-      "rsi14": 39.87,
-      "pct_vs_ema20": -8.74,
-      "pct_vs_ema200": -56.23,
-      "volume_ratio20": 1.49,
+      "technical_score": 50.0,
+      "rsi14": 48.91,
+      "pct_vs_ema20": 4.83,
+      "pct_vs_ema200": -49.36,
+      "volume_ratio20": 1.68,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:TMDX:price-move:2026-08-04",
-      "ticker": "TMDX",
+      "event_id": "technical:AMD:price-move:2026-08-04",
+      "ticker": "AMD",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.8%",
+      "headline": "Price +8.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.8% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.148472+00:00",
-      "detected_at": "2026-08-04T22:22:02.148476+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:TMDX:price-move:2026-08-04"
-      ],
-      "dedupe_key": "TMDX:price_move:348ade81b0a3e22d"
-    },
-    {
-      "event_id": "technical:ORCL:price-move:2026-08-04",
-      "ticker": "ORCL",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +9.2%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +9.2% today.",
+      "why_today": "The stock moved +8.5% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.148432+00:00",
-      "detected_at": "2026-08-04T22:22:02.148442+00:00",
+      "event_time": "2026-08-05T03:30:58.439581+00:00",
+      "detected_at": "2026-08-05T03:30:58.439589+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -432,29 +560,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:ORCL:price-move:2026-08-04"
+        "technical:AMD:price-move:2026-08-04"
       ],
-      "dedupe_key": "ORCL:price_move:dadb3f59eacd1090",
-      "technical_score": 50.0,
-      "rsi14": 53.25,
-      "pct_vs_ema20": 7.02,
-      "pct_vs_ema200": -25.03,
-      "volume_ratio20": 1.25,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "AMD:price_move:384cc4a84d73dfe6"
     },
     {
       "event_id": "technical:IONQ:price-move:2026-08-04",
       "ticker": "IONQ",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.6%",
+      "headline": "Price +7.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.6% today.",
+      "why_today": "The stock moved +7.5% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.128612+00:00",
-      "detected_at": "2026-08-04T22:22:02.128614+00:00",
+      "event_time": "2026-08-05T03:30:58.421996+00:00",
+      "detected_at": "2026-08-05T03:30:58.421998+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -486,51 +607,13 @@
       "ticker": "MP",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.0%",
+      "headline": "Price +8.3%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.0% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.128600+00:00",
-      "detected_at": "2026-08-04T22:22:02.128602+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:MP:price-move:2026-08-04"
-      ],
-      "dedupe_key": "MP:price_move:f16fe895d8c263d3"
-    },
-    {
-      "event_id": "technical:NBIS:price-move:2026-08-04",
-      "ticker": "NBIS",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +11.7%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +11.7% today.",
+      "why_today": "The stock moved +8.3% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.128572+00:00",
-      "detected_at": "2026-08-04T22:22:02.128580+00:00",
+      "event_time": "2026-08-05T03:30:58.421983+00:00",
+      "detected_at": "2026-08-05T03:30:58.421985+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -553,29 +636,67 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
+        "technical:MP:price-move:2026-08-04"
+      ],
+      "dedupe_key": "MP:price_move:f16fe895d8c263d3",
+      "technical_score": 50.0,
+      "rsi14": 49.79,
+      "pct_vs_ema20": 3.18,
+      "pct_vs_ema200": -19.7,
+      "volume_ratio20": 1.71,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:NBIS:price-move:2026-08-04",
+      "ticker": "NBIS",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +6.1%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +6.1% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.421928+00:00",
+      "detected_at": "2026-08-05T03:30:58.421937+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
         "technical:NBIS:price-move:2026-08-04"
       ],
-      "dedupe_key": "NBIS:price_move:c72953ccc416b721",
-      "technical_score": 87.0,
-      "rsi14": 52.27,
-      "pct_vs_ema20": 6.59,
-      "pct_vs_ema200": 39.23,
-      "volume_ratio20": 1.15,
-      "technical_signal": "BUY ZONE / Trend Confirmed",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "NBIS:price_move:c72953ccc416b721"
     },
     {
       "event_id": "technical:OKLO:price-move:2026-08-04",
       "ticker": "OKLO",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.2%",
+      "headline": "Price +5.1%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.2% today.",
+      "why_today": "The stock moved +5.1% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.108693+00:00",
-      "detected_at": "2026-08-04T22:22:02.108695+00:00",
+      "event_time": "2026-08-05T03:30:58.402803+00:00",
+      "detected_at": "2026-08-05T03:30:58.402805+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -607,13 +728,58 @@
       "ticker": "ASTS",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +7.7%",
+      "headline": "Price +10.7%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +7.7% today.",
+      "why_today": "The stock moved +10.7% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58.402779+00:00",
+      "detected_at": "2026-08-05T03:30:58.402787+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Critical",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:ASTS:price-move:2026-08-04"
+      ],
+      "dedupe_key": "ASTS:price_move:32e94b7b97c3354f",
+      "technical_score": 57.0,
+      "rsi14": 53.45,
+      "pct_vs_ema20": 9.26,
+      "pct_vs_ema200": -8.01,
+      "volume_ratio20": 1.23,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:RKLB:price-move:2026-08-04",
+      "ticker": "RKLB",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.7%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.108680+00:00",
-      "detected_at": "2026-08-04T22:22:02.108682+00:00",
+      "event_time": "2026-08-05T03:30:58.299818+00:00",
+      "detected_at": "2026-08-05T03:30:58.299821+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -636,99 +802,52 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:ASTS:price-move:2026-08-04"
-      ],
-      "dedupe_key": "ASTS:price_move:32e94b7b97c3354f"
-    },
-    {
-      "event_id": "technical:IREN:price-move:2026-08-04",
-      "ticker": "IREN",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.0%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.0% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:02.108656+00:00",
-      "detected_at": "2026-08-04T22:22:02.108665+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:IREN:price-move:2026-08-04"
-      ],
-      "dedupe_key": "IREN:price_move:e79cdc7dfccb4240",
-      "technical_score": 53.0,
-      "rsi14": 48.46,
-      "pct_vs_ema20": 1.22,
-      "pct_vs_ema200": -12.65,
-      "volume_ratio20": 0.91,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
-    },
-    {
-      "event_id": "technical:RKLB:price-move:2026-08-04",
-      "ticker": "RKLB",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.5% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-08-04T22:22:01.925771+00:00",
-      "detected_at": "2026-08-04T22:22:01.925774+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
         "technical:RKLB:price-move:2026-08-04"
       ],
-      "dedupe_key": "RKLB:price_move:e62c8b4c1d73c9bd",
-      "technical_score": 37.0,
-      "rsi14": 43.93,
-      "pct_vs_ema20": -3.16,
-      "pct_vs_ema200": -8.01,
-      "volume_ratio20": 0.88,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "RKLB:price_move:e62c8b4c1d73c9bd"
+    },
+    {
+      "event_id": "company_ir:AMD:dae7d1b0dd034e13",
+      "ticker": "AMD",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "Earnings ReleaseHTML",
+      "summary": "A earnings reported event was detected and requires source review.",
+      "why_today": "A earnings reported event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-05T03:30:58+00:00",
+      "detected_at": "2026-08-05T03:30:58+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "medium",
+      "entity_confidence_reason": "article domain matches configured company domain",
+      "dedupe_key": "AMD:earnings_reported:2026-08-05:b6024742a8ae",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+        "published_at": "2026-08-05T03:30:58+00:00",
+        "domain": "ir.amd.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+          "published_at": "2026-08-05T03:30:58+00:00",
+          "domain": "ir.amd.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "company_ir:AMD:dae7d1b0dd034e13"
+      ],
+      "priority_score": 100,
+      "priority": "Critical"
     },
     {
       "event_id": "regulator:TE:8042127c5d54d751",
@@ -780,17 +899,17 @@
       "priority": "Risk"
     },
     {
-      "event_id": "technical:OSCR:technical_setup:2026-08-03",
-      "ticker": "OSCR",
+      "event_id": "technical:GOOGL:technical_setup:2026-08-04",
+      "ticker": "GOOGL",
       "event_type": "technical",
       "event_subtype": "technical_setup",
-      "headline": "Latest technical scan · 93/100",
+      "headline": "Latest technical scan · 97/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-03: score 93/100, BUY ZONE / Trend Confirmed, RSI 55.2, +2.4% vs EMA20, +45.1% vs EMA200, volume 0.81x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-08-04: score 97/100, BUY ZONE / Trend Confirmed, RSI 62.6, +7.8% vs EMA20, +18.3% vs EMA200, volume 1.14x 20-day average.",
       "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-08-03",
-      "detected_at": "2026-08-04T22:23:48+00:00",
+      "urgency": "today",
+      "event_time": "2026-08-04",
+      "detected_at": "2026-08-05T03:33:01+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -798,30 +917,30 @@
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": "2026-08-03"
+        "published_at": "2026-08-04"
       },
       "source_chain": [
         {
           "type": "technical_json",
           "quality": "internal",
           "url": "data/technical.json",
-          "published_at": "2026-08-03"
+          "published_at": "2026-08-04"
         }
       ],
-      "technical_score": 93.0,
+      "technical_score": 97.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 1,
-      "rsi14": 55.22,
-      "pct_vs_ema20": 2.36,
-      "pct_vs_ema200": 45.12,
-      "volume_ratio20": 0.81,
+      "scan_age_days": 0,
+      "rsi14": 62.56,
+      "pct_vs_ema20": 7.81,
+      "pct_vs_ema200": 18.26,
+      "volume_ratio20": 1.14,
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:OSCR:technical_setup:2026-08-03"
+        "technical:GOOGL:technical_setup:2026-08-04"
       ],
-      "dedupe_key": "OSCR:technical_setup:3ed30359e2e47966",
-      "priority_score": 48,
-      "priority": "Watch"
+      "dedupe_key": "GOOGL:technical_setup:b33ff3b152e00469",
+      "priority_score": 68,
+      "priority": "Action"
     },
     {
       "event_id": "gdelt:NOW:16b9b1b70631c9ad",
