@@ -879,7 +879,11 @@
       "SPGI": "endpoints/company_profile/SPGI.json",
       "SPIR": "endpoints/company_profile/SPIR.json",
       "SSYS": "endpoints/company_profile/SSYS.json",
-      "STX": "endpoints/company_profile/STX.json"
+      "STX": "endpoints/company_profile/STX.json",
+      "SYM": "endpoints/company_profile/SYM.json",
+      "SYNA": "endpoints/company_profile/SYNA.json",
+      "TDG": "endpoints/company_profile/TDG.json",
+      "TDOC": "endpoints/company_profile/TDOC.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1190,50 +1194,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-04T12:01:45+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA",
-            "CDNS",
-            "CEG",
-            "CHTR",
-            "CIFR",
-            "CLFD",
-            "CLPT",
-            "CLSK",
-            "CMCSA",
-            "COHR",
-            "COIN"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-04T12:01:18+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2175,9 +2135,70 @@
       "mode": "events",
       "started_at": "2026-08-05T20:01:09+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX",
+            "PUMP",
+            "PWR",
+            "PYPL"
+          ],
+          "company_profile": [
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC"
+          ],
+          "recommendation_trends": [
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE",
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR",
+            "BRK-B",
+            "BTDR",
+            "BW",
+            "CACI",
+            "CAMT"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-05T20:21:48+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-05T20:21:02+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-05T20:01:36+00:00"
+  "updated_at": "2026-08-05T20:21:49+00:00"
 }
