@@ -887,7 +887,11 @@
       "TE": "endpoints/company_profile/TE.json",
       "TEM": "endpoints/company_profile/TEM.json",
       "TER": "endpoints/company_profile/TER.json",
-      "TGT": "endpoints/company_profile/TGT.json"
+      "TGT": "endpoints/company_profile/TGT.json",
+      "TMC": "endpoints/company_profile/TMC.json",
+      "TMDX": "endpoints/company_profile/TMDX.json",
+      "TMUS": "endpoints/company_profile/TMUS.json",
+      "TOST": "endpoints/company_profile/TOST.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1198,50 +1202,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-04T17:03:47+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "IZRL",
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-04T17:03:20+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2200,9 +2160,70 @@
       "mode": "events",
       "started_at": "2026-08-06T08:52:10+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "RIOT",
+            "RKLB",
+            "ROKU",
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX",
+            "RXRX"
+          ],
+          "company_profile": [
+            "TMC",
+            "TMDX",
+            "TMUS",
+            "TOST"
+          ],
+          "recommendation_trends": [
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH",
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-06T09:28:29+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-06T09:27:42+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-06T08:52:37+00:00"
+  "updated_at": "2026-08-06T09:28:30+00:00"
 }
