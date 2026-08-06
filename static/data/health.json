@@ -1,20 +1,20 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-05T22:21:55.189057+00:00",
+  "generated_at": "2026-08-06T03:36:43.570825+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 211.4,
+      "age_minutes": 297.4,
       "stale_after_minutes": 30,
-      "timestamp": "2026-08-05T18:50:31+00:00",
+      "timestamp": "2026-08-05T22:39:20+00:00",
       "row_count": 408,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download"
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 211.4,
+      "age_minutes": 297.2,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-08-05T18:50:32+00:00",
+      "timestamp": "2026-08-05T22:39:34+00:00",
       "row_count": 407,
       "source": "technical indicators + quote_latest live-price projection"
     },
@@ -27,8 +27,8 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-05T22:21:54+00:00",
-      "row_count": 2,
+      "timestamp": "2026-08-06T03:36:42+00:00",
+      "row_count": 1,
       "source": null,
       "coverage_status": "partial",
       "source_health": {
@@ -42,18 +42,18 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 138,
+          "rows": 139,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
           "phase": "P5",
           "read_order": "canonical_only",
           "policy_enforced": true,
           "legacy_fallback_retired": true,
-          "canonical_rows": 138,
+          "canonical_rows": 139,
           "legacy_fallback_rows": 0,
-          "policy_reject_rows": 137,
+          "policy_reject_rows": 138,
           "allowed_rows": 1,
-          "rejected_rows": 137
+          "rejected_rows": 138
         },
         "market_data": {
           "status": "ok",
@@ -75,9 +75,9 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 5,
-          "partial": 4,
-          "errors": 1
+          "ok": 2,
+          "partial": 8,
+          "errors": 0
         },
         "gdelt": {
           "status": "error",
@@ -101,13 +101,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-05T22:21:54+00:00",
+      "timestamp": "2026-08-06T03:36:42+00:00",
       "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 26665.1,
+      "age_minutes": 26979.9,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -115,7 +115,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 30803.7,
+      "age_minutes": 31118.5,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -123,7 +123,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 27723.9,
+      "age_minutes": 28038.7,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
