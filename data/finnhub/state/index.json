@@ -883,7 +883,11 @@
       "SYM": "endpoints/company_profile/SYM.json",
       "SYNA": "endpoints/company_profile/SYNA.json",
       "TDG": "endpoints/company_profile/TDG.json",
-      "TDOC": "endpoints/company_profile/TDOC.json"
+      "TDOC": "endpoints/company_profile/TDOC.json",
+      "TE": "endpoints/company_profile/TE.json",
+      "TEM": "endpoints/company_profile/TEM.json",
+      "TER": "endpoints/company_profile/TER.json",
+      "TGT": "endpoints/company_profile/TGT.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1194,50 +1198,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-04T14:34:27+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "FATE",
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG",
-            "FTNT",
-            "FUTU",
-            "GD",
-            "GEHC",
-            "GEV",
-            "GH",
-            "GILD",
-            "GILT",
-            "GLXY",
-            "GOOG",
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-04T14:34:01+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2196,9 +2156,70 @@
       "mode": "events",
       "started_at": "2026-08-06T03:34:15+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "QCOM",
+            "QQQI",
+            "RACE",
+            "RBLX",
+            "RBRK",
+            "RDW",
+            "REGN",
+            "RGNX"
+          ],
+          "company_profile": [
+            "TE",
+            "TEM",
+            "TER",
+            "TGT"
+          ],
+          "recommendation_trends": [
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL",
+            "CRDO",
+            "CRM",
+            "CRSP",
+            "CRWD",
+            "CRWV",
+            "CSCO"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-06T03:54:38+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-06T03:53:50+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-06T03:34:42+00:00"
+  "updated_at": "2026-08-06T03:54:39+00:00"
 }
