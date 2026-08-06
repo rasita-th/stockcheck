@@ -119,7 +119,8 @@ jobs:
           python scripts/check_source_market_freshness.py site/data/technical.json \
             --report data/generated/source_freshness.json \
             --max-business-day-lag 1 \
-            --min-coverage 0.80
+            --min-coverage 0.80 \
+            --max-stale-ratio 0.01
 
       - name: Build canonical intraday screener snapshot
         if: steps.window.outputs.run_refresh == 'true'
@@ -133,6 +134,7 @@ jobs:
           python -m unittest tests.test_screener_snapshot -v
           python -m unittest tests.test_drawdown_snapshot -v
           python -m unittest tests.test_technical_shards -v
+          python -m unittest tests.test_source_market_freshness -v
           node --check site/drawdown-screener-v10-9.js
           cmp site/drawdown-screener-v10-9.js static/drawdown-screener-v10-9.js
           cmp site/drawdown-screener-v10-9.css static/drawdown-screener-v10-9.css
