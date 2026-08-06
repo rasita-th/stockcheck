@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-06T08:54:39+00:00",
+  "updated_at": "2026-08-06T11:35:15+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -58,16 +58,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 2,
-      "errors": 8
+      "ok": 1,
+      "errors": 9
     },
     "regulators": {
       "status": "ok",
@@ -161,8 +161,8 @@
           "why_today": "The stock moved -7.1% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.690357+00:00",
-          "detected_at": "2026-08-06T08:52:38.690367+00:00",
+          "event_time": "2026-08-06T11:32:52.917093+00:00",
+          "detected_at": "2026-08-06T11:32:52.917102+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -415,92 +415,77 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -577,7 +562,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-06T08:52:38.770247+00:00",
+      "event_time": "2026-08-06T11:32:52.994984+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -601,8 +586,8 @@
           "why_today": "The stock moved +11.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.770247+00:00",
-          "detected_at": "2026-08-06T08:52:38.770249+00:00",
+          "event_time": "2026-08-06T11:32:52.994984+00:00",
+          "detected_at": "2026-08-06T11:32:52.994988+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -648,9 +633,9 @@
         "The stock moved +11.7% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -677,7 +662,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-06T08:52:38.770200+00:00",
+      "event_time": "2026-08-06T11:32:52.994902+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -701,8 +686,8 @@
           "why_today": "The stock moved -8.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.770200+00:00",
-          "detected_at": "2026-08-06T08:52:38.770201+00:00",
+          "event_time": "2026-08-06T11:32:52.994902+00:00",
+          "detected_at": "2026-08-06T11:32:52.994905+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -748,9 +733,9 @@
         "The stock moved -8.2% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -777,7 +762,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-06T08:52:38.690410+00:00",
+      "event_time": "2026-08-06T11:32:52.917151+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -801,8 +786,8 @@
           "why_today": "The stock moved -12.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.690410+00:00",
-          "detected_at": "2026-08-06T08:52:38.690411+00:00",
+          "event_time": "2026-08-06T11:32:52.917151+00:00",
+          "detected_at": "2026-08-06T11:32:52.917153+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -848,9 +833,9 @@
         "The stock moved -12.3% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -877,7 +862,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-06T08:52:38.770257+00:00",
+      "event_time": "2026-08-06T11:32:52.995041+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -901,8 +886,8 @@
           "why_today": "The stock moved -8.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.770257+00:00",
-          "detected_at": "2026-08-06T08:52:38.770259+00:00",
+          "event_time": "2026-08-06T11:32:52.995041+00:00",
+          "detected_at": "2026-08-06T11:32:52.995045+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -948,9 +933,9 @@
         "The stock moved -8.5% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -977,7 +962,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-06T08:52:38.770287+00:00",
+      "event_time": "2026-08-06T11:32:52.995097+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1001,8 +986,8 @@
           "why_today": "The stock moved -7.1% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.770287+00:00",
-          "detected_at": "2026-08-06T08:52:38.770288+00:00",
+          "event_time": "2026-08-06T11:32:52.995097+00:00",
+          "detected_at": "2026-08-06T11:32:52.995100+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1048,9 +1033,9 @@
         "The stock moved -7.1% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -1077,7 +1062,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-06T08:52:38.770180+00:00",
+      "event_time": "2026-08-06T11:32:52.994863+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1101,8 +1086,8 @@
           "why_today": "The stock moved -5.6% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-06T08:52:38.770180+00:00",
-          "detected_at": "2026-08-06T08:52:38.770189+00:00",
+          "event_time": "2026-08-06T11:32:52.994863+00:00",
+          "detected_at": "2026-08-06T11:32:52.994882+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1148,9 +1133,9 @@
         "The stock moved -5.6% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-06T08:54:39+00:00",
         "active_days": 0
       },
@@ -1167,10 +1152,10 @@
     }
   ],
   "changes_summary": {
-    "new": 6,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 1,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
