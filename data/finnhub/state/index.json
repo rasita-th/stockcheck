@@ -1199,67 +1199,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA"
-          ],
-          "company_profile": [
-            "SDGR",
-            "SE",
-            "SEI",
-            "SHOP"
-          ],
-          "recommendation_trends": [
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT",
-            "RKLB",
-            "ROKU",
-            "ROP",
-            "ROST",
-            "RR",
-            "RTX",
-            "RXRX",
-            "SAIC",
-            "SATL",
-            "SBUX",
-            "SDGR",
-            "SE"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-04T15:08:34+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-04T15:07:46+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2217,9 +2156,53 @@
       "mode": "analyst",
       "started_at": "2026-08-06T03:53:50+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-08-06T08:52:36+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-06T08:52:10+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-06T03:54:39+00:00"
+  "updated_at": "2026-08-06T08:52:37+00:00"
 }
