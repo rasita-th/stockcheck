@@ -891,7 +891,11 @@
       "TMC": "endpoints/company_profile/TMC.json",
       "TMDX": "endpoints/company_profile/TMDX.json",
       "TMUS": "endpoints/company_profile/TMUS.json",
-      "TOST": "endpoints/company_profile/TOST.json"
+      "TOST": "endpoints/company_profile/TOST.json",
+      "TRI": "endpoints/company_profile/TRI.json",
+      "TRMB": "endpoints/company_profile/TRMB.json",
+      "TSAT": "endpoints/company_profile/TSAT.json",
+      "TSEM": "endpoints/company_profile/TSEM.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1202,88 +1206,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [
-          {
-            "endpoint": "company_profile",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "SIDU",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "basic_financials",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "NBIS",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "company_profile",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "SITM",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "basic_financials",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "NICE",
-            "type": "timeout"
-          }
-        ],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "NFLX",
-            "NNDM",
-            "NOC",
-            "NOW",
-            "NTLA",
-            "NTRA"
-          ],
-          "company_profile": [
-            "SMCI",
-            "SMH"
-          ],
-          "recommendation_trends": [
-            "SEI",
-            "SHOP",
-            "SIDU",
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER",
-            "TGT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-04T20:14:07+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-04T20:12:32+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2221,9 +2143,70 @@
       "mode": "events",
       "started_at": "2026-08-06T14:39:16+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "SAIC",
+            "SATL",
+            "SBUX",
+            "SDGR",
+            "SE",
+            "SEI",
+            "SHOP",
+            "SIDU"
+          ],
+          "company_profile": [
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM"
+          ],
+          "recommendation_trends": [
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST",
+            "FATE",
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG",
+            "FTNT",
+            "FUTU",
+            "GD",
+            "GEHC",
+            "GEV",
+            "GH",
+            "GILD",
+            "GILT",
+            "GLXY",
+            "GOOG",
+            "GOOGL",
+            "GRMN",
+            "GSAT",
+            "HEI"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-06T15:00:23+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-06T14:59:32+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-06T14:39:43+00:00"
+  "updated_at": "2026-08-06T15:00:24+00:00"
 }
