@@ -77,7 +77,14 @@ def extract_row_date(row: dict[str, Any]) -> date | None:
     return None
 
 
-def inspect(payload: dict[str, Any], *, now: datetime, max_business_day_lag: int, min_coverage: float) -> dict[str, Any]:
+def inspect(
+    payload: dict[str, Any],
+    *,
+    now: datetime,
+    max_business_day_lag: int,
+    min_coverage: float,
+    max_stale_ratio: float = 0.0,
+) -> dict[str, Any]:
     rows = payload.get("rows") if isinstance(payload.get("rows"), list) else []
     expected = previous_business_day(now.date())
     observed: list[tuple[str, date]] = []
@@ -98,11 +105,12 @@ def inspect(payload: dict[str, Any], *, now: datetime, max_business_day_lag: int
     total = len(rows)
     coverage = (len(observed) / total) if total else 0.0
     stale_ratio = (len(stale) / len(observed)) if observed else 1.0
+    stale_within_tolerance = bool(stale) and stale_ratio <= max_stale_ratio
     if total == 0:
         status = "invalid"
     elif coverage < min_coverage:
         status = "source_partial"
-    elif stale:
+    elif stale and not stale_within_tolerance:
         status = "source_stale"
     else:
         status = "fresh"
@@ -113,9 +121,11 @@ def inspect(payload: dict[str, Any], *, now: datetime, max_business_day_lag: int
         "checked_at": now.astimezone(timezone.utc).isoformat(),
         "expected_market_date": expected.isoformat(),
         "max_business_day_lag": max_business_day_lag,
+        "max_stale_ratio": max_stale_ratio,
         "row_count": total,
         "timestamp_coverage": round(coverage, 4),
         "stale_ratio": round(stale_ratio, 4),
+        "stale_within_tolerance": stale_within_tolerance,
         "oldest_market_date": min(dates).isoformat() if dates else None,
         "newest_market_date": max(dates).isoformat() if dates else None,
         "missing_timestamp_count": len(missing),
@@ -125,12 +135,20 @@ def inspect(payload: dict[str, Any], *, now: datetime, max_business_day_lag: int
     }
 
 
+def ratio(value: str) -> float:
+    parsed = float(value)
+    if not 0.0 <= parsed <= 1.0:
+        raise argparse.ArgumentTypeError("ratio must be between 0 and 1")
+    return parsed
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("path")
     parser.add_argument("--report", default=str(DEFAULT_REPORT))
     parser.add_argument("--max-business-day-lag", type=int, default=1)
-    parser.add_argument("--min-coverage", type=float, default=0.80)
+    parser.add_argument("--min-coverage", type=ratio, default=0.80)
+    parser.add_argument("--max-stale-ratio", type=ratio, default=0.0)
     parser.add_argument("--allow-partial", action="store_true")
     args = parser.parse_args()
     payload = json.loads((ROOT / args.path).read_text(encoding="utf-8"))
@@ -139,6 +157,7 @@ def main() -> None:
         now=datetime.now(timezone.utc),
         max_business_day_lag=args.max_business_day_lag,
         min_coverage=args.min_coverage,
+        max_stale_ratio=args.max_stale_ratio,
     )
     report = Path(args.report)
     if not report.is_absolute():
