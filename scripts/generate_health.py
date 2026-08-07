@@ -2,13 +2,18 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "generated"
-OUT = DATA / "health.json"
+OUTPUTS = (
+    DATA / "health.json",
+    ROOT / "site" / "data" / "health.json",
+    ROOT / "static" / "data" / "health.json",
+)
 FILES = {
     "quote": ("quote_latest.json", 30),
     "technical": ("technical.json", 1440),
@@ -17,7 +22,9 @@ FILES = {
     "events": ("events.json", 90),
     "consensus": ("recommendation_trends.json", 1440),
     "fundamental": ("fundamental.json", 24 * 60 * 35),
-    "market_pulse": ("market_pulse.json", 30),
+    # The producer runs every 12 hours. Keep the TTL slightly wider than the
+    # schedule so a healthy artifact is not marked stale between runs.
+    "market_pulse": ("market_pulse.json", 13 * 60),
 }
 
 
@@ -98,9 +105,13 @@ def main() -> None:
     error_states = {"missing", "invalid", "source_stale"}
     partial_states = {"partial", "source_partial"}
     payload["status"] = "error" if any(status in error_states for status in statuses) else "stale" if "stale" in statuses else "partial" if any(status in partial_states for status in statuses) else "ok"
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("wrote", OUT)
+    encoded = (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    for output in OUTPUTS:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        temporary = output.with_suffix(output.suffix + ".tmp")
+        temporary.write_bytes(encoded)
+        os.replace(temporary, output)
+        print("wrote", output)
 
 
 if __name__ == "__main__":

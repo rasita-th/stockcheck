@@ -21,11 +21,11 @@ PRODUCERS: dict[str, dict[str, Any]] = {
     },
     "Refresh Finnhub Analyst Features": {
         "events": {"schedule", "workflow_dispatch"},
-        "paths": ("data/finnhub/**", "data/recommendation_trends.json", "data/finnhub_features.json", "site/data/recommendation_trends.json", "site/data/finnhub_features.json", "static/data/recommendation_trends.json", "static/data/finnhub_features.json"),
+        "paths": ("data/finnhub/**", "data/recommendation_trends.json", "data/generated/recommendation_trends.json", "data/finnhub_features.json", "site/data/recommendation_trends.json", "site/data/finnhub_features.json", "static/data/recommendation_trends.json", "static/data/finnhub_features.json"),
     },
     "Refresh Finnhub Full Backfill": {
         "events": {"workflow_dispatch"},
-        "paths": ("data/finnhub/**", "data/earnings_calendar.json", "data/eps_surprises.json", "data/recommendation_trends.json", "data/finnhub_features.json", "site/data/earnings_calendar.json", "site/data/eps_surprises.json", "site/data/recommendation_trends.json", "site/data/finnhub_features.json", "static/data/earnings_calendar.json", "static/data/eps_surprises.json", "static/data/recommendation_trends.json", "static/data/finnhub_features.json"),
+        "paths": ("data/finnhub/**", "data/earnings_calendar.json", "data/eps_surprises.json", "data/recommendation_trends.json", "data/generated/recommendation_trends.json", "data/finnhub_features.json", "site/data/earnings_calendar.json", "site/data/eps_surprises.json", "site/data/recommendation_trends.json", "site/data/finnhub_features.json", "static/data/earnings_calendar.json", "static/data/eps_surprises.json", "static/data/recommendation_trends.json", "static/data/finnhub_features.json"),
     },
     "Refresh Live Data v10 PR3": {
         "events": {"schedule", "workflow_dispatch", "push"},
@@ -33,7 +33,7 @@ PRODUCERS: dict[str, dict[str, Any]] = {
     },
     "Refresh Market Pulse v9.6": {
         "events": {"schedule", "workflow_dispatch", "push"},
-        "paths": ("data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"),
+        "paths": ("data/generated/market_pulse.json", "data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"),
     },
     "Update static fundamental data": {
         "events": {"schedule", "workflow_dispatch"},
