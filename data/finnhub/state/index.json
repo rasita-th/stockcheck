@@ -899,7 +899,11 @@
       "TSLA": "endpoints/company_profile/TSLA.json",
       "TSM": "endpoints/company_profile/TSM.json",
       "TTWO": "endpoints/company_profile/TTWO.json",
-      "TWLO": "endpoints/company_profile/TWLO.json"
+      "TWLO": "endpoints/company_profile/TWLO.json",
+      "TWST": "endpoints/company_profile/TWST.json",
+      "TXG": "endpoints/company_profile/TXG.json",
+      "TXN": "endpoints/company_profile/TXN.json",
+      "TXT": "endpoints/company_profile/TXT.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1210,67 +1214,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "NBIS",
-            "NICE",
-            "NU",
-            "NVDA",
-            "NVTS",
-            "NXPI",
-            "ODFL",
-            "OKLO"
-          ],
-          "company_profile": [
-            "SIDU",
-            "SITM",
-            "SNDK",
-            "SNOW"
-          ],
-          "recommendation_trends": [
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST",
-            "TRI",
-            "TRMB",
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG",
-            "TXN",
-            "TXT",
-            "U",
-            "UFO",
-            "UNH",
-            "UUUU",
-            "VCYT",
-            "VICR",
-            "VRSK",
-            "VRT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-05T03:49:12+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-05T03:48:24+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2225,9 +2168,70 @@
       "mode": "events",
       "started_at": "2026-08-07T03:15:26+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG"
+          ],
+          "company_profile": [
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT"
+          ],
+          "recommendation_trends": [
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR",
+            "MRAM",
+            "MRCY"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-07T03:36:52+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-07T03:36:06+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T03:15:54+00:00"
+  "updated_at": "2026-08-07T03:36:53+00:00"
 }
