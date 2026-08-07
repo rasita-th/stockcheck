@@ -9,6 +9,7 @@ from pathlib import Path
 
 from scripts.build_screener_snapshot import build_snapshot
 from scripts.update_quote_data import select_quote_values
+from scripts.verify_screener_snapshot import is_regular_us_market_session
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -216,6 +217,27 @@ class ScreenerSnapshotTests(unittest.TestCase):
             verifier,
         )
         self.assertNotIn('default="10.7.5"', verifier)
+
+    def test_core_freshness_is_enforced_only_during_regular_market_hours(self):
+        self.assertFalse(
+            is_regular_us_market_session(
+                datetime(2026, 8, 7, 8, 14, tzinfo=timezone.utc)
+            )
+        )
+        self.assertTrue(
+            is_regular_us_market_session(
+                datetime(2026, 8, 7, 15, 0, tzinfo=timezone.utc)
+            )
+        )
+
+        for workflow_name in (
+            "deploy-pages.yml",
+            "verify-production-screener.yml",
+        ):
+            workflow = (
+                ROOT / ".github" / "workflows" / workflow_name
+            ).read_text(encoding="utf-8")
+            self.assertIn("--quote-freshness-policy market-hours", workflow)
 
     def test_screener_schema_expectation_matches_each_input_contract(self):
         deploy = (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(
