@@ -1223,67 +1223,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL"
-          ],
-          "company_profile": [
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC"
-          ],
-          "recommendation_trends": [
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-05T20:21:48+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-05T20:21:02+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2237,9 +2176,53 @@
       "mode": "analyst",
       "started_at": "2026-08-07T19:40:35+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-07T21:54:40+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD",
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-07T21:54:13+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T19:41:22+00:00"
+  "updated_at": "2026-08-07T21:54:41+00:00"
 }
