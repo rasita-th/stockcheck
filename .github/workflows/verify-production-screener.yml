@@ -55,6 +55,7 @@ jobs:
               "${BASE_URL}/data/technical/symbols/${symbol}.json?core=${nonce}" \
               -o "/tmp/stockcheck-core/shards/${symbol}.json"
           done
+          expected_runtime="$(python -c 'import json; print(json.load(open("config/release-manifest.json", encoding="utf-8"))["assets"]["technical_shards_js"])')"
           python scripts/verify_screener_snapshot.py \
             --snapshot /tmp/stockcheck-core/screener_snapshot.json \
             --quotes /tmp/stockcheck-core/quote_latest.json \
@@ -62,7 +63,7 @@ jobs:
             --runtime /tmp/stockcheck-core/technical-shards-v2.js \
             --build /tmp/stockcheck-core/build.json \
             --expected-commit "$EXPECTED_COMMIT" \
-            --expected-runtime 10.7.5 \
+            --expected-runtime "$expected_runtime" \
             --shard /tmp/stockcheck-core/shards/AMD.json \
             --shard /tmp/stockcheck-core/shards/ZETA.json \
             --shard /tmp/stockcheck-core/shards/NVDA.json \
