@@ -21,13 +21,20 @@ permissions:
 
 concurrency:
   group: live-data-producer-main
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 18
     steps:
+      - name: Checkout production source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
       - name: Resolve fast and full refresh modes
         id: window
         shell: bash
@@ -35,38 +42,13 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           EVENT_SCHEDULE: ${{ github.event.schedule || '' }}
           FULL_TECHNICAL_INPUT: ${{ inputs.full_technical || 'false' }}
+          TECHNICAL_DATA_PATH: site/data/technical.json
         run: |
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import os
-          from datetime import datetime, time
-          from zoneinfo import ZoneInfo
-
-          now = datetime.now(ZoneInfo("America/New_York"))
-          event_name = os.environ.get("EVENT_NAME", "")
-          event_schedule = os.environ.get("EVENT_SCHEDULE", "")
-          requested_full = os.environ.get("FULL_TECHNICAL_INPUT", "false").lower() == "true"
-          scheduled_full = event_name == "schedule" and event_schedule == "35 21 * * 1-5"
-          full_technical = requested_full or scheduled_full
-          market_open = now.weekday() < 5 and time(9, 25) <= now.time() <= time(16, 20)
-          force_fast = event_name in {"workflow_dispatch", "push"}
-          run_refresh = market_open or force_fast or full_technical
-
-          print(f"run_refresh={'true' if run_refresh else 'false'}")
-          print(f"market_open={'true' if market_open else 'false'}")
-          print(f"full_technical={'true' if full_technical else 'false'}")
-          print(f"now={now.isoformat()}")
-          PY
+          python scripts/resolve_live_refresh_mode.py >> "$GITHUB_OUTPUT"
 
       - name: Explain no-op outside refresh window
         if: steps.window.outputs.run_refresh != 'true'
         run: echo "Outside the core market refresh window at ${{ steps.window.outputs.now }}."
-
-      - name: Checkout production source
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -112,6 +94,10 @@ jobs:
             --timestamp-field generatedAt \
             --max-age-minutes 30 \
             --min-rows 1
+
+      - name: Test market-hours technical refresh policy
+        if: steps.window.outputs.run_refresh == 'true'
+        run: python -m unittest tests.test_live_refresh_mode tests.test_data_freshness -v
 
       - name: Validate technical baseline market date
         if: steps.window.outputs.run_refresh == 'true'
