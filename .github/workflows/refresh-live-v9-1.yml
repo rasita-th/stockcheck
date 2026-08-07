@@ -143,12 +143,13 @@ jobs:
             --snapshot site/data/screener_snapshot.json \
             --technical site/data/technical.json \
             --compat-output /tmp/screener_snapshot_v1_compat.json
+          expected_runtime="$(python -c 'import json; print(json.load(open("config/release-manifest.json", encoding="utf-8"))["assets"]["technical_shards_js"])')"
           python scripts/verify_screener_snapshot.py \
             --snapshot /tmp/screener_snapshot_v1_compat.json \
             --quotes site/data/quote_latest.json \
             --technical site/data/technical.json \
             --runtime site/technical-shards-v2.js \
-            --expected-runtime 10.7.5 \
+            --expected-runtime "$expected_runtime" \
             --shard site/data/technical/symbols/AMD.json \
             --shard site/data/technical/symbols/ZETA.json \
             --shard site/data/technical/symbols/NVDA.json \
