@@ -195,6 +195,28 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertNotIn("SCREENER_SNAPSHOT_FIXTURE", workflow)
         self.assertNotIn("--allow-stale", workflow)
 
+    def test_screener_verifiers_read_runtime_version_from_release_manifest(self):
+        for workflow_name in (
+            "refresh-live-v9-1.yml",
+            "verify-production-screener.yml",
+        ):
+            workflow = (
+                ROOT / ".github" / "workflows" / workflow_name
+            ).read_text(encoding="utf-8")
+            self.assertIn("config/release-manifest.json", workflow)
+            self.assertIn('["assets"]["technical_shards_js"]', workflow)
+            self.assertIn('--expected-runtime "$expected_runtime"', workflow)
+            self.assertNotIn("--expected-runtime 10.7.5", workflow)
+
+        verifier = (ROOT / "scripts" / "verify_screener_snapshot.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            'parser.add_argument("--expected-runtime", required=True)',
+            verifier,
+        )
+        self.assertNotIn('default="10.7.5"', verifier)
+
     def test_quote_refresh_is_batched_bounded_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
         ast.parse(source, filename="scripts/update_quote_data.py")

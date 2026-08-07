@@ -62,7 +62,7 @@ def main() -> None:
     parser.add_argument("--build", type=Path)
     parser.add_argument("--shard", type=Path, action="append", default=[])
     parser.add_argument("--expected-commit", default=os.environ.get("GITHUB_SHA", ""))
-    parser.add_argument("--expected-runtime", default="10.7.5")
+    parser.add_argument("--expected-runtime", required=True)
     parser.add_argument("--summary-output", type=Path)
     args = parser.parse_args()
 
