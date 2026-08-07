@@ -26,10 +26,15 @@ class ProductionArtifactContractTests(unittest.TestCase):
         self.assertIn("REJECTED_PATH", str(raised.exception))
 
     def test_market_pulse_paths_are_narrow(self) -> None:
-        contract.validate_paths("Refresh Market Pulse v9.6", ["data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"])
+        contract.validate_paths("Refresh Market Pulse v9.6", ["data/generated/market_pulse.json", "data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"])
         with self.assertRaises(SystemExit) as raised:
             contract.validate_paths("Refresh Market Pulse v9.6", ["site/data/scanner.json"])
         self.assertIn("REJECTED_PATH", str(raised.exception))
+
+    def test_consensus_paths_include_canonical_generated_projection(self) -> None:
+        canonical = ["data/generated/recommendation_trends.json"]
+        contract.validate_paths("Refresh Finnhub Analyst Features", canonical)
+        contract.validate_paths("Refresh Finnhub Full Backfill", canonical)
 
     def test_fundamental_paths_are_narrow(self) -> None:
         contract.validate_paths("Update static fundamental data", ["site/data/fundamental.json"])
