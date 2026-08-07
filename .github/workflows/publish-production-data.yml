@@ -132,9 +132,32 @@ jobs:
           python scripts/validate_attention_pr3.py
           python scripts/validate_earnings_radar.py
           if [ "$producer" = "Refresh Market Pulse v9.6" ]; then
-            python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
-            cmp data/market_pulse.json site/data/market_pulse.json
-            cmp data/market_pulse.json static/data/market_pulse.json
+            python scripts/validate_market_pulse.py data/generated/market_pulse.json --min-ok-rate 0.75
+            cmp data/generated/market_pulse.json data/market_pulse.json
+            cmp data/generated/market_pulse.json site/data/market_pulse.json
+            cmp data/generated/market_pulse.json static/data/market_pulse.json
+          fi
+          if [ "$producer" = "Refresh Finnhub Analyst Features" ] || [ "$producer" = "Refresh Finnhub Full Backfill" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          paths = (
+              Path('data/generated/recommendation_trends.json'),
+              Path('data/recommendation_trends.json'),
+              Path('site/data/recommendation_trends.json'),
+              Path('static/data/recommendation_trends.json'),
+          )
+          canonical = paths[0].read_bytes()
+          if not canonical:
+              raise SystemExit('canonical consensus projection is empty')
+          payload = json.loads(canonical)
+          if not isinstance(payload, dict):
+              raise SystemExit('canonical consensus projection root must be an object')
+          for mirror in paths[1:]:
+              if mirror.read_bytes() != canonical:
+                  raise SystemExit(f'consensus mirror mismatch: {mirror} vs {paths[0]}')
+          print('Consensus canonical projection and mirrors are valid.')
+          PY
           fi
           if [ "$producer" = "Update static fundamental data" ]; then
             python - <<'PY'
@@ -147,6 +170,15 @@ jobs:
           print('Published fundamental JSON is valid.')
           PY
           fi
+
+      - name: Regenerate health from merged production tree
+        if: steps.contract.outputs.status == 'READY'
+        run: |
+          set -euo pipefail
+          python scripts/generate_health.py
+          cmp data/generated/health.json site/data/health.json
+          cmp data/generated/health.json static/data/health.json
+          git add data/generated/health.json site/data/health.json static/data/health.json
 
       - name: Record publisher ledger
         if: steps.contract.outputs.status == 'READY'
