@@ -895,7 +895,11 @@
       "TRI": "endpoints/company_profile/TRI.json",
       "TRMB": "endpoints/company_profile/TRMB.json",
       "TSAT": "endpoints/company_profile/TSAT.json",
-      "TSEM": "endpoints/company_profile/TSEM.json"
+      "TSEM": "endpoints/company_profile/TSEM.json",
+      "TSLA": "endpoints/company_profile/TSLA.json",
+      "TSM": "endpoints/company_profile/TSM.json",
+      "TTWO": "endpoints/company_profile/TTWO.json",
+      "TWLO": "endpoints/company_profile/TWLO.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1206,50 +1210,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-04T22:21:59+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "PERI",
-            "PINS",
-            "PL",
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-04T22:21:33+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2204,9 +2164,70 @@
       "mode": "events",
       "started_at": "2026-08-07T00:14:54+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK",
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX"
+          ],
+          "company_profile": [
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO"
+          ],
+          "recommendation_trends": [
+            "HIMS",
+            "HON",
+            "HOOD",
+            "HUT",
+            "HWM",
+            "IDXX",
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "JMIA",
+            "IZRL",
+            "JEPQ",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-07T00:29:50+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-07T00:29:02+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T00:15:21+00:00"
+  "updated_at": "2026-08-07T00:29:51+00:00"
 }
