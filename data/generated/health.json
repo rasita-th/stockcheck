@@ -1,18 +1,18 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-06T14:41:46.479589+00:00",
+  "generated_at": "2026-08-07T00:17:28.507054+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 962.4,
+      "age_minutes": 1538.1,
       "stale_after_minutes": 30,
       "timestamp": "2026-08-05T22:39:20+00:00",
       "row_count": 408,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download"
     },
     "technical": {
-      "status": "ok",
-      "age_minutes": 962.2,
+      "status": "stale",
+      "age_minutes": 1537.9,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-05T22:39:34+00:00",
       "row_count": 407,
@@ -27,7 +27,7 @@
       "status": "partial",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-06T14:41:44+00:00",
+      "timestamp": "2026-08-07T00:17:26+00:00",
       "row_count": 1,
       "source": null,
       "coverage_status": "partial",
@@ -42,18 +42,18 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 140,
+          "rows": 141,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
           "phase": "P5",
           "read_order": "canonical_only",
           "policy_enforced": true,
           "legacy_fallback_retired": true,
-          "canonical_rows": 140,
+          "canonical_rows": 141,
           "legacy_fallback_rows": 0,
-          "policy_reject_rows": 139,
+          "policy_reject_rows": 140,
           "allowed_rows": 1,
-          "rejected_rows": 139
+          "rejected_rows": 140
         },
         "market_data": {
           "status": "ok",
@@ -75,9 +75,9 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 2,
-          "partial": 7,
-          "errors": 1
+          "ok": 1,
+          "partial": 9,
+          "errors": 0
         },
         "gdelt": {
           "status": "error",
@@ -101,13 +101,13 @@
       "status": "ok",
       "age_minutes": 0.0,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-06T14:41:44+00:00",
+      "timestamp": "2026-08-07T00:17:26+00:00",
       "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "stale",
-      "age_minutes": 27644.9,
+      "age_minutes": 28220.6,
       "stale_after_minutes": 1440,
       "timestamp": "2026-07-18T09:56:50.778261+00:00",
       "row_count": null,
@@ -115,7 +115,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 31783.6,
+      "age_minutes": 32359.3,
       "stale_after_minutes": 50400,
       "timestamp": "2026-07-15 12:58:13 UTC",
       "row_count": 408,
@@ -123,7 +123,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 28703.7,
+      "age_minutes": 29279.4,
       "stale_after_minutes": 30,
       "timestamp": "2026-07-17T16:18:02.677697+00:00",
       "row_count": null,
