@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-07T00:17:26+00:00",
+  "updated_at": "2026-08-07T03:18:17+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 17,
+  "total_events": 13,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
@@ -58,16 +58,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 1,
-      "partial": 9,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
-      "status": "error",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 0,
-      "errors": 10
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -86,10 +86,9 @@
       "portfolio_status": "holding",
       "role": "AI semiconductors",
       "priority": "Critical",
-      "priority_score": 100,
+      "priority_score": 97,
       "why_today": [
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -7.1% today."
+        "A earnings reported event was detected and requires source review."
       ],
       "event_type": "earnings",
       "event_subtype": "earnings_reported",
@@ -103,9 +102,9 @@
         "published_at": "2026-08-05T03:30:58+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 481.64,
-      "day_change_pct": -7.1233,
-      "relative_volume": 1.6,
+      "price": 489.67,
+      "day_change_pct": 1.5808,
+      "relative_volume": 0.8,
       "trigger_level": null,
       "events": [
         {
@@ -148,46 +147,8 @@
           "related_event_ids": [
             "company_ir:AMD:dae7d1b0dd034e13"
           ],
-          "priority_score": 100,
+          "priority_score": 97,
           "priority": "Critical"
-        },
-        {
-          "event_id": "technical:AMD:price-drop:2026-08-06",
-          "ticker": "AMD",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -7.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.1% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.556107+00:00",
-          "detected_at": "2026-08-07T00:15:23.556116+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:AMD:price-drop:2026-08-06"
-          ],
-          "dedupe_key": "AMD:price_drop:7721776d32d5a9bd"
         }
       ],
       "actions": {
@@ -199,8 +160,7 @@
       "severity": "high",
       "primary_trigger": "earnings_reported",
       "signals": [
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -7.1% today."
+        "A earnings reported event was detected and requires source review."
       ],
       "change": {
         "status": "ongoing",
@@ -211,11 +171,11 @@
       },
       "impact": {
         "baseline_price": 526.0,
-        "current_price": 481.64,
-        "change_pct": -8.43,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.4%"
+        "current_price": 489.67,
+        "change_pct": -6.91,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.9%"
       },
-      "personal_priority_score": 116,
+      "personal_priority_score": 113,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "earnings +8"
@@ -415,97 +375,92 @@
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OPEN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RXRX",
-      "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "GDELT response unavailable"
     }
   ],
@@ -524,7 +479,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 6,
+    "technical_metric_repair_count": 5,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -544,8 +499,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 16,
-      "accepted_events": 16,
+      "evaluated_events": 12,
+      "accepted_events": 12,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -566,23 +521,23 @@
   },
   "technical_summary": {
     "risk": 0,
-    "setup": 0,
+    "setup": 1,
     "total": 6
   },
   "technical_watch": [
     {
-      "ticker": "ZETA",
-      "name": "Zeta Global Holdings Corp.",
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
       "portfolio_status": "holding",
-      "role": "Marketing technology",
-      "priority": "Critical",
+      "role": "AI infrastructure",
+      "priority": "Risk",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +11.7% today."
+        "The stock moved -13.3% today."
       ],
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-08-07T00:15:23.620952+00:00",
+      "event_subtype": "price_drop",
+      "event_time": "2026-08-07T03:15:56.166772+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -591,23 +546,23 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 27.088,
-      "day_change_pct": 11.657,
-      "relative_volume": 3.82,
+      "price": 189.85,
+      "day_change_pct": -13.3065,
+      "relative_volume": 1.12,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:ZETA:price-move:2026-08-06",
-          "ticker": "ZETA",
+          "event_id": "technical:NBIS:price-drop:2026-08-06",
+          "ticker": "NBIS",
           "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +11.7%",
+          "event_subtype": "price_drop",
+          "headline": "Price -13.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +11.7% today.",
+          "why_today": "The stock moved -13.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.620952+00:00",
-          "detected_at": "2026-08-07T00:15:23.620953+00:00",
+          "event_time": "2026-08-07T03:15:56.166772+00:00",
+          "detected_at": "2026-08-07T03:15:56.166780+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -616,7 +571,7 @@
             "published_at": ""
           },
           "priority_score": 99,
-          "priority": "Critical",
+          "priority": "Risk",
           "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -630,238 +585,38 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:ZETA:price-move:2026-08-06"
+            "technical:NBIS:price-drop:2026-08-06"
           ],
-          "dedupe_key": "ZETA:price_move:7f5c31f70581fbad",
-          "technical_score": 87.0,
-          "rsi14": 74.25,
-          "pct_vs_ema20": 23.02,
-          "pct_vs_ema200": 38.27,
-          "volume_ratio20": 3.82,
+          "dedupe_key": "NBIS:price_drop:0153fb6c9a2b4851",
+          "technical_score": 72.0,
+          "rsi14": 46.22,
+          "pct_vs_ema20": -6.17,
+          "pct_vs_ema200": 23.23,
+          "volume_ratio20": 1.12,
           "technical_signal": "WATCH FOR ENTRY",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +11.7% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-08-06T08:54:39+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 27.088,
-        "current_price": 27.088,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "CIFR",
-      "name": "Cipher Mining Inc.",
-      "portfolio_status": "holding",
-      "role": "Digital infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -8.2% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-08-07T00:15:23.620900+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 18.705,
-      "day_change_pct": -8.2188,
-      "relative_volume": 1.15,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:CIFR:price-drop:2026-08-06",
-          "ticker": "CIFR",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.2%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.2% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.620900+00:00",
-          "detected_at": "2026-08-07T00:15:23.620902+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:CIFR:price-drop:2026-08-06"
-          ],
-          "dedupe_key": "CIFR:price_drop:7e76720293e358d1",
-          "technical_score": 56.0,
-          "rsi14": 43.49,
-          "pct_vs_ema20": -13.4,
-          "pct_vs_ema200": 1.38,
-          "volume_ratio20": 1.15,
-          "technical_signal": "WEAK / Avoid",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -8.2% today."
+        "The stock moved -13.3% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-06T08:54:39+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-07T03:18:17+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 18.705,
-        "current_price": 18.705,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy storage",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -12.3% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-08-07T00:15:23.556163+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 3.815,
-      "day_change_pct": -12.2988,
-      "relative_volume": 1.65,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:EOSE:price-drop:2026-08-06",
-          "ticker": "EOSE",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -12.3%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -12.3% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.556163+00:00",
-          "detected_at": "2026-08-07T00:15:23.556165+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:EOSE:price-drop:2026-08-06"
-          ],
-          "dedupe_key": "EOSE:price_drop:5ead6ce794ff4486",
-          "technical_score": 24.0,
-          "rsi14": 42.79,
-          "pct_vs_ema20": -7.18,
-          "pct_vs_ema200": -55.38,
-          "volume_ratio20": 1.65,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -12.3% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-06T08:54:39+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 3.815,
-        "current_price": 3.815,
+        "baseline_price": 189.85,
+        "current_price": 189.85,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -878,11 +633,11 @@
       "priority": "Risk",
       "priority_score": 99,
       "why_today": [
-        "The stock moved -8.5% today."
+        "The stock moved -8.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-07T00:15:23.620962+00:00",
+      "event_time": "2026-08-07T03:15:56.201614+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -891,9 +646,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 3.77,
-      "day_change_pct": -8.4951,
-      "relative_volume": 0.87,
+      "price": 3.445,
+      "day_change_pct": -8.3777,
+      "relative_volume": 0.68,
       "trigger_level": null,
       "events": [
         {
@@ -901,13 +656,13 @@
           "ticker": "OPEN",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -8.5%",
+          "headline": "Price -8.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.5% today.",
+          "why_today": "The stock moved -8.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.620962+00:00",
-          "detected_at": "2026-08-07T00:15:23.620964+00:00",
+          "event_time": "2026-08-07T03:15:56.201614+00:00",
+          "detected_at": "2026-08-07T03:15:56.201616+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -933,11 +688,11 @@
             "technical:OPEN:price-drop:2026-08-06"
           ],
           "dedupe_key": "OPEN:price_drop:31414e31ed6d603e",
-          "technical_score": 12.0,
-          "rsi14": 39.63,
-          "pct_vs_ema20": -8.94,
-          "pct_vs_ema200": -29.93,
-          "volume_ratio20": 0.87,
+          "technical_score": 9.0,
+          "rsi14": 34.75,
+          "pct_vs_ema20": -15.36,
+          "pct_vs_ema200": -35.97,
+          "volume_ratio20": 0.68,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -950,7 +705,7 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -8.5% today."
+        "The stock moved -8.4% today."
       ],
       "change": {
         "status": "ongoing",
@@ -961,7 +716,107 @@
       },
       "impact": {
         "baseline_price": 3.77,
-        "current_price": 3.77,
+        "current_price": 3.445,
+        "change_pct": -8.62,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.6%"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "OSCR",
+      "name": "Oscar Health, Inc.",
+      "portfolio_status": "holding",
+      "role": "Insurtech",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -11.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-08-07T03:15:56.201581+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 26.54,
+      "day_change_pct": -11.8565,
+      "relative_volume": 3.18,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:OSCR:price-drop:2026-08-06",
+          "ticker": "OSCR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -11.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -11.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-08-07T03:15:56.201581+00:00",
+          "detected_at": "2026-08-07T03:15:56.201583+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:OSCR:price-drop:2026-08-06"
+          ],
+          "dedupe_key": "OSCR:price_drop:f954fe061897c76e",
+          "technical_score": 59.0,
+          "rsi14": 37.95,
+          "pct_vs_ema20": -10.76,
+          "pct_vs_ema200": 24.08,
+          "volume_ratio20": 3.18,
+          "technical_signal": "NEUTRAL / Wait",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-OSCR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -11.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-07T03:18:17+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 26.54,
+        "current_price": 26.54,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -971,18 +826,18 @@
       ]
     },
     {
-      "ticker": "INDI",
-      "name": "indie Semiconductor, Inc.",
+      "ticker": "SYM",
+      "name": "Symbotic Inc.",
       "portfolio_status": "holding",
-      "role": "Automotive semiconductors",
+      "role": "Automation",
       "priority": "Risk",
-      "priority_score": 75,
+      "priority_score": 99,
       "why_today": [
-        "The stock moved -7.1% today."
+        "The stock moved -14.9% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-07T00:15:23.620994+00:00",
+      "event_time": "2026-08-07T03:15:56.201555+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -991,23 +846,123 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 3.38,
-      "day_change_pct": -7.1429,
-      "relative_volume": 0.96,
+      "price": 39.58,
+      "day_change_pct": -14.9183,
+      "relative_volume": 3.07,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:INDI:price-drop:2026-08-06",
-          "ticker": "INDI",
+          "event_id": "technical:SYM:price-drop:2026-08-06",
+          "ticker": "SYM",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -7.1%",
+          "headline": "Price -14.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.1% today.",
+          "why_today": "The stock moved -14.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-08-07T03:15:56.201555+00:00",
+          "detected_at": "2026-08-07T03:15:56.201562+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:SYM:price-drop:2026-08-06"
+          ],
+          "dedupe_key": "SYM:price_drop:38b193e6e39629d7",
+          "technical_score": 34.0,
+          "rsi14": 42.28,
+          "pct_vs_ema20": -7.89,
+          "pct_vs_ema200": -24.38,
+          "volume_ratio20": 3.07,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-SYM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -14.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-07T03:18:17+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 39.58,
+        "current_price": 39.58,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "ZETA",
+      "name": "Zeta Global Holdings Corp.",
+      "portfolio_status": "holding",
+      "role": "Marketing technology",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -5.6% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-08-07T03:15:56.201603+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 25.56,
+      "day_change_pct": -5.5781,
+      "relative_volume": 1.65,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:ZETA:price-drop:2026-08-06",
+          "ticker": "ZETA",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -5.6%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -5.6% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.620994+00:00",
-          "detected_at": "2026-08-07T00:15:23.620996+00:00",
+          "event_time": "2026-08-07T03:15:56.201603+00:00",
+          "detected_at": "2026-08-07T03:15:56.201605+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1030,38 +985,38 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:INDI:price-drop:2026-08-06"
+            "technical:ZETA:price-drop:2026-08-06"
           ],
-          "dedupe_key": "INDI:price_drop:7cffd4d441d33aff",
-          "technical_score": 17.0,
-          "rsi14": 43.31,
-          "pct_vs_ema20": -6.63,
-          "pct_vs_ema200": -15.29,
-          "volume_ratio20": 0.96,
-          "technical_signal": "AVOID / Turnaround only",
+          "dedupe_key": "ZETA:price_drop:291fe71dbd4f390a",
+          "technical_score": 94.0,
+          "rsi14": 65.37,
+          "pct_vs_ema20": 14.36,
+          "pct_vs_ema200": 30.14,
+          "volume_ratio20": 1.65,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-INDI/",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -7.1% today."
+        "The stock moved -5.6% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-06T08:54:39+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-07T03:18:17+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 3.38,
-        "current_price": 3.38,
+        "baseline_price": 25.56,
+        "current_price": 25.56,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -1071,115 +1026,155 @@
       ]
     },
     {
-      "ticker": "PSIX",
-      "name": "Power Solutions International, Inc.",
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
       "portfolio_status": "holding",
-      "role": "Industrial power",
-      "priority": "Risk",
-      "priority_score": 75,
+      "role": "Core AI",
+      "priority": "Action",
+      "priority_score": 68,
       "why_today": [
-        "The stock moved -5.6% today."
+        "Latest technical scan dated 2026-08-06: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.4, +6.2% vs EMA20, +12.6% vs EMA200, volume 0.87x 20-day average."
       ],
       "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-08-07T00:15:23.620879+00:00",
+      "event_subtype": "technical_setup",
+      "event_time": "2026-08-06",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": ""
+        "published_at": "2026-08-06"
       },
-      "price": 32.92,
-      "day_change_pct": -5.5651,
-      "relative_volume": 0.88,
+      "price": 218.99,
+      "day_change_pct": -0.1049,
+      "relative_volume": 0.87,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:PSIX:price-drop:2026-08-06",
-          "ticker": "PSIX",
+          "event_id": "technical:NVDA:technical_setup:2026-08-06",
+          "ticker": "NVDA",
           "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -5.6%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -5.6% today.",
+          "event_subtype": "technical_setup",
+          "headline": "Latest technical scan · 93/100",
+          "summary": "Technical context from the latest market scan; this is not a recommendation.",
+          "why_today": "Latest technical scan dated 2026-08-06: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.4, +6.2% vs EMA20, +12.6% vs EMA200, volume 0.87x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-07T00:15:23.620879+00:00",
-          "detected_at": "2026-08-07T00:15:23.620887+00:00",
+          "event_time": "2026-08-06",
+          "detected_at": "2026-08-07T03:18:17+00:00",
           "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
             "url": "data/technical.json",
-            "published_at": ""
+            "published_at": "2026-08-06"
           },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
               "type": "technical_json",
               "quality": "internal",
               "url": "data/technical.json",
-              "published_at": ""
+              "published_at": "2026-08-06"
             }
           ],
+          "technical_score": 93.0,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "scan_age_days": 0,
+          "rsi14": 61.37,
+          "pct_vs_ema20": 6.2,
+          "pct_vs_ema200": 12.59,
+          "volume_ratio20": 0.87,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:PSIX:price-drop:2026-08-06"
+            "technical:NVDA:technical_setup:2026-08-06"
           ],
-          "dedupe_key": "PSIX:price_drop:a9715f60e80122b1",
-          "technical_score": 43.0,
-          "rsi14": 50.39,
-          "pct_vs_ema20": 4.08,
-          "pct_vs_ema200": -44.16,
-          "volume_ratio20": 0.88,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
+          "dedupe_key": "NVDA:technical_setup:e4fd85cd64d07b8f",
+          "priority_score": 68,
+          "priority": "Action"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-PSIX/",
+        "company_ir": "https://investor.nvidia.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
         "raw_data": "data/technical.json"
       },
-      "severity": "high",
-      "primary_trigger": "price_drop",
+      "severity": "medium",
+      "primary_trigger": "technical_setup",
       "signals": [
-        "The stock moved -5.6% today."
+        "Latest technical scan dated 2026-08-06: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.4, +6.2% vs EMA20, +12.6% vs EMA200, volume 0.87x 20-day average."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-06T08:54:39+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-07T03:18:17+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 32.92,
-        "current_price": 32.92,
+        "baseline_price": 218.99,
+        "current_price": 218.99,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 83,
+      "personal_priority_score": 76,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 5,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 2,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:ZETA:price-move:2026-08-06",
+      "ticker": "ZETA",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-08-07T03:18:17+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:CIFR:price-drop:2026-08-06",
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-08-07T03:18:17+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:price-drop:2026-08-06",
+      "ticker": "EOSE",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-08-07T03:18:17+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:INDI:price-drop:2026-08-06",
+      "ticker": "INDI",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-08-07T03:18:17+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:PSIX:price-drop:2026-08-06",
+      "ticker": "PSIX",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-08-07T03:18:17+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:ZETA:price-move:2026-08-05",
       "ticker": "ZETA",
@@ -1218,46 +1213,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-08-06T08:54:39+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:PSIX:price-drop:2026-08-05",
-      "ticker": "PSIX",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-06T08:54:39+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TE:price-drop:2026-08-05",
-      "ticker": "TE",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-06T03:36:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TMDX:price-drop:2026-08-05",
-      "ticker": "TMDX",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-05T20:04:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:RR:price-drop:2026-08-05",
-      "ticker": "RR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-05T20:04:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-move:2026-08-05",
-      "ticker": "ASTS",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-05T16:54:20+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
