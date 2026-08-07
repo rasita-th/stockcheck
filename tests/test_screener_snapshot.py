@@ -217,6 +217,17 @@ class ScreenerSnapshotTests(unittest.TestCase):
         )
         self.assertNotIn('default="10.7.5"', verifier)
 
+    def test_pages_deploy_owns_core_production_status(self):
+        workflow = (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("  verify-core:", workflow)
+        self.assertIn("    needs: deploy", workflow)
+        self.assertIn("scripts/verify_screener_snapshot.py", workflow)
+        self.assertIn("config/release-manifest.json", workflow)
+        self.assertIn("context: 'production/stockcheck-core'", workflow)
+        self.assertIn("production-screener-receipt-", workflow)
+
     def test_quote_refresh_is_batched_bounded_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")
         ast.parse(source, filename="scripts/update_quote_data.py")
