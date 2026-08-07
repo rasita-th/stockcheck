@@ -55,7 +55,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .deploy-backup
-          for f in data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
+          for f in data/generated/market_pulse.json data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json; do
             [ -f "$f" ] && cp --parents "$f" .deploy-backup/
           done
       - name: Upload pre-refresh backup
@@ -69,14 +69,16 @@ jobs:
         run: python scripts/generate_market_pulse.py
       - name: Validate candidate
         run: |
-          python scripts/validate_market_pulse.py data/market_pulse.json --min-ok-rate 0.75
-          cmp data/market_pulse.json site/data/market_pulse.json
-          cmp data/market_pulse.json static/data/market_pulse.json
+          python scripts/validate_market_pulse.py data/generated/market_pulse.json --min-ok-rate 0.75
+          cmp data/generated/market_pulse.json data/market_pulse.json
+          cmp data/generated/market_pulse.json site/data/market_pulse.json
+          cmp data/generated/market_pulse.json static/data/market_pulse.json
       - name: Upload validated candidate
         uses: actions/upload-artifact@v4
         with:
           name: market-pulse-candidate-${{ github.run_id }}
           path: |
+            data/generated/market_pulse.json
             data/market_pulse.json
             site/data/market_pulse.json
             static/data/market_pulse.json
@@ -87,7 +89,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > publish-artifact/production-data.patch
+          git diff --binary HEAD -- data/generated/market_pulse.json data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > publish-artifact/production-data.patch
           python scripts/validate_production_artifact.py create-metadata --patch publish-artifact/production-data.patch --metadata publish-artifact/metadata.json
       - name: Upload production patch
         if: github.event_name != 'pull_request'
@@ -102,7 +104,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git diff --binary HEAD -- data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > /tmp/market-pulse.patch
+          git diff --binary HEAD -- data/generated/market_pulse.json data/market_pulse.json site/data/market_pulse.json static/data/market_pulse.json > /tmp/market-pulse.patch
           python - <<'PY'
           from pathlib import Path
           from scripts.validate_production_artifact import patch_paths, validate_paths
