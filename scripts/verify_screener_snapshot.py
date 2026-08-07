@@ -62,6 +62,7 @@ def main() -> None:
     parser.add_argument("--build", type=Path)
     parser.add_argument("--shard", type=Path, action="append", default=[])
     parser.add_argument("--expected-commit", default=os.environ.get("GITHUB_SHA", ""))
+    parser.add_argument("--expected-snapshot-schema", required=True)
     parser.add_argument("--expected-runtime", required=True)
     parser.add_argument("--summary-output", type=Path)
     args = parser.parse_args()
@@ -71,7 +72,10 @@ def main() -> None:
     technical = load(args.technical)
     runtime = args.runtime.read_text(encoding="utf-8")
 
-    fail(snapshot.get("schema_version") == "1.0", "snapshot schema is not 1.0")
+    fail(
+        snapshot.get("schema_version") == args.expected_snapshot_schema,
+        f"snapshot schema is not {args.expected_snapshot_schema}",
+    )
     fail(snapshot.get("contract") == "canonical-screener-snapshot", "snapshot contract is invalid")
     rows = snapshot.get("rows")
     fail(isinstance(rows, list) and bool(rows), "snapshot rows are empty")

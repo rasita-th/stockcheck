@@ -217,6 +217,33 @@ class ScreenerSnapshotTests(unittest.TestCase):
         )
         self.assertNotIn('default="10.7.5"', verifier)
 
+    def test_screener_schema_expectation_matches_each_input_contract(self):
+        deploy = (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(
+            encoding="utf-8"
+        )
+        standalone = (
+            ROOT / ".github" / "workflows" / "verify-production-screener.yml"
+        ).read_text(encoding="utf-8")
+        live = (ROOT / ".github" / "workflows" / "refresh-live-v9-1.yml").read_text(
+            encoding="utf-8"
+        )
+        for workflow in (deploy, standalone):
+            self.assertIn('["data_contracts"]["screener_snapshot"]', workflow)
+            self.assertIn(
+                '--expected-snapshot-schema "$expected_snapshot_schema"',
+                workflow,
+            )
+        self.assertIn("--expected-snapshot-schema 1.0", live)
+
+        verifier = (ROOT / "scripts" / "verify_screener_snapshot.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            'parser.add_argument("--expected-snapshot-schema", required=True)',
+            verifier,
+        )
+        self.assertNotIn('snapshot.get("schema_version") == "1.0"', verifier)
+
     def test_pages_deploy_owns_core_production_status(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(
             encoding="utf-8"
