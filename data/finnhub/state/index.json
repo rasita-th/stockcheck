@@ -903,7 +903,11 @@
       "TWST": "endpoints/company_profile/TWST.json",
       "TXG": "endpoints/company_profile/TXG.json",
       "TXN": "endpoints/company_profile/TXN.json",
-      "TXT": "endpoints/company_profile/TXT.json"
+      "TXT": "endpoints/company_profile/TXT.json",
+      "U": "endpoints/company_profile/U.json",
+      "UFO": "endpoints/company_profile/UFO.json",
+      "UNH": "endpoints/company_profile/UNH.json",
+      "UUUU": "endpoints/company_profile/UUUU.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1214,50 +1218,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-05T11:28:57+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "TRI",
-            "TRMB",
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG",
-            "TXN",
-            "TXT",
-            "U",
-            "UFO",
-            "UNH",
-            "UUUU",
-            "VCYT",
-            "VICR",
-            "VRSK",
-            "VRT"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-05T11:28:31+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2212,9 +2172,70 @@
       "mode": "events",
       "started_at": "2026-08-07T07:40:04+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT",
+            "TMC",
+            "TMDX",
+            "TMUS"
+          ],
+          "company_profile": [
+            "U",
+            "UFO",
+            "UNH",
+            "UUUU"
+          ],
+          "recommendation_trends": [
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-07T07:56:47+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-07T07:55:58+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T07:40:32+00:00"
+  "updated_at": "2026-08-07T07:56:48+00:00"
 }
