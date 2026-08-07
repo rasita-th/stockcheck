@@ -149,6 +149,7 @@ jobs:
             --quotes site/data/quote_latest.json \
             --technical site/data/technical.json \
             --runtime site/technical-shards-v2.js \
+            --expected-snapshot-schema 1.0 \
             --expected-runtime "$expected_runtime" \
             --shard site/data/technical/symbols/AMD.json \
             --shard site/data/technical/symbols/ZETA.json \
