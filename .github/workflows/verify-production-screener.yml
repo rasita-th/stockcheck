@@ -66,6 +66,7 @@ jobs:
             --expected-commit "$EXPECTED_COMMIT" \
             --expected-snapshot-schema "$expected_snapshot_schema" \
             --expected-runtime "$expected_runtime" \
+            --quote-freshness-policy market-hours \
             --shard /tmp/stockcheck-core/shards/AMD.json \
             --shard /tmp/stockcheck-core/shards/ZETA.json \
             --shard /tmp/stockcheck-core/shards/NVDA.json \

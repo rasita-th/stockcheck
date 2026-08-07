@@ -6,8 +6,9 @@ import argparse
 import json
 import math
 import os
-from datetime import datetime, timezone
+from datetime import datetime, time, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 from typing import Any
 
 
@@ -53,6 +54,15 @@ def fail(condition: bool, message: str) -> None:
         raise SystemExit(message)
 
 
+
+def is_regular_us_market_session(now: datetime) -> bool:
+    local = now.astimezone(ZoneInfo("America/New_York"))
+    wall_clock = local.timetz().replace(tzinfo=None)
+    return (
+        local.weekday() < 5
+        and time(9, 30) <= wall_clock <= time(16, 30)
+    )
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--snapshot", type=Path, required=True)
@@ -64,6 +74,11 @@ def main() -> None:
     parser.add_argument("--expected-commit", default=os.environ.get("GITHUB_SHA", ""))
     parser.add_argument("--expected-snapshot-schema", required=True)
     parser.add_argument("--expected-runtime", required=True)
+    parser.add_argument(
+        "--quote-freshness-policy",
+        choices=("always", "market-hours"),
+        default="always",
+    )
     parser.add_argument("--summary-output", type=Path)
     args = parser.parse_args()
 
@@ -189,8 +204,13 @@ def main() -> None:
     fail(ttl > 0, "snapshot TTL is invalid")
     fail(quote_age_minutes >= -5, f"quote timestamp is too far in the future: {quote_age_minutes:.1f}m")
     fail(snapshot_age_minutes >= -5, f"snapshot timestamp is too far in the future: {snapshot_age_minutes:.1f}m")
-    fail(quote_age_minutes <= ttl, f"deployed quotes are stale: {quote_age_minutes:.1f}m > {ttl}m")
-    fail(snapshot_age_minutes <= ttl, f"snapshot is stale: {snapshot_age_minutes:.1f}m > {ttl}m")
+    enforce_freshness = (
+        args.quote_freshness_policy == "always"
+        or is_regular_us_market_session(now)
+    )
+    if enforce_freshness:
+        fail(quote_age_minutes <= ttl, f"deployed quotes are stale: {quote_age_minutes:.1f}m > {ttl}m")
+        fail(snapshot_age_minutes <= ttl, f"snapshot is stale: {snapshot_age_minutes:.1f}m > {ttl}m")
 
     runtime_tokens = (
         "data/screener_snapshot.json",
@@ -235,6 +255,8 @@ def main() -> None:
         "live_quote_coverage": round(computed_coverage, 6),
         "indicator_coverage": {key: round(value, 6) for key, value in indicator_coverage.items()},
         "quote_age_minutes": round(quote_age_minutes, 2),
+        "quote_freshness_policy": args.quote_freshness_policy,
+        "freshness_enforced": enforce_freshness,
         "snapshot_age_minutes": round(snapshot_age_minutes, 2),
         "stale_after_minutes": ttl,
         "runtime_version": args.expected_runtime,
