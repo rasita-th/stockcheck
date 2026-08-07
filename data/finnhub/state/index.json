@@ -1219,67 +1219,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "PATH",
-            "PAYX",
-            "PCAR",
-            "PDD",
-            "PEP",
-            "PERI",
-            "PINS",
-            "PL"
-          ],
-          "company_profile": [
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX"
-          ],
-          "recommendation_trends": [
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD",
-            "AMGN",
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-05T15:00:57+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-05T15:00:09+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2233,9 +2172,53 @@
       "mode": "events",
       "started_at": "2026-08-07T10:10:11+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-08-07T13:37:42+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK",
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-07T13:37:16+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T10:10:38+00:00"
+  "updated_at": "2026-08-07T13:37:43+00:00"
 }
