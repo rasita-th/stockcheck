@@ -907,7 +907,11 @@
       "U": "endpoints/company_profile/U.json",
       "UFO": "endpoints/company_profile/UFO.json",
       "UNH": "endpoints/company_profile/UNH.json",
-      "UUUU": "endpoints/company_profile/UUUU.json"
+      "UUUU": "endpoints/company_profile/UUUU.json",
+      "VCYT": "endpoints/company_profile/VCYT.json",
+      "VICR": "endpoints/company_profile/VICR.json",
+      "VRSK": "endpoints/company_profile/VRSK.json",
+      "VRT": "endpoints/company_profile/VRT.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1218,50 +1222,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-05T20:01:35+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-05T20:01:09+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2216,9 +2176,70 @@
       "mode": "events",
       "started_at": "2026-08-07T19:18:23+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "TOST",
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO"
+          ],
+          "company_profile": [
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT"
+          ],
+          "recommendation_trends": [
+            "OSCR",
+            "OSS",
+            "PACB",
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS",
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX",
+            "PUMP",
+            "PWR",
+            "PYPL",
+            "QCOM",
+            "QQQI",
+            "RACE",
+            "RBLX"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-07T19:41:21+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-07T19:40:35+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-07T19:18:51+00:00"
+  "updated_at": "2026-08-07T19:41:22+00:00"
 }
