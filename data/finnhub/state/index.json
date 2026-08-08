@@ -1227,67 +1227,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX"
-          ],
-          "company_profile": [
-            "TE",
-            "TEM",
-            "TER",
-            "TGT"
-          ],
-          "recommendation_trends": [
-            "CBRS",
-            "CCEP",
-            "CDNA",
-            "CDNS",
-            "CEG",
-            "CHTR",
-            "CIFR",
-            "CLFD",
-            "CLPT",
-            "CLSK",
-            "CMCSA",
-            "COHR",
-            "COIN",
-            "COPX",
-            "CORZ",
-            "COST",
-            "CPRT",
-            "CRCL",
-            "CRDO",
-            "CRM",
-            "CRSP",
-            "CRWD",
-            "CRWV",
-            "CSCO"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-06T03:54:38+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-06T03:53:50+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2241,9 +2180,53 @@
       "mode": "analyst",
       "started_at": "2026-08-08T02:33:47+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-08T04:20:43+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-08T04:20:16+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-08T02:34:34+00:00"
+  "updated_at": "2026-08-08T04:20:44+00:00"
 }
