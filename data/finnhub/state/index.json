@@ -911,7 +911,11 @@
       "VCYT": "endpoints/company_profile/VCYT.json",
       "VICR": "endpoints/company_profile/VICR.json",
       "VRSK": "endpoints/company_profile/VRSK.json",
-      "VRT": "endpoints/company_profile/VRT.json"
+      "VRT": "endpoints/company_profile/VRT.json",
+      "VRTX": "endpoints/company_profile/VRTX.json",
+      "VSAT": "endpoints/company_profile/VSAT.json",
+      "VST": "endpoints/company_profile/VST.json",
+      "WBD": "endpoints/company_profile/WBD.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1222,50 +1226,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-06T03:34:41+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "CLPT",
-            "CLSK",
-            "CMCSA",
-            "COHR",
-            "COIN",
-            "COPX",
-            "CORZ",
-            "COST",
-            "CPRT",
-            "CRCL",
-            "CRDO",
-            "CRM",
-            "CRSP",
-            "CRWD",
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-06T03:34:15+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 36,
@@ -2220,9 +2180,70 @@
       "mode": "events",
       "started_at": "2026-08-08T02:20:19+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "TWLO",
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH"
+          ],
+          "company_profile": [
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD"
+          ],
+          "recommendation_trends": [
+            "RBRK",
+            "RDW",
+            "REGN",
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU",
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX",
+            "RXRX",
+            "SAIC",
+            "SATL",
+            "SBUX",
+            "SDGR",
+            "SE",
+            "SEI",
+            "SHOP",
+            "SIDU",
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-08T02:34:33+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-08T02:33:47+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-08T02:20:47+00:00"
+  "updated_at": "2026-08-08T02:34:34+00:00"
 }
