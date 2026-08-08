@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-08T09:55:20+00:00",
+  "updated_at": "2026-08-08T13:13:12+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -25,18 +25,18 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 147,
+      "rows": 148,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 147,
+      "canonical_rows": 148,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 146,
+      "policy_reject_rows": 147,
       "allowed_rows": 1,
-      "rejected_rows": 146
+      "rejected_rows": 147
     },
     "market_data": {
       "status": "ok",
@@ -58,16 +58,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 0,
-      "partial": 10,
+      "ok": 4,
+      "partial": 6,
       "errors": 0
     },
     "gdelt": {
-      "status": "partial",
+      "status": "error",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 0,
+      "errors": 10
     },
     "regulators": {
       "status": "ok",
@@ -273,97 +273,82 @@
     },
     {
       "source": "ir",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "UUUU",
+      "ticker": "COST",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "CIFR",
+      "ticker": "NOW",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "RXRX",
+      "ticker": "TE",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
+      "ticker": "INDI",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "SYM",
+      "ticker": "INDI",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "RKLB",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "AMZN",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "HOOD",
+      "message": "GDELT response unavailable"
+    },
+    {
+      "source": "gdelt",
+      "ticker": "NVDA",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMC",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OSCR",
+      "ticker": "IREN",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "OSCR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "RR",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "ZETA",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "ZETA",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
-      "message": "IR URL unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "OPEN",
+      "ticker": "IREN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -391,12 +376,12 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 147,
-      "canonical_rows": 147,
+      "rows": 148,
+      "canonical_rows": 148,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 146,
+      "policy_reject_rows": 147,
       "allowed_rows": 1,
-      "rejected_rows": 146
+      "rejected_rows": 147
     },
     "attention_policy_gate": {
       "phase": "P5",
@@ -440,7 +425,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.261130+00:00",
+      "event_time": "2026-08-08T13:11:21.768707+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -464,8 +449,8 @@
           "why_today": "The stock moved +17.6% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.261130+00:00",
-          "detected_at": "2026-08-08T09:53:46.261132+00:00",
+          "event_time": "2026-08-08T13:11:21.768707+00:00",
+          "detected_at": "2026-08-08T13:11:21.768710+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -540,7 +525,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.226911+00:00",
+      "event_time": "2026-08-08T13:11:21.717424+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -564,8 +549,8 @@
           "why_today": "The stock moved +11.9% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.226911+00:00",
-          "detected_at": "2026-08-08T09:53:46.226913+00:00",
+          "event_time": "2026-08-08T13:11:21.717424+00:00",
+          "detected_at": "2026-08-08T13:11:21.717426+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -640,7 +625,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.210450+00:00",
+      "event_time": "2026-08-08T13:11:21.700230+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -664,8 +649,8 @@
           "why_today": "The stock moved +8.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.210450+00:00",
-          "detected_at": "2026-08-08T09:53:46.210461+00:00",
+          "event_time": "2026-08-08T13:11:21.700230+00:00",
+          "detected_at": "2026-08-08T13:11:21.700238+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -740,7 +725,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.210495+00:00",
+      "event_time": "2026-08-08T13:11:21.700266+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -764,8 +749,8 @@
           "why_today": "The stock moved +14.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.210495+00:00",
-          "detected_at": "2026-08-08T09:53:46.210497+00:00",
+          "event_time": "2026-08-08T13:11:21.700266+00:00",
+          "detected_at": "2026-08-08T13:11:21.700267+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -840,7 +825,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.260966+00:00",
+      "event_time": "2026-08-08T13:11:21.768524+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -864,8 +849,8 @@
           "why_today": "The stock moved +10.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.260966+00:00",
-          "detected_at": "2026-08-08T09:53:46.260974+00:00",
+          "event_time": "2026-08-08T13:11:21.768524+00:00",
+          "detected_at": "2026-08-08T13:11:21.768530+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -941,7 +926,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.261008+00:00",
+      "event_time": "2026-08-08T13:11:21.768567+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -965,8 +950,8 @@
           "why_today": "The stock moved +24.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.261008+00:00",
-          "detected_at": "2026-08-08T09:53:46.261010+00:00",
+          "event_time": "2026-08-08T13:11:21.768567+00:00",
+          "detected_at": "2026-08-08T13:11:21.768569+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1041,7 +1026,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-08T09:53:46.091407+00:00",
+      "event_time": "2026-08-08T13:11:21.468944+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1065,8 +1050,8 @@
           "why_today": "The stock moved +9.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-08T09:53:46.091407+00:00",
-          "detected_at": "2026-08-08T09:53:46.091411+00:00",
+          "event_time": "2026-08-08T13:11:21.468944+00:00",
+          "detected_at": "2026-08-08T13:11:21.468947+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
