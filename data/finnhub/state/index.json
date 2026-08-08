@@ -915,7 +915,11 @@
       "VRTX": "endpoints/company_profile/VRTX.json",
       "VSAT": "endpoints/company_profile/VSAT.json",
       "VST": "endpoints/company_profile/VST.json",
-      "WBD": "endpoints/company_profile/WBD.json"
+      "WBD": "endpoints/company_profile/WBD.json",
+      "WDAY": "endpoints/company_profile/WDAY.json",
+      "WDC": "endpoints/company_profile/WDC.json",
+      "WIX": "endpoints/company_profile/WIX.json",
+      "WM": "endpoints/company_profile/WM.json"
     },
     "recommendation_trends": {
       "AAOI": "endpoints/recommendation_trends/AAOI.json",
@@ -1226,67 +1230,6 @@
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "RIOT",
-            "RKLB",
-            "ROKU",
-            "ROP",
-            "ROST",
-            "RR",
-            "RTX",
-            "RXRX"
-          ],
-          "company_profile": [
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST"
-          ],
-          "recommendation_trends": [
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG",
-            "DE",
-            "DELL",
-            "DKNG",
-            "DLO",
-            "DNA",
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-06T09:28:29+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-06T09:27:42+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2224,9 +2167,70 @@
       "mode": "events",
       "started_at": "2026-08-08T07:12:30+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST"
+          ],
+          "company_profile": [
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM"
+          ],
+          "recommendation_trends": [
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT",
+            "TMC",
+            "TMDX",
+            "TMUS",
+            "TOST",
+            "TRI",
+            "TRMB",
+            "TSAT"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-08T07:34:37+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-08T07:33:48+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-08T07:12:57+00:00"
+  "updated_at": "2026-08-08T07:34:38+00:00"
 }
