@@ -1235,67 +1235,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX"
-          ],
-          "company_profile": [
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO"
-          ],
-          "recommendation_trends": [
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "JMIA",
-            "IZRL",
-            "JEPQ",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-07T00:29:50+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-07T00:29:02+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2232,9 +2171,53 @@
       "mode": "events",
       "started_at": "2026-08-08T15:44:33+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-08-08T18:57:35+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "GH",
+            "GILD",
+            "GILT",
+            "GLXY",
+            "GOOG",
+            "GOOGL",
+            "GRMN",
+            "GSAT",
+            "HEI",
+            "HIMS",
+            "HON",
+            "HOOD",
+            "HUT",
+            "HWM",
+            "IDXX",
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-08T18:57:08+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-08T15:45:00+00:00"
+  "updated_at": "2026-08-08T18:57:35+00:00"
 }
