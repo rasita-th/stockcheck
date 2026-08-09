@@ -2790,8 +2790,17 @@ if (state.staticMode || isStaticDeployHost()) {
     const p=memoToNum(memo.currentPrice), t=memoToNum(memo.targetPrice); if(p==null || t==null) return false;
     return memo.targetDirection === "lte" ? p <= t : p >= t;
   }
+  function canonicalStockForMemoTicker(ticker){
+    const t = memoTicker(ticker);
+    const rows = Array.isArray(state?.rows) ? state.rows : [];
+    const row = rows.find(item => memoTicker(item?.ticker || item?.symbol) === t);
+    if (!row) return null;
+    try { return typeof mapRow === "function" ? mapRow(row) : row; } catch (_) { return null; }
+  }
   function stockForMemoTicker(ticker){
     const t = memoTicker(ticker);
+    const canonical = canonicalStockForMemoTicker(t);
+    if (canonical) return canonical;
     let stocks = [];
     try { stocks = typeof allWatchlistStocks === "function" ? allWatchlistStocks() : []; } catch (_) { stocks = []; }
     if (!Array.isArray(stocks) || !stocks.length) { try { stocks = typeof scannerStocks === "function" ? scannerStocks() : []; } catch (_) {} }
@@ -2867,8 +2876,9 @@ if (state.staticMode || isStaticDeployHost()) {
   }
 
   function enrichMemo(m){
-    const current = memoToNum(m.currentPrice);
-    const out = { ...m };
+    const canonical = canonicalStockForMemoTicker(m.ticker);
+    const current = memoToNum(canonical?.price) ?? memoToNum(m.currentPrice);
+    const out = { ...m, currentPrice: current };
     out.changePct = calcPctChange(current, m.notePrice);
     out.fromTargetPct = calcFromTarget(current, m.targetPrice);
     if (out.status !== "Done" && out.status !== "Ignored" && isMemoAlertReached(out)) out.status = "Alert";
@@ -2895,8 +2905,11 @@ if (state.staticMode || isStaticDeployHost()) {
 
   async function fetchMemoPrice(ticker){
     const t = memoTicker(ticker);
-    const existing = (typeof allWatchlistStocks === "function" ? allWatchlistStocks() : []).find(s => s.ticker === t);
-    let best = existing && memoToNum(existing.price) != null ? { price:memoToNum(existing.price), trend: existing.ema20 && existing.price ? "Unknown" : "Unknown", quote: existing.quote, latest: existing.raw || {} } : null;
+    const existing = canonicalStockForMemoTicker(t);
+    if (existing && memoToNum(existing.price) != null) {
+      return { price:memoToNum(existing.price), trend:trendFromStock(existing), quote:existing.quote, latest:existing.raw || {}, source:"canonical_screener_snapshot" };
+    }
+    let best = null;
     try {
       const params = new URLSearchParams({ symbol:t, range:"1y", interval:"1d", includeFundamentals:"0", v:String(Date.now()) });
       const data = await fetchJson(`/api/quote?${params}`);

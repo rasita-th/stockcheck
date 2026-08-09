@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEPLOY_VERSION: "10.8.0"
+  DEPLOY_VERSION: "10.8.1"
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
           path = Path('scripts/prepare_stable_site_v9_4_1.py')
           text = path.read_text(encoding='utf-8')
           old = 'VERSION = "10.7.3"'
-          new = 'VERSION = "10.8.0"'
+          new = 'VERSION = "10.8.1"'
           if old not in text and new not in text:
               raise SystemExit('prepare script VERSION contract not found')
           path.write_text(text.replace(old, new), encoding='utf-8')
@@ -84,6 +84,7 @@ jobs:
           node --check site/app.js
           node --check site/technical-shards-v2.js
           node tests/technical_shards_runtime.test.js
+          node tests/memo_canonical_price_runtime.test.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
           node --check site/notification-phase2.js
@@ -99,8 +100,8 @@ jobs:
           python scripts/check_ui_view_contract.py
           python scripts/check_earnings_radar_ui_contract.py
           python scripts/check_earnings_radar_activation.py
-          grep -F 'final-ui-coordinator.js?v=10.8.0' site/index.html
-          grep -F 'final-ui-coordinator.css?v=10.8.0' site/index.html
+          grep -F 'final-ui-coordinator.js?v=10.8.1' site/index.html
+          grep -F 'final-ui-coordinator.css?v=10.8.1' site/index.html
 
       - name: Stamp immutable production identity
         run: |
@@ -126,7 +127,7 @@ jobs:
               'technical_count': len(rows),
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'asset_version': os.environ['DEPLOY_VERSION'],
-              'drawdown_runtime': '10.8.0',
+              'drawdown_runtime': '10.8.1',
           }
           Path('site/build.json').write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(identity, ensure_ascii=False))
@@ -175,14 +176,14 @@ jobs:
           runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
           if build.get('source_commit') != os.environ['GITHUB_SHA']:
               raise SystemExit('production commit mismatch')
-          if build.get('asset_version') != '10.8.0':
+          if build.get('asset_version') != '10.8.1':
               raise SystemExit('production asset version mismatch')
-          if 'final-ui-coordinator.js?v=10.8.0' not in index:
-              raise SystemExit('production HTML missing coordinator v10.8.0')
-          for token in ('const VERSION = "10.8.0"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown'):
+          if 'final-ui-coordinator.js?v=10.8.1' not in index:
+              raise SystemExit('production HTML missing coordinator v10.8.1')
+          for token in ('const VERSION = "10.8.1"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown'):
               if token not in runtime:
                   raise SystemExit(f'production drawdown runtime missing: {token}')
-          print('Verified production drawdown runtime 10.8.0')
+          print('Verified production drawdown runtime 10.8.1')
           PY
               then
                 ready=true
