@@ -6,6 +6,10 @@ on:
     branches: ["main"]
     paths:
       - ".github/refresh-fundamental-now"
+      - "sec_v1_fundamentals.py"
+      - "scripts/update_fundamental_data.py"
+      - "scripts/validate_fundamental_snapshot.py"
+      - ".github/workflows/update-fundamental.yml"
   schedule:
     - cron: "23 11 * * *"
 

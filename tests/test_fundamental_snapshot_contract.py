@@ -44,6 +44,16 @@ class FundamentalSnapshotContractTests(unittest.TestCase):
             with self.assertRaises(contract.FundamentalContractError):
                 contract.validate_mirrors(paths)
 
+    def test_fundamental_code_changes_trigger_the_owner_workflow(self) -> None:
+        workflow = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "update-fundamental.yml").read_text(encoding="utf-8")
+        for owned_path in (
+            "sec_v1_fundamentals.py",
+            "scripts/update_fundamental_data.py",
+            "scripts/validate_fundamental_snapshot.py",
+            ".github/workflows/update-fundamental.yml",
+        ):
+            self.assertIn(f'- "{owned_path}"', workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
