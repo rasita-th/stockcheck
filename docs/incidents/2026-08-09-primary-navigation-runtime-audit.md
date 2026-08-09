@@ -12,9 +12,9 @@ The goal is to establish a reproducible failure map and an ordered fix plan befo
 - Default branch: `main`
 - Production URL: `https://rasita-th.github.io/stockcheck/`
 - Main at investigation start: `bd191d7b8f8c696365404a21742143eb3a7e65d1`
-- Main commit source: `Publish production data from Update static fundamental data`
+- Latest main observed during investigation: `8ae48bf2c370a0aef70494304f94a62de4449565`
 - Affected user flow: Scanner → Today → Memo → Scanner → Market Pulse
-- Affected layer: browser bootstrap / runtime view ownership / release identity gates
+- Confirmed root-cause layer: UI runtime / body-class MutationObserver feedback loop
 - Data domains intentionally out of scope: technical, fundamental, canonical screener snapshot, market pulse, publisher artifacts
 - Automatic main writer remains: `Publish Production Data`
 
@@ -24,9 +24,7 @@ The goal is to establish a reproducible failure map and an ordered fix plan befo
 
 PR #211 attempted to make `app-shell-v9-4-6.js` the synchronous navigation owner and to browser-test the exact prepared Pages artifact.
 
-Candidate head: `ba8ea81ff17c4dac2062cb93d976b58fb6896d85`.
-
-The candidate artifact preparation succeeded and reported:
+Candidate artifact preparation succeeded and reported:
 
 - prepared Pages runtime `v10.8.7`
 - technical index: 408 rows
@@ -34,62 +32,72 @@ The candidate artifact preparation succeeded and reported:
 - fundamental: 407 rows
 - Today P0/P3/P4 assets synchronized
 
-The browser smoke then reached:
+The original browser smoke reached:
 
 ```text
 [primary-nav] desktop-nav: start
 [primary-nav] desktop-nav: runtime ok
 ```
 
-and made no further progress until the workflow-level timeout cancelled the job about 14 minutes later. The first action after `runtime ok` is the Today navigation click. Therefore the failure is not merely a slow data assertion: the candidate can enter a browser-main-thread/action hang at the first primary navigation interaction.
+and then stalled on the first Today click until the workflow timeout.
 
-### PR #211 CI failures unrelated to the browser hang
+### Bounded A/B diagnostic
 
-Three additional gates failed:
+A follow-up diagnostic served the exact candidate Pages artifact and ran the first Today click with individual runtime assets blocked. Every variant had a bounded action timeout and emitted before/after evidence.
 
-1. **Validate Drawer UI**
-   - stock detail drawer contract: passed
-   - watchlist add drawer contract: passed
-   - failure: `final-ui-coordinator.js` remained `10.8.3` while `release-manifest.assets.app_js` was changed to `10.8.7`
+| Variant | Result | Observation |
+|---|---|---|
+| baseline | FAIL | Today `locator.click()` timed out while performing click |
+| drawdown blocked | FAIL | same hang |
+| `memo-only-fix.js` blocked | FAIL | same hang |
+| Attention P0 blocked | FAIL | same hang |
+| Attention PR3 blocked | FAIL | same hang |
+| Attention PR4 blocked | FAIL | same hang |
+| **`final-ui-coordinator.js` blocked** | **PASS** | click returned; `attention-active=true`; `memo-active=false`; visible renderer=`attentionPageP4` |
 
-2. **Validate Today Attention PR4**
-   - Today/data/unit/runtime tests passed up to view contract validation
-   - failure: `Desktop stock detail VERSION 10.8.3 must match release-manifest app_js 10.8.7`
+This isolates `final-ui-coordinator.js` as the causal runtime for the hard navigation hang. The drawdown observer is a separate hardening concern, but it is not the cause of this incident.
 
-3. **Validate Single Production Publisher**
-   - publisher/release-control compile passed
-   - failure: `deploy-pages.yml` `TODAY_DEPLOY_VERSION` remained `10.8.3` while the release manifest was changed to `10.8.7`
+## Confirmed root cause
 
-These are release-identity consistency failures. They do not explain the browser hang, but they prove PR #211 bundled a navigation fix with a global release identity change that touched unrelated UI contracts.
+`final-ui-coordinator.js` owns a body-class observer:
 
-## Runtime ownership map
+```js
+const viewObserver = new MutationObserver(() => {
+  syncAlertHeight();
+  if (!scannerViewIsActive()) closeStockDetail({ restoreFocus: false });
+});
+viewObserver.observe(document.body, {
+  attributes: true,
+  attributeFilter: ["class"]
+});
+```
 
-### Owner 1 — `app.js` Memo runtime
+When Today or Memo becomes active, changing the body class invokes this observer. `closeStockDetail()` then executes an unconditional body-class mutation even when Stock Detail was not open:
 
-`app.js` creates the Memo page and owns a `setAppView(view)` path. Its capture-phase click handler consumes `[data-app-view]` and calls that function.
+```js
+const wasOpen = document.body.classList.contains("stock-detail-open");
+document.body.classList.remove("stock-detail-open");
+```
 
-### Owner 2 — `app.js` legacy Today runtime
+That redundant mutation is observed again by the same `MutationObserver`, which calls `closeStockDetail()` again. The result is a self-triggering body-class mutation loop that can starve the browser main thread during the navigation click.
 
-The same `app.js` also creates the legacy Today page and owns `setAttentionActive(active)`. A second capture-phase click handler responds to the same `[data-app-view]` controls.
+The smallest correct repair is to make both sides idempotent:
 
-### Owner 3 — `memo-only-fix.js`
+1. only remove `stock-detail-open` when it is actually present;
+2. only call `closeStockDetail()` from the body-class observer when Stock Detail is actually open.
 
-Despite its narrow name, `memo-only-fix.js` currently:
+This is one atomic runtime root cause. It does not require a navigation architecture rewrite, data change, Today renderer change, or drawdown change.
 
-- enforces Memo/Today exclusivity with another capture click handler
-- observes `document.body` class changes
-- installs an Attention data store
-- loads scanner-loading guard
-- loads drawdown screener JS/CSS
-- dynamically chains Attention P0 → P3 → P4 → Earnings Radar
+## Runtime ownership findings that are not the current root cause
 
-This is broader than the documented view-isolation ownership model.
+The application still has historical overlap in primary-view handling:
 
-### Owner 4 — `app-shell-v9-4-6.js`
+- `app.js` Memo runtime handles `[data-app-view]`;
+- legacy Today code in `app.js` handles the same primary controls;
+- `memo-only-fix.js` enforces Memo/Today exclusivity;
+- PR #211 attempted to add a fourth capture owner in `app-shell-v9-4-6.js`.
 
-PR #211 adds a fourth capture-phase navigation owner and calls `stopImmediatePropagation()` so it can pre-empt the three older owners.
-
-This is symptom containment rather than ownership consolidation. It leaves the old owners alive and makes correct behavior depend on script registration order.
+This is undesirable architectural debt, but the A/B result shows it is not necessary to refactor these owners to fix the current hang. A primary-view ownership consolidation should be a separate PR only if regression evidence shows remaining behavioral conflicts after the confirmed observer fix.
 
 ## Today renderer map
 
@@ -100,109 +108,90 @@ Today currently has four generations of page DOM:
 - `#attentionPageP3`
 - `#attentionPageP4`
 
-`today-view-isolation.css` hides all `.attention-page` nodes and selects the highest renderer whose readiness class is present.
+`today-view-isolation.css` selects the highest ready renderer. The A/B diagnostic proved that P4 renders correctly after the click when `final-ui-coordinator.js` is removed, so the renderer stack is not the blocking root cause for this incident.
 
-This fallback design can work, but it means page creation, data loading, readiness, and visible-renderer ownership are distributed across multiple scripts. The navigation owner should not also attempt to infer or own those renderer generations.
+## Other findings
 
-## Observer / feedback-loop risk
+### Release-identity coupling in PR #211
 
-### Confirmed unsafe pattern in `drawdown-screener-v10-9.js`
+PR #211 also changed `release-manifest.assets.app_js` to `10.8.7` without moving all contracts that currently treat that value as a shared UI identity.
 
-The drawdown runtime installs:
+This produced three separate gate failures:
 
-```js
-new MutationObserver(scheduleRender)
-  .observe(document.body, { childList: true, subtree: true });
-```
+1. **Validate Drawer UI** — drawer tests passed, then failed because `final-ui-coordinator.js` was still `10.8.3` while manifest `app_js` was `10.8.7`.
+2. **Validate Today Attention PR4** — data/unit/runtime tests passed, then view contract failed on the same coordinator/manifest mismatch.
+3. **Validate Single Production Publisher** — release-control compile passed, then failed because `deploy-pages.yml` still declared `TODAY_DEPLOY_VERSION=10.8.3` while manifest release was `10.8.7`.
 
-Its scheduled render then writes back into descendants of `document.body`, including repeated `textContent`, `innerHTML`, appended table cells, and card decorations.
+For the immediate runtime repair, use the repository's current coupled release contract consistently. Decoupling `app_js`, `app_shell_js`, and `final_ui_coordinator_js` is a separate release-control improvement and should not be mixed into the hang fix.
 
-That is an observer feedback-loop pattern: mutations can schedule another render which creates more mutations. This violates the repository preference against broad subtree observers and is a credible source of browser-main-thread starvation. It must be isolated with a diagnostic browser test before claiming it is the exact cause of the Today-click hang.
+### Drawdown observer
 
-### Other observers
+`drawdown-screener-v10-9.js` observes the full body subtree and writes into descendants. That broad pattern deserves a separate hardening PR, but A/B testing showed that disabling drawdown does not unblock the Today click.
 
-- `scanner-loading-guard.js`: scoped to scanner buttons; low risk for this incident.
-- `notification-phase2.js`: scoped to Alert list child changes; low risk for this incident.
-- `final-ui-coordinator.js`: body-class observer plus broad page-guide subtree observer. It should be measured during the diagnostic, but its writes are guarded more carefully than the drawdown renderer.
+### Browser-test watchdog
+
+The diagnostic proved the test infrastructure should retain bounded action timeouts and incremental evidence so a main-thread hang fails quickly instead of consuming the workflow timeout.
+
+### Pages concurrency
+
+`deploy-pages.yml` currently uses `cancel-in-progress: true`. Because generated-data publisher commits can move `main`, deployment concurrency should be reviewed separately to ensure every production identity that matters receives the required verification. This is not part of the current runtime repair.
 
 ## Root-cause classification
 
-| ID | Layer | Finding | Evidence status | Merge blocker |
+| ID | Layer | Finding | Evidence status | Current action |
 |---|---|---|---|---|
-| R1 | Browser bootstrap / runtime state | Multiple primary-view owners compete for the same nav controls | Confirmed by source | Yes |
-| R2 | Runtime lifecycle | PR #211 adds a fourth capture owner rather than removing duplicate ownership | Confirmed by diff/source | Yes |
-| R3 | Runtime performance | Drawdown broad MutationObserver writes into its own observed subtree | Confirmed by source; causal link to nav hang still needs A/B proof | Yes until diagnostic |
-| R4 | UI runtime architecture | Four Today renderer generations coexist and readiness CSS chooses one | Confirmed by source | No by itself; must remain deterministic |
-| R5 | Release identity | `assets.app_js` is treated as a global UI version by drawer and Today validators | Confirmed by CI failures | Yes for #211 |
-| R6 | Release identity | Deploy workflow version must match release manifest, but #211 did not update it | Confirmed by CI failure | Yes for #211 |
-| R7 | Test infrastructure | Browser test can hang until workflow timeout; no per-action watchdog/evidence flush | Confirmed by run behavior | Yes for reliable diagnosis |
-| R8 | Deployment governance | Pages workflow uses `cancel-in-progress: true`, which can cancel a deploy when a newer production commit arrives | Confirmed by workflow source; separate from nav failure | Follow-up hardening |
+| R1 | UI runtime | `final-ui-coordinator` body-class observer self-triggers through `closeStockDetail()` | **Confirmed by source + A/B** | **Fix first** |
+| R2 | Test infrastructure | browser interaction lacked bounded diagnostic isolation | Confirmed | keep bounded regression evidence |
+| R3 | Release control | shared `app_js` identity creates unrelated validator coupling | Confirmed by CI | follow current contract now; decouple later |
+| R4 | Runtime architecture | multiple historical view owners remain | Confirmed by source, not causal to current hang | follow-up only if regression remains |
+| R5 | Runtime hardening | drawdown uses broad subtree observer | Confirmed by source, **A/B non-causal** | separate follow-up |
+| R6 | Deployment governance | Pages uses `cancel-in-progress: true` | Confirmed by workflow source | separate follow-up |
 
-## What should be fixed first
+## Ordered repair plan
 
-### PR 1 — Diagnostic watchdog and A/B isolation
+### Fix PR 1 — Final UI observer loop
 
-Goal: prove which runtime causes the hard hang without changing production behavior.
+Scope only the confirmed root cause:
 
-Add a diagnostic browser test with a Node-side watchdog and explicit before/after action logging. Run the exact prepared Pages artifact in isolated contexts with request/runtime variants:
-
-1. baseline
-2. drawdown runtime disabled
-3. `memo-only-fix.js` disabled
-4. final coordinator disabled only if needed
-
-Acceptance: every variant terminates within a bounded time and the first failing/hanging component is identified reproducibly.
-
-### PR 2 — Remove the proven observer feedback loop if R3 is causal
-
-If A/B shows drawdown is causal, replace the body-wide self-observing render with narrowly scoped observation or explicit application render hooks. The render must be idempotent and must not mutate when the rendered value is already correct.
-
-Scope: drawdown runtime only; no navigation redesign, no data changes.
-
-### PR 3 — Consolidate primary-view ownership
-
-After the browser is stable, make exactly one runtime own Scanner/Today/Memo switching.
-
-Preferred direction:
-
-- one `setPrimaryView(view)` contract
-- Memo/Today modules expose render/refresh hooks only
-- remove their independent `[data-app-view]` capture handlers
-- `memo-only-fix.js` returns to a narrow compatibility/exclusivity role or loses nav ownership entirely
-- `app-shell` may normalize nav markup but should not depend on registration-order pre-emption
+- make `closeStockDetail()` idempotent with respect to `stock-detail-open`;
+- guard the body-class observer so it closes detail only when detail is open;
+- mirror `site/` and `static/`;
+- update the runtime/cache identity according to the current release contract;
+- add desktop + iPhone browser regression for Scanner → Today → Memo → Scanner → Market Pulse;
+- browser-test the exact prepared Pages artifact.
 
 Acceptance:
 
-- Scanner → Today → Memo → Scanner passes desktop and iPhone
-- body classes are mutually exclusive
-- persisted view reload works
-- cold/warm cache pass
-- localStorage enabled/blocked pass
-- visible Today renderer is the highest ready renderer without changing primary-view ownership
+- no Today/Memo click hangs;
+- Today and Memo remain mutually exclusive;
+- Scanner restores correctly;
+- Stock Detail still closes if a view switch occurs while it is genuinely open;
+- existing drawer contracts remain green;
+- no canonical-data, producer, publisher, chart, or notification behavior changes.
 
-### PR 4 — Decouple release identities
+### Fix PR 2 — Only if evidence remains after Fix PR 1
 
-Do not bump unrelated drawer/coordinator assets for a navigation-only change merely to satisfy a shared `app_js` number.
+If primary navigation still has a reproducible ownership conflict after the observer fix, then consolidate primary-view ownership in a separate PR. Do not do this speculatively.
 
-Introduce explicit asset identities (for example `app_js`, `app_shell_js`, `final_ui_coordinator_js`) and make validators compare the asset they actually validate. Deployment release/build identity remains a separate release-level field.
+### Follow-up PRs
 
-This is a validator/manifest PR and must not be mixed with the runtime behavior fix.
+Keep these isolated from the incident repair:
 
-### PR 5 — Production release
+- decouple release asset identities;
+- harden drawdown observer scope/idempotency;
+- review Pages deployment concurrency.
 
-Once the focused runtime PR(s) and identity contract are green:
+## Production release path
 
-1. build the exact Pages artifact
-2. run desktop + iPhone candidate browser flow
-3. merge with expected head SHA
-4. allow one Pages deploy for the production commit
-5. verify build identity and asset identities
-6. run production browser smoke against Scanner → Today → Memo → Scanner → Market Pulse
-7. confirm no console/bootstrap errors and no silent fallback
-
-### Follow-up — deployment concurrency hardening
-
-Evaluate changing Pages deployment concurrency so a production commit cannot lose its required deployment verification merely because a newer data commit arrives. This is a deployment-governance PR, not part of the primary-navigation runtime repair.
+1. Build the exact Pages artifact from the focused fix PR.
+2. Run desktop + iPhone primary-navigation regression on that artifact.
+3. Run existing bootstrap, drawer, Today, data, and publisher topology gates.
+4. Confirm no unresolved review threads and document rollback parent.
+5. Merge the expected head SHA.
+6. Verify the Pages deployment contains the fix commit (or a later main commit with the fix as an ancestor).
+7. Run production browser smoke against Scanner → Today → Memo → Scanner → Market Pulse.
+8. Confirm no bootstrap/page errors and no silent data fallback.
+9. Close PR #211 as superseded after production acceptance.
 
 ## Explicit non-goals
 
@@ -219,16 +208,16 @@ This investigation does not change:
 
 ## Stop conditions
 
-Do not merge a navigation runtime fix while any of these remain true:
+Do not merge the runtime repair while any of these remain true:
 
-- the hard hang has no isolated A/B reproduction
-- the browser test can itself wait until workflow timeout
-- multiple primary-view owners remain active
-- runtime behavior changes without a distinct cache/asset identity
-- the exact deploy artifact has not passed desktop and mobile browser flow
-- unrelated validator failures are hidden by bumping every UI asset to the same version
-- production browser smoke has not passed on the merged production identity
+- the exact candidate artifact fails the primary navigation regression;
+- desktop or iPhone flow hangs;
+- runtime behavior changed without cache/release identity update;
+- site/static mirrors differ;
+- drawer/Today/publisher gates fail;
+- the production deploy cannot be tied to a main commit containing the fix;
+- production browser smoke has not passed.
 
 ## Rollback
 
-Each behavior PR must document its immediate parent production SHA and remain independently revertible. No data-schema rollback should be required for this incident because the planned fixes are browser runtime / release-control only.
+The behavior fix must remain independently revertible to its immediate parent production SHA. No data-schema rollback is required because the confirmed issue is in UI runtime lifecycle only.
