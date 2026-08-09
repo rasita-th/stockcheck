@@ -44,23 +44,25 @@ jobs:
       - name: Prepare candidate browser artifact
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          rm -rf /tmp/stockcheck-browser-candidate
-          cp -a site /tmp/stockcheck-browser-candidate
+          set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          path = Path('/tmp/stockcheck-browser-candidate/index.html')
-          html = path.read_text(encoding='utf-8')
-          guard = '  <script src="storage-guard-v10-8-4.js?v=10.8.4"></script>\n'
-          html = html.replace(guard, '')
-          marker = '  <script src="app.js?v=10.7.1"></script>'
-          if marker not in html:
-              marker = '  <script src="app.js?v=10.8.3"></script>'
-          if marker not in html:
-              raise SystemExit('candidate app.js marker missing')
-          path.write_text(html.replace(marker, guard + marker, 1), encoding='utf-8')
+          path = Path('scripts/prepare_stable_site_v9_4_1.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'VERSION = "10.8.3"'
+          new = 'VERSION = "10.8.7"'
+          if old not in text and new not in text:
+              raise SystemExit('prepare script VERSION contract not found')
+          path.write_text(text.replace(old, new), encoding='utf-8')
           PY
+          python3 scripts/prepare_stable_site_v9_4_1.py
+          python3 scripts/sync_attention_assets.py
+          rm -rf /tmp/stockcheck-browser-candidate
+          cp -a site /tmp/stockcheck-browser-candidate
           node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
-          grep -F 'STORAGE_GUARD_ASSET = "storage-guard-v10-8-4.js"' scripts/prepare_stable_site_v9_4_1.py
+          node --check /tmp/stockcheck-browser-candidate/app-shell-v9-4-6.js
+          grep -F 'app-shell-v9-4-6.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'storage-guard-v10-8-4.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
 
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
