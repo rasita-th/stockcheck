@@ -2172,13 +2172,14 @@ function setDetailTab(tabName) {
   ensureSymbolDetail(state.selected, state.detailTab === "fundamental");
 }
 
-function setFundSubTab(tabName) {
+async function setFundSubTab(tabName) {
   const allowed = new Set(["earnings", "guidance", "analyst"]);
   state.fundSubTab = allowed.has(tabName) ? tabName : "earnings";
   saveSettings();
   renderDetail();
   if (state.fundSubTab === "analyst") {
-    // Keep API on-demand: UI switches immediately; the user decides when to press Load.
+    await loadRecommendationTrendsCache();
+    if (state.fundSubTab === "analyst") renderDetail();
     return;
   }
   ensureSymbolDetail(state.selected, true);
