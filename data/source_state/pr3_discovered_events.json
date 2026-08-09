@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-09T19:02:35+00:00",
-  "active_count": 9,
+  "updated_at": "2026-08-09T21:49:12+00:00",
+  "active_count": 10,
   "events": {
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
       "event": {
@@ -86,6 +86,48 @@
       "first_seen_at": "2026-08-05T03:33:01+00:00",
       "last_seen_at": "2026-08-05T03:33:01+00:00",
       "expires_at": "2026-08-12T03:33:01+00:00"
+    },
+    "gdelt:AMD:c354c900f97605bc": {
+      "event": {
+        "event_id": "gdelt:AMD:c354c900f97605bc",
+        "ticker": "AMD",
+        "event_type": "corporate_event",
+        "event_subtype": "transaction",
+        "headline": "Legacy Wealth Management LLC MS Acquires Shares of 1 , 490 Advanced Micro Devices , Inc . $AMD",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-08-09T11:00:00+00:00",
+        "detected_at": "2026-08-09T21:47:11+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: Advanced Micro Devices, Inc.",
+        "dedupe_key": "AMD:transaction:2026-08-09:4705ae2d4e16",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.themarketsdaily.com/2026/08/09/legacy-wealth-management-llc-ms-acquires-shares-of-1490-advanced-micro-devices-inc-amd.html",
+          "published_at": "2026-08-09T11:00:00+00:00",
+          "domain": "www.themarketsdaily.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.themarketsdaily.com/2026/08/09/legacy-wealth-management-llc-ms-acquires-shares-of-1490-advanced-micro-devices-inc-amd.html",
+            "published_at": "2026-08-09T11:00:00+00:00",
+            "domain": "www.themarketsdaily.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-08-09T21:49:12+00:00",
+      "last_seen_at": "2026-08-09T21:49:12+00:00",
+      "expires_at": "2026-08-16T21:49:12+00:00"
     },
     "gdelt:COST:1db038cf7e87931b": {
       "event": {

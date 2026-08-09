@@ -1238,67 +1238,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "UUUU",
-            "VCYT",
-            "VICR",
-            "VRSK",
-            "VRT",
-            "VRTX",
-            "VSAT",
-            "VST"
-          ],
-          "company_profile": [
-            "WDAY",
-            "WDC",
-            "WIX",
-            "WM"
-          ],
-          "recommendation_trends": [
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER",
-            "TGT",
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST",
-            "TRI",
-            "TRMB",
-            "TSAT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-08T07:34:37+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-08T07:33:48+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2210,9 +2149,53 @@
       "mode": "analyst",
       "started_at": "2026-08-09T19:18:31+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-09T21:47:09+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-09T21:46:42+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-09T19:19:14+00:00"
+  "updated_at": "2026-08-09T21:47:09+00:00"
 }
