@@ -45,24 +45,14 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('scripts/prepare_stable_site_v9_4_1.py')
-          text = path.read_text(encoding='utf-8')
-          old = 'VERSION = "10.8.3"'
-          new = 'VERSION = "10.8.7"'
-          if old not in text and new not in text:
-              raise SystemExit('prepare script VERSION contract not found')
-          path.write_text(text.replace(old, new), encoding='utf-8')
-          PY
           python3 scripts/prepare_stable_site_v9_4_1.py
           python3 scripts/sync_attention_assets.py
           rm -rf /tmp/stockcheck-browser-candidate
           cp -a site /tmp/stockcheck-browser-candidate
           node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
           node --check /tmp/stockcheck-browser-candidate/app-shell-v9-4-6.js
-          grep -F 'app-shell-v9-4-6.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
-          grep -F 'storage-guard-v10-8-4.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'app-shell-v9-4-6.js?v=10.8.3' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'storage-guard-v10-8-4.js?v=10.8.3' /tmp/stockcheck-browser-candidate/index.html
 
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
