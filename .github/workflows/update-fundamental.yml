@@ -12,6 +12,7 @@ on:
       - ".github/workflows/update-fundamental.yml"
   schedule:
     - cron: "23 11 * * *"
+    - cron: "47 */6 * * *"
 
 permissions:
   contents: read
@@ -42,9 +43,12 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Generate static fundamental data
+        id: generate
         env:
           INCLUDE_FUNDAMENTALS: "1"
           FUNDAMENTAL_SCAN_WORKERS: "4"
+          FUNDAMENTAL_REFRESH_MODE: ${{ github.event_name == 'schedule' && github.event.schedule == '47 */6 * * *' && 'targeted-post-earnings' || 'full' }}
+          FUNDAMENTAL_POST_EARNINGS_LOOKBACK_DAYS: "7"
           SEC_GUIDANCE_LOOKBACK_DAYS: "1460"
           SEC_GUIDANCE_MAX_FILINGS: "40"
           SEC_GUIDANCE_MAX_DOCUMENTS_PER_FILING: "8"
@@ -70,11 +74,15 @@ jobs:
             --current /tmp/fundamental-before.json \
             --mirror site/data/fundamental.json \
             --mirror static/data/fundamental.json
-          python scripts/check_data_freshness.py site/data/fundamental.json \
-            --timestamp-field generatedAtFundamental \
-            --timestamp-field generatedAt \
-            --max-age-minutes 30 \
-            --min-rows 1
+          if [ "${{ steps.generate.outputs.changed }}" = "true" ]; then
+            python scripts/check_data_freshness.py site/data/fundamental.json \
+              --timestamp-field generatedAtFundamental \
+              --timestamp-field generatedAt \
+              --max-age-minutes 30 \
+              --min-rows 1
+          else
+            echo "Targeted refresh produced no changes; preserving the current canonical snapshot."
+          fi
 
       - name: Build immutable production artifact
         run: |
