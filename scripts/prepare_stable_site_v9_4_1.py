@@ -12,10 +12,11 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
-VERSION = "10.8.3"
+VERSION = "10.8.7"
 TECHNICAL_RUNTIME_VERSION = "10.7.7"
 STORAGE_GUARD_ASSET = "storage-guard-v10-8-4.js"
 CANONICAL_BOOTSTRAP_ASSET = "canonical-screener-bootstrap-v10-7-7.js"
+PRIMARY_SHELL_ASSET = "app-shell-v9-4-6.js"
 
 LEGACY_ASSETS = (
     "nav-fix-v9-2.css", "nav-fix-v9-2.js",
@@ -87,6 +88,26 @@ def inject_storage_guard(html: str, bootstrap_asset: str) -> str:
     )
 
 
+def inject_primary_shell_before_app(html: str) -> str:
+    html = re.sub(
+        rf"\s*<script[^>]+{re.escape(PRIMARY_SHELL_ASSET)}[^>]*></script>",
+        "",
+        html,
+        flags=re.I,
+    )
+    guard_pattern = rf'(\s*<script[^>]+src=["\']{re.escape(STORAGE_GUARD_ASSET)}(?:\?[^"\']*)?["\'][^>]*></script>)'
+    if re.search(guard_pattern, html, flags=re.I) is None:
+        raise SystemExit("storage guard must exist before injecting primary shell")
+    shell = f'<script src="{PRIMARY_SHELL_ASSET}?v={VERSION}"></script>'
+    return re.sub(
+        guard_pattern,
+        lambda match: f"\n  {shell}{match.group(1)}",
+        html,
+        count=1,
+        flags=re.I,
+    )
+
+
 def prepare_index(path: Path) -> None:
     html = strip_legacy_markup(path.read_text(encoding="utf-8"))
     for asset in LEGACY_ASSETS:
@@ -94,6 +115,7 @@ def prepare_index(path: Path) -> None:
     for asset in RUNTIME_ASSETS:
         html = cache_bust(html, asset)
     html = inject_storage_guard(html, "app.js")
+    html = inject_primary_shell_before_app(html)
     html = inject_once(
         html,
         r'\s*<link[^>]+app-shell-v9-4-6\.css[^>]*>',
@@ -110,12 +132,6 @@ def prepare_index(path: Path) -> None:
         html,
         rf'\s*<script[^>]+{re.escape(CANONICAL_BOOTSTRAP_ASSET)}[^>]*></script>',
         f'<script src="{CANONICAL_BOOTSTRAP_ASSET}" defer></script>',
-        r'</body>',
-    )
-    html = inject_once(
-        html,
-        r'\s*<script[^>]+app-shell-v9-4-6\.js[^>]*></script>',
-        f'<script src="app-shell-v9-4-6.js?v={VERSION}" defer></script>',
         r'</body>',
     )
     path.write_text(html, encoding="utf-8")
@@ -237,6 +253,22 @@ def validate_guard_order(html: str, bootstrap_asset: str, page_name: str) -> Non
         raise SystemExit(f"storage guard must load before {bootstrap_asset} on {page_name}")
 
 
+def validate_primary_shell_order(html: str) -> None:
+    shell_ref = f"{PRIMARY_SHELL_ASSET}?v={VERSION}"
+    guard_ref = f"{STORAGE_GUARD_ASSET}?v={VERSION}"
+    app_ref = f"app.js?v={VERSION}"
+    shell_position = html.find(shell_ref)
+    guard_position = html.find(guard_ref)
+    app_position = html.find(app_ref)
+    if min(shell_position, guard_position, app_position) < 0:
+        raise SystemExit("primary shell / storage guard / app runtime reference missing")
+    if not (shell_position < guard_position < app_position):
+        raise SystemExit("primary navigation shell must register before storage guard and app.js")
+    shell_tag = re.search(rf'<script[^>]+src=["\']{re.escape(shell_ref)}["\'][^>]*>', html, flags=re.I)
+    if shell_tag is None or re.search(r'\bdefer\b|\basync\b', shell_tag.group(0), flags=re.I):
+        raise SystemExit("primary navigation shell must execute synchronously before app.js")
+
+
 def validate_clean_html() -> None:
     index = (SITE / "index.html").read_text(encoding="utf-8")
     market = (SITE / "market.html").read_text(encoding="utf-8")
@@ -254,10 +286,14 @@ def validate_clean_html() -> None:
         if f"{asset}?v={VERSION}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
     validate_guard_order(index, "app.js", "index.html")
+    validate_primary_shell_order(index)
     validate_guard_order(market, "market.js", "market.html")
     guard_path = SITE / STORAGE_GUARD_ASSET
     if not guard_path.exists() or "__stockcheckStorageMode" not in guard_path.read_text(encoding="utf-8"):
         raise SystemExit("storage compatibility guard is missing or invalid")
+    shell_path = SITE / PRIMARY_SHELL_ASSET
+    if not shell_path.exists() or "__stockcheckPrimaryNavVersion" not in shell_path.read_text(encoding="utf-8"):
+        raise SystemExit("primary navigation shell asset is missing or invalid")
     technical_ref = f"technical-shards-v2.js?v={TECHNICAL_RUNTIME_VERSION}"
     bootstrap_ref = CANONICAL_BOOTSTRAP_ASSET
     if technical_ref not in index:
