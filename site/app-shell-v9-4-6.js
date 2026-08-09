@@ -76,6 +76,17 @@
     $('.app-mode-nav .market-mode-btn')?.classList.remove('active');
   }
 
+  function scheduleRefresh(view){
+    setTimeout(() => {
+      if (view === 'attention' && typeof window.__stockcheckAttentionRefresh === 'function') {
+        Promise.resolve().then(() => window.__stockcheckAttentionRefresh()).catch(error => console.error('[primary-nav] Today refresh failed', error));
+      }
+      if (view === 'memo' && typeof window.StockcheckMemoRefresh === 'function') {
+        try { window.StockcheckMemoRefresh(); } catch (error) { console.error('[primary-nav] Memo refresh failed', error); }
+      }
+    }, 0);
+  }
+
   function setViewState(view, { persist = true, refresh = true } = {}){
     if (isMarketPage()) return false;
     const normalized = ['scanner','attention','memo'].includes(view) ? view : 'scanner';
@@ -89,12 +100,7 @@
     if (persist) {
       try { localStorage.setItem(VIEW_KEY, normalized); } catch (_) {}
     }
-    if (refresh && attention && typeof window.__stockcheckAttentionRefresh === 'function') {
-      Promise.resolve(window.__stockcheckAttentionRefresh()).catch(error => console.error('[primary-nav] Today refresh failed', error));
-    }
-    if (refresh && memo && typeof window.StockcheckMemoRefresh === 'function') {
-      try { window.StockcheckMemoRefresh(); } catch (error) { console.error('[primary-nav] Memo refresh failed', error); }
-    }
+    if (refresh) scheduleRefresh(normalized);
     return true;
   }
 
@@ -185,6 +191,7 @@
     const market = event.target.closest?.('.app-mode-nav a.market-mode-btn');
     if (market) {
       event.preventDefault();
+      event.stopImmediatePropagation();
       location.assign(new URL('market.html', location.href).href);
       return;
     }
@@ -192,6 +199,7 @@
     const control = event.target.closest?.('.app-mode-nav [data-app-view]');
     if (control) {
       event.preventDefault();
+      event.stopImmediatePropagation();
       setViewState(control.dataset.appView || 'scanner');
     }
   }, true);
