@@ -10,6 +10,14 @@ const profiles = [
   { name: "iphone-nav", device: devices["iPhone 13"] },
 ];
 
+async function pointerClick(page, selector) {
+  const locator = page.locator(selector);
+  await locator.waitFor({ state: "visible", timeout: 10000 });
+  const box = await locator.boundingBox();
+  if (!box) throw new Error(`No clickable box for ${selector}`);
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 const browser = await chromium.launch({ headless: true });
 const results = [];
 let failed = false;
@@ -39,7 +47,7 @@ for (const profile of profiles) {
     checks.runtime = true;
     console.log(`[primary-nav] ${profile.name}: runtime ok`);
 
-    await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 10000, noWaitAfter: true });
+    await pointerClick(page, '.app-mode-nav [data-app-view="attention"]');
     await page.waitForFunction(() => {
       const visibleToday = Array.from(document.querySelectorAll(".attention-page")).some((node) => {
         const style = getComputedStyle(node);
@@ -51,7 +59,7 @@ for (const profile of profiles) {
     checks.today = true;
     console.log(`[primary-nav] ${profile.name}: Today ok`);
 
-    await page.locator('.app-mode-nav [data-app-view="memo"]').click({ timeout: 10000, noWaitAfter: true });
+    await pointerClick(page, '.app-mode-nav [data-app-view="memo"]');
     await page.waitForFunction(() => {
       const memo = document.querySelector("#memoPage");
       if (!memo) return false;
@@ -62,16 +70,15 @@ for (const profile of profiles) {
     checks.memo = true;
     console.log(`[primary-nav] ${profile.name}: Memo ok`);
 
-    await page.locator('.app-mode-nav [data-app-view="scanner"]').click({ timeout: 10000, noWaitAfter: true });
+    await pointerClick(page, '.app-mode-nav [data-app-view="scanner"]');
     await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 10000 });
     checks.scanner = true;
     console.log(`[primary-nav] ${profile.name}: Scanner ok`);
 
     await page.waitForSelector('.app-mode-nav a.market-mode-btn', { state: "visible", timeout: 10000 });
-    await Promise.all([
-      page.waitForURL((url) => /\/market\.html$/.test(url.pathname), { timeout: 15000 }),
-      page.locator('.app-mode-nav a.market-mode-btn').click({ timeout: 10000, noWaitAfter: true }),
-    ]);
+    const marketNav = page.waitForURL((url) => /\/market\.html$/.test(url.pathname), { timeout: 15000 });
+    await pointerClick(page, '.app-mode-nav a.market-mode-btn');
+    await marketNav;
     await page.waitForSelector("#marketBriefing", { state: "visible", timeout: 15000 });
     checks.marketPulse = true;
     console.log(`[primary-nav] ${profile.name}: Market Pulse ok`);
