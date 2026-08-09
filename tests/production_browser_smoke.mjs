@@ -6,8 +6,29 @@ const outDir = process.env.SMOKE_OUT_DIR || "production-smoke-artifacts";
 fs.mkdirSync(outDir, { recursive: true });
 
 const profiles = [
-  { name: "desktop", viewport: { width: 1440, height: 1000 } },
-  { name: "iphone", device: devices["iPhone 13"] },
+  { name: "desktop-cold", viewport: { width: 1440, height: 1000 } },
+  { name: "iphone-cold", device: devices["iPhone 13"] },
+  {
+    name: "desktop-corrupt-persisted-alerts",
+    viewport: { width: 1440, height: 1000 },
+    beforeLoad: async (page) => {
+      await page.addInitScript(() => {
+        localStorage.setItem("stockTimingRadar.alertDismissed.v62", "{");
+      });
+    },
+  },
+  {
+    name: "desktop-storage-blocked",
+    viewport: { width: 1440, height: 1000 },
+    beforeLoad: async (page) => {
+      await page.addInitScript(() => {
+        const deny = () => { throw new DOMException("Storage access denied", "SecurityError"); };
+        Storage.prototype.getItem = deny;
+        Storage.prototype.setItem = deny;
+        Storage.prototype.removeItem = deny;
+      });
+    },
+  },
 ];
 
 const results = [];
@@ -32,6 +53,8 @@ for (const profile of profiles) {
     }
   });
 
+  await profile.beforeLoad?.(page);
+
   let status = null;
   let navigationError = null;
   try {
@@ -44,7 +67,14 @@ for (const profile of profiles) {
       const mobile = document.querySelector("#technicalMobileCards");
       return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
     }, null, { timeout: 45000 });
-    await page.waitForTimeout(1500);
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 60000 });
+    await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
+    await page.waitForFunction(() => {
+      const body = document.querySelector("#technicalTableBody");
+      const mobile = document.querySelector("#technicalMobileCards");
+      return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
+    }, null, { timeout: 45000 });
+    await page.waitForTimeout(1000);
   } catch (error) {
     navigationError = String(error?.stack || error);
   }
