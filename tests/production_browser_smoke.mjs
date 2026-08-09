@@ -99,6 +99,12 @@ for (const profile of profiles) {
       canonicalSource: window.StockcheckCanonicalScreener?.source || window.StockcheckCanonicalScreener?.identity || null,
       storageMode: window.__stockcheckStorageMode || null,
       recoveryVersion: window.__stockcheckStorageRecoveryVersion || null,
+      sheetBootGuard: window.__stockcheckDesktopSheetBootGuard || null,
+      visibleSheets: Array.from(document.querySelectorAll(".bottom-sheet")).filter((sheet) => {
+        const style = getComputedStyle(sheet);
+        const rect = sheet.getBoundingClientRect();
+        return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity || 1) > 0 && rect.width > 1 && rect.height > 1 && rect.right > 0 && rect.bottom > 0 && rect.left < innerWidth && rect.top < innerHeight;
+      }).map((sheet) => ({ id: sheet.id || null, ariaHidden: sheet.getAttribute("aria-hidden"), classes: sheet.className })),
     };
   }).catch(() => ({}));
 
@@ -107,7 +113,7 @@ for (const profile of profiles) {
   results.push(record);
 
   const criticalFailures = firstPartyFailures.filter((item) => ["document", "script", "stylesheet", "xhr", "fetch"].includes(item.type));
-  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1) {
+  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
     failed = true;
   }
 
