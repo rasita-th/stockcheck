@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "tests/production_browser_smoke.mjs"
+      - "tests/primary_navigation_smoke.mjs"
       - ".github/workflows/production-browser-smoke.yml"
       - "site/**"
       - "static/**"
@@ -25,6 +26,7 @@ jobs:
     timeout-minutes: 15
     env:
       SMOKE_OUT_DIR: production-smoke-artifacts
+      NAV_SMOKE_OUT_DIR: primary-navigation-smoke-artifacts
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,26 +43,18 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Prepare candidate browser artifact
+      - name: Prepare exact candidate Pages artifact
         if: ${{ github.event_name == 'pull_request' }}
         run: |
+          set -euo pipefail
+          python3 scripts/prepare_stable_site_v9_4_1.py
+          python3 scripts/sync_attention_assets.py
           rm -rf /tmp/stockcheck-browser-candidate
           cp -a site /tmp/stockcheck-browser-candidate
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('/tmp/stockcheck-browser-candidate/index.html')
-          html = path.read_text(encoding='utf-8')
-          guard = '  <script src="storage-guard-v10-8-4.js?v=10.8.4"></script>\n'
-          html = html.replace(guard, '')
-          marker = '  <script src="app.js?v=10.7.1"></script>'
-          if marker not in html:
-              marker = '  <script src="app.js?v=10.8.3"></script>'
-          if marker not in html:
-              raise SystemExit('candidate app.js marker missing')
-          path.write_text(html.replace(marker, guard + marker, 1), encoding='utf-8')
-          PY
           node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
-          grep -F 'STORAGE_GUARD_ASSET = "storage-guard-v10-8-4.js"' scripts/prepare_stable_site_v9_4_1.py
+          node --check /tmp/stockcheck-browser-candidate/final-ui-coordinator.js
+          grep -F 'final-ui-coordinator.js?v=10.8.4' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'storage-guard-v10-8-4.js?v=10.8.4' /tmp/stockcheck-browser-candidate/index.html
 
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
@@ -74,11 +68,23 @@ jobs:
           cat /tmp/stockcheck-smoke-server.log
           exit 1
 
+      - name: Verify candidate primary navigation
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          PRODUCTION_URL: http://127.0.0.1:8000/
+        run: node tests/primary_navigation_smoke.mjs
+
       - name: Verify candidate browser bootstrap
         if: ${{ github.event_name == 'pull_request' }}
         env:
           PRODUCTION_URL: http://127.0.0.1:8000/
         run: node tests/production_browser_smoke.mjs
+
+      - name: Verify deployed primary navigation
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          PRODUCTION_URL: https://rasita-th.github.io/stockcheck/
+        run: node tests/primary_navigation_smoke.mjs
 
       - name: Verify deployed production browser bootstrap
         if: ${{ github.event_name != 'pull_request' }}
@@ -91,5 +97,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-browser-smoke-${{ github.run_id }}
-          path: production-smoke-artifacts
+          path: |
+            production-smoke-artifacts
+            primary-navigation-smoke-artifacts
           if-no-files-found: warn
