@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEPLOY_VERSION: "10.8.2"
+  DEPLOY_VERSION: "10.8.3"
 
 jobs:
   build:
@@ -41,8 +41,8 @@ jobs:
           from pathlib import Path
           path = Path('scripts/prepare_stable_site_v9_4_1.py')
           text = path.read_text(encoding='utf-8')
-          old = 'VERSION = "10.8.1"'
-          new = 'VERSION = "10.8.2"'
+          old = 'VERSION = "10.8.2"'
+          new = 'VERSION = "10.8.3"'
           if old not in text and new not in text:
               raise SystemExit('prepare script VERSION contract not found')
           path.write_text(text.replace(old, new), encoding='utf-8')
@@ -84,6 +84,7 @@ jobs:
           node tests/technical_shards_runtime.test.js
           node tests/memo_canonical_price_runtime.test.js
           node tests/stock_detail_drawer_contract.test.js
+          node tests/watchlist_add_drawer_contract.test.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
           node --check site/notification-phase2.js
@@ -93,14 +94,16 @@ jobs:
           node --check site/attention-pr3.js
           node --check site/attention-pr4.js
           node --check site/earnings-radar-pr4.js
+          test -s site/watchlist-add-drawer.css
+          cmp site/watchlist-add-drawer.css static/watchlist-add-drawer.css
           python scripts/validate_static_data.py
           python scripts/validate_earnings_radar.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
           python scripts/check_earnings_radar_ui_contract.py
           python scripts/check_earnings_radar_activation.py
-          grep -F 'final-ui-coordinator.js?v=10.8.2' site/index.html
-          grep -F 'final-ui-coordinator.css?v=10.8.2' site/index.html
+          grep -F 'final-ui-coordinator.js?v=10.8.3' site/index.html
+          grep -F 'final-ui-coordinator.css?v=10.8.3' site/index.html
 
       - name: Stamp immutable production identity
         run: |
@@ -126,7 +129,8 @@ jobs:
               'technical_count': len(rows),
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'asset_version': os.environ['DEPLOY_VERSION'],
-              'drawdown_runtime': '10.8.2',
+              'drawdown_runtime': '10.8.3',
+              'watchlist_add_drawer_css': manifest['assets'].get('watchlist_add_drawer_css'),
           }
           Path('site/build.json').write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(identity, ensure_ascii=False))
@@ -155,7 +159,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify drawdown production runtime
+      - name: Verify drawer production runtime
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -166,23 +170,30 @@ jobs:
             nonce="$(date +%s)-${attempt}"
             if curl -fsSL "${BASE}/build.json?smoke=${nonce}" -o /tmp/build.json \
               && curl -fsSL "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
-              && curl -fsSL "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js; then
+              && curl -fsSL "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js \
+              && curl -fsSL "${BASE}/watchlist-add-drawer.css?smoke=${nonce}" -o /tmp/watchlist-add-drawer.css; then
               if python - <<'PY'
           import json, os
           from pathlib import Path
           build = json.loads(Path('/tmp/build.json').read_text(encoding='utf-8'))
           index = Path('/tmp/index.html').read_text(encoding='utf-8')
           runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
+          drawer_css = Path('/tmp/watchlist-add-drawer.css').read_text(encoding='utf-8')
           if build.get('source_commit') != os.environ['GITHUB_SHA']:
               raise SystemExit('production commit mismatch')
-          if build.get('asset_version') != '10.8.2':
+          if build.get('asset_version') != '10.8.3':
               raise SystemExit('production asset version mismatch')
-          if 'final-ui-coordinator.js?v=10.8.2' not in index:
-              raise SystemExit('production HTML missing coordinator v10.8.2')
-          for token in ('const VERSION = "10.8.2"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation'):
+          if build.get('watchlist_add_drawer_css') != '10.8.3':
+              raise SystemExit('watchlist drawer CSS identity mismatch')
+          if 'final-ui-coordinator.js?v=10.8.3' not in index:
+              raise SystemExit('production HTML missing coordinator v10.8.3')
+          for token in ('const VERSION = "10.8.3"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation', 'StockRadarWatchlistDrawer'):
               if token not in runtime:
                   raise SystemExit(f'production coordinator runtime missing: {token}')
-          print('Verified production coordinator runtime 10.8.2')
+          for token in ('#bulkAddSheet.bottom-sheet', 'width:clamp(360px, 36vw, 520px)', 'border-radius:18px 0 0 18px'):
+              if token not in drawer_css:
+                  raise SystemExit(f'production watchlist drawer CSS missing: {token}')
+          print('Verified production drawer runtime 10.8.3')
           PY
               then
                 ready=true

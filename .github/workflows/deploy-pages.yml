@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TODAY_DEPLOY_VERSION: "10.8.2"
+  TODAY_DEPLOY_VERSION: "10.8.3"
 
 jobs:
   build:
@@ -43,8 +43,8 @@ jobs:
           from pathlib import Path
           path = Path('scripts/prepare_stable_site_v9_4_1.py')
           text = path.read_text(encoding='utf-8')
-          old = 'VERSION = "10.8.1"'
-          new = 'VERSION = "10.8.2"'
+          old = 'VERSION = "10.8.2"'
+          new = 'VERSION = "10.8.3"'
           if old not in text and new not in text:
               raise SystemExit('prepare script VERSION contract not found')
           path.write_text(text.replace(old, new), encoding='utf-8')
@@ -86,6 +86,7 @@ jobs:
           node tests/technical_shards_runtime.test.js
           node tests/memo_canonical_price_runtime.test.js
           node tests/stock_detail_drawer_contract.test.js
+          node tests/watchlist_add_drawer_contract.test.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
           node --check site/notification-phase2.js
@@ -95,14 +96,17 @@ jobs:
           node --check site/attention-pr3.js
           node --check site/attention-pr4.js
           node --check site/earnings-radar-pr4.js
+          test -s site/watchlist-add-drawer.css
+          cmp site/watchlist-add-drawer.css static/watchlist-add-drawer.css
           python scripts/validate_static_data.py
           python scripts/validate_earnings_radar.py
           python scripts/smoke_test_site_v9_4_6.py
           python scripts/check_ui_view_contract.py
           python scripts/check_earnings_radar_ui_contract.py
           python scripts/check_earnings_radar_activation.py
-          grep -F 'final-ui-coordinator.js?v=10.8.2' site/index.html
-          grep -F 'final-ui-coordinator.css?v=10.8.2' site/index.html
+          grep -F 'final-ui-coordinator.js?v=10.8.3' site/index.html
+          grep -F 'final-ui-coordinator.css?v=10.8.3' site/index.html
+          grep -F 'watchlist-add-drawer.css?v=${VERSION}' site/final-ui-coordinator.js
 
       - name: Stamp immutable production identity
         run: |
@@ -137,7 +141,8 @@ jobs:
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'technical_samples': technical_samples,
               'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
-              'drawdown_runtime': '10.8.2',
+              'drawdown_runtime': '10.8.3',
+              'watchlist_add_drawer_css': manifest['assets'].get('watchlist_add_drawer_css'),
           }
           Path("site/build.json").write_text(
               json.dumps(identity, ensure_ascii=False, indent=2) + '\n',
@@ -169,7 +174,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify deployed prices technical data and Drawdown runtime
+      - name: Verify deployed prices technical data and drawer runtimes
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
@@ -185,7 +190,8 @@ jobs:
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/NVDA.json?smoke=${nonce}" -o /tmp/nvda.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/CIFR.json?smoke=${nonce}" -o /tmp/cifr.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
-              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js; then
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/final-ui-coordinator.js?smoke=${nonce}" -o /tmp/coordinator.js \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/watchlist-add-drawer.css?smoke=${nonce}" -o /tmp/watchlist-add-drawer.css; then
               if python - <<'PY'
           import json
           import os
@@ -200,6 +206,7 @@ jobs:
           }
           index = Path('/tmp/index.html').read_text(encoding='utf-8')
           runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
+          drawer_css = Path('/tmp/watchlist-add-drawer.css').read_text(encoding='utf-8')
           if build.get('source_commit') != os.environ['GITHUB_SHA']:
               raise SystemExit('commit mismatch')
           if build.get('attention_updated_at') != attention.get('updated_at'):
@@ -209,13 +216,18 @@ jobs:
           technical_stamp = technical.get('generatedAtTechnical') or technical.get('generatedAt')
           if build.get('technical_generated_at') != technical_stamp:
               raise SystemExit('technical identity mismatch')
-          if build.get('asset_version') != '10.8.2':
+          if build.get('asset_version') != '10.8.3':
               raise SystemExit('production asset version mismatch')
-          if 'final-ui-coordinator.js?v=10.8.2' not in index:
-              raise SystemExit('production HTML missing coordinator v10.8.2')
-          for token in ('const VERSION = "10.8.2"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation'):
+          if build.get('watchlist_add_drawer_css') != '10.8.3':
+              raise SystemExit('watchlist drawer CSS identity mismatch')
+          if 'final-ui-coordinator.js?v=10.8.3' not in index:
+              raise SystemExit('production HTML missing coordinator v10.8.3')
+          for token in ('const VERSION = "10.8.3"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation', 'StockRadarWatchlistDrawer', 'watchlist-add-drawer.css'):
               if token not in runtime:
                   raise SystemExit(f'production coordinator runtime missing: {token}')
+          for token in ('#bulkAddSheet.bottom-sheet', 'width:clamp(360px, 36vw, 520px)', 'border-radius:18px 0 0 18px'):
+              if token not in drawer_css:
+                  raise SystemExit(f'production watchlist drawer CSS missing: {token}')
           rows = technical.get('rows') or []
           samples = build.get('technical_samples') or {}
           for symbol, shard in shards.items():
@@ -233,7 +245,7 @@ jobs:
               sample = samples.get(symbol) or {}
               if sample.get('series_points') != len(series):
                   raise SystemExit(f'{symbol} chart identity mismatch')
-          print('Verified production coordinator runtime 10.8.2 with NVDA and CIFR chart history')
+          print('Verified production drawer runtimes 10.8.3 with NVDA and CIFR chart history')
           PY
               then
                 ready=true
