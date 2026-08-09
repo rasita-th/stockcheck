@@ -4,6 +4,8 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+from apply_runtime_asset_versions import main as apply_runtime_asset_versions
+
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 STATIC = ROOT / "static"
@@ -31,6 +33,10 @@ def main() -> None:
             raise SystemExit(f"Missing Today asset: {source}")
         shutil.copyfile(source, target)
         print(f"Synced {name}")
+    # Pages preparation rewrites legacy shell tags to the release-level app version.
+    # Re-apply the manifest-owned shell identity after that preparation so warm
+    # browser caches cannot keep the previous Stock Detail/header geometry runtime.
+    apply_runtime_asset_versions()
 
 
 if __name__ == "__main__":
