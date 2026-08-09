@@ -14,6 +14,7 @@
   const legacyMapRow = typeof mapRow === "function" ? mapRow : null;
   const legacyBuildAlertItems = typeof buildAlertItems === "function" ? buildAlertItems : null;
   const shardRequests = new Map();
+  const rowModels = new Map();
   let screenerSnapshot = null;
 
   async function fetchJsonNoStore(url) {
@@ -37,6 +38,24 @@
     const ticker = safeTicker(symbol);
     const rows = Array.isArray(screenerSnapshot?.rows) ? screenerSnapshot.rows : [];
     return rows.find((row) => safeTicker(row?.symbol || row?.ticker) === ticker) || null;
+  }
+
+  function normalizeDrawdown(row = {}) {
+    const nested = row?.drawdown && typeof row.drawdown === "object" ? row.drawdown : {};
+    const value = (preferred, fallback) => preferred ?? fallback ?? null;
+    return {
+      ...nested,
+      schemaVersion: value(nested.schemaVersion, row.drawdownSchemaVersion),
+      status: value(nested.status, row.drawdownStatus),
+      currentPct: value(nested.currentPct, row.drawdownCurrentPct),
+      maxPct: value(nested.maxPct, row.drawdownMaxPct),
+      daysSincePeak: value(nested.daysSincePeak, row.drawdownDaysSincePeak),
+      asOf: value(nested.asOf, row.drawdownAsOf),
+    };
+  }
+
+  function drawdownFor(symbol) {
+    return rowModels.get(safeTicker(symbol))?.drawdown || null;
   }
 
   function parseTimestamp(value) {
@@ -218,8 +237,10 @@
       const liveDayPct = typeof toNum === "function" ? toNum(row.dayPct ?? row.day_change_pct) : Number(row.dayPct ?? row.day_change_pct);
       if (Number.isFinite(livePrice)) mapped.price = livePrice;
       if (Number.isFinite(liveDayPct)) mapped.dayPct = liveDayPct;
+      mapped.drawdown = normalizeDrawdown(row);
       mapped.screenerSnapshotFresh = snapshotIsFresh();
       mapped.screenerSnapshotStatus = row.snapshotStatus || "unknown";
+      if (mapped.ticker) rowModels.set(safeTicker(mapped.ticker), mapped);
       return mapped;
     };
   }
@@ -249,13 +270,14 @@
   if (typeof setInterval === "function") setInterval(renderFreshnessNotice, 60000);
 
   window.StockcheckTechnicalV2 = Object.freeze({
-    version: "10.7.7",
+    version: "10.7.8",
     snapshotSchema: SCREENER_SNAPSHOT_SCHEMA,
     loadTechnicalShard,
     hasSeries,
     snapshotAgeMinutes,
     snapshotIsFresh,
     snapshotCanDriveAlerts,
+    drawdownFor,
     getSnapshot: () => screenerSnapshot,
     isActive: () => Boolean(state.staticPayloads?.technical?.__technicalV2),
   });

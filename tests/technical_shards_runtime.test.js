@@ -40,6 +40,20 @@ const snapshot = {
       price: 493.23,
       regularMarketPrice: 493.23,
       dayPct: 0.6592,
+      drawdown: {
+        schemaVersion: "1.0",
+        status: "complete",
+        currentPct: -8.5,
+        maxPct: -31.2,
+        daysSincePeak: 21,
+        observations: 251,
+        asOf: "2026-08-07",
+      },
+      drawdownCurrentPct: -8.5,
+      drawdownMaxPct: -31.2,
+      drawdownDaysSincePeak: 21,
+      drawdownAsOf: "2026-08-07",
+      drawdownStatus: "complete",
       snapshotStatus: "live_quote",
     },
     {
@@ -124,12 +138,15 @@ vm.runInContext(`
   assert.equal(technical.__screenerSnapshot, true);
   assert.equal(technical.__screenerFresh, true);
   assert.equal(technical.rows[0].price, 493.23);
-  assert.equal(context.window.StockcheckTechnicalV2.version, "10.7.7");
+  assert.equal(context.window.StockcheckTechnicalV2.version, "10.7.8");
   assert.equal(context.window.StockcheckTechnicalV2.snapshotSchema, "1.1");
 
   const mapped = context.__runtimeMapRow(technical.rows[0]);
   assert.equal(mapped.price, 493.23, "canonical live price must override technical close");
   assert.equal(mapped.dayPct, 0.6592, "canonical day change must reach screener and alerts");
+  assert.equal(mapped.drawdown.currentPct, -8.5, "canonical drawdown must reach the UI row model");
+  assert.equal(mapped.drawdown.daysSincePeak, 21, "row model must retain drawdown context");
+  assert.equal(context.window.StockcheckTechnicalV2.drawdownFor("AMD").currentPct, -8.5, "Drawdown UI must read the mapped row metric");
   assert.equal(mapped.screenerSnapshotFresh, true);
   assert.equal(context.__runtimeBuildAlertItems().length, 1, "fresh snapshot may produce alerts");
 

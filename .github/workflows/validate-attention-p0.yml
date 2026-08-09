@@ -110,6 +110,7 @@ jobs:
           python -m unittest tests.test_technical_shards -v
           python -m unittest tests.test_screener_snapshot -v
           node tests/technical_shards_runtime.test.js
+          node tests/drawdown_screener_runtime.test.js
       - name: Build deterministic market-wide fixtures
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
@@ -141,6 +142,7 @@ jobs:
           node --check site/app.js
           node --check site/technical-shards-v2.js
           node tests/technical_shards_runtime.test.js
+          node tests/drawdown_screener_runtime.test.js
           node --check site/storage-guard-v10-7-3.js
           node --check site/app-shell-v9-4-6.js
           node --check site/attention-p0.js

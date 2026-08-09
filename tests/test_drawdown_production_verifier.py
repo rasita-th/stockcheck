@@ -38,9 +38,9 @@ def payload(url: str) -> bytes:
     if "index.html" in url:
         return b'<script src="memo-only-fix.js?v=10.8.0"></script>'
     if "memo-only-fix.js" in url:
-        return b'const DRAWDOWN_VERSION = "10.9.0"; drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}'
+        return b'const DRAWDOWN_VERSION = "10.9.1"; drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}'
     if "drawdown-screener-v10-9.js" in url:
-        return b'const VERSION = "10.9.0"; dataset.drawdownScreener drawdownCurrentPct currentPct status === "unavailable"'
+        return b'const VERSION = "10.9.1"; dataset.drawdownScreener drawdownCurrentPct currentPct status === "unavailable" StockcheckTechnicalV2?.drawdownFor'
     if "screener_snapshot.json" in url:
         return json.dumps(snapshot()).encode()
     raise AssertionError(url)
@@ -80,7 +80,7 @@ class DrawdownProductionVerifierTests(unittest.TestCase):
 
     def test_rejects_stale_loader_version(self) -> None:
         def stale(url: str) -> bytes:
-            return payload(url).replace(b"10.9.0", b"10.8.0")
+            return payload(url).replace(b"10.9.1", b"10.8.0")
 
         with self.assertRaises(verifier.DrawdownVerificationError):
             verifier.verify_once("https://example.test", "1", fetcher=stale)
