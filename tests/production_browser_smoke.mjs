@@ -46,8 +46,12 @@ async function verifyPrimaryNavigation(page) {
   await page.waitForSelector('.app-mode-nav [data-app-view="attention"]', { state: "visible", timeout: 15000 });
   await page.click('.app-mode-nav [data-app-view="attention"]');
   await page.waitForFunction(() => {
-    const today = document.querySelector(".attention-page");
-    return document.body.classList.contains("attention-active") && today && getComputedStyle(today).display !== "none";
+    const visibleToday = Array.from(document.querySelectorAll(".attention-page")).some((node) => {
+      const style = getComputedStyle(node);
+      const rect = node.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
+    });
+    return document.body.classList.contains("attention-active") && visibleToday;
   }, null, { timeout: 10000 });
   checks.today = true;
 
