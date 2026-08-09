@@ -1238,50 +1238,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-07T19:18:50+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "TGT",
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST",
-            "TRI",
-            "TRMB",
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG",
-            "TXN",
-            "TXT",
-            "U",
-            "UFO",
-            "UNH"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-07T19:18:23+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2211,9 +2167,64 @@
       "mode": "events",
       "started_at": "2026-08-09T07:25:20+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "AEP",
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD"
+          ],
+          "recommendation_trends": [
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE",
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR",
+            "BRK-B",
+            "BTDR",
+            "BW",
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-09T07:39:43+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-09T07:39:00+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-09T07:25:47+00:00"
+  "updated_at": "2026-08-09T07:39:44+00:00"
 }
