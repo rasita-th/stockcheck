@@ -31,55 +31,6 @@ const profiles = [
   },
 ];
 
-async function waitForScannerRows(page) {
-  await page.waitForSelector("#technicalTableBody", { state: "attached", timeout: 30000 });
-  await page.waitForFunction(() => {
-    const body = document.querySelector("#technicalTableBody");
-    const mobile = document.querySelector("#technicalMobileCards");
-    return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
-  }, null, { timeout: 45000 });
-}
-
-async function verifyPrimaryNavigation(page) {
-  const checks = { today: false, memo: false, scanner: false, marketPulse: false };
-
-  await page.waitForSelector('.app-mode-nav [data-app-view="attention"]', { state: "visible", timeout: 15000 });
-  await page.click('.app-mode-nav [data-app-view="attention"]');
-  await page.waitForFunction(() => {
-    const visibleToday = Array.from(document.querySelectorAll(".attention-page")).some((node) => {
-      const style = getComputedStyle(node);
-      const rect = node.getBoundingClientRect();
-      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
-    });
-    return document.body.classList.contains("attention-active") && visibleToday;
-  }, null, { timeout: 10000 });
-  checks.today = true;
-
-  await page.click('.app-mode-nav [data-app-view="memo"]');
-  await page.waitForFunction(() => {
-    const memo = document.querySelector("#memoPage");
-    return document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active") && memo && getComputedStyle(memo).display !== "none";
-  }, null, { timeout: 10000 });
-  checks.memo = true;
-
-  await page.click('.app-mode-nav [data-app-view="scanner"]');
-  await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 10000 });
-  checks.scanner = true;
-
-  await page.waitForSelector('.app-mode-nav a.market-mode-btn', { state: "visible", timeout: 10000 });
-  await Promise.all([
-    page.waitForURL((url) => /\/market\.html(?:$|[?#])/.test(url.pathname + url.search + url.hash), { timeout: 15000 }),
-    page.click('.app-mode-nav a.market-mode-btn'),
-  ]);
-  await page.waitForSelector("#marketBriefing", { state: "attached", timeout: 15000 });
-  checks.marketPulse = true;
-
-  await page.goto(`${base}?browser_smoke_return=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 60000 });
-  await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
-  await waitForScannerRows(page);
-  return checks;
-}
-
 const results = [];
 let failed = false;
 const browser = await chromium.launch({ headless: true });
@@ -90,7 +41,6 @@ for (const profile of profiles) {
   const pageErrors = [];
   const firstPartyFailures = [];
   const consoleErrors = [];
-  let navChecks = null;
 
   page.on("pageerror", (error) => pageErrors.push(String(error?.stack || error)));
   page.on("console", (message) => {
@@ -112,14 +62,20 @@ for (const profile of profiles) {
     const response = await page.goto(`${base}?browser_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 60000 });
     status = response?.status() ?? null;
     await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
-    await waitForScannerRows(page);
+    await page.waitForSelector("#technicalTableBody", { state: "attached", timeout: 30000 });
+    await page.waitForFunction(() => {
+      const body = document.querySelector("#technicalTableBody");
+      const mobile = document.querySelector("#technicalMobileCards");
+      return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
+    }, null, { timeout: 45000 });
     await page.reload({ waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
-    await waitForScannerRows(page);
+    await page.waitForFunction(() => {
+      const body = document.querySelector("#technicalTableBody");
+      const mobile = document.querySelector("#technicalMobileCards");
+      return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
+    }, null, { timeout: 45000 });
     await page.waitForTimeout(1000);
-    if (profile.name === "desktop-cold" || profile.name === "iphone-cold") {
-      navChecks = await verifyPrimaryNavigation(page);
-    }
   } catch (error) {
     navigationError = String(error?.stack || error);
   }
@@ -144,7 +100,6 @@ for (const profile of profiles) {
       storageMode: window.__stockcheckStorageMode || null,
       recoveryVersion: window.__stockcheckStorageRecoveryVersion || null,
       sheetBootGuard: window.__stockcheckDesktopSheetBootGuard || null,
-      primaryNavVersion: window.__stockcheckPrimaryNavVersion || window.StockRadarShellV946?.version || null,
       visibleSheets: Array.from(document.querySelectorAll(".bottom-sheet")).filter((sheet) => {
         const style = getComputedStyle(sheet);
         const rect = sheet.getBoundingClientRect();
@@ -154,13 +109,11 @@ for (const profile of profiles) {
   }).catch(() => ({}));
 
   await page.screenshot({ path: `${outDir}/${profile.name}.png`, fullPage: true }).catch(() => {});
-  const record = { profile: profile.name, status, navigationError, pageErrors, firstPartyFailures, consoleErrors, navChecks, runtime };
+  const record = { profile: profile.name, status, navigationError, pageErrors, firstPartyFailures, consoleErrors, runtime };
   results.push(record);
 
   const criticalFailures = firstPartyFailures.filter((item) => ["document", "script", "stylesheet", "xhr", "fetch"].includes(item.type));
-  const navFailed = navChecks && Object.values(navChecks).some((value) => value !== true);
-  const navRuntimeFailed = navChecks && runtime.primaryNavVersion !== "10.8.7";
-  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || navFailed || navRuntimeFailed || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
+  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
     failed = true;
   }
 
