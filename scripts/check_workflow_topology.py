@@ -16,7 +16,7 @@ PRODUCERS = {
     "refresh-market-pulse-v9-6.yml",
     "update-fundamental.yml",
 }
-DISPATCH_ALLOWLIST = {PUBLISHER}
+PAGES_DEPLOYER = "deploy-pages.yml"
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
 LEGACY_VERIFIERS = {"verify-pr3-pages.yml", "verify-finnhub-today.yml"}
 
@@ -39,6 +39,8 @@ def main() -> None:
         failures.append("refresh_market_live.yml: legacy live writer must remain disabled")
 
     automatic_writers: list[str] = []
+    pages_deployers: list[str] = []
+    pages_dispatchers: list[str] = []
     for path in workflows:
         text = path.read_text(encoding="utf-8")
         name = path.name
@@ -47,6 +49,7 @@ def main() -> None:
         has_push = "git push" in text
         has_credentials = "persist-credentials: true" in text
         dispatches_pages = "workflow_id: 'deploy-pages.yml'" in text or 'workflow_id: "deploy-pages.yml"' in text
+        deploys_pages = "actions/deploy-pages@" in text
 
         if name in PRODUCERS:
             for token, present in {
@@ -67,13 +70,26 @@ def main() -> None:
                 failures.append(f"{name}: unapproved repository writer")
             elif name == PUBLISHER:
                 automatic_writers.append(name)
-        if dispatches_pages and name not in DISPATCH_ALLOWLIST:
-            failures.append(f"{name}: unapproved Pages dispatcher")
+        if deploys_pages:
+            pages_deployers.append(name)
+        if dispatches_pages:
+            pages_dispatchers.append(name)
         if OLD_HOSTNAME in text:
             failures.append(f"{name}: references obsolete production hostname")
 
     if automatic_writers != [PUBLISHER]:
         failures.append(f"automatic production writers must be exactly [{PUBLISHER!r}], got {automatic_writers}")
+    if pages_deployers != [PAGES_DEPLOYER]:
+        failures.append(f"Pages deploy owner must be exactly [{PAGES_DEPLOYER!r}], got {pages_deployers}")
+    if pages_dispatchers:
+        failures.append(f"Pages must be triggered only by a main push; explicit dispatchers found: {pages_dispatchers}")
+
+    pages = (WORKFLOW_DIR / PAGES_DEPLOYER).read_text(encoding="utf-8")
+    for token in ('push:', 'branches: ["main"]', 'group: pages-production', 'cancel-in-progress: true'):
+        if token not in pages:
+            failures.append(f"{PAGES_DEPLOYER}: missing single-trigger contract token {token!r}")
+    if "workflow_dispatch:" in pages:
+        failures.append(f"{PAGES_DEPLOYER}: manual dispatch would allow the same commit to deploy more than once")
 
     publisher = (WORKFLOW_DIR / PUBLISHER).read_text(encoding="utf-8")
     for token in (
@@ -116,7 +132,7 @@ def main() -> None:
 
     if failures:
         raise SystemExit("Workflow topology violations:\n- " + "\n- ".join(failures))
-    print("Workflow topology is valid. One automatic writer, one manual rollback, and one receipt-backed production verifier are active.")
+    print("Workflow topology is valid. One automatic writer, one push-triggered Pages deployer, one manual rollback, and one receipt-backed production verifier are active.")
 
 
 if __name__ == "__main__":

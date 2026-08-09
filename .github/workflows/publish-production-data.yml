@@ -12,7 +12,7 @@ on:
     types: [completed]
 
 permissions:
-  actions: write
+  actions: read
   contents: write
 
 concurrency:
@@ -225,19 +225,6 @@ jobs:
           echo "Unable to publish production data after three attempts."
           exit 1
 
-      - name: Dispatch Pages after published data
-        if: steps.push.outputs.published == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'deploy-pages.yml',
-              ref: 'main',
-            });
-            core.info('Dispatched deploy-pages.yml after the hardened publisher pushed main.');
-
       - name: Publish result summary
         if: always()
         env:
@@ -249,7 +236,7 @@ jobs:
           CHANGED_COUNT: ${{ steps.contract.outputs.changed_count || '0' }}
           PATCH_SHA: ${{ steps.contract.outputs.patch_sha256 || 'unavailable' }}
           PUBLISHED_SHA: ${{ steps.push.outputs.published_sha || 'none' }}
-          PAGES: ${{ steps.push.outputs.published == 'true' && 'yes' || 'no' }}
+          PAGES_TRIGGER: ${{ steps.push.outputs.published == 'true' && 'main push' || 'none' }}
         run: |
           {
             echo "## Production publisher result"
@@ -261,5 +248,5 @@ jobs:
             echo "- Changed paths: $CHANGED_COUNT"
             echo "- Patch SHA-256: \`$PATCH_SHA\`"
             echo "- Published commit: \`$PUBLISHED_SHA\`"
-            echo "- Pages dispatched: $PAGES"
+            echo "- Pages trigger: $PAGES_TRIGGER"
           } >> "$GITHUB_STEP_SUMMARY"

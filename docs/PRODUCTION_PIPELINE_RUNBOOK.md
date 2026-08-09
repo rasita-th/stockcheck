@@ -9,7 +9,7 @@ Manual writer exception: `Roll back Market Pulse data` only.
 
 ## Normal statuses
 
-- `PUBLISHED`: data commit created and Pages dispatched.
+- `PUBLISHED`: data commit created; its push to `main` triggers the sole Pages workflow.
 - `NO_CHANGES`: producer succeeded but generated no patch; no commit or deploy.
 - `SKIPPED_REPLAY`: the same producer run/attempt was already published.
 - `SKIPPED_DUPLICATE`: identical patch content was already published.
