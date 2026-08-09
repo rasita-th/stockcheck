@@ -1238,67 +1238,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER",
-            "TGT",
-            "TMC",
-            "TMDX",
-            "TMUS"
-          ],
-          "company_profile": [
-            "U",
-            "UFO",
-            "UNH",
-            "UUUU"
-          ],
-          "recommendation_trends": [
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA",
-            "NBIS",
-            "NFLX",
-            "NICE",
-            "NNDM",
-            "NOC",
-            "NOW",
-            "NTLA",
-            "NTRA",
-            "NU",
-            "NVDA",
-            "NVTS",
-            "NXPI",
-            "ODFL",
-            "OKLO",
-            "ONDS",
-            "OPEN",
-            "ORCL",
-            "ORLY"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-07T07:56:47+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-07T07:55:58+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2228,9 +2167,53 @@
       "mode": "analyst",
       "started_at": "2026-08-09T02:39:31+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-09T04:35:30+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-09T04:35:04+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-09T02:40:16+00:00"
+  "updated_at": "2026-08-09T04:35:31+00:00"
 }
