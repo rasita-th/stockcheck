@@ -52,4 +52,15 @@ jobs:
             cmp site/watchlist-add-drawer.css static/watchlist-add-drawer.css
           fi
           python -m py_compile scripts/prepare_stable_site_v9_4_1.py
-          python scripts/check_ui_view_contract.py
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
+          runtime = Path('site/final-ui-coordinator.js').read_text(encoding='utf-8')
+          match = re.search(r'const VERSION = "(\d+\.\d+\.\d+)"', runtime)
+          if not match:
+              raise SystemExit('drawer coordinator VERSION missing')
+          if match.group(1) != str(manifest['assets']['app_js']):
+              raise SystemExit('drawer coordinator VERSION does not match app_js manifest identity')
+          PY
