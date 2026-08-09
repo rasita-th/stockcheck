@@ -1,0 +1,23 @@
+name: Duplicate Pages dispatch fixture
+
+on:
+  workflow_run:
+    workflows: ["Producer fixture"]
+    types: [completed]
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-pages.yml',
+              ref: 'main',
+            });
