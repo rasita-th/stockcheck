@@ -13,7 +13,8 @@ from finnhub_sharded_state import hydrate_state as hydrate_finnhub_state
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 VERSION = "10.8.4"
-TECHNICAL_RUNTIME_VERSION = "10.7.7"
+TECHNICAL_RUNTIME_VERSION = "10.7.8"
+MEMO_RUNTIME_VERSION = "10.8.2"
 STORAGE_GUARD_ASSET = "storage-guard-v10-8-4.js"
 CANONICAL_BOOTSTRAP_ASSET = "canonical-screener-bootstrap-v10-7-7.js"
 
@@ -93,6 +94,12 @@ def prepare_index(path: Path) -> None:
         html = strip_asset(html, asset)
     for asset in RUNTIME_ASSETS:
         html = cache_bust(html, asset)
+    html = re.sub(
+        r'(memo-only-fix\.js)(?:\?[^"\']*)?',
+        rf'\1?v={MEMO_RUNTIME_VERSION}',
+        html,
+        flags=re.I,
+    )
     html = inject_storage_guard(html, "app.js")
     html = inject_once(
         html,
@@ -251,7 +258,8 @@ def validate_clean_html() -> None:
         if token not in market:
             raise SystemExit(f"market briefing contract missing: {token}")
     for asset in RUNTIME_ASSETS:
-        if f"{asset}?v={VERSION}" not in index:
+        expected_version = MEMO_RUNTIME_VERSION if asset == "memo-only-fix.js" else VERSION
+        if f"{asset}?v={expected_version}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
     validate_guard_order(index, "app.js", "index.html")
     validate_guard_order(market, "market.js", "market.html")

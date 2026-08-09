@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.9.0";
+  const VERSION = "10.9.1";
   const SNAPSHOT_URL = `data/screener_snapshot.json?v=${encodeURIComponent(VERSION)}`;
   const STORAGE_KEY = "stockTimingRadar.drawdownFilter.v1";
   const DEFAULTS = Object.freeze({ enabled: false, preset: "5-15" });
@@ -46,7 +46,9 @@
   }
 
   function metricFor(ticker) {
-    return metrics.get(normalizeTicker(ticker)) || null;
+    const normalized = normalizeTicker(ticker);
+    const rowMetric = window.StockcheckTechnicalV2?.drawdownFor?.(normalized);
+    return rowMetric || metrics.get(normalized) || null;
   }
 
   function depthFor(metric) {
@@ -70,7 +72,7 @@
   function tickerFromRow(row) {
     const first = row?.querySelector("td, th");
     const selected = row?.querySelector("[data-select]");
-    const candidate = selected?.dataset?.select || selected?.dataset?.symbol || first?.textContent || "";
+    const candidate = row?.dataset?.select || row?.dataset?.symbol || selected?.dataset?.select || selected?.dataset?.symbol || first?.textContent || "";
     const match = String(candidate).toUpperCase().match(/[A-Z0-9.\-]{1,18}/);
     return normalizeTicker(match?.[0]);
   }

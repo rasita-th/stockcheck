@@ -18,6 +18,7 @@ PRESETS = {
     "15-30": (15.0, 30.0),
     "30+": (30.0, float("inf")),
 }
+EXPECTED_RUNTIME = "10.9.1"
 
 
 @dataclass(frozen=True)
@@ -111,7 +112,7 @@ def choose_presets(values: list[float]) -> list[str]:
 
 def wait_runtime(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
     wait.until(lambda current: current.execute_script(
-        "return document.documentElement.dataset.drawdownScreener || ''") == "10.9.0")
+        "return document.documentElement.dataset.drawdownScreener || ''") == EXPECTED_RUNTIME)
 
 
 def clear_storage(driver: webdriver.Chrome, url: str) -> None:

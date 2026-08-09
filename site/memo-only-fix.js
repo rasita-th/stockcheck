@@ -4,7 +4,7 @@
   const VIEW_KEY = "stockTimingRadar.appView.v55";
   const ATTENTION_DATA_URL = "data/attention_today.json";
   const ATTENTION_CACHE_WINDOW_MS = 15 * 1000;
-  const DRAWDOWN_VERSION = "10.9.0";
+  const DRAWDOWN_VERSION = "10.9.1";
   const SCANNER_GUARD_VERSION = "1.0.0";
 
   function installAttentionDataStore() {

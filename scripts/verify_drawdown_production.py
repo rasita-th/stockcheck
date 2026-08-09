@@ -112,10 +112,11 @@ def verify_once(base_url: str, nonce: str, fetcher: Callable[[str], bytes] = fet
 
     if "memo-only-fix.js" not in index:
         raise DrawdownVerificationError("production HTML is missing the runtime loader")
-    if "drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}" not in loader or 'DRAWDOWN_VERSION = "10.9.0"' not in loader:
-        raise DrawdownVerificationError("production loader is missing Drawdown Scanner runtime 10.9.0")
+    if "drawdown-screener-v10-9.js?v=${DRAWDOWN_VERSION}" not in loader or 'DRAWDOWN_VERSION = "10.9.1"' not in loader:
+        raise DrawdownVerificationError("production loader is missing Drawdown Scanner runtime 10.9.1")
     for token in (
-        'const VERSION = "10.9.0"',
+        'const VERSION = "10.9.1"',
+        "StockcheckTechnicalV2?.drawdownFor",
         "dataset.drawdownScreener",
         "drawdownCurrentPct",
         "currentPct",

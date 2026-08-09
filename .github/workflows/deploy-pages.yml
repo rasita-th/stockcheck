@@ -83,6 +83,7 @@ jobs:
           node --check site/app.js
           node --check site/technical-shards-v2.js
           node tests/technical_shards_runtime.test.js
+          node tests/drawdown_screener_runtime.test.js
           node tests/memo_canonical_price_runtime.test.js
           node tests/stock_detail_drawer_contract.test.js
           node tests/watchlist_add_drawer_contract.test.js
@@ -141,7 +142,7 @@ jobs:
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'technical_samples': technical_samples,
               'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
-              'drawdown_runtime': '10.8.4',
+              'drawdown_runtime': manifest['assets']['drawdown_screener_js'],
               'watchlist_add_drawer_css': manifest['assets'].get('watchlist_add_drawer_css'),
           }
           Path("site/build.json").write_text(
