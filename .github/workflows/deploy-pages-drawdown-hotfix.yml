@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEPLOY_VERSION: "10.8.3"
+  DEPLOY_VERSION: "10.8.4"
 
 jobs:
   build:
@@ -41,8 +41,8 @@ jobs:
           from pathlib import Path
           path = Path('scripts/prepare_stable_site_v9_4_1.py')
           text = path.read_text(encoding='utf-8')
-          old = 'VERSION = "10.8.2"'
-          new = 'VERSION = "10.8.3"'
+          old = 'VERSION = "10.8.3"'
+          new = 'VERSION = "10.8.4"'
           if old not in text and new not in text:
               raise SystemExit('prepare script VERSION contract not found')
           path.write_text(text.replace(old, new), encoding='utf-8')
@@ -85,6 +85,7 @@ jobs:
           node tests/memo_canonical_price_runtime.test.js
           node tests/stock_detail_drawer_contract.test.js
           node tests/watchlist_add_drawer_contract.test.js
+          node tests/final_ui_view_observer_contract.test.js
           node --check site/app-shell-v9-4-6.js
           node --check site/market.js
           node --check site/notification-phase2.js
@@ -102,8 +103,8 @@ jobs:
           python scripts/check_ui_view_contract.py
           python scripts/check_earnings_radar_ui_contract.py
           python scripts/check_earnings_radar_activation.py
-          grep -F 'final-ui-coordinator.js?v=10.8.3' site/index.html
-          grep -F 'final-ui-coordinator.css?v=10.8.3' site/index.html
+          grep -F 'final-ui-coordinator.js?v=10.8.4' site/index.html
+          grep -F 'final-ui-coordinator.css?v=10.8.4' site/index.html
 
       - name: Stamp immutable production identity
         run: |
@@ -129,7 +130,7 @@ jobs:
               'technical_count': len(rows),
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'asset_version': os.environ['DEPLOY_VERSION'],
-              'drawdown_runtime': '10.8.3',
+              'drawdown_runtime': '10.8.4',
               'watchlist_add_drawer_css': manifest['assets'].get('watchlist_add_drawer_css'),
           }
           Path('site/build.json').write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -181,19 +182,19 @@ jobs:
           drawer_css = Path('/tmp/watchlist-add-drawer.css').read_text(encoding='utf-8')
           if build.get('source_commit') != os.environ['GITHUB_SHA']:
               raise SystemExit('production commit mismatch')
-          if build.get('asset_version') != '10.8.3':
+          if build.get('asset_version') != '10.8.4':
               raise SystemExit('production asset version mismatch')
-          if build.get('watchlist_add_drawer_css') != '10.8.3':
+          if build.get('watchlist_add_drawer_css') != '10.8.4':
               raise SystemExit('watchlist drawer CSS identity mismatch')
-          if 'final-ui-coordinator.js?v=10.8.3' not in index:
-              raise SystemExit('production HTML missing coordinator v10.8.3')
-          for token in ('const VERSION = "10.8.3"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation', 'StockRadarWatchlistDrawer'):
+          if 'final-ui-coordinator.js?v=10.8.4' not in index:
+              raise SystemExit('production HTML missing coordinator v10.8.4')
+          for token in ('const VERSION = "10.8.4"', 'drawdownData', 'data-drawdown-panel', 'StockRadarDrawdown', 'StockRadarDetailPresentation', 'StockRadarWatchlistDrawer'):
               if token not in runtime:
                   raise SystemExit(f'production coordinator runtime missing: {token}')
           for token in ('#bulkAddSheet.bottom-sheet', 'width:clamp(360px, 36vw, 520px)', 'border-radius:18px 0 0 18px'):
               if token not in drawer_css:
                   raise SystemExit(f'production watchlist drawer CSS missing: {token}')
-          print('Verified production drawer runtime 10.8.3')
+          print('Verified production drawer runtime 10.8.4')
           PY
               then
                 ready=true

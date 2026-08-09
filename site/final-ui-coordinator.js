@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.8.3";
+  const VERSION = "10.8.4";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   const DRAWER_TRANSITION_MS = 240;
@@ -461,7 +461,7 @@
     const backdrop = document.querySelector("#desktopDetailBackdrop");
     const wasOpen = document.body.classList.contains("stock-detail-open");
     clearTimeout(detailCloseTimer);
-    document.body.classList.remove("stock-detail-open");
+    if (wasOpen) document.body.classList.remove("stock-detail-open");
     if (panel) panel.setAttribute("aria-hidden", "true");
     if (wasOpen && panel && !panel.hidden) {
       detailCloseTimer = window.setTimeout(() => finalizeStockDetailClose(panel, backdrop), DRAWER_TRANSITION_MS);
@@ -557,7 +557,7 @@
 
     const viewObserver = new MutationObserver(() => {
       syncAlertHeight();
-      if (!scannerViewIsActive()) closeStockDetail({ restoreFocus: false });
+      if (!scannerViewIsActive() && document.body.classList.contains("stock-detail-open")) closeStockDetail({ restoreFocus: false });
     });
     viewObserver.observe(document.body, {
       attributes: true,
