@@ -31,14 +31,23 @@ const profiles = [
   },
 ];
 
+async function waitForScannerRows(page) {
+  await page.waitForSelector("#technicalTableBody", { state: "attached", timeout: 30000 });
+  await page.waitForFunction(() => {
+    const body = document.querySelector("#technicalTableBody");
+    const mobile = document.querySelector("#technicalMobileCards");
+    return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
+  }, null, { timeout: 45000 });
+}
+
 async function verifyPrimaryNavigation(page) {
   const checks = { today: false, memo: false, scanner: false, marketPulse: false };
 
   await page.waitForSelector('.app-mode-nav [data-app-view="attention"]', { state: "visible", timeout: 15000 });
   await page.click('.app-mode-nav [data-app-view="attention"]');
   await page.waitForFunction(() => {
-    const page = document.querySelector(".attention-page");
-    return document.body.classList.contains("attention-active") && page && getComputedStyle(page).display !== "none";
+    const today = document.querySelector(".attention-page");
+    return document.body.classList.contains("attention-active") && today && getComputedStyle(today).display !== "none";
   }, null, { timeout: 10000 });
   checks.today = true;
 
@@ -63,6 +72,7 @@ async function verifyPrimaryNavigation(page) {
 
   await page.goto(`${base}?browser_smoke_return=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
+  await waitForScannerRows(page);
   return checks;
 }
 
@@ -98,19 +108,10 @@ for (const profile of profiles) {
     const response = await page.goto(`${base}?browser_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 60000 });
     status = response?.status() ?? null;
     await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
-    await page.waitForSelector("#technicalTableBody", { state: "attached", timeout: 30000 });
-    await page.waitForFunction(() => {
-      const body = document.querySelector("#technicalTableBody");
-      const mobile = document.querySelector("#technicalMobileCards");
-      return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
-    }, null, { timeout: 45000 });
+    await waitForScannerRows(page);
     await page.reload({ waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
-    await page.waitForFunction(() => {
-      const body = document.querySelector("#technicalTableBody");
-      const mobile = document.querySelector("#technicalMobileCards");
-      return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
-    }, null, { timeout: 45000 });
+    await waitForScannerRows(page);
     await page.waitForTimeout(1000);
     if (profile.name === "desktop-cold" || profile.name === "iphone-cold") {
       navChecks = await verifyPrimaryNavigation(page);
@@ -139,6 +140,7 @@ for (const profile of profiles) {
       storageMode: window.__stockcheckStorageMode || null,
       recoveryVersion: window.__stockcheckStorageRecoveryVersion || null,
       sheetBootGuard: window.__stockcheckDesktopSheetBootGuard || null,
+      primaryNavVersion: window.__stockcheckPrimaryNavVersion || window.StockRadarShellV946?.version || null,
       visibleSheets: Array.from(document.querySelectorAll(".bottom-sheet")).filter((sheet) => {
         const style = getComputedStyle(sheet);
         const rect = sheet.getBoundingClientRect();
@@ -153,7 +155,8 @@ for (const profile of profiles) {
 
   const criticalFailures = firstPartyFailures.filter((item) => ["document", "script", "stylesheet", "xhr", "fetch"].includes(item.type));
   const navFailed = navChecks && Object.values(navChecks).some((value) => value !== true);
-  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || navFailed || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
+  const navRuntimeFailed = navChecks && runtime.primaryNavVersion !== "10.8.7";
+  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || navFailed || navRuntimeFailed || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
     failed = true;
   }
 
