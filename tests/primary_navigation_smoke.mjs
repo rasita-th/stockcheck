@@ -3,6 +3,7 @@ import fs from "node:fs";
 
 const base = (process.env.PRODUCTION_URL || "https://rasita-th.github.io/stockcheck/").replace(/\/?$/, "/");
 const outDir = process.env.NAV_SMOKE_OUT_DIR || "primary-navigation-smoke-artifacts";
+const expectedShellVersion = process.env.EXPECTED_APP_SHELL_VERSION || "10.8.5";
 fs.mkdirSync(outDir, { recursive: true });
 
 const profiles = [
@@ -53,16 +54,18 @@ for (const profile of profiles) {
   });
   await profile.beforeLoad?.(page);
 
-  const checks = { scannerBoot: false, today: false, memo: false, scannerReturn: false, marketPulse: false };
+  const checks = { shellIdentity: false, scannerBoot: false, today: false, memo: false, scannerReturn: false, marketPulse: false };
   let errorText = null;
   try {
     const response = await page.goto(`${base}?primary_nav_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 30000 });
     if (response?.status() !== 200) throw new Error(`index HTTP ${response?.status()}`);
     await page.waitForSelector(".app-shell", { state: "visible", timeout: 15000 });
     await page.waitForSelector('.app-mode-nav [data-app-view="attention"]', { state: "visible", timeout: 15000 });
+    await page.waitForFunction((expected) => window.StockRadarShellV946?.version === expected, expectedShellVersion, { timeout: 10000 });
+    checks.shellIdentity = true;
     await page.waitForFunction(() => typeof window.StockRadarDetailDialog?.version === "string", null, { timeout: 10000 });
     checks.scannerBoot = true;
-    console.log(`[primary-nav] ${profile.name}: scanner boot ok`);
+    console.log(`[primary-nav] ${profile.name}: scanner boot ok · shell ${expectedShellVersion}`);
 
     console.log(`[primary-nav] ${profile.name}: click Today from closed detail`);
     await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 5000, noWaitAfter: true });
@@ -99,11 +102,11 @@ for (const profile of profiles) {
   if (pageErrors.length || criticalFailures.length || Object.values(checks).some((value) => value !== true)) failed = true;
 
   await page.screenshot({ path: `${outDir}/${profile.name}.png`, fullPage: true, timeout: 10000 }).catch(() => {});
-  results.push({ profile: profile.name, checks, errorText, pageErrors, consoleErrors, firstPartyFailures });
+  results.push({ profile: profile.name, checks, expectedShellVersion, errorText, pageErrors, consoleErrors, firstPartyFailures });
   await context.close();
 }
 
 await browser.close();
-fs.writeFileSync(`${outDir}/result.json`, JSON.stringify({ base, results }, null, 2));
-console.log(JSON.stringify({ base, results }, null, 2));
+fs.writeFileSync(`${outDir}/result.json`, JSON.stringify({ base, expectedShellVersion, results }, null, 2));
+console.log(JSON.stringify({ base, expectedShellVersion, results }, null, 2));
 if (failed) process.exit(1);

@@ -5,10 +5,12 @@ on:
     paths:
       - "tests/production_browser_smoke.mjs"
       - "tests/primary_navigation_smoke.mjs"
+      - "tests/stock_detail_primary_nav_smoke.mjs"
       - ".github/workflows/production-browser-smoke.yml"
       - "site/**"
       - "static/**"
       - "scripts/prepare_stable_site_v9_4_1.py"
+      - "scripts/apply_runtime_asset_versions.py"
       - "config/release-manifest.json"
       - ".github/workflows/deploy-pages.yml"
   workflow_run:
@@ -27,6 +29,7 @@ jobs:
     env:
       SMOKE_OUT_DIR: production-smoke-artifacts
       NAV_SMOKE_OUT_DIR: primary-navigation-smoke-artifacts
+      DETAIL_NAV_SMOKE_OUT_DIR: stock-detail-primary-nav-smoke-artifacts
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,12 +52,16 @@ jobs:
           set -euo pipefail
           python3 scripts/prepare_stable_site_v9_4_1.py
           python3 scripts/sync_attention_assets.py
+          python3 scripts/apply_runtime_asset_versions.py
           rm -rf /tmp/stockcheck-browser-candidate
           cp -a site /tmp/stockcheck-browser-candidate
           node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
           node --check /tmp/stockcheck-browser-candidate/final-ui-coordinator.js
+          node --check /tmp/stockcheck-browser-candidate/app-shell-v9-4-6.js
           grep -F 'final-ui-coordinator.js?v=10.8.4' /tmp/stockcheck-browser-candidate/index.html
           grep -F 'storage-guard-v10-8-4.js?v=10.8.4' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'app-shell-v9-4-6.js?v=10.8.5' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'app-shell-v9-4-6.css?v=10.8.5' /tmp/stockcheck-browser-candidate/index.html
 
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
@@ -74,6 +81,12 @@ jobs:
           PRODUCTION_URL: http://stockcheck.localhost:8000/
         run: node tests/primary_navigation_smoke.mjs
 
+      - name: Verify candidate Stock Detail primary navigation
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          PRODUCTION_URL: http://stockcheck.localhost:8000/
+        run: node tests/stock_detail_primary_nav_smoke.mjs
+
       - name: Verify candidate browser bootstrap
         if: ${{ github.event_name == 'pull_request' }}
         env:
@@ -85,6 +98,12 @@ jobs:
         env:
           PRODUCTION_URL: https://rasita-th.github.io/stockcheck/
         run: node tests/primary_navigation_smoke.mjs
+
+      - name: Verify deployed Stock Detail primary navigation
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          PRODUCTION_URL: https://rasita-th.github.io/stockcheck/
+        run: node tests/stock_detail_primary_nav_smoke.mjs
 
       - name: Verify deployed production browser bootstrap
         if: ${{ github.event_name != 'pull_request' }}
@@ -100,4 +119,5 @@ jobs:
           path: |
             production-smoke-artifacts
             primary-navigation-smoke-artifacts
+            stock-detail-primary-nav-smoke-artifacts
           if-no-files-found: warn

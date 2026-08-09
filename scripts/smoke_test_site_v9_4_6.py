@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 PREPARE_SCRIPT = ROOT / "scripts" / "prepare_stable_site_v9_4_1.py"
+RELEASE_MANIFEST = ROOT / "config" / "release-manifest.json"
 
 
 def deployment_version() -> str:
@@ -16,6 +17,15 @@ def deployment_version() -> str:
     if not match:
         raise SystemExit(f"{PREPARE_SCRIPT}: VERSION constant not found")
     return match.group(1)
+
+
+def asset_version(name: str, fallback: str) -> str:
+    payload = json.loads(RELEASE_MANIFEST.read_text(encoding="utf-8"))
+    assets = payload.get("assets") if isinstance(payload.get("assets"), dict) else {}
+    value = str(assets.get(name) or fallback)
+    if not re.fullmatch(r"\d+\.\d+\.\d+", value):
+        raise SystemExit(f"{RELEASE_MANIFEST}: invalid {name} version {value!r}")
+    return value
 
 
 def require_text(path: Path, tokens: tuple[str, ...]) -> None:
@@ -74,11 +84,14 @@ def validate_attention() -> None:
 
 def main() -> None:
     version = deployment_version()
+    shell_js_version = asset_version("app_shell_js", version)
+    shell_css_version = asset_version("app_shell_css", shell_js_version)
     require_text(SITE / "index.html", (
         'id="technicalTableBody"', 'id="technicalMobileCards"', 'id="alertCenter"', 'id="detailPanel"',
-        f'app.js?v={version}', f'app-shell-v9-4-6.css?v={version}', f'app-shell-v9-4-6.js?v={version}',
+        f'app.js?v={version}', f'app-shell-v9-4-6.css?v={shell_css_version}', f'app-shell-v9-4-6.js?v={shell_js_version}',
     ))
-    require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view'))
+    require_text(SITE / "app-shell-v9-4-6.js", ("Scanner", "Today", "Memo", "Market Pulse", 'data-app-view', "syncHeaderClearance"))
+    require_text(SITE / "app-shell-v9-4-6.css", ("--stock-detail-top-offset", "#desktopDetailBackdrop:not([hidden])", "#detailPanel:not([hidden])"))
     require_text(SITE / "memo-only-fix.js", (
         "attention-p0.js", "attention-pr3.js?v=10.3.0", "attention-pr4.js?v=10.7.1",
         "loadAttentionP3", "loadAttentionP4",
@@ -113,14 +126,13 @@ def main() -> None:
         "body.attention-active .decision-screener", "body.attention-active .attention-p0-page",
         "body.attention-active.attention-p4-ready #attentionPageP4", "display: none !important",
     ))
-    require_text(SITE / "market.html", ('id="marketBriefing"', 'id="pulseHeadline"', f'market.js?v={version}'))
+    require_text(SITE / "market.html", ('id="marketBriefing"', 'id="pulseHeadline"', f'market.js?v={version}', f'app-shell-v9-4-6.css?v={shell_css_version}'))
     validate_json("technical.json", require_rows=True)
     validate_json("fundamental.json", require_rows=False)
     validate_market_pulse()
     validate_attention()
-    print(f"v{version} static UI smoke test passed")
+    print(f"v{version} static UI smoke test passed · shell js={shell_js_version} css={shell_css_version}")
 
 
 if __name__ == "__main__":
     main()
-

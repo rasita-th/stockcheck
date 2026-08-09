@@ -1,9 +1,11 @@
 (() => {
   'use strict';
-  const VERSION = '9.4.6';
+  const VERSION = '10.8.5';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const detailOverlayQuery = window.matchMedia('(min-width: 768px)');
   let recoveryAttempted = false;
+  let headerResizeObserver = null;
 
   function isMarketPage(){ return /market\.html$/i.test(location.pathname); }
 
@@ -70,6 +72,32 @@
     return true;
   }
 
+  function syncHeaderClearance(){
+    const root = document.documentElement;
+    if (isMarketPage() || !detailOverlayQuery.matches) {
+      root.style.removeProperty('--stock-detail-top-offset');
+      return;
+    }
+    const header = $('header.topbar');
+    if (!header) {
+      root.style.removeProperty('--stock-detail-top-offset');
+      return;
+    }
+    const bottom = Math.max(0, Math.ceil(header.getBoundingClientRect().bottom));
+    if (bottom > 0) root.style.setProperty('--stock-detail-top-offset', `${bottom}px`);
+  }
+
+  function observeHeaderClearance(){
+    headerResizeObserver?.disconnect();
+    headerResizeObserver = null;
+    const header = $('header.topbar');
+    if (header && typeof ResizeObserver === 'function') {
+      headerResizeObserver = new ResizeObserver(syncHeaderClearance);
+      headerResizeObserver.observe(header);
+    }
+    syncHeaderClearance();
+  }
+
   function setActive(view){
     $$('.app-mode-nav [data-app-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.appView === view));
     const market = $('.app-mode-nav .market-mode-btn');
@@ -82,6 +110,7 @@
       return;
     }
     ensureNativeNavigation();
+    syncHeaderClearance();
     const control = $(`[data-app-view="${view}"]`);
     if (!control) return false;
     control.click();
@@ -139,7 +168,7 @@
         else showStatus('ไฟล์ข้อมูลมีอยู่ แต่ UI ยัง render ไม่สำเร็จ กรุณากด Retry loading', true);
       }, 1200);
     } catch (error) {
-      console.error('[v9.4.6] data recovery failed', error);
+      console.error('[v10.8.5] data recovery failed', error);
       showStatus(`โหลดข้อมูลไม่สำเร็จ: ${error.message || error}`, true);
     }
   }
@@ -147,9 +176,10 @@
   function boot(){
     removeLegacyArtifacts();
     ensureNativeNavigation();
+    observeHeaderClearance();
     applyHash();
-    setTimeout(ensureNativeNavigation, 100);
-    setTimeout(ensureNativeNavigation, 700);
+    setTimeout(() => { ensureNativeNavigation(); syncHeaderClearance(); }, 100);
+    setTimeout(() => { ensureNativeNavigation(); syncHeaderClearance(); }, 700);
     setTimeout(() => verifyDataAndRecover(false), 4500);
   }
 
@@ -165,13 +195,16 @@
     if (source.includes('app.js') || source.includes('app-shell')) showStatus(`JavaScript error: ${event.message || 'unknown error'}`, true);
   });
   window.addEventListener('unhandledrejection', event => {
-    console.error('[v9.4.6] unhandled rejection', event.reason);
+    console.error('[v10.8.5] unhandled rejection', event.reason);
   });
+  window.addEventListener('resize', syncHeaderClearance, { passive:true });
+  window.addEventListener('pageshow', syncHeaderClearance);
+  detailOverlayQuery.addEventListener?.('change', syncHeaderClearance);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
   else boot();
-  addEventListener('load', () => { ensureNativeNavigation(); applyHash(); }, { once:true });
+  addEventListener('load', () => { ensureNativeNavigation(); observeHeaderClearance(); applyHash(); }, { once:true });
   addEventListener('hashchange', applyHash);
 
-  window.StockRadarShellV946 = { version:VERSION, boot, ensureNativeNavigation, verifyDataAndRecover, activateView };
+  window.StockRadarShellV946 = { version:VERSION, boot, ensureNativeNavigation, verifyDataAndRecover, activateView, syncHeaderClearance };
 })();
