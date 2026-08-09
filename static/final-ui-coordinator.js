@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "10.8.2";
+  const VERSION = "10.8.3";
   const desktopQuery = window.matchMedia("(min-width: 1181px)");
   const detailQuery = window.matchMedia("(min-width: 768px)");
   const DRAWER_TRANSITION_MS = 240;
@@ -14,6 +14,7 @@
   let detailLogoRetryCount = 0;
   let drawdownFrame = 0;
   let decisionSurfaceFrame = 0;
+  let watchlistDrawerFrame = 0;
 
   function syncStockDetailLogos() {
     cancelAnimationFrame(detailLogoFrame);
@@ -178,6 +179,129 @@
         if (surface) identity.insertAdjacentElement("afterend", surface);
       });
     });
+  }
+
+  function ensureWatchlistDrawerStyles() {
+    if (document.querySelector("link[data-watchlist-add-drawer-style]")) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `watchlist-add-drawer.css?v=${VERSION}`;
+    link.dataset.watchlistAddDrawerStyle = VERSION;
+    document.head.append(link);
+  }
+
+  function parsedBulkSymbols(input) {
+    if (!input || typeof window.parseTickerList !== "function") return [];
+    try {
+      const parsed = window.parseTickerList(input.value || "");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function bulkParserMarkup() {
+    return `<div class="bulk-parser-feedback" data-bulk-parser-feedback aria-live="polite">
+      <span class="bulk-parser-status">Paste or type symbols to preview the parsed list</span>
+      <span class="bulk-parser-separators">Supports comma, space, or line break</span>
+    </div>
+    <section class="bulk-parsed-symbols" data-bulk-parsed-symbols aria-label="Parsed symbols">
+      <div class="bulk-parsed-heading"><span>Parsed symbols</span><strong data-bulk-parsed-count>0</strong></div>
+      <div class="bulk-symbol-chips" data-bulk-symbol-chips></div>
+    </section>`;
+  }
+
+  function arrangeWatchlistDrawerActions(sheet) {
+    const actions = sheet?.querySelector(".sheet-actions.bulk-actions");
+    if (!actions || actions.classList.contains("watchlist-drawer-actions")) return;
+    const appendSymbols = actions.querySelector("[data-import-symbols]");
+    const replaceList = actions.querySelector("[data-replace-symbols]");
+    const clearText = actions.querySelector("[data-clear-symbols]");
+    const clearWatchlist = actions.querySelector("[data-clear-watchlist]");
+    if (!appendSymbols || !replaceList || !clearText || !clearWatchlist) return;
+
+    const secondary = document.createElement("div");
+    secondary.className = "bulk-secondary-actions";
+    secondary.append(replaceList, clearText);
+
+    const danger = document.createElement("section");
+    danger.className = "bulk-danger-zone";
+    danger.innerHTML = `<div class="bulk-danger-copy"><strong>Danger zone</strong><span>Clears every symbol from the current watchlist</span></div>`;
+    danger.append(clearWatchlist);
+
+    actions.replaceChildren(appendSymbols, secondary, danger);
+    actions.classList.add("watchlist-drawer-actions");
+  }
+
+  function renderBulkParserFeedback(sheet) {
+    const input = sheet?.querySelector("#bulkSymbolInput");
+    const feedback = sheet?.querySelector("[data-bulk-parser-feedback]");
+    const status = feedback?.querySelector(".bulk-parser-status");
+    const count = sheet?.querySelector("[data-bulk-parsed-count]");
+    const chips = sheet?.querySelector("[data-bulk-symbol-chips]");
+    if (!input || !status || !count || !chips) return;
+
+    const parsed = parsedBulkSymbols(input);
+    count.textContent = String(parsed.length);
+    status.textContent = parsed.length
+      ? `${parsed.length} symbols recognized`
+      : "Paste or type symbols to preview the parsed list";
+    feedback.classList.toggle("has-symbols", parsed.length > 0);
+    chips.innerHTML = parsed.length
+      ? parsed.map((ticker) => `<button type="button" class="bulk-symbol-chip" data-remove-bulk-symbol="${htmlEscape(ticker)}" aria-label="Remove ${htmlEscape(ticker)}"><span>${htmlEscape(ticker)}</span><b aria-hidden="true">×</b></button>`).join("")
+      : `<span class="bulk-symbol-empty">No symbols parsed yet</span>`;
+  }
+
+  function syncWatchlistAddDrawer() {
+    cancelAnimationFrame(watchlistDrawerFrame);
+    watchlistDrawerFrame = requestAnimationFrame(() => {
+      const sheet = document.querySelector("#bulkAddSheet");
+      const input = sheet?.querySelector("#bulkSymbolInput");
+      const body = sheet?.querySelector(".bulk-add-body");
+      const title = sheet?.querySelector(".sheet-header h2");
+      if (!sheet || !input || !body) return;
+
+      sheet.classList.add("watchlist-add-drawer");
+      if (title) title.textContent = "Add watchlist symbols";
+      const helper = body.querySelector(".helper-text");
+      if (helper) helper.textContent = "วางหรือพิมพ์ชื่อหุ้นหลายตัวพร้อมกันได้เลย — คั่นด้วย comma, เว้นวรรค หรือขึ้นบรรทัดใหม่";
+
+      if (!body.querySelector("label[for='bulkSymbolInput']")) {
+        input.insertAdjacentHTML("beforebegin", `<label class="bulk-input-label" for="bulkSymbolInput">Paste or type symbols</label>`);
+      }
+      if (!body.querySelector("[data-bulk-parser-feedback]")) {
+        input.insertAdjacentHTML("afterend", bulkParserMarkup());
+      }
+      if (!input.dataset.drawerParserBound) {
+        input.dataset.drawerParserBound = "true";
+        input.addEventListener("input", () => renderBulkParserFeedback(sheet));
+      }
+
+      arrangeWatchlistDrawerActions(sheet);
+      renderBulkParserFeedback(sheet);
+    });
+  }
+
+  function bindWatchlistAddDrawer() {
+    document.addEventListener("click", (event) => {
+      const remove = event.target.closest?.("[data-remove-bulk-symbol]");
+      if (remove) {
+        event.preventDefault();
+        event.stopPropagation();
+        const sheet = remove.closest("#bulkAddSheet");
+        const input = sheet?.querySelector("#bulkSymbolInput");
+        if (!input) return;
+        const target = String(remove.dataset.removeBulkSymbol || "").toUpperCase();
+        const next = parsedBulkSymbols(input).filter((ticker) => ticker !== target);
+        input.value = next.join(", ");
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.focus({ preventScroll: true });
+        return;
+      }
+      if (event.target.closest?.("#bulkAddSheet [data-import-symbols], #bulkAddSheet [data-replace-symbols], #bulkAddSheet [data-clear-symbols], #bulkAddSheet [data-clear-watchlist], [data-add-symbol]")) {
+        requestAnimationFrame(syncWatchlistAddDrawer);
+      }
+    }, true);
   }
 
   function drawdownData(stock) {
@@ -419,6 +543,8 @@
     document.documentElement.dataset.stockDetailDialog = VERSION;
     document.documentElement.dataset.drawdownChart = VERSION;
     document.documentElement.dataset.stockDetailDrawer = VERSION;
+    document.documentElement.dataset.watchlistAddDrawer = VERSION;
+    ensureWatchlistDrawerStyles();
     const resizeObserver = new ResizeObserver(syncAlertHeight);
     [
       "#watchlistPanel",
@@ -465,11 +591,13 @@
     }, true);
 
     bindStockDetail();
+    bindWatchlistAddDrawer();
     ensurePageGuides();
     ensureMobileDetailHandle();
     closeStockDetail({ restoreFocus: false });
     syncAlertHeight();
     syncStockDetailDecisionSurface();
+    syncWatchlistAddDrawer();
     syncDrawdownCharts();
   }
 
@@ -483,6 +611,11 @@
     version: VERSION,
     rangePositionPct,
     refresh: syncStockDetailDecisionSurface
+  });
+
+  window.StockRadarWatchlistDrawer = Object.freeze({
+    version: VERSION,
+    refresh: syncWatchlistAddDrawer
   });
 
   window.StockRadarDrawdown = Object.freeze({
