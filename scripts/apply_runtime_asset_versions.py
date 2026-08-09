@@ -10,12 +10,12 @@ SITE = ROOT / "site"
 MANIFEST = ROOT / "config" / "release-manifest.json"
 
 
-def replace_version(html: str, asset: str, version: str) -> str:
+def replace_version(html: str, asset: str, version: str, *, required: bool = True) -> tuple[str, bool]:
     pattern = rf"({re.escape(asset)})(?:\?[^\"']*)?"
     updated, count = re.subn(pattern, rf"\1?v={version}", html, flags=re.I)
-    if count < 1:
+    if required and count < 1:
         raise SystemExit(f"asset reference missing: {asset}")
-    return updated
+    return updated, count > 0
 
 
 def main() -> None:
@@ -30,27 +30,38 @@ def main() -> None:
 
     index_path = SITE / "index.html"
     index = index_path.read_text(encoding="utf-8")
-    index = replace_version(index, "app-shell-v9-4-6.css", shell_css)
-    index = replace_version(index, "app-shell-v9-4-6.js", shell_js)
+    index, _ = replace_version(index, "app-shell-v9-4-6.css", shell_css)
+    index, _ = replace_version(index, "app-shell-v9-4-6.js", shell_js)
     index_path.write_text(index, encoding="utf-8")
 
+    # The source-tree market page does not always contain the shared shell CSS;
+    # prepare_stable_site injects it for the Pages artifact. Apply the cache
+    # identity whenever that reference exists, without making source-only UI
+    # workflows depend on a prepared market artifact.
     market_path = SITE / "market.html"
     market = market_path.read_text(encoding="utf-8")
-    market = replace_version(market, "app-shell-v9-4-6.css", shell_css)
+    market, market_has_shell = replace_version(
+        market,
+        "app-shell-v9-4-6.css",
+        shell_css,
+        required=False,
+    )
     market_path.write_text(market, encoding="utf-8")
 
     index_check = index_path.read_text(encoding="utf-8")
-    market_check = market_path.read_text(encoding="utf-8")
     for token in (
         f"app-shell-v9-4-6.js?v={shell_js}",
         f"app-shell-v9-4-6.css?v={shell_css}",
     ):
         if token not in index_check:
             raise SystemExit(f"index cache identity missing: {token}")
-    if f"app-shell-v9-4-6.css?v={shell_css}" not in market_check:
+    if market_has_shell and f"app-shell-v9-4-6.css?v={shell_css}" not in market_path.read_text(encoding="utf-8"):
         raise SystemExit("market shell CSS cache identity missing")
 
-    print(f"Applied shell runtime identities: js={shell_js} css={shell_css}")
+    print(
+        f"Applied shell runtime identities: js={shell_js} css={shell_css} "
+        f"market={'yes' if market_has_shell else 'deferred'}"
+    )
 
 
 if __name__ == "__main__":
