@@ -5,8 +5,10 @@ This script is designed for the slower daily/manual GitHub Actions workflow.
 It fetches SEC companyfacts + conservative guidance parsing and stores the
 result as static JSON. The frequent technical workflow reuses this file.
 
-Outputs:
+Outputs identical canonical mirrors:
+  data/generated/fundamental.json
   site/data/fundamental.json
+  static/data/fundamental.json
 """
 from __future__ import annotations
 
@@ -28,15 +30,21 @@ os.environ.setdefault("SEC_GUIDANCE_MAX_DOCUMENTS_PER_FILING", os.environ.get("S
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_DATA = ROOT / "site" / "data"
+FUNDAMENTAL_PATHS = (
+    ROOT / "data" / "generated" / "fundamental.json",
+    SITE_DATA / "fundamental.json",
+    ROOT / "static" / "data" / "fundamental.json",
+)
 WATCHLIST = ROOT / "watchlist.txt"
 sys.path.insert(0, str(ROOT))
 
 from app import build_analysis  # noqa: E402
+from scripts.validate_fundamental_snapshot import validate_candidate, write_mirrors  # noqa: E402
 
 
 FUNDAMENTAL_KEYS = {
     "fundamentalScore", "fundamentalSignal", "fundamentalReasons", "fundamentalHighlights", "fundamentalSource",
-    "latestQuarter", "earningsDate", "revenue", "revenuePrevQuarter", "revenuePrevQuarterLabel", "revenueYearAgo", "revenueYearAgoLabel",
+    "latestQuarter", "periodEnd", "filedDate", "filingDate", "accessNumber", "sourceUrl", "earningsDate", "revenue", "revenuePrevQuarter", "revenuePrevQuarterLabel", "revenueYearAgo", "revenueYearAgoLabel",
     "estimatedRevenue", "estimatedRevenueStatus", "revenueSurprisePct", "revenueQoQ", "revenueYoY",
     "netIncome", "netIncomePrevQuarter", "netIncomePrevQuarterLabel", "netIncomeYearAgo", "netIncomeYearAgoLabel",
     "estimatedNetIncome", "profitSurprisePct", "profitQoQ", "profitYoY",
@@ -126,9 +134,9 @@ def main() -> None:
         "durationSeconds": round(time.time() - started, 2),
         "note": "Static SEC fundamental layer. Updated by daily/manual GitHub Actions, then merged with technical.json in the browser.",
     }
-    out = SITE_DATA / "fundamental.json"
-    out.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"Wrote {out} with {len(rows)} rows, {len(errors)} errors in {payload['durationSeconds']}s")
+    validate_candidate(payload)
+    write_mirrors(payload, FUNDAMENTAL_PATHS)
+    print(f"Wrote {len(FUNDAMENTAL_PATHS)} identical Fundamental mirrors with {len(rows)} rows, {len(errors)} errors in {payload['durationSeconds']}s")
 
 
 if __name__ == "__main__":

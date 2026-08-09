@@ -153,6 +153,9 @@ jobs:
               data/generated \
               site/data \
               static/data \
+              ':(exclude)data/generated/fundamental.json' \
+              ':(exclude)site/data/fundamental.json' \
+              ':(exclude)static/data/fundamental.json' \
               ':(exclude)data/generated/market_pulse.json' \
               ':(exclude)site/data/market_pulse.json' \
               ':(exclude)static/data/market_pulse.json' \

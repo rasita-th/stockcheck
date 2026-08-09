@@ -9,13 +9,15 @@ from publish_generated_data import EXCLUDED, publishable_files
 
 def main() -> None:
     assert "market_pulse.json" in EXCLUDED
+    assert "fundamental.json" in EXCLUDED
     with tempfile.TemporaryDirectory() as tmp:
         source = Path(tmp)
-        for name in ("technical.json", "health.json", "market_pulse.json"):
+        for name in ("technical.json", "health.json", "market_pulse.json", "fundamental.json"):
             (source / name).write_text("{}\n", encoding="utf-8")
         names = [path.name for path in publishable_files(source)]
         assert names == ["health.json", "technical.json"], names
         assert "market_pulse.json" not in names
+        assert "fundamental.json" not in names
     print("Generic publisher exclusion test passed")
 
 

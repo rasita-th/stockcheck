@@ -163,12 +163,23 @@ jobs:
             python - <<'PY'
           import json
           from pathlib import Path
-          path = Path('site/data/fundamental.json')
-          if not path.exists():
-              raise SystemExit('site/data/fundamental.json is missing after apply')
-          json.loads(path.read_text(encoding='utf-8'))
-          print('Published fundamental JSON is valid.')
+          paths = (
+              Path('data/generated/fundamental.json'),
+              Path('site/data/fundamental.json'),
+              Path('static/data/fundamental.json'),
+          )
+          canonical = paths[0].read_bytes()
+          payload = json.loads(canonical)
+          if not isinstance(payload.get('rows'), list) or not payload['rows']:
+              raise SystemExit('published fundamental rows are empty')
+          for path in paths[1:]:
+              if path.read_bytes() != canonical:
+                  raise SystemExit(f'fundamental mirror mismatch: {path} vs {paths[0]}')
+          print('Published Fundamental canonical projection and mirrors are valid.')
           PY
+            python scripts/validate_fundamental_snapshot.py data/generated/fundamental.json \
+              --mirror site/data/fundamental.json \
+              --mirror static/data/fundamental.json
           fi
 
       - name: Regenerate health from merged production tree
