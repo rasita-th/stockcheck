@@ -24,9 +24,11 @@ function extractFunction(name) {
 }
 
 let apiFetchCount = 0;
+let liveApiEnabled = false;
 const context = {
   console,
   state: {
+    staticMode: true,
     watchlist: ["NVDA"],
     rows: [
       { symbol: "NVDA", close: 223.98, snapshotStatus: "live_quote" },
@@ -46,8 +48,10 @@ const context = {
   isMemoAlertReached: () => false,
   fetchJson: async () => {
     apiFetchCount += 1;
+    if (liveApiEnabled) return { latest: { symbol: "HOOD", close: 151.5 } };
     throw new Error("GitHub Pages does not expose /api/quote");
   },
+  isStaticDeployHost: () => false,
   URLSearchParams,
 };
 vm.createContext(context);
@@ -72,6 +76,17 @@ vm.runInContext(`
   assert.equal(refreshed.price, 150.44);
   assert.equal(refreshed.source, "canonical_screener_snapshot");
   assert.equal(apiFetchCount, 0, "a canonical price must not fall through to the unavailable Pages API");
+
+  context.state.staticMode = false;
+  liveApiEnabled = true;
+  const live = await context.__fetchMemoPrice("HOOD");
+  assert.equal(live.price, 151.5, "backend mode must retain live quote refreshes");
+  assert.equal(apiFetchCount, 1);
+
+  assert.match(source, /renderAll\(\);\s*window\.StockcheckMemoRefresh\?\.\(\);/,
+    "Memo must rerender after the asynchronous canonical snapshot load completes");
+  assert.match(source, /window\.StockcheckMemoRefresh\s*=\s*renderMemo/,
+    "Memo runtime must expose its canonical hydration render hook");
 
   console.log("memo canonical price runtime test passed");
 })().catch((error) => {
