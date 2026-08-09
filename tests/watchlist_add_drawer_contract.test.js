@@ -23,6 +23,7 @@ for (const token of [
   "inset:0 0 0 auto",
   "border-radius:18px 0 0 18px",
   "translate3d(100%, 0, 0)",
+  "sheet-visible-force",
 ]) {
   assert.ok(drawerCss.includes(token), `Watchlist Add drawer CSS missing: ${token}`);
 }
