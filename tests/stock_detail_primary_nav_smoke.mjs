@@ -12,6 +12,7 @@ const pageErrors = [];
 page.on("pageerror", (error) => pageErrors.push(String(error?.stack || error)));
 
 let errorText = null;
+let geometry = null;
 const checks = { scanner: false, detailOpen: false, todayReachable: false, detailClosed: false };
 try {
   const response = await page.goto(`${base}?stock_detail_nav_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 30000 });
@@ -27,6 +28,16 @@ try {
   await page.waitForFunction(() => document.body.classList.contains("stock-detail-open"), null, { timeout: 5000 });
   checks.detailOpen = true;
 
+  geometry = await page.evaluate(() => {
+    const header = document.querySelector("header.topbar")?.getBoundingClientRect();
+    const nav = document.querySelector('.app-mode-nav [data-app-view="attention"]')?.getBoundingClientRect();
+    const panel = document.querySelector("#detailPanel")?.getBoundingClientRect();
+    const backdrop = document.querySelector("#desktopDetailBackdrop")?.getBoundingClientRect();
+    const pick = (rect) => rect ? { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, width: rect.width, height: rect.height } : null;
+    return { header: pick(header), nav: pick(nav), panel: pick(panel), backdrop: pick(backdrop) };
+  });
+  console.log(`[stock-detail-nav] geometry=${JSON.stringify(geometry)}`);
+
   // This must be a real pointer click. The regression is that the full-height
   // detail drawer/backdrop physically intercepts primary-nav pointer events.
   await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 5000, noWaitAfter: true });
@@ -40,9 +51,9 @@ try {
 }
 
 await page.screenshot({ path: `${outDir}/desktop-detail-primary-nav.png`, fullPage: true, timeout: 10000 }).catch(() => {});
-fs.writeFileSync(`${outDir}/result.json`, JSON.stringify({ base, checks, errorText, pageErrors }, null, 2));
+fs.writeFileSync(`${outDir}/result.json`, JSON.stringify({ base, checks, geometry, errorText, pageErrors }, null, 2));
 await context.close();
 await browser.close();
 
-console.log(JSON.stringify({ base, checks, errorText, pageErrors }, null, 2));
+console.log(JSON.stringify({ base, checks, geometry, errorText, pageErrors }, null, 2));
 if (errorText || pageErrors.length || Object.values(checks).some((value) => value !== true)) process.exit(1);
