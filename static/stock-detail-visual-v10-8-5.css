@@ -1,0 +1,140 @@
+/* v10.8.5 — Stock Detail readability tuning: restrained semantic color, lower divider weight, stronger numeric hierarchy. */
+:root {
+  --detail-accent: #4f9be8;
+  --detail-positive: #45c979;
+  --detail-negative: #e56a6a;
+  --detail-warning: #d6a34d;
+  --detail-text: #eef4fb;
+  --detail-label: #96a8bb;
+  --detail-muted: #74879b;
+  --detail-surface-1: #101a26;
+  --detail-surface-2: #13202d;
+  --detail-divider: rgba(96, 119, 143, .16);
+  --detail-section-border: rgba(96, 119, 143, .34);
+}
+
+#detailPanel .stock-detail-decision-grid,
+#mobileDetailBody .stock-detail-decision-grid {
+  border-color: var(--detail-section-border) !important;
+  background: linear-gradient(180deg, rgba(19, 32, 45, .98), rgba(14, 24, 35, .98)) !important;
+}
+#detailPanel .detail-decision-cell,
+#mobileDetailBody .detail-decision-cell { border-color: var(--detail-divider) !important; }
+#detailPanel .detail-decision-label,
+#mobileDetailBody .detail-decision-label,
+#detailPanel .detail-range-heading,
+#mobileDetailBody .detail-range-heading,
+#detailPanel .detail-decision-metrics dt,
+#mobileDetailBody .detail-decision-metrics dt { color: var(--detail-label) !important; }
+#detailPanel .detail-decision-price-value,
+#mobileDetailBody .detail-decision-price-value,
+#detailPanel .detail-decision-metrics dd,
+#mobileDetailBody .detail-decision-metrics dd,
+#detailPanel .detail-score-dial strong,
+#mobileDetailBody .detail-score-dial strong {
+  color: var(--detail-text) !important;
+  font-variant-numeric: tabular-nums;
+}
+#detailPanel .detail-decision-cell small,
+#mobileDetailBody .detail-decision-cell small,
+#detailPanel .detail-range-labels,
+#mobileDetailBody .detail-range-labels,
+#detailPanel .detail-score-dial span,
+#mobileDetailBody .detail-score-dial span { color: var(--detail-muted) !important; }
+#detailPanel .detail-decision-change.positive,
+#mobileDetailBody .detail-decision-change.positive { color: var(--detail-positive) !important; }
+#detailPanel .detail-decision-change.negative,
+#mobileDetailBody .detail-decision-change.negative { color: var(--detail-negative) !important; }
+#detailPanel .detail-range-track,
+#mobileDetailBody .detail-range-track { background: linear-gradient(90deg, rgba(79, 155, 232, .12), rgba(79, 155, 232, .42)) !important; }
+#detailPanel .detail-range-marker,
+#mobileDetailBody .detail-range-marker {
+  background: var(--detail-accent) !important;
+  border-color: #dce9f8 !important;
+  box-shadow: 0 0 0 3px rgba(79, 155, 232, .12) !important;
+}
+#detailPanel .detail-score-dial,
+#mobileDetailBody .detail-score-dial {
+  background: conic-gradient(var(--detail-accent) calc(var(--score-pct) * 1%), rgba(106, 124, 143, .14) 0) !important;
+  box-shadow: inset 0 0 0 1px rgba(79, 155, 232, .08) !important;
+}
+#detailPanel .detail-score-dial > div,
+#mobileDetailBody .detail-score-dial > div { background: var(--detail-surface-1) !important; }
+#detailPanel .detail-decision-metrics dl > div,
+#mobileDetailBody .detail-decision-metrics dl > div { border-bottom-color: var(--detail-divider) !important; }
+#detailPanel .detail-decision-metrics dd,
+#mobileDetailBody .detail-decision-metrics dd { font-weight: 500 !important; }
+#detailPanel .detail-tabs,
+#mobileDetailBody .detail-tabs {
+  border-color: rgba(96, 119, 143, .30) !important;
+  background: rgba(11, 19, 28, .78) !important;
+}
+#detailPanel .detail-tabs button,
+#mobileDetailBody .detail-tabs button {
+  border-color: rgba(96, 119, 143, .14) !important;
+  color: #8ea0b3 !important;
+}
+#detailPanel .detail-tabs button.active,
+#mobileDetailBody .detail-tabs button.active {
+  color: #edf5ff !important;
+  background: rgba(79, 155, 232, .12) !important;
+  box-shadow: inset 0 2px var(--detail-accent) !important;
+}
+#detailPanel .detail-load button,
+#mobileDetailBody .detail-load button {
+  border: 1px solid rgba(79, 155, 232, .42) !important;
+  background: rgba(79, 155, 232, .08) !important;
+  color: #cfe5fb !important;
+  box-shadow: none !important;
+}
+#detailPanel .detail-tab-content,
+#mobileDetailBody .detail-tab-content { border-top-color: rgba(96, 119, 143, .20) !important; }
+#detailPanel .chart-panel,
+#mobileDetailBody .chart-panel {
+  border-color: rgba(96, 119, 143, .28) !important;
+  background: linear-gradient(180deg, rgba(18, 29, 42, .90), rgba(11, 19, 28, .94)) !important;
+}
+
+@media (max-width: 767px) {
+  #mobileDetailModal.full-modal { z-index: 1200 !important; background: #0b121b !important; }
+  body.stock-detail-open #mobileScanNow,
+  body.stock-detail-open #alertFab { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+  #mobileDetailBody .drawer-detail-header { gap: 16px !important; padding: 16px !important; }
+  #mobileDetailBody .detail-identity h2 { color: var(--detail-text) !important; }
+  #mobileDetailBody .detail-identity p { color: var(--detail-label) !important; }
+  #mobileDetailBody .stock-detail-decision-grid { border-radius: 14px !important; }
+  #mobileDetailBody .detail-decision-cell { padding: 16px !important; }
+  #mobileDetailBody .detail-decision-price { background: rgba(79, 155, 232, .025) !important; }
+  #mobileDetailBody .detail-decision-context { background: rgba(255, 255, 255, .012) !important; }
+  #mobileDetailBody .detail-decision-label { margin-bottom: 9px !important; font-size: 12px !important; font-weight: 500 !important; }
+  #mobileDetailBody .detail-decision-price-value { font-size: 38px !important; line-height: 1.03 !important; letter-spacing: -.035em !important; }
+  #mobileDetailBody .detail-decision-change { margin-top: 10px !important; font-size: 15px !important; line-height: 1.2 !important; }
+  #mobileDetailBody .detail-decision-cell small { margin-top: 9px !important; font-size: 11px !important; line-height: 1.45 !important; }
+  #mobileDetailBody .detail-signal-text { color: #e3ebf4 !important; font-size: 14px !important; line-height: 1.45 !important; }
+  #mobileDetailBody .detail-range-heading { margin-bottom: 9px !important; font-size: 11px !important; }
+  #mobileDetailBody .detail-range-heading strong { color: #cbd8e6 !important; font-size: 12px !important; }
+  #mobileDetailBody .detail-range-track { height: 7px !important; margin: 9px 0 !important; }
+  #mobileDetailBody .detail-range-labels { margin-top: 8px !important; font-size: 11px !important; }
+  #mobileDetailBody .detail-score-cell { padding-block: 18px !important; }
+  #mobileDetailBody .detail-score-dial { width: 88px !important; height: 88px !important; }
+  #mobileDetailBody .detail-score-dial > div { width: 70px !important; height: 70px !important; }
+  #mobileDetailBody .detail-score-dial strong { font-size: 30px !important; line-height: 1 !important; }
+  #mobileDetailBody .detail-score-dial span { font-size: 10.5px !important; }
+  #mobileDetailBody .detail-decision-metrics { padding-block: 14px !important; }
+  #mobileDetailBody .detail-decision-metrics dl > div { min-height: 44px !important; padding: 9px 0 !important; align-items: center !important; }
+  #mobileDetailBody .detail-decision-metrics dt { font-size: 11px !important; line-height: 1.35 !important; }
+  #mobileDetailBody .detail-decision-metrics dd { font-size: 14px !important; line-height: 1.25 !important; }
+  #mobileDetailBody .detail-load { gap: 10px !important; }
+  #mobileDetailBody .detail-load input { min-height: 48px !important; }
+  #mobileDetailBody .detail-load button { min-height: 48px !important; padding-inline: 16px !important; }
+  #mobileDetailBody .detail-tabs { margin-top: 2px !important; }
+  #mobileDetailBody .detail-tabs button { min-height: 46px !important; font-size: 13px !important; }
+}
+
+@media (min-width: 768px) {
+  #detailPanel .detail-decision-cell { padding: 18px !important; }
+  #detailPanel .detail-decision-price-value { font-size: clamp(31px, 2.55vw, 44px) !important; }
+  #detailPanel .detail-decision-metrics dl > div { min-height: 38px !important; padding: 7px 0 !important; }
+  #detailPanel .detail-decision-metrics dt { font-size: 11px !important; }
+  #detailPanel .detail-decision-metrics dd { font-size: 13px !important; }
+}
