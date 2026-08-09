@@ -315,6 +315,58 @@ def fact_values(
     return [], {"tag": None, "unit": None, "taxonomy": None, "rawPoints": 0}
 
 
+def freshest_flow_fact_values(
+    facts: Dict[str, Any],
+    tag_names: List[str],
+    units: List[str],
+    taxonomies: Optional[List[str]] = None,
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Any]]:
+    """Select the tag whose usable quarterly series ends most recently.
+
+    Issuers can migrate between equivalent US-GAAP tags. Picking the first tag
+    that merely has any history can therefore surface a years-old value while a
+    fallback tag contains the current quarter.
+    """
+    taxonomies = taxonomies or ["us-gaap", "ifrs-full", "dei"]
+    all_facts = facts.get("facts") or {}
+    best_values: List[Dict[str, Any]] = []
+    best_quarters: List[Dict[str, Any]] = []
+    best_audit = {"tag": None, "unit": None, "taxonomy": None, "rawPoints": 0, "quarterPoints": 0}
+    best_key: Optional[Tuple[str, str, int]] = None
+
+    for taxonomy in taxonomies:
+        bucket = all_facts.get(taxonomy) or {}
+        for tag in tag_names:
+            node = bucket.get(tag) or {}
+            unit_map = node.get("units") or {}
+            for unit in units:
+                values = unit_map.get(unit) or []
+                if not values:
+                    continue
+                quarters, _annuals = duration_points(values)
+                if not quarters:
+                    continue
+                latest = quarters[-1]
+                candidate_key = (
+                    str(latest.get("end") or ""),
+                    str(latest.get("filed") or ""),
+                    len(quarters),
+                )
+                if best_key is None or candidate_key > best_key:
+                    best_key = candidate_key
+                    best_values = values
+                    best_quarters = quarters
+                    best_audit = {
+                        "tag": tag,
+                        "unit": unit,
+                        "taxonomy": taxonomy,
+                        "rawPoints": len(values),
+                        "quarterPoints": len(quarters),
+                    }
+
+    return best_values, best_quarters, best_audit
+
+
 def duration_points(values: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Return clean quarterly points and annual points for one duration fact."""
     quarters: List[Dict[str, Any]] = []
@@ -456,9 +508,7 @@ def latest_with_changes(values: List[Dict[str, Any]], earnings_mode: bool = Fals
 
 
 def flow_metric(facts: Dict[str, Any], name: str, units: List[str], earnings_mode: bool = False) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    values, audit = fact_values(facts, TAGS[name], units)
-    quarters, _annuals = duration_points(values)
-    audit["quarterPoints"] = len(quarters)
+    _values, quarters, audit = freshest_flow_fact_values(facts, TAGS[name], units)
     return latest_with_changes(quarters, earnings_mode=earnings_mode), audit
 
 
@@ -928,8 +978,7 @@ def quarter_value_map(facts: Dict[str, Any], name: str, units: List[str]) -> Dic
     metadata/tags do not line up perfectly.
     """
     try:
-        values, _audit = fact_values(facts, TAGS[name], units)
-        quarters, _annuals = duration_points(values)
+        _values, quarters, _audit = freshest_flow_fact_values(facts, TAGS[name], units)
     except Exception:
         return {}
     out: Dict[str, Dict[str, Any]] = {}
