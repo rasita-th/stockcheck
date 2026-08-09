@@ -11,7 +11,7 @@ TARGETS = [ROOT / "site" / "data", ROOT / "static" / "data"]
 # Files with their own validated production workflow must never be republished
 # by the generic generated-data layer. Market Pulse is written only by
 # refresh-market-pulse-v9-6.yml at 08:00 and 20:00 ICT.
-EXCLUDED = {"market_pulse.json"}
+EXCLUDED = {"fundamental.json", "market_pulse.json"}
 
 
 def publishable_files(source: Path = SOURCE) -> list[Path]:

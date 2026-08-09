@@ -36,11 +36,16 @@ PRODUCERS: dict[str, dict[str, Any]] = {
         "paths": ("data/generated/market_pulse.json", "data/market_pulse.json", "site/data/market_pulse.json", "static/data/market_pulse.json"),
     },
     "Update static fundamental data": {
-        "events": {"schedule", "workflow_dispatch"},
-        "paths": ("site/data/fundamental.json",),
+        "events": {"schedule", "workflow_dispatch", "push"},
+        "paths": ("data/generated/fundamental.json", "site/data/fundamental.json", "static/data/fundamental.json"),
     },
 }
 BLOCKED_PATTERNS = (".github/**", "scripts/**", "tests/**", "requirements.txt", "site/*.js", "site/*.css", "static/*.js", "static/*.css")
+RESERVED_PATH_OWNERS = {
+    "data/generated/fundamental.json": "Update static fundamental data",
+    "site/data/fundamental.json": "Update static fundamental data",
+    "static/data/fundamental.json": "Update static fundamental data",
+}
 
 
 def fail(message: str, code: str) -> NoReturn:
@@ -79,6 +84,9 @@ def validate_paths(producer: str, paths: list[str]) -> None:
     if not config:
         fail(f"unknown producer {producer!r}", "REJECTED_UNKNOWN_PRODUCER")
     for path in paths:
+        owner = RESERVED_PATH_OWNERS.get(path)
+        if owner and owner != producer:
+            fail(f"reserved path {path} is owned by {owner}", "REJECTED_PATH")
         if any(matches(path, pattern) for pattern in BLOCKED_PATTERNS):
             fail(f"blocked path {path}", "REJECTED_PATH")
         if not any(matches(path, pattern) for pattern in config["paths"]):

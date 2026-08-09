@@ -37,10 +37,33 @@ class ProductionArtifactContractTests(unittest.TestCase):
         contract.validate_paths("Refresh Finnhub Full Backfill", canonical)
 
     def test_fundamental_paths_are_narrow(self) -> None:
-        contract.validate_paths("Update static fundamental data", ["site/data/fundamental.json"])
+        self.assertIn("push", contract.PRODUCERS["Update static fundamental data"]["events"])
+        contract.validate_paths(
+            "Update static fundamental data",
+            [
+                "data/generated/fundamental.json",
+                "site/data/fundamental.json",
+                "static/data/fundamental.json",
+            ],
+        )
         with self.assertRaises(SystemExit) as raised:
             contract.validate_paths("Update static fundamental data", ["site/data/technical.json"])
         self.assertIn("REJECTED_PATH", str(raised.exception))
+
+    def test_non_fundamental_producers_cannot_publish_fundamental_mirrors(self) -> None:
+        fundamental_paths = (
+            "data/generated/fundamental.json",
+            "site/data/fundamental.json",
+            "static/data/fundamental.json",
+        )
+        for producer in contract.PRODUCERS:
+            if producer == "Update static fundamental data":
+                continue
+            for path in fundamental_paths:
+                with self.subTest(producer=producer, path=path):
+                    with self.assertRaises(SystemExit) as raised:
+                        contract.validate_paths(producer, [path])
+                    self.assertIn("REJECTED_PATH", str(raised.exception))
 
     def test_blocked_workflow_path(self) -> None:
         with self.assertRaises(SystemExit) as raised:

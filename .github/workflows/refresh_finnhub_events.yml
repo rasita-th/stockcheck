@@ -108,7 +108,7 @@ jobs:
           set -euo pipefail
           mkdir -p publish-artifact
           git add -N -- data/finnhub/state
-          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' > publish-artifact/production-data.patch
+          git diff --binary HEAD -- data/finnhub data/earnings_calendar.json data/eps_surprises.json data/finnhub_features.json data/generated data/source_state site/data static/data ':(exclude)data/generated/fundamental.json' ':(exclude)site/data/fundamental.json' ':(exclude)static/data/fundamental.json' ':(exclude)data/generated/market_pulse.json' ':(exclude)site/data/market_pulse.json' ':(exclude)static/data/market_pulse.json' > publish-artifact/production-data.patch
           grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
           if grep -q 'a/data/finnhub/state.json b/data/finnhub/state.json' publish-artifact/production-data.patch; then
             python scripts/check_generated_file_sizes.py --patch-hard-limit-mib 50 publish-artifact/production-data.patch

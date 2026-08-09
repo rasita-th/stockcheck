@@ -44,11 +44,14 @@ jobs:
           SEC_GUIDANCE_LOOKBACK_DAYS: "1460"
           SEC_GUIDANCE_MAX_FILINGS: "40"
           SEC_GUIDANCE_MAX_DOCUMENTS_PER_FILING: "8"
-        run: python scripts/update_fundamental_data.py
+        run: |
+          cp site/data/fundamental.json /tmp/fundamental-before.json
+          python scripts/update_fundamental_data.py
 
       - name: Validate fundamental output
         run: |
-          python -m py_compile scripts/update_fundamental_data.py scripts/check_data_freshness.py scripts/validate_production_artifact.py
+          python -m py_compile scripts/update_fundamental_data.py scripts/check_data_freshness.py scripts/validate_fundamental_snapshot.py scripts/validate_production_artifact.py
+          python -m unittest tests.test_fundamental_snapshot_contract tests.test_production_artifact_contract
           python scripts/validate_static_data.py
           python - <<'PY'
           import json
@@ -59,6 +62,10 @@ jobs:
           json.loads(path.read_text(encoding='utf-8'))
           print('Fundamental JSON is present and valid.')
           PY
+          python scripts/validate_fundamental_snapshot.py data/generated/fundamental.json \
+            --current /tmp/fundamental-before.json \
+            --mirror site/data/fundamental.json \
+            --mirror static/data/fundamental.json
           python scripts/check_data_freshness.py site/data/fundamental.json \
             --timestamp-field generatedAtFundamental \
             --timestamp-field generatedAt \
@@ -69,7 +76,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p publish-artifact
-          git diff --binary HEAD -- site/data/fundamental.json \
+          git diff --binary HEAD -- data/generated/fundamental.json site/data/fundamental.json static/data/fundamental.json \
             > publish-artifact/production-data.patch
           python scripts/validate_production_artifact.py create-metadata \
             --patch publish-artifact/production-data.patch \
