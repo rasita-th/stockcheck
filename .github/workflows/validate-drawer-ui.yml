@@ -1,0 +1,55 @@
+name: Validate Drawer UI
+
+on:
+  pull_request:
+    paths:
+      - "site/final-ui-coordinator.js"
+      - "site/final-ui-coordinator.css"
+      - "site/watchlist-add-drawer.css"
+      - "static/final-ui-coordinator.js"
+      - "static/final-ui-coordinator.css"
+      - "static/watchlist-add-drawer.css"
+      - "tests/stock_detail_drawer_contract.test.js"
+      - "tests/watchlist_add_drawer_contract.test.js"
+      - "config/release-manifest.json"
+      - "scripts/prepare_stable_site_v9_4_1.py"
+      - ".github/workflows/deploy-pages.yml"
+      - ".github/workflows/deploy-pages-drawdown-hotfix.yml"
+      - ".github/workflows/validate-drawer-ui.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate drawer runtime contracts
+        run: |
+          set -euo pipefail
+          node --check site/final-ui-coordinator.js
+          node tests/stock_detail_drawer_contract.test.js
+          if [ -f tests/watchlist_add_drawer_contract.test.js ]; then
+            node tests/watchlist_add_drawer_contract.test.js
+          fi
+          cmp site/final-ui-coordinator.js static/final-ui-coordinator.js
+          cmp site/final-ui-coordinator.css static/final-ui-coordinator.css
+          if [ -f site/watchlist-add-drawer.css ]; then
+            cmp site/watchlist-add-drawer.css static/watchlist-add-drawer.css
+          fi
+          python -m py_compile scripts/prepare_stable_site_v9_4_1.py
+          python scripts/check_ui_view_contract.py
