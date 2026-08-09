@@ -31,6 +31,41 @@ const profiles = [
   },
 ];
 
+async function verifyPrimaryNavigation(page) {
+  const checks = { today: false, memo: false, scanner: false, marketPulse: false };
+
+  await page.waitForSelector('.app-mode-nav [data-app-view="attention"]', { state: "visible", timeout: 15000 });
+  await page.click('.app-mode-nav [data-app-view="attention"]');
+  await page.waitForFunction(() => {
+    const page = document.querySelector(".attention-page");
+    return document.body.classList.contains("attention-active") && page && getComputedStyle(page).display !== "none";
+  }, null, { timeout: 10000 });
+  checks.today = true;
+
+  await page.click('.app-mode-nav [data-app-view="memo"]');
+  await page.waitForFunction(() => {
+    const memo = document.querySelector("#memoPage");
+    return document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active") && memo && getComputedStyle(memo).display !== "none";
+  }, null, { timeout: 10000 });
+  checks.memo = true;
+
+  await page.click('.app-mode-nav [data-app-view="scanner"]');
+  await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 10000 });
+  checks.scanner = true;
+
+  await page.waitForSelector('.app-mode-nav a.market-mode-btn', { state: "visible", timeout: 10000 });
+  await Promise.all([
+    page.waitForURL((url) => /\/market\.html(?:$|[?#])/.test(url.pathname + url.search + url.hash), { timeout: 15000 }),
+    page.click('.app-mode-nav a.market-mode-btn'),
+  ]);
+  await page.waitForSelector("#marketBriefing", { state: "attached", timeout: 15000 });
+  checks.marketPulse = true;
+
+  await page.goto(`${base}?browser_smoke_return=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 60000 });
+  await page.waitForSelector(".app-shell", { state: "visible", timeout: 30000 });
+  return checks;
+}
+
 const results = [];
 let failed = false;
 const browser = await chromium.launch({ headless: true });
@@ -41,6 +76,7 @@ for (const profile of profiles) {
   const pageErrors = [];
   const firstPartyFailures = [];
   const consoleErrors = [];
+  let navChecks = null;
 
   page.on("pageerror", (error) => pageErrors.push(String(error?.stack || error)));
   page.on("console", (message) => {
@@ -76,6 +112,9 @@ for (const profile of profiles) {
       return (body && body.children.length > 0) || (mobile && mobile.children.length > 0);
     }, null, { timeout: 45000 });
     await page.waitForTimeout(1000);
+    if (profile.name === "desktop-cold" || profile.name === "iphone-cold") {
+      navChecks = await verifyPrimaryNavigation(page);
+    }
   } catch (error) {
     navigationError = String(error?.stack || error);
   }
@@ -109,11 +148,12 @@ for (const profile of profiles) {
   }).catch(() => ({}));
 
   await page.screenshot({ path: `${outDir}/${profile.name}.png`, fullPage: true }).catch(() => {});
-  const record = { profile: profile.name, status, navigationError, pageErrors, firstPartyFailures, consoleErrors, runtime };
+  const record = { profile: profile.name, status, navigationError, pageErrors, firstPartyFailures, consoleErrors, navChecks, runtime };
   results.push(record);
 
   const criticalFailures = firstPartyFailures.filter((item) => ["document", "script", "stylesheet", "xhr", "fetch"].includes(item.type));
-  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
+  const navFailed = navChecks && Object.values(navChecks).some((value) => value !== true);
+  if (status !== 200 || navigationError || pageErrors.length || criticalFailures.length || navFailed || !runtime.shellVisible || runtime.bodyTextLength < 100 || (runtime.desktopRows + runtime.mobileCards) < 1 || (runtime.visibleSheets?.length || 0) > 0) {
     failed = true;
   }
 
