@@ -28,16 +28,28 @@ def main() -> None:
     if not re.fullmatch(r"\d+\.\d+\.\d+", shell_css):
         raise SystemExit("manifest assets.app_shell_css must be semantic")
 
+    # Source-only validation workflows may call the synchronizer before the
+    # stable Pages builder injects app-shell-v9-4-6. In that case there is
+    # nothing to rewrite yet. Once prepare_stable_site has injected the shell,
+    # both index references must exist and are rewritten atomically.
     index_path = SITE / "index.html"
     index = index_path.read_text(encoding="utf-8")
-    index, _ = replace_version(index, "app-shell-v9-4-6.css", shell_css)
-    index, _ = replace_version(index, "app-shell-v9-4-6.js", shell_js)
+    index, index_has_css = replace_version(
+        index,
+        "app-shell-v9-4-6.css",
+        shell_css,
+        required=False,
+    )
+    index, index_has_js = replace_version(
+        index,
+        "app-shell-v9-4-6.js",
+        shell_js,
+        required=False,
+    )
+    if index_has_css != index_has_js:
+        raise SystemExit("prepared index must contain both app-shell JS and CSS or neither")
     index_path.write_text(index, encoding="utf-8")
 
-    # The source-tree market page does not always contain the shared shell CSS;
-    # prepare_stable_site injects it for the Pages artifact. Apply the cache
-    # identity whenever that reference exists, without making source-only UI
-    # workflows depend on a prepared market artifact.
     market_path = SITE / "market.html"
     market = market_path.read_text(encoding="utf-8")
     market, market_has_shell = replace_version(
@@ -48,18 +60,20 @@ def main() -> None:
     )
     market_path.write_text(market, encoding="utf-8")
 
-    index_check = index_path.read_text(encoding="utf-8")
-    for token in (
-        f"app-shell-v9-4-6.js?v={shell_js}",
-        f"app-shell-v9-4-6.css?v={shell_css}",
-    ):
-        if token not in index_check:
-            raise SystemExit(f"index cache identity missing: {token}")
+    if index_has_js:
+        index_check = index_path.read_text(encoding="utf-8")
+        for token in (
+            f"app-shell-v9-4-6.js?v={shell_js}",
+            f"app-shell-v9-4-6.css?v={shell_css}",
+        ):
+            if token not in index_check:
+                raise SystemExit(f"index cache identity missing: {token}")
     if market_has_shell and f"app-shell-v9-4-6.css?v={shell_css}" not in market_path.read_text(encoding="utf-8"):
         raise SystemExit("market shell CSS cache identity missing")
 
     print(
         f"Applied shell runtime identities: js={shell_js} css={shell_css} "
+        f"index={'yes' if index_has_js else 'deferred'} "
         f"market={'yes' if market_has_shell else 'deferred'}"
     )
 
