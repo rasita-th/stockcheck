@@ -139,7 +139,7 @@
   #detailPanel .detail-decision-metrics dd { font-size: 13px !important; }
 }
 
-/* v10.8.6 hotfix: closed sheets must never paint inside the viewport. The aria state is the source of truth; .open and .sheet-visible-force remain valid transient open states. */
+/* v10.8.6 hotfix: closed sheets must never paint inside the viewport. The aria state is the source of truth. */
 .bottom-sheet[aria-hidden="true"]:not(.open):not(.sheet-visible-force) {
   visibility: hidden !important;
   pointer-events: none !important;
@@ -148,4 +148,12 @@
 .bottom-sheet.sheet-visible-force,
 .bottom-sheet[aria-hidden="false"] {
   visibility: visible;
+}
+/* Some legacy code can leave sheet-visible-force behind. aria-hidden wins unconditionally. */
+.bottom-sheet[aria-hidden="true"] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.bottom-sheet[aria-hidden="false"] {
+  visibility: visible !important;
 }
