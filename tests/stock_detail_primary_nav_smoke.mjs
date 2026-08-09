@@ -13,7 +13,7 @@ page.on("pageerror", (error) => pageErrors.push(String(error?.stack || error)));
 
 let errorText = null;
 let geometry = null;
-const checks = { scanner: false, detailOpen: false, todayReachable: false, detailClosed: false };
+const checks = { scanner: false, detailOpen: false, headerClearance: false, todayReachable: false, detailClosed: false };
 try {
   const response = await page.goto(`${base}?stock_detail_nav_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 30000 });
   if (response?.status() !== 200) throw new Error(`index HTTP ${response?.status()}`);
@@ -26,6 +26,7 @@ try {
   await stock.waitFor({ state: "visible", timeout: 10000 });
   await stock.click({ timeout: 5000, noWaitAfter: true });
   await page.waitForFunction(() => document.body.classList.contains("stock-detail-open"), null, { timeout: 5000 });
+  await page.waitForTimeout(350);
   checks.detailOpen = true;
 
   geometry = await page.evaluate(() => {
@@ -34,12 +35,22 @@ try {
     const panel = document.querySelector("#detailPanel")?.getBoundingClientRect();
     const backdrop = document.querySelector("#desktopDetailBackdrop")?.getBoundingClientRect();
     const pick = (rect) => rect ? { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, width: rect.width, height: rect.height } : null;
-    return { header: pick(header), nav: pick(nav), panel: pick(panel), backdrop: pick(backdrop) };
+    return {
+      header: pick(header),
+      nav: pick(nav),
+      panel: pick(panel),
+      backdrop: pick(backdrop),
+      offset: getComputedStyle(document.documentElement).getPropertyValue("--stock-detail-top-offset").trim(),
+    };
   });
   console.log(`[stock-detail-nav] geometry=${JSON.stringify(geometry)}`);
+  if (!geometry?.header || !geometry?.panel || !geometry?.backdrop) throw new Error(`missing geometry: ${JSON.stringify(geometry)}`);
+  if (geometry.panel.top + 1 < geometry.header.bottom) throw new Error(`detail overlaps header: ${JSON.stringify(geometry)}`);
+  if (geometry.backdrop.top + 1 < geometry.header.bottom) throw new Error(`detail backdrop overlaps header: ${JSON.stringify(geometry)}`);
+  checks.headerClearance = true;
 
-  // This must be a real pointer click. The regression is that the full-height
-  // detail drawer/backdrop physically intercepts primary-nav pointer events.
+  // This must remain a real pointer click. The primary navigation is part of
+  // the shared shell and must stay reachable while the desktop detail is open.
   await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 5000, noWaitAfter: true });
   await page.waitForFunction(() => document.body.classList.contains("attention-active"), null, { timeout: 5000 });
   checks.todayReachable = true;
