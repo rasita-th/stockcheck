@@ -11,6 +11,7 @@ on:
       - "static/watchlist-add-drawer.css"
       - "tests/stock_detail_drawer_contract.test.js"
       - "tests/watchlist_add_drawer_contract.test.js"
+      - "tests/final_ui_view_observer_contract.test.js"
       - "config/release-manifest.json"
       - "scripts/prepare_stable_site_v9_4_1.py"
       - ".github/workflows/deploy-pages.yml"
@@ -46,6 +47,7 @@ jobs:
           if [ -f tests/watchlist_add_drawer_contract.test.js ]; then
             node tests/watchlist_add_drawer_contract.test.js
           fi
+          node tests/final_ui_view_observer_contract.test.js
           cmp site/final-ui-coordinator.js static/final-ui-coordinator.js
           cmp site/final-ui-coordinator.css static/final-ui-coordinator.css
           if [ -f site/watchlist-add-drawer.css ]; then
