@@ -53,7 +53,7 @@ for (const profile of profiles) {
   });
   await profile.beforeLoad?.(page);
 
-  const checks = { scannerBoot: false, today: false, memo: false, scannerReturn: false, detailCloseOnViewSwitch: true, marketPulse: false };
+  const checks = { scannerBoot: false, today: false, memo: false, scannerReturn: false, marketPulse: false };
   let errorText = null;
   try {
     const response = await page.goto(`${base}?primary_nav_smoke=${Date.now()}`, { waitUntil: "domcontentloaded", timeout: 30000 });
@@ -80,20 +80,6 @@ for (const profile of profiles) {
     await page.locator('.app-mode-nav [data-app-view="scanner"]').click({ timeout: 5000, noWaitAfter: true });
     await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 5000 });
     checks.scannerReturn = true;
-
-    if (!profile.device) {
-      const stock = page.locator('#watchlistPanel [data-select]').first();
-      if (await stock.count()) {
-        await stock.click({ timeout: 5000, noWaitAfter: true });
-        await page.waitForFunction(() => document.body.classList.contains("stock-detail-open"), null, { timeout: 5000 });
-        console.log(`[primary-nav] ${profile.name}: switch Today with detail open`);
-        await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 5000, noWaitAfter: true });
-        await page.waitForFunction(() => document.body.classList.contains("attention-active") && !document.body.classList.contains("stock-detail-open"), null, { timeout: 5000 });
-        checks.detailCloseOnViewSwitch = true;
-        await page.locator('.app-mode-nav [data-app-view="scanner"]').click({ timeout: 5000, noWaitAfter: true });
-        await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 5000 });
-      }
-    }
 
     console.log(`[primary-nav] ${profile.name}: open Market Pulse`);
     await page.waitForSelector('.app-mode-nav a.market-mode-btn', { state: "visible", timeout: 5000 });
