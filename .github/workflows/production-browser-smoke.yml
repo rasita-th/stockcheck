@@ -53,8 +53,16 @@ jobs:
           cp -a site /tmp/stockcheck-browser-candidate
           node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
           node --check /tmp/stockcheck-browser-candidate/app-shell-v9-4-6.js
-          grep -F 'app-shell-v9-4-6.js?v=10.8.3' /tmp/stockcheck-browser-candidate/index.html
-          grep -F 'storage-guard-v10-8-4.js?v=10.8.3' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'app-shell-v9-4-6.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
+          grep -F 'storage-guard-v10-8-4.js?v=10.8.7' /tmp/stockcheck-browser-candidate/index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('/tmp/stockcheck-browser-candidate/index.html').read_text(encoding='utf-8')
+          shell = html.index('app-shell-v9-4-6.js?v=10.8.7')
+          guard = html.index('storage-guard-v10-8-4.js?v=10.8.7')
+          app = html.index('app.js?v=10.8.7')
+          assert shell < guard < app, (shell, guard, app)
+          PY
 
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
