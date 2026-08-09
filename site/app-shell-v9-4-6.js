@@ -1,6 +1,7 @@
 (() => {
   'use strict';
-  const VERSION = '9.4.6';
+  const VERSION = '10.8.7';
+  const VIEW_KEY = 'stockTimingRadar.appView.v55';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   let recoveryAttempted = false;
@@ -72,28 +73,48 @@
 
   function setActive(view){
     $$('.app-mode-nav [data-app-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.appView === view));
-    const market = $('.app-mode-nav .market-mode-btn');
-    market?.classList.remove('active');
+    $('.app-mode-nav .market-mode-btn')?.classList.remove('active');
+  }
+
+  function setViewState(view, { persist = true, refresh = true } = {}){
+    if (isMarketPage()) return false;
+    const normalized = ['scanner','attention','memo'].includes(view) ? view : 'scanner';
+    const memo = normalized === 'memo';
+    const attention = normalized === 'attention';
+
+    document.body.classList.toggle('memo-active', memo);
+    document.body.classList.toggle('attention-active', attention);
+    setActive(normalized);
+
+    if (persist) {
+      try { localStorage.setItem(VIEW_KEY, normalized); } catch (_) {}
+    }
+    if (refresh && attention && typeof window.__stockcheckAttentionRefresh === 'function') {
+      Promise.resolve(window.__stockcheckAttentionRefresh()).catch(error => console.error('[primary-nav] Today refresh failed', error));
+    }
+    if (refresh && memo && typeof window.StockcheckMemoRefresh === 'function') {
+      try { window.StockcheckMemoRefresh(); } catch (error) { console.error('[primary-nav] Memo refresh failed', error); }
+    }
+    return true;
   }
 
   function activateView(view){
     if (isMarketPage()) {
       location.assign(`index.html#${view === 'attention' ? 'today' : view}`);
-      return;
+      return true;
     }
     ensureNativeNavigation();
-    const control = $(`[data-app-view="${view}"]`);
-    if (!control) return false;
-    control.click();
-    setActive(view);
-    return true;
+    return setViewState(view);
   }
 
-  function applyHash(){
+  function applyHashOrSavedView(){
     const hash = location.hash.toLowerCase();
-    if (hash === '#today') activateView('attention');
-    else if (hash === '#memo') activateView('memo');
-    else if (hash === '#scanner') activateView('scanner');
+    if (hash === '#today') return setViewState('attention');
+    if (hash === '#memo') return setViewState('memo');
+    if (hash === '#scanner') return setViewState('scanner');
+    let saved = '';
+    try { saved = localStorage.getItem(VIEW_KEY) || ''; } catch (_) {}
+    return setViewState(saved === 'memo' || saved === 'attention' ? saved : 'scanner', { persist:false, refresh:false });
   }
 
   function ensureStatus(){
@@ -139,7 +160,7 @@
         else showStatus('ไฟล์ข้อมูลมีอยู่ แต่ UI ยัง render ไม่สำเร็จ กรุณากด Retry loading', true);
       }, 1200);
     } catch (error) {
-      console.error('[v9.4.6] data recovery failed', error);
+      console.error('[v10.8.7] data recovery failed', error);
       showStatus(`โหลดข้อมูลไม่สำเร็จ: ${error.message || error}`, true);
     }
   }
@@ -147,31 +168,47 @@
   function boot(){
     removeLegacyArtifacts();
     ensureNativeNavigation();
-    applyHash();
+    applyHashOrSavedView();
     setTimeout(ensureNativeNavigation, 100);
-    setTimeout(ensureNativeNavigation, 700);
+    setTimeout(() => { ensureNativeNavigation(); applyHashOrSavedView(); }, 700);
     setTimeout(() => verifyDataAndRecover(false), 4500);
   }
 
   document.addEventListener('click', event => {
-    if (event.target.closest('[data-sr946-retry]')) {
+    if (event.target.closest?.('[data-sr946-retry]')) {
       event.preventDefault();
       recoveryAttempted = false;
       verifyDataAndRecover(true);
+      return;
     }
-  });
+
+    const market = event.target.closest?.('.app-mode-nav a.market-mode-btn');
+    if (market) {
+      event.preventDefault();
+      location.assign(new URL('market.html', location.href).href);
+      return;
+    }
+
+    const control = event.target.closest?.('.app-mode-nav [data-app-view]');
+    if (control) {
+      event.preventDefault();
+      setViewState(control.dataset.appView || 'scanner');
+    }
+  }, true);
+
   window.addEventListener('error', event => {
     const source = String(event.filename || '');
     if (source.includes('app.js') || source.includes('app-shell')) showStatus(`JavaScript error: ${event.message || 'unknown error'}`, true);
   });
   window.addEventListener('unhandledrejection', event => {
-    console.error('[v9.4.6] unhandled rejection', event.reason);
+    console.error('[v10.8.7] unhandled rejection', event.reason);
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
   else boot();
-  addEventListener('load', () => { ensureNativeNavigation(); applyHash(); }, { once:true });
-  addEventListener('hashchange', applyHash);
+  addEventListener('load', () => { ensureNativeNavigation(); applyHashOrSavedView(); }, { once:true });
+  addEventListener('hashchange', applyHashOrSavedView);
 
-  window.StockRadarShellV946 = { version:VERSION, boot, ensureNativeNavigation, verifyDataAndRecover, activateView };
+  window.StockRadarShellV946 = { version:VERSION, boot, ensureNativeNavigation, verifyDataAndRecover, activateView, setViewState };
+  window.__stockcheckPrimaryNavVersion = VERSION;
 })();
