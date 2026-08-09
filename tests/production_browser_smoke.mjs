@@ -48,8 +48,9 @@ for (const profile of profiles) {
   });
   page.on("requestfailed", (request) => {
     const url = request.url();
-    if (url.startsWith(base)) {
-      firstPartyFailures.push({ url, type: request.resourceType(), error: request.failure()?.errorText || "failed" });
+    const error = request.failure()?.errorText || "failed";
+    if (url.startsWith(base) && error !== "net::ERR_ABORTED") {
+      firstPartyFailures.push({ url, type: request.resourceType(), error });
     }
   });
 
@@ -96,6 +97,8 @@ for (const profile of profiles) {
       mobileCards: mobile?.children.length || 0,
       coordinator: window.StockRadarDetailPresentation || window.StockRadarWatchlistDrawer || null,
       canonicalSource: window.StockcheckCanonicalScreener?.source || window.StockcheckCanonicalScreener?.identity || null,
+      storageMode: window.__stockcheckStorageMode || null,
+      recoveryVersion: window.__stockcheckStorageRecoveryVersion || null,
     };
   }).catch(() => ({}));
 
