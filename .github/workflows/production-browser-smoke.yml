@@ -41,10 +41,31 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.55.0
           npx playwright install --with-deps chromium
 
+      - name: Prepare candidate browser artifact
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          rm -rf /tmp/stockcheck-browser-candidate
+          cp -a site /tmp/stockcheck-browser-candidate
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('/tmp/stockcheck-browser-candidate/index.html')
+          html = path.read_text(encoding='utf-8')
+          guard = '  <script src="storage-guard-v10-8-4.js?v=10.8.4"></script>\n'
+          html = html.replace(guard, '')
+          marker = '  <script src="app.js?v=10.7.1"></script>'
+          if marker not in html:
+              marker = '  <script src="app.js?v=10.8.3"></script>'
+          if marker not in html:
+              raise SystemExit('candidate app.js marker missing')
+          path.write_text(html.replace(marker, guard + marker, 1), encoding='utf-8')
+          PY
+          node --check /tmp/stockcheck-browser-candidate/storage-guard-v10-8-4.js
+          grep -F 'STORAGE_GUARD_ASSET = "storage-guard-v10-8-4.js"' scripts/prepare_stable_site_v9_4_1.py
+
       - name: Start candidate server
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          python3 -m http.server 8000 --directory site >/tmp/stockcheck-smoke-server.log 2>&1 &
+          python3 -m http.server 8000 --directory /tmp/stockcheck-browser-candidate >/tmp/stockcheck-smoke-server.log 2>&1 &
           echo $! > /tmp/stockcheck-smoke-server.pid
           for attempt in $(seq 1 20); do
             if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
