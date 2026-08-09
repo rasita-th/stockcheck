@@ -39,7 +39,7 @@ for (const profile of profiles) {
     checks.runtime = true;
     console.log(`[primary-nav] ${profile.name}: runtime ok`);
 
-    await page.click('.app-mode-nav [data-app-view="attention"]', { timeout: 10000 });
+    await page.locator('.app-mode-nav [data-app-view="attention"]').click({ timeout: 10000, noWaitAfter: true });
     await page.waitForFunction(() => {
       const visibleToday = Array.from(document.querySelectorAll(".attention-page")).some((node) => {
         const style = getComputedStyle(node);
@@ -51,7 +51,7 @@ for (const profile of profiles) {
     checks.today = true;
     console.log(`[primary-nav] ${profile.name}: Today ok`);
 
-    await page.click('.app-mode-nav [data-app-view="memo"]', { timeout: 10000 });
+    await page.locator('.app-mode-nav [data-app-view="memo"]').click({ timeout: 10000, noWaitAfter: true });
     await page.waitForFunction(() => {
       const memo = document.querySelector("#memoPage");
       if (!memo) return false;
@@ -62,7 +62,7 @@ for (const profile of profiles) {
     checks.memo = true;
     console.log(`[primary-nav] ${profile.name}: Memo ok`);
 
-    await page.click('.app-mode-nav [data-app-view="scanner"]', { timeout: 10000 });
+    await page.locator('.app-mode-nav [data-app-view="scanner"]').click({ timeout: 10000, noWaitAfter: true });
     await page.waitForFunction(() => !document.body.classList.contains("memo-active") && !document.body.classList.contains("attention-active"), null, { timeout: 10000 });
     checks.scanner = true;
     console.log(`[primary-nav] ${profile.name}: Scanner ok`);
@@ -70,7 +70,7 @@ for (const profile of profiles) {
     await page.waitForSelector('.app-mode-nav a.market-mode-btn', { state: "visible", timeout: 10000 });
     await Promise.all([
       page.waitForURL((url) => /\/market\.html$/.test(url.pathname), { timeout: 15000 }),
-      page.click('.app-mode-nav a.market-mode-btn', { timeout: 10000 }),
+      page.locator('.app-mode-nav a.market-mode-btn').click({ timeout: 10000, noWaitAfter: true }),
     ]);
     await page.waitForSelector("#marketBriefing", { state: "visible", timeout: 15000 });
     checks.marketPulse = true;
