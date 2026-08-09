@@ -71,13 +71,13 @@ jobs:
       - name: Verify candidate primary navigation
         if: ${{ github.event_name == 'pull_request' }}
         env:
-          PRODUCTION_URL: http://127.0.0.1:8000/
+          PRODUCTION_URL: http://stockcheck.localhost:8000/
         run: node tests/primary_navigation_smoke.mjs
 
       - name: Verify candidate browser bootstrap
         if: ${{ github.event_name == 'pull_request' }}
         env:
-          PRODUCTION_URL: http://127.0.0.1:8000/
+          PRODUCTION_URL: http://stockcheck.localhost:8000/
         run: node tests/production_browser_smoke.mjs
 
       - name: Verify deployed primary navigation
