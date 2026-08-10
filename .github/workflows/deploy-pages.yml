@@ -119,6 +119,9 @@ jobs:
           attention = json.loads(Path('site/data/attention_today.json').read_text(encoding='utf-8'))
           market = json.loads(Path('site/data/market_pulse.json').read_text(encoding='utf-8'))
           technical = json.loads(Path('site/data/technical/index.json').read_text(encoding='utf-8'))
+          snapshot = json.loads(Path('site/data/screener_snapshot.json').read_text(encoding='utf-8'))
+          quotes = json.loads(Path('site/data/quote_latest.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('site/data/health.json').read_text(encoding='utf-8'))
           manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
           rows = technical.get('rows') or []
           technical_samples = {}
@@ -139,6 +142,11 @@ jobs:
               'market_generated_at': market.get('generated_at'),
               'technical_generated_at': technical.get('generatedAtTechnical') or technical.get('generatedAt'),
               'technical_count': len(rows),
+              'screener_snapshot_generated_at': snapshot.get('generated_at') or snapshot.get('generatedAt'),
+              'quote_generated_at': snapshot.get('quote_generated_at'),
+              'health_generated_at': health.get('generated_at'),
+              'screener_snapshot_count': len(snapshot.get('rows') or []),
+              'quote_count': len(quotes.get('rows') or []),
               'technical_asset_version': manifest['assets']['technical_shards_js'],
               'technical_samples': technical_samples,
               'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
@@ -188,6 +196,9 @@ jobs:
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/attention_today.json?smoke=${nonce}" -o /tmp/attention_today.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/market_pulse.json?smoke=${nonce}" -o /tmp/market_pulse.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/index.json?smoke=${nonce}" -o /tmp/technical_index.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/screener_snapshot.json?smoke=${nonce}" -o /tmp/screener_snapshot.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/quote_latest.json?smoke=${nonce}" -o /tmp/quote_latest.json \
+              && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/health.json?smoke=${nonce}" -o /tmp/health.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/NVDA.json?smoke=${nonce}" -o /tmp/nvda.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/data/technical/symbols/CIFR.json?smoke=${nonce}" -o /tmp/cifr.json \
               && curl -fsSL --retry 2 --connect-timeout 10 --max-time 30 "${BASE}/index.html?smoke=${nonce}" -o /tmp/index.html \
@@ -201,6 +212,9 @@ jobs:
           attention = json.loads(Path('/tmp/attention_today.json').read_text(encoding='utf-8'))
           market = json.loads(Path('/tmp/market_pulse.json').read_text(encoding='utf-8'))
           technical = json.loads(Path('/tmp/technical_index.json').read_text(encoding='utf-8'))
+          snapshot = json.loads(Path('/tmp/screener_snapshot.json').read_text(encoding='utf-8'))
+          quotes = json.loads(Path('/tmp/quote_latest.json').read_text(encoding='utf-8'))
+          health = json.loads(Path('/tmp/health.json').read_text(encoding='utf-8'))
           shards = {
               'NVDA': json.loads(Path('/tmp/nvda.json').read_text(encoding='utf-8')),
               'CIFR': json.loads(Path('/tmp/cifr.json').read_text(encoding='utf-8')),
@@ -217,6 +231,22 @@ jobs:
           technical_stamp = technical.get('generatedAtTechnical') or technical.get('generatedAt')
           if build.get('technical_generated_at') != technical_stamp:
               raise SystemExit('technical identity mismatch')
+          quote_stamp = quotes.get('market_as_of') or quotes.get('generated_at')
+          if build.get('screener_snapshot_generated_at') != (snapshot.get('generated_at') or snapshot.get('generatedAt')):
+              raise SystemExit('screener snapshot identity mismatch')
+          if build.get('quote_generated_at') != quote_stamp or snapshot.get('quote_generated_at') != quote_stamp:
+              raise SystemExit('quote identity mismatch')
+          if build.get('health_generated_at') != health.get('generated_at'):
+              raise SystemExit('health identity mismatch')
+          if build.get('screener_snapshot_count') != len(snapshot.get('rows') or []):
+              raise SystemExit('screener snapshot row count mismatch')
+          if build.get('quote_count') != len(quotes.get('rows') or []):
+              raise SystemExit('quote row count mismatch')
+          layers = health.get('layers') or {}
+          if (layers.get('quote') or {}).get('timestamp') != quote_stamp:
+              raise SystemExit('health quote timestamp mismatch')
+          if (layers.get('technical') or {}).get('timestamp') != (snapshot.get('generated_at') or snapshot.get('generatedAt')):
+              raise SystemExit('health technical timestamp mismatch')
           if build.get('asset_version') != '10.8.4':
               raise SystemExit('production asset version mismatch')
           if build.get('watchlist_add_drawer_css') != '10.8.4':
@@ -293,6 +323,8 @@ jobs:
           curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
             "${BASE_URL}/data/technical.json?core=${nonce}" -o /tmp/stockcheck-core/technical.json
           curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/data/health.json?core=${nonce}" -o /tmp/stockcheck-core/health.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
             "${BASE_URL}/technical-shards-v2.js?core=${nonce}" -o /tmp/stockcheck-core/technical-shards-v2.js
           for symbol in AMD ZETA NVDA CIFR; do
             curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
@@ -307,6 +339,7 @@ jobs:
             --technical /tmp/stockcheck-core/technical.json \
             --runtime /tmp/stockcheck-core/technical-shards-v2.js \
             --build /tmp/stockcheck-core/build.json \
+            --health /tmp/stockcheck-core/health.json \
             --expected-commit "$EXPECTED_COMMIT" \
             --expected-snapshot-schema "$expected_snapshot_schema" \
             --expected-runtime "$expected_runtime" \

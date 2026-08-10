@@ -49,6 +49,8 @@ jobs:
           curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
             "${BASE_URL}/data/technical.json?core=${nonce}" -o /tmp/stockcheck-core/technical.json
           curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
+            "${BASE_URL}/data/health.json?core=${nonce}" -o /tmp/stockcheck-core/health.json
+          curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
             "${BASE_URL}/technical-shards-v2.js?core=${nonce}" -o /tmp/stockcheck-core/technical-shards-v2.js
           for symbol in AMD ZETA NVDA CIFR; do
             curl -fsSL --retry 4 --retry-all-errors --connect-timeout 10 --max-time 45 \
@@ -63,6 +65,7 @@ jobs:
             --technical /tmp/stockcheck-core/technical.json \
             --runtime /tmp/stockcheck-core/technical-shards-v2.js \
             --build /tmp/stockcheck-core/build.json \
+            --health /tmp/stockcheck-core/health.json \
             --expected-commit "$EXPECTED_COMMIT" \
             --expected-snapshot-schema "$expected_snapshot_schema" \
             --expected-runtime "$expected_runtime" \

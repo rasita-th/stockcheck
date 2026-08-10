@@ -9,7 +9,7 @@ from pathlib import Path
 
 from scripts.build_screener_snapshot import build_snapshot
 from scripts.update_quote_data import select_quote_values
-from scripts.verify_screener_snapshot import is_regular_us_market_session
+from scripts.verify_screener_snapshot import is_regular_us_market_session, validate_health_identity
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -239,6 +239,42 @@ class ScreenerSnapshotTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("--quote-freshness-policy market-hours", workflow)
 
+    def test_production_health_identity_matches_canonical_snapshot(self):
+        snapshot = {
+            "generated_at": "2026-08-10T14:34:02+00:00",
+            "quote_generated_at": "2026-08-10T14:33:46+00:00",
+            "technical_generated_at": "2026-08-10T14:34:01+00:00",
+            "rows": [{"symbol": "AMD"}, {"symbol": "NVDA"}],
+        }
+        quotes = {
+            "market_as_of": "2026-08-10T14:33:46+00:00",
+            "rows": [{"ticker": "AMD"}, {"ticker": "NVDA"}],
+        }
+        technical = {
+            "generatedAtTechnical": "2026-08-10T14:34:01+00:00",
+            "rows": [{"symbol": "AMD"}, {"symbol": "NVDA"}],
+        }
+        health = {
+            "generated_at": "2026-08-10T14:35:16+00:00",
+            "layers": {
+                "quote": {
+                    "timestamp": "2026-08-10T14:33:46+00:00",
+                    "row_count": 2,
+                },
+                "technical": {
+                    "timestamp": "2026-08-10T14:34:02+00:00",
+                    "row_count": 2,
+                },
+            },
+        }
+        identity = validate_health_identity(snapshot, quotes, technical, health)
+        self.assertEqual(identity["snapshot_row_count"], 2)
+        self.assertEqual(identity["health_generated_at"], health["generated_at"])
+
+        health["layers"]["technical"]["timestamp"] = "2026-08-10T14:34:01+00:00"
+        with self.assertRaisesRegex(SystemExit, "health technical timestamp"):
+            validate_health_identity(snapshot, quotes, technical, health)
+
     def test_screener_schema_expectation_matches_each_input_contract(self):
         deploy = (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(
             encoding="utf-8"
@@ -255,6 +291,8 @@ class ScreenerSnapshotTests(unittest.TestCase):
                 '--expected-snapshot-schema "$expected_snapshot_schema"',
                 workflow,
             )
+            self.assertIn("--health /tmp/stockcheck-core/health.json", workflow)
+            self.assertIn("data/health.json?core=", workflow)
         self.assertIn("--expected-snapshot-schema 1.0", live)
 
         verifier = (ROOT / "scripts" / "verify_screener_snapshot.py").read_text(
@@ -276,6 +314,15 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertIn("config/release-manifest.json", workflow)
         self.assertIn("context: 'production/stockcheck-core'", workflow)
         self.assertIn("production-screener-receipt-", workflow)
+        for token in (
+            "screener_snapshot_generated_at",
+            "quote_generated_at",
+            "health_generated_at",
+            "screener_snapshot_count",
+            "health quote timestamp mismatch",
+            "health technical timestamp mismatch",
+        ):
+            self.assertIn(token, workflow)
 
     def test_quote_refresh_is_batched_bounded_atomic_and_writes_deployable_mirrors(self):
         source = (ROOT / "scripts" / "update_quote_data.py").read_text(encoding="utf-8")

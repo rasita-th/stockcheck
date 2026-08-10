@@ -10,9 +10,11 @@ class ClosedMarketAlertRetentionContractTest(unittest.TestCase):
         site = (ROOT / "site" / "technical-shards-v2.js").read_text(encoding="utf-8")
         static = (ROOT / "static" / "technical-shards-v2.js").read_text(encoding="utf-8")
         for runtime in (site, static):
+            self.assertIn("function freshnessState", runtime)
             self.assertIn("function snapshotCanDriveAlerts", runtime)
-            self.assertIn("if (session.marketOpen) return false", runtime)
-            self.assertIn("session.businessDay ? 18 * 60 : 72 * 60", runtime)
+            self.assertIn('status: latestCompleted ? "latest-completed-session" : "stale"', runtime)
+            self.assertIn("latestCompletedSession", runtime)
+            self.assertIn("marketHolidayKeys", runtime)
             self.assertIn("!snapshotCanDriveAlerts()", runtime)
             self.assertNotIn("!snapshotIsFresh()) return []", runtime)
 
@@ -21,6 +23,8 @@ class ClosedMarketAlertRetentionContractTest(unittest.TestCase):
         static = (ROOT / "static" / "technical-shards-v2.js").read_text(encoding="utf-8")
         for token in (
             "snapshotCanDriveAlerts",
+            "refreshScreenerSnapshot",
+            'dataset.freshnessState',
             "Latest completed market session",
             "ตลาดปิด · คง alerts จาก session ล่าสุด",
         ):

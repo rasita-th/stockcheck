@@ -54,6 +54,53 @@ def fail(condition: bool, message: str) -> None:
         raise SystemExit(message)
 
 
+def validate_health_identity(
+    snapshot: dict[str, Any],
+    quotes: dict[str, Any],
+    technical: dict[str, Any],
+    health: dict[str, Any],
+) -> dict[str, Any]:
+    layers = health.get("layers")
+    fail(isinstance(layers, dict), "health layers are missing")
+    quote_health = layers.get("quote") if isinstance(layers, dict) else None
+    technical_health = layers.get("technical") if isinstance(layers, dict) else None
+    fail(isinstance(quote_health, dict), "health quote layer is missing")
+    fail(isinstance(technical_health, dict), "health technical layer is missing")
+
+    snapshot_rows = snapshot.get("rows")
+    quote_rows = quotes.get("rows")
+    technical_rows = technical.get("rows")
+    fail(isinstance(snapshot_rows, list), "snapshot rows are missing")
+    fail(isinstance(quote_rows, list), "quote rows are missing")
+    fail(isinstance(technical_rows, list), "technical rows are missing")
+
+    quote_identity = str(quotes.get("market_as_of") or quotes.get("generated_at") or "")
+    technical_identity = str(
+        technical.get("technical_generated_at")
+        or technical.get("generatedAtTechnical")
+        or technical.get("generatedAt")
+        or ""
+    )
+    fail(snapshot.get("quote_generated_at") == quote_identity, "snapshot quote timestamp mismatch")
+    fail(snapshot.get("technical_generated_at") == technical_identity, "snapshot technical timestamp mismatch")
+    fail(quote_health.get("timestamp") == quote_identity, "health quote timestamp mismatch")
+    snapshot_identity = str(snapshot.get("generated_at") or snapshot.get("generatedAt") or "")
+    fail(technical_health.get("timestamp") == snapshot_identity, "health technical timestamp mismatch")
+    fail(quote_health.get("row_count") == len(quote_rows), "health quote row count mismatch")
+    fail(technical_health.get("row_count") == len(snapshot_rows), "health technical row count mismatch")
+    fail(len(technical_rows) == len(snapshot_rows), "technical mirror row count mismatch")
+    health_generated_at = str(health.get("generated_at") or "")
+    fail(parse_time(health_generated_at) is not None, "health generated_at is invalid")
+    return {
+        "snapshot_generated_at": snapshot.get("generated_at") or snapshot.get("generatedAt"),
+        "quote_generated_at": quote_identity,
+        "technical_generated_at": technical_identity,
+        "health_generated_at": health_generated_at,
+        "snapshot_row_count": len(snapshot_rows),
+        "quote_row_count": len(quote_rows),
+    }
+
+
 
 def is_regular_us_market_session(now: datetime) -> bool:
     local = now.astimezone(ZoneInfo("America/New_York"))
@@ -70,6 +117,7 @@ def main() -> None:
     parser.add_argument("--technical", type=Path, required=True)
     parser.add_argument("--runtime", type=Path, required=True)
     parser.add_argument("--build", type=Path)
+    parser.add_argument("--health", type=Path)
     parser.add_argument("--shard", type=Path, action="append", default=[])
     parser.add_argument("--expected-commit", default=os.environ.get("GITHUB_SHA", ""))
     parser.add_argument("--expected-snapshot-schema", required=True)
@@ -86,6 +134,9 @@ def main() -> None:
     quotes = load(args.quotes)
     technical = load(args.technical)
     runtime = args.runtime.read_text(encoding="utf-8")
+    health_identity: dict[str, Any] = {}
+    if args.health:
+        health_identity = validate_health_identity(snapshot, quotes, technical, load(args.health))
 
     fail(
         snapshot.get("schema_version") == args.expected_snapshot_schema,
@@ -262,6 +313,7 @@ def main() -> None:
         "runtime_version": args.expected_runtime,
         "sample_shards": shard_summary,
         "build": build_identity,
+        "health": health_identity,
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     if args.summary_output:
