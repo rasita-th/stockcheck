@@ -32,7 +32,7 @@ class WorkflowTopologyTests(unittest.TestCase):
             check=False,
         )
 
-    def test_repository_has_one_push_triggered_pages_owner(self) -> None:
+    def test_repository_has_one_exact_commit_pages_dispatcher(self) -> None:
         result = self.run_check(self.make_checkout())
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
@@ -46,7 +46,7 @@ class WorkflowTopologyTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Pages deploy owner must be exactly", result.stdout + result.stderr)
 
-    def test_explicit_pages_dispatcher_is_rejected(self) -> None:
+    def test_duplicate_pages_dispatcher_is_rejected(self) -> None:
         checkout = self.make_checkout()
         shutil.copy2(
             ROOT / "tests" / "fixtures" / "workflow_topology" / "duplicate-dispatch.yml",
@@ -54,7 +54,7 @@ class WorkflowTopologyTests(unittest.TestCase):
         )
         result = self.run_check(checkout)
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("Pages must be triggered only by a main push", result.stdout + result.stderr)
+        self.assertIn("Pages dispatcher must be exactly", result.stdout + result.stderr)
 
 
 if __name__ == "__main__":
