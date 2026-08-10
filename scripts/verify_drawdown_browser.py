@@ -158,10 +158,14 @@ def select_momentum(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
         driver,
         wait,
         "select Momentum dataset",
-        lambda current: "active" in (
-            current.find_element(By.CSS_SELECTOR, '[data-screener="momentum"]').get_attribute("class") or ""
-        ).split(),
+        momentum_active,
     )
+
+
+def momentum_active(driver: webdriver.Chrome) -> bool:
+    return bool(driver.execute_script("""
+      return document.querySelector('[data-screener="momentum"]')?.classList.contains('active') || false;
+    """))
 
 
 def clear_storage(driver: webdriver.Chrome, url: str) -> None:
