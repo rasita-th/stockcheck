@@ -11,6 +11,7 @@ const runtime = fs.readFileSync(path.join(root, "site", "technical-shards-v2.js"
 let shardFetchCount = 0;
 let snapshotFetchCount = 0;
 let renderCount = 0;
+const intervals = [];
 const state = {
   staticMode: true,
   staticLoaded: true,
@@ -68,6 +69,7 @@ const snapshot = {
     },
   ],
 };
+let servedSnapshot = snapshot;
 
 const shard = {
   schema_version: "2.0",
@@ -94,13 +96,20 @@ const context = {
     return Number.isFinite(number) ? number : null;
   },
   __renderAll: () => { renderCount += 1; },
+  __mergeStaticPayloads: (technical) => {
+    state.rows = technical.rows;
+  },
+  setInterval: (callback, delay) => {
+    intervals.push({ callback, delay });
+    return intervals.length;
+  },
   __fetch: async (url) => {
     if (/data\/screener_snapshot\.json/.test(url)) {
       snapshotFetchCount += 1;
       return {
         ok: true,
         status: 200,
-        text: async () => JSON.stringify(snapshot),
+        text: async () => JSON.stringify(servedSnapshot),
       };
     }
     if (/data\/technical\/symbols\/CIFR\.json/.test(url)) {
@@ -124,6 +133,7 @@ vm.runInContext(`
   var buildAlertItems = globalThis.__buildAlertItems;
   var toNum = globalThis.__toNum;
   var renderAll = globalThis.__renderAll;
+  var mergeStaticPayloads = globalThis.__mergeStaticPayloads;
   var fetch = globalThis.__fetch;
   ${runtime}
   globalThis.__runtimeFetchStaticLayer = fetchStaticLayer;
@@ -138,7 +148,7 @@ vm.runInContext(`
   assert.equal(technical.__screenerSnapshot, true);
   assert.equal(technical.__screenerFresh, true);
   assert.equal(technical.rows[0].price, 493.23);
-  assert.equal(context.window.StockcheckTechnicalV2.version, "10.7.8");
+  assert.equal(context.window.StockcheckTechnicalV2.version, "10.7.9");
   assert.equal(context.window.StockcheckTechnicalV2.snapshotSchema, "1.1");
 
   const mapped = context.__runtimeMapRow(technical.rows[0]);
@@ -173,9 +183,59 @@ vm.runInContext(`
   assert.equal(cached.series.length, 2);
   assert.equal(shardFetchCount, 1, "loaded series must be cached for the page session");
 
+  const fridayCloseSnapshot = {
+    ...snapshot,
+    generated_at: "2026-08-07T19:55:00Z",
+  };
+  const mondayPreOpen = new Date("2026-08-10T13:00:00Z");
+  const mondayMarketOpen = new Date("2026-08-10T15:00:00Z");
+  assert.equal(
+    context.window.StockcheckTechnicalV2.freshnessState(fridayCloseSnapshot, mondayPreOpen).status,
+    "latest-completed-session",
+    "Friday close must remain usable before Monday opens",
+  );
+  assert.equal(
+    context.window.StockcheckTechnicalV2.freshnessState(fridayCloseSnapshot, mondayMarketOpen).status,
+    "stale",
+    "Friday data must stop driving alerts once Monday is open",
+  );
+
+  const laborDay = new Date("2026-09-07T15:00:00Z");
+  const preHolidaySnapshot = { ...snapshot, generated_at: "2026-09-04T19:55:00Z" };
+  assert.equal(
+    context.window.StockcheckTechnicalV2.freshnessState(preHolidaySnapshot, laborDay).status,
+    "latest-completed-session",
+    "the last completed session must remain usable on a US market holiday",
+  );
+  assert.equal(
+    context.window.StockcheckTechnicalV2.freshnessState({ rows: [] }, mondayPreOpen).status,
+    "unavailable",
+    "invalid contracts must fail closed",
+  );
+
   context.window.StockcheckTechnicalV2.getSnapshot().generated_at = "2020-01-01T00:00:00Z";
   assert.equal(context.window.StockcheckTechnicalV2.snapshotIsFresh(), false);
   assert.equal(context.__runtimeBuildAlertItems().length, 0, "stale snapshot must suppress technical alerts");
+
+  const refreshTimer = intervals.find((entry) => entry.delay === 5 * 60 * 1000);
+  assert.ok(refreshTimer, "runtime must poll the canonical snapshot every five minutes");
+  servedSnapshot = {
+    ...snapshot,
+    generated_at: new Date(Date.now() + 60_000).toISOString(),
+    rows: snapshot.rows.map((row) => row.symbol === "CIFR" ? { ...row, price: 23.5, close: 23.5 } : row),
+  };
+  const rendersBeforeRefresh = renderCount;
+  await refreshTimer.callback();
+  assert.equal(context.window.StockcheckTechnicalV2.getSnapshot().rows[1].price, 23.5);
+  assert.equal(state.rows[1].price, 23.5, "newer snapshot must replace the canonical application rows");
+  assert.equal(context.__runtimeBuildAlertItems().length, 1, "the open tab must recover alerts after a fresh publish");
+  assert.ok(renderCount > rendersBeforeRefresh, "new snapshot must rerender the open page");
+
+  const activeIdentity = context.window.StockcheckTechnicalV2.getSnapshot();
+  const rendersBeforeWarmRefresh = renderCount;
+  await refreshTimer.callback();
+  assert.equal(context.window.StockcheckTechnicalV2.getSnapshot(), activeIdentity, "equal identity must not replace warm-cache state");
+  assert.equal(renderCount, rendersBeforeWarmRefresh, "equal identity must not cause a redundant application rerender");
 
   console.log("canonical screener runtime test passed: schema 1.1 + single fetch + live overview + lazy detail");
 })().catch((error) => {
