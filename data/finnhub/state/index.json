@@ -1238,66 +1238,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 35,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL"
-          ],
-          "company_profile": [
-            "Z",
-            "ZETA",
-            "ZS"
-          ],
-          "recommendation_trends": [
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-08T19:15:12+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-08T19:14:26+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2198,9 +2138,53 @@
       "mode": "analyst",
       "started_at": "2026-08-10T08:16:11+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-10T10:36:09+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT",
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST",
+            "FATE",
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-10T10:35:43+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-10T08:16:55+00:00"
+  "updated_at": "2026-08-10T10:36:10+00:00"
 }
