@@ -41,7 +41,7 @@ jobs:
         with:
           python-version: "3.13"
       - name: Compile publisher and release controls
-        run: python -m py_compile scripts/check_workflow_topology.py scripts/validate_production_artifact.py scripts/verify_production_deployment.py
+        run: python -m py_compile scripts/check_workflow_topology.py scripts/sync_attention_market_fields.py scripts/validate_production_artifact.py scripts/verify_production_deployment.py
       - name: Validate release manifest
         run: |
           python - <<'PY'
@@ -65,5 +65,7 @@ jobs:
         run: python -m unittest tests.test_production_verifier -v
       - name: Test workflow topology fault handling
         run: python -m unittest tests.test_workflow_topology -v
+      - name: Test Attention market-field synchronization
+        run: python -m unittest tests.test_sync_attention_market_fields -v
       - name: Enforce repository workflow topology
         run: python scripts/check_workflow_topology.py

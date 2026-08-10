@@ -66,6 +66,16 @@ jobs:
           git apply --index --3way "$patch"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
+      - name: Synchronize Attention market fields from canonical live data
+        if: steps.contract.outputs.status == 'READY' && steps.contract.outputs.producer == 'Refresh Live Data v10 PR3'
+        run: |
+          set -euo pipefail
+          python scripts/sync_attention_market_fields.py
+          git add \
+            data/generated/attention_today.json \
+            site/data/attention_today.json \
+            static/data/attention_today.json
+
       - name: Enforce generated-file size budgets
         if: steps.contract.outputs.status == 'READY'
         run: |

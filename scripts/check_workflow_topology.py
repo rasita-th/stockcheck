@@ -113,6 +113,7 @@ def main() -> None:
         '"Refresh Market Pulse v9.6"',
         '"Update static fundamental data"',
         "validate_production_artifact.py validate",
+        "scripts/sync_attention_market_fields.py",
         "data/publisher-state.json",
         "git push origin HEAD:main",
         "gh workflow run deploy-pages.yml",
