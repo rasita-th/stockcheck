@@ -1238,61 +1238,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 32,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK",
-            "ADYEY",
-            "AEHR"
-          ],
-          "recommendation_trends": [
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD",
-            "AMGN",
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-09T02:40:14+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-09T02:39:31+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2193,9 +2138,53 @@
       "mode": "analyst",
       "started_at": "2026-08-10T14:03:22+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-10T16:15:55+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-10T16:15:28+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-10T14:04:06+00:00"
+  "updated_at": "2026-08-10T16:15:56+00:00"
 }
