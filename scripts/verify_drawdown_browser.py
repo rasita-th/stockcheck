@@ -146,8 +146,14 @@ def wait_stage(driver: webdriver.Chrome, wait: WebDriverWait, stage: str, condit
 
 
 def select_momentum(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
-    button = driver.find_element(By.CSS_SELECTOR, '[data-screener="momentum"]')
-    driver.execute_script('arguments[0].click()', button)
+    clicked = driver.execute_script("""
+      const button = document.querySelector('[data-screener="momentum"]');
+      if (!button) return false;
+      button.click();
+      return true;
+    """)
+    if not clicked:
+        raise AssertionError("Momentum screener control was not found")
     wait_stage(
         driver,
         wait,
