@@ -93,7 +93,10 @@ jobs:
             scripts/verify_production_deployment.py \
             scripts/verify_drawdown_production.py \
             scripts/verify_drawdown_browser.py
-          python -m unittest tests.test_drawdown_production_verifier -v
+          python -m unittest \
+            tests.test_drawdown_production_verifier \
+            tests.test_drawdown_browser_verifier \
+            -v
           BASE_URL="$(python - <<'PY'
           import json
           from pathlib import Path

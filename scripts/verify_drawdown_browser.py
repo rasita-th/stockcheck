@@ -19,6 +19,12 @@ PRESETS = {
     "30+": (30.0, float("inf")),
 }
 EXPECTED_RUNTIME = "10.9.1"
+DESKTOP_ITEM_SELECTOR = '#technicalTableBody tr[data-select]'
+MOBILE_ITEM_SELECTOR = '#technicalMobileCards > [data-select]'
+
+
+class BrowserStageTimeout(AssertionError):
+    pass
 
 
 @dataclass(frozen=True)
@@ -111,8 +117,45 @@ def choose_presets(values: list[float]) -> list[str]:
 
 
 def wait_runtime(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
-    wait.until(lambda current: current.execute_script(
+    wait_stage(driver, wait, "activate Drawdown runtime", lambda current: current.execute_script(
         "return document.documentElement.dataset.drawdownScreener || ''") == EXPECTED_RUNTIME)
+
+
+def browser_diagnostics(driver: webdriver.Chrome) -> dict:
+    return driver.execute_script("""
+      const active = document.querySelector('[data-screener].active');
+      return {
+        activeScreener: active?.dataset?.screener || '',
+        desktopRows: document.querySelectorAll('#technicalTableBody tr').length,
+        desktopStockRows: document.querySelectorAll('#technicalTableBody tr[data-select]').length,
+        mobileCards: document.querySelectorAll('#technicalMobileCards > *').length,
+        mobileStockCards: document.querySelectorAll('#technicalMobileCards > [data-select]').length,
+        runtime: document.documentElement.dataset.drawdownScreener || '',
+      };
+    """)
+
+
+def wait_stage(driver: webdriver.Chrome, wait: WebDriverWait, stage: str, condition):
+    try:
+        return wait.until(condition)
+    except TimeoutException as exc:
+        diagnostics = browser_diagnostics(driver)
+        raise BrowserStageTimeout(
+            f"Timed out during {stage}; diagnostics={json.dumps(diagnostics, ensure_ascii=False, sort_keys=True)}"
+        ) from exc
+
+
+def select_momentum(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
+    button = driver.find_element(By.CSS_SELECTOR, '[data-screener="momentum"]')
+    driver.execute_script('arguments[0].click()', button)
+    wait_stage(
+        driver,
+        wait,
+        "select Momentum dataset",
+        lambda current: "active" in (
+            current.find_element(By.CSS_SELECTOR, '[data-screener="momentum"]').get_attribute("class") or ""
+        ).split(),
+    )
 
 
 def clear_storage(driver: webdriver.Chrome, url: str) -> None:
@@ -127,7 +170,7 @@ def verify_presets(driver, wait, item_selector, metric_selector, control_root, v
         button = driver.find_element(By.CSS_SELECTOR, f'{control_root} [data-drawdown-preset="{preset}"]')
         driver.execute_script("arguments[0].click()", button)
         expected = expected_count(values, preset)
-        wait.until(lambda current, expected=expected: visible_count(
+        wait_stage(driver, wait, f"apply Drawdown preset {preset}", lambda current, expected=expected: visible_count(
             read_items(current, item_selector, metric_selector)) == expected)
         filtered = read_items(driver, item_selector, metric_selector)
         visible_values = [value for visible, value in filtered if visible]
@@ -140,22 +183,23 @@ def verify_presets(driver, wait, item_selector, metric_selector, control_root, v
 
 def run_desktop(base_url: str) -> dict:
     driver = chrome(); driver.set_window_size(1440, 1000); wait = WebDriverWait(driver, 45)
-    item_selector, metric_selector = "#technicalTableBody tr", "[data-drawdown-cell]"
+    item_selector, metric_selector = DESKTOP_ITEM_SELECTOR, "[data-drawdown-cell]"
     try:
         clear_storage(driver, f"{base_url}/index.html?browser_smoke={int(time.time())}-desktop")
         wait_runtime(driver, wait)
+        select_momentum(driver, wait)
         reset_scanner_filters(driver)
-        wait.until(lambda current: snapshot_ready(current, item_selector, metric_selector))
+        wait_stage(driver, wait, "render desktop Drawdown metrics", lambda current: snapshot_ready(current, item_selector, metric_selector))
         baseline_items = read_items(driver, item_selector, metric_selector)
         baseline = visible_count(baseline_items); values = [value for _, value in baseline_items]
         if baseline != len(baseline_items):
             raise AssertionError(f"Desktop filter should start disabled: {baseline}/{len(baseline_items)} visible")
         driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "desktopDrawdownEnabled"))
-        wait.until(lambda current: current.find_element(By.ID, "desktopDrawdownEnabled").is_selected())
+        wait_stage(driver, wait, "enable desktop Drawdown filter", lambda current: current.find_element(By.ID, "desktopDrawdownEnabled").is_selected())
         results = verify_presets(driver, wait, item_selector, metric_selector,
                                  '[data-drawdown-filter="desktop"]', values)
         driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "desktopDrawdownEnabled"))
-        wait.until(lambda current: visible_count(read_items(current, item_selector, metric_selector)) == baseline)
+        wait_stage(driver, wait, "disable desktop Drawdown filter", lambda current: visible_count(read_items(current, item_selector, metric_selector)) == baseline)
         return {"viewport": "desktop", "baseline": baseline,
                 "presets": [asdict(result) for result in results],
                 "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener")}
@@ -167,25 +211,26 @@ def run_desktop(base_url: str) -> dict:
 
 def run_mobile(base_url: str) -> dict:
     driver = chrome(); driver.set_window_size(390, 844); wait = WebDriverWait(driver, 45)
-    item_selector, metric_selector = "#technicalMobileCards > *", "[data-drawdown-card-metric] strong"
+    item_selector, metric_selector = MOBILE_ITEM_SELECTOR, "[data-drawdown-card-metric] strong"
     try:
         clear_storage(driver, f"{base_url}/index.html?browser_smoke={int(time.time())}-mobile")
         wait_runtime(driver, wait)
+        select_momentum(driver, wait)
         reset_scanner_filters(driver)
-        wait.until(lambda current: snapshot_ready(current, item_selector, metric_selector))
+        wait_stage(driver, wait, "render mobile Drawdown metrics", lambda current: snapshot_ready(current, item_selector, metric_selector))
         baseline_items = read_items(driver, item_selector, metric_selector)
         baseline = visible_count(baseline_items); values = [value for _, value in baseline_items]
         if baseline != len(baseline_items):
             raise AssertionError(f"Mobile filter should start disabled: {baseline}/{len(baseline_items)} visible")
         driver.execute_script("arguments[0].click()", driver.find_element(By.CSS_SELECTOR, '[data-open-panel="filters"]'))
-        wait.until(lambda current: current.find_element(By.ID, "filtersSheet").is_displayed())
-        wait.until(lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_displayed())
+        wait_stage(driver, wait, "open mobile filters sheet", lambda current: current.find_element(By.ID, "filtersSheet").is_displayed())
+        wait_stage(driver, wait, "show mobile Drawdown control", lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_displayed())
         driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "sheetDrawdownEnabled"))
-        wait.until(lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_selected())
+        wait_stage(driver, wait, "enable mobile Drawdown filter", lambda current: current.find_element(By.ID, "sheetDrawdownEnabled").is_selected())
         results = verify_presets(driver, wait, item_selector, metric_selector,
                                  '[data-drawdown-filter="sheet"]', values)
         driver.execute_script("arguments[0].click()", driver.find_element(By.CSS_SELECTOR, "#filtersSheet [data-close-sheet]"))
-        wait.until(lambda current: not current.find_element(By.ID, "filtersSheet").is_displayed())
+        wait_stage(driver, wait, "close mobile filters sheet", lambda current: not current.find_element(By.ID, "filtersSheet").is_displayed())
         return {"viewport": "mobile", "baseline": baseline,
                 "presets": [asdict(result) for result in results],
                 "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener")}
