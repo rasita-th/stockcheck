@@ -20,19 +20,29 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
         )
 
     def test_selects_momentum_as_deterministic_dataset(self) -> None:
-        button = Mock()
         driver = Mock()
-        driver.find_element.return_value = button
+        driver.execute_script.return_value = True
         wait = Mock()
 
         verifier.select_momentum(driver, wait)
 
-        driver.find_element.assert_called_once_with(
-            verifier.By.CSS_SELECTOR,
-            '[data-screener="momentum"]',
+        driver.find_element.assert_not_called()
+        driver.execute_script.assert_called_once_with(
+            """
+      const button = document.querySelector('[data-screener="momentum"]');
+      if (!button) return false;
+      button.click();
+      return true;
+    """
         )
-        driver.execute_script.assert_called_once_with('arguments[0].click()', button)
         wait.until.assert_called_once()
+
+    def test_fails_immediately_when_momentum_control_is_missing(self) -> None:
+        driver = Mock()
+        driver.execute_script.return_value = False
+
+        with self.assertRaisesRegex(AssertionError, 'Momentum screener control was not found'):
+            verifier.select_momentum(driver, Mock())
 
     def test_stage_wait_reports_the_failed_stage(self) -> None:
         wait = Mock()
