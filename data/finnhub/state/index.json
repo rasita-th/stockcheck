@@ -1238,50 +1238,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-08T18:57:35+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "GH",
-            "GILD",
-            "GILT",
-            "GLXY",
-            "GOOG",
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-08T18:57:08+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 35,
         "enabled_endpoints": [
@@ -2187,9 +2143,64 @@
       "mode": "events",
       "started_at": "2026-08-10T08:03:13+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "BE",
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR"
+          ],
+          "recommendation_trends": [
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "JMIA",
+            "IZRL",
+            "JEPQ",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-10T08:16:54+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-10T08:16:11+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-10T08:03:40+00:00"
+  "updated_at": "2026-08-10T08:16:55+00:00"
 }
