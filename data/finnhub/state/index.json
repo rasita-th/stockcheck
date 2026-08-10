@@ -1238,50 +1238,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-09T02:27:57+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR",
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-09T02:27:31+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2182,9 +2138,64 @@
       "mode": "events",
       "started_at": "2026-08-10T13:41:59+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "BRK-B",
+            "BTDR",
+            "BW",
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA"
+          ],
+          "recommendation_trends": [
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR",
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-10T14:04:05+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-10T14:03:22+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-10T13:42:27+00:00"
+  "updated_at": "2026-08-10T14:04:06+00:00"
 }
