@@ -44,6 +44,13 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'Momentum screener control was not found'):
             verifier.select_momentum(driver, Mock())
 
+    def test_momentum_active_query_does_not_retain_an_element(self) -> None:
+        driver = Mock()
+        driver.execute_script.return_value = True
+
+        self.assertTrue(verifier.momentum_active(driver))
+        driver.find_element.assert_not_called()
+
     def test_stage_wait_reports_the_failed_stage(self) -> None:
         wait = Mock()
         wait.until.side_effect = TimeoutException('')
