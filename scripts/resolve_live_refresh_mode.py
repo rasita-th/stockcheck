@@ -29,7 +29,7 @@ def resolve_refresh_mode(
 ) -> dict[str, Any]:
     local_now = now.astimezone(MARKET_TZ)
     market_open = local_now.weekday() < 5 and time(9, 25) <= local_now.time() <= time(16, 20)
-    scheduled_full = event_name == "schedule" and event_schedule == "35 21 * * 1-5"
+    scheduled_full = event_name == "schedule" and event_schedule == "41 21 * * 1-5"
     force_fast = event_name in {"workflow_dispatch", "push"}
 
     technical_stamp = technical_payload.get("generatedAtTechnical")
