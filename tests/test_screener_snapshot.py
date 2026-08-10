@@ -315,6 +315,10 @@ class ScreenerSnapshotTests(unittest.TestCase):
         self.assertIn("config/release-manifest.json", workflow)
         self.assertIn("context: 'production/stockcheck-core'", workflow)
         self.assertIn("production-screener-receipt-", workflow)
+        self.assertIn("workflow_dispatch:", workflow)
+        self.assertIn("expected_commit:", workflow)
+        self.assertIn("DEPLOY_SOURCE_COMMIT:", workflow)
+        self.assertIn('ref: ${{ env.DEPLOY_SOURCE_COMMIT }}', workflow)
         for token in (
             "screener_snapshot_generated_at",
             "quote_generated_at",

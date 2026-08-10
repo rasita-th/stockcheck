@@ -12,7 +12,7 @@ on:
     types: [completed]
 
 permissions:
-  actions: read
+  actions: write
   contents: write
 
 concurrency:
@@ -225,6 +225,17 @@ jobs:
           echo "Unable to publish production data after three attempts."
           exit 1
 
+      - name: Dispatch exact Pages deployment
+        if: steps.push.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUBLISHED_SHA: ${{ steps.push.outputs.published_sha }}
+        run: |
+          set -euo pipefail
+          gh workflow run deploy-pages.yml \
+            --ref main \
+            -f expected_commit="$PUBLISHED_SHA"
+
       - name: Publish result summary
         if: always()
         env:
@@ -236,7 +247,7 @@ jobs:
           CHANGED_COUNT: ${{ steps.contract.outputs.changed_count || '0' }}
           PATCH_SHA: ${{ steps.contract.outputs.patch_sha256 || 'unavailable' }}
           PUBLISHED_SHA: ${{ steps.push.outputs.published_sha || 'none' }}
-          PAGES_TRIGGER: ${{ steps.push.outputs.published == 'true' && 'main push' || 'none' }}
+          PAGES_TRIGGER: ${{ steps.push.outputs.published == 'true' && 'exact workflow dispatch' || 'none' }}
         run: |
           {
             echo "## Production publisher result"

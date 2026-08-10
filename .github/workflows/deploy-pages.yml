@@ -3,6 +3,12 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      expected_commit:
+        description: "Immutable main commit produced by the production publisher"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -16,6 +22,7 @@ concurrency:
 
 env:
   TODAY_DEPLOY_VERSION: "10.8.4"
+  DEPLOY_SOURCE_COMMIT: ${{ inputs.expected_commit || github.sha }}
 
 jobs:
   build:
@@ -24,6 +31,8 @@ jobs:
     steps:
       - name: Checkout exact production commit
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DEPLOY_SOURCE_COMMIT }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -135,7 +144,7 @@ jobs:
           identity = {
               'schema_version': '1.2',
               'repository': os.environ['GITHUB_REPOSITORY'],
-              'source_commit': os.environ['GITHUB_SHA'],
+              'source_commit': os.environ['DEPLOY_SOURCE_COMMIT'],
               'run_id': os.environ['GITHUB_RUN_ID'],
               'built_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
               'attention_updated_at': attention.get('updated_at'),
@@ -222,7 +231,7 @@ jobs:
           index = Path('/tmp/index.html').read_text(encoding='utf-8')
           runtime = Path('/tmp/coordinator.js').read_text(encoding='utf-8')
           drawer_css = Path('/tmp/watchlist-add-drawer.css').read_text(encoding='utf-8')
-          if build.get('source_commit') != os.environ['GITHUB_SHA']:
+          if build.get('source_commit') != os.environ['DEPLOY_SOURCE_COMMIT']:
               raise SystemExit('commit mismatch')
           if build.get('attention_updated_at') != attention.get('updated_at'):
               raise SystemExit('attention identity mismatch')
@@ -296,7 +305,7 @@ jobs:
       - name: Checkout deployed production commit
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ env.DEPLOY_SOURCE_COMMIT }}
           persist-credentials: false
 
       - name: Set up Python
@@ -309,7 +318,7 @@ jobs:
         continue-on-error: true
         env:
           BASE_URL: https://rasita-th.github.io/stockcheck
-          EXPECTED_COMMIT: ${{ github.sha }}
+          EXPECTED_COMMIT: ${{ env.DEPLOY_SOURCE_COMMIT }}
         run: |
           set -euo pipefail
           mkdir -p /tmp/stockcheck-core/shards
@@ -361,7 +370,7 @@ jobs:
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.sha,
+              sha: process.env.DEPLOY_SOURCE_COMMIT,
               state: ok ? 'success' : 'failure',
               context: 'production/stockcheck-core',
               description: ok
@@ -396,7 +405,7 @@ jobs:
             state=success
             description="Production deployment verified"
           fi
-          gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${DEPLOY_SOURCE_COMMIT}" \
             -f state="$state" \
             -f context="production/stockcheck-pages" \
             -f description="$description" \
