@@ -1238,67 +1238,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "WBD",
-            "WDAY",
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL"
-          ],
-          "company_profile": [
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ"
-          ],
-          "recommendation_trends": [
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG",
-            "TXN",
-            "TXT",
-            "U",
-            "UFO",
-            "UNH",
-            "UUUU",
-            "VCYT",
-            "VICR",
-            "VRSK",
-            "VRT",
-            "VRTX",
-            "VSAT",
-            "VST",
-            "WBD",
-            "WDAY",
-            "WDC",
-            "WIX"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-08T13:31:41+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-08T13:30:55+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 0,
         "row_count": 500,
@@ -2204,9 +2143,53 @@
       "mode": "analyst",
       "started_at": "2026-08-10T02:56:39+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-10T04:53:00+00:00",
+      "events": {
+        "calls_used": 20,
+        "enabled_endpoints": [
+          "company_earnings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-10T04:52:34+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-10T02:57:22+00:00"
+  "updated_at": "2026-08-10T04:53:01+00:00"
 }
