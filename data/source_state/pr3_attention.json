@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-10T19:17:57+00:00",
+  "updated_at": "2026-08-10T21:59:49+00:00",
   "items": {
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
       "ticker": "AMD",
@@ -9,22 +9,22 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 3,
       "baseline_price": 475.465,
-      "current_price": 475.635
+      "current_price": 474.0099
     },
     "technical:TE:price-drop:2026-08-10": {
       "ticker": "TE",
       "event_subtype": "price_drop",
       "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
+      "priority_score": 99,
+      "personal_priority_score": 107,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 3,
       "baseline_price": 5.405,
-      "current_price": 5.3899
+      "current_price": 5.335
     },
     "technical:INDI:price-drop:2026-08-10": {
       "ticker": "INDI",
@@ -33,10 +33,22 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 1,
       "baseline_price": 3.615,
-      "current_price": 3.7199
+      "current_price": 3.725
+    },
+    "technical:IREN:price-drop:2026-08-10": {
+      "ticker": "IREN",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-08-10T21:59:49+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
+      "event_count": 1,
+      "baseline_price": 38.915,
+      "current_price": 38.915
     },
     "technical:MP:price-move:2026-08-10": {
       "ticker": "MP",
@@ -45,10 +57,10 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 1,
       "baseline_price": 54.335,
-      "current_price": 54.52
+      "current_price": 54.88
     },
     "technical:OKLO:price-drop:2026-08-10": {
       "ticker": "OKLO",
@@ -57,10 +69,10 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 1,
       "baseline_price": 44.42,
-      "current_price": 45.0
+      "current_price": 44.83
     },
     "technical:PSIX:price-move:2026-08-10": {
       "ticker": "PSIX",
@@ -69,25 +81,21 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T19:17:57+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
+      "last_seen_at": "2026-08-10T21:59:49+00:00",
       "event_count": 1,
       "baseline_price": 43.455,
-      "current_price": 43.455
-    },
-    "technical:TEM:price-move:2026-08-10": {
-      "ticker": "TEM",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
-      "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T19:17:57+00:00",
-      "event_count": 1,
-      "baseline_price": 55.795,
-      "current_price": 55.39
+      "current_price": 43.58
     }
   },
   "resolved": [
+    {
+      "history_key": "technical:TEM:price-move:2026-08-10",
+      "ticker": "TEM",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-08-10T21:59:49+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:CIFR:price-drop:2026-08-10",
       "ticker": "CIFR",
@@ -235,14 +243,6 @@
     {
       "history_key": "technical:OKLO:price-move:2026-08-08",
       "ticker": "OKLO",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-09T04:37:10+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:PLTR:price-move:2026-08-08",
-      "ticker": "PLTR",
       "event_subtype": "price_move",
       "priority": "Critical",
       "resolved_at": "2026-08-09T04:37:10+00:00",
