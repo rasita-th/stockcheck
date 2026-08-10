@@ -13,15 +13,17 @@ on:
     paths:
       - ".github/refresh-now"
   schedule:
-    - cron: "*/15 * * * 1-5"
-    - cron: "35 21 * * 1-5"
+    # Avoid quarter-hour hot spots where GitHub may delay or drop scheduled events.
+    - cron: "7,17,27,37,47,57 * * * 1-5"
+    - cron: "41 21 * * 1-5"
 
 permissions:
   contents: read
 
 concurrency:
   group: live-data-producer-main
-  cancel-in-progress: true
+  # Let an active publish artifact finish; a later no-op schedule must not kill it.
+  cancel-in-progress: false
 
 jobs:
   refresh:

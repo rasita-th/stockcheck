@@ -6,6 +6,19 @@ from scripts.resolve_live_refresh_mode import resolve_refresh_mode
 
 
 class LiveRefreshModeTests(unittest.TestCase):
+    def test_staggered_after_close_schedule_requests_full_refresh(self):
+        now = datetime(2026, 8, 7, 17, 41, tzinfo=ZoneInfo("America/New_York"))
+        result = resolve_refresh_mode(
+            now=now,
+            event_name="schedule",
+            event_schedule="41 21 * * 1-5",
+            requested_full=False,
+            technical_payload={"generatedAtTechnical": "2026-08-07 15:05:00 UTC"},
+        )
+        self.assertTrue(result["run_refresh"])
+        self.assertTrue(result["full_technical"])
+        self.assertEqual(result["full_reason"], "scheduled_after_close_refresh")
+
     def test_promotes_stale_market_hours_baseline_to_full_refresh(self):
         now = datetime(2026, 8, 7, 11, 34, tzinfo=ZoneInfo("America/New_York"))
         result = resolve_refresh_mode(
