@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-11T19:21:01+00:00",
+  "updated_at": "2026-08-11T22:06:48+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 11,
+  "total_events": 12,
   "coverage_status": "partial",
   "summary": {
     "Critical": 2,
     "Risk": 0,
-    "Action": 1,
-    "Watch": 1,
+    "Action": 0,
+    "Watch": 0,
     "Developing": 0
   },
   "source_health": {
@@ -58,16 +58,16 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 2,
-      "partial": 8,
+      "ok": 0,
+      "partial": 10,
       "errors": 0
     },
     "gdelt": {
       "status": "partial",
       "source": "GDELT DOC 2.0",
       "checked": 10,
-      "ok": 1,
-      "errors": 9
+      "ok": 2,
+      "errors": 8
     },
     "regulators": {
       "status": "ok",
@@ -371,263 +371,6 @@
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
       ]
-    },
-    {
-      "ticker": "TE",
-      "name": "T1 Energy Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy technology",
-      "priority": "Action",
-      "priority_score": 64,
-      "why_today": [
-        "A product event was detected and requires source review."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "product",
-      "event_time": "2026-08-04T21:56:03+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "regulator",
-        "quality": "primary",
-        "url": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-        "published_at": "2026-08-04T21:56:03+00:00",
-        "domain": "www.energy.gov",
-        "agency": "DOE",
-        "name": "U.S. Department of Energy"
-      },
-      "price": 5.465,
-      "day_change_pct": 2.919,
-      "relative_volume": 0.54,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "regulator:TE:8042127c5d54d751",
-          "ticker": "TE",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Reuse of Wartime Lands in Volunteer State Launches Nation’s Next American Energy Hub",
-          "summary": "A product event was detected and requires source review.",
-          "why_today": "A product event was detected and requires source review.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-08-04T21:56:03+00:00",
-          "detected_at": "2026-08-04T21:56:03+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "headline matched company tokens: energy",
-          "dedupe_key": "TE:product:2026-08-04:5ff254965fce",
-          "source": {
-            "type": "regulator",
-            "quality": "primary",
-            "url": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-            "published_at": "2026-08-04T21:56:03+00:00",
-            "domain": "www.energy.gov",
-            "agency": "DOE",
-            "name": "U.S. Department of Energy"
-          },
-          "source_chain": [
-            {
-              "type": "regulator",
-              "quality": "primary",
-              "url": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-              "published_at": "2026-08-04T21:56:03+00:00",
-              "domain": "www.energy.gov",
-              "agency": "DOE",
-              "name": "U.S. Department of Energy"
-            }
-          ],
-          "secondary_source_count": 0,
-          "regulator": "DOE",
-          "regulator_name": "U.S. Department of Energy",
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "regulator:TE:8042127c5d54d751"
-          ],
-          "priority_score": 64,
-          "priority": "Action"
-        },
-        {
-          "event_id": "regulator:TE:aa21dc3f60777ff7",
-          "ticker": "TE",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Energy Department Launches $100 Million Initiative to Build America’s Critical Minerals Workforce, Strengthen Domestic Supply Chains",
-          "summary": "A product event was detected and requires source review.",
-          "why_today": "A product event was detected and requires source review.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-08-08T07:15:06+00:00",
-          "detected_at": "2026-08-08T07:15:06+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "headline matched company tokens: energy",
-          "dedupe_key": "TE:product:2026-08-08:8b7b9e6e6818",
-          "source": {
-            "type": "regulator",
-            "quality": "primary",
-            "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-            "published_at": "2026-08-08T07:15:06+00:00",
-            "domain": "www.energy.gov",
-            "agency": "DOE",
-            "name": "U.S. Department of Energy"
-          },
-          "source_chain": [
-            {
-              "type": "regulator",
-              "quality": "primary",
-              "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-              "published_at": "2026-08-08T07:15:06+00:00",
-              "domain": "www.energy.gov",
-              "agency": "DOE",
-              "name": "U.S. Department of Energy"
-            }
-          ],
-          "secondary_source_count": 0,
-          "regulator": "DOE",
-          "regulator_name": "U.S. Department of Energy",
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "regulator:TE:aa21dc3f60777ff7"
-          ],
-          "priority_score": 64,
-          "priority": "Action"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "product",
-      "signals": [
-        "A product event was detected and requires source review."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-08-11T19:21:01+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 5.4886,
-        "current_price": 5.465,
-        "change_pct": -0.43,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 77,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "NOW",
-      "name": "ServiceNow, Inc.",
-      "portfolio_status": "holding",
-      "role": "Enterprise software",
-      "priority": "Watch",
-      "priority_score": 32,
-      "why_today": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "product",
-      "event_time": "2026-08-05T13:00:00+00:00",
-      "verification_status": "unverified",
-      "source_status": "secondary",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-        "published_at": "2026-08-05T13:00:00+00:00",
-        "domain": "www.manilatimes.net"
-      },
-      "price": 127.54,
-      "day_change_pct": 0.0,
-      "relative_volume": 0.46,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "gdelt:NOW:1a99a209577a6403",
-          "ticker": "NOW",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Autonomize AI Launches Fraud , Waste , and Abuse AI - native App in the ServiceNow Store",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "developing",
-          "event_time": "2026-08-05T13:00:00+00:00",
-          "detected_at": "2026-08-05T20:01:37+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: ServiceNow",
-          "dedupe_key": "NOW:product:2026-08-05:c864bd47be60",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-            "published_at": "2026-08-05T13:00:00+00:00",
-            "domain": "www.manilatimes.net"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-              "published_at": "2026-08-05T13:00:00+00:00",
-              "domain": "www.manilatimes.net"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:NOW:1a99a209577a6403"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-NOW/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "product",
-      "signals": [
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-08-11T19:21:01+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 126.925,
-        "current_price": 127.54,
-        "change_pct": 0.48,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 45,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
-      ]
     }
   ],
   "errors": [
@@ -823,87 +566,92 @@
     },
     {
       "source": "ir",
-      "ticker": "NBIS",
+      "ticker": "UUUU",
       "message": "IR URL unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "PSIX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TEM",
+      "ticker": "PSIX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "MP",
+      "ticker": "CIFR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "MP",
+      "ticker": "CIFR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "IONQ",
+      "ticker": "RXRX",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "IONQ",
-      "message": "GDELT response unavailable"
-    },
-    {
-      "source": "gdelt",
-      "ticker": "AMD",
+      "ticker": "RXRX",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "ORCL",
+      "ticker": "SYM",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "ORCL",
+      "ticker": "SYM",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EQT",
+      "ticker": "TMC",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EQT",
+      "ticker": "TMC",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "OSCR",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "TMDX",
+      "ticker": "OSCR",
       "message": "GDELT response unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "RR",
+      "message": "IR URL unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "ZETA",
       "message": "IR URL unavailable"
     },
     {
       "source": "gdelt",
-      "ticker": "EOSE",
+      "ticker": "ZETA",
       "message": "GDELT response unavailable"
     },
     {
+      "source": "ir",
+      "ticker": "OPEN",
+      "message": "IR URL unavailable"
+    },
+    {
       "source": "gdelt",
-      "ticker": "PLTR",
+      "ticker": "OPEN",
       "message": "GDELT response unavailable"
     }
   ],
@@ -918,11 +666,11 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 8,
+    "active_discovered_event_count": 7,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 2,
+    "technical_metric_repair_count": 4,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -942,8 +690,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 10,
-      "accepted_events": 10,
+      "evaluated_events": 11,
+      "accepted_events": 11,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -965,7 +713,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 1,
-    "total": 3
+    "total": 5
   },
   "technical_watch": [
     {
@@ -980,7 +728,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-11T19:18:50.765614+00:00",
+      "event_time": "2026-08-11T22:03:38.723802+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1004,8 +752,8 @@
           "why_today": "The stock moved +5.4% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-11T19:18:50.765614+00:00",
-          "detected_at": "2026-08-11T19:18:50.765624+00:00",
+          "event_time": "2026-08-11T22:03:38.723802+00:00",
+          "detected_at": "2026-08-11T22:03:38.723810+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1051,9 +799,9 @@
         "The stock moved +5.4% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-11T19:21:01+00:00",
         "active_days": 0
       },
@@ -1062,6 +810,106 @@
         "current_price": 17.205,
         "change_pct": -0.81,
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.8%"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +5.1% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-08-11T22:03:38.603466+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 4.255,
+      "day_change_pct": 5.0617,
+      "relative_volume": 0.85,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-move:2026-08-11",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +5.1%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +5.1% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-11T22:03:38.603466+00:00",
+          "detected_at": "2026-08-11T22:03:38.603475+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-move:2026-08-11"
+          ],
+          "dedupe_key": "EOSE:price_move:b112fdf1ac703f27",
+          "technical_score": 43.0,
+          "rsi14": 48.93,
+          "pct_vs_ema20": 3.53,
+          "pct_vs_ema200": -49.59,
+          "volume_ratio20": 0.85,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +5.1% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-11T22:06:48+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 4.255,
+        "current_price": 4.255,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
@@ -1080,7 +928,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-11T19:18:50.400641+00:00",
+      "event_time": "2026-08-11T22:03:38.335575+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1104,8 +952,8 @@
           "why_today": "The stock moved +5.7% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-11T19:18:50.400641+00:00",
-          "detected_at": "2026-08-11T19:18:50.400650+00:00",
+          "event_time": "2026-08-11T22:03:38.335575+00:00",
+          "detected_at": "2026-08-11T22:03:38.335584+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1151,9 +999,9 @@
         "The stock moved +5.7% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-11T19:21:01+00:00",
         "active_days": 0
       },
@@ -1169,6 +1017,106 @@
       ]
     },
     {
+      "ticker": "ZETA",
+      "name": "Zeta Global Holdings Corp.",
+      "portfolio_status": "holding",
+      "role": "Marketing technology",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +5.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-08-11T22:03:38.723856+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 29.17,
+      "day_change_pct": 5.9187,
+      "relative_volume": 0.97,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:ZETA:price-move:2026-08-11",
+          "ticker": "ZETA",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +5.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +5.9% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-11T22:03:38.723856+00:00",
+          "detected_at": "2026-08-11T22:03:38.723858+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:ZETA:price-move:2026-08-11"
+          ],
+          "dedupe_key": "ZETA:price_move:0bd85e35eae321cd",
+          "technical_score": 80.0,
+          "rsi14": 74.08,
+          "pct_vs_ema20": 22.67,
+          "pct_vs_ema200": 46.8,
+          "volume_ratio20": 0.97,
+          "technical_signal": "WATCH FOR ENTRY",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +5.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-11T22:06:48+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 29.17,
+        "current_price": 29.17,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "portfolio_status": "holding",
@@ -1176,7 +1124,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.8, +3.6% vs EMA20, +11.3% vs EMA200, volume 0.55x 20-day average."
+        "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 58.0, +3.7% vs EMA20, +11.5% vs EMA200, volume 0.76x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -1201,11 +1149,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.8, +3.6% vs EMA20, +11.3% vs EMA200, volume 0.55x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 58.0, +3.7% vs EMA20, +11.5% vs EMA200, volume 0.76x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-08-11",
-          "detected_at": "2026-08-11T19:21:01+00:00",
+          "detected_at": "2026-08-11T22:06:48+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1236,8 +1184,7 @@
           ],
           "dedupe_key": "NVDA:technical_setup:9a3aacf288f13971",
           "priority_score": 68,
-          "priority": "Action",
-          "technical_metrics_source": "canonical_technical_snapshot"
+          "priority": "Action"
         }
       ],
       "actions": {
@@ -1249,12 +1196,12 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.8, +3.6% vs EMA20, +11.3% vs EMA200, volume 0.55x 20-day average."
+        "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 58.0, +3.7% vs EMA20, +11.5% vs EMA200, volume 0.76x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-08-11T19:21:01+00:00",
         "active_days": 0
       },
@@ -1271,14 +1218,30 @@
     }
   ],
   "changes_summary": {
-    "new": 5,
+    "new": 2,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 2,
+    "ongoing": 5,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "regulator:TE:8042127c5d54d751",
+      "ticker": "TE",
+      "event_subtype": "product",
+      "priority": "Action",
+      "resolved_at": "2026-08-11T22:06:48+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "gdelt:NOW:1a99a209577a6403",
+      "ticker": "NOW",
+      "event_subtype": "product",
+      "priority": "Watch",
+      "resolved_at": "2026-08-11T22:06:48+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:TE:price-drop:2026-08-11",
       "ticker": "TE",
@@ -1338,22 +1301,6 @@
     {
       "history_key": "technical:CIFR:price-drop:2026-08-10",
       "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-11T04:40:59+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:INDI:price-drop:2026-08-10",
-      "ticker": "INDI",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-11T04:40:59+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-drop:2026-08-10",
-      "ticker": "IREN",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-08-11T04:40:59+00:00",

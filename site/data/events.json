@@ -1,21 +1,66 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-11T19:21:01+00:00",
-  "row_count": 11,
+  "generated_at": "2026-08-11T22:06:48+00:00",
+  "row_count": 12,
   "events": [
+    {
+      "event_id": "technical:ZETA:price-move:2026-08-11",
+      "ticker": "ZETA",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.9%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.9% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-11T22:03:38.723856+00:00",
+      "detected_at": "2026-08-11T22:03:38.723858+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:ZETA:price-move:2026-08-11"
+      ],
+      "dedupe_key": "ZETA:price_move:0bd85e35eae321cd",
+      "technical_score": 80.0,
+      "rsi14": 74.08,
+      "pct_vs_ema20": 22.67,
+      "pct_vs_ema200": 46.8,
+      "volume_ratio20": 0.97,
+      "technical_signal": "WATCH FOR ENTRY",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
     {
       "event_id": "technical:CIFR:price-move:2026-08-11",
       "ticker": "CIFR",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.2%",
+      "headline": "Price +5.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.2% today.",
+      "why_today": "The stock moved +5.4% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-11T19:18:50.765614+00:00",
-      "detected_at": "2026-08-11T19:18:50.765624+00:00",
+      "event_time": "2026-08-11T22:03:38.723802+00:00",
+      "detected_at": "2026-08-11T22:03:38.723810+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -42,10 +87,55 @@
       ],
       "dedupe_key": "CIFR:price_move:daf0b04ddcd89694",
       "technical_score": 27.0,
-      "rsi14": 42.0,
-      "pct_vs_ema20": -13.96,
-      "pct_vs_ema200": -5.89,
-      "volume_ratio20": 0.79,
+      "rsi14": 41.64,
+      "pct_vs_ema20": -14.62,
+      "pct_vs_ema200": -6.65,
+      "volume_ratio20": 0.94,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:EOSE:price-move:2026-08-11",
+      "ticker": "EOSE",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.1%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.1% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-11T22:03:38.603466+00:00",
+      "detected_at": "2026-08-11T22:03:38.603475+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:EOSE:price-move:2026-08-11"
+      ],
+      "dedupe_key": "EOSE:price_move:b112fdf1ac703f27",
+      "technical_score": 43.0,
+      "rsi14": 48.93,
+      "pct_vs_ema20": 3.53,
+      "pct_vs_ema200": -49.59,
+      "volume_ratio20": 0.85,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
@@ -54,13 +144,13 @@
       "ticker": "OKLO",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +6.2%",
+      "headline": "Price +5.7%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.2% today.",
+      "why_today": "The stock moved +5.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-11T19:18:50.400641+00:00",
-      "detected_at": "2026-08-11T19:18:50.400650+00:00",
+      "event_time": "2026-08-11T22:03:38.335575+00:00",
+      "detected_at": "2026-08-11T22:03:38.335584+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -87,10 +177,10 @@
       ],
       "dedupe_key": "OKLO:price_move:ebbdacdd0886e552",
       "technical_score": 53.0,
-      "rsi14": 53.0,
-      "pct_vs_ema20": 6.53,
-      "pct_vs_ema200": -33.73,
-      "volume_ratio20": 0.78,
+      "rsi14": 52.62,
+      "pct_vs_ema20": 6.06,
+      "pct_vs_ema200": -34.15,
+      "volume_ratio20": 0.93,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
@@ -144,11 +234,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 57.8, +3.6% vs EMA20, +11.3% vs EMA200, volume 0.55x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 58.0, +3.7% vs EMA20, +11.5% vs EMA200, volume 0.76x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-08-11",
-      "detected_at": "2026-08-11T19:21:01+00:00",
+      "detected_at": "2026-08-11T22:06:48+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -169,10 +259,10 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 57.81,
-      "pct_vs_ema20": 3.61,
-      "pct_vs_ema200": 11.31,
-      "volume_ratio20": 0.55,
+      "rsi14": 58.01,
+      "pct_vs_ema20": 3.74,
+      "pct_vs_ema200": 11.49,
+      "volume_ratio20": 0.76,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:NVDA:technical_setup:2026-08-11"
@@ -444,55 +534,6 @@
       ],
       "priority_score": 97,
       "priority": "Critical"
-    },
-    {
-      "event_id": "regulator:TE:8042127c5d54d751",
-      "ticker": "TE",
-      "event_type": "corporate_event",
-      "event_subtype": "product",
-      "headline": "Reuse of Wartime Lands in Volunteer State Launches Nation’s Next American Energy Hub",
-      "summary": "A product event was detected and requires source review.",
-      "why_today": "A product event was detected and requires source review.",
-      "materiality": "low",
-      "reported_materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-08-04T21:56:03+00:00",
-      "detected_at": "2026-08-04T21:56:03+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "entity_confidence": "medium",
-      "entity_confidence_reason": "headline matched company tokens: energy",
-      "dedupe_key": "TE:product:2026-08-04:5ff254965fce",
-      "source": {
-        "type": "regulator",
-        "quality": "primary",
-        "url": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-        "published_at": "2026-08-04T21:56:03+00:00",
-        "domain": "www.energy.gov",
-        "agency": "DOE",
-        "name": "U.S. Department of Energy"
-      },
-      "source_chain": [
-        {
-          "type": "regulator",
-          "quality": "primary",
-          "url": "https://www.energy.gov/em/articles/reuse-wartime-lands-volunteer-state-launches-nations-next-american-energy-hub",
-          "published_at": "2026-08-04T21:56:03+00:00",
-          "domain": "www.energy.gov",
-          "agency": "DOE",
-          "name": "U.S. Department of Energy"
-        }
-      ],
-      "secondary_source_count": 0,
-      "regulator": "DOE",
-      "regulator_name": "U.S. Department of Energy",
-      "attention_policy_decision": "allow",
-      "related_event_ids": [
-        "regulator:TE:8042127c5d54d751"
-      ],
-      "priority_score": 64,
-      "priority": "Action"
     }
   ]
 }
