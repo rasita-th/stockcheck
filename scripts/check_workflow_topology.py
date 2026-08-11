@@ -158,6 +158,21 @@ def main() -> None:
         if forbidden in watchdog:
             failures.append(f"{LIVE_WATCHDOG}: watchdog contains forbidden token {forbidden!r}")
 
+    live_producer = (WORKFLOW_DIR / "refresh-live-v9-1.yml").read_text(encoding="utf-8")
+    for token in (
+        "actions: write",
+        "jobs:\n  admission:",
+        "scripts/live-refresh-dedupe.js",
+        "listWorkflowRuns",
+        "cancelWorkflowRun",
+        "needs: admission",
+        "if: needs.admission.outputs.run_refresh == 'true'",
+        "group: live-data-producer-main",
+        "cancel-in-progress: false",
+    ):
+        if token not in live_producer:
+            failures.append(f"refresh-live-v9-1.yml: missing delayed-schedule admission token {token!r}")
+
     verifier = (WORKFLOW_DIR / VERIFIER).read_text(encoding="utf-8")
     for token in (
         'workflows: ["Deploy GitHub Pages"]',
