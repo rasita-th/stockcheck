@@ -6,6 +6,7 @@ on:
     types: [completed]
 
 permissions:
+  actions: read
   contents: read
   statuses: write
 
@@ -19,10 +20,40 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      - name: Download immutable deployment receipt
+        uses: actions/download-artifact@v4
+        with:
+          name: production-deploy-receipt-${{ github.event.workflow_run.id }}
+          path: /tmp/deploy-receipt
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve exact deployed commit
+        id: receipt
+        env:
+          EXPECTED_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          receipt = json.loads(Path('/tmp/deploy-receipt/deploy-receipt.json').read_text(encoding='utf-8'))
+          source_commit = str(receipt.get('source_commit') or '')
+          if str(receipt.get('deploy_run_id') or '') != os.environ['EXPECTED_RUN_ID']:
+              raise SystemExit('deployment receipt run ID mismatch')
+          if receipt.get('status') != 'verified' or receipt.get('production_smoke_passed') is not True:
+              raise SystemExit('deployment receipt is not verified')
+          if not re.fullmatch(r'[0-9a-f]{40}', source_commit):
+              raise SystemExit('deployment receipt source commit is not an exact SHA')
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as output:
+              output.write(f'source_commit={source_commit}\n')
+          PY
+
       - name: Checkout deployed production commit
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ steps.receipt.outputs.source_commit }}
           persist-credentials: false
 
       - name: Set up Python
@@ -35,7 +66,7 @@ jobs:
         continue-on-error: true
         env:
           BASE_URL: https://rasita-th.github.io/stockcheck
-          EXPECTED_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          EXPECTED_COMMIT: ${{ steps.receipt.outputs.source_commit }}
         run: |
           set -euo pipefail
           mkdir -p /tmp/stockcheck-core/shards
@@ -81,7 +112,7 @@ jobs:
         uses: actions/github-script@v7
         env:
           VERIFY_OUTCOME: ${{ steps.core.outcome }}
-          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+          DEPLOYED_SHA: ${{ steps.receipt.outputs.source_commit }}
           DEPLOY_RUN_URL: ${{ github.event.workflow_run.html_url }}
         with:
           script: |

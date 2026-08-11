@@ -394,6 +394,44 @@ jobs:
     needs: [build, deploy]
     if: always()
     steps:
+      - name: Create immutable deployment receipt
+        env:
+          RESULT: ${{ needs.deploy.result }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/deploy-receipt
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          verified = os.environ['RESULT'] == 'success'
+          receipt = {
+              'schema_version': '1.1',
+              'status': 'verified' if verified else 'failed',
+              'production_smoke_passed': verified,
+              'source_commit': os.environ['DEPLOY_SOURCE_COMMIT'],
+              'deploy_run_id': os.environ['GITHUB_RUN_ID'],
+              'deploy_run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'asset_version': os.environ['TODAY_DEPLOY_VERSION'],
+              'created_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+          }
+          Path('/tmp/deploy-receipt/deploy-receipt.json').write_text(
+              json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(receipt, ensure_ascii=False))
+          PY
+
+      - name: Upload immutable deployment receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-deploy-receipt-${{ github.run_id }}
+          path: /tmp/deploy-receipt/deploy-receipt.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Publish verified deployment status
         env:
           GH_TOKEN: ${{ github.token }}

@@ -20,20 +20,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  verify:
+  identity:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_run'
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 5
+    outputs:
+      deploy_run_id: ${{ steps.deploy.outputs.run_id }}
+      source_commit: ${{ steps.receipt.outputs.source_commit }}
+      receipt_status: ${{ steps.receipt.outputs.receipt_status }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          persist-credentials: false
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
       - name: Resolve deploy run
         id: deploy
         env:
@@ -47,41 +42,65 @@ jobs:
             echo "run_id=$MANUAL_RUN_ID" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Derive deployment receipt from Pages event
-        if: github.event_name == 'workflow_run'
-        env:
-          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
-          DEPLOY_RUN_ID: ${{ github.event.workflow_run.id }}
-        run: |
-          set -euo pipefail
-          mkdir -p /tmp/deploy-receipt
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          manifest = json.loads(Path('config/release-manifest.json').read_text(encoding='utf-8'))
-          receipt = {
-              'schema_version': '1.0',
-              'status': 'verified',
-              'production_smoke_passed': True,
-              'source_commit': os.environ['SOURCE_SHA'],
-              'deploy_run_id': os.environ['DEPLOY_RUN_ID'],
-              'asset_version': manifest['release'],
-          }
-          Path('/tmp/deploy-receipt/deploy-receipt.json').write_text(
-              json.dumps(receipt, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-          print(json.dumps(receipt, ensure_ascii=False))
-          PY
-
-      - name: Download verified deployment receipt
-        if: github.event_name == 'workflow_dispatch'
+      - name: Download immutable deployment receipt
         uses: actions/download-artifact@v4
         with:
           name: production-deploy-receipt-${{ steps.deploy.outputs.run_id }}
           path: /tmp/deploy-receipt
           run-id: ${{ steps.deploy.outputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate deployment receipt identity
+        id: receipt
+        env:
+          EXPECTED_RUN_ID: ${{ steps.deploy.outputs.run_id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          receipt = json.loads(Path('/tmp/deploy-receipt/deploy-receipt.json').read_text(encoding='utf-8'))
+          source_commit = str(receipt.get('source_commit') or '')
+          if receipt.get('schema_version') != '1.1':
+              raise SystemExit('unsupported deployment receipt schema')
+          if str(receipt.get('deploy_run_id') or '') != os.environ['EXPECTED_RUN_ID']:
+              raise SystemExit('deployment receipt run ID mismatch')
+          if not re.fullmatch(r'[0-9a-f]{40}', source_commit):
+              raise SystemExit('deployment receipt source commit is not an exact SHA')
+          status = str(receipt.get('status') or '')
+          if status not in {'verified', 'failed'}:
+              raise SystemExit('deployment receipt status is invalid')
+          if receipt.get('production_smoke_passed') is not (status == 'verified'):
+              raise SystemExit('deployment receipt smoke result is inconsistent')
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as output:
+              output.write(f'source_commit={source_commit}\n')
+              output.write(f'receipt_status={status}\n')
+          print(json.dumps(receipt, ensure_ascii=False))
+          PY
+
+  verify:
+    needs: identity
+    if: needs.identity.outputs.receipt_status == 'verified'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.identity.outputs.source_commit }}
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Download immutable deployment receipt
+        uses: actions/download-artifact@v4
+        with:
+          name: production-deploy-receipt-${{ needs.identity.outputs.deploy_run_id }}
+          path: /tmp/deploy-receipt
+          run-id: ${{ needs.identity.outputs.deploy_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install production browser dependency
@@ -148,15 +167,15 @@ jobs:
           if-no-files-found: ignore
 
   report:
-    if: always() && github.event_name == 'workflow_run'
-    needs: verify
+    if: always() && github.event_name == 'workflow_run' && needs.identity.result == 'success'
+    needs: [identity, verify]
     runs-on: ubuntu-latest
     steps:
       - name: Publish production browser smoke status
         env:
           GH_TOKEN: ${{ github.token }}
           RESULT: ${{ needs.verify.result }}
-          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_SHA: ${{ needs.identity.outputs.source_commit }}
         run: |
           state=failure
           description="Production Drawdown browser smoke failed"
