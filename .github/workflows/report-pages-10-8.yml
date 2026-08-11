@@ -6,16 +6,45 @@ on:
     types: [completed]
 
 permissions:
+  actions: read
   statuses: write
 
 jobs:
   report:
     runs-on: ubuntu-latest
     steps:
+      - name: Download immutable deployment receipt
+        uses: actions/download-artifact@v4
+        with:
+          name: production-deploy-receipt-${{ github.event.workflow_run.id }}
+          path: /tmp/deploy-receipt
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve exact deployed commit
+        id: identity
+        env:
+          EXPECTED_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          receipt = json.loads(Path('/tmp/deploy-receipt/deploy-receipt.json').read_text(encoding='utf-8'))
+          source_commit = str(receipt.get('source_commit') or '')
+          if str(receipt.get('deploy_run_id') or '') != os.environ['EXPECTED_RUN_ID']:
+              raise SystemExit('deployment receipt run ID mismatch')
+          if not re.fullmatch(r'[0-9a-f]{40}', source_commit):
+              raise SystemExit('deployment receipt source commit is not an exact SHA')
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as output:
+              output.write(f'source_commit={source_commit}\n')
+          PY
+
       - name: Publish deployment status
         env:
           GH_TOKEN: ${{ github.token }}
-          SHA: ${{ github.event.workflow_run.head_sha }}
+          SHA: ${{ steps.identity.outputs.source_commit }}
           CONCLUSION: ${{ github.event.workflow_run.conclusion }}
           RUN_URL: ${{ github.event.workflow_run.html_url }}
           REPO: ${{ github.repository }}

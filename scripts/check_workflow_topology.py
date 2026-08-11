@@ -135,6 +135,21 @@ def main() -> None:
         if token not in verifier:
             failures.append(f"{VERIFIER}: missing verifier contract token {token!r}")
 
+    receipt_consumers = {
+        VERIFIER,
+        "report-pages-10-8.yml",
+        "verify-production-screener.yml",
+    }
+    for name in sorted(receipt_consumers):
+        consumer = (WORKFLOW_DIR / name).read_text(encoding="utf-8")
+        if "production-deploy-receipt-" not in consumer:
+            failures.append(f"{name}: completion consumer must download the deployment receipt")
+        if "github.event.workflow_run.head_sha" in consumer:
+            failures.append(f"{name}: completion consumer must not trust workflow_run.head_sha")
+
+    if "production-deploy-receipt-${{ github.run_id }}" not in pages:
+        failures.append(f"{PAGES_DEPLOYER}: deploy owner must upload the immutable deployment receipt")
+
     for required_path in (Path("config/release-manifest.json"), Path("scripts/verify_production_deployment.py")):
         if not required_path.exists():
             failures.append(f"missing release contract file: {required_path}")
