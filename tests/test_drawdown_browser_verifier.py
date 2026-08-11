@@ -9,6 +9,11 @@ from scripts import verify_drawdown_browser as verifier
 
 
 class DrawdownBrowserVerifierTests(unittest.TestCase):
+    def test_momentum_selector_covers_desktop_and_mobile_navigation_owners(self) -> None:
+        self.assertIn('[data-screener="momentum"]', verifier.MOMENTUM_CONTROL_SELECTOR)
+        self.assertIn('[data-v80-screener="momentum"]', verifier.MOMENTUM_CONTROL_SELECTOR)
+        self.assertIn('[data-v71-screener="momentum"]', verifier.MOMENTUM_CONTROL_SELECTOR)
+
     def test_scanner_selectors_exclude_empty_state_elements(self) -> None:
         self.assertEqual(
             verifier.DESKTOP_ITEM_SELECTOR,
@@ -46,6 +51,7 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
         self.assertFalse(verifier.click_momentum_if_present(driver))
         self.assertTrue(verifier.click_momentum_if_present(driver))
         driver.find_element.assert_not_called()
+        self.assertTrue(all(call.args[-1] == verifier.MOMENTUM_CONTROL_SELECTOR for call in driver.execute_script.call_args_list))
 
     def test_momentum_active_query_does_not_retain_an_element(self) -> None:
         driver = Mock()
