@@ -1,20 +1,20 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-11T14:41:47.661836+00:00",
+  "generated_at": "2026-08-11T15:40:35.326716+00:00",
   "layers": {
     "quote": {
       "status": "ok",
-      "age_minutes": 1.1,
+      "age_minutes": 6.6,
       "stale_after_minutes": 30,
-      "timestamp": "2026-08-11T14:40:39+00:00",
+      "timestamp": "2026-08-11T15:33:58+00:00",
       "row_count": 408,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download"
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 1.1,
+      "age_minutes": 6.5,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-08-11T14:40:40+00:00",
+      "timestamp": "2026-08-11T15:34:08+00:00",
       "row_count": 408,
       "source": "technical indicators + quote_latest live-price projection"
     },
@@ -24,8 +24,8 @@
       "stale_after_minutes": 30
     },
     "attention": {
-      "status": "partial",
-      "age_minutes": 58.7,
+      "status": "stale",
+      "age_minutes": 117.5,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-11T13:43:08+00:00",
       "row_count": 3,
@@ -98,8 +98,8 @@
       }
     },
     "events": {
-      "status": "ok",
-      "age_minutes": 58.7,
+      "status": "stale",
+      "age_minutes": 117.5,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-11T13:43:08+00:00",
       "row_count": 19,
@@ -107,7 +107,7 @@
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 37.3,
+      "age_minutes": 96.1,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T14:04:32+00:00",
       "row_count": null,
@@ -115,7 +115,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 32.3,
+      "age_minutes": 91.1,
       "stale_after_minutes": 50400,
       "timestamp": "2026-08-11 14:09:31 UTC",
       "row_count": 408,
@@ -123,12 +123,12 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 26.8,
+      "age_minutes": 85.6,
       "stale_after_minutes": 780,
       "timestamp": "2026-08-11T14:15:01.566030+00:00",
       "row_count": null,
       "source": "Yahoo Finance via yfinance; indices and ETF proxies"
     }
   },
-  "status": "partial"
+  "status": "stale"
 }
