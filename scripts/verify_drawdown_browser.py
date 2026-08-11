@@ -100,6 +100,19 @@ def visible_count(items: list[tuple[bool, float]]) -> int:
     return sum(1 for visible, _ in items if visible)
 
 
+def read_matching_preset_snapshot(
+    driver: webdriver.Chrome,
+    item_selector: str,
+    metric_selector: str,
+    expected: int,
+) -> list[tuple[bool, float]] | bool:
+    try:
+        items = read_items(driver, item_selector, metric_selector)
+        return items if visible_count(items) == expected else False
+    except AssertionError:
+        return False
+
+
 def expected_count(values: list[float], preset: str) -> int:
     minimum, maximum = PRESETS[preset]
     return sum(1 for value in values if minimum <= value < maximum)
@@ -179,9 +192,14 @@ def verify_presets(driver, wait, item_selector, metric_selector, control_root, v
         button = driver.find_element(By.CSS_SELECTOR, f'{control_root} [data-drawdown-preset="{preset}"]')
         driver.execute_script("arguments[0].click()", button)
         expected = expected_count(values, preset)
-        wait_stage(driver, wait, f"apply Drawdown preset {preset}", lambda current, expected=expected: visible_count(
-            read_items(current, item_selector, metric_selector)) == expected)
-        filtered = read_items(driver, item_selector, metric_selector)
+        filtered = wait_stage(
+            driver,
+            wait,
+            f"apply Drawdown preset {preset}",
+            lambda current, expected=expected: read_matching_preset_snapshot(
+                current, item_selector, metric_selector, expected
+            ),
+        )
         visible_values = [value for visible, value in filtered if visible]
         minimum, maximum = PRESETS[preset]
         if not all(minimum <= value < maximum for value in visible_values):
@@ -208,7 +226,12 @@ def run_desktop(base_url: str) -> dict:
         results = verify_presets(driver, wait, item_selector, metric_selector,
                                  '[data-drawdown-filter="desktop"]', values)
         driver.execute_script("arguments[0].click()", driver.find_element(By.ID, "desktopDrawdownEnabled"))
-        wait_stage(driver, wait, "disable desktop Drawdown filter", lambda current: visible_count(read_items(current, item_selector, metric_selector)) == baseline)
+        wait_stage(
+            driver,
+            wait,
+            "disable desktop Drawdown filter",
+            lambda current: read_matching_preset_snapshot(current, item_selector, metric_selector, baseline),
+        )
         return {"viewport": "desktop", "baseline": baseline,
                 "presets": [asdict(result) for result in results],
                 "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener")}

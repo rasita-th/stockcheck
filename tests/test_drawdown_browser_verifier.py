@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from selenium.common.exceptions import TimeoutException
 
@@ -63,6 +63,21 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
             [(True, 12.5), (False, 31.0)],
         )
         driver.find_elements.assert_not_called()
+
+    def test_preset_wait_retries_a_partial_scanner_snapshot(self) -> None:
+        with patch.object(
+            verifier,
+            'read_items',
+            side_effect=[
+                AssertionError('Drawdown metric is unavailable'),
+                [(True, 12.5), (False, 31.0)],
+            ],
+        ):
+            self.assertFalse(verifier.read_matching_preset_snapshot(Mock(), '#rows', '[data-dd]', 1))
+            self.assertEqual(
+                verifier.read_matching_preset_snapshot(Mock(), '#rows', '[data-dd]', 1),
+                [(True, 12.5), (False, 31.0)],
+            )
 
     def test_stage_wait_reports_the_failed_stage(self) -> None:
         wait = Mock()
