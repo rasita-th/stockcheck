@@ -18,17 +18,64 @@ on:
     - cron: "41 21 * * 1-5"
 
 permissions:
+  actions: write
   contents: read
 
-concurrency:
-  group: live-data-producer-main
-  # Let an active publish artifact finish; a later no-op schedule must not kill it.
-  cancel-in-progress: false
-
 jobs:
+  admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      run_refresh: ${{ steps.gate.outputs.run_refresh }}
+    steps:
+      - name: Checkout admission policy from latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Cancel a redundant delayed intraday schedule
+        id: gate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { resolveProducerAdmission } = require("${{ github.workspace }}/scripts/live-refresh-dedupe.js");
+            const response = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "refresh-live-v9-1.yml",
+              branch: "main",
+              per_page: 20,
+            });
+            const decision = resolveProducerAdmission({
+              eventName: context.eventName,
+              eventSchedule: context.payload.schedule || "",
+              currentRunId: context.runId,
+              runs: response.data.workflow_runs,
+              now: new Date(),
+            });
+            core.info(`Producer admission: ${JSON.stringify(decision)}`);
+            core.setOutput("run_refresh", decision.allow ? "true" : "false");
+            if (decision.allow) return;
+
+            core.notice(`Cancelling redundant schedule blocked by run ${decision.blockingRunId}: ${decision.reason}`);
+            await github.rest.actions.cancelWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+            });
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
   refresh:
+    needs: admission
+    if: needs.admission.outputs.run_refresh == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 18
+    concurrency:
+      group: live-data-producer-main
+      # Serialize admitted producers without making redundant schedules wait.
+      cancel-in-progress: false
     steps:
       - name: Checkout production source
         uses: actions/checkout@v4

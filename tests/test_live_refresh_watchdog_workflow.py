@@ -27,9 +27,19 @@ class LiveRefreshWatchdogWorkflowTests(unittest.TestCase):
         producer = (ROOT / ".github/workflows/refresh-live-v9-1.yml").read_text(
             encoding="utf-8"
         )
+        self.assertIn("actions: write", producer)
+        self.assertIn("contents: read", producer)
+        self.assertIn("jobs:\n  admission:", producer)
+        self.assertIn("Cancel a redundant delayed intraday schedule", producer)
+        self.assertIn("scripts/live-refresh-dedupe.js", producer)
+        self.assertIn("listWorkflowRuns", producer)
+        self.assertIn("cancelWorkflowRun", producer)
+        self.assertIn("needs: admission", producer)
+        self.assertIn("if: needs.admission.outputs.run_refresh == 'true'", producer)
         self.assertIn("group: live-data-producer-main", producer)
         self.assertIn("cancel-in-progress: false", producer)
-        self.assertIn("permissions:\n  contents: read", producer)
+        self.assertNotIn("contents: write", producer)
+        self.assertNotIn("git push", producer)
 
 
 if __name__ == "__main__":
