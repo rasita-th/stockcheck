@@ -462,5 +462,6 @@ jobs:
         run: |
           set -euo pipefail
           gh workflow run verify-production-deployment.yml \
+            --repo "$GITHUB_REPOSITORY" \
             --ref main \
             -f deploy_run_id="$GITHUB_RUN_ID"

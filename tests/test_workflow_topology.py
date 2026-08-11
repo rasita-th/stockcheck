@@ -84,6 +84,20 @@ class WorkflowTopologyTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("missing verifier contract token", result.stdout + result.stderr)
 
+    def test_verifier_dispatch_must_name_repository_without_checkout(self) -> None:
+        checkout = self.make_checkout()
+        deployer = checkout / ".github" / "workflows" / "deploy-pages.yml"
+        deployer.write_text(
+            deployer.read_text(encoding="utf-8").replace(
+                '--repo "$GITHUB_REPOSITORY"',
+                "",
+            ),
+            encoding="utf-8",
+        )
+        result = self.run_check(checkout)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("missing single-trigger contract token", result.stdout + result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
