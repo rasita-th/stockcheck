@@ -27,22 +27,25 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
         verifier.select_momentum(driver, wait)
 
         driver.find_element.assert_not_called()
-        driver.execute_script.assert_called_once_with(
-            """
-      const button = document.querySelector('[data-screener="momentum"]');
-      if (!button) return false;
-      button.click();
-      return true;
-    """
-        )
-        wait.until.assert_called_once()
+        driver.execute_script.assert_not_called()
+        self.assertEqual(wait.until.call_count, 2)
 
-    def test_fails_immediately_when_momentum_control_is_missing(self) -> None:
+    def test_missing_momentum_control_reports_a_named_wait_stage(self) -> None:
         driver = Mock()
-        driver.execute_script.return_value = False
+        driver.execute_script.return_value = {'activeScreener': '', 'runtime': '10.9.1'}
+        wait = Mock()
+        wait.until.side_effect = TimeoutException('')
 
-        with self.assertRaisesRegex(AssertionError, 'Momentum screener control was not found'):
-            verifier.select_momentum(driver, Mock())
+        with self.assertRaisesRegex(verifier.BrowserStageTimeout, 'render and select Momentum control'):
+            verifier.select_momentum(driver, wait)
+
+    def test_momentum_click_can_retry_until_the_control_exists(self) -> None:
+        driver = Mock()
+        driver.execute_script.side_effect = [False, True]
+
+        self.assertFalse(verifier.click_momentum_if_present(driver))
+        self.assertTrue(verifier.click_momentum_if_present(driver))
+        driver.find_element.assert_not_called()
 
     def test_momentum_active_query_does_not_retain_an_element(self) -> None:
         driver = Mock()
