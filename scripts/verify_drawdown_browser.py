@@ -8,7 +8,7 @@ import time
 from dataclasses import asdict, dataclass
 
 from selenium import webdriver
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -52,27 +52,26 @@ def parse_depth(text: str) -> float | None:
 
 
 def read_items(driver: webdriver.Chrome, item_selector: str, metric_selector: str) -> list[tuple[bool, float]]:
-    last_error: Exception | None = None
-    for _ in range(20):
-        try:
-            result: list[tuple[bool, float]] = []
-            for item in driver.find_elements(By.CSS_SELECTOR, item_selector):
-                value = parse_depth(item.find_element(By.CSS_SELECTOR, metric_selector).text)
-                if value is None:
-                    raise AssertionError("Drawdown metric is unavailable in a production Scanner row/card")
-                hidden = "drawdown-filter-hidden" in (item.get_attribute("class") or "").split()
-                result.append((not hidden, value))
-            return result
-        except StaleElementReferenceException as exc:
-            last_error = exc
-            time.sleep(0.1)
-    raise AssertionError(f"Scanner kept re-rendering before a coherent DOM snapshot could be read: {last_error}")
+    snapshot = driver.execute_script("""
+      const [itemSelector, metricSelector] = arguments;
+      return Array.from(document.querySelectorAll(itemSelector), item => ({
+        visible: !item.classList.contains('drawdown-filter-hidden'),
+        text: item.querySelector(metricSelector)?.textContent || '',
+      }));
+    """, item_selector, metric_selector)
+    result: list[tuple[bool, float]] = []
+    for item in snapshot:
+        value = parse_depth(str(item.get("text") or ""))
+        if value is None:
+            raise AssertionError("Drawdown metric is unavailable in a production Scanner row/card")
+        result.append((bool(item.get("visible")), value))
+    return result
 
 
 def snapshot_ready(driver: webdriver.Chrome, item_selector: str, metric_selector: str) -> bool:
     try:
         return bool(read_items(driver, item_selector, metric_selector))
-    except (AssertionError, StaleElementReferenceException):
+    except AssertionError:
         return False
 
 
