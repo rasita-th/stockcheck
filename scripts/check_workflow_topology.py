@@ -96,10 +96,14 @@ def main() -> None:
         'branches: ["main"]',
         'workflow_dispatch:',
         'expected_commit:',
+        'actions: write',
         'DEPLOY_SOURCE_COMMIT:',
         'ref: ${{ env.DEPLOY_SOURCE_COMMIT }}',
         'group: pages-production',
         'cancel-in-progress: true',
+        'context="production/stockcheck-pages-v10-8"',
+        'gh workflow run verify-production-deployment.yml',
+        'if: github.event_name == \'workflow_dispatch\'',
     ):
         if token not in pages:
             failures.append(f"{PAGES_DEPLOYER}: missing single-trigger contract token {token!r}")
@@ -131,6 +135,7 @@ def main() -> None:
         "production-deploy-receipt-",
         "config/release-manifest.json",
         "verify_production_deployment.py",
+        "if: always() && needs.identity.result == 'success'",
     ):
         if token not in verifier:
             failures.append(f"{VERIFIER}: missing verifier contract token {token!r}")

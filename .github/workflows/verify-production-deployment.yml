@@ -167,7 +167,7 @@ jobs:
           if-no-files-found: ignore
 
   report:
-    if: always() && github.event_name == 'workflow_run' && needs.identity.result == 'success'
+    if: always() && needs.identity.result == 'success'
     needs: [identity, verify]
     runs-on: ubuntu-latest
     steps:
