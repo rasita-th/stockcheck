@@ -1,12 +1,17 @@
 name: Publish Production Data
 
 on:
+  workflow_dispatch:
+    inputs:
+      producer_run_id:
+        description: "Completed live producer run carrying the immutable artifact"
+        required: true
+        type: string
   workflow_run:
     workflows:
       - "Refresh Finnhub Earnings Events"
       - "Refresh Finnhub Analyst Features"
       - "Refresh Finnhub Full Backfill"
-      - "Refresh Live Data v10 PR3"
       - "Refresh Market Pulse v9.6"
       - "Update static fundamental data"
     types: [completed]
@@ -21,10 +26,55 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Resolve and verify immutable producer receipt
+        id: source
+        uses: actions/github-script@v7
+        env:
+          REQUESTED_RUN_ID: ${{ inputs.producer_run_id || github.event.workflow_run.id }}
+        with:
+          script: |
+            const runId = Number(process.env.REQUESTED_RUN_ID);
+            if (!Number.isSafeInteger(runId) || runId < 1) {
+              core.setFailed(`Invalid producer run id: ${process.env.REQUESTED_RUN_ID}`);
+              return;
+            }
+            const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+            let run = null;
+            for (let attempt = 0; attempt < 30; attempt += 1) {
+              const response = await github.rest.actions.getWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId,
+              });
+              run = response.data;
+              if (run.status === "completed") break;
+              await sleep(2000);
+            }
+            if (!run || run.status !== "completed" || run.conclusion !== "success") {
+              core.setFailed(`Producer run ${runId} did not complete successfully`);
+              return;
+            }
+            if (run.head_branch !== "main") {
+              core.setFailed(`Producer run ${runId} is not bound to main`);
+              return;
+            }
+            if (context.eventName === "workflow_dispatch" && run.name !== "Refresh Live Data v10 PR3") {
+              core.setFailed(`Manual receipt dispatch only accepts the live producer, got ${run.name}`);
+              return;
+            }
+            for (const [key, value] of Object.entries({
+              name: run.name,
+              run_id: run.id,
+              run_attempt: run.run_attempt,
+              head_sha: run.head_sha,
+              head_branch: run.head_branch,
+              event: run.event,
+            })) core.setOutput(key, String(value));
+
       - name: Checkout latest main
         uses: actions/checkout@v4
         with:
@@ -35,9 +85,9 @@ jobs:
       - name: Download immutable producer artifact
         uses: actions/download-artifact@v4
         with:
-          name: production-data-${{ github.event.workflow_run.id }}
+          name: production-data-${{ steps.source.outputs.run_id }}
           path: /tmp/production-data
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ steps.source.outputs.run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validate source, hash, paths and replay state
@@ -49,12 +99,12 @@ jobs:
             --metadata /tmp/production-data/metadata.json \
             --ledger data/publisher-state.json \
             --repository "${{ github.repository }}" \
-            --workflow-name "${{ github.event.workflow_run.name }}" \
-            --run-id "${{ github.event.workflow_run.id }}" \
-            --run-attempt "${{ github.event.workflow_run.run_attempt }}" \
-            --source-sha "${{ github.event.workflow_run.head_sha }}" \
-            --branch "${{ github.event.workflow_run.head_branch }}" \
-            --event "${{ github.event.workflow_run.event }}"
+            --workflow-name "${{ steps.source.outputs.name }}" \
+            --run-id "${{ steps.source.outputs.run_id }}" \
+            --run-attempt "${{ steps.source.outputs.run_attempt }}" \
+            --source-sha "${{ steps.source.outputs.head_sha }}" \
+            --branch "${{ steps.source.outputs.head_branch }}" \
+            --event "${{ steps.source.outputs.event }}"
 
       - name: Apply production patch atomically
         id: apply
@@ -211,7 +261,7 @@ jobs:
             --run-attempt "${{ steps.contract.outputs.run_attempt }}" \
             --produced-at "${{ steps.contract.outputs.produced_at }}" \
             --patch-sha256 "${{ steps.contract.outputs.patch_sha256 }}" \
-            --source-sha "${{ github.event.workflow_run.head_sha }}"
+            --source-sha "${{ steps.source.outputs.head_sha }}"
           git add data/publisher-state.json
 
       - name: Commit and push through the single writer
@@ -221,7 +271,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Publish production data from ${{ github.event.workflow_run.name }}"
+          git commit -m "Publish production data from ${{ steps.source.outputs.name }}"
           for attempt in 1 2 3; do
             git fetch origin main
             if git rebase origin/main && git push origin HEAD:main; then
@@ -251,9 +301,9 @@ jobs:
         env:
           STATUS: ${{ steps.contract.outputs.status || 'REJECTED_OR_FAILED' }}
           REASON: ${{ steps.contract.outputs.reason || 'artifact validation or publishing failed' }}
-          PRODUCER: ${{ steps.contract.outputs.producer || github.event.workflow_run.name }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
-          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          PRODUCER: ${{ steps.contract.outputs.producer || steps.source.outputs.name }}
+          RUN_ID: ${{ steps.source.outputs.run_id }}
+          RUN_ATTEMPT: ${{ steps.source.outputs.run_attempt }}
           CHANGED_COUNT: ${{ steps.contract.outputs.changed_count || '0' }}
           PATCH_SHA: ${{ steps.contract.outputs.patch_sha256 || 'unavailable' }}
           PUBLISHED_SHA: ${{ steps.push.outputs.published_sha || 'none' }}

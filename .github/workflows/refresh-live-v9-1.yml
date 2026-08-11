@@ -224,3 +224,27 @@ jobs:
           path: publish-artifact
           if-no-files-found: error
           retention-days: 7
+
+      - name: Dispatch receipt-bound publisher and next freshness watchdog
+        if: steps.window.outputs.run_refresh == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const inputs = { producer_run_id: String(context.runId) };
+            await Promise.all([
+              github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: "publish-production-data.yml",
+                ref: "main",
+                inputs,
+              }),
+              github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: "live-refresh-watchdog.yml",
+                ref: "main",
+                inputs,
+              }),
+            ]);
+            core.notice(`Dispatched publisher and watchdog for producer run ${context.runId}`);

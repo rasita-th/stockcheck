@@ -97,9 +97,10 @@ def main() -> None:
         failures.append(
             f"Pages dispatcher must be exactly [{PUBLISHER!r}], got {pages_dispatchers}"
         )
-    if live_refresh_dispatchers != [LIVE_WATCHDOG]:
+    expected_live_dispatchers = [LIVE_WATCHDOG, "refresh-live-v9-1.yml"]
+    if live_refresh_dispatchers != expected_live_dispatchers:
         failures.append(
-            f"Live refresh dispatcher must be exactly [{LIVE_WATCHDOG!r}], "
+            f"Live refresh dispatcher must be exactly {expected_live_dispatchers!r}, "
             f"got {live_refresh_dispatchers}"
         )
 
@@ -127,6 +128,9 @@ def main() -> None:
         "group: production-publisher",
         "cancel-in-progress: false",
         "actions: write",
+        "producer_run_id:",
+        "getWorkflowRun",
+        "steps.source.outputs.run_id",
         '"Refresh Live Data v10 PR3"',
         '"Refresh Market Pulse v9.6"',
         '"Update static fundamental data"',
@@ -143,12 +147,13 @@ def main() -> None:
 
     watchdog = (WORKFLOW_DIR / LIVE_WATCHDOG).read_text(encoding="utf-8")
     for token in (
-        'workflows: ["Refresh Live Data v10 PR3"]',
+        "producer_run_id:",
         "actions: write",
         "contents: read",
         "group: live-refresh-watchdog-main",
         "cancel-in-progress: true",
         "listWorkflowRuns",
+        "getWorkflowRun",
         "createWorkflowDispatch",
         "scripts/live-refresh-watchdog.js",
     ):
@@ -165,6 +170,8 @@ def main() -> None:
         "scripts/live-refresh-dedupe.js",
         "listWorkflowRuns",
         "cancelWorkflowRun",
+        'workflow_id: "publish-production-data.yml"',
+        'workflow_id: "live-refresh-watchdog.yml"',
         "needs: admission",
         "if: needs.admission.outputs.run_refresh == 'true'",
         "group: live-data-producer-main",
