@@ -103,6 +103,7 @@ def main() -> None:
         'cancel-in-progress: true',
         'context="production/stockcheck-pages-v10-8"',
         'gh workflow run verify-production-deployment.yml',
+        '--repo "$GITHUB_REPOSITORY"',
         'if: github.event_name == \'workflow_dispatch\'',
     ):
         if token not in pages:
