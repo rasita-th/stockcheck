@@ -17,6 +17,7 @@ PRODUCERS = {
     "update-fundamental.yml",
 }
 PAGES_DEPLOYER = "deploy-pages.yml"
+LIVE_WATCHDOG = "live-refresh-watchdog.yml"
 OLD_HOSTNAME = "rasita2644-star.github.io/stockcheck"
 LEGACY_VERIFIERS = {"verify-pr3-pages.yml", "verify-finnhub-today.yml"}
 
@@ -41,6 +42,7 @@ def main() -> None:
     automatic_writers: list[str] = []
     pages_deployers: list[str] = []
     pages_dispatchers: list[str] = []
+    live_refresh_dispatchers: list[str] = []
     for path in workflows:
         text = path.read_text(encoding="utf-8")
         name = path.name
@@ -52,6 +54,10 @@ def main() -> None:
             "workflow_id: 'deploy-pages.yml'" in text
             or 'workflow_id: "deploy-pages.yml"' in text
             or "gh workflow run deploy-pages.yml" in text
+        )
+        dispatches_live_refresh = (
+            "refresh-live-v9-1.yml" in text
+            and "createWorkflowDispatch" in text
         )
         deploys_pages = "actions/deploy-pages@" in text
 
@@ -78,6 +84,8 @@ def main() -> None:
             pages_deployers.append(name)
         if dispatches_pages:
             pages_dispatchers.append(name)
+        if dispatches_live_refresh:
+            live_refresh_dispatchers.append(name)
         if OLD_HOSTNAME in text:
             failures.append(f"{name}: references obsolete production hostname")
 
@@ -88,6 +96,11 @@ def main() -> None:
     if pages_dispatchers != [PUBLISHER]:
         failures.append(
             f"Pages dispatcher must be exactly [{PUBLISHER!r}], got {pages_dispatchers}"
+        )
+    if live_refresh_dispatchers != [LIVE_WATCHDOG]:
+        failures.append(
+            f"Live refresh dispatcher must be exactly [{LIVE_WATCHDOG!r}], "
+            f"got {live_refresh_dispatchers}"
         )
 
     pages = (WORKFLOW_DIR / PAGES_DEPLOYER).read_text(encoding="utf-8")
@@ -127,6 +140,23 @@ def main() -> None:
     ):
         if token not in publisher:
             failures.append(f"{PUBLISHER}: missing contract token {token!r}")
+
+    watchdog = (WORKFLOW_DIR / LIVE_WATCHDOG).read_text(encoding="utf-8")
+    for token in (
+        'workflows: ["Refresh Live Data v10 PR3"]',
+        "actions: write",
+        "contents: read",
+        "group: live-refresh-watchdog-main",
+        "cancel-in-progress: true",
+        "listWorkflowRuns",
+        "createWorkflowDispatch",
+        "scripts/live-refresh-watchdog.js",
+    ):
+        if token not in watchdog:
+            failures.append(f"{LIVE_WATCHDOG}: missing watchdog contract token {token!r}")
+    for forbidden in ("contents: write", "git commit", "git push"):
+        if forbidden in watchdog:
+            failures.append(f"{LIVE_WATCHDOG}: watchdog contains forbidden token {forbidden!r}")
 
     verifier = (WORKFLOW_DIR / VERIFIER).read_text(encoding="utf-8")
     for token in (

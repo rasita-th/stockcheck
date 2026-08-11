@@ -56,6 +56,16 @@ class WorkflowTopologyTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Pages dispatcher must be exactly", result.stdout + result.stderr)
 
+    def test_duplicate_live_refresh_dispatcher_is_rejected(self) -> None:
+        checkout = self.make_checkout()
+        shutil.copy2(
+            ROOT / ".github" / "workflows" / "live-refresh-watchdog.yml",
+            checkout / ".github" / "workflows" / "duplicate-live-refresh-watchdog.yml",
+        )
+        result = self.run_check(checkout)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Live refresh dispatcher must be exactly", result.stdout + result.stderr)
+
     def test_deployer_must_dispatch_receipt_verifier_for_manual_runs(self) -> None:
         checkout = self.make_checkout()
         deployer = checkout / ".github" / "workflows" / "deploy-pages.yml"
