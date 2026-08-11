@@ -158,20 +158,22 @@ def wait_stage(driver: webdriver.Chrome, wait: WebDriverWait, stage: str, condit
 
 
 def select_momentum(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
-    clicked = driver.execute_script("""
-      const button = document.querySelector('[data-screener="momentum"]');
-      if (!button) return false;
-      button.click();
-      return true;
-    """)
-    if not clicked:
-        raise AssertionError("Momentum screener control was not found")
+    wait_stage(driver, wait, "render and select Momentum control", click_momentum_if_present)
     wait_stage(
         driver,
         wait,
         "select Momentum dataset",
         momentum_active,
     )
+
+
+def click_momentum_if_present(driver: webdriver.Chrome) -> bool:
+    return bool(driver.execute_script("""
+      const button = document.querySelector('[data-screener="momentum"]');
+      if (!button) return false;
+      button.click();
+      return true;
+    """))
 
 
 def momentum_active(driver: webdriver.Chrome) -> bool:
