@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-10T21:59:49+00:00",
+  "updated_at": "2026-08-11T02:28:13+00:00",
   "active_count": 8,
   "events": {
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
@@ -129,48 +129,6 @@
       "last_seen_at": "2026-08-09T21:49:12+00:00",
       "expires_at": "2026-08-16T21:49:12+00:00"
     },
-    "gdelt:COST:1db038cf7e87931b": {
-      "event": {
-        "event_id": "gdelt:COST:1db038cf7e87931b",
-        "ticker": "COST",
-        "event_type": "litigation",
-        "event_subtype": "litigation",
-        "headline": "Costco reaches $14 million settlement over misleading promo emails",
-        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-        "materiality": "low",
-        "reported_materiality": "medium",
-        "urgency": "developing",
-        "event_time": "2026-07-27T13:15:00+00:00",
-        "detected_at": "2026-07-27T22:02:14+00:00",
-        "verification_status": "unverified",
-        "verification_level": "unverified_report",
-        "verification_reason": "Discovered in public news; primary source not yet matched.",
-        "entity_confidence": "high",
-        "entity_confidence_reason": "headline contains alias: Costco",
-        "dedupe_key": "COST:litigation:2026-07-27:5442faa0e281",
-        "source": {
-          "type": "gdelt",
-          "quality": "secondary",
-          "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-          "published_at": "2026-07-27T13:15:00+00:00",
-          "domain": "finance.yahoo.com"
-        },
-        "source_chain": [
-          {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/media-advertising/articles/costco-reaches-14-million-settlement-124151383.html",
-            "published_at": "2026-07-27T13:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          }
-        ],
-        "secondary_source_count": 1
-      },
-      "first_seen_at": "2026-07-27T22:04:20+00:00",
-      "last_seen_at": "2026-07-27T22:04:20+00:00",
-      "expires_at": "2026-08-10T22:04:20+00:00"
-    },
     "gdelt:NOW:1a99a209577a6403": {
       "event": {
         "event_id": "gdelt:NOW:1a99a209577a6403",
@@ -212,6 +170,48 @@
       "first_seen_at": "2026-08-05T20:04:26+00:00",
       "last_seen_at": "2026-08-05T20:04:26+00:00",
       "expires_at": "2026-08-12T20:04:26+00:00"
+    },
+    "company_ir:RKLB:da533bd82ba001bd": {
+      "event": {
+        "event_id": "company_ir:RKLB:da533bd82ba001bd",
+        "ticker": "RKLB",
+        "event_type": "earnings",
+        "event_subtype": "earnings_reported",
+        "headline": "Second Quarter 2026 Financial Results Presentation",
+        "summary": "A earnings reported event was detected and requires source review.",
+        "why_today": "A earnings reported event was detected and requires source review.",
+        "materiality": "high",
+        "reported_materiality": "high",
+        "urgency": "today",
+        "event_time": "2026-08-11T02:26:24+00:00",
+        "detected_at": "2026-08-11T02:26:24+00:00",
+        "verification_status": "confirmed",
+        "verification_level": "confirmed_primary",
+        "verification_reason": "Published by a configured primary source.",
+        "entity_confidence": "medium",
+        "entity_confidence_reason": "article domain matches configured company domain",
+        "dedupe_key": "RKLB:earnings_reported:2026-08-11:9b05f0e428d9",
+        "source": {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/static-files/3dde8e68-7ce6-4685-8c0b-17afc94dbb86",
+          "published_at": "2026-08-11T02:26:24+00:00",
+          "domain": "investors.rocketlabusa.com"
+        },
+        "source_chain": [
+          {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.rocketlabusa.com/static-files/3dde8e68-7ce6-4685-8c0b-17afc94dbb86",
+            "published_at": "2026-08-11T02:26:24+00:00",
+            "domain": "investors.rocketlabusa.com"
+          }
+        ],
+        "secondary_source_count": 0
+      },
+      "first_seen_at": "2026-08-11T02:28:13+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
+      "expires_at": "2026-08-18T02:28:13+00:00"
     },
     "regulator:TE:8042127c5d54d751": {
       "event": {

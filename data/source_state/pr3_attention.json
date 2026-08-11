@@ -1,7 +1,19 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-10T21:59:49+00:00",
+  "updated_at": "2026-08-11T02:28:13+00:00",
   "items": {
+    "company_ir:RKLB:da533bd82ba001bd": {
+      "ticker": "RKLB",
+      "event_subtype": "earnings_reported",
+      "priority": "Critical",
+      "priority_score": 97,
+      "personal_priority_score": 113,
+      "first_seen_at": "2026-08-11T02:28:13+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
+      "event_count": 1,
+      "baseline_price": 80.195,
+      "current_price": 80.195
+    },
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
       "ticker": "AMD",
       "event_subtype": "transaction",
@@ -9,10 +21,10 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
       "event_count": 3,
       "baseline_price": 475.465,
-      "current_price": 474.0099
+      "current_price": 469.35
     },
     "technical:TE:price-drop:2026-08-10": {
       "ticker": "TE",
@@ -21,10 +33,34 @@
       "priority_score": 99,
       "personal_priority_score": 107,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
       "event_count": 3,
       "baseline_price": 5.405,
-      "current_price": 5.335
+      "current_price": 5.3061
+    },
+    "technical:OKLO:price-drop:2026-08-10": {
+      "ticker": "OKLO",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-08-10T16:17:58+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
+      "event_count": 1,
+      "baseline_price": 44.42,
+      "current_price": 44.51
+    },
+    "technical:CIFR:price-drop:2026-08-10": {
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-08-11T02:28:13+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
+      "event_count": 1,
+      "baseline_price": 16.31,
+      "current_price": 16.31
     },
     "technical:INDI:price-drop:2026-08-10": {
       "ticker": "INDI",
@@ -33,10 +69,10 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
       "event_count": 1,
       "baseline_price": 3.615,
-      "current_price": 3.725
+      "current_price": 3.7261
     },
     "technical:IREN:price-drop:2026-08-10": {
       "ticker": "IREN",
@@ -45,49 +81,29 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-10T21:59:49+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
+      "last_seen_at": "2026-08-11T02:28:13+00:00",
       "event_count": 1,
       "baseline_price": 38.915,
-      "current_price": 38.915
-    },
-    "technical:MP:price-move:2026-08-10": {
-      "ticker": "MP",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
-      "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
-      "event_count": 1,
-      "baseline_price": 54.335,
-      "current_price": 54.88
-    },
-    "technical:OKLO:price-drop:2026-08-10": {
-      "ticker": "OKLO",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
-      "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
-      "event_count": 1,
-      "baseline_price": 44.42,
-      "current_price": 44.83
-    },
-    "technical:PSIX:price-move:2026-08-10": {
-      "ticker": "PSIX",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
-      "first_seen_at": "2026-08-10T19:17:57+00:00",
-      "last_seen_at": "2026-08-10T21:59:49+00:00",
-      "event_count": 1,
-      "baseline_price": 43.455,
-      "current_price": 43.58
+      "current_price": 38.71
     }
   },
   "resolved": [
+    {
+      "history_key": "technical:MP:price-move:2026-08-10",
+      "ticker": "MP",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-08-11T02:28:13+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:PSIX:price-move:2026-08-10",
+      "ticker": "PSIX",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-08-11T02:28:13+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:TEM:price-move:2026-08-10",
       "ticker": "TEM",
@@ -227,22 +243,6 @@
     {
       "history_key": "technical:IONQ:price-move:2026-08-08",
       "ticker": "IONQ",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-09T04:37:10+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-move:2026-08-08",
-      "ticker": "IREN",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-09T04:37:10+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:price-move:2026-08-08",
-      "ticker": "OKLO",
       "event_subtype": "price_move",
       "priority": "Critical",
       "resolved_at": "2026-08-09T04:37:10+00:00",
