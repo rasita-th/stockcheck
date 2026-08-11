@@ -51,6 +51,19 @@ class DrawdownBrowserVerifierTests(unittest.TestCase):
         self.assertTrue(verifier.momentum_active(driver))
         driver.find_element.assert_not_called()
 
+    def test_scanner_snapshot_is_read_atomically_without_element_handles(self) -> None:
+        driver = Mock()
+        driver.execute_script.return_value = [
+            {'visible': True, 'text': '-12.5%'},
+            {'visible': False, 'text': '-31.0%'},
+        ]
+
+        self.assertEqual(
+            verifier.read_items(driver, '#rows > [data-select]', '[data-drawdown-cell]'),
+            [(True, 12.5), (False, 31.0)],
+        )
+        driver.find_elements.assert_not_called()
+
     def test_stage_wait_reports_the_failed_stage(self) -> None:
         wait = Mock()
         wait.until.side_effect = TimeoutException('')
