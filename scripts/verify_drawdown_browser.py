@@ -21,6 +21,11 @@ PRESETS = {
 EXPECTED_RUNTIME = "10.9.1"
 DESKTOP_ITEM_SELECTOR = '#technicalTableBody tr[data-select]'
 MOBILE_ITEM_SELECTOR = '#technicalMobileCards > [data-select]'
+MOMENTUM_CONTROL_SELECTOR = ', '.join((
+    '[data-screener="momentum"]',
+    '[data-v80-screener="momentum"]',
+    '[data-v71-screener="momentum"]',
+))
 
 
 class BrowserStageTimeout(AssertionError):
@@ -169,17 +174,17 @@ def select_momentum(driver: webdriver.Chrome, wait: WebDriverWait) -> None:
 
 def click_momentum_if_present(driver: webdriver.Chrome) -> bool:
     return bool(driver.execute_script("""
-      const button = document.querySelector('[data-screener="momentum"]');
+      const button = document.querySelector(arguments[0]);
       if (!button) return false;
       button.click();
       return true;
-    """))
+    """, MOMENTUM_CONTROL_SELECTOR))
 
 
 def momentum_active(driver: webdriver.Chrome) -> bool:
     return bool(driver.execute_script("""
-      return document.querySelector('[data-screener="momentum"]')?.classList.contains('active') || false;
-    """))
+      return document.querySelector(arguments[0])?.classList.contains('active') || false;
+    """, MOMENTUM_CONTROL_SELECTOR))
 
 
 def clear_storage(driver: webdriver.Chrome, url: str) -> None:
