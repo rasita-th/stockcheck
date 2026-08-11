@@ -60,30 +60,34 @@ jobs:
         run: |
           python -m py_compile scripts/finnhub_pipeline.py scripts/run_finnhub_free_tier.py scripts/compact_finnhub_state.py scripts/finnhub_sharded_state.py scripts/check_generated_file_sizes.py scripts/verify_finnhub_today_deploy.py scripts/generate_earnings_radar.py scripts/validate_earnings_radar.py
           python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier tests.test_finnhub_compaction tests.test_finnhub_sharded_state tests.test_finnhub_binary_patch tests.test_earnings_radar
-      - name: Rehearse legacy-to-sharded migration on current data
+      - name: Rehearse shard-native Finnhub state round trip
         run: |
-          python scripts/compact_finnhub_state.py --write
+          cp data/finnhub/state/index.json /tmp/finnhub-index-before.json
+          python scripts/finnhub_sharded_state.py hydrate
+          test -f data/finnhub/state.json
           python scripts/finnhub_sharded_state.py shard --delete-legacy
           test ! -e data/finnhub/state.json
-          test -f data/finnhub/state/index.json
-      - name: Verify current migration patch transport budget
-        run: |
-          mkdir -p publish-artifact
-          git add -N -- data/finnhub/state
-          git diff --binary HEAD -- data/finnhub data/finnhub_features.json site/data/finnhub_features.json static/data/finnhub_features.json data/generated/finnhub_features.json > publish-artifact/production-data.patch
-          grep -q 'data/finnhub/state/index.json' publish-artifact/production-data.patch
-          python scripts/check_generated_file_sizes.py --patch-hard-limit-mib 50 publish-artifact/production-data.patch
-      - name: Verify migration patch applies to a clean base
-        run: |
-          git worktree add /tmp/finnhub-migration-base HEAD
-          git -C /tmp/finnhub-migration-base apply --check --3way "$GITHUB_WORKSPACE/publish-artifact/production-data.patch"
-      - name: Rehearse sharded-to-working-state hydration
+          cmp /tmp/finnhub-index-before.json data/finnhub/state/index.json
+          git diff --exit-code -- data/finnhub/state
+      - name: Rehearse hydrated producer lifecycle
         run: |
           python scripts/finnhub_sharded_state.py hydrate
           test -f data/finnhub/state.json
           python scripts/compact_finnhub_state.py --write
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state = json.loads(Path('data/finnhub/state.json').read_text(encoding='utf-8'))
+          endpoints = state.get('endpoints') if isinstance(state.get('endpoints'), dict) else {}
+          ticker_shards = sum(len(rows) for rows in endpoints.values() if isinstance(rows, dict))
+          if not endpoints or ticker_shards <= 0:
+              raise SystemExit('compaction collapsed current Finnhub state')
+          print(f'Compacted Finnhub state retains {len(endpoints)} endpoints and {ticker_shards} ticker shards.')
+          PY
           python scripts/finnhub_sharded_state.py shard --delete-legacy
           test ! -e data/finnhub/state.json
+          test -f data/finnhub/state/index.json
       - name: Enforce sharded repository size budgets
         run: |
           mapfile -t shard_files < <(find data/finnhub/state -type f -name '*.json' -print | sort)
@@ -93,5 +97,7 @@ jobs:
           EARNINGS_RADAR_DAYS_BACK: "1"
           EARNINGS_RADAR_DAYS_FORWARD: "14"
         run: |
+          python scripts/finnhub_sharded_state.py hydrate
           python scripts/generate_earnings_radar.py
           python scripts/validate_earnings_radar.py
+          rm -f data/finnhub/state.json

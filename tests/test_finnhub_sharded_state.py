@@ -93,5 +93,28 @@ class FinnhubShardedStateTests(unittest.TestCase):
                 store.shard_state(delete_legacy=False)
 
 
+class FinnhubWorkflowContractTests(unittest.TestCase):
+    def test_current_repository_rehearsal_is_shard_native(self):
+        workflow = (MODULE_PATH.parents[1] / ".github" / "workflows" / "validate-finnhub-pipeline.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertNotIn("Rehearse legacy-to-sharded migration on current data", workflow)
+        self.assertIn("Rehearse shard-native Finnhub state round trip", workflow)
+        self.assertIn("git diff --exit-code -- data/finnhub/state", workflow)
+
+        round_trip = workflow.index("Rehearse shard-native Finnhub state round trip")
+        lifecycle = workflow.index("Rehearse hydrated producer lifecycle")
+        hydrate = workflow.index("finnhub_sharded_state.py hydrate", lifecycle)
+        compact = workflow.index("compact_finnhub_state.py --write", lifecycle)
+        shard = workflow.index("finnhub_sharded_state.py shard --delete-legacy", lifecycle)
+        self.assertLess(round_trip, lifecycle)
+        self.assertLess(hydrate, compact)
+        self.assertLess(compact, shard)
+
+        self.assertNotIn("Verify current migration patch transport budget", workflow)
+        self.assertNotIn("Verify migration patch applies to a clean base", workflow)
+
+
 if __name__ == "__main__":
     unittest.main()
