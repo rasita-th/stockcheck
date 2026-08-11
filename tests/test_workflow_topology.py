@@ -56,6 +56,34 @@ class WorkflowTopologyTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Pages dispatcher must be exactly", result.stdout + result.stderr)
 
+    def test_deployer_must_dispatch_receipt_verifier_for_manual_runs(self) -> None:
+        checkout = self.make_checkout()
+        deployer = checkout / ".github" / "workflows" / "deploy-pages.yml"
+        deployer.write_text(
+            deployer.read_text(encoding="utf-8").replace(
+                "gh workflow run verify-production-deployment.yml",
+                "gh workflow run missing-verifier.yml",
+            ),
+            encoding="utf-8",
+        )
+        result = self.run_check(checkout)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("missing single-trigger contract token", result.stdout + result.stderr)
+
+    def test_manual_verifier_must_publish_receipt_bound_status(self) -> None:
+        checkout = self.make_checkout()
+        verifier = checkout / ".github" / "workflows" / "verify-production-deployment.yml"
+        verifier.write_text(
+            verifier.read_text(encoding="utf-8").replace(
+                "if: always() && needs.identity.result == 'success'",
+                "if: always() && github.event_name == 'workflow_run' && needs.identity.result == 'success'",
+            ),
+            encoding="utf-8",
+        )
+        result = self.run_check(checkout)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("missing verifier contract token", result.stdout + result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
