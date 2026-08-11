@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-11T03:30:28.808921+00:00",
+  "generated_at": "2026-08-11T04:42:07.626701+00:00",
   "layers": {
     "quote": {
-      "status": "ok",
-      "age_minutes": 1.2,
+      "status": "stale",
+      "age_minutes": 72.8,
       "stale_after_minutes": 30,
       "timestamp": "2026-08-11T03:29:18+00:00",
       "row_count": 408,
@@ -12,7 +12,7 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 1.2,
+      "age_minutes": 72.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T03:29:18+00:00",
       "row_count": 408,
@@ -25,9 +25,9 @@
     },
     "attention": {
       "status": "partial",
-      "age_minutes": 62.3,
+      "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-11T02:28:13+00:00",
+      "timestamp": "2026-08-11T04:40:59+00:00",
       "row_count": 3,
       "source": null,
       "coverage_status": "partial",
@@ -69,15 +69,15 @@
           "status": "partial",
           "source": "Free news discovery",
           "checked": 10,
-          "accepted_events": 1
+          "accepted_events": 0
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 4,
-          "partial": 6,
-          "errors": 0
+          "ok": 2,
+          "partial": 7,
+          "errors": 1
         },
         "gdelt": {
           "status": "error",
@@ -99,15 +99,15 @@
     },
     "events": {
       "status": "ok",
-      "age_minutes": 62.3,
+      "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-11T02:28:13+00:00",
+      "timestamp": "2026-08-11T04:40:59+00:00",
       "row_count": 19,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 50.5,
+      "age_minutes": 122.1,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T02:39:59+00:00",
       "row_count": null,
@@ -115,7 +115,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 37.1,
+      "age_minutes": 108.8,
       "stale_after_minutes": 50400,
       "timestamp": "2026-08-11 02:53:22 UTC",
       "row_count": 408,
@@ -123,12 +123,12 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 29.0,
+      "age_minutes": 100.6,
       "stale_after_minutes": 780,
       "timestamp": "2026-08-11T03:01:30.033316+00:00",
       "row_count": null,
       "source": "Yahoo Finance via yfinance; indices and ETF proxies"
     }
   },
-  "status": "partial"
+  "status": "stale"
 }
