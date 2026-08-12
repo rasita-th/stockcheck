@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import sys
+import tempfile
 import unittest
 import urllib.error
 from datetime import datetime, timezone
@@ -187,6 +188,18 @@ class AttentionPR4ReliabilityTests(unittest.TestCase):
         self.assertEqual(events, [])
         self.assertEqual(status, "error")
         self.assertIn("unavailable", error)
+
+    def test_discovery_loader_skips_stale_projection_without_ticker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            stale = Path(tmp) / "stale.json"
+            current = Path(tmp) / "current.json"
+            stale.write_text(json.dumps({"features": {"sec_filings": {}}}), encoding="utf-8")
+            current.write_text(json.dumps({
+                "features": {"sec_filings": {"RKLB": {"status": "empty", "data": []}}}
+            }), encoding="utf-8")
+            with patch.object(p0, "FINNHUB_FEATURE_PATHS", [stale, current]):
+                entry = p0.load_sec_discovery_entry("RKLB")
+        self.assertEqual(entry["status"], "empty")
 
     def test_optional_gdelt_failure_does_not_downgrade_verified_ir(self):
         now = datetime(2026, 8, 12, 4, 0, tzinfo=timezone.utc)
