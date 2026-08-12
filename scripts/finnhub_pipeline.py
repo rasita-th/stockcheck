@@ -10,7 +10,9 @@ import argparse
 import json
 import math
 import os
+import re
 import time
+import urllib.parse
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -43,6 +45,7 @@ class EndpointPolicy:
 
 ENDPOINTS: dict[str, EndpointPolicy] = {
     "company_earnings": EndpointPolicy("events", 24.0, "company_earnings", "earnings", 20),
+    "sec_filings": EndpointPolicy("events", 6.0, "filings", "sec_filings", 16),
     "eps_estimates": EndpointPolicy("events", 24.0, "company_eps_estimates", "list", 14),
     "revenue_estimates": EndpointPolicy("events", 24.0, "company_revenue_estimates", "list", 14),
     "recommendation_trends": EndpointPolicy("analyst", 24.0, "recommendation_trends", "recommendations", 24),
@@ -232,11 +235,58 @@ def normalize_dict(payload: Any) -> dict[str, Any]:
     return dict(payload) if isinstance(payload, dict) else {}
 
 
+def _official_sec_filing_url(value: Any) -> str:
+    url = str(value or "").strip()
+    try:
+        parsed = urllib.parse.urlsplit(url)
+    except ValueError:
+        return ""
+    host = (parsed.hostname or "").lower()
+    if parsed.scheme != "https" or not (host == "sec.gov" or host.endswith(".sec.gov")):
+        return ""
+    if not parsed.path.startswith("/Archives/edgar/data/"):
+        return ""
+    return url
+
+
+def normalize_sec_filings(payload: Any) -> list[dict[str, Any]]:
+    """Keep only Finnhub discovery rows that link to an official SEC filing."""
+    rows = payload if isinstance(payload, list) else []
+    output: list[dict[str, Any]] = []
+    for row in rows[:250]:
+        if not isinstance(row, dict):
+            continue
+        accession = str(
+            row.get("accessNumber") or row.get("accessionNumber") or row.get("accessionNo") or ""
+        ).strip()
+        if not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accession):
+            continue
+        source_url = _official_sec_filing_url(row.get("reportUrl")) or _official_sec_filing_url(row.get("filingUrl"))
+        if not source_url:
+            continue
+        source_path = urllib.parse.urlsplit(source_url).path
+        if f"/{accession.replace('-', '')}/" not in source_path:
+            continue
+        primary_document = source_path.rsplit("/", 1)[-1]
+        output.append({
+            "form": str(row.get("form") or "").strip().upper(),
+            "accessionNumber": accession,
+            "filingDate": str(row.get("filedDate") or row.get("filingDate") or "")[:10],
+            "acceptanceDateTime": row.get("acceptedDate") or row.get("acceptanceDateTime") or "",
+            "primaryDocument": primary_document,
+            "items": str(row.get("items") or ""),
+            "reportDate": str(row.get("reportDate") or "")[:10],
+            "sourceUrl": source_url,
+        })
+    return output
+
+
 NORMALIZERS: dict[str, Callable[[Any], Any]] = {
     "earnings": normalize_earnings,
     "recommendations": normalize_recommendations,
     "list": normalize_list,
     "dict": normalize_dict,
+    "sec_filings": normalize_sec_filings,
 }
 
 
@@ -262,6 +312,9 @@ def endpoint_call(client: Any, endpoint: str, ticker: str) -> Any:
         raise RuntimeError(f"finnhub client does not support {policy.method}")
     if endpoint == "company_earnings":
         return method(ticker, limit=8)
+    if endpoint == "sec_filings":
+        today = date.today()
+        return method(symbol=ticker, _from=(today - timedelta(days=10)).isoformat(), to=today.isoformat())
     if endpoint in {"eps_estimates", "revenue_estimates"}:
         return method(ticker, freq="quarterly")
     if endpoint == "company_profile":
