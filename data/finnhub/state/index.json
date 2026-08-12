@@ -1239,18 +1239,23 @@
       "AMD": "endpoints/sec_filings/AMD.json",
       "AMZN": "endpoints/sec_filings/AMZN.json",
       "ASTS": "endpoints/sec_filings/ASTS.json",
+      "BEAM": "endpoints/sec_filings/BEAM.json",
       "BMNR": "endpoints/sec_filings/BMNR.json",
       "CIFR": "endpoints/sec_filings/CIFR.json",
       "COPX": "endpoints/sec_filings/COPX.json",
+      "COST": "endpoints/sec_filings/COST.json",
       "EOSE": "endpoints/sec_filings/EOSE.json",
       "EQT": "endpoints/sec_filings/EQT.json",
       "GOOGL": "endpoints/sec_filings/GOOGL.json",
       "HOOD": "endpoints/sec_filings/HOOD.json",
+      "INDI": "endpoints/sec_filings/INDI.json",
       "IONQ": "endpoints/sec_filings/IONQ.json",
       "IREN": "endpoints/sec_filings/IREN.json",
       "JEPQ": "endpoints/sec_filings/JEPQ.json",
       "MP": "endpoints/sec_filings/MP.json",
+      "NASA": "endpoints/sec_filings/NASA.json",
       "NBIS": "endpoints/sec_filings/NBIS.json",
+      "NOW": "endpoints/sec_filings/NOW.json",
       "NVDA": "endpoints/sec_filings/NVDA.json",
       "OKLO": "endpoints/sec_filings/OKLO.json",
       "OPEN": "endpoints/sec_filings/OPEN.json",
@@ -1262,6 +1267,7 @@
       "RR": "endpoints/sec_filings/RR.json",
       "RXRX": "endpoints/sec_filings/RXRX.json",
       "SYM": "endpoints/sec_filings/SYM.json",
+      "TE": "endpoints/sec_filings/TE.json",
       "TEM": "endpoints/sec_filings/TEM.json",
       "TMC": "endpoints/sec_filings/TMC.json",
       "TMDX": "endpoints/sec_filings/TMDX.json",
@@ -1271,50 +1277,6 @@
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-10T19:15:57+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "LBRT",
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE",
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-10T19:15:31+00:00",
-      "universe_count": 305
-    },
     {
       "analyst": {
         "calls_used": 32,
@@ -2254,9 +2216,62 @@
       "mode": "events",
       "started_at": "2026-08-12T07:05:46+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-12T07:50:34+00:00",
+      "events": {
+        "calls_used": 26,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "HON",
+            "HOOD",
+            "HUT",
+            "HWM",
+            "IDXX",
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP"
+          ],
+          "sec_filings": [
+            "COST",
+            "BEAM",
+            "NOW",
+            "TE",
+            "NASA",
+            "INDI"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-12T07:50:01+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-12T07:06:35+00:00"
+  "updated_at": "2026-08-12T07:50:35+00:00"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-12T07:08:54+00:00",
+  "updated_at": "2026-08-12T07:53:04+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -16,13 +16,13 @@
   },
   "source_health": {
     "sec": {
-      "status": "partial",
+      "status": "ok",
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 30,
+      "ok": 35,
       "partial": 0,
-      "errors": 5,
+      "errors": 0,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -30,9 +30,9 @@
         "missing": 0
       },
       "transport": {
-        "status": "partial",
-        "ok": 30,
-        "errors": 5
+        "status": "ok",
+        "ok": 35,
+        "errors": 0
       }
     },
     "earnings": {
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "partial",
+      "status": "ok",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 4
+      "accepted_events": 0
     },
     "ir": {
-      "status": "partial",
+      "status": "ok",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 8,
+      "ok": 10,
       "partial": 0,
-      "errors": 2,
+      "errors": 0,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -319,9 +319,9 @@
         "A earnings reported event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T07:08:54+00:00",
         "active_days": 0
       },
@@ -592,23 +592,7 @@
       ]
     }
   ],
-  "errors": [
-    {
-      "source": "sec",
-      "ticker": "*",
-      "message": "SEC transport unavailable for 5 applicable tickers"
-    },
-    {
-      "source": "ir",
-      "ticker": "IREN",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    }
-  ],
+  "errors": [],
   "data_quality": {
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
@@ -620,7 +604,7 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 4,
+    "newly_discovered_event_count": 0,
     "active_discovered_event_count": 12,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
@@ -683,7 +667,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T07:06:37.333628+00:00",
+      "event_time": "2026-08-12T07:50:36.983199+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -707,8 +691,8 @@
           "why_today": "The stock moved +5.4% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12T07:06:37.333628+00:00",
-          "detected_at": "2026-08-12T07:06:37.333633+00:00",
+          "event_time": "2026-08-12T07:50:36.983199+00:00",
+          "detected_at": "2026-08-12T07:50:36.983204+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -783,7 +767,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T07:06:37.287622+00:00",
+      "event_time": "2026-08-12T07:50:36.934306+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -807,8 +791,8 @@
           "why_today": "The stock moved +5.1% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12T07:06:37.287622+00:00",
-          "detected_at": "2026-08-12T07:06:37.287627+00:00",
+          "event_time": "2026-08-12T07:50:36.934306+00:00",
+          "detected_at": "2026-08-12T07:50:36.934314+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -883,7 +867,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T07:06:37.150162+00:00",
+      "event_time": "2026-08-12T07:50:36.794027+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -907,8 +891,8 @@
           "why_today": "The stock moved +5.7% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12T07:06:37.150162+00:00",
-          "detected_at": "2026-08-12T07:06:37.150167+00:00",
+          "event_time": "2026-08-12T07:50:36.794027+00:00",
+          "detected_at": "2026-08-12T07:50:36.794033+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -983,7 +967,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T07:06:37.403054+00:00",
+      "event_time": "2026-08-12T07:50:37.051790+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1007,8 +991,8 @@
           "why_today": "The stock moved +5.9% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12T07:06:37.403054+00:00",
-          "detected_at": "2026-08-12T07:06:37.403059+00:00",
+          "event_time": "2026-08-12T07:50:37.051790+00:00",
+          "detected_at": "2026-08-12T07:50:37.051795+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1073,10 +1057,10 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
