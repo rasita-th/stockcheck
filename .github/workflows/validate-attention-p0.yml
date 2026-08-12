@@ -214,6 +214,30 @@ jobs:
           pip install -r requirements.txt
       - name: Seed canonical generated layer
         run: python scripts/build_generated_layer.py
+      - name: Refresh bounded SEC discovery fallback
+        env:
+          FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
+          FINNHUB_EVENTS_MAX_CALLS_PER_RUN: "6"
+          FINNHUB_MIN_DELAY_SECONDS: "1.25"
+        run: |
+          python scripts/finnhub_sharded_state.py hydrate
+          python scripts/run_finnhub_free_tier.py --mode events
+          mkdir -p data/generated
+          cp data/finnhub_features.json data/generated/finnhub_features.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("data/generated/finnhub_features.json").read_text(encoding="utf-8"))
+          entries = payload.get("features", {}).get("sec_filings", {})
+          healthy = sorted(
+              ticker for ticker, entry in entries.items()
+              if isinstance(entry, dict) and entry.get("status") in {"ok", "empty"}
+          )
+          if not healthy:
+              raise SystemExit("Finnhub SEC discovery produced no successful ticker checks")
+          print(f"Verified Finnhub SEC discovery transport for {len(healthy)} ticker(s): {', '.join(healthy)}")
+          PY
       - name: Generate Today data without quote or technical refresh
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
