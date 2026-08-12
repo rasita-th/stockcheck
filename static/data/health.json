@@ -1,17 +1,17 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-08-12T12:23:32.074958+00:00",
+  "generated_at": "2026-08-12T13:49:28.720281+00:00",
   "market_session": {
     "timezone": "America/New_York",
-    "phase": "pre-market",
-    "market_open": false,
+    "phase": "market-open",
+    "market_open": true,
     "local_date": "2026-08-12",
     "latest_completed_session": "2026-08-11"
   },
   "layers": {
     "quote": {
-      "status": "latest-completed-session",
-      "age_minutes": 837.8,
+      "status": "stale",
+      "age_minutes": 923.7,
       "stale_after_minutes": 30,
       "timestamp": "2026-08-11T22:25:46+00:00",
       "row_count": 408,
@@ -19,15 +19,15 @@
       "fallback_count": 0,
       "session": {
         "timezone": "America/New_York",
-        "phase": "pre-market",
-        "market_open": false,
+        "phase": "market-open",
+        "market_open": true,
         "local_date": "2026-08-12",
         "latest_completed_session": "2026-08-11"
       }
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 837.6,
+      "age_minutes": 923.5,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T22:25:57+00:00",
       "row_count": 408,
@@ -39,10 +39,10 @@
       "stale_after_minutes": 30
     },
     "attention": {
-      "status": "stale",
-      "age_minutes": 121.1,
+      "status": "partial",
+      "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T10:22:29+00:00",
+      "timestamp": "2026-08-12T13:48:25+00:00",
       "row_count": 3,
       "source": null,
       "coverage_status": "partial",
@@ -93,18 +93,18 @@
           "source": "SEC company_tickers.json"
         },
         "news": {
-          "status": "ok",
+          "status": "partial",
           "source": "Verified company IR discovery",
           "checked": 10,
-          "accepted_events": 0
+          "accepted_events": 1
         },
         "ir": {
-          "status": "ok",
+          "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 10,
+          "ok": 9,
           "partial": 0,
-          "errors": 0,
+          "errors": 1,
           "registry": {
             "applicable": 35,
             "configured": 35,
@@ -133,16 +133,16 @@
       }
     },
     "events": {
-      "status": "stale",
-      "age_minutes": 121.1,
+      "status": "ok",
+      "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T10:22:29+00:00",
-      "row_count": 16,
+      "timestamp": "2026-08-12T13:48:25+00:00",
+      "row_count": 17,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 260.1,
+      "age_minutes": 346.1,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-12T08:03:25+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 1.0,
+      "age_minutes": 86.9,
       "stale_after_minutes": 50400,
       "timestamp": "2026-08-12 12:22:34 UTC",
       "row_count": 408,
@@ -158,7 +158,7 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 300.1,
+      "age_minutes": 386.0,
       "stale_after_minutes": 780,
       "timestamp": "2026-08-12T07:23:27.526753+00:00",
       "row_count": null,
