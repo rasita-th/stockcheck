@@ -1,66 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-12T13:48:25+00:00",
-  "row_count": 17,
+  "generated_at": "2026-08-12T16:11:51+00:00",
+  "row_count": 18,
   "events": [
-    {
-      "event_id": "technical:ZETA:price-move:2026-08-12",
-      "ticker": "ZETA",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +5.9%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.9% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-12T13:45:47.234338+00:00",
-      "detected_at": "2026-08-12T13:45:47.234342+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:ZETA:price-move:2026-08-12"
-      ],
-      "dedupe_key": "ZETA:price_move:45bcbecdc6594063",
-      "technical_score": 80.0,
-      "rsi14": 74.04,
-      "pct_vs_ema20": 22.67,
-      "pct_vs_ema200": 46.8,
-      "volume_ratio20": 0.97,
-      "technical_signal": "WATCH FOR ENTRY",
-      "technical_metrics_source": "canonical_technical_snapshot"
-    },
     {
       "event_id": "technical:CIFR:price-move:2026-08-12",
       "ticker": "CIFR",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.4%",
+      "headline": "Price +9.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.4% today.",
-      "materiality": "medium",
+      "why_today": "The stock moved +9.6% today.",
+      "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-12T13:45:47.168550+00:00",
-      "detected_at": "2026-08-12T13:45:47.168555+00:00",
+      "event_time": "2026-08-12T16:09:20.898712+00:00",
+      "detected_at": "2026-08-12T16:09:20.898716+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -68,8 +23,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 75,
-      "priority": "Risk",
+      "priority_score": 99,
+      "priority": "Critical",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -87,25 +42,63 @@
       ],
       "dedupe_key": "CIFR:price_move:3b88a5bee88b1e26",
       "technical_score": 27.0,
-      "rsi14": 41.64,
-      "pct_vs_ema20": -14.62,
-      "pct_vs_ema200": -6.65,
-      "volume_ratio20": 0.94,
+      "rsi14": 42.99,
+      "pct_vs_ema20": -11.39,
+      "pct_vs_ema200": -2.93,
+      "volume_ratio20": 0.59,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:EOSE:price-move:2026-08-12",
-      "ticker": "EOSE",
+      "event_id": "technical:NBIS:price-move:2026-08-12",
+      "ticker": "NBIS",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.1%",
+      "headline": "Price +32.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.1% today.",
+      "why_today": "The stock moved +32.5% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-12T16:09:20.791632+00:00",
+      "detected_at": "2026-08-12T16:09:20.791636+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Critical",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:NBIS:price-move:2026-08-12"
+      ],
+      "dedupe_key": "NBIS:price_move:525f252c070904f1"
+    },
+    {
+      "event_id": "technical:ASTS:price-move:2026-08-12",
+      "ticker": "ASTS",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +6.8%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +6.8% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T13:45:47.124877+00:00",
-      "detected_at": "2026-08-12T13:45:47.124882+00:00",
+      "event_time": "2026-08-12T16:09:20.747030+00:00",
+      "detected_at": "2026-08-12T16:09:20.747035+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -128,29 +121,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:EOSE:price-move:2026-08-12"
+        "technical:ASTS:price-move:2026-08-12"
       ],
-      "dedupe_key": "EOSE:price_move:1117725c3c7cce3c",
-      "technical_score": 43.0,
-      "rsi14": 48.93,
-      "pct_vs_ema20": 3.53,
-      "pct_vs_ema200": -49.59,
-      "volume_ratio20": 0.85,
-      "technical_signal": "AVOID / Turnaround only",
+      "dedupe_key": "ASTS:price_move:0b1123da5f0cd996",
+      "technical_score": 63.0,
+      "rsi14": 55.59,
+      "pct_vs_ema20": 10.25,
+      "pct_vs_ema200": -3.23,
+      "volume_ratio20": 0.35,
+      "technical_signal": "NEUTRAL / Wait",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:OKLO:price-move:2026-08-12",
-      "ticker": "OKLO",
+      "event_id": "technical:IREN:price-move:2026-08-12",
+      "ticker": "IREN",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.7%",
+      "headline": "Price +9.8%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.7% today.",
-      "materiality": "medium",
+      "why_today": "The stock moved +9.8% today.",
+      "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-12T13:45:46.992205+00:00",
-      "detected_at": "2026-08-12T13:45:46.992209+00:00",
+      "event_time": "2026-08-12T16:09:20.738410+00:00",
+      "detected_at": "2026-08-12T16:09:20.738415+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -158,8 +151,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 75,
-      "priority": "Risk",
+      "priority_score": 99,
+      "priority": "Critical",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -173,16 +166,59 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:OKLO:price-move:2026-08-12"
+        "technical:IREN:price-move:2026-08-12"
       ],
-      "dedupe_key": "OKLO:price_move:00003fbb488fe506",
+      "dedupe_key": "IREN:price_move:55c0ed2e32c36ffc",
       "technical_score": 53.0,
-      "rsi14": 52.66,
-      "pct_vs_ema20": 6.03,
-      "pct_vs_ema200": -34.16,
-      "volume_ratio20": 0.93,
+      "rsi14": 52.42,
+      "pct_vs_ema20": 7.36,
+      "pct_vs_ema200": -6.3,
+      "volume_ratio20": 0.57,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "gdelt:NBIS:b62ae025f93f4d89",
+      "ticker": "NBIS",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "Nebius Group : Nebius reports second quarter 2026 financial results",
+      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "materiality": "low",
+      "reported_materiality": "high",
+      "urgency": "developing",
+      "event_time": "2026-08-12T12:15:00+00:00",
+      "detected_at": "2026-08-12T16:09:21+00:00",
+      "verification_status": "unverified",
+      "verification_level": "unverified_report",
+      "verification_reason": "Primary source not yet located.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Nebius",
+      "dedupe_key": "NBIS:earnings_reported:2026-08-12:d1dfe53363da",
+      "source": {
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
+        "published_at": "2026-08-12T12:15:00+00:00",
+        "domain": "www.finanznachrichten.de"
+      },
+      "source_chain": [
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
+          "published_at": "2026-08-12T12:15:00+00:00",
+          "domain": "www.finanznachrichten.de"
+        }
+      ],
+      "secondary_source_count": 1,
+      "attention_policy_decision": "allow_unverified",
+      "related_event_ids": [
+        "gdelt:NBIS:b62ae025f93f4d89"
+      ],
+      "priority_score": 46,
+      "priority": "Watch"
     },
     {
       "event_id": "company_ir:RKLB:5c9232304438abc2",
@@ -403,7 +439,7 @@
       "related_event_ids": [
         "gdelt:NBIS:1ec191514e708d16"
       ],
-      "priority_score": 32,
+      "priority_score": 46,
       "priority": "Watch"
     },
     {
@@ -450,6 +486,50 @@
       "priority": "Watch"
     },
     {
+      "event_id": "technical:NVDA:technical_setup:2026-08-12",
+      "ticker": "NVDA",
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "headline": "Latest technical scan · 93/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.7, +5.8% vs EMA20, +14.3% vs EMA200, volume 0.42x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-12",
+      "detected_at": "2026-08-12T16:11:51+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-08-12"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-08-12"
+        }
+      ],
+      "technical_score": 93.0,
+      "technical_signal": "BUY ZONE / Trend Confirmed",
+      "scan_age_days": 0,
+      "rsi14": 61.74,
+      "pct_vs_ema20": 5.82,
+      "pct_vs_ema200": 14.26,
+      "volume_ratio20": 0.42,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:NVDA:technical_setup:2026-08-12"
+      ],
+      "dedupe_key": "NVDA:technical_setup:ff2c27a4c743b764",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
       "event_id": "company_ir:RKLB:da533bd82ba001bd",
       "ticker": "RKLB",
       "event_type": "earnings",
@@ -491,50 +571,6 @@
       ],
       "priority_score": 97,
       "priority": "Critical"
-    },
-    {
-      "event_id": "technical:NVDA:technical_setup:2026-08-11",
-      "ticker": "NVDA",
-      "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "headline": "Latest technical scan · 93/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-11: score 93/100, BUY ZONE / Trend Confirmed, RSI 58.0, +3.7% vs EMA20, +11.5% vs EMA200, volume 0.76x 20-day average.",
-      "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-08-11",
-      "detected_at": "2026-08-12T13:48:25+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-08-11"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-08-11"
-        }
-      ],
-      "technical_score": 93.0,
-      "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 1,
-      "rsi14": 58.01,
-      "pct_vs_ema20": 3.74,
-      "pct_vs_ema200": 11.49,
-      "volume_ratio20": 0.76,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:NVDA:technical_setup:2026-08-11"
-      ],
-      "dedupe_key": "NVDA:technical_setup:9a3aacf288f13971",
-      "priority_score": 48,
-      "priority": "Watch"
     },
     {
       "event_id": "gdelt:AMD:c354c900f97605bc",
