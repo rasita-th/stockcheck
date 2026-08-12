@@ -168,6 +168,12 @@ class FinnhubPipelineTests(unittest.TestCase):
         self.assertIn("_from", client.kwargs)
         self.assertIn("to", client.kwargs)
 
+    def test_sec_filing_queue_is_limited_to_portfolio_universe(self):
+        state = pipeline.default_state()
+        with mock.patch.object(pipeline, "load_portfolio_tickers", return_value=["RKLB"]):
+            due = pipeline.due_tickers(state, "sec_filings", ["AAPL", "RKLB", "MSFT"])
+        self.assertEqual(due, ["RKLB"])
+
     def test_output_does_not_expose_key_presence(self):
         state = pipeline.default_state()
         with mock.patch.object(pipeline, "load_json", return_value={"items": []}):
