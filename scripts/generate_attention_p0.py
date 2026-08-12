@@ -408,12 +408,16 @@ def validated_sec_discovery_rows(entry: Any, cik: str = "") -> list[dict[str, An
 
 
 def load_sec_discovery_entry(ticker: str) -> dict[str, Any] | None:
-    path = first_existing(FINNHUB_FEATURE_PATHS)
-    payload = load_json(path, {}) if path else {}
-    features = payload.get("features") if isinstance(payload, dict) else {}
-    filings = features.get("sec_filings") if isinstance(features, dict) else {}
-    entry = filings.get(ticker) if isinstance(filings, dict) else None
-    return entry if isinstance(entry, dict) else None
+    for path in FINNHUB_FEATURE_PATHS:
+        if not path.exists():
+            continue
+        payload = load_json(path, {})
+        features = payload.get("features") if isinstance(payload, dict) else {}
+        filings = features.get("sec_filings") if isinstance(features, dict) else {}
+        entry = filings.get(ticker) if isinstance(filings, dict) else None
+        if isinstance(entry, dict):
+            return entry
+    return None
 
 
 def sec_url(cik: str, accession: str, primary_document: str = "") -> str:
