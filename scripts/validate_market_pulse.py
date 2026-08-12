@@ -16,6 +16,7 @@ REQUIRED = {
     "themes": 5,
 }
 REQUIRED_MODES = ("balanced", "portfolio", "action", "news", "risk")
+DIAGNOSTIC_COMPONENTS = tuple(REQUIRED)
 
 
 def is_text(value: Any, minimum: int = 1) -> bool:
@@ -64,6 +65,55 @@ def validate_narrative(data: dict[str, Any], problems: list[str]) -> None:
             value = mode.get(bucket)
             if not isinstance(value, list):
                 problems.append(f"narrative.modes.{key}.{bucket}: must be a list")
+
+
+def validate_diagnostics(data: dict[str, Any], problems: list[str]) -> None:
+    if str(data.get("schema_version") or "") != "3.1":
+        return
+    diagnostics = data.get("diagnostics")
+    if not isinstance(diagnostics, dict):
+        problems.append("diagnostics: missing/not an object")
+        return
+    if diagnostics.get("status") not in {"complete", "partial", "insufficient"}:
+        problems.append("diagnostics.status: invalid")
+    if diagnostics.get("usability") not in {"usable", "caution", "suppress"}:
+        problems.append("diagnostics.usability: invalid")
+    if diagnostics.get("signal_policy") not in {"generate", "generate-with-caution", "suppress"}:
+        problems.append("diagnostics.signal_policy: invalid")
+    if not is_text(diagnostics.get("conclusion_impact"), 8):
+        problems.append("diagnostics.conclusion_impact: missing/too short")
+    missing = diagnostics.get("missing_symbols")
+    if not isinstance(missing, list):
+        problems.append("diagnostics.missing_symbols: must be a list")
+        missing = []
+    components = diagnostics.get("components")
+    if not isinstance(components, dict):
+        problems.append("diagnostics.components: missing/not an object")
+    else:
+        for name in DIAGNOSTIC_COMPONENTS:
+            component = components.get(name)
+            if not isinstance(component, dict):
+                problems.append(f"diagnostics.components.{name}: missing/not an object")
+                continue
+            requested = component.get("requested")
+            available = component.get("available")
+            component_missing = component.get("missing_symbols")
+            if not isinstance(requested, int) or not isinstance(available, int) or not 0 <= available <= requested:
+                problems.append(f"diagnostics.components.{name}: invalid counts")
+            if not isinstance(component_missing, list) or len(component_missing) != requested - available:
+                problems.append(f"diagnostics.components.{name}: missing-symbol count mismatch")
+            if component.get("impact") not in {"low", "medium", "high"}:
+                problems.append(f"diagnostics.components.{name}.impact: invalid")
+    sources = diagnostics.get("sources")
+    if not isinstance(sources, list) or not sources:
+        problems.append("diagnostics.sources: missing/empty")
+    if data.get("status") in {"partial", "error"} and not missing:
+        problems.append("diagnostics: partial/error payload must identify missing symbols")
+    if diagnostics.get("signal_policy") == "suppress":
+        if data.get("today_pulse"):
+            problems.append("today_pulse: must be empty when signals are suppressed")
+        if data.get("narrative", {}).get("signals_suppressed") is not True:
+            problems.append("narrative.signals_suppressed: must be true when signals are suppressed")
 
 
 def main() -> int:
@@ -117,6 +167,7 @@ def main() -> int:
         problems.append(f"valid row rate {rate:.1%}, need >= {args.min_ok_rate:.0%}")
 
     validate_narrative(data, problems)
+    validate_diagnostics(data, problems)
     if problems:
         raise SystemExit("validation failed: " + "; ".join(problems))
     print(
