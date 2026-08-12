@@ -229,7 +229,7 @@ jobs:
           from pathlib import Path
 
           payload = json.loads(Path("data/generated/attention_today.json").read_text(encoding="utf-8"))
-          ir = payload.get("health", {}).get("ir", {})
+          ir = payload.get("source_health", {}).get("ir", {})
           registry = ir.get("registry", {})
           if registry.get("missing") != 0 or registry.get("configured") != 35:
               raise SystemExit(f"IR registry coverage is incomplete: {registry}")
