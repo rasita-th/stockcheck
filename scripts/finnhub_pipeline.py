@@ -190,18 +190,22 @@ def is_due(entry: Any, ttl_hours: float, current: datetime | None = None) -> boo
 def due_tickers(state: dict[str, Any], endpoint: str, universe: Iterable[str]) -> list[str]:
     policy = ENDPOINTS[endpoint]
     bucket = state.setdefault("endpoints", {}).setdefault(endpoint, {})
+    portfolio_order: dict[str, int] = {}
     if endpoint == "sec_filings":
-        portfolio = set(load_portfolio_tickers())
+        ordered_portfolio = load_portfolio_tickers()
+        portfolio = set(ordered_portfolio)
+        portfolio_order = {ticker: index for index, ticker in enumerate(ordered_portfolio)}
         universe = [ticker for ticker in universe if ticker in portfolio]
     unique = sorted({ticker for ticker in universe if clean_ticker(ticker)})
 
-    def rank(ticker: str) -> tuple[int, float, str]:
+    def rank(ticker: str) -> tuple[int, float, int, str]:
         entry = bucket.get(ticker)
         checked = parse_dt(entry.get("updated_at")) if isinstance(entry, dict) else None
+        priority = portfolio_order.get(ticker, 0)
         if checked is None:
-            return (0, 0.0, ticker)
+            return (0, 0.0, priority, ticker)
         age = (now_utc() - checked).total_seconds()
-        return (1, -age, ticker)
+        return (1, -age, priority, ticker)
 
     return [ticker for ticker in sorted(unique, key=rank) if is_due(bucket.get(ticker), policy.ttl_hours)]
 
