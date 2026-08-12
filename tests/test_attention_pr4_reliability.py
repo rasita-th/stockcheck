@@ -19,6 +19,14 @@ import attention_sources.pipeline as pipeline  # noqa: E402
 
 
 class AttentionPR4ReliabilityTests(unittest.TestCase):
+    def test_http_wrappers_execute_their_expected_transport(self):
+        with patch.object(p0, "_pace_sec_request"), patch.object(p0.urllib.request, "urlopen") as urlopen:
+            urlopen.return_value.__enter__.return_value.read.return_value = b'{"ok": true}'
+            self.assertEqual(p0.http_json("https://data.sec.gov/test.json"), {"ok": True})
+        with patch.object(p0, "_pace_sec_request"), patch.object(p0.urllib.request, "urlopen") as urlopen:
+            urlopen.return_value.__enter__.return_value.read.return_value = b"<feed />"
+            self.assertEqual(p0.http_bytes("https://www.sec.gov/test.atom"), b"<feed />")
+
     def test_sec_ticker_map_bootstraps_from_versioned_registry(self):
         registry = {
             "items": {

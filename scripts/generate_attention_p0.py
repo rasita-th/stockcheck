@@ -125,6 +125,22 @@ def _pace_sec_request(url: str) -> None:
 def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
     if OFFLINE_MODE:
         return None
+    _pace_sec_request(url)
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json,text/plain,*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "close",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        print(f"::warning::GET failed {url}: {exc}")
+        return None
 
 
 def http_bytes(url: str, timeout: int = 18) -> bytes | None:
@@ -143,22 +159,6 @@ def http_bytes(url: str, timeout: int = 18) -> bytes | None:
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return response.read()
-    except Exception as exc:
-        print(f"::warning::GET failed {url}: {exc}")
-        return None
-    _pace_sec_request(url)
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "application/json,text/plain,*/*",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Connection": "close",
-        },
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.loads(response.read().decode("utf-8"))
     except Exception as exc:
         print(f"::warning::GET failed {url}: {exc}")
         return None
