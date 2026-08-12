@@ -14,7 +14,10 @@ import json
 import math
 import os
 import time
+import re
+import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as XML_ET
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -34,6 +37,7 @@ TECHNICAL_PATHS = [SITE_DATA_DIR / "technical.json", GENERATED_DIR / "technical.
 ATTENTION_OUT_PATHS = [DATA_DIR / "attention_today.json", GENERATED_DIR / "attention_today.json", SITE_DATA_DIR / "attention_today.json", STATIC_DATA_DIR / "attention_today.json"]
 EVENT_OUT_PATHS = [DATA_DIR / "events.json", GENERATED_DIR / "events.json", SITE_DATA_DIR / "events.json", STATIC_DATA_DIR / "events.json"]
 SEC_STATE_PATH = STATE_DIR / "sec.json"
+SEC_REGISTRY_PATH = DATA_DIR / "sec_registry.json"
 
 ET = ZoneInfo("America/New_York")
 UTC = timezone.utc
@@ -120,6 +124,27 @@ def _pace_sec_request(url: str) -> None:
 
 def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
     if OFFLINE_MODE:
+        return None
+
+
+def http_bytes(url: str, timeout: int = 18) -> bytes | None:
+    if OFFLINE_MODE:
+        return None
+    _pace_sec_request(url)
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/atom+xml,application/xml,text/xml,*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "close",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return response.read()
+    except Exception as exc:
+        print(f"::warning::GET failed {url}: {exc}")
         return None
     _pace_sec_request(url)
     request = urllib.request.Request(
@@ -213,10 +238,38 @@ def _cached_sec_ticker_map(old_state: dict[str, Any] | None) -> dict[str, dict[s
     return output
 
 
-def fetch_sec_ticker_map(old_state: dict[str, Any] | None = None) -> tuple[dict[str, dict[str, Any]], str]:
-    """Fetch the official index, falling back to previously verified CIKs."""
-    exchange_data = http_json("https://www.sec.gov/files/company_tickers_exchange.json")
+def _registry_sec_ticker_map(registry: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
+    items = registry.get("items") if isinstance(registry, dict) else {}
     output: dict[str, dict[str, Any]] = {}
+    for raw_ticker, raw_entry in (items.items() if isinstance(items, dict) else []):
+        ticker = str(raw_ticker or "").upper().strip()
+        entry = raw_entry if isinstance(raw_entry, dict) else {}
+        status = str(entry.get("status") or "applicable")
+        if status == "not_applicable":
+            output[ticker] = {
+                "ticker": ticker,
+                "status": "not_applicable",
+                "identity_status": "not_applicable",
+                "reason": str(entry.get("reason") or "Not an SEC-reporting issuer"),
+            }
+            continue
+        cik = str(entry.get("cik") or "").strip()
+        if ticker and cik.isdigit():
+            output[ticker] = {
+                **entry,
+                "ticker": ticker,
+                "cik_str": cik.zfill(10),
+                "identity_status": "verified_registry",
+            }
+    return output
+
+
+def fetch_sec_ticker_map(old_state: dict[str, Any] | None = None, registry: dict[str, Any] | None = None) -> tuple[dict[str, dict[str, Any]], str]:
+    """Fetch the official index, falling back to previously verified CIKs."""
+    registry_map = _registry_sec_ticker_map(registry)
+    exchange_data = http_json("https://www.sec.gov/files/company_tickers_exchange.json")
+    output: dict[str, dict[str, Any]] = dict(registry_map)
+    live_rows = 0
     if exchange_data:
         fields = exchange_data.get("fields") or []
         for values in exchange_data.get("data") or []:
@@ -224,17 +277,76 @@ def fetch_sec_ticker_map(old_state: dict[str, Any] | None = None) -> tuple[dict[
             ticker = str(row.get("ticker") or "").upper().strip()
             cik = row.get("cik") or row.get("cik_str")
             if ticker and cik:
-                output[ticker] = {**row, "ticker": ticker, "cik_str": str(cik).zfill(10)}
-    if not output:
+                output[ticker] = {**row, "ticker": ticker, "cik_str": str(cik).zfill(10), "identity_status": "verified_live"}
+                live_rows += 1
+    if not live_rows:
         data = http_json("https://www.sec.gov/files/company_tickers.json")
         for row in (data.values() if isinstance(data, dict) else []):
             if isinstance(row, dict) and row.get("ticker") and row.get("cik_str") is not None:
                 ticker = str(row["ticker"]).upper().strip()
-                output[ticker] = {**row, "ticker": ticker, "cik_str": str(row["cik_str"]).zfill(10)}
-    if output:
+                output[ticker] = {**row, "ticker": ticker, "cik_str": str(row["cik_str"]).zfill(10), "identity_status": "verified_live"}
+                live_rows += 1
+    if live_rows:
         return output, "ok"
+    if registry_map:
+        return registry_map, "registry"
     cached = _cached_sec_ticker_map(old_state)
     return (cached, "cached") if cached else ({}, "error")
+
+
+def parse_sec_atom(payload: bytes) -> list[dict[str, Any]]:
+    try:
+        root = XML_ET.fromstring(payload)
+    except Exception:
+        return []
+    rows: list[dict[str, Any]] = []
+    for entry in root.iter():
+        if entry.tag.split("}")[-1].lower() != "entry":
+            continue
+        values: dict[str, str] = {}
+        link = ""
+        form = ""
+        for child in list(entry):
+            name = child.tag.split("}")[-1].lower()
+            if name in {"id", "updated", "title"}:
+                values[name] = "".join(child.itertext()).strip()
+            elif name == "category" and child.attrib.get("term"):
+                form = str(child.attrib["term"]).strip().upper()
+            elif name == "link" and child.attrib.get("href") and child.attrib.get("rel", "alternate") == "alternate":
+                link = str(child.attrib["href"]).strip()
+        accession_match = re.search(r"accession-number=([0-9-]+)", values.get("id", ""))
+        if not accession_match:
+            accession_match = re.search(r"([0-9]{10}-[0-9]{2}-[0-9]{6})", link)
+        accession = accession_match.group(1) if accession_match else ""
+        if not form:
+            form = values.get("title", "").split(" - ", 1)[0].strip().upper()
+        if not accession or not form:
+            continue
+        path = urllib.parse.urlsplit(link).path
+        rows.append({
+            "form": form,
+            "accessionNumber": accession,
+            "filingDate": values.get("updated", "")[:10],
+            "acceptanceDateTime": values.get("updated", ""),
+            "primaryDocument": path.rsplit("/", 1)[-1] if path else "",
+            "items": "",
+            "reportDate": "",
+        })
+    return rows
+
+
+def fetch_sec_atom(cik: str) -> list[dict[str, Any]]:
+    query = urllib.parse.urlencode({
+        "action": "getcompany",
+        "CIK": cik.zfill(10),
+        "type": "",
+        "dateb": "",
+        "owner": "include",
+        "count": "100",
+        "output": "atom",
+    })
+    payload = http_bytes(f"https://www.sec.gov/cgi-bin/browse-edgar?{query}")
+    return parse_sec_atom(payload) if payload else []
 
 
 def sec_url(cik: str, accession: str, primary_document: str = "") -> str:
@@ -296,13 +408,28 @@ def sec_event_materiality(subtype: str) -> str:
 def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]], old_state: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any], str, str | None]:
     ticker = stock["ticker"]
     mapping = ticker_map.get(ticker, {})
+    if mapping.get("status") == "not_applicable":
+        return [], {
+            **old_state,
+            "identity_status": "not_applicable",
+            "reason": mapping.get("reason") or "Not an SEC-reporting issuer",
+        }, "not_applicable", None
     cik = str(stock.get("sec_cik") or mapping.get("cik_str") or old_state.get("cik") or "").strip()
     if not cik.isdigit():
         return [], old_state, "partial", "CIK unavailable"
     data = http_json(f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json")
-    if not data:
-        return [], old_state, "error", "SEC submissions unavailable"
-    recent = (data.get("filings") or {}).get("recent") or {}
+    transport = "submissions_json"
+    if data:
+        recent = (data.get("filings") or {}).get("recent") or {}
+    else:
+        atom_rows = fetch_sec_atom(cik)
+        if not atom_rows:
+            return [], old_state, "error", "SEC submissions and Atom transports unavailable"
+        transport = "company_atom"
+        recent = {key: [row.get(key) for row in atom_rows] for key in (
+            "form", "accessionNumber", "filingDate", "acceptanceDateTime",
+            "primaryDocument", "items", "reportDate",
+        )}
     forms = recent.get("form") or []
     accessions = recent.get("accessionNumber") or []
     filing_dates = recent.get("filingDate") or []
@@ -343,7 +470,14 @@ def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]
             "detected_at": now_utc().isoformat(), "verification_status": "confirmed",
             "source": {"type": "sec", "quality": "primary", "url": source_url, "published_at": accepted_at.isoformat() if accepted_at else (str(filing_date) if filing_date else None), "form": form, "items": items, "accession_number": accession, "report_date": str(report_dates[index]) if index < len(report_dates) else ""},
         })
-    return events, {"cik": cik.zfill(10), "last_successful_check": now_utc().isoformat(), "seen_accessions": all_important[:100]}, "ok", None
+    return events, {
+        "cik": cik.zfill(10),
+        "identity_status": str(mapping.get("identity_status") or "verified_state"),
+        "transport_status": "ok",
+        "transport": transport,
+        "last_successful_check": now_utc().isoformat(),
+        "seen_accessions": all_important[:100],
+    }, "ok", None
 
 
 def earnings_events(calendar: list[dict[str, Any]], portfolio_map: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
@@ -487,10 +621,12 @@ def generate() -> dict[str, Any]:
     contexts = {ticker: price_context(technical_map.get(ticker)) for ticker in portfolio_map}
     earnings_calendar = load_earnings_calendar()
     old_sec_state = load_json(SEC_STATE_PATH, {}) or {}
-    ticker_map, ticker_map_status = fetch_sec_ticker_map(old_sec_state)
+    sec_registry = load_json(SEC_REGISTRY_PATH, {}) or {}
+    ticker_map, ticker_map_status = fetch_sec_ticker_map(old_sec_state, sec_registry)
     events: list[dict[str, Any]] = []
     next_sec_state: dict[str, Any] = {"schema_version": "1.0", "updated_at": now_utc().isoformat(), "tickers": {}}
-    sec_ok = sec_partial = sec_error = 0
+    sec_ok = sec_partial = sec_error = sec_not_applicable = 0
+    sec_transport_failures = 0
     errors: list[dict[str, str]] = []
     for stock in portfolio:
         ticker = stock["ticker"]
@@ -501,16 +637,41 @@ def generate() -> dict[str, Any]:
         sec_ok += status == "ok"
         sec_partial += status == "partial"
         sec_error += status == "error"
+        sec_not_applicable += status == "not_applicable"
         if error:
-            errors.append({"source": "sec", "ticker": ticker, "message": error})
+            if status == "error" and error == "SEC submissions and Atom transports unavailable":
+                sec_transport_failures += 1
+            else:
+                errors.append({"source": "sec", "ticker": ticker, "message": error})
         events.extend(technical_events(stock, contexts[ticker]))
     events.extend(earnings_events(earnings_calendar, portfolio_map))
     unique = {str(event.get("event_id")): event for event in events if event.get("event_id")}
     normalized_events = sorted(unique.values(), key=lambda event: str(event.get("event_time") or ""), reverse=True)
     items = aggregate_items(normalized_events, portfolio_map, contexts)
-    sec_status = "ok" if sec_ok and not sec_error and not sec_partial else "partial" if sec_ok or sec_partial else "error"
+    if sec_transport_failures:
+        errors.append({
+            "source": "sec",
+            "ticker": "*",
+            "message": f"SEC transport unavailable for {sec_transport_failures} applicable tickers",
+        })
+    sec_applicable = len(portfolio) - sec_not_applicable
+    identity_missing = sec_partial
+    identity_status = "complete" if identity_missing == 0 else "partial"
+    transport_status = "ok" if sec_ok == sec_applicable else "partial" if sec_ok else "error"
+    sec_status = "ok" if identity_status == "complete" and transport_status == "ok" else "partial" if sec_ok or sec_not_applicable else "error"
     source_health = {
-        "sec": {"status": sec_status, "checked": len(portfolio), "ok": sec_ok, "partial": sec_partial, "errors": sec_error, "source": "SEC EDGAR"},
+        "sec": {
+            "status": sec_status,
+            "checked": len(portfolio),
+            "applicable": sec_applicable,
+            "not_applicable": sec_not_applicable,
+            "ok": sec_ok,
+            "partial": sec_partial,
+            "errors": sec_error,
+            "source": "SEC EDGAR",
+            "identity": {"status": identity_status, "verified": sec_applicable - identity_missing, "missing": identity_missing},
+            "transport": {"status": transport_status, "ok": sec_ok, "errors": sec_error},
+        },
         "earnings": {"status": "partial", "rows": len(earnings_calendar), "source": "Company/SEC-confirmed curated calendar", "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated."},
         "market_data": {"status": "ok" if technical_map else "error", "rows": len(technical_map), "source": "technical.json"},
         "news": {"status": "unavailable", "source": "Not enabled in PR1", "note": "Free news discovery and IR monitoring are planned for PR2."},

@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import sys
 import unittest
 from datetime import datetime, timezone
@@ -18,6 +19,77 @@ import attention_sources.pipeline as pipeline  # noqa: E402
 
 
 class AttentionPR4ReliabilityTests(unittest.TestCase):
+    def test_sec_ticker_map_bootstraps_from_versioned_registry(self):
+        registry = {
+            "items": {
+                "RKLB": {
+                    "status": "applicable",
+                    "cik": "0001819994",
+                    "verified_at": "2026-08-12",
+                }
+            }
+        }
+        with patch.object(p0, "http_json", return_value=None):
+            mapping, status = p0.fetch_sec_ticker_map({}, registry=registry)
+        self.assertEqual(status, "registry")
+        self.assertEqual(mapping["RKLB"]["cik_str"], "0001819994")
+        self.assertEqual(mapping["RKLB"]["identity_status"], "verified_registry")
+
+    def test_non_issuer_is_not_reported_as_cik_error(self):
+        events, state, status, error = p0.fetch_sec_events(
+            {"ticker": "JEPQ"},
+            {"JEPQ": {"status": "not_applicable", "reason": "ETF"}},
+            {},
+        )
+        self.assertEqual(events, [])
+        self.assertEqual(status, "not_applicable")
+        self.assertIsNone(error)
+        self.assertEqual(state["identity_status"], "not_applicable")
+
+    def test_sec_atom_transport_parses_important_filing(self):
+        payload = b"""<?xml version="1.0" encoding="UTF-8"?>
+        <feed xmlns="http://www.w3.org/2005/Atom">
+          <entry>
+            <title>8-K - Current report</title>
+            <updated>2026-08-12T12:00:00-04:00</updated>
+            <category term="8-K" />
+            <link rel="alternate" href="https://www.sec.gov/Archives/edgar/data/1819994/000181999426000001/rklb-8k.htm" />
+            <id>urn:tag:sec.gov,2008:accession-number=0001819994-26-000001</id>
+          </entry>
+        </feed>"""
+        rows = p0.parse_sec_atom(payload)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["form"], "8-K")
+        self.assertEqual(rows[0]["accessionNumber"], "0001819994-26-000001")
+        self.assertEqual(rows[0]["primaryDocument"], "rklb-8k.htm")
+
+    def test_sec_registry_covers_every_portfolio_identity(self):
+        registry = json.loads((ROOT / "data" / "sec_registry.json").read_text(encoding="utf-8"))
+        expected = {
+            "RKLB", "AMZN", "HOOD", "NVDA", "IREN", "ASTS", "OKLO", "TSLA",
+            "GOOGL", "BMNR", "NBIS", "TEM", "MP", "IONQ", "AMD", "ORCL", "EQT",
+            "TMDX", "EOSE", "PLTR", "UUUU", "PSIX", "CIFR", "RXRX", "JEPQ",
+            "SYM", "TMC", "OSCR", "COPX", "RR", "ZETA", "OPEN", "COST", "BEAM",
+            "NOW", "TE", "NASA", "INDI",
+        }
+        self.assertEqual(set(registry["items"]), expected)
+        self.assertTrue(all(
+            entry.get("status") == "not_applicable" or str(entry.get("cik", "")).isdigit()
+            for entry in registry["items"].values()
+        ))
+
+    def test_required_filing_forms_have_stable_classification(self):
+        expected = {
+            "8-K": "current_report",
+            "10-Q": "periodic_report",
+            "6-K": "foreign_issuer_report",
+            "4": "insider_activity",
+            "S-3": "capital_raise",
+        }
+        for form, subtype in expected.items():
+            with self.subTest(form=form):
+                self.assertEqual(p0.classify_sec_filing(form)["subtype"], subtype)
+
     def test_sec_ticker_map_falls_back_to_last_verified_cik(self):
         state = {"tickers": {"RKLB": {"cik": "0001819994", "last_successful_check": "2026-08-11T00:00:00+00:00"}}}
         with patch.object(p0, "http_json", return_value=None):
