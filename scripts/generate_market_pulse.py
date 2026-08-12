@@ -19,6 +19,13 @@ UNIVERSE_PATHS = [
 ]
 OUTPUT_DIRS = [ROOT / "data/generated", ROOT / "data", ROOT / "site/data", ROOT / "static/data"]
 BATCH_SIZE = 20
+COMPONENT_POLICY = {
+    "global_markets": {"impact": "medium", "minimum_coverage": 0.75},
+    "us_indices": {"impact": "high", "minimum_coverage": 0.80},
+    "us_sectors": {"impact": "high", "minimum_coverage": 0.75},
+    "themes": {"impact": "low", "minimum_coverage": 0.60},
+}
+CRITICAL_INDEX_SYMBOLS = {"^GSPC", "^IXIC", "^VIX"}
 
 
 def universe() -> dict[str, Any]:
@@ -183,6 +190,88 @@ def build(items: list[dict[str, Any]], cache: dict[str, pd.Series], failed: list
             )
             rows.append(row)
     return rows
+
+
+def coverage_diagnostics(
+    global_markets: list[dict[str, Any]],
+    us_indices: list[dict[str, Any]],
+    sectors: list[dict[str, Any]],
+    themes: list[dict[str, Any]],
+) -> dict[str, Any]:
+    groups = {
+        "global_markets": global_markets,
+        "us_indices": us_indices,
+        "us_sectors": sectors,
+        "themes": themes,
+    }
+    components: dict[str, dict[str, Any]] = {}
+    missing_symbols: list[str] = []
+    for name, rows in groups.items():
+        policy = COMPONENT_POLICY[name]
+        available = [row for row in rows if row.get("status") == "ok" and safe(row.get("week_pct")) is not None]
+        missing = [
+            str(row.get("symbol") or "UNKNOWN")
+            for row in rows
+            if row.get("status") != "ok" or safe(row.get("week_pct")) is None
+        ]
+        requested = len(rows)
+        coverage = len(available) / requested if requested else 0.0
+        components[name] = {
+            "requested": requested,
+            "available": len(available),
+            "coverage_rate": round(coverage, 4),
+            "missing_symbols": missing,
+            "impact": policy["impact"],
+            "minimum_coverage": policy["minimum_coverage"],
+            "sufficient": coverage >= policy["minimum_coverage"],
+        }
+        missing_symbols.extend(missing)
+
+    missing_symbols = list(dict.fromkeys(missing_symbols))
+    missing_set = set(missing_symbols)
+    index_missing = set(components["us_indices"]["missing_symbols"])
+    critical_missing = sorted(index_missing & CRITICAL_INDEX_SYMBOLS)
+    indices = components["us_indices"]
+    sector_breadth = components["us_sectors"]
+    primary_anchors_missing = {"^GSPC", "^IXIC"}.issubset(index_missing)
+    insufficient_core = (
+        float(indices["coverage_rate"]) < 0.50
+        or float(sector_breadth["coverage_rate"]) < 0.50
+        or primary_anchors_missing
+    )
+    if insufficient_core:
+        usability = "suppress"
+        signal_policy = "suppress"
+        if float(sector_breadth["coverage_rate"]) < 0.50:
+            impact = "Sector breadth coverage is below 50%; breadth and regime conclusions are not reliable."
+        else:
+            impact = "Primary US index coverage is insufficient; market regime conclusions are not reliable."
+    elif missing_symbols:
+        usability = "caution"
+        signal_policy = "generate-with-caution"
+        affected = [name for name, detail in components.items() if detail["missing_symbols"]]
+        impact = "Partial coverage affects: " + ", ".join(affected) + "."
+    else:
+        usability = "usable"
+        signal_policy = "generate"
+        impact = "All configured components are available."
+
+    return {
+        "status": "complete" if not missing_symbols else "insufficient" if insufficient_core else "partial",
+        "usability": usability,
+        "signal_policy": signal_policy,
+        "conclusion_impact": impact,
+        "missing_symbols": missing_symbols,
+        "critical_missing_symbols": critical_missing,
+        "components": components,
+        "sources": [{
+            "source": "yahoo_finance_yfinance",
+            "status": "ok" if not missing_symbols else "unavailable" if sum(
+                component["available"] for component in components.values()
+            ) == 0 else "partial",
+            "failed_symbols": missing_symbols,
+        }],
+    }
 
 
 def pulse(sectors: list[dict[str, Any]], themes: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -375,10 +464,15 @@ def main() -> None:
         "sectors_positive_week": sum(1 for row in sectors if (row.get("week_pct") or 0) > 0),
         "sector_count": sum(1 for row in sectors if row.get("status") == "ok"),
     }
+    diagnostics = coverage_diagnostics(global_markets, us_indices, sectors, themes)
+    narrative = build_narrative(global_markets, us_indices, sectors, themes, breadth)
+    narrative["data_usability"] = diagnostics["usability"]
+    narrative["signal_policy"] = diagnostics["signal_policy"]
+    narrative["signals_suppressed"] = diagnostics["signal_policy"] == "suppress"
     generated_at = datetime.now(timezone.utc)
     payload = {
-        "schema_version": "3.0",
-        "version": "9.6.0",
+        "schema_version": "3.1",
+        "version": "9.6.1",
         "generated_at": generated_at.isoformat(),
         "next_refresh_at": (generated_at + timedelta(hours=12)).isoformat(),
         "source": "Yahoo Finance via yfinance; indices and ETF proxies",
@@ -386,13 +480,14 @@ def main() -> None:
         "successful_symbols": ok,
         "requested_rows": len(all_rows),
         "failed_symbols": failed,
+        "diagnostics": diagnostics,
         "global_markets": global_markets,
         "us_indices": us_indices,
         "us_sectors": sectors,
         "themes": themes,
-        "today_pulse": pulse(sectors, themes),
+        "today_pulse": [] if diagnostics["signal_policy"] == "suppress" else pulse(sectors, themes),
         "breadth": breadth,
-        "narrative": build_narrative(global_markets, us_indices, sectors, themes, breadth),
+        "narrative": narrative,
     }
     save(payload)
 
