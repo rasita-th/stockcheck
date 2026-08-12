@@ -2,6 +2,7 @@ import importlib.util
 import json
 import sys
 import unittest
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
@@ -19,6 +20,9 @@ import attention_sources.pipeline as pipeline  # noqa: E402
 
 
 class AttentionPR4ReliabilityTests(unittest.TestCase):
+    def setUp(self):
+        p0._SEC_BLOCKED_HOSTS.clear()
+
     def test_http_wrappers_execute_their_expected_transport(self):
         with patch.object(p0, "_pace_sec_request"), patch.object(p0.urllib.request, "urlopen") as urlopen:
             urlopen.return_value.__enter__.return_value.read.return_value = b'{"ok": true}'
@@ -117,6 +121,72 @@ class AttentionPR4ReliabilityTests(unittest.TestCase):
         self.assertEqual(status, "ok")
         self.assertIsNone(error)
         self.assertEqual(state["cik"], "0001819994")
+
+    def test_sec_transport_circuit_breaker_stops_repeating_blocked_host(self):
+        denied = urllib.error.HTTPError(
+            "https://data.sec.gov/submissions/test.json", 403, "Forbidden", {}, None
+        )
+        with patch.object(p0, "_pace_sec_request"), patch.object(
+            p0.urllib.request, "urlopen", side_effect=denied
+        ) as urlopen:
+            self.assertIsNone(p0.http_json("https://data.sec.gov/submissions/one.json"))
+            self.assertIsNone(p0.http_json("https://data.sec.gov/submissions/two.json"))
+        self.assertEqual(urlopen.call_count, 1)
+
+    def test_verified_finnhub_sec_index_is_used_when_official_transport_is_blocked(self):
+        fallback = {
+            "status": "ok",
+            "updated_at": "2026-08-12T12:00:00+00:00",
+            "data": [{
+                "form": "8-K",
+                "accessionNumber": "0001819994-26-000001",
+                "filingDate": "2026-08-12",
+                "acceptanceDateTime": "2026-08-12T16:05:00-04:00",
+                "primaryDocument": "rklb-8k.htm",
+                "items": "2.02",
+                "reportDate": "2026-06-30",
+                "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000001/rklb-8k.htm",
+            }],
+        }
+        with (
+            patch.object(p0, "http_json", return_value=None),
+            patch.object(p0, "fetch_sec_atom", return_value=[]),
+        ):
+            events, state, status, error = p0.fetch_sec_events(
+                {"ticker": "RKLB"},
+                {"RKLB": {"cik_str": "0001819994", "identity_status": "verified_registry"}},
+                {},
+                fallback_entry=fallback,
+            )
+        self.assertEqual(status, "ok")
+        self.assertIsNone(error)
+        self.assertEqual(state["transport"], "finnhub_sec_index")
+        self.assertEqual(events[0]["source"]["url"], fallback["data"][0]["sourceUrl"])
+        self.assertEqual(events[0]["source"]["discovered_via"], "finnhub_sec_index")
+
+    def test_invalid_discovery_link_cannot_claim_sec_coverage(self):
+        fallback = {
+            "status": "ok",
+            "updated_at": "2026-08-12T12:00:00+00:00",
+            "data": [{
+                "form": "8-K",
+                "accessionNumber": "0001819994-26-000001",
+                "sourceUrl": "https://example.invalid/fake-filing",
+            }],
+        }
+        with (
+            patch.object(p0, "http_json", return_value=None),
+            patch.object(p0, "fetch_sec_atom", return_value=[]),
+        ):
+            events, _state, status, error = p0.fetch_sec_events(
+                {"ticker": "RKLB"},
+                {"RKLB": {"cik_str": "0001819994"}},
+                {},
+                fallback_entry=fallback,
+            )
+        self.assertEqual(events, [])
+        self.assertEqual(status, "error")
+        self.assertIn("unavailable", error)
 
     def test_optional_gdelt_failure_does_not_downgrade_verified_ir(self):
         now = datetime(2026, 8, 12, 4, 0, tzinfo=timezone.utc)
