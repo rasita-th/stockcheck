@@ -230,13 +230,18 @@ jobs:
 
           payload = json.loads(Path("data/generated/finnhub_features.json").read_text(encoding="utf-8"))
           entries = payload.get("features", {}).get("sec_filings", {})
+          portfolio = json.loads(Path("data/portfolio.json").read_text(encoding="utf-8"))
+          monitored = {
+              str(row.get("ticker") or row.get("symbol") or "").upper()
+              for row in portfolio if isinstance(row, dict)
+          }
           healthy = sorted(
               ticker for ticker, entry in entries.items()
-              if isinstance(entry, dict) and entry.get("status") in {"ok", "empty"}
+              if ticker in monitored and isinstance(entry, dict) and entry.get("status") in {"ok", "empty"}
           )
           if not healthy:
-              raise SystemExit("Finnhub SEC discovery produced no successful ticker checks")
-          print(f"Verified Finnhub SEC discovery transport for {len(healthy)} ticker(s): {', '.join(healthy)}")
+              raise SystemExit("Finnhub SEC discovery produced no successful portfolio ticker checks")
+          print(f"Verified portfolio SEC discovery transport for {len(healthy)} ticker(s): {', '.join(healthy)}")
           PY
       - name: Generate Today data without quote or technical refresh
         env:
