@@ -133,6 +133,47 @@ class FinnhubPipelineTests(unittest.TestCase):
         self.assertEqual(result["calls_used"], 3)
         self.assertLessEqual(sum(len(v) for v in result["refreshed"].values()), 3)
 
+    def test_sec_filing_normalizer_keeps_only_official_sec_records(self):
+        rows = pipeline.normalize_sec_filings([
+            {
+                "symbol": "RKLB",
+                "form": "8-K",
+                "accessNumber": "0001819994-26-000001",
+                "filedDate": "2026-08-12",
+                "acceptedDate": "2026-08-12 16:05:00",
+                "reportUrl": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000001/rklb-8k.htm",
+            },
+            {
+                "symbol": "RKLB",
+                "form": "8-K",
+                "accessNumber": "0001819994-26-000002",
+                "filedDate": "2026-08-12",
+                "reportUrl": "https://example.invalid/not-sec.htm",
+            },
+        ])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["accessionNumber"], "0001819994-26-000001")
+        self.assertEqual(rows[0]["primaryDocument"], "rklb-8k.htm")
+        self.assertEqual(rows[0]["sourceUrl"], "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000001/rklb-8k.htm")
+
+    def test_sec_filing_endpoint_uses_bounded_recent_window(self):
+        class FakeClient:
+            def filings(self, **kwargs):
+                self.kwargs = kwargs
+                return []
+
+        client = FakeClient()
+        pipeline.endpoint_call(client, "sec_filings", "RKLB")
+        self.assertEqual(client.kwargs["symbol"], "RKLB")
+        self.assertIn("_from", client.kwargs)
+        self.assertIn("to", client.kwargs)
+
+    def test_sec_filing_queue_is_limited_to_portfolio_universe(self):
+        state = pipeline.default_state()
+        with mock.patch.object(pipeline, "load_portfolio_tickers", return_value=["RKLB", "AMZN"]):
+            due = pipeline.due_tickers(state, "sec_filings", ["AAPL", "AMZN", "RKLB", "MSFT"])
+        self.assertEqual(due, ["RKLB", "AMZN"])
+
     def test_output_does_not_expose_key_presence(self):
         state = pipeline.default_state()
         with mock.patch.object(pipeline, "load_json", return_value={"items": []}):
