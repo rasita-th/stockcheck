@@ -3,7 +3,7 @@
 
 P0 design goals:
 - use SEC EDGAR, curated primary-source earnings entries and the scanner's own data
-- never depend on Finnhub or another paid/licensed data feed
+- prefer SEC EDGAR and allow a bounded Finnhub index only when it links back to an official SEC filing
 - preserve every unseen SEC accession, including multiple filings on the same day
 - normalize events before ranking and grouping them into a short attention list
 - report partial source coverage instead of claiming a false all-clear
@@ -15,6 +15,7 @@ import math
 import os
 import time
 import re
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as XML_ET
@@ -38,6 +39,12 @@ ATTENTION_OUT_PATHS = [DATA_DIR / "attention_today.json", GENERATED_DIR / "atten
 EVENT_OUT_PATHS = [DATA_DIR / "events.json", GENERATED_DIR / "events.json", SITE_DATA_DIR / "events.json", STATIC_DATA_DIR / "events.json"]
 SEC_STATE_PATH = STATE_DIR / "sec.json"
 SEC_REGISTRY_PATH = DATA_DIR / "sec_registry.json"
+FINNHUB_FEATURE_PATHS = [
+    GENERATED_DIR / "finnhub_features.json",
+    DATA_DIR / "finnhub_features.json",
+    SITE_DATA_DIR / "finnhub_features.json",
+    STATIC_DATA_DIR / "finnhub_features.json",
+]
 
 ET = ZoneInfo("America/New_York")
 UTC = timezone.utc
@@ -47,6 +54,7 @@ MAX_ITEMS = max(1, int(os.environ.get("ATTENTION_MAX_ITEMS", "7")))
 SEC_BOOTSTRAP_DAYS = max(0, int(os.environ.get("SEC_BOOTSTRAP_DAYS", "1")))
 SEC_REQUEST_DELAY_SECONDS = max(0.0, float(os.environ.get("SEC_REQUEST_DELAY_SECONDS", "0.12")))
 _LAST_SEC_REQUEST_TS = 0.0
+_SEC_BLOCKED_HOSTS: set[str] = set()
 
 IMPORTANT_FORMS = {
     "8-K", "8-K/A", "10-Q", "10-Q/A", "10-K", "10-K/A", "20-F", "20-F/A", "6-K", "6-K/A",
@@ -125,6 +133,9 @@ def _pace_sec_request(url: str) -> None:
 def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
     if OFFLINE_MODE:
         return None
+    host = (urllib.parse.urlsplit(url).hostname or "").lower()
+    if host in _SEC_BLOCKED_HOSTS:
+        return None
     _pace_sec_request(url)
     request = urllib.request.Request(
         url,
@@ -138,6 +149,11 @@ def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if exc.code in {403, 429} and host.endswith("sec.gov"):
+            _SEC_BLOCKED_HOSTS.add(host)
+        print(f"::warning::GET failed {url}: {exc}")
+        return None
     except Exception as exc:
         print(f"::warning::GET failed {url}: {exc}")
         return None
@@ -145,6 +161,9 @@ def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
 
 def http_bytes(url: str, timeout: int = 18) -> bytes | None:
     if OFFLINE_MODE:
+        return None
+    host = (urllib.parse.urlsplit(url).hostname or "").lower()
+    if host in _SEC_BLOCKED_HOSTS:
         return None
     _pace_sec_request(url)
     request = urllib.request.Request(
@@ -159,6 +178,11 @@ def http_bytes(url: str, timeout: int = 18) -> bytes | None:
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return response.read()
+    except urllib.error.HTTPError as exc:
+        if exc.code in {403, 429} and host.endswith("sec.gov"):
+            _SEC_BLOCKED_HOSTS.add(host)
+        print(f"::warning::GET failed {url}: {exc}")
+        return None
     except Exception as exc:
         print(f"::warning::GET failed {url}: {exc}")
         return None
@@ -349,6 +373,49 @@ def fetch_sec_atom(cik: str) -> list[dict[str, Any]]:
     return parse_sec_atom(payload) if payload else []
 
 
+def _official_sec_filing_url(value: Any) -> str:
+    url = str(value or "").strip()
+    try:
+        parsed = urllib.parse.urlsplit(url)
+    except ValueError:
+        return ""
+    host = (parsed.hostname or "").lower()
+    if parsed.scheme != "https" or not (host == "sec.gov" or host.endswith(".sec.gov")):
+        return ""
+    if not parsed.path.startswith("/Archives/edgar/data/"):
+        return ""
+    return url
+
+
+def validated_sec_discovery_rows(entry: Any, cik: str = "") -> list[dict[str, Any]]:
+    if not isinstance(entry, dict) or entry.get("status") not in {"ok", "empty"}:
+        return []
+    rows = entry.get("data") if isinstance(entry.get("data"), list) else []
+    output: list[dict[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        accession = str(row.get("accessionNumber") or "").strip()
+        source_url = _official_sec_filing_url(row.get("sourceUrl"))
+        if not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accession) or not source_url:
+            continue
+        source_path = urllib.parse.urlsplit(source_url).path
+        expected_prefix = f"/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/" if cik.isdigit() else ""
+        if expected_prefix and not source_path.startswith(expected_prefix):
+            continue
+        output.append({**row, "accessionNumber": accession, "sourceUrl": source_url})
+    return output
+
+
+def load_sec_discovery_entry(ticker: str) -> dict[str, Any] | None:
+    path = first_existing(FINNHUB_FEATURE_PATHS)
+    payload = load_json(path, {}) if path else {}
+    features = payload.get("features") if isinstance(payload, dict) else {}
+    filings = features.get("sec_filings") if isinstance(features, dict) else {}
+    entry = filings.get(ticker) if isinstance(filings, dict) else None
+    return entry if isinstance(entry, dict) else None
+
+
 def sec_url(cik: str, accession: str, primary_document: str = "") -> str:
     cik_int = str(int(str(cik)))
     base = f"https://www.sec.gov/Archives/edgar/data/{cik_int}/{accession.replace('-', '')}/"
@@ -405,7 +472,12 @@ def sec_event_materiality(subtype: str) -> str:
     return "low"
 
 
-def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]], old_state: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any], str, str | None]:
+def fetch_sec_events(
+    stock: dict[str, Any],
+    ticker_map: dict[str, dict[str, Any]],
+    old_state: dict[str, Any],
+    fallback_entry: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any], str, str | None]:
     ticker = stock["ticker"]
     mapping = ticker_map.get(ticker, {})
     if mapping.get("status") == "not_applicable":
@@ -419,17 +491,34 @@ def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]
         return [], old_state, "partial", "CIK unavailable"
     data = http_json(f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json")
     transport = "submissions_json"
+    transport_checked_at = now_utc().isoformat()
     if data:
         recent = (data.get("filings") or {}).get("recent") or {}
     else:
         atom_rows = fetch_sec_atom(cik)
-        if not atom_rows:
-            return [], old_state, "error", "SEC submissions and Atom transports unavailable"
-        transport = "company_atom"
-        recent = {key: [row.get(key) for row in atom_rows] for key in (
-            "form", "accessionNumber", "filingDate", "acceptanceDateTime",
-            "primaryDocument", "items", "reportDate",
-        )}
+        if atom_rows:
+            transport = "company_atom"
+            recent = {key: [row.get(key) for row in atom_rows] for key in (
+                "form", "accessionNumber", "filingDate", "acceptanceDateTime",
+                "primaryDocument", "items", "reportDate", "sourceUrl",
+            )}
+        else:
+            fallback_entry = fallback_entry if fallback_entry is not None else load_sec_discovery_entry(ticker)
+            fallback_rows = validated_sec_discovery_rows(fallback_entry, cik)
+            fallback_empty = (
+                isinstance(fallback_entry, dict)
+                and fallback_entry.get("status") == "empty"
+                and isinstance(fallback_entry.get("data"), list)
+                and not fallback_entry.get("data")
+            )
+            if not fallback_rows and not fallback_empty:
+                return [], old_state, "error", "SEC submissions, Atom and verified discovery transports unavailable"
+            transport = "finnhub_sec_index"
+            transport_checked_at = str(fallback_entry.get("updated_at") or transport_checked_at)
+            recent = {key: [row.get(key) for row in fallback_rows] for key in (
+                "form", "accessionNumber", "filingDate", "acceptanceDateTime",
+                "primaryDocument", "items", "reportDate", "sourceUrl",
+            )}
     forms = recent.get("form") or []
     accessions = recent.get("accessionNumber") or []
     filing_dates = recent.get("filingDate") or []
@@ -437,6 +526,7 @@ def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]
     docs = recent.get("primaryDocument") or []
     items_values = recent.get("items") or []
     report_dates = recent.get("reportDate") or []
+    source_urls = recent.get("sourceUrl") or []
     seen = set(str(value) for value in old_state.get("seen_accessions", []) if value)
     bootstrapping = not seen
     cutoff = now_et().date() - timedelta(days=SEC_BOOTSTRAP_DAYS)
@@ -461,21 +551,22 @@ def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]
         primary_document = str(docs[index] if index < len(docs) else "")
         classification = classify_sec_filing(form, items)
         subtype = classification["subtype"]
-        source_url = sec_url(cik, accession, primary_document)
+        discovered_url = str(source_urls[index]) if index < len(source_urls) else ""
+        source_url = _official_sec_filing_url(discovered_url) or sec_url(cik, accession, primary_document)
         events.append({
             "event_id": f"sec:{ticker}:{accession}", "ticker": ticker, "event_type": classification["event_type"], "event_subtype": subtype,
             "headline": classification["headline"], "summary": classification["summary"], "why_today": classification["summary"],
             "materiality": sec_event_materiality(subtype), "urgency": "today",
             "event_time": accepted_at.isoformat() if accepted_at else (str(filing_date) if filing_date else None),
             "detected_at": now_utc().isoformat(), "verification_status": "confirmed",
-            "source": {"type": "sec", "quality": "primary", "url": source_url, "published_at": accepted_at.isoformat() if accepted_at else (str(filing_date) if filing_date else None), "form": form, "items": items, "accession_number": accession, "report_date": str(report_dates[index]) if index < len(report_dates) else ""},
+            "source": {"type": "sec", "quality": "primary", "url": source_url, "published_at": accepted_at.isoformat() if accepted_at else (str(filing_date) if filing_date else None), "form": form, "items": items, "accession_number": accession, "report_date": str(report_dates[index]) if index < len(report_dates) else "", "discovered_via": transport},
         })
     return events, {
         "cik": cik.zfill(10),
         "identity_status": str(mapping.get("identity_status") or "verified_state"),
         "transport_status": "ok",
         "transport": transport,
-        "last_successful_check": now_utc().isoformat(),
+        "last_successful_check": transport_checked_at,
         "seen_accessions": all_important[:100],
     }, "ok", None
 
@@ -639,7 +730,7 @@ def generate() -> dict[str, Any]:
         sec_error += status == "error"
         sec_not_applicable += status == "not_applicable"
         if error:
-            if status == "error" and error == "SEC submissions and Atom transports unavailable":
+            if status == "error" and error.startswith("SEC submissions, Atom and verified discovery transports unavailable"):
                 sec_transport_failures += 1
             else:
                 errors.append({"source": "sec", "ticker": ticker, "message": error})
@@ -680,7 +771,7 @@ def generate() -> dict[str, Any]:
     coverage_status = "partial" if any(value.get("status") in {"partial", "unavailable", "error"} for value in source_health.values()) else "complete"
     summary = {label: sum(1 for item in items if item.get("priority") == label) for label in ("Critical", "Risk", "Action", "Watch", "Developing")}
     generated_at = now_utc().replace(microsecond=0).isoformat()
-    output = {"schema_version": "2.0-p0", "updated_at": generated_at, "market_timezone": "America/New_York", "display_timezone": "Asia/Bangkok", "stale_after_minutes": 90, "total_monitored": len(portfolio), "total_events": len(normalized_events), "coverage_status": coverage_status, "summary": summary, "source_health": source_health, "items": items, "errors": errors, "data_quality": {"free_sources_only": True, "sec_cursor": "accession-number based; multiple same-day filings are preserved", "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency", "technical_policy": "large daily moves and same-day zone crossings only; stale near-zone alerts are suppressed", "max_attention_items": MAX_ITEMS}}
+    output = {"schema_version": "2.0-p0", "updated_at": generated_at, "market_timezone": "America/New_York", "display_timezone": "Asia/Bangkok", "stale_after_minutes": 90, "total_monitored": len(portfolio), "total_events": len(normalized_events), "coverage_status": coverage_status, "summary": summary, "source_health": source_health, "items": items, "errors": errors, "data_quality": {"free_sources_only": True, "sec_cursor": "accession-number based; multiple same-day filings are preserved", "sec_transport_policy": "SEC EDGAR preferred; bounded Finnhub discovery accepted only for syntactically valid accession numbers with official sec.gov filing URLs", "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency", "technical_policy": "large daily moves and same-day zone crossings only; stale near-zone alerts are suppressed", "max_attention_items": MAX_ITEMS}}
     event_output = {"schema_version": "1.0", "generated_at": generated_at, "row_count": len(normalized_events), "events": normalized_events}
     for path in ATTENTION_OUT_PATHS:
         save_json(path, output)
