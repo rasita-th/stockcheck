@@ -14,7 +14,6 @@ on:
       - "scripts/verify_screener_snapshot.py"
       - "scripts/generate_earnings_radar.py"
       - "scripts/generate_attention_p0.py"
-      - "scripts/finnhub_pipeline.py"
       - "scripts/generate_attention_pr2.py"
       - "scripts/generate_attention_pr3.py"
       - "scripts/attention_pr3.py"
@@ -36,9 +35,9 @@ on:
       - "tests/technical_shards_runtime.test.js"
       - "tests/test_attention_p0.py"
       - "tests/test_attention_news.py"
+      - "tests/test_attention_ir_registry.py"
       - "tests/test_attention_pr3.py"
       - "tests/test_attention_pr4_reliability.py"
-      - "tests/test_finnhub_pipeline.py"
       - "tests/fixtures/attention_news/**"
       - "tests/golden/attention_today_v2_0.json"
       - "data/portfolio.json"
@@ -89,7 +88,6 @@ jobs:
           python -m py_compile scripts/verify_screener_snapshot.py
           python -m py_compile scripts/generate_earnings_radar.py
           python -m py_compile scripts/generate_attention_p0.py
-          python -m py_compile scripts/finnhub_pipeline.py
           python -m py_compile scripts/generate_attention_pr2.py
           python -m py_compile scripts/generate_attention_pr3.py
           python -m py_compile scripts/attention_pr3.py
@@ -111,9 +109,9 @@ jobs:
         run: |
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_news.py" -v
+          python -m unittest discover -s tests -p "test_attention_ir_registry.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest discover -s tests -p "test_attention_pr4_reliability.py" -v
-          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier -v
           python -m unittest tests.test_technical_shards -v
           python -m unittest tests.test_screener_snapshot -v
           node tests/technical_shards_runtime.test.js
@@ -214,35 +212,6 @@ jobs:
           pip install -r requirements.txt
       - name: Seed canonical generated layer
         run: python scripts/build_generated_layer.py
-      - name: Refresh bounded SEC discovery fallback
-        env:
-          FINNHUB_API_KEY_EVENTS: ${{ secrets.FINNHUB_API_KEY_EVENTS || secrets.FINNHUB_API_KEY }}
-          FINNHUB_EVENTS_MAX_CALLS_PER_RUN: "6"
-          FINNHUB_MIN_DELAY_SECONDS: "1.25"
-        run: |
-          python scripts/finnhub_sharded_state.py hydrate
-          python scripts/run_finnhub_free_tier.py --mode events
-          mkdir -p data/generated
-          cp data/finnhub_features.json data/generated/finnhub_features.json
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          payload = json.loads(Path("data/generated/finnhub_features.json").read_text(encoding="utf-8"))
-          entries = payload.get("features", {}).get("sec_filings", {})
-          portfolio = json.loads(Path("data/portfolio.json").read_text(encoding="utf-8"))
-          monitored = {
-              str(row.get("ticker") or row.get("symbol") or "").upper()
-              for row in portfolio if isinstance(row, dict)
-          }
-          healthy = sorted(
-              ticker for ticker, entry in entries.items()
-              if ticker in monitored and isinstance(entry, dict) and entry.get("status") in {"ok", "empty"}
-          )
-          if not healthy:
-              raise SystemExit("Finnhub SEC discovery produced no successful portfolio ticker checks")
-          print(f"Verified portfolio SEC discovery transport for {len(healthy)} ticker(s): {', '.join(healthy)}")
-          PY
       - name: Generate Today data without quote or technical refresh
         env:
           SEC_USER_AGENT: "Stock Timing Radar GitHub Action contact@users.noreply.github.com"
@@ -253,29 +222,20 @@ jobs:
           ATTENTION_MAX_ITEMS: "7"
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
-      - name: Verify effective SEC portfolio coverage
+      - name: Verify live company IR coverage
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
           payload = json.loads(Path("data/generated/attention_today.json").read_text(encoding="utf-8"))
-          sec = payload.get("source_health", {}).get("sec", {})
-          identity = sec.get("identity", {})
-          if int(identity.get("missing") or 0) != 0:
-              raise SystemExit(f"SEC identity coverage is incomplete: {identity}")
-          if int(sec.get("ok") or 0) < 1:
-              raise SystemExit(f"SEC effective transport coverage remains zero: {sec}")
-          cik_errors = [
-              row for row in payload.get("errors", [])
-              if isinstance(row, dict) and "CIK unavailable" in str(row.get("message") or "")
-          ]
-          if cik_errors:
-              raise SystemExit(f"SEC CIK errors remain: {cik_errors}")
-          print(
-              f"Effective SEC portfolio coverage: {sec.get('ok')}/{sec.get('applicable')} applicable; "
-              f"{sec.get('not_applicable')} not applicable; identity missing=0"
-          )
+          ir = payload.get("source_health", {}).get("ir", {})
+          registry = ir.get("registry", {})
+          if registry.get("missing") != 0 or registry.get("configured") != 35:
+              raise SystemExit(f"IR registry coverage is incomplete: {registry}")
+          if int(ir.get("ok") or 0) < 1:
+              raise SystemExit(f"No configured company IR source succeeded in the live batch: {ir}")
+          print(f"Verified live IR coverage: ok={ir['ok']}/{ir['checked']}; registry={registry}")
           PY
       - name: Test generated-data publication
         run: python scripts/test_publish_generated_data.py
