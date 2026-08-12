@@ -14,6 +14,7 @@ on:
       - "scripts/verify_screener_snapshot.py"
       - "scripts/generate_earnings_radar.py"
       - "scripts/generate_attention_p0.py"
+      - "scripts/finnhub_pipeline.py"
       - "scripts/generate_attention_pr2.py"
       - "scripts/generate_attention_pr3.py"
       - "scripts/attention_pr3.py"
@@ -37,6 +38,7 @@ on:
       - "tests/test_attention_news.py"
       - "tests/test_attention_pr3.py"
       - "tests/test_attention_pr4_reliability.py"
+      - "tests/test_finnhub_pipeline.py"
       - "tests/fixtures/attention_news/**"
       - "tests/golden/attention_today_v2_0.json"
       - "data/portfolio.json"
@@ -87,6 +89,7 @@ jobs:
           python -m py_compile scripts/verify_screener_snapshot.py
           python -m py_compile scripts/generate_earnings_radar.py
           python -m py_compile scripts/generate_attention_p0.py
+          python -m py_compile scripts/finnhub_pipeline.py
           python -m py_compile scripts/generate_attention_pr2.py
           python -m py_compile scripts/generate_attention_pr3.py
           python -m py_compile scripts/attention_pr3.py
@@ -110,6 +113,7 @@ jobs:
           python -m unittest discover -s tests -p "test_attention_news.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
           python -m unittest discover -s tests -p "test_attention_pr4_reliability.py" -v
+          python -m unittest tests.test_finnhub_pipeline tests.test_finnhub_free_tier -v
           python -m unittest tests.test_technical_shards -v
           python -m unittest tests.test_screener_snapshot -v
           node tests/technical_shards_runtime.test.js
