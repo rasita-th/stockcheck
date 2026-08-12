@@ -253,6 +253,30 @@ jobs:
           ATTENTION_MAX_ITEMS: "7"
           SEC_BOOTSTRAP_DAYS: "1"
         run: python scripts/generate_attention_pr3.py
+      - name: Verify effective SEC portfolio coverage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("data/generated/attention_today.json").read_text(encoding="utf-8"))
+          sec = payload.get("source_health", {}).get("sec", {})
+          identity = sec.get("identity", {})
+          if int(identity.get("missing") or 0) != 0:
+              raise SystemExit(f"SEC identity coverage is incomplete: {identity}")
+          if int(sec.get("ok") or 0) < 1:
+              raise SystemExit(f"SEC effective transport coverage remains zero: {sec}")
+          cik_errors = [
+              row for row in payload.get("errors", [])
+              if isinstance(row, dict) and "CIK unavailable" in str(row.get("message") or "")
+          ]
+          if cik_errors:
+              raise SystemExit(f"SEC CIK errors remain: {cik_errors}")
+          print(
+              f"Effective SEC portfolio coverage: {sec.get('ok')}/{sec.get('applicable')} applicable; "
+              f"{sec.get('not_applicable')} not applicable; identity missing=0"
+          )
+          PY
       - name: Test generated-data publication
         run: python scripts/test_publish_generated_data.py
       - name: Generate data health
