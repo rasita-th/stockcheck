@@ -7,6 +7,15 @@ const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const runtime = fs.readFileSync(path.join(root, "site", "technical-shards-v2.js"), "utf8");
+const FIXED_NOW_MS = Date.parse("2026-08-10T15:00:00Z");
+class FixedDate extends Date {
+  constructor(...args) {
+    super(...(args.length ? args : [FIXED_NOW_MS]));
+  }
+  static now() {
+    return FIXED_NOW_MS;
+  }
+}
 
 let shardFetchCount = 0;
 let snapshotFetchCount = 0;
@@ -32,7 +41,7 @@ const state = {
 const snapshot = {
   schema_version: "1.1",
   contract: "canonical-screener-snapshot",
-  generated_at: new Date().toISOString(),
+  generated_at: new FixedDate().toISOString(),
   stale_after_minutes: 30,
   rows: [
     {
@@ -84,6 +93,7 @@ const shard = {
 
 const context = {
   console,
+  Date: FixedDate,
   window: {},
   __state: state,
   __fetchStaticLayer: async () => ({ rows: [] }),
@@ -221,7 +231,7 @@ vm.runInContext(`
   assert.ok(refreshTimer, "runtime must poll the canonical snapshot every five minutes");
   servedSnapshot = {
     ...snapshot,
-    generated_at: new Date(Date.now() + 60_000).toISOString(),
+    generated_at: new FixedDate(FIXED_NOW_MS + 60_000).toISOString(),
     rows: snapshot.rows.map((row) => row.symbol === "CIFR" ? { ...row, price: 23.5, close: 23.5 } : row),
   };
   const rendersBeforeRefresh = renderCount;
