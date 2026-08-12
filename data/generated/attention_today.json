@@ -1,15 +1,15 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-12T16:11:51+00:00",
+  "updated_at": "2026-08-12T19:21:32+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 18,
+  "total_events": 19,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 3,
-    "Risk": 0,
+    "Critical": 4,
+    "Risk": 1,
     "Action": 0,
     "Watch": 0,
     "Developing": 0
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "partial",
+      "status": "ok",
       "source": "Verified company IR discovery",
       "checked": 10,
       "accepted_events": 1
     },
     "ir": {
-      "status": "partial",
+      "status": "ok",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 9,
+      "ok": 10,
       "partial": 0,
-      "errors": 1,
+      "errors": 0,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 4,
-      "unavailable": 6,
+      "ok": 1,
+      "unavailable": 9,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -527,6 +527,106 @@
       ]
     },
     {
+      "ticker": "UUUU",
+      "name": "Energy Fuels Inc.",
+      "portfolio_status": "holding",
+      "role": "Uranium and rare earths",
+      "priority": "Critical",
+      "priority_score": 97,
+      "why_today": [
+        "A transaction event was detected and requires source review."
+      ],
+      "event_type": "corporate_event",
+      "event_subtype": "transaction",
+      "event_time": "2026-08-12T19:19:18+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
+        "published_at": "2026-08-12T19:19:18+00:00",
+        "domain": "investors.energyfuels.com"
+      },
+      "price": 14.5833,
+      "day_change_pct": -1.3309,
+      "relative_volume": 0.48,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "company_ir:UUUU:30206b70fafd3309",
+          "ticker": "UUUU",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Energy Fuels' Acquisition of Australian Strategic Materials Wins Shareholder Approval",
+          "summary": "A transaction event was detected and requires source review.",
+          "why_today": "A transaction event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-08-12T19:19:18+00:00",
+          "detected_at": "2026-08-12T19:19:18+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Energy Fuels",
+          "dedupe_key": "UUUU:transaction:2026-08-12:a88829ceaef4",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
+            "published_at": "2026-08-12T19:19:18+00:00",
+            "domain": "investors.energyfuels.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
+              "published_at": "2026-08-12T19:19:18+00:00",
+              "domain": "investors.energyfuels.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:UUUU:30206b70fafd3309"
+          ],
+          "priority_score": 97,
+          "priority": "Critical"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
+        "tradingview": "https://www.tradingview.com/symbols/AMEX-UUUU/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "transaction",
+      "signals": [
+        "A transaction event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-12T19:21:32+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 14.5833,
+        "current_price": 14.5833,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 110,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
+      ]
+    },
+    {
       "ticker": "NBIS",
       "name": "Nebius Group N.V.",
       "portfolio_status": "holding",
@@ -534,12 +634,12 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +32.5% today.",
+        "The stock moved +28.9% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T16:09:20.791632+00:00",
+      "event_time": "2026-08-12T19:19:18.410074+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -558,13 +658,13 @@
           "ticker": "NBIS",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +32.5%",
+          "headline": "Price +28.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +32.5% today.",
+          "why_today": "The stock moved +28.9% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T16:09:20.791632+00:00",
-          "detected_at": "2026-08-12T16:09:20.791636+00:00",
+          "event_time": "2026-08-12T19:19:18.410074+00:00",
+          "detected_at": "2026-08-12T19:19:18.410078+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -686,13 +786,13 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +32.5% today.",
+        "The stock moved +28.9% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T16:11:51+00:00",
         "active_days": 0
       },
@@ -706,15 +806,153 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
-    }
-  ],
-  "errors": [
+    },
     {
-      "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
+      "ticker": "TE",
+      "name": "T1 Energy Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy technology",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.4% today.",
+        "A product event was detected and requires source review."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-08-12T19:19:18.607270+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 5.065,
+      "day_change_pct": -7.404,
+      "relative_volume": 0.67,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:TE:price-drop:2026-08-12",
+          "ticker": "TE",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.4%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.4% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-12T19:19:18.607270+00:00",
+          "detected_at": "2026-08-12T19:19:18.607274+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TE:price-drop:2026-08-12"
+          ],
+          "dedupe_key": "TE:price_drop:e43ceacafaba8ddf"
+        },
+        {
+          "event_id": "regulator:TE:aa21dc3f60777ff7",
+          "ticker": "TE",
+          "event_type": "corporate_event",
+          "event_subtype": "product",
+          "headline": "Energy Department Launches $100 Million Initiative to Build America’s Critical Minerals Workforce, Strengthen Domestic Supply Chains",
+          "summary": "A product event was detected and requires source review.",
+          "why_today": "A product event was detected and requires source review.",
+          "materiality": "low",
+          "reported_materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-08-08T07:15:06+00:00",
+          "detected_at": "2026-08-08T07:15:06+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "medium",
+          "entity_confidence_reason": "headline matched company tokens: energy",
+          "dedupe_key": "TE:product:2026-08-08:8b7b9e6e6818",
+          "source": {
+            "type": "regulator",
+            "quality": "primary",
+            "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
+            "published_at": "2026-08-08T07:15:06+00:00",
+            "domain": "www.energy.gov",
+            "agency": "DOE",
+            "name": "U.S. Department of Energy"
+          },
+          "source_chain": [
+            {
+              "type": "regulator",
+              "quality": "primary",
+              "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
+              "published_at": "2026-08-08T07:15:06+00:00",
+              "domain": "www.energy.gov",
+              "agency": "DOE",
+              "name": "U.S. Department of Energy"
+            }
+          ],
+          "secondary_source_count": 0,
+          "regulator": "DOE",
+          "regulator_name": "U.S. Department of Energy",
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "regulator:TE:aa21dc3f60777ff7"
+          ],
+          "priority_score": 71,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.4% today.",
+        "A product event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-12T19:21:32+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 5.065,
+        "current_price": 5.065,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
+  "errors": [],
   "data_quality": {
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
@@ -727,11 +965,11 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 1,
-    "active_discovered_event_count": 14,
+    "active_discovered_event_count": 15,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 1,
-    "technical_metric_repair_count": 3,
+    "technical_fill_count": 2,
+    "technical_metric_repair_count": 1,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -789,7 +1027,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T16:09:20.738410+00:00",
+      "event_time": "2026-08-12T19:19:18.359736+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -813,8 +1051,8 @@
           "why_today": "The stock moved +10.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T16:09:20.738410+00:00",
-          "detected_at": "2026-08-12T16:09:20.738415+00:00",
+          "event_time": "2026-08-12T19:19:18.359736+00:00",
+          "detected_at": "2026-08-12T19:19:18.359740+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -860,9 +1098,9 @@
         "The stock moved +10.5% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T16:11:51+00:00",
         "active_days": 0
       },
@@ -885,7 +1123,7 @@
       "priority": "Action",
       "priority_score": 68,
       "why_today": [
-        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.7, +5.8% vs EMA20, +14.3% vs EMA200, volume 0.42x 20-day average."
+        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average."
       ],
       "event_type": "technical",
       "event_subtype": "technical_setup",
@@ -910,11 +1148,11 @@
           "event_subtype": "technical_setup",
           "headline": "Latest technical scan · 93/100",
           "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.7, +5.8% vs EMA20, +14.3% vs EMA200, volume 0.42x 20-day average.",
+          "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-08-12",
-          "detected_at": "2026-08-12T16:11:51+00:00",
+          "detected_at": "2026-08-12T19:21:32+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -945,8 +1183,7 @@
           ],
           "dedupe_key": "NVDA:technical_setup:ff2c27a4c743b764",
           "priority_score": 68,
-          "priority": "Action",
-          "technical_metrics_source": "canonical_technical_snapshot"
+          "priority": "Action"
         }
       ],
       "actions": {
@@ -958,12 +1195,12 @@
       "severity": "medium",
       "primary_trigger": "technical_setup",
       "signals": [
-        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.7, +5.8% vs EMA20, +14.3% vs EMA200, volume 0.42x 20-day average."
+        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-08-12T16:11:51+00:00",
         "active_days": 0
       },
@@ -980,14 +1217,30 @@
     }
   ],
   "changes_summary": {
-    "new": 4,
-    "escalated": 1,
+    "new": 2,
+    "escalated": 0,
     "updated": 0,
-    "ongoing": 2,
+    "ongoing": 5,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:CIFR:price-move:2026-08-12",
+      "ticker": "CIFR",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-08-12T19:21:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ASTS:price-move:2026-08-12",
+      "ticker": "ASTS",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-08-12T19:21:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "regulator:TE:aa21dc3f60777ff7",
       "ticker": "TE",
@@ -1049,22 +1302,6 @@
       "ticker": "OKLO",
       "event_subtype": "price_move",
       "priority": "Risk",
-      "resolved_at": "2026-08-12T05:03:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ZETA:price-move:2026-08-11",
-      "ticker": "ZETA",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T05:03:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NVDA:technical_setup:2026-08-11",
-      "ticker": "NVDA",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
       "resolved_at": "2026-08-12T05:03:22+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
