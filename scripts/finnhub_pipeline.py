@@ -108,6 +108,27 @@ def _rows_from_payload(payload: Any) -> list[dict[str, Any]]:
     return []
 
 
+def load_portfolio_tickers() -> list[str]:
+    for path in (
+        ROOT / "data" / "portfolio.json",
+        ROOT / "site" / "data" / "portfolio.json",
+        ROOT / "static" / "data" / "portfolio.json",
+    ):
+        payload = load_json(path, [])
+        if not isinstance(payload, list):
+            continue
+        output: list[str] = []
+        seen: set[str] = set()
+        for row in payload:
+            ticker = clean_ticker(row.get("ticker") or row.get("symbol")) if isinstance(row, dict) else ""
+            if ticker and ticker not in seen:
+                seen.add(ticker)
+                output.append(ticker)
+        if output:
+            return output
+    return []
+
+
 def load_universe() -> list[str]:
     candidates = [
         ROOT / "data" / "portfolio.json",
@@ -169,6 +190,9 @@ def is_due(entry: Any, ttl_hours: float, current: datetime | None = None) -> boo
 def due_tickers(state: dict[str, Any], endpoint: str, universe: Iterable[str]) -> list[str]:
     policy = ENDPOINTS[endpoint]
     bucket = state.setdefault("endpoints", {}).setdefault(endpoint, {})
+    if endpoint == "sec_filings":
+        portfolio = set(load_portfolio_tickers())
+        universe = [ticker for ticker in universe if ticker in portfolio]
     unique = sorted({ticker for ticker in universe if clean_ticker(ticker)})
 
     def rank(ticker: str) -> tuple[int, float, str]:
