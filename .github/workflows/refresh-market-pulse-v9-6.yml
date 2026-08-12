@@ -9,6 +9,7 @@ on:
     paths:
       - "scripts/generate_market_pulse.py"
       - "scripts/test_market_pulse_narrative.py"
+      - "tests/test_market_pulse_diagnostics.py"
       - "scripts/validate_market_pulse.py"
       - "data/market_universe.json"
       - ".github/workflows/refresh-market-pulse-v9-6.yml"
@@ -17,6 +18,7 @@ on:
     paths:
       - "scripts/generate_market_pulse.py"
       - "scripts/test_market_pulse_narrative.py"
+      - "tests/test_market_pulse_diagnostics.py"
       - "scripts/validate_market_pulse.py"
       - "data/market_universe.json"
       - ".github/workflows/refresh-market-pulse-v9-6.yml"
@@ -50,6 +52,7 @@ jobs:
         run: |
           python -m py_compile scripts/generate_market_pulse.py scripts/test_market_pulse_narrative.py scripts/validate_market_pulse.py
           python scripts/test_market_pulse_narrative.py
+          python -m unittest tests.test_market_pulse_diagnostics -v
       - name: Backup last-known-good JSON
         shell: bash
         run: |
