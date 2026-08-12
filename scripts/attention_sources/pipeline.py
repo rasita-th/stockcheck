@@ -23,11 +23,19 @@ def collect_news_events(portfolio: list[dict[str, Any]], registry: dict[str, Any
     overrides = registry.get("items") if isinstance(registry.get("items"), dict) else {}
     if not enabled:
         return NewsCollectionResult([], old_state, {"news": {"status": "disabled", "source": "Free news discovery", "note": "Feature flag ATTENTION_NEWS_ENABLED is off."}, "ir": {"status": "disabled", "checked": 0, "source": "Company IR/RSS"}, "gdelt": {"status": "disabled", "checked": 0, "source": "GDELT DOC 2.0"}}, [])
-    entries = [build_registry_entry(stock, overrides.get(str(stock.get("ticker") or "").upper(), {})) for stock in portfolio]
-    entries = [entry for entry in entries if entry.get("ticker") and not entry.get("disabled")]
+    all_entries = [build_registry_entry(stock, overrides.get(str(stock.get("ticker") or "").upper(), {})) for stock in portfolio]
+    not_applicable = sum(bool(entry.get("ticker") and entry.get("disabled")) for entry in all_entries)
+    entries = [entry for entry in all_entries if entry.get("ticker") and not entry.get("disabled")]
     if not entries:
         return NewsCollectionResult([], old_state, {"news": {"status": "partial", "source": "Free news discovery", "note": "No enabled source-registry entries."}}, [])
     batch_size = max(1, int(os.environ.get("ATTENTION_NEWS_BATCH_SIZE", defaults.get("batch_size", 10))))
+    configured = sum(bool(entry.get("ir_urls") or entry.get("ir_feeds")) for entry in entries)
+    registry_coverage = {
+        "applicable": len(entries),
+        "configured": configured,
+        "missing": len(entries) - configured,
+        "not_applicable": not_applicable,
+    }
     cursor = int(old_state.get("cursor") or 0) % len(entries)
     batch = [entries[(cursor + index) % len(entries)] for index in range(min(batch_size, len(entries)))]
     old_tickers = old_state.get("tickers") if isinstance(old_state.get("tickers"), dict) else {}
@@ -48,5 +56,5 @@ def collect_news_events(portfolio: list[dict[str, Any]], registry: dict[str, Any
     # GDELT is discovery-only. Verified IR coverage owns the actionable news health.
     overall = ir_status
     next_state = {"schema_version": "1.0", "updated_at": now.isoformat(), "cursor": (cursor + len(batch)) % len(entries), "tickers": next_tickers}
-    health = {"news": {"status": overall, "source": "Verified company IR discovery", "checked": len(batch), "accepted_events": len(events)}, "ir": {"status": ir_status, "source": "Company IR/RSS", "checked": len(batch), "ok": ir_ok, "partial": ir_partial, "errors": ir_error}, "gdelt": {"status": gdelt_status, "source": "GDELT DOC 2.0", "role": "discovery_only", "checked": len(batch), "ok": gdelt_ok, "unavailable": gdelt_unavailable, "note": "Optional secondary discovery does not downgrade verified-source coverage."}}
+    health = {"news": {"status": overall, "source": "Verified company IR discovery", "checked": len(batch), "accepted_events": len(events)}, "ir": {"status": ir_status, "source": "Company IR/RSS", "checked": len(batch), "ok": ir_ok, "partial": ir_partial, "errors": ir_error, "registry": registry_coverage}, "gdelt": {"status": gdelt_status, "source": "GDELT DOC 2.0", "role": "discovery_only", "checked": len(batch), "ok": gdelt_ok, "unavailable": gdelt_unavailable, "note": "Optional secondary discovery does not downgrade verified-source coverage."}}
     return NewsCollectionResult(events, next_state, health, errors)
