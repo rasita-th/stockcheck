@@ -1240,65 +1240,37 @@
       "AMZN": "endpoints/sec_filings/AMZN.json",
       "ASTS": "endpoints/sec_filings/ASTS.json",
       "BMNR": "endpoints/sec_filings/BMNR.json",
+      "CIFR": "endpoints/sec_filings/CIFR.json",
+      "COPX": "endpoints/sec_filings/COPX.json",
+      "EOSE": "endpoints/sec_filings/EOSE.json",
+      "EQT": "endpoints/sec_filings/EQT.json",
       "GOOGL": "endpoints/sec_filings/GOOGL.json",
       "HOOD": "endpoints/sec_filings/HOOD.json",
       "IONQ": "endpoints/sec_filings/IONQ.json",
       "IREN": "endpoints/sec_filings/IREN.json",
+      "JEPQ": "endpoints/sec_filings/JEPQ.json",
       "MP": "endpoints/sec_filings/MP.json",
       "NBIS": "endpoints/sec_filings/NBIS.json",
       "NVDA": "endpoints/sec_filings/NVDA.json",
       "OKLO": "endpoints/sec_filings/OKLO.json",
+      "OPEN": "endpoints/sec_filings/OPEN.json",
       "ORCL": "endpoints/sec_filings/ORCL.json",
+      "OSCR": "endpoints/sec_filings/OSCR.json",
+      "PLTR": "endpoints/sec_filings/PLTR.json",
+      "PSIX": "endpoints/sec_filings/PSIX.json",
       "RKLB": "endpoints/sec_filings/RKLB.json",
+      "RR": "endpoints/sec_filings/RR.json",
+      "RXRX": "endpoints/sec_filings/RXRX.json",
+      "SYM": "endpoints/sec_filings/SYM.json",
       "TEM": "endpoints/sec_filings/TEM.json",
-      "TSLA": "endpoints/sec_filings/TSLA.json"
+      "TMC": "endpoints/sec_filings/TMC.json",
+      "TMDX": "endpoints/sec_filings/TMDX.json",
+      "TSLA": "endpoints/sec_filings/TSLA.json",
+      "UUUU": "endpoints/sec_filings/UUUU.json",
+      "ZETA": "endpoints/sec_filings/ZETA.json"
     }
   },
   "runs": [
-    {
-      "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-10T16:15:55+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "IZRL",
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-10T16:15:28+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 1,
@@ -2219,9 +2191,72 @@
       "mode": "events",
       "started_at": "2026-08-12T06:44:29+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-12T07:06:34+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "FATE",
+            "FER",
+            "FICO",
+            "FPS",
+            "FROG",
+            "FTNT",
+            "FUTU",
+            "GD",
+            "GEHC",
+            "GEV",
+            "GH",
+            "GILD",
+            "GILT",
+            "GLXY",
+            "GOOG",
+            "GOOGL",
+            "GRMN",
+            "GSAT",
+            "HEI",
+            "HIMS"
+          ],
+          "sec_filings": [
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR",
+            "COPX",
+            "RR",
+            "ZETA",
+            "OPEN"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-12T07:05:46+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-12T06:45:16+00:00"
+  "updated_at": "2026-08-12T07:06:35+00:00"
 }

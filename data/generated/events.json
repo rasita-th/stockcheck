@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-12T06:47:34+00:00",
-  "row_count": 13,
+  "generated_at": "2026-08-12T07:08:54+00:00",
+  "row_count": 16,
   "events": [
     {
       "event_id": "technical:ZETA:price-move:2026-08-12",
@@ -14,8 +14,8 @@
       "why_today": "The stock moved +5.9% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T06:45:19.233353+00:00",
-      "detected_at": "2026-08-12T06:45:19.233361+00:00",
+      "event_time": "2026-08-12T07:06:37.403054+00:00",
+      "detected_at": "2026-08-12T07:06:37.403059+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -59,8 +59,8 @@
       "why_today": "The stock moved +5.4% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T06:45:18.968209+00:00",
-      "detected_at": "2026-08-12T06:45:18.968216+00:00",
+      "event_time": "2026-08-12T07:06:37.333628+00:00",
+      "detected_at": "2026-08-12T07:06:37.333633+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -104,8 +104,8 @@
       "why_today": "The stock moved +5.1% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T06:45:18.782274+00:00",
-      "detected_at": "2026-08-12T06:45:18.782283+00:00",
+      "event_time": "2026-08-12T07:06:37.287622+00:00",
+      "detected_at": "2026-08-12T07:06:37.287627+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -149,8 +149,8 @@
       "why_today": "The stock moved +5.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T06:45:18.550276+00:00",
-      "detected_at": "2026-08-12T06:45:18.550281+00:00",
+      "event_time": "2026-08-12T07:06:37.150162+00:00",
+      "detected_at": "2026-08-12T07:06:37.150167+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -183,6 +183,142 @@
       "volume_ratio20": 0.93,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "company_ir:RKLB:5c9232304438abc2",
+      "ticker": "RKLB",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "Quarterly Results",
+      "summary": "A earnings reported event was detected and requires source review.",
+      "why_today": "A earnings reported event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-12T07:06:37+00:00",
+      "detected_at": "2026-08-12T07:06:37+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "medium",
+      "entity_confidence_reason": "article domain matches configured company domain",
+      "dedupe_key": "RKLB:earnings_reported:2026-08-12:ebf01aeb9dd2",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabcorp.com/financial-information/quarterly-results",
+        "published_at": "2026-08-12T07:06:37+00:00",
+        "domain": "investors.rocketlabcorp.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/financial-information/quarterly-results",
+          "published_at": "2026-08-12T07:06:37+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "company_ir:RKLB:5c9232304438abc2"
+      ],
+      "priority_score": 97,
+      "priority": "Critical"
+    },
+    {
+      "event_id": "company_ir:RKLB:5dc4111f5bcc4b94",
+      "ticker": "RKLB",
+      "event_type": "corporate_event",
+      "event_subtype": "material_agreement",
+      "headline": "Rocket Lab Awarded Record $266M Missile Defense Contract with U.S. Space Force for Suborbital Launches",
+      "summary": "A material agreement event was detected and requires source review.",
+      "why_today": "A material agreement event was detected and requires source review.",
+      "materiality": "medium",
+      "reported_materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-12T07:06:37+00:00",
+      "detected_at": "2026-08-12T07:06:37+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:material_agreement:2026-08-12:9ab91732ba24",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
+        "published_at": "2026-08-12T07:06:37+00:00",
+        "domain": "investors.rocketlabcorp.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
+          "published_at": "2026-08-12T07:06:37+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "company_ir:RKLB:5dc4111f5bcc4b94"
+      ],
+      "priority_score": 80,
+      "priority": "Risk"
+    },
+    {
+      "event_id": "event:RKLB:06994d7855e122e8",
+      "ticker": "RKLB",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "headline": "Rocket Lab Announces Second Quarter 2026 Financial Results: Posts Record Revenue and Record Backlog, Guides To Another Record Revenue Quarter in Q3 2026",
+      "summary": "A earnings reported event was detected and requires source review.",
+      "why_today": "A earnings reported event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-12T07:06:37+00:00",
+      "detected_at": "2026-08-12T07:06:37+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "corroborated",
+      "verification_reason": "Matched a configured primary source and additional coverage.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:earnings_reported:2026-08-12:af420dfcedd9",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-second-quarter-2026-financial-results-posts",
+        "published_at": "2026-08-12T07:06:37+00:00",
+        "domain": "investors.rocketlabcorp.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-second-quarter-2026-financial-results-posts",
+          "published_at": "2026-08-12T07:06:37+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        },
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
+          "published_at": "2026-08-12T07:06:37+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        }
+      ],
+      "secondary_source_count": 0,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "event:RKLB:06994d7855e122e8"
+      ],
+      "priority_score": 97,
+      "priority": "Critical"
     },
     {
       "event_id": "gdelt:BMNR:30bf59b2fded22ec",
@@ -324,7 +460,7 @@
       "materiality": "medium",
       "urgency": "developing",
       "event_time": "2026-08-11",
-      "detected_at": "2026-08-12T06:47:34+00:00",
+      "detected_at": "2026-08-12T07:08:54+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",

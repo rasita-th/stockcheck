@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-12T06:48:38.837417+00:00",
+  "generated_at": "2026-08-12T07:10:00.087205+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 502.9,
+      "age_minutes": 524.2,
       "stale_after_minutes": 30,
       "timestamp": "2026-08-11T22:25:46+00:00",
       "row_count": 408,
@@ -12,7 +12,7 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 502.7,
+      "age_minutes": 524.1,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T22:25:57+00:00",
       "row_count": 408,
@@ -27,7 +27,7 @@
       "status": "partial",
       "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T06:47:34+00:00",
+      "timestamp": "2026-08-12T07:08:54+00:00",
       "row_count": 3,
       "source": null,
       "coverage_status": "partial",
@@ -37,9 +37,9 @@
           "checked": 38,
           "applicable": 35,
           "not_applicable": 3,
-          "ok": 16,
+          "ok": 30,
           "partial": 0,
-          "errors": 19,
+          "errors": 5,
           "source": "SEC EDGAR",
           "identity": {
             "status": "complete",
@@ -48,8 +48,8 @@
           },
           "transport": {
             "status": "partial",
-            "ok": 16,
-            "errors": 19
+            "ok": 30,
+            "errors": 5
           }
         },
         "earnings": {
@@ -81,23 +81,29 @@
           "status": "partial",
           "source": "Verified company IR discovery",
           "checked": 10,
-          "accepted_events": 0
+          "accepted_events": 4
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 0,
-          "partial": 10,
-          "errors": 0
+          "ok": 8,
+          "partial": 0,
+          "errors": 2,
+          "registry": {
+            "applicable": 35,
+            "configured": 35,
+            "missing": 0,
+            "not_applicable": 3
+          }
         },
         "gdelt": {
-          "status": "optional_unavailable",
+          "status": "partial",
           "source": "GDELT DOC 2.0",
           "role": "discovery_only",
           "checked": 10,
-          "ok": 0,
-          "unavailable": 10,
+          "ok": 2,
+          "unavailable": 8,
           "note": "Optional secondary discovery does not downgrade verified-source coverage."
         },
         "regulators": {
@@ -115,13 +121,13 @@
       "status": "ok",
       "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T06:47:34+00:00",
-      "row_count": 13,
+      "timestamp": "2026-08-12T07:08:54+00:00",
+      "row_count": 16,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 218.9,
+      "age_minutes": 240.3,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-12T03:09:44+00:00",
       "row_count": null,
@@ -129,7 +135,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 213.6,
+      "age_minutes": 234.9,
       "stale_after_minutes": 50400,
       "timestamp": "2026-08-12 03:15:05 UTC",
       "row_count": 408,
@@ -137,7 +143,7 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 208.0,
+      "age_minutes": 229.4,
       "stale_after_minutes": 780,
       "timestamp": "2026-08-12T03:20:36.757125+00:00",
       "row_count": null,
