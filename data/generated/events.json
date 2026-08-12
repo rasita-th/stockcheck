@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-12T19:21:32+00:00",
-  "row_count": 19,
+  "generated_at": "2026-08-12T22:06:07+00:00",
+  "row_count": 20,
   "events": [
     {
-      "event_id": "technical:TE:price-drop:2026-08-12",
-      "ticker": "TE",
+      "event_id": "technical:INDI:price-move:2026-08-12",
+      "ticker": "INDI",
       "event_type": "technical",
-      "event_subtype": "price_drop",
-      "headline": "Price -7.4%",
+      "event_subtype": "price_move",
+      "headline": "Price +5.2%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -7.4% today.",
+      "why_today": "The stock moved +5.2% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-12T19:19:18.607270+00:00",
-      "detected_at": "2026-08-12T19:19:18.607274+00:00",
+      "event_time": "2026-08-12T22:03:46.598173+00:00",
+      "detected_at": "2026-08-12T22:03:46.598177+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -38,22 +38,143 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
+        "technical:INDI:price-move:2026-08-12"
+      ],
+      "dedupe_key": "INDI:price_move:6f6756d4cf68513c",
+      "technical_score": 80.0,
+      "rsi14": 57.4,
+      "pct_vs_ema20": 8.09,
+      "pct_vs_ema200": 1.01,
+      "volume_ratio20": 1.27,
+      "technical_signal": "WATCH FOR ENTRY",
+      "technical_metrics_source": "canonical_technical_snapshot"
+    },
+    {
+      "event_id": "technical:TE:price-drop:2026-08-12",
+      "ticker": "TE",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -10.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -10.4% today.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-12T22:03:46.589963+00:00",
+      "detected_at": "2026-08-12T22:03:46.589967+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 99,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
         "technical:TE:price-drop:2026-08-12"
       ],
       "dedupe_key": "TE:price_drop:e43ceacafaba8ddf"
+    },
+    {
+      "event_id": "technical:OSCR:price-move:2026-08-12",
+      "ticker": "OSCR",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.9%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.9% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-12T22:03:46.531795+00:00",
+      "detected_at": "2026-08-12T22:03:46.531799+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:OSCR:price-move:2026-08-12"
+      ],
+      "dedupe_key": "OSCR:price_move:f8a04349d64cc048"
+    },
+    {
+      "event_id": "technical:ORCL:price-move:2026-08-12",
+      "ticker": "ORCL",
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "headline": "Price +5.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved +5.4% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-12T22:03:46.442136+00:00",
+      "detected_at": "2026-08-12T22:03:46.442141+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:ORCL:price-move:2026-08-12"
+      ],
+      "dedupe_key": "ORCL:price_move:6c4c495d7b1df6b8"
     },
     {
       "event_id": "technical:NBIS:price-move:2026-08-12",
       "ticker": "NBIS",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +28.9%",
+      "headline": "Price +34.1%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +28.9% today.",
+      "why_today": "The stock moved +34.1% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-12T19:19:18.410074+00:00",
-      "detected_at": "2026-08-12T19:19:18.410078+00:00",
+      "event_time": "2026-08-12T22:03:46.401136+00:00",
+      "detected_at": "2026-08-12T22:03:46.401140+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -85,13 +206,13 @@
       "ticker": "IREN",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +10.5%",
+      "headline": "Price +9.8%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +10.5% today.",
+      "why_today": "The stock moved +9.8% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-08-12T19:19:18.359736+00:00",
-      "detected_at": "2026-08-12T19:19:18.359740+00:00",
+      "event_time": "2026-08-12T22:03:46.350449+00:00",
+      "detected_at": "2026-08-12T22:03:46.350453+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -118,10 +239,10 @@
       ],
       "dedupe_key": "IREN:price_move:55c0ed2e32c36ffc",
       "technical_score": 53.0,
-      "rsi14": 54.78,
-      "pct_vs_ema20": 10.32,
-      "pct_vs_ema200": -3.33,
-      "volume_ratio20": 0.79,
+      "rsi14": 54.91,
+      "pct_vs_ema20": 9.62,
+      "pct_vs_ema200": -3.77,
+      "volume_ratio20": 0.86,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
@@ -483,11 +604,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 61.8, +6.3% vs EMA20, +14.7% vs EMA200, volume 0.65x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-08-12",
-      "detected_at": "2026-08-12T19:21:32+00:00",
+      "detected_at": "2026-08-12T22:06:07+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -508,59 +629,15 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 62.47,
-      "pct_vs_ema20": 5.98,
-      "pct_vs_ema200": 14.48,
-      "volume_ratio20": 0.6,
+      "rsi14": 61.78,
+      "pct_vs_ema20": 6.27,
+      "pct_vs_ema200": 14.74,
+      "volume_ratio20": 0.65,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:NVDA:technical_setup:2026-08-12"
       ],
       "dedupe_key": "NVDA:technical_setup:ff2c27a4c743b764",
-      "priority_score": 68,
-      "priority": "Action"
-    },
-    {
-      "event_id": "technical:OPEN:technical_risk:2026-08-12",
-      "ticker": "OPEN",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 12/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-12: score 12/100, AVOID / Turnaround only, RSI 35.8, -10.8% vs EMA20, -34.9% vs EMA200, volume 0.22x 20-day average.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-12",
-      "detected_at": "2026-08-12T19:21:32+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-08-12"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-08-12"
-        }
-      ],
-      "technical_score": 12.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
-      "rsi14": 35.76,
-      "pct_vs_ema20": -10.84,
-      "pct_vs_ema200": -34.92,
-      "volume_ratio20": 0.22,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:OPEN:technical_risk:2026-08-12"
-      ],
-      "dedupe_key": "OPEN:technical_risk:f54c58e13b0ca1a0",
       "priority_score": 68,
       "priority": "Action"
     },
@@ -696,8 +773,8 @@
       "related_event_ids": [
         "regulator:TE:aa21dc3f60777ff7"
       ],
-      "priority_score": 71,
-      "priority": "Action"
+      "priority_score": 78,
+      "priority": "Risk"
     },
     {
       "event_id": "company_ir:AMD:a5d4fbb4fa69b2d7",
@@ -781,49 +858,6 @@
       "attention_policy_decision": "allow_unverified",
       "related_event_ids": [
         "gdelt:TSLA:98e226d862a86471"
-      ],
-      "priority_score": 32,
-      "priority": "Watch"
-    },
-    {
-      "event_id": "gdelt:NOW:1a99a209577a6403",
-      "ticker": "NOW",
-      "event_type": "corporate_event",
-      "event_subtype": "product",
-      "headline": "Autonomize AI Launches Fraud , Waste , and Abuse AI - native App in the ServiceNow Store",
-      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-      "materiality": "low",
-      "reported_materiality": "low",
-      "urgency": "developing",
-      "event_time": "2026-08-05T13:00:00+00:00",
-      "detected_at": "2026-08-05T20:01:37+00:00",
-      "verification_status": "unverified",
-      "verification_level": "unverified_report",
-      "verification_reason": "Primary source not yet located.",
-      "entity_confidence": "high",
-      "entity_confidence_reason": "headline contains alias: ServiceNow",
-      "dedupe_key": "NOW:product:2026-08-05:c864bd47be60",
-      "source": {
-        "type": "gdelt",
-        "quality": "secondary",
-        "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-        "published_at": "2026-08-05T13:00:00+00:00",
-        "domain": "www.manilatimes.net"
-      },
-      "source_chain": [
-        {
-          "type": "gdelt",
-          "quality": "secondary",
-          "url": "https://www.manilatimes.net/2026/08/05/tmt-newswire/globenewswire/autonomize-ai-launches-fraud-waste-and-abuse-ai-native-app-in-the-servicenow-store/2398920",
-          "published_at": "2026-08-05T13:00:00+00:00",
-          "domain": "www.manilatimes.net"
-        }
-      ],
-      "secondary_source_count": 1,
-      "attention_policy_decision": "allow_unverified",
-      "related_event_ids": [
-        "gdelt:NOW:1a99a209577a6403"
       ],
       "priority_score": 32,
       "priority": "Watch"

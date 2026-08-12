@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-12T19:21:32+00:00",
+  "updated_at": "2026-08-12T22:06:07+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 19,
+  "total_events": 20,
   "coverage_status": "partial",
   "summary": {
     "Critical": 4,
@@ -64,7 +64,7 @@
       "status": "ok",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 1
+      "accepted_events": 0
     },
     "ir": {
       "status": "ok",
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 2,
+      "unavailable": 8,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -608,9 +608,9 @@
         "A transaction event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T19:21:32+00:00",
         "active_days": 0
       },
@@ -634,12 +634,12 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +28.9% today.",
+        "The stock moved +34.1% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T19:19:18.410074+00:00",
+      "event_time": "2026-08-12T22:03:46.401136+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -658,13 +658,13 @@
           "ticker": "NBIS",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +28.9%",
+          "headline": "Price +34.1%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +28.9% today.",
+          "why_today": "The stock moved +34.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T19:19:18.410074+00:00",
-          "detected_at": "2026-08-12T19:19:18.410078+00:00",
+          "event_time": "2026-08-12T22:03:46.401136+00:00",
+          "detected_at": "2026-08-12T22:03:46.401140+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -786,7 +786,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +28.9% today.",
+        "The stock moved +34.1% today.",
         "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
@@ -813,14 +813,14 @@
       "portfolio_status": "holding",
       "role": "Energy technology",
       "priority": "Risk",
-      "priority_score": 75,
+      "priority_score": 99,
       "why_today": [
-        "The stock moved -7.4% today.",
+        "The stock moved -10.4% today.",
         "A product event was detected and requires source review."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-12T19:19:18.607270+00:00",
+      "event_time": "2026-08-12T22:03:46.589963+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -839,13 +839,13 @@
           "ticker": "TE",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -7.4%",
+          "headline": "Price -10.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.4% today.",
-          "materiality": "medium",
+          "why_today": "The stock moved -10.4% today.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T19:19:18.607270+00:00",
-          "detected_at": "2026-08-12T19:19:18.607274+00:00",
+          "event_time": "2026-08-12T22:03:46.589963+00:00",
+          "detected_at": "2026-08-12T22:03:46.589967+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -853,7 +853,7 @@
             "url": "data/technical.json",
             "published_at": ""
           },
-          "priority_score": 75,
+          "priority_score": 99,
           "priority": "Risk",
           "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
@@ -918,8 +918,8 @@
           "related_event_ids": [
             "regulator:TE:aa21dc3f60777ff7"
           ],
-          "priority_score": 71,
-          "priority": "Action"
+          "priority_score": 78,
+          "priority": "Risk"
         }
       ],
       "actions": {
@@ -930,13 +930,13 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -7.4% today.",
+        "The stock moved -10.4% today.",
         "A product event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-12T19:21:32+00:00",
         "active_days": 0
       },
@@ -946,7 +946,7 @@
         "change_pct": -3.26,
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 3.3%"
       },
-      "personal_priority_score": 83,
+      "personal_priority_score": 107,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
@@ -964,12 +964,12 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 1,
-    "active_discovered_event_count": 15,
+    "newly_discovered_event_count": 0,
+    "active_discovered_event_count": 14,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 2,
-    "technical_metric_repair_count": 1,
+    "technical_fill_count": 1,
+    "technical_metric_repair_count": 2,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -989,8 +989,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 18,
-      "accepted_events": 18,
+      "evaluated_events": 20,
+      "accepted_events": 20,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1011,7 +1011,7 @@
   },
   "technical_summary": {
     "risk": 0,
-    "setup": 1,
+    "setup": 0,
     "total": 2
   },
   "technical_watch": [
@@ -1027,7 +1027,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T19:19:18.359736+00:00",
+      "event_time": "2026-08-12T22:03:46.350449+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1051,8 +1051,8 @@
           "why_today": "The stock moved +9.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T19:19:18.359736+00:00",
-          "detected_at": "2026-08-12T19:19:18.359740+00:00",
+          "event_time": "2026-08-12T22:03:46.350449+00:00",
+          "detected_at": "2026-08-12T22:03:46.350453+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1116,116 +1116,123 @@
       ]
     },
     {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
+      "ticker": "INDI",
+      "name": "indie Semiconductor, Inc.",
       "portfolio_status": "holding",
-      "role": "Core AI",
-      "priority": "Action",
-      "priority_score": 68,
+      "role": "Automotive semiconductors",
+      "priority": "Risk",
+      "priority_score": 75,
       "why_today": [
-        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average."
+        "The stock moved +5.2% today."
       ],
       "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "event_time": "2026-08-12",
+      "event_subtype": "price_move",
+      "event_time": "2026-08-12T22:03:46.598173+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": "2026-08-12"
+        "published_at": ""
       },
-      "price": 224.13,
-      "day_change_pct": 3.0483,
-      "relative_volume": 0.65,
+      "price": 4.01,
+      "day_change_pct": 5.2494,
+      "relative_volume": 1.27,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NVDA:technical_setup:2026-08-12",
-          "ticker": "NVDA",
+          "event_id": "technical:INDI:price-move:2026-08-12",
+          "ticker": "INDI",
           "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 93/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average.",
+          "event_subtype": "price_move",
+          "headline": "Price +5.2%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12",
-          "detected_at": "2026-08-12T19:21:32+00:00",
+          "event_time": "2026-08-12T22:03:46.598173+00:00",
+          "detected_at": "2026-08-12T22:03:46.598177+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
             "url": "data/technical.json",
-            "published_at": "2026-08-12"
+            "published_at": ""
           },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
               "type": "technical_json",
               "quality": "internal",
               "url": "data/technical.json",
-              "published_at": "2026-08-12"
+              "published_at": ""
             }
           ],
-          "technical_score": 93.0,
-          "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
-          "rsi14": 61.78,
-          "pct_vs_ema20": 6.27,
-          "pct_vs_ema200": 14.74,
-          "volume_ratio20": 0.65,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NVDA:technical_setup:2026-08-12"
+            "technical:INDI:price-move:2026-08-12"
           ],
-          "dedupe_key": "NVDA:technical_setup:ff2c27a4c743b764",
-          "priority_score": 68,
-          "priority": "Action",
+          "dedupe_key": "INDI:price_move:6f6756d4cf68513c",
+          "technical_score": 80.0,
+          "rsi14": 57.4,
+          "pct_vs_ema20": 8.09,
+          "pct_vs_ema200": 1.01,
+          "volume_ratio20": 1.27,
+          "technical_signal": "WATCH FOR ENTRY",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "company_ir": "https://investor.nvidia.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-INDI/",
         "raw_data": "data/technical.json"
       },
-      "severity": "medium",
-      "primary_trigger": "technical_setup",
+      "severity": "high",
+      "primary_trigger": "price_move",
       "signals": [
-        "Latest technical scan dated 2026-08-12: score 93/100, BUY ZONE / Trend Confirmed, RSI 62.5, +6.0% vs EMA20, +14.5% vs EMA200, volume 0.60x 20-day average."
+        "The stock moved +5.2% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-08-12T16:11:51+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-12T22:06:07+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 223.1909,
-        "current_price": 224.13,
-        "change_pct": 0.42,
+        "baseline_price": 4.01,
+        "current_price": 4.01,
+        "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 83,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "changes_summary": {
-    "new": 2,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 5,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:NVDA:technical_setup:2026-08-12",
+      "ticker": "NVDA",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-08-12T22:06:07+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:CIFR:price-move:2026-08-12",
       "ticker": "CIFR",
@@ -1293,14 +1300,6 @@
     {
       "history_key": "technical:EOSE:price-move:2026-08-11",
       "ticker": "EOSE",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T05:03:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:price-move:2026-08-11",
-      "ticker": "OKLO",
       "event_subtype": "price_move",
       "priority": "Risk",
       "resolved_at": "2026-08-12T05:03:22+00:00",
