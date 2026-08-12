@@ -32,7 +32,7 @@ def collect_news_events(portfolio: list[dict[str, Any]], registry: dict[str, Any
     batch = [entries[(cursor + index) % len(entries)] for index in range(min(batch_size, len(entries)))]
     old_tickers = old_state.get("tickers") if isinstance(old_state.get("tickers"), dict) else {}
     next_tickers, events, errors = dict(old_tickers), [], []
-    ir_ok = ir_partial = ir_error = gdelt_ok = gdelt_error = 0
+    ir_ok = ir_partial = ir_error = gdelt_ok = gdelt_unavailable = 0
     for entry in batch:
         ticker = entry["ticker"]
         ticker_state = old_tickers.get(ticker) if isinstance(old_tickers.get(ticker), dict) else {}
@@ -41,12 +41,12 @@ def collect_news_events(portfolio: list[dict[str, Any]], registry: dict[str, Any
         events.extend(ir_events + gdelt_events)
         next_tickers[ticker] = {"ir": ir_state, "gdelt": gdelt_state}
         ir_ok += ir_status == "ok"; ir_partial += ir_status == "partial"; ir_error += ir_status == "error"
-        gdelt_ok += gdelt_status == "ok"; gdelt_error += gdelt_status == "error"
+        gdelt_ok += gdelt_status == "ok"; gdelt_unavailable += gdelt_status != "ok"
         if ir_message: errors.append({"source": "ir", "ticker": ticker, "message": ir_message})
-        if gdelt_message: errors.append({"source": "gdelt", "ticker": ticker, "message": gdelt_message})
     ir_status = "ok" if ir_ok and not ir_error and not ir_partial else "partial" if ir_ok or ir_partial else "error"
-    gdelt_status = "ok" if gdelt_ok and not gdelt_error else "partial" if gdelt_ok else "error"
-    overall = "ok" if ir_status == gdelt_status == "ok" else "partial" if ir_status != "error" or gdelt_status != "error" else "error"
+    gdelt_status = "ok" if gdelt_ok and not gdelt_unavailable else "partial" if gdelt_ok else "optional_unavailable"
+    # GDELT is discovery-only. Verified IR coverage owns the actionable news health.
+    overall = ir_status
     next_state = {"schema_version": "1.0", "updated_at": now.isoformat(), "cursor": (cursor + len(batch)) % len(entries), "tickers": next_tickers}
-    health = {"news": {"status": overall, "source": "Free news discovery", "checked": len(batch), "accepted_events": len(events)}, "ir": {"status": ir_status, "source": "Company IR/RSS", "checked": len(batch), "ok": ir_ok, "partial": ir_partial, "errors": ir_error}, "gdelt": {"status": gdelt_status, "source": "GDELT DOC 2.0", "checked": len(batch), "ok": gdelt_ok, "errors": gdelt_error}}
+    health = {"news": {"status": overall, "source": "Verified company IR discovery", "checked": len(batch), "accepted_events": len(events)}, "ir": {"status": ir_status, "source": "Company IR/RSS", "checked": len(batch), "ok": ir_ok, "partial": ir_partial, "errors": ir_error}, "gdelt": {"status": gdelt_status, "source": "GDELT DOC 2.0", "role": "discovery_only", "checked": len(batch), "ok": gdelt_ok, "unavailable": gdelt_unavailable, "note": "Optional secondary discovery does not downgrade verified-source coverage."}}
     return NewsCollectionResult(events, next_state, health, errors)

@@ -15,7 +15,10 @@ on:
       - "scripts/generate_earnings_radar.py"
       - "scripts/generate_earnings_radar_p5.py"
       - "scripts/validate_earnings_radar.py"
+      - "scripts/generate_attention_p0.py"
       - "scripts/generate_attention_pr3.py"
+      - "scripts/attention_sources/pipeline.py"
+      - "tests/test_attention_pr4_reliability.py"
       - "scripts/generate_attention_p5.py"
       - "tests/test_attention_source_policy.py"
       - "tests/test_attention_policy_p4.py"
@@ -94,6 +97,7 @@ jobs:
           test -f data/finnhub/state/index.json
           python -m unittest discover -s tests -p "test_attention_p0.py" -v
           python -m unittest discover -s tests -p "test_attention_pr3.py" -v
+          python -m unittest discover -s tests -p "test_attention_pr4_reliability.py" -v
           python scripts/test_publish_generated_data.py
           python scripts/generate_health.py
           python scripts/publish_generated_data.py

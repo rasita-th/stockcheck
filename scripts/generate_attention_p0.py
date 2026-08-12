@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import time
 import urllib.request
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
@@ -40,6 +41,8 @@ USER_AGENT = os.environ.get("SEC_USER_AGENT", "Stock Timing Radar contact@users.
 OFFLINE_MODE = os.environ.get("STOCKCHECK_ATTENTION_OFFLINE", "").lower() in {"1", "true", "yes"}
 MAX_ITEMS = max(1, int(os.environ.get("ATTENTION_MAX_ITEMS", "7")))
 SEC_BOOTSTRAP_DAYS = max(0, int(os.environ.get("SEC_BOOTSTRAP_DAYS", "1")))
+SEC_REQUEST_DELAY_SECONDS = max(0.0, float(os.environ.get("SEC_REQUEST_DELAY_SECONDS", "0.12")))
+_LAST_SEC_REQUEST_TS = 0.0
 
 IMPORTANT_FORMS = {
     "8-K", "8-K/A", "10-Q", "10-Q/A", "10-K", "10-K/A", "20-F", "20-F/A", "6-K", "6-K/A",
@@ -104,10 +107,30 @@ def parse_datetime(value: Any, fallback_date: date | None = None) -> datetime | 
     return None
 
 
+def _pace_sec_request(url: str) -> None:
+    """Keep EDGAR traffic below the SEC fair-access ceiling."""
+    global _LAST_SEC_REQUEST_TS
+    if "sec.gov" not in url.lower():
+        return
+    wait = SEC_REQUEST_DELAY_SECONDS - (time.monotonic() - _LAST_SEC_REQUEST_TS)
+    if wait > 0:
+        time.sleep(wait)
+    _LAST_SEC_REQUEST_TS = time.monotonic()
+
+
 def http_json(url: str, timeout: int = 18) -> dict[str, Any] | None:
     if OFFLINE_MODE:
         return None
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+    _pace_sec_request(url)
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json,text/plain,*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Connection": "close",
+        },
+    )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return json.loads(response.read().decode("utf-8"))
@@ -180,15 +203,38 @@ def load_earnings_calendar() -> list[dict[str, Any]]:
     return output
 
 
-def fetch_sec_ticker_map() -> tuple[dict[str, dict[str, Any]], str]:
-    data = http_json("https://www.sec.gov/files/company_tickers.json")
-    if not data:
-        return {}, "error"
+def _cached_sec_ticker_map(old_state: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
+    tickers = old_state.get("tickers") if isinstance(old_state, dict) else {}
     output: dict[str, dict[str, Any]] = {}
-    for row in data.values():
-        if isinstance(row, dict) and row.get("ticker"):
-            output[str(row["ticker"]).upper()] = row
-    return output, "ok"
+    for ticker, state in (tickers.items() if isinstance(tickers, dict) else []):
+        cik = str(state.get("cik") or "").strip() if isinstance(state, dict) else ""
+        if ticker and cik.isdigit():
+            output[str(ticker).upper()] = {"ticker": str(ticker).upper(), "cik_str": cik.zfill(10)}
+    return output
+
+
+def fetch_sec_ticker_map(old_state: dict[str, Any] | None = None) -> tuple[dict[str, dict[str, Any]], str]:
+    """Fetch the official index, falling back to previously verified CIKs."""
+    exchange_data = http_json("https://www.sec.gov/files/company_tickers_exchange.json")
+    output: dict[str, dict[str, Any]] = {}
+    if exchange_data:
+        fields = exchange_data.get("fields") or []
+        for values in exchange_data.get("data") or []:
+            row = dict(zip(fields, values)) if isinstance(values, list) else {}
+            ticker = str(row.get("ticker") or "").upper().strip()
+            cik = row.get("cik") or row.get("cik_str")
+            if ticker and cik:
+                output[ticker] = {**row, "ticker": ticker, "cik_str": str(cik).zfill(10)}
+    if not output:
+        data = http_json("https://www.sec.gov/files/company_tickers.json")
+        for row in (data.values() if isinstance(data, dict) else []):
+            if isinstance(row, dict) and row.get("ticker") and row.get("cik_str") is not None:
+                ticker = str(row["ticker"]).upper().strip()
+                output[ticker] = {**row, "ticker": ticker, "cik_str": str(row["cik_str"]).zfill(10)}
+    if output:
+        return output, "ok"
+    cached = _cached_sec_ticker_map(old_state)
+    return (cached, "cached") if cached else ({}, "error")
 
 
 def sec_url(cik: str, accession: str, primary_document: str = "") -> str:
@@ -250,7 +296,7 @@ def sec_event_materiality(subtype: str) -> str:
 def fetch_sec_events(stock: dict[str, Any], ticker_map: dict[str, dict[str, Any]], old_state: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any], str, str | None]:
     ticker = stock["ticker"]
     mapping = ticker_map.get(ticker, {})
-    cik = str(stock.get("sec_cik") or mapping.get("cik_str") or "").strip()
+    cik = str(stock.get("sec_cik") or mapping.get("cik_str") or old_state.get("cik") or "").strip()
     if not cik.isdigit():
         return [], old_state, "partial", "CIK unavailable"
     data = http_json(f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json")
@@ -441,7 +487,7 @@ def generate() -> dict[str, Any]:
     contexts = {ticker: price_context(technical_map.get(ticker)) for ticker in portfolio_map}
     earnings_calendar = load_earnings_calendar()
     old_sec_state = load_json(SEC_STATE_PATH, {}) or {}
-    ticker_map, ticker_map_status = fetch_sec_ticker_map()
+    ticker_map, ticker_map_status = fetch_sec_ticker_map(old_sec_state)
     events: list[dict[str, Any]] = []
     next_sec_state: dict[str, Any] = {"schema_version": "1.0", "updated_at": now_utc().isoformat(), "tickers": {}}
     sec_ok = sec_partial = sec_error = 0
