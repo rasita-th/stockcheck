@@ -1234,64 +1234,27 @@
       "Z": "endpoints/recommendation_trends/Z.json",
       "ZETA": "endpoints/recommendation_trends/ZETA.json",
       "ZS": "endpoints/recommendation_trends/ZS.json"
+    },
+    "sec_filings": {
+      "AMD": "endpoints/sec_filings/AMD.json",
+      "AMZN": "endpoints/sec_filings/AMZN.json",
+      "ASTS": "endpoints/sec_filings/ASTS.json",
+      "BMNR": "endpoints/sec_filings/BMNR.json",
+      "GOOGL": "endpoints/sec_filings/GOOGL.json",
+      "HOOD": "endpoints/sec_filings/HOOD.json",
+      "IONQ": "endpoints/sec_filings/IONQ.json",
+      "IREN": "endpoints/sec_filings/IREN.json",
+      "MP": "endpoints/sec_filings/MP.json",
+      "NBIS": "endpoints/sec_filings/NBIS.json",
+      "NVDA": "endpoints/sec_filings/NVDA.json",
+      "OKLO": "endpoints/sec_filings/OKLO.json",
+      "ORCL": "endpoints/sec_filings/ORCL.json",
+      "RKLB": "endpoints/sec_filings/RKLB.json",
+      "TEM": "endpoints/sec_filings/TEM.json",
+      "TSLA": "endpoints/sec_filings/TSLA.json"
     }
   },
   "runs": [
-    {
-      "analyst": {
-        "calls_used": 32,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA"
-          ],
-          "recommendation_trends": [
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR",
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA",
-            "NBIS"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-10T14:04:05+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-10T14:03:22+00:00",
-      "universe_count": 305
-    },
     {
       "calendar": {
         "calls_used": 0,
@@ -2193,9 +2156,72 @@
       "mode": "events",
       "started_at": "2026-08-12T05:11:44+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-08-12T06:45:16+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT",
+            "ETN",
+            "EVTL",
+            "EXC",
+            "FANG",
+            "FAST"
+          ],
+          "sec_filings": [
+            "RKLB",
+            "AMZN",
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR",
+            "NBIS",
+            "TEM",
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-12T06:44:29+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-12T05:12:11+00:00"
+  "updated_at": "2026-08-12T06:45:16+00:00"
 }

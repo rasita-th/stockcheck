@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-12T05:15:11.567849+00:00",
+  "generated_at": "2026-08-12T06:48:38.837417+00:00",
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 409.4,
+      "age_minutes": 502.9,
       "stale_after_minutes": 30,
       "timestamp": "2026-08-11T22:25:46+00:00",
       "row_count": 408,
@@ -12,7 +12,7 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 409.2,
+      "age_minutes": 502.7,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-11T22:25:57+00:00",
       "row_count": 408,
@@ -27,7 +27,7 @@
       "status": "partial",
       "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T05:14:05+00:00",
+      "timestamp": "2026-08-12T06:47:34+00:00",
       "row_count": 3,
       "source": null,
       "coverage_status": "partial",
@@ -35,10 +35,22 @@
         "sec": {
           "status": "partial",
           "checked": 38,
-          "ok": 0,
-          "partial": 32,
-          "errors": 6,
-          "source": "SEC EDGAR"
+          "applicable": 35,
+          "not_applicable": 3,
+          "ok": 16,
+          "partial": 0,
+          "errors": 19,
+          "source": "SEC EDGAR",
+          "identity": {
+            "status": "complete",
+            "verified": 35,
+            "missing": 0
+          },
+          "transport": {
+            "status": "partial",
+            "ok": 16,
+            "errors": 19
+          }
         },
         "earnings": {
           "status": "partial",
@@ -61,8 +73,8 @@
           "source": "technical.json"
         },
         "sec_ticker_map": {
-          "status": "error",
-          "rows": 0,
+          "status": "registry",
+          "rows": 38,
           "source": "SEC company_tickers.json"
         },
         "news": {
@@ -75,8 +87,8 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 1,
-          "partial": 9,
+          "ok": 0,
+          "partial": 10,
           "errors": 0
         },
         "gdelt": {
@@ -103,13 +115,13 @@
       "status": "ok",
       "age_minutes": 1.1,
       "stale_after_minutes": 90,
-      "timestamp": "2026-08-12T05:14:05+00:00",
+      "timestamp": "2026-08-12T06:47:34+00:00",
       "row_count": 13,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 125.5,
+      "age_minutes": 218.9,
       "stale_after_minutes": 1440,
       "timestamp": "2026-08-12T03:09:44+00:00",
       "row_count": null,
@@ -117,7 +129,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 120.1,
+      "age_minutes": 213.6,
       "stale_after_minutes": 50400,
       "timestamp": "2026-08-12 03:15:05 UTC",
       "row_count": 408,
@@ -125,7 +137,7 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 114.6,
+      "age_minutes": 208.0,
       "stale_after_minutes": 780,
       "timestamp": "2026-08-12T03:20:36.757125+00:00",
       "row_count": null,
