@@ -110,7 +110,7 @@ def parse_datetime(value: Any, fallback_date: date | None = None) -> datetime | 
 def _pace_sec_request(url: str) -> None:
     """Keep EDGAR traffic below the SEC fair-access ceiling."""
     global _LAST_SEC_REQUEST_TS
-    if "sec.gov" not in urllib.parse.urlsplit(url).netloc.lower():
+    if "sec.gov" not in url.lower():
         return
     wait = SEC_REQUEST_DELAY_SECONDS - (time.monotonic() - _LAST_SEC_REQUEST_TS)
     if wait > 0:
