@@ -122,8 +122,8 @@
         "published_at": "2026-08-12T07:06:37+00:00",
         "domain": "investors.rocketlabcorp.com"
       },
-      "price": 81.42,
-      "day_change_pct": 1.7241,
+      "price": 81.64,
+      "day_change_pct": 2.0372,
       "relative_volume": 0.23,
       "trigger_level": null,
       "events": [
@@ -370,9 +370,9 @@
       },
       "impact": {
         "baseline_price": 79.99,
-        "current_price": 81.42,
-        "change_pct": 1.79,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.8%"
+        "current_price": 81.64,
+        "change_pct": 2.06,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.1%"
       },
       "personal_priority_score": 113,
       "personalization_reasons": [
@@ -403,8 +403,8 @@
         "published_at": "2026-08-07T07:40:33+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 485.32,
-      "day_change_pct": 2.3191,
+      "price": 486.17,
+      "day_change_pct": 2.4983,
       "relative_volume": 0.15,
       "trigger_level": null,
       "events": [
@@ -516,9 +516,9 @@
       },
       "impact": {
         "baseline_price": 475.465,
-        "current_price": 485.32,
-        "change_pct": 2.07,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.1%"
+        "current_price": 486.17,
+        "change_pct": 2.25,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.2%"
       },
       "personal_priority_score": 110,
       "personalization_reasons": [
@@ -550,8 +550,8 @@
         "agency": "DOE",
         "name": "U.S. Department of Energy"
       },
-      "price": 5.42,
-      "day_change_pct": 2.0716,
+      "price": 5.4399,
+      "day_change_pct": -0.5503,
       "relative_volume": 0.25,
       "trigger_level": null,
       "events": [
@@ -624,9 +624,9 @@
       },
       "impact": {
         "baseline_price": 5.465,
-        "current_price": 5.42,
-        "change_pct": -0.82,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.8%"
+        "current_price": 5.4399,
+        "change_pct": -0.46,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 77,
       "personalization_reasons": [
@@ -701,7 +701,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 2
+    "total": 1
   },
   "technical_watch": [
     {
@@ -709,10 +709,10 @@
       "name": "Cipher Mining Inc.",
       "portfolio_status": "holding",
       "role": "Digital infrastructure",
-      "priority": "Critical",
-      "priority_score": 99,
+      "priority": "Risk",
+      "priority_score": 75,
       "why_today": [
-        "The stock moved +12.5% today."
+        "The stock moved +7.3% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -725,8 +725,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 18.3775,
-      "day_change_pct": 12.5383,
+      "price": 18.46,
+      "day_change_pct": 7.2632,
       "relative_volume": 0.27,
       "trigger_level": null,
       "events": [
@@ -735,113 +735,13 @@
           "ticker": "CIFR",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +12.5%",
+          "headline": "Price +7.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +12.5% today.",
-          "materiality": "high",
+          "why_today": "The stock moved +7.3% today.",
+          "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-08-12T13:45:47.168550+00:00",
           "detected_at": "2026-08-12T13:45:47.168555+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:CIFR:price-move:2026-08-12"
-          ],
-          "dedupe_key": "CIFR:price_move:3b88a5bee88b1e26",
-          "technical_score": 37.0,
-          "rsi14": 44.52,
-          "pct_vs_ema20": -9.29,
-          "pct_vs_ema200": -0.34,
-          "volume_ratio20": 0.27,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +12.5% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-12T05:03:22+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 17.205,
-        "current_price": 18.3775,
-        "change_pct": 6.81,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 6.8%"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy storage",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved +6.0% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-08-12T13:45:47.124877+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 4.2936,
-      "day_change_pct": 6.0148,
-      "relative_volume": 0.09,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:EOSE:price-move:2026-08-12",
-          "ticker": "EOSE",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +6.0%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.0% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-08-12T13:45:47.124877+00:00",
-          "detected_at": "2026-08-12T13:45:47.124882+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -864,27 +764,27 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:EOSE:price-move:2026-08-12"
+            "technical:CIFR:price-move:2026-08-12"
           ],
-          "dedupe_key": "EOSE:price_move:1117725c3c7cce3c",
-          "technical_score": 43.0,
-          "rsi14": 49.61,
-          "pct_vs_ema20": 4.47,
-          "pct_vs_ema200": -49.13,
-          "volume_ratio20": 0.09,
-          "technical_signal": "AVOID / Turnaround only",
+          "dedupe_key": "CIFR:price_move:3b88a5bee88b1e26",
+          "technical_score": 52.0,
+          "rsi14": 44.52,
+          "pct_vs_ema20": -8.88,
+          "pct_vs_ema200": 0.11,
+          "volume_ratio20": 0.27,
+          "technical_signal": "WEAK / Avoid",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +6.0% today."
+        "The stock moved +7.3% today."
       ],
       "change": {
         "status": "ongoing",
@@ -894,10 +794,10 @@
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 4.255,
-        "current_price": 4.2936,
-        "change_pct": 0.91,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.9%"
+        "baseline_price": 17.205,
+        "current_price": 18.46,
+        "change_pct": 7.29,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.3%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
