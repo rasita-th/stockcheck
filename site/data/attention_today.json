@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-13T19:22:08+00:00",
+  "updated_at": "2026-08-13T22:04:41+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -10,7 +10,7 @@
   "summary": {
     "Critical": 3,
     "Risk": 0,
-    "Action": 2,
+    "Action": 1,
     "Watch": 0,
     "Developing": 0
   },
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 2,
+      "unavailable": 8,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -759,9 +759,9 @@
         "A product event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Action",
         "first_seen_at": "2026-08-13T19:22:08+00:00",
         "active_days": 0
       },
@@ -775,193 +775,6 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Action",
-      "priority_score": 68,
-      "why_today": [
-        "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "event_time": "2026-08-13",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-08-13"
-      },
-      "price": 254.96,
-      "day_change_pct": -1.6358,
-      "relative_volume": 1.21,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:NBIS:technical_setup:2026-08-13",
-          "ticker": "NBIS",
-          "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 97/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-08-13",
-          "detected_at": "2026-08-13T19:22:08+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": "2026-08-13"
-          },
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": "2026-08-13"
-            }
-          ],
-          "technical_score": 97.0,
-          "technical_signal": "BUY ZONE / Trend Confirmed",
-          "scan_age_days": 0,
-          "rsi14": 59.92,
-          "pct_vs_ema20": 20.74,
-          "pct_vs_ema200": 61.47,
-          "volume_ratio20": 1.12,
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:NBIS:technical_setup:2026-08-13"
-          ],
-          "dedupe_key": "NBIS:technical_setup:cf07d64bd515e05f",
-          "priority_score": 68,
-          "priority": "Action"
-        },
-        {
-          "event_id": "gdelt:NBIS:1ec191514e708d16",
-          "ticker": "NBIS",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "DA Davidson Slashes Nebius Group ( NASDAQ : NBIS ) Stock Price Target By 30 % As Vineland Construction Delays Cloud Outlook",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-12T04:00:00+00:00",
-          "detected_at": "2026-08-12T05:00:40+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Nebius",
-          "dedupe_key": "NBIS:guidance:2026-08-12:9e67172bea9b",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
-            "published_at": "2026-08-12T04:00:00+00:00",
-            "domain": "www.foreignpolicyjournal.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
-              "published_at": "2026-08-12T04:00:00+00:00",
-              "domain": "www.foreignpolicyjournal.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:NBIS:1ec191514e708d16"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:NBIS:b62ae025f93f4d89",
-          "ticker": "NBIS",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Nebius Group : Nebius reports second quarter 2026 financial results",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-12T12:15:00+00:00",
-          "detected_at": "2026-08-12T16:09:21+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Nebius",
-          "dedupe_key": "NBIS:earnings_reported:2026-08-12:d1dfe53363da",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
-            "published_at": "2026-08-12T12:15:00+00:00",
-            "domain": "www.finanznachrichten.de"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
-              "published_at": "2026-08-12T12:15:00+00:00",
-              "domain": "www.finanznachrichten.de"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:NBIS:b62ae025f93f4d89"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "technical_setup",
-      "signals": [
-        "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-08-13T19:22:08+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 252.365,
-        "current_price": 254.96,
-        "change_pct": 1.03,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.0%"
-      },
-      "personal_priority_score": 76,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
       ]
     }
   ],
@@ -981,8 +794,8 @@
     "active_discovered_event_count": 15,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 1,
-    "technical_metric_repair_count": 2,
+    "technical_fill_count": 2,
+    "technical_metric_repair_count": 1,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -1002,8 +815,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 17,
-      "accepted_events": 17,
+      "evaluated_events": 16,
+      "accepted_events": 16,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1024,8 +837,8 @@
   },
   "technical_summary": {
     "risk": 0,
-    "setup": 0,
-    "total": 1
+    "setup": 2,
+    "total": 3
   },
   "technical_watch": [
     {
@@ -1040,7 +853,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-13T19:19:51.496666+00:00",
+      "event_time": "2026-08-13T22:02:24.682259+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1064,8 +877,8 @@
           "why_today": "The stock moved -7.0% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-13T19:19:51.496666+00:00",
-          "detected_at": "2026-08-13T19:19:51.496672+00:00",
+          "event_time": "2026-08-13T22:02:24.682259+00:00",
+          "detected_at": "2026-08-13T22:02:24.682263+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1111,9 +924,9 @@
         "The stock moved -7.0% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-13T19:22:08+00:00",
         "active_days": 0
       },
@@ -1127,17 +940,232 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
+    },
+    {
+      "ticker": "JEPQ",
+      "name": "JPMorgan Nasdaq Equity Premium Income ETF",
+      "portfolio_status": "holding",
+      "role": "Income ETF",
+      "priority": "Action",
+      "priority_score": 68,
+      "why_today": [
+        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.59x 20-day average."
+      ],
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "event_time": "2026-08-13",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-08-13"
+      },
+      "price": 60.415,
+      "day_change_pct": 0.6917,
+      "relative_volume": 0.59,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:JEPQ:technical_setup:2026-08-13",
+          "ticker": "JEPQ",
+          "event_type": "technical",
+          "event_subtype": "technical_setup",
+          "headline": "Latest technical scan · 93/100",
+          "summary": "Technical context from the latest market scan; this is not a recommendation.",
+          "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.59x 20-day average.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-13",
+          "detected_at": "2026-08-13T22:04:41+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": "2026-08-13"
+          },
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": "2026-08-13"
+            }
+          ],
+          "technical_score": 93.0,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "scan_age_days": 0,
+          "rsi14": 59.03,
+          "pct_vs_ema20": 1.93,
+          "pct_vs_ema200": 3.2,
+          "volume_ratio20": 0.59,
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:JEPQ:technical_setup:2026-08-13"
+          ],
+          "dedupe_key": "JEPQ:technical_setup:9f5989142ae3a16c",
+          "priority_score": 68,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-JEPQ/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "technical_setup",
+      "signals": [
+        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.59x 20-day average."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-13T22:04:41+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 60.415,
+        "current_price": 60.415,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 76,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "portfolio_status": "holding",
+      "role": "Core AI",
+      "priority": "Action",
+      "priority_score": 68,
+      "why_today": [
+        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.5, +6.1% vs EMA20, +15.2% vs EMA200, volume 0.59x 20-day average."
+      ],
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "event_time": "2026-08-13",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-08-13"
+      },
+      "price": 225.37,
+      "day_change_pct": 0.5712,
+      "relative_volume": 0.59,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:NVDA:technical_setup:2026-08-13",
+          "ticker": "NVDA",
+          "event_type": "technical",
+          "event_subtype": "technical_setup",
+          "headline": "Latest technical scan · 93/100",
+          "summary": "Technical context from the latest market scan; this is not a recommendation.",
+          "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.5, +6.1% vs EMA20, +15.2% vs EMA200, volume 0.59x 20-day average.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-13",
+          "detected_at": "2026-08-13T22:04:41+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": "2026-08-13"
+          },
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": "2026-08-13"
+            }
+          ],
+          "technical_score": 93.0,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "scan_age_days": 0,
+          "rsi14": 63.52,
+          "pct_vs_ema20": 6.1,
+          "pct_vs_ema200": 15.23,
+          "volume_ratio20": 0.59,
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:NVDA:technical_setup:2026-08-13"
+          ],
+          "dedupe_key": "NVDA:technical_setup:f6c33cfbd55a595d",
+          "priority_score": 68,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "company_ir": "https://investor.nvidia.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "technical_setup",
+      "signals": [
+        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.5, +6.1% vs EMA20, +15.2% vs EMA200, volume 0.59x 20-day average."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-13T22:04:41+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 225.37,
+        "current_price": 225.37,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 76,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
   "changes_summary": {
-    "new": 3,
+    "new": 2,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 4,
+    "ongoing": 5,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:NBIS:technical_setup:2026-08-13",
+      "ticker": "NBIS",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-08-13T22:04:41+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:INDI:price-move:2026-08-13",
+      "ticker": "INDI",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-08-13T22:04:41+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:price-move:2026-08-13",
       "ticker": "NBIS",
@@ -1200,22 +1228,6 @@
       "event_subtype": "technical_setup",
       "priority": "Action",
       "resolved_at": "2026-08-12T22:06:07+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-move:2026-08-12",
-      "ticker": "CIFR",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-12T19:21:32+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-move:2026-08-12",
-      "ticker": "ASTS",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T19:21:32+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
