@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-13T07:54:15+00:00",
-  "active_count": 14,
+  "updated_at": "2026-08-13T10:24:02+00:00",
+  "active_count": 15,
   "events": {
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
       "event": {
@@ -422,6 +422,48 @@
       "first_seen_at": "2026-08-12T07:08:54+00:00",
       "last_seen_at": "2026-08-12T07:08:54+00:00",
       "expires_at": "2026-08-19T07:08:54+00:00"
+    },
+    "gdelt:RKLB:9ed7619de0b5028d": {
+      "event": {
+        "event_id": "gdelt:RKLB:9ed7619de0b5028d",
+        "ticker": "RKLB",
+        "event_type": "earnings",
+        "event_subtype": "guidance",
+        "headline": "Rocket Lab Shares Fall as Earnings Miss and Margin Outlook Raise Profitability Concerns",
+        "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+        "materiality": "low",
+        "reported_materiality": "high",
+        "urgency": "developing",
+        "event_time": "2026-08-12T19:15:00+00:00",
+        "detected_at": "2026-08-13T10:21:47+00:00",
+        "verification_status": "unverified",
+        "verification_level": "unverified_report",
+        "verification_reason": "Discovered in public news; primary source not yet matched.",
+        "entity_confidence": "high",
+        "entity_confidence_reason": "headline contains alias: Rocket Lab",
+        "dedupe_key": "RKLB:guidance:2026-08-12:9ed9ec45e67d",
+        "source": {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
+          "published_at": "2026-08-12T19:15:00+00:00",
+          "domain": "finance.yahoo.com"
+        },
+        "source_chain": [
+          {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
+            "published_at": "2026-08-12T19:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          }
+        ],
+        "secondary_source_count": 1
+      },
+      "first_seen_at": "2026-08-13T10:24:02+00:00",
+      "last_seen_at": "2026-08-13T10:24:02+00:00",
+      "expires_at": "2026-08-20T10:24:02+00:00"
     },
     "gdelt:RKLB:b849786d0f8dafbd": {
       "event": {

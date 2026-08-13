@@ -1,11 +1,11 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-13T07:54:15+00:00",
+  "updated_at": "2026-08-13T10:24:02+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 20,
+  "total_events": 21,
   "coverage_status": "partial",
   "summary": {
     "Critical": 4,
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "ok",
+      "status": "partial",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 1
     },
     "ir": {
-      "status": "ok",
+      "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 10,
+      "ok": 9,
       "partial": 0,
-      "errors": 0,
+      "errors": 1,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 2,
+      "unavailable": 8,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -307,6 +307,49 @@
           "priority": "Risk"
         },
         {
+          "event_id": "gdelt:RKLB:9ed7619de0b5028d",
+          "ticker": "RKLB",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "Rocket Lab Shares Fall as Earnings Miss and Margin Outlook Raise Profitability Concerns",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-08-12T19:15:00+00:00",
+          "detected_at": "2026-08-13T10:21:47+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Rocket Lab",
+          "dedupe_key": "RKLB:guidance:2026-08-12:9ed9ec45e67d",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
+            "published_at": "2026-08-12T19:15:00+00:00",
+            "domain": "finance.yahoo.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
+              "published_at": "2026-08-12T19:15:00+00:00",
+              "domain": "finance.yahoo.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "attention_policy_decision": "allow_unverified",
+          "related_event_ids": [
+            "gdelt:RKLB:9ed7619de0b5028d"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
           "event_id": "gdelt:RKLB:b849786d0f8dafbd",
           "ticker": "RKLB",
           "event_type": "corporate_event",
@@ -362,8 +405,8 @@
         "A earnings reported event was detected and requires source review."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T07:08:54+00:00",
         "active_days": 1
@@ -639,7 +682,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T07:51:56.953311+00:00",
+      "event_time": "2026-08-13T10:21:47.704614+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -663,8 +706,8 @@
           "why_today": "The stock moved +34.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T07:51:56.953311+00:00",
-          "detected_at": "2026-08-13T07:51:56.953318+00:00",
+          "event_time": "2026-08-13T10:21:47.704614+00:00",
+          "detected_at": "2026-08-13T10:21:47.704622+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -820,7 +863,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-13T07:51:57.209869+00:00",
+      "event_time": "2026-08-13T10:21:47.968606+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -844,8 +887,8 @@
           "why_today": "The stock moved -10.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T07:51:57.209869+00:00",
-          "detected_at": "2026-08-13T07:51:57.209875+00:00",
+          "event_time": "2026-08-13T10:21:47.968606+00:00",
+          "detected_at": "2026-08-13T10:21:47.968615+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -952,7 +995,13 @@
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "source": "ir",
+      "ticker": "IREN",
+      "message": "Configured IR sources were unavailable"
+    }
+  ],
   "data_quality": {
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
@@ -964,8 +1013,8 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 14,
+    "newly_discovered_event_count": 1,
+    "active_discovered_event_count": 15,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
@@ -989,8 +1038,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 20,
-      "accepted_events": 20,
+      "evaluated_events": 21,
+      "accepted_events": 21,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1027,7 +1076,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T07:51:56.885431+00:00",
+      "event_time": "2026-08-13T10:21:47.625303+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1051,8 +1100,8 @@
           "why_today": "The stock moved +9.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T07:51:56.885431+00:00",
-          "detected_at": "2026-08-13T07:51:56.885438+00:00",
+          "event_time": "2026-08-13T10:21:47.625303+00:00",
+          "detected_at": "2026-08-13T10:21:47.625309+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1127,7 +1176,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T07:51:57.221230+00:00",
+      "event_time": "2026-08-13T10:21:47.980563+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1151,8 +1200,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-13T07:51:57.221230+00:00",
-          "detected_at": "2026-08-13T07:51:57.221237+00:00",
+          "event_time": "2026-08-13T10:21:47.980563+00:00",
+          "detected_at": "2026-08-13T10:21:47.980572+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1219,8 +1268,8 @@
   "changes_summary": {
     "new": 0,
     "escalated": 0,
-    "updated": 0,
-    "ongoing": 7,
+    "updated": 1,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
