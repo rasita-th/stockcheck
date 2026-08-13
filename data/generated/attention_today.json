@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-12T22:06:07+00:00",
+  "updated_at": "2026-08-13T02:48:43+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "ok",
+      "status": "partial",
       "source": "Verified company IR discovery",
       "checked": 10,
       "accepted_events": 0
     },
     "ir": {
-      "status": "ok",
+      "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 10,
+      "ok": 8,
       "partial": 0,
-      "errors": 0,
+      "errors": 2,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -366,7 +366,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T07:08:54+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 79.99,
@@ -512,7 +512,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-10T16:17:58+00:00",
-        "active_days": 2
+        "active_days": 3
       },
       "impact": {
         "baseline_price": 475.465,
@@ -612,7 +612,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T19:21:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 14.5833,
@@ -639,7 +639,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T22:03:46.401136+00:00",
+      "event_time": "2026-08-13T02:46:07.532098+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -663,8 +663,8 @@
           "why_today": "The stock moved +34.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T22:03:46.401136+00:00",
-          "detected_at": "2026-08-12T22:03:46.401140+00:00",
+          "event_time": "2026-08-13T02:46:07.532098+00:00",
+          "detected_at": "2026-08-13T02:46:07.532103+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -794,7 +794,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T16:11:51+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 243.94,
@@ -820,7 +820,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-12T22:03:46.589963+00:00",
+      "event_time": "2026-08-13T02:46:07.779953+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -844,8 +844,8 @@
           "why_today": "The stock moved -10.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T22:03:46.589963+00:00",
-          "detected_at": "2026-08-12T22:03:46.589967+00:00",
+          "event_time": "2026-08-13T02:46:07.779953+00:00",
+          "detected_at": "2026-08-13T02:46:07.779958+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -938,7 +938,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-08-12T19:21:32+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 5.065,
@@ -952,7 +952,18 @@
       ]
     }
   ],
-  "errors": [],
+  "errors": [
+    {
+      "source": "ir",
+      "ticker": "IREN",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "TSLA",
+      "message": "Configured IR sources were unavailable"
+    }
+  ],
   "data_quality": {
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
@@ -1027,7 +1038,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T22:03:46.350449+00:00",
+      "event_time": "2026-08-13T02:46:07.467917+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1051,8 +1062,8 @@
           "why_today": "The stock moved +9.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T22:03:46.350449+00:00",
-          "detected_at": "2026-08-12T22:03:46.350453+00:00",
+          "event_time": "2026-08-13T02:46:07.467917+00:00",
+          "detected_at": "2026-08-13T02:46:07.467922+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1102,7 +1113,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T16:11:51+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 42.5486,
@@ -1127,7 +1138,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-12T22:03:46.598173+00:00",
+      "event_time": "2026-08-13T02:46:07.790524+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1151,8 +1162,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-12T22:03:46.598173+00:00",
-          "detected_at": "2026-08-12T22:03:46.598177+00:00",
+          "event_time": "2026-08-13T02:46:07.790524+00:00",
+          "detected_at": "2026-08-13T02:46:07.790528+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1198,11 +1209,11 @@
         "The stock moved +5.2% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-08-12T22:06:07+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 4.01,
@@ -1217,10 +1228,10 @@
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
