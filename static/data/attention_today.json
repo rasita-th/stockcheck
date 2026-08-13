@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-13T10:24:02+00:00",
+  "updated_at": "2026-08-13T13:48:49+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -64,7 +64,7 @@
       "status": "partial",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 1
+      "accepted_events": 0
     },
     "ir": {
       "status": "partial",
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 2,
-      "unavailable": 8,
+      "ok": 1,
+      "unavailable": 9,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -405,8 +405,8 @@
         "A earnings reported event was detected and requires source review."
       ],
       "change": {
-        "status": "updated",
-        "label_th": "มีข้อมูลใหม่เพิ่ม",
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-08-12T07:08:54+00:00",
         "active_days": 1
@@ -682,7 +682,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T10:21:47.704614+00:00",
+      "event_time": "2026-08-13T13:46:33.758551+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -706,8 +706,8 @@
           "why_today": "The stock moved +34.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T10:21:47.704614+00:00",
-          "detected_at": "2026-08-13T10:21:47.704622+00:00",
+          "event_time": "2026-08-13T13:46:33.758551+00:00",
+          "detected_at": "2026-08-13T13:46:33.758557+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -863,7 +863,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-08-13T10:21:47.968606+00:00",
+      "event_time": "2026-08-13T13:46:34.024636+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -887,8 +887,8 @@
           "why_today": "The stock moved -10.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T10:21:47.968606+00:00",
-          "detected_at": "2026-08-13T10:21:47.968615+00:00",
+          "event_time": "2026-08-13T13:46:34.024636+00:00",
+          "detected_at": "2026-08-13T13:46:34.024641+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -998,7 +998,7 @@
   "errors": [
     {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "TSLA",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -1013,7 +1013,7 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 1,
+    "newly_discovered_event_count": 0,
     "active_discovered_event_count": 15,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
@@ -1076,7 +1076,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T10:21:47.625303+00:00",
+      "event_time": "2026-08-13T13:46:33.688327+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1100,8 +1100,8 @@
           "why_today": "The stock moved +9.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13T10:21:47.625303+00:00",
-          "detected_at": "2026-08-13T10:21:47.625309+00:00",
+          "event_time": "2026-08-13T13:46:33.688327+00:00",
+          "detected_at": "2026-08-13T13:46:33.688332+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1176,7 +1176,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-08-13T10:21:47.980563+00:00",
+      "event_time": "2026-08-13T13:46:34.035766+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1200,8 +1200,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-08-13T10:21:47.980563+00:00",
-          "detected_at": "2026-08-13T10:21:47.980572+00:00",
+          "event_time": "2026-08-13T13:46:34.035766+00:00",
+          "detected_at": "2026-08-13T13:46:34.035771+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1268,8 +1268,8 @@
   "changes_summary": {
     "new": 0,
     "escalated": 0,
-    "updated": 1,
-    "ongoing": 6,
+    "updated": 0,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
