@@ -1278,50 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-11T19:18:47+00:00",
-      "events": {
-        "calls_used": 20,
-        "enabled_endpoints": [
-          "company_earnings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-11T19:18:21+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2355,9 +2311,72 @@
       "mode": "analyst",
       "started_at": "2026-08-13T03:13:12+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 0,
+        "row_count": 500,
+        "status": "fresh"
+      },
+      "completed_at": "2026-08-13T05:03:05+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "TRI",
+            "TRMB",
+            "TSAT",
+            "TSEM",
+            "TSLA",
+            "TSM",
+            "TTWO",
+            "TWLO",
+            "TWST",
+            "TXG",
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH",
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT"
+          ],
+          "sec_filings": [
+            "COST",
+            "BEAM",
+            "NOW",
+            "TE",
+            "NASA",
+            "INDI",
+            "RKLB",
+            "AMZN",
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-08-13T05:02:19+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-13T03:13:56+00:00"
+  "updated_at": "2026-08-13T05:03:05+00:00"
 }
