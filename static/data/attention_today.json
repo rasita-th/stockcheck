@@ -1,16 +1,16 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-13T13:48:49+00:00",
+  "updated_at": "2026-08-13T19:22:08+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 21,
+  "total_events": 17,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 4,
-    "Risk": 1,
-    "Action": 0,
+    "Critical": 3,
+    "Risk": 0,
+    "Action": 2,
     "Watch": 0,
     "Developing": 0
   },
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "partial",
+      "status": "ok",
       "source": "Verified company IR discovery",
       "checked": 10,
       "accepted_events": 0
     },
     "ir": {
-      "status": "partial",
+      "status": "ok",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 9,
+      "ok": 10,
       "partial": 0,
-      "errors": 1,
+      "errors": 0,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -670,251 +670,34 @@
       ]
     },
     {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +34.1% today.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-08-13T13:46:33.758551+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 252.365,
-      "day_change_pct": -2.637,
-      "relative_volume": 1.12,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:NBIS:price-move:2026-08-13",
-          "ticker": "NBIS",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +34.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +34.1% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-13T13:46:33.758551+00:00",
-          "detected_at": "2026-08-13T13:46:33.758557+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:NBIS:price-move:2026-08-13"
-          ],
-          "dedupe_key": "NBIS:price_move:067e66b4ba58a660"
-        },
-        {
-          "event_id": "gdelt:NBIS:1ec191514e708d16",
-          "ticker": "NBIS",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "DA Davidson Slashes Nebius Group ( NASDAQ : NBIS ) Stock Price Target By 30 % As Vineland Construction Delays Cloud Outlook",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-12T04:00:00+00:00",
-          "detected_at": "2026-08-12T05:00:40+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Nebius",
-          "dedupe_key": "NBIS:guidance:2026-08-12:9e67172bea9b",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
-            "published_at": "2026-08-12T04:00:00+00:00",
-            "domain": "www.foreignpolicyjournal.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
-              "published_at": "2026-08-12T04:00:00+00:00",
-              "domain": "www.foreignpolicyjournal.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:NBIS:1ec191514e708d16"
-          ],
-          "priority_score": 46,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:NBIS:b62ae025f93f4d89",
-          "ticker": "NBIS",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Nebius Group : Nebius reports second quarter 2026 financial results",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-12T12:15:00+00:00",
-          "detected_at": "2026-08-12T16:09:21+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Nebius",
-          "dedupe_key": "NBIS:earnings_reported:2026-08-12:d1dfe53363da",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
-            "published_at": "2026-08-12T12:15:00+00:00",
-            "domain": "www.finanznachrichten.de"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
-              "published_at": "2026-08-12T12:15:00+00:00",
-              "domain": "www.finanznachrichten.de"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:NBIS:b62ae025f93f4d89"
-          ],
-          "priority_score": 46,
-          "priority": "Watch"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +34.1% today.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-08-13T05:05:31+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 259.14,
-        "current_price": 252.365,
-        "change_pct": -2.61,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 2.6%"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
       "ticker": "TE",
       "name": "T1 Energy Inc.",
       "portfolio_status": "holding",
       "role": "Energy technology",
-      "priority": "Risk",
-      "priority_score": 99,
+      "priority": "Action",
+      "priority_score": 64,
       "why_today": [
-        "The stock moved -10.4% today.",
         "A product event was detected and requires source review."
       ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-08-13T13:46:34.024636+00:00",
+      "event_type": "corporate_event",
+      "event_subtype": "product",
+      "event_time": "2026-08-08T07:15:06+00:00",
       "verification_status": "confirmed",
-      "source_status": "internal",
+      "source_status": "primary",
       "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
+        "type": "regulator",
+        "quality": "primary",
+        "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
+        "published_at": "2026-08-08T07:15:06+00:00",
+        "domain": "www.energy.gov",
+        "agency": "DOE",
+        "name": "U.S. Department of Energy"
       },
       "price": 4.925,
       "day_change_pct": 0.5102,
       "relative_volume": 0.37,
       "trigger_level": null,
       "events": [
-        {
-          "event_id": "technical:TE:price-drop:2026-08-13",
-          "ticker": "TE",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -10.4%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.4% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-13T13:46:34.024636+00:00",
-          "detected_at": "2026-08-13T13:46:34.024641+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:TE:price-drop:2026-08-13"
-          ],
-          "dedupe_key": "TE:price_drop:99bd6e4eca69b89a"
-        },
         {
           "event_id": "regulator:TE:aa21dc3f60777ff7",
           "ticker": "TE",
@@ -961,47 +744,228 @@
           "related_event_ids": [
             "regulator:TE:aa21dc3f60777ff7"
           ],
-          "priority_score": 78,
-          "priority": "Risk"
+          "priority_score": 64,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "medium",
+      "primary_trigger": "product",
+      "signals": [
+        "A product event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-13T19:22:08+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 4.925,
+        "current_price": 4.925,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 77,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Action",
+      "priority_score": 68,
+      "why_today": [
+        "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
+      ],
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "event_time": "2026-08-13",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-08-13"
+      },
+      "price": 252.365,
+      "day_change_pct": -2.637,
+      "relative_volume": 1.12,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:NBIS:technical_setup:2026-08-13",
+          "ticker": "NBIS",
+          "event_type": "technical",
+          "event_subtype": "technical_setup",
+          "headline": "Latest technical scan · 97/100",
+          "summary": "Technical context from the latest market scan; this is not a recommendation.",
+          "why_today": "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-13",
+          "detected_at": "2026-08-13T19:22:08+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": "2026-08-13"
+          },
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": "2026-08-13"
+            }
+          ],
+          "technical_score": 97.0,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "scan_age_days": 0,
+          "rsi14": 59.92,
+          "pct_vs_ema20": 20.74,
+          "pct_vs_ema200": 61.47,
+          "volume_ratio20": 1.12,
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:NBIS:technical_setup:2026-08-13"
+          ],
+          "dedupe_key": "NBIS:technical_setup:cf07d64bd515e05f",
+          "priority_score": 68,
+          "priority": "Action"
+        },
+        {
+          "event_id": "gdelt:NBIS:1ec191514e708d16",
+          "ticker": "NBIS",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "DA Davidson Slashes Nebius Group ( NASDAQ : NBIS ) Stock Price Target By 30 % As Vineland Construction Delays Cloud Outlook",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-08-12T04:00:00+00:00",
+          "detected_at": "2026-08-12T05:00:40+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Nebius",
+          "dedupe_key": "NBIS:guidance:2026-08-12:9e67172bea9b",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
+            "published_at": "2026-08-12T04:00:00+00:00",
+            "domain": "www.foreignpolicyjournal.com"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.foreignpolicyjournal.com/2026/08/11/da-davidson-slashes-nebius-group-nasdaq-nbis-stock-price-target-by-30-as-vineland-construction-delays-cloud-outlook",
+              "published_at": "2026-08-12T04:00:00+00:00",
+              "domain": "www.foreignpolicyjournal.com"
+            }
+          ],
+          "secondary_source_count": 1,
+          "attention_policy_decision": "allow_unverified",
+          "related_event_ids": [
+            "gdelt:NBIS:1ec191514e708d16"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
+        },
+        {
+          "event_id": "gdelt:NBIS:b62ae025f93f4d89",
+          "ticker": "NBIS",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Nebius Group : Nebius reports second quarter 2026 financial results",
+          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+          "materiality": "low",
+          "reported_materiality": "high",
+          "urgency": "developing",
+          "event_time": "2026-08-12T12:15:00+00:00",
+          "detected_at": "2026-08-12T16:09:21+00:00",
+          "verification_status": "unverified",
+          "verification_level": "unverified_report",
+          "verification_reason": "Primary source not yet located.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Nebius",
+          "dedupe_key": "NBIS:earnings_reported:2026-08-12:d1dfe53363da",
+          "source": {
+            "type": "gdelt",
+            "quality": "secondary",
+            "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
+            "published_at": "2026-08-12T12:15:00+00:00",
+            "domain": "www.finanznachrichten.de"
+          },
+          "source_chain": [
+            {
+              "type": "gdelt",
+              "quality": "secondary",
+              "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69290345-nebius-group-nebius-reports-second-quarter-2026-financial-results-023.htm",
+              "published_at": "2026-08-12T12:15:00+00:00",
+              "domain": "www.finanznachrichten.de"
+            }
+          ],
+          "secondary_source_count": 1,
+          "attention_policy_decision": "allow_unverified",
+          "related_event_ids": [
+            "gdelt:NBIS:b62ae025f93f4d89"
+          ],
+          "priority_score": 32,
+          "priority": "Watch"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
         "raw_data": "data/technical.json"
       },
-      "severity": "high",
-      "primary_trigger": "price_drop",
+      "severity": "medium",
+      "primary_trigger": "technical_setup",
       "signals": [
-        "The stock moved -10.4% today.",
-        "A product event was detected and requires source review."
+        "Latest technical scan dated 2026-08-13: score 97/100, BUY ZONE / Trend Confirmed, RSI 59.9, +20.7% vs EMA20, +61.5% vs EMA200, volume 1.12x 20-day average.",
+        "A potentially material public-news report was detected. Primary-source verification is pending."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-08-13T05:05:31+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-13T19:22:08+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 4.9,
-        "current_price": 4.925,
-        "change_pct": 0.51,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.5%"
+        "baseline_price": 252.365,
+        "current_price": 252.365,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 107,
+      "personal_priority_score": 76,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
-  "errors": [
-    {
-      "source": "ir",
-      "ticker": "TSLA",
-      "message": "Configured IR sources were unavailable"
-    }
-  ],
+  "errors": [],
   "data_quality": {
     "free_sources_only": true,
     "sec_cursor": "accession-number based; multiple same-day filings are preserved",
@@ -1038,8 +1002,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 21,
-      "accepted_events": 21,
+      "evaluated_events": 17,
+      "accepted_events": 17,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1061,18 +1025,243 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 0
+    "total": 2
   },
-  "technical_watch": [],
+  "technical_watch": [
+    {
+      "ticker": "CIFR",
+      "name": "Cipher Mining Inc.",
+      "portfolio_status": "holding",
+      "role": "Digital infrastructure",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.6% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-08-13T19:19:51.496666+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 16.505,
+      "day_change_pct": -7.6385,
+      "relative_volume": 0.78,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:CIFR:price-drop:2026-08-13",
+          "ticker": "CIFR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.6%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.6% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-13T19:19:51.496666+00:00",
+          "detected_at": "2026-08-13T19:19:51.496672+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:CIFR:price-drop:2026-08-13"
+          ],
+          "dedupe_key": "CIFR:price_drop:5674571478bc773a",
+          "technical_score": 27.0,
+          "rsi14": 40.63,
+          "pct_vs_ema20": -15.79,
+          "pct_vs_ema200": -10.4,
+          "volume_ratio20": 0.78,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.6% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-08-13T19:22:08+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 16.505,
+        "current_price": 16.505,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "INDI",
+      "name": "indie Semiconductor, Inc.",
+      "portfolio_status": "holding",
+      "role": "Automotive semiconductors",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +5.6% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-08-13T19:19:51.609511+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 4.235,
+      "day_change_pct": 5.611,
+      "relative_volume": 1.4,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:INDI:price-move:2026-08-13",
+          "ticker": "INDI",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +5.6%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +5.6% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-08-13T19:19:51.609511+00:00",
+          "detected_at": "2026-08-13T19:19:51.609517+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:INDI:price-move:2026-08-13"
+          ],
+          "dedupe_key": "INDI:price_move:3d3c5e2b906dd725",
+          "technical_score": 80.0,
+          "rsi14": 59.74,
+          "pct_vs_ema20": 12.93,
+          "pct_vs_ema200": 6.68,
+          "volume_ratio20": 1.4,
+          "technical_signal": "WATCH FOR ENTRY",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-INDI/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +5.6% today."
+      ],
+      "change": {
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
+        "first_seen_at": "2026-08-13T05:05:31+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 4.01,
+        "current_price": 4.235,
+        "change_pct": 5.61,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.6%"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    }
+  ],
   "changes_summary": {
-    "new": 0,
+    "new": 3,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 4,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:NBIS:price-move:2026-08-13",
+      "ticker": "NBIS",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-08-13T19:22:08+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:TE:price-drop:2026-08-13",
+      "ticker": "TE",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-08-13T19:22:08+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IREN:price-move:2026-08-13",
+      "ticker": "IREN",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-08-13T19:22:08+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:price-move:2026-08-12",
       "ticker": "NBIS",
@@ -1127,30 +1316,6 @@
       "event_subtype": "price_move",
       "priority": "Risk",
       "resolved_at": "2026-08-12T19:21:32+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "regulator:TE:aa21dc3f60777ff7",
-      "ticker": "TE",
-      "event_subtype": "product",
-      "priority": "Action",
-      "resolved_at": "2026-08-12T16:11:51+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:EOSE:price-move:2026-08-12",
-      "ticker": "EOSE",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T16:11:51+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:price-move:2026-08-12",
-      "ticker": "OKLO",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T16:11:51+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
