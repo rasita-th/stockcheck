@@ -1279,69 +1279,6 @@
   "runs": [
     {
       "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-12T06:45:16+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "DE",
-            "DELL",
-            "DKNG",
-            "DLO",
-            "DNA",
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT",
-            "ETN",
-            "EVTL",
-            "EXC",
-            "FANG",
-            "FAST"
-          ],
-          "sec_filings": [
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS",
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR",
-            "NBIS",
-            "TEM",
-            "MP",
-            "IONQ",
-            "AMD",
-            "ORCL"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-12T06:44:29+00:00",
-      "universe_count": 305
-    },
-    {
-      "calendar": {
         "calls_used": 0,
         "row_count": 500,
         "status": "fresh"
@@ -2440,9 +2377,64 @@
       "mode": "events",
       "started_at": "2026-08-13T19:19:00+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR"
+          ],
+          "recommendation_trends": [
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR",
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-13T19:42:13+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-13T19:41:29+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-13T19:19:49+00:00"
+  "updated_at": "2026-08-13T19:42:14+00:00"
 }
