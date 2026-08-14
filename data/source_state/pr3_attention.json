@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-13T22:04:41+00:00",
+  "updated_at": "2026-08-14T02:47:30+00:00",
   "items": {
-    "company_ir:RKLB:5c9232304438abc2": {
+    "event:RKLB:72d498ed73db6fdd": {
       "ticker": "RKLB",
-      "event_subtype": "earnings_reported",
+      "event_subtype": "capital_raise",
       "priority": "Critical",
-      "priority_score": 97,
+      "priority_score": 100,
       "personal_priority_score": 113,
-      "first_seen_at": "2026-08-12T07:08:54+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
-      "event_count": 6,
-      "baseline_price": 79.99,
+      "first_seen_at": "2026-08-14T02:47:30+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
+      "event_count": 9,
+      "baseline_price": 80.1,
       "current_price": 80.1
     },
     "company_ir:AMD:a5d4fbb4fa69b2d7": {
@@ -21,7 +21,7 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-08-10T16:17:58+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 2,
       "baseline_price": 475.465,
       "current_price": 483.0887
@@ -33,10 +33,10 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-08-12T19:21:32+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 1,
       "baseline_price": 14.5833,
-      "current_price": 14.57
+      "current_price": 14.56
     },
     "regulator:TE:aa21dc3f60777ff7": {
       "ticker": "TE",
@@ -45,10 +45,10 @@
       "priority_score": 64,
       "personal_priority_score": 77,
       "first_seen_at": "2026-08-13T19:22:08+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 1,
       "baseline_price": 4.925,
-      "current_price": 4.78
+      "current_price": 4.79
     },
     "technical:CIFR:price-drop:2026-08-13": {
       "ticker": "CIFR",
@@ -57,7 +57,7 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-08-13T19:22:08+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 1,
       "baseline_price": 16.505,
       "current_price": 16.625
@@ -69,7 +69,7 @@
       "priority_score": 68,
       "personal_priority_score": 76,
       "first_seen_at": "2026-08-13T22:04:41+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 1,
       "baseline_price": 60.415,
       "current_price": 60.415
@@ -81,13 +81,21 @@
       "priority_score": 68,
       "personal_priority_score": 76,
       "first_seen_at": "2026-08-13T22:04:41+00:00",
-      "last_seen_at": "2026-08-13T22:04:41+00:00",
+      "last_seen_at": "2026-08-14T02:47:30+00:00",
       "event_count": 1,
       "baseline_price": 225.37,
       "current_price": 225.37
     }
   },
   "resolved": [
+    {
+      "history_key": "company_ir:RKLB:5c9232304438abc2",
+      "ticker": "RKLB",
+      "event_subtype": "earnings_reported",
+      "priority": "Critical",
+      "resolved_at": "2026-08-14T02:47:30+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:technical_setup:2026-08-13",
       "ticker": "NBIS",
@@ -235,14 +243,6 @@
     {
       "history_key": "technical:EOSE:price-move:2026-08-11",
       "ticker": "EOSE",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-12T05:03:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:price-move:2026-08-11",
-      "ticker": "OKLO",
       "event_subtype": "price_move",
       "priority": "Risk",
       "resolved_at": "2026-08-12T05:03:22+00:00",

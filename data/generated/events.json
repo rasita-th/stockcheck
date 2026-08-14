@@ -1,9 +1,123 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-08-13T22:04:41+00:00",
-  "row_count": 17,
+  "generated_at": "2026-08-14T02:47:30+00:00",
+  "row_count": 20,
   "events": [
+    {
+      "event_id": "event:RKLB:72d498ed73db6fdd",
+      "ticker": "RKLB",
+      "event_type": "corporate_event",
+      "event_subtype": "capital_raise",
+      "headline": "Rocket Lab Corporation Announces Dollar-for-Dollar Replacement At-The-Market Equity Program",
+      "summary": "A capital raise event was detected and requires source review.",
+      "why_today": "A capital raise event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-14T02:45:09+00:00",
+      "detected_at": "2026-08-14T02:45:09+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "corroborated",
+      "verification_reason": "Matched a configured primary source and additional coverage.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:capital_raise:2026-08-14:b1232480523e",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
+        "published_at": "2026-08-14T02:45:09+00:00",
+        "domain": "investors.rocketlabcorp.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
+          "published_at": "2026-08-14T02:45:09+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        },
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
+          "published_at": "2026-08-14T02:45:09+00:00",
+          "domain": "investors.rocketlabusa.com"
+        },
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.manilatimes.net/2026/08/13/tmt-newswire/globenewswire/rocket-lab-corporation-announces-dollar-for-dollar-replacement-at-the-market-equity-program/2404732",
+          "published_at": "2026-08-13T11:45:00+00:00",
+          "domain": "www.manilatimes.net"
+        }
+      ],
+      "secondary_source_count": 1,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "event:RKLB:72d498ed73db6fdd"
+      ],
+      "priority_score": 100,
+      "priority": "Critical"
+    },
+    {
+      "event_id": "event:RKLB:2c38c1d1cf746b13",
+      "ticker": "RKLB",
+      "event_type": "corporate_event",
+      "event_subtype": "transaction",
+      "headline": "Rocket Lab Corporation Announces Progress on Iridium Acquisition: HSR Period Lapses; Form S-4 Filed; FCC Applications Filed; Capital Strategy Underway",
+      "summary": "A transaction event was detected and requires source review.",
+      "why_today": "A transaction event was detected and requires source review.",
+      "materiality": "high",
+      "reported_materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-08-14T02:45:09+00:00",
+      "detected_at": "2026-08-14T02:45:09+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "corroborated",
+      "verification_reason": "Matched a configured primary source and additional coverage.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:transaction:2026-08-14:6b24b2704edf",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
+        "published_at": "2026-08-14T02:45:09+00:00",
+        "domain": "investors.rocketlabusa.com"
+      },
+      "source_chain": [
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
+          "published_at": "2026-08-14T02:45:09+00:00",
+          "domain": "investors.rocketlabusa.com"
+        },
+        {
+          "type": "company_ir",
+          "quality": "primary",
+          "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
+          "published_at": "2026-08-14T02:45:09+00:00",
+          "domain": "investors.rocketlabcorp.com"
+        },
+        {
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.manilatimes.net/2026/08/13/tmt-newswire/globenewswire/rocket-lab-corporation-announces-progress-on-iridium-acquisition-hsr-period-lapses-form-s-4-filed-fcc-applications-filed-capital-strategy-underway/2404731",
+          "published_at": "2026-08-13T11:45:00+00:00",
+          "domain": "www.manilatimes.net"
+        }
+      ],
+      "secondary_source_count": 1,
+      "attention_policy_decision": "allow",
+      "related_event_ids": [
+        "event:RKLB:2c38c1d1cf746b13"
+      ],
+      "priority_score": 97,
+      "priority": "Critical"
+    },
     {
       "event_id": "technical:CIFR:price-drop:2026-08-13",
       "ticker": "CIFR",
@@ -14,8 +128,8 @@
       "why_today": "The stock moved -7.0% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-08-13T22:02:24.682259+00:00",
-      "detected_at": "2026-08-13T22:02:24.682263+00:00",
+      "event_time": "2026-08-14T02:45:08.996979+00:00",
+      "detected_at": "2026-08-14T02:45:08.996985+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -41,57 +155,56 @@
         "technical:CIFR:price-drop:2026-08-13"
       ],
       "dedupe_key": "CIFR:price_drop:5674571478bc773a",
-      "technical_score": 27.0,
-      "rsi14": 40.59,
-      "pct_vs_ema20": -15.18,
-      "pct_vs_ema200": -9.74,
-      "volume_ratio20": 0.87,
+      "technical_score": 31.0,
+      "rsi14": 40.86,
+      "pct_vs_ema20": -15.22,
+      "pct_vs_ema200": -9.79,
+      "volume_ratio20": 1.01,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:JEPQ:technical_setup:2026-08-13",
-      "ticker": "JEPQ",
-      "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "headline": "Latest technical scan · 93/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.59x 20-day average.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-08-13",
-      "detected_at": "2026-08-13T22:04:41+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "event_id": "gdelt:RKLB:46bc391d0908a514",
+      "ticker": "RKLB",
+      "event_type": "corporate_event",
+      "event_subtype": "transaction",
+      "headline": "Rocket Lab ( NASDAQ : RKLB ) Clears U . S . Antitrust Hurdle And Files Key Regulatory Documents To Advance Iridium Takeover",
+      "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
+      "materiality": "low",
+      "reported_materiality": "high",
+      "urgency": "developing",
+      "event_time": "2026-08-13T19:15:00+00:00",
+      "detected_at": "2026-08-14T02:45:09+00:00",
+      "verification_status": "unverified",
+      "verification_level": "unverified_report",
+      "verification_reason": "Primary source not yet located.",
+      "entity_confidence": "high",
+      "entity_confidence_reason": "headline contains alias: Rocket Lab",
+      "dedupe_key": "RKLB:transaction:2026-08-13:caadcf5f7d45",
       "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-08-13"
+        "type": "gdelt",
+        "quality": "secondary",
+        "url": "https://www.foreignpolicyjournal.com/2026/08/13/rocket-lab-nasdaq-rklb-clears-u-s-antitrust-hurdle-and-files-key-regulatory-documents-to-advance-iridium-takeover",
+        "published_at": "2026-08-13T19:15:00+00:00",
+        "domain": "www.foreignpolicyjournal.com"
       },
       "source_chain": [
         {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-08-13"
+          "type": "gdelt",
+          "quality": "secondary",
+          "url": "https://www.foreignpolicyjournal.com/2026/08/13/rocket-lab-nasdaq-rklb-clears-u-s-antitrust-hurdle-and-files-key-regulatory-documents-to-advance-iridium-takeover",
+          "published_at": "2026-08-13T19:15:00+00:00",
+          "domain": "www.foreignpolicyjournal.com"
         }
       ],
-      "technical_score": 93.0,
-      "technical_signal": "BUY ZONE / Trend Confirmed",
-      "scan_age_days": 0,
-      "rsi14": 59.03,
-      "pct_vs_ema20": 1.93,
-      "pct_vs_ema200": 3.2,
-      "volume_ratio20": 0.59,
       "secondary_source_count": 1,
+      "attention_policy_decision": "allow_unverified",
       "related_event_ids": [
-        "technical:JEPQ:technical_setup:2026-08-13"
+        "gdelt:RKLB:46bc391d0908a514"
       ],
-      "dedupe_key": "JEPQ:technical_setup:9f5989142ae3a16c",
-      "priority_score": 68,
-      "priority": "Action"
+      "priority_score": 32,
+      "priority": "Watch"
     },
     {
       "event_id": "technical:NVDA:technical_setup:2026-08-13",
@@ -100,11 +213,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.5, +6.1% vs EMA20, +15.2% vs EMA200, volume 0.59x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.2, +6.1% vs EMA20, +15.3% vs EMA200, volume 0.76x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-08-13",
-      "detected_at": "2026-08-13T22:04:41+00:00",
+      "detected_at": "2026-08-14T02:47:30+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -125,15 +238,59 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 63.52,
-      "pct_vs_ema20": 6.1,
-      "pct_vs_ema200": 15.23,
-      "volume_ratio20": 0.59,
+      "rsi14": 63.19,
+      "pct_vs_ema20": 6.12,
+      "pct_vs_ema200": 15.28,
+      "volume_ratio20": 0.76,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:NVDA:technical_setup:2026-08-13"
       ],
       "dedupe_key": "NVDA:technical_setup:f6c33cfbd55a595d",
+      "priority_score": 68,
+      "priority": "Action"
+    },
+    {
+      "event_id": "technical:JEPQ:technical_setup:2026-08-13",
+      "ticker": "JEPQ",
+      "event_type": "technical",
+      "event_subtype": "technical_setup",
+      "headline": "Latest technical scan · 93/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.63x 20-day average.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-08-13",
+      "detected_at": "2026-08-14T02:47:30+00:00",
+      "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-08-13"
+      },
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-08-13"
+        }
+      ],
+      "technical_score": 93.0,
+      "technical_signal": "BUY ZONE / Trend Confirmed",
+      "scan_age_days": 0,
+      "rsi14": 58.98,
+      "pct_vs_ema20": 1.93,
+      "pct_vs_ema200": 3.2,
+      "volume_ratio20": 0.63,
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:JEPQ:technical_setup:2026-08-13"
+      ],
+      "dedupe_key": "JEPQ:technical_setup:9f5989142ae3a16c",
       "priority_score": 68,
       "priority": "Action"
     },
