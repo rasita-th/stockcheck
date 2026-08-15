@@ -1278,59 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-12T19:19:16+00:00",
-      "events": {
-        "calls_used": 26,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "PERI",
-            "PINS",
-            "PL",
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT"
-          ],
-          "sec_filings": [
-            "COST",
-            "BEAM",
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-12T19:18:41+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2436,9 +2383,64 @@
       "mode": "analyst",
       "started_at": "2026-08-15T02:03:26+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS"
+          ],
+          "recommendation_trends": [
+            "ADBE",
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY",
+            "AEHR",
+            "AEP",
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-15T07:11:15+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-15T07:10:33+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-15T02:04:10+00:00"
+  "updated_at": "2026-08-15T07:11:16+00:00"
 }
