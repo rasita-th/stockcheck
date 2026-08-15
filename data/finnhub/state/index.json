@@ -1279,69 +1279,6 @@
   "runs": [
     {
       "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-12T16:09:19+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "NTRA",
-            "NU",
-            "NVDA",
-            "NVTS",
-            "NXPI",
-            "ODFL",
-            "OKLO",
-            "ONDS",
-            "OPEN",
-            "ORCL",
-            "ORLY",
-            "OSCR",
-            "OSS",
-            "PACB",
-            "PANW",
-            "PATH",
-            "PAYX",
-            "PCAR",
-            "PDD",
-            "PEP"
-          ],
-          "sec_filings": [
-            "EQT",
-            "TMDX",
-            "EOSE",
-            "PLTR",
-            "UUUU",
-            "PSIX",
-            "CIFR",
-            "RXRX",
-            "JEPQ",
-            "SYM",
-            "TMC",
-            "OSCR",
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-12T16:08:30+00:00",
-      "universe_count": 305
-    },
-    {
-      "calendar": {
         "calls_used": 1,
         "row_count": 1500,
         "status": "ok"
@@ -2444,9 +2381,64 @@
       "mode": "analyst",
       "started_at": "2026-08-14T19:34:52+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB"
+          ],
+          "recommendation_trends": [
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD",
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI",
+            "AAPL",
+            "ABBV",
+            "ABCL",
+            "ABNB",
+            "ACHR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-15T02:04:09+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-15T02:03:26+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-14T19:35:35+00:00"
+  "updated_at": "2026-08-15T02:04:10+00:00"
 }
