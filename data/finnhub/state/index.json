@@ -1278,59 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-08-13T07:51:54+00:00",
-      "events": {
-        "calls_used": 26,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "VRTX",
-            "VSAT",
-            "VST",
-            "WBD",
-            "WDAY",
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB"
-          ],
-          "sec_filings": [
-            "NBIS",
-            "TEM",
-            "MP",
-            "IONQ",
-            "AMD",
-            "ORCL"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-13T07:51:20+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2414,9 +2361,64 @@
       "mode": "analyst",
       "started_at": "2026-08-16T13:17:23+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA"
+          ],
+          "recommendation_trends": [
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-16T19:01:30+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-16T19:00:47+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-16T13:18:06+00:00"
+  "updated_at": "2026-08-16T19:01:31+00:00"
 }
