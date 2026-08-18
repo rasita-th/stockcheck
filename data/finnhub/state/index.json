@@ -1279,69 +1279,6 @@
   "runs": [
     {
       "calendar": {
-        "calls_used": 0,
-        "row_count": 500,
-        "status": "fresh"
-      },
-      "completed_at": "2026-08-13T22:02:22+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "CLPT",
-            "CLSK",
-            "CMCSA",
-            "COHR",
-            "COIN",
-            "COPX",
-            "CORZ",
-            "COST",
-            "CPRT",
-            "CRCL",
-            "CRDO",
-            "CRM",
-            "CRSP",
-            "CRWD",
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH"
-          ],
-          "sec_filings": [
-            "TMC",
-            "OSCR",
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN",
-            "COST",
-            "BEAM",
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI",
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-08-13T22:01:36+00:00",
-      "universe_count": 305
-    },
-    {
-      "calendar": {
         "calls_used": 1,
         "row_count": 1500,
         "status": "ok"
@@ -2410,9 +2347,70 @@
       "mode": "analyst",
       "started_at": "2026-08-18T07:23:33+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "ABCL",
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY"
+          ],
+          "company_profile": [
+            "AEP",
+            "AFRM",
+            "AIQ",
+            "AIR"
+          ],
+          "recommendation_trends": [
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-08-18T13:28:35+00:00",
+      "mode": "analyst",
+      "started_at": "2026-08-18T13:27:47+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-08-18T07:24:22+00:00"
+  "updated_at": "2026-08-18T13:28:36+00:00"
 }
