@@ -1289,67 +1289,6 @@
         "missing_key": false,
         "refreshed": {
           "basic_financials": [
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK"
-          ],
-          "company_profile": [
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE"
-          ],
-          "recommendation_trends": [
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY",
-            "AMAT",
-            "AMD",
-            "AMGN",
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-08-29T16:53:30+00:00",
-      "mode": "analyst",
-      "started_at": "2026-08-29T16:52:41+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
             "ADYEY",
             "AEHR",
             "AEP",
@@ -2496,9 +2435,96 @@
       "mode": "analyst",
       "started_at": "2026-09-03T16:40:39+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [
+          {
+            "endpoint": "company_profile",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "RXRX",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "basic_financials",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "LRCX",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "company_profile",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "SAIC",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "basic_financials",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "LUNR",
+            "type": "timeout"
+          },
+          {
+            "endpoint": "company_profile",
+            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
+            "ticker": "SATL",
+            "type": "timeout"
+          }
+        ],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI"
+          ],
+          "company_profile": [
+            "SBUX"
+          ],
+          "recommendation_trends": [
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB",
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-09-03T21:21:19+00:00",
+      "mode": "analyst",
+      "started_at": "2026-09-03T21:19:28+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-09-03T16:41:27+00:00"
+  "updated_at": "2026-09-03T21:21:20+00:00"
 }
