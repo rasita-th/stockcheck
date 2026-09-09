@@ -1,35 +1,35 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-09-09T19:50:57.094894+00:00",
+  "generated_at": "2026-09-09T20:09:19.006548+00:00",
   "market_session": {
     "timezone": "America/New_York",
-    "phase": "market-open",
-    "market_open": true,
+    "phase": "post-market",
+    "market_open": false,
     "local_date": "2026-09-09",
-    "latest_completed_session": "2026-09-08"
+    "latest_completed_session": "2026-09-09"
   },
   "layers": {
     "quote": {
-      "status": "fresh",
-      "age_minutes": 1.1,
+      "status": "latest-completed-session",
+      "age_minutes": 1.4,
       "stale_after_minutes": 30,
-      "timestamp": "2026-09-09T19:49:49+00:00",
+      "timestamp": "2026-09-09T20:07:53+00:00",
       "row_count": 407,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download",
       "fallback_count": 0,
       "session": {
         "timezone": "America/New_York",
-        "phase": "market-open",
-        "market_open": true,
+        "phase": "post-market",
+        "market_open": false,
         "local_date": "2026-09-09",
-        "latest_completed_session": "2026-09-08"
+        "latest_completed_session": "2026-09-09"
       }
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 1.1,
+      "age_minutes": 1.2,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-09-09T19:49:50+00:00",
+      "timestamp": "2026-09-09T20:08:09+00:00",
       "row_count": 407,
       "source": "technical indicators + quote_latest live-price projection"
     },
@@ -40,7 +40,7 @@
     },
     "attention": {
       "status": "stale",
-      "age_minutes": 38463.5,
+      "age_minutes": 38481.8,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-14T02:47:30+00:00",
       "row_count": 4,
@@ -134,7 +134,7 @@
     },
     "events": {
       "status": "stale",
-      "age_minutes": 38463.5,
+      "age_minutes": 38481.8,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-14T02:47:30+00:00",
       "row_count": 20,
@@ -142,7 +142,7 @@
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 177.0,
+      "age_minutes": 195.3,
       "stale_after_minutes": 1440,
       "timestamp": "2026-09-09T16:54:00+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 176.2,
+      "age_minutes": 194.6,
       "stale_after_minutes": 50400,
       "timestamp": "2026-09-09 16:54:45 UTC",
       "row_count": 407,
@@ -158,7 +158,7 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 172.4,
+      "age_minutes": 190.8,
       "stale_after_minutes": 780,
       "timestamp": "2026-09-09T16:58:31.063511+00:00",
       "row_count": null,
