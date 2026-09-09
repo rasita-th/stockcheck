@@ -1285,93 +1285,6 @@
           "company_profile",
           "basic_financials"
         ],
-        "errors": [
-          {
-            "endpoint": "company_profile",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "RXRX",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "basic_financials",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "LRCX",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "company_profile",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "SAIC",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "basic_financials",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "LUNR",
-            "type": "timeout"
-          },
-          {
-            "endpoint": "company_profile",
-            "message": "HTTPSConnectionPool(host='api.finnhub.io', port=443): Read timed out. (read timeout=10)",
-            "ticker": "SATL",
-            "type": "timeout"
-          }
-        ],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI"
-          ],
-          "company_profile": [
-            "SBUX"
-          ],
-          "recommendation_trends": [
-            "NICE",
-            "NNDM",
-            "NOC",
-            "NOW",
-            "NTLA",
-            "NTRA",
-            "NU",
-            "NVDA",
-            "NVTS",
-            "NXPI",
-            "ODFL",
-            "OKLO",
-            "ONDS",
-            "OPEN",
-            "ORCL",
-            "ORLY",
-            "OSCR",
-            "OSS",
-            "PACB",
-            "PANW",
-            "PATH",
-            "PAYX",
-            "PCAR",
-            "PDD"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-09-03T21:21:19+00:00",
-      "mode": "analyst",
-      "started_at": "2026-09-03T21:19:28+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
         "errors": [],
         "missing_key": false,
         "refreshed": {
@@ -2510,9 +2423,64 @@
       "mode": "analyst",
       "started_at": "2026-09-08T21:23:50+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC"
+          ],
+          "recommendation_trends": [
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL",
+            "CRDO",
+            "CRM",
+            "CRSP",
+            "CRWD"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-09-09T05:13:07+00:00",
+      "mode": "analyst",
+      "started_at": "2026-09-09T05:12:24+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-09-08T21:24:32+00:00"
+  "updated_at": "2026-09-09T05:13:09+00:00"
 }
