@@ -1,6 +1,6 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-10-06T00:20:53.682819+00:00",
+  "generated_at": "2026-10-06T01:57:26.677067+00:00",
   "market_session": {
     "timezone": "America/New_York",
     "phase": "post-market",
@@ -10,10 +10,10 @@
   },
   "layers": {
     "quote": {
-      "status": "stale",
-      "age_minutes": 4295.1,
+      "status": "latest-completed-session",
+      "age_minutes": 1.6,
       "stale_after_minutes": 30,
-      "timestamp": "2026-10-03T00:45:46+00:00",
+      "timestamp": "2026-10-06T01:55:53+00:00",
       "row_count": 407,
       "source": "Yahoo Finance via bounded yfinance multi-ticker download",
       "fallback_count": 0,
@@ -26,10 +26,10 @@
       }
     },
     "technical": {
-      "status": "stale",
-      "age_minutes": 4295.0,
+      "status": "ok",
+      "age_minutes": 1.4,
       "stale_after_minutes": 1440,
-      "timestamp": "2026-10-03T00:45:55+00:00",
+      "timestamp": "2026-10-06T01:56:03+00:00",
       "row_count": 407,
       "source": "technical indicators + quote_latest live-price projection"
     },
@@ -40,7 +40,7 @@
     },
     "attention": {
       "status": "stale",
-      "age_minutes": 76173.4,
+      "age_minutes": 76269.9,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-14T02:47:30+00:00",
       "row_count": 4,
@@ -134,7 +134,7 @@
     },
     "events": {
       "status": "stale",
-      "age_minutes": 76173.4,
+      "age_minutes": 76269.9,
       "stale_after_minutes": 90,
       "timestamp": "2026-08-14T02:47:30+00:00",
       "row_count": 20,
@@ -142,7 +142,7 @@
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 1.3,
+      "age_minutes": 97.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-10-06T00:19:37+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 259.0,
+      "age_minutes": 355.5,
       "stale_after_minutes": 50400,
       "timestamp": "2026-10-05 20:01:54 UTC",
       "row_count": 407,
@@ -158,7 +158,7 @@
     },
     "market_pulse": {
       "status": "stale",
-      "age_minutes": 1073.0,
+      "age_minutes": 1169.6,
       "stale_after_minutes": 780,
       "timestamp": "2026-10-05T06:27:51.748251+00:00",
       "row_count": null,
