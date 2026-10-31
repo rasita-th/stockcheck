@@ -1,28 +1,28 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-08-14T02:47:30+00:00",
+  "updated_at": "2026-10-31T06:03:46+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 20,
+  "total_events": 36,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 3,
-    "Risk": 0,
-    "Action": 1,
+    "Critical": 2,
+    "Risk": 1,
+    "Action": 0,
     "Watch": 0,
     "Developing": 0
   },
   "source_health": {
     "sec": {
-      "status": "ok",
+      "status": "partial",
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 35,
+      "ok": 34,
       "partial": 0,
-      "errors": 0,
+      "errors": 1,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -30,29 +30,29 @@
         "missing": 0
       },
       "transport": {
-        "status": "ok",
-        "ok": 35,
-        "errors": 0
+        "status": "partial",
+        "ok": 34,
+        "errors": 1
       }
     },
     "earnings": {
       "status": "partial",
-      "rows": 158,
+      "rows": 216,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 158,
+      "canonical_rows": 216,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 157,
+      "policy_reject_rows": 215,
       "allowed_rows": 1,
-      "rejected_rows": 157
+      "rejected_rows": 215
     },
     "market_data": {
       "status": "ok",
-      "rows": 408,
+      "rows": 406,
       "source": "technical.json"
     },
     "sec_ticker_map": {
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 8,
+      "ok": 7,
       "partial": 0,
-      "errors": 2,
+      "errors": 3,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "partial",
+      "status": "optional_unavailable",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 2,
-      "unavailable": 8,
+      "ok": 0,
+      "unavailable": 10,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -101,485 +101,173 @@
   },
   "items": [
     {
-      "ticker": "RKLB",
-      "name": "Rocket Lab USA, Inc.",
+      "ticker": "ZETA",
+      "name": "Zeta Global Holdings Corp.",
       "portfolio_status": "holding",
-      "role": "Space growth",
+      "role": "Marketing technology",
       "priority": "Critical",
       "priority_score": 100,
       "why_today": [
-        "A capital raise event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review."
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "An insider transaction was reported; transaction context still requires document review."
       ],
-      "event_type": "corporate_event",
+      "event_type": "sec_filing",
       "event_subtype": "capital_raise",
-      "event_time": "2026-08-14T02:45:09+00:00",
+      "event_time": "2026-10-23T17:00:22-04:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
-        "type": "company_ir",
+        "type": "sec",
         "quality": "primary",
-        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
-        "published_at": "2026-08-14T02:45:09+00:00",
-        "domain": "investors.rocketlabcorp.com"
+        "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
+        "published_at": "2026-10-23T17:00:22-04:00",
+        "form": "424B7",
+        "items": "",
+        "accession_number": "0001193125-26-430617",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
       },
-      "price": 54.72,
-      "day_change_pct": -7.4112,
-      "relative_volume": 0.73,
+      "price": 31.17,
+      "day_change_pct": -4.7954,
+      "relative_volume": 0.53,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "event:RKLB:72d498ed73db6fdd",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
+          "event_id": "sec:ZETA:0001193125-26-430617",
+          "ticker": "ZETA",
+          "event_type": "sec_filing",
           "event_subtype": "capital_raise",
-          "headline": "Rocket Lab Corporation Announces Dollar-for-Dollar Replacement At-The-Market Equity Program",
-          "summary": "A capital raise event was detected and requires source review.",
-          "why_today": "A capital raise event was detected and requires source review.",
+          "headline": "424B7 capital-markets filing",
+          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
           "materiality": "high",
-          "reported_materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-14T02:45:09+00:00",
-          "detected_at": "2026-08-14T02:45:09+00:00",
+          "event_time": "2026-10-23T17:00:22-04:00",
+          "detected_at": "2026-10-31T06:01:17.565716+00:00",
           "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:capital_raise:2026-08-14:b1232480523e",
           "source": {
-            "type": "company_ir",
+            "type": "sec",
             "quality": "primary",
-            "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
-            "published_at": "2026-08-14T02:45:09+00:00",
-            "domain": "investors.rocketlabcorp.com"
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
+            "published_at": "2026-10-23T17:00:22-04:00",
+            "form": "424B7",
+            "items": "",
+            "accession_number": "0001193125-26-430617",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
           },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
-              "published_at": "2026-08-14T02:45:09+00:00",
-              "domain": "investors.rocketlabcorp.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
-              "published_at": "2026-08-14T02:45:09+00:00",
-              "domain": "investors.rocketlabusa.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.manilatimes.net/2026/08/13/tmt-newswire/globenewswire/rocket-lab-corporation-announces-dollar-for-dollar-replacement-at-the-market-equity-program/2404732",
-              "published_at": "2026-08-13T11:45:00+00:00",
-              "domain": "www.manilatimes.net"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:RKLB:72d498ed73db6fdd"
-          ],
           "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "company_ir:RKLB:5c9232304438abc2",
-          "ticker": "RKLB",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Quarterly Results",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-12T07:06:37+00:00",
-          "detected_at": "2026-08-12T07:06:37+00:00",
-          "verification_status": "confirmed",
+          "priority": "Critical",
+          "attention_policy_decision": "allow",
           "verification_level": "confirmed_primary",
           "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "article domain matches configured company domain",
-          "dedupe_key": "RKLB:earnings_reported:2026-08-12:ebf01aeb9dd2",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.rocketlabcorp.com/financial-information/quarterly-results",
-            "published_at": "2026-08-12T07:06:37+00:00",
-            "domain": "investors.rocketlabcorp.com"
-          },
           "source_chain": [
             {
-              "type": "company_ir",
+              "type": "sec",
               "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/financial-information/quarterly-results",
-              "published_at": "2026-08-12T07:06:37+00:00",
-              "domain": "investors.rocketlabcorp.com"
+              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
+              "published_at": "2026-10-23T17:00:22-04:00",
+              "form": "424B7",
+              "items": "",
+              "accession_number": "0001193125-26-430617",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
           "related_event_ids": [
-            "company_ir:RKLB:5c9232304438abc2"
+            "sec:ZETA:0001193125-26-430617"
           ],
-          "priority_score": 97,
-          "priority": "Critical"
+          "dedupe_key": "ZETA:capital_raise:22532ffe41c9d70c"
         },
         {
-          "event_id": "company_ir:RKLB:da533bd82ba001bd",
-          "ticker": "RKLB",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Second Quarter 2026 Financial Results Presentation",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
+          "event_id": "event:ZETA:e38d58735b0ef013",
+          "ticker": "ZETA",
+          "event_type": "sec_filing",
+          "event_subtype": "insider_activity",
+          "headline": "New Form 4 insider filing",
+          "summary": "An insider transaction was reported; transaction context still requires document review.",
+          "why_today": "An insider transaction was reported; transaction context still requires document review.",
+          "materiality": "low",
           "urgency": "today",
-          "event_time": "2026-08-11T02:26:24+00:00",
-          "detected_at": "2026-08-11T02:26:24+00:00",
+          "event_time": "2026-10-23T16:55:04-04:00",
+          "detected_at": "2026-10-31T06:01:17.565740+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "article domain matches configured company domain",
-          "dedupe_key": "RKLB:earnings_reported:2026-08-11:9b05f0e428d9",
           "source": {
-            "type": "company_ir",
+            "type": "sec",
             "quality": "primary",
-            "url": "https://investors.rocketlabusa.com/static-files/3dde8e68-7ce6-4685-8c0b-17afc94dbb86",
-            "published_at": "2026-08-11T02:26:24+00:00",
-            "domain": "investors.rocketlabusa.com"
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430606/ownership.xml",
+            "published_at": "2026-10-23T16:58:03-04:00",
+            "form": "4",
+            "items": "",
+            "accession_number": "0001193125-26-430606",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
           },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabusa.com/static-files/3dde8e68-7ce6-4685-8c0b-17afc94dbb86",
-              "published_at": "2026-08-11T02:26:24+00:00",
-              "domain": "investors.rocketlabusa.com"
-            }
-          ],
-          "secondary_source_count": 0,
+          "priority_score": 64,
+          "priority": "Action",
           "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:RKLB:da533bd82ba001bd"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "event:RKLB:06994d7855e122e8",
-          "ticker": "RKLB",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Rocket Lab Announces Second Quarter 2026 Financial Results: Posts Record Revenue and Record Backlog, Guides To Another Record Revenue Quarter in Q3 2026",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-12T07:06:37+00:00",
-          "detected_at": "2026-08-12T07:06:37+00:00",
-          "verification_status": "confirmed",
           "verification_level": "corroborated",
           "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:earnings_reported:2026-08-12:af420dfcedd9",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-second-quarter-2026-financial-results-posts",
-            "published_at": "2026-08-12T07:06:37+00:00",
-            "domain": "investors.rocketlabcorp.com"
-          },
           "source_chain": [
             {
-              "type": "company_ir",
+              "type": "sec",
               "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-second-quarter-2026-financial-results-posts",
-              "published_at": "2026-08-12T07:06:37+00:00",
-              "domain": "investors.rocketlabcorp.com"
+              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430606/ownership.xml",
+              "published_at": "2026-10-23T16:58:03-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-430606",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
             },
             {
-              "type": "company_ir",
+              "type": "sec",
               "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
-              "published_at": "2026-08-12T07:06:37+00:00",
-              "domain": "investors.rocketlabcorp.com"
+              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430600/ownership.xml",
+              "published_at": "2026-10-23T16:55:04-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-430600",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
           "related_event_ids": [
-            "event:RKLB:06994d7855e122e8"
+            "event:ZETA:e38d58735b0ef013"
           ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "event:RKLB:2c38c1d1cf746b13",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Rocket Lab Corporation Announces Progress on Iridium Acquisition: HSR Period Lapses; Form S-4 Filed; FCC Applications Filed; Capital Strategy Underway",
-          "summary": "A transaction event was detected and requires source review.",
-          "why_today": "A transaction event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-08-14T02:45:09+00:00",
-          "detected_at": "2026-08-14T02:45:09+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:transaction:2026-08-14:6b24b2704edf",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
-            "published_at": "2026-08-14T02:45:09+00:00",
-            "domain": "investors.rocketlabusa.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabusa.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
-              "published_at": "2026-08-14T02:45:09+00:00",
-              "domain": "investors.rocketlabusa.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-progress-iridium-acquisition",
-              "published_at": "2026-08-14T02:45:09+00:00",
-              "domain": "investors.rocketlabcorp.com"
-            },
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.manilatimes.net/2026/08/13/tmt-newswire/globenewswire/rocket-lab-corporation-announces-progress-on-iridium-acquisition-hsr-period-lapses-form-s-4-filed-fcc-applications-filed-capital-strategy-underway/2404731",
-              "published_at": "2026-08-13T11:45:00+00:00",
-              "domain": "www.manilatimes.net"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:RKLB:2c38c1d1cf746b13"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "company_ir:RKLB:5dc4111f5bcc4b94",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
-          "event_subtype": "material_agreement",
-          "headline": "Rocket Lab Awarded Record $266M Missile Defense Contract with U.S. Space Force for Suborbital Launches",
-          "summary": "A material agreement event was detected and requires source review.",
-          "why_today": "A material agreement event was detected and requires source review.",
-          "materiality": "medium",
-          "reported_materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-08-12T07:06:37+00:00",
-          "detected_at": "2026-08-12T07:06:37+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:material_agreement:2026-08-12:9ab91732ba24",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
-            "published_at": "2026-08-12T07:06:37+00:00",
-            "domain": "investors.rocketlabcorp.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-record-266m-missile-defense-contract-us-space",
-              "published_at": "2026-08-12T07:06:37+00:00",
-              "domain": "investors.rocketlabcorp.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:RKLB:5dc4111f5bcc4b94"
-          ],
-          "priority_score": 80,
-          "priority": "Risk"
-        },
-        {
-          "event_id": "gdelt:RKLB:46bc391d0908a514",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Rocket Lab ( NASDAQ : RKLB ) Clears U . S . Antitrust Hurdle And Files Key Regulatory Documents To Advance Iridium Takeover",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-13T19:15:00+00:00",
-          "detected_at": "2026-08-14T02:45:09+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:transaction:2026-08-13:caadcf5f7d45",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.foreignpolicyjournal.com/2026/08/13/rocket-lab-nasdaq-rklb-clears-u-s-antitrust-hurdle-and-files-key-regulatory-documents-to-advance-iridium-takeover",
-            "published_at": "2026-08-13T19:15:00+00:00",
-            "domain": "www.foreignpolicyjournal.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.foreignpolicyjournal.com/2026/08/13/rocket-lab-nasdaq-rklb-clears-u-s-antitrust-hurdle-and-files-key-regulatory-documents-to-advance-iridium-takeover",
-              "published_at": "2026-08-13T19:15:00+00:00",
-              "domain": "www.foreignpolicyjournal.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:RKLB:46bc391d0908a514"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:RKLB:9ed7619de0b5028d",
-          "ticker": "RKLB",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "Rocket Lab Shares Fall as Earnings Miss and Margin Outlook Raise Profitability Concerns",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-12T19:15:00+00:00",
-          "detected_at": "2026-08-13T10:21:47+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:guidance:2026-08-12:9ed9ec45e67d",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
-            "published_at": "2026-08-12T19:15:00+00:00",
-            "domain": "finance.yahoo.com"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-fall-earnings-100340676.html",
-              "published_at": "2026-08-12T19:15:00+00:00",
-              "domain": "finance.yahoo.com"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:RKLB:9ed7619de0b5028d"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
-        },
-        {
-          "event_id": "gdelt:RKLB:b849786d0f8dafbd",
-          "ticker": "RKLB",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Judicial review sought over Government approval of four of Rocket Lab Mahia satellite launches",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "developing",
-          "event_time": "2026-08-12T03:15:00+00:00",
-          "detected_at": "2026-08-12T13:45:47+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Rocket Lab",
-          "dedupe_key": "RKLB:product:2026-08-12:f4a09bf71e35",
-          "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.nzherald.co.nz/gisborne-herald/news/judicial-review-sought-over-governments-approval-of-four-of-rocket-labs-mahia-satellite-launches/premium/WG7HTVFQCVFDBG7P6PRCRMN73M",
-            "published_at": "2026-08-12T03:15:00+00:00",
-            "domain": "www.nzherald.co.nz"
-          },
-          "source_chain": [
-            {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.nzherald.co.nz/gisborne-herald/news/judicial-review-sought-over-governments-approval-of-four-of-rocket-labs-mahia-satellite-launches/premium/WG7HTVFQCVFDBG7P6PRCRMN73M",
-              "published_at": "2026-08-12T03:15:00+00:00",
-              "domain": "www.nzherald.co.nz"
-            }
-          ],
-          "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
-          "related_event_ids": [
-            "gdelt:RKLB:b849786d0f8dafbd"
-          ],
-          "priority_score": 32,
-          "priority": "Watch"
+          "dedupe_key": "ZETA:insider_activity:d2b71c7eef1cd481"
         }
       ],
       "actions": {
-        "primary_source": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-corporation-announces-dollar-dollar-replacement",
-        "company_ir": "https://investors.rocketlabusa.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RKLB/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "capital_raise",
       "signals": [
-        "A capital raise event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review."
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "An insider transaction was reported; transaction context still requires document review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-08-14T02:47:30+00:00",
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 80.1,
-        "current_price": 54.72,
-        "change_pct": -31.69,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 31.7%"
+        "baseline_price": 31.17,
+        "current_price": 31.17,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 113,
+      "personal_priority_score": 114,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
-        "corporate_event +5"
+        "sec_filing +6"
       ]
     },
     {
@@ -588,21 +276,22 @@
       "portfolio_status": "holding",
       "role": "AI semiconductors",
       "priority": "Critical",
-      "priority_score": 97,
+      "priority_score": 100,
       "why_today": [
         "A transaction event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
+        "A earnings reported event was detected and requires source review.",
+        "A material agreement event was detected and requires source review."
       ],
       "event_type": "corporate_event",
       "event_subtype": "transaction",
-      "event_time": "2026-08-07T07:40:33+00:00",
+      "event_time": "2026-10-31T06:01:17+00:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "company_ir",
         "quality": "primary",
-        "url": "https://ir.amd.com/news-events/press-releases/detail/1296/amd-acquires-taalas-to-advance-compute-solutions-for-rapidly-growing-ai-inference-market",
-        "published_at": "2026-08-07T07:40:33+00:00",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+        "published_at": "2026-10-31T06:01:17+00:00",
         "domain": "ir.amd.com"
       },
       "price": 505.18,
@@ -611,94 +300,182 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "company_ir:AMD:a5d4fbb4fa69b2d7",
+          "event_id": "company_ir:AMD:0453a8f863b62b77",
           "ticker": "AMD",
           "event_type": "corporate_event",
           "event_subtype": "transaction",
-          "headline": "AMD Acquires Taalas to Advance Compute Solutions for Rapidly Growing AI Inference Market",
+          "headline": "AMD to Acquire World Labs to Advance the Future of AI Compute",
           "summary": "A transaction event was detected and requires source review.",
           "why_today": "A transaction event was detected and requires source review.",
           "materiality": "high",
           "reported_materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-07T07:40:33+00:00",
-          "detected_at": "2026-08-07T07:40:33+00:00",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_primary",
           "verification_reason": "Matched a configured primary source.",
           "entity_confidence": "high",
           "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:transaction:2026-08-07:6ff181688587",
+          "dedupe_key": "AMD:transaction:2026-10-31:908f191aed5c",
           "source": {
             "type": "company_ir",
             "quality": "primary",
-            "url": "https://ir.amd.com/news-events/press-releases/detail/1296/amd-acquires-taalas-to-advance-compute-solutions-for-rapidly-growing-ai-inference-market",
-            "published_at": "2026-08-07T07:40:33+00:00",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+            "published_at": "2026-10-31T06:01:17+00:00",
             "domain": "ir.amd.com"
           },
           "source_chain": [
             {
               "type": "company_ir",
               "quality": "primary",
-              "url": "https://ir.amd.com/news-events/press-releases/detail/1296/amd-acquires-taalas-to-advance-compute-solutions-for-rapidly-growing-ai-inference-market",
-              "published_at": "2026-08-07T07:40:33+00:00",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+              "published_at": "2026-10-31T06:01:17+00:00",
               "domain": "ir.amd.com"
             }
           ],
           "secondary_source_count": 0,
           "attention_policy_decision": "allow",
           "related_event_ids": [
-            "company_ir:AMD:a5d4fbb4fa69b2d7"
+            "company_ir:AMD:0453a8f863b62b77"
           ],
-          "priority_score": 97,
+          "priority_score": 100,
           "priority": "Critical"
         },
         {
-          "event_id": "gdelt:AMD:c354c900f97605bc",
+          "event_id": "event:AMD:a25e96a39c37de22",
           "ticker": "AMD",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Legacy Wealth Management LLC MS Acquires Shares of 1 , 490 Advanced Micro Devices , Inc . $AMD",
-          "summary": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "why_today": "A potentially material public-news report was detected. Primary-source verification is pending.",
-          "materiality": "low",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "AMD Fiscal Third Quarter 2026 Financial Results View Event",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
           "reported_materiality": "high",
-          "urgency": "developing",
-          "event_time": "2026-08-09T11:00:00+00:00",
-          "detected_at": "2026-08-09T21:47:11+00:00",
-          "verification_status": "unverified",
-          "verification_level": "unverified_report",
-          "verification_reason": "Primary source not yet located.",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
           "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Advanced Micro Devices, Inc.",
-          "dedupe_key": "AMD:transaction:2026-08-09:4705ae2d4e16",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:earnings_reported:2026-10-31:9b89033d2a1b",
           "source": {
-            "type": "gdelt",
-            "quality": "secondary",
-            "url": "https://www.themarketsdaily.com/2026/08/09/legacy-wealth-management-llc-ms-acquires-shares-of-1490-advanced-micro-devices-inc-amd.html",
-            "published_at": "2026-08-09T11:00:00+00:00",
-            "domain": "www.themarketsdaily.com"
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
+            "published_at": "2026-10-31T06:01:17+00:00",
+            "domain": "ir.amd.com"
           },
           "source_chain": [
             {
-              "type": "gdelt",
-              "quality": "secondary",
-              "url": "https://www.themarketsdaily.com/2026/08/09/legacy-wealth-management-llc-ms-acquires-shares-of-1490-advanced-micro-devices-inc-amd.html",
-              "published_at": "2026-08-09T11:00:00+00:00",
-              "domain": "www.themarketsdaily.com"
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:AMD:a25e96a39c37de22"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "company_ir:AMD:a763319f57e7309e",
+          "ticker": "AMD",
+          "event_type": "corporate_event",
+          "event_subtype": "material_agreement",
+          "headline": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
+          "summary": "A material agreement event was detected and requires source review.",
+          "why_today": "A material agreement event was detected and requires source review.",
+          "materiality": "medium",
+          "reported_materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:material_agreement:2026-10-31:19b59f9ec012",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
+            "published_at": "2026-10-31T06:01:17+00:00",
+            "domain": "ir.amd.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:AMD:a763319f57e7309e"
+          ],
+          "priority_score": 94,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:AMD:price-drop:2026-10-31",
+          "ticker": "AMD",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.8%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.8% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17.420017+00:00",
+          "detected_at": "2026-10-31T06:01:17.420023+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
             }
           ],
           "secondary_source_count": 1,
-          "attention_policy_decision": "allow_unverified",
           "related_event_ids": [
-            "gdelt:AMD:c354c900f97605bc"
+            "technical:AMD:price-drop:2026-10-31"
           ],
-          "priority_score": 32,
-          "priority": "Watch"
+          "dedupe_key": "AMD:price_drop:8f42f83ff851808c"
         }
       ],
       "actions": {
-        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1296/amd-acquires-taalas-to-advance-compute-solutions-for-rapidly-growing-ai-inference-market",
+        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
         "company_ir": "https://ir.amd.com/",
         "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
         "raw_data": "data/technical.json"
@@ -707,245 +484,191 @@
       "primary_trigger": "transaction",
       "signals": [
         "A transaction event was detected and requires source review.",
-        "A potentially material public-news report was detected. Primary-source verification is pending."
+        "A earnings reported event was detected and requires source review.",
+        "A material agreement event was detected and requires source review."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-08-10T16:17:58+00:00",
-        "active_days": 4
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 475.465,
+        "baseline_price": 505.18,
         "current_price": 505.18,
-        "change_pct": 6.25,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 6.2%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 110,
+      "personal_priority_score": 113,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
       ]
     },
     {
-      "ticker": "UUUU",
-      "name": "Energy Fuels Inc.",
+      "ticker": "CIFR",
+      "name": "Cipher Mining Inc.",
       "portfolio_status": "holding",
-      "role": "Uranium and rare earths",
-      "priority": "Critical",
-      "priority_score": 97,
+      "role": "Digital infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
       "why_today": [
-        "A transaction event was detected and requires source review."
+        "The stock moved -10.1% today.",
+        "An insider transaction was reported; transaction context still requires document review."
       ],
-      "event_type": "corporate_event",
-      "event_subtype": "transaction",
-      "event_time": "2026-08-12T19:19:18+00:00",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-10-31T06:01:17.503217+00:00",
       "verification_status": "confirmed",
-      "source_status": "primary",
+      "source_status": "internal",
       "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
-        "published_at": "2026-08-12T19:19:18+00:00",
-        "domain": "investors.energyfuels.com"
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
       },
-      "price": 7.72,
-      "day_change_pct": -6.1968,
+      "price": 7.285,
+      "day_change_pct": -10.0617,
       "relative_volume": 0.81,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "company_ir:UUUU:30206b70fafd3309",
-          "ticker": "UUUU",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "Energy Fuels' Acquisition of Australian Strategic Materials Wins Shareholder Approval",
-          "summary": "A transaction event was detected and requires source review.",
-          "why_today": "A transaction event was detected and requires source review.",
+          "event_id": "technical:CIFR:price-drop:2026-10-31",
+          "ticker": "CIFR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.1%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.1% today.",
           "materiality": "high",
-          "reported_materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-12T19:19:18+00:00",
-          "detected_at": "2026-08-12T19:19:18+00:00",
+          "event_time": "2026-10-31T06:01:17.503217+00:00",
+          "detected_at": "2026-10-31T06:01:17.503220+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Energy Fuels",
-          "dedupe_key": "UUUU:transaction:2026-08-12:a88829ceaef4",
           "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
-            "published_at": "2026-08-12T19:19:18+00:00",
-            "domain": "investors.energyfuels.com"
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
           },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
-              "type": "company_ir",
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:CIFR:price-drop:2026-10-31"
+          ],
+          "dedupe_key": "CIFR:price_drop:85ea7b11ec72bf42"
+        },
+        {
+          "event_id": "sec:CIFR:0001123292-26-001436",
+          "ticker": "CIFR",
+          "event_type": "sec_filing",
+          "event_subtype": "insider_activity",
+          "headline": "New Form 4 insider filing",
+          "summary": "An insider transaction was reported; transaction context still requires document review.",
+          "why_today": "An insider transaction was reported; transaction context still requires document review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-27T16:26:52-04:00",
+          "detected_at": "2026-10-31T06:01:17.503189+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000112329226001436/form4.xml",
+            "published_at": "2026-10-27T16:26:52-04:00",
+            "form": "4",
+            "items": "",
+            "accession_number": "0001123292-26-001436",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 78,
+          "priority": "Risk",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
               "quality": "primary",
-              "url": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
-              "published_at": "2026-08-12T19:19:18+00:00",
-              "domain": "investors.energyfuels.com"
+              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000112329226001436/form4.xml",
+              "published_at": "2026-10-27T16:26:52-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001123292-26-001436",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
           "related_event_ids": [
-            "company_ir:UUUU:30206b70fafd3309"
+            "sec:CIFR:0001123292-26-001436"
           ],
-          "priority_score": 97,
-          "priority": "Critical"
+          "dedupe_key": "CIFR:insider_activity:6b6c0fc6af43e475"
         }
       ],
       "actions": {
-        "primary_source": "https://investors.energyfuels.com/2026-08-12-Energy-Fuels-Acquisition-of-Australian-Strategic-Materials-Wins-Shareholder-Approval",
-        "tradingview": "https://www.tradingview.com/symbols/AMEX-UUUU/",
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "transaction",
+      "primary_trigger": "price_drop",
       "signals": [
-        "A transaction event was detected and requires source review."
+        "The stock moved -10.1% today.",
+        "An insider transaction was reported; transaction context still requires document review."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-08-12T19:21:32+00:00",
-        "active_days": 2
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 14.5833,
-        "current_price": 7.72,
-        "change_pct": -47.06,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 47.1%"
+        "baseline_price": 7.285,
+        "current_price": 7.285,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 110,
+      "personal_priority_score": 107,
       "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
-      ]
-    },
-    {
-      "ticker": "TE",
-      "name": "T1 Energy Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy technology",
-      "priority": "Action",
-      "priority_score": 64,
-      "why_today": [
-        "A product event was detected and requires source review."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "product",
-      "event_time": "2026-08-08T07:15:06+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "regulator",
-        "quality": "primary",
-        "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-        "published_at": "2026-08-08T07:15:06+00:00",
-        "domain": "www.energy.gov",
-        "agency": "DOE",
-        "name": "U.S. Department of Energy"
-      },
-      "price": 2.695,
-      "day_change_pct": -5.7692,
-      "relative_volume": 1.57,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "regulator:TE:aa21dc3f60777ff7",
-          "ticker": "TE",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "Energy Department Launches $100 Million Initiative to Build America’s Critical Minerals Workforce, Strengthen Domestic Supply Chains",
-          "summary": "A product event was detected and requires source review.",
-          "why_today": "A product event was detected and requires source review.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-08-08T07:15:06+00:00",
-          "detected_at": "2026-08-08T07:15:06+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "headline matched company tokens: energy",
-          "dedupe_key": "TE:product:2026-08-08:8b7b9e6e6818",
-          "source": {
-            "type": "regulator",
-            "quality": "primary",
-            "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-            "published_at": "2026-08-08T07:15:06+00:00",
-            "domain": "www.energy.gov",
-            "agency": "DOE",
-            "name": "U.S. Department of Energy"
-          },
-          "source_chain": [
-            {
-              "type": "regulator",
-              "quality": "primary",
-              "url": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-              "published_at": "2026-08-08T07:15:06+00:00",
-              "domain": "www.energy.gov",
-              "agency": "DOE",
-              "name": "U.S. Department of Energy"
-            }
-          ],
-          "secondary_source_count": 0,
-          "regulator": "DOE",
-          "regulator_name": "U.S. Department of Energy",
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "regulator:TE:aa21dc3f60777ff7"
-          ],
-          "priority_score": 64,
-          "priority": "Action"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.energy.gov/articles/energy-department-launches-100-million-initiative-build-americas-critical-minerals",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "medium",
-      "primary_trigger": "product",
-      "signals": [
-        "A product event was detected and requires source review."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-08-13T19:22:08+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 4.925,
-        "current_price": 2.695,
-        "change_pct": -45.28,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 45.3%"
-      },
-      "personal_priority_score": 77,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
+        "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "errors": [
     {
+      "source": "sec",
+      "ticker": "*",
+      "message": "SEC transport unavailable for 1 applicable tickers"
+    },
+    {
       "source": "ir",
-      "ticker": "IREN",
+      "ticker": "TEM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
+      "ticker": "TMDX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "EOSE",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -961,11 +684,11 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 7,
-    "active_discovered_event_count": 22,
+    "active_discovered_event_count": 4,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 2,
-    "technical_metric_repair_count": 1,
+    "technical_fill_count": 1,
+    "technical_metric_repair_count": 4,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -974,19 +697,19 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 158,
-      "canonical_rows": 158,
+      "rows": 216,
+      "canonical_rows": 216,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 157,
+      "policy_reject_rows": 215,
       "allowed_rows": 1,
-      "rejected_rows": 157
+      "rejected_rows": 215
     },
     "attention_policy_gate": {
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 23,
-      "accepted_events": 23,
+      "evaluated_events": 39,
+      "accepted_events": 39,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1007,221 +730,476 @@
   },
   "technical_summary": {
     "risk": 0,
-    "setup": 2,
-    "total": 2
+    "setup": 0,
+    "total": 4
   },
   "technical_watch": [
     {
-      "ticker": "JEPQ",
-      "name": "JPMorgan Nasdaq Equity Premium Income ETF",
+      "ticker": "IREN",
+      "name": "IREN Limited",
       "portfolio_status": "holding",
-      "role": "Income ETF",
-      "priority": "Action",
-      "priority_score": 68,
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
       "why_today": [
-        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.63x 20-day average."
+        "The stock moved -8.7% today."
       ],
       "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "event_time": "2026-08-13",
+      "event_subtype": "price_drop",
+      "event_time": "2026-10-31T06:01:17.315530+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": "2026-08-13"
+        "published_at": ""
       },
-      "price": 57.55,
-      "day_change_pct": -3.0818,
-      "relative_volume": 0.99,
+      "price": 23.9658,
+      "day_change_pct": -8.7017,
+      "relative_volume": 0.95,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:JEPQ:technical_setup:2026-08-13",
-          "ticker": "JEPQ",
+          "event_id": "technical:IREN:price-drop:2026-10-31",
+          "ticker": "IREN",
           "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 93/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.63x 20-day average.",
-          "materiality": "medium",
+          "event_subtype": "price_drop",
+          "headline": "Price -8.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -8.7% today.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13",
-          "detected_at": "2026-08-14T02:47:30+00:00",
+          "event_time": "2026-10-31T06:01:17.315530+00:00",
+          "detected_at": "2026-10-31T06:01:17.315535+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
             "url": "data/technical.json",
-            "published_at": "2026-08-13"
+            "published_at": ""
           },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
               "type": "technical_json",
               "quality": "internal",
               "url": "data/technical.json",
-              "published_at": "2026-08-13"
+              "published_at": ""
             }
           ],
-          "technical_score": 33.0,
-          "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
-          "rsi14": 45.33,
-          "pct_vs_ema20": -3.79,
-          "pct_vs_ema200": -2.82,
-          "volume_ratio20": 0.99,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:JEPQ:technical_setup:2026-08-13"
+            "technical:IREN:price-drop:2026-10-31"
           ],
-          "dedupe_key": "JEPQ:technical_setup:9f5989142ae3a16c",
-          "priority_score": 68,
-          "priority": "Action",
+          "dedupe_key": "IREN:price_drop:68e5b33ae7031b03",
+          "technical_score": 9.0,
+          "rsi14": 33.73,
+          "pct_vs_ema20": -22.59,
+          "pct_vs_ema200": -44.43,
+          "volume_ratio20": 0.95,
+          "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-JEPQ/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
         "raw_data": "data/technical.json"
       },
-      "severity": "medium",
-      "primary_trigger": "technical_setup",
+      "severity": "high",
+      "primary_trigger": "price_drop",
       "signals": [
-        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 59.0, +1.9% vs EMA20, +3.2% vs EMA200, volume 0.63x 20-day average."
+        "The stock moved -8.7% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-08-13T22:04:41+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 60.415,
-        "current_price": 57.55,
-        "change_pct": -4.74,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 4.7%"
+        "baseline_price": 23.9658,
+        "current_price": 23.9658,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 107,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     },
     {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
       "portfolio_status": "holding",
-      "role": "Core AI",
-      "priority": "Action",
-      "priority_score": 68,
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
       "why_today": [
-        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.2, +6.1% vs EMA20, +15.3% vs EMA200, volume 0.76x 20-day average."
+        "The stock moved -10.4% today."
       ],
       "event_type": "technical",
-      "event_subtype": "technical_setup",
-      "event_time": "2026-08-13",
+      "event_subtype": "price_drop",
+      "event_time": "2026-10-31T06:01:17.379201+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
         "type": "technical_json",
         "quality": "internal",
         "url": "data/technical.json",
-        "published_at": "2026-08-13"
+        "published_at": ""
       },
-      "price": 204.81,
-      "day_change_pct": -4.1421,
-      "relative_volume": 0.78,
+      "price": 154.1,
+      "day_change_pct": -10.4018,
+      "relative_volume": 0.79,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NVDA:technical_setup:2026-08-13",
-          "ticker": "NVDA",
+          "event_id": "technical:NBIS:price-drop:2026-10-31",
+          "ticker": "NBIS",
           "event_type": "technical",
-          "event_subtype": "technical_setup",
-          "headline": "Latest technical scan · 93/100",
-          "summary": "Technical context from the latest market scan; this is not a recommendation.",
-          "why_today": "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.2, +6.1% vs EMA20, +15.3% vs EMA200, volume 0.76x 20-day average.",
-          "materiality": "medium",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.4%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.4% today.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-08-13",
-          "detected_at": "2026-08-14T02:47:30+00:00",
+          "event_time": "2026-10-31T06:01:17.379201+00:00",
+          "detected_at": "2026-10-31T06:01:17.379206+00:00",
           "verification_status": "confirmed",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source": {
             "type": "technical_json",
             "quality": "internal",
             "url": "data/technical.json",
-            "published_at": "2026-08-13"
+            "published_at": ""
           },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
           "source_chain": [
             {
               "type": "technical_json",
               "quality": "internal",
               "url": "data/technical.json",
-              "published_at": "2026-08-13"
+              "published_at": ""
             }
           ],
-          "technical_score": 37.0,
-          "technical_signal": "AVOID / Turnaround only",
-          "scan_age_days": 0,
-          "rsi14": 42.27,
-          "pct_vs_ema20": -6.73,
-          "pct_vs_ema200": -0.46,
-          "volume_ratio20": 0.78,
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NVDA:technical_setup:2026-08-13"
+            "technical:NBIS:price-drop:2026-10-31"
           ],
-          "dedupe_key": "NVDA:technical_setup:f6c33cfbd55a595d",
-          "priority_score": 68,
-          "priority": "Action",
+          "dedupe_key": "NBIS:price_drop:2dcb68e16126f389",
+          "technical_score": 32.0,
+          "rsi14": 41.01,
+          "pct_vs_ema20": -17.52,
+          "pct_vs_ema200": -10.48,
+          "volume_ratio20": 0.79,
+          "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "company_ir": "https://investor.nvidia.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NVDA/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
         "raw_data": "data/technical.json"
       },
-      "severity": "medium",
-      "primary_trigger": "technical_setup",
+      "severity": "high",
+      "primary_trigger": "price_drop",
       "signals": [
-        "Latest technical scan dated 2026-08-13: score 93/100, BUY ZONE / Trend Confirmed, RSI 63.2, +6.1% vs EMA20, +15.3% vs EMA200, volume 0.76x 20-day average."
+        "The stock moved -10.4% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Action",
-        "first_seen_at": "2026-08-13T22:04:41+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 225.37,
-        "current_price": 204.81,
-        "change_pct": -9.12,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 9.1%"
+        "baseline_price": 154.1,
+        "current_price": 154.1,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 76,
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "RR",
+      "name": "Richtech Robotics Inc.",
+      "portfolio_status": "holding",
+      "role": "Robotics",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -10.1% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-10-31T06:01:17.555053+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 0.9439,
+      "day_change_pct": -10.1048,
+      "relative_volume": 1.41,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:RR:price-drop:2026-10-31",
+          "ticker": "RR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.1%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.1% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17.555053+00:00",
+          "detected_at": "2026-10-31T06:01:17.555061+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:RR:price-drop:2026-10-31"
+          ],
+          "dedupe_key": "RR:price_drop:f232f58286f29be6",
+          "technical_score": 16.0,
+          "rsi14": 23.03,
+          "pct_vs_ema20": -27.95,
+          "pct_vs_ema200": -58.6,
+          "volume_ratio20": 1.41,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -10.1% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 0.9439,
+        "current_price": 0.9439,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "TMC",
+      "name": "TMC the metals company Inc.",
+      "portfolio_status": "holding",
+      "role": "Critical minerals",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -8.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-10-31T06:01:17.534405+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 2.6,
+      "day_change_pct": -8.4507,
+      "relative_volume": 1.03,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:TMC:price-drop:2026-10-31",
+          "ticker": "TMC",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -8.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -8.5% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17.534405+00:00",
+          "detected_at": "2026-10-31T06:01:17.534411+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TMC:price-drop:2026-10-31"
+          ],
+          "dedupe_key": "TMC:price_drop:1d3570f4a5abed13",
+          "technical_score": 26.0,
+          "rsi14": 41.55,
+          "pct_vs_ema20": -11.56,
+          "pct_vs_ema200": -46.28,
+          "volume_ratio20": 1.03,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMC/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -8.5% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 2.6,
+        "current_price": 2.6,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 7,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 6,
+    "ongoing": 0,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "event:RKLB:72d498ed73db6fdd",
+      "ticker": "RKLB",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "company_ir:AMD:a5d4fbb4fa69b2d7",
+      "ticker": "AMD",
+      "event_subtype": "transaction",
+      "priority": "Critical",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "company_ir:UUUU:30206b70fafd3309",
+      "ticker": "UUUU",
+      "event_subtype": "transaction",
+      "priority": "Critical",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "regulator:TE:aa21dc3f60777ff7",
+      "ticker": "TE",
+      "event_subtype": "product",
+      "priority": "Action",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:CIFR:price-drop:2026-08-13",
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:JEPQ:technical_setup:2026-08-13",
+      "ticker": "JEPQ",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NVDA:technical_setup:2026-08-13",
+      "ticker": "NVDA",
+      "event_subtype": "technical_setup",
+      "priority": "Action",
+      "resolved_at": "2026-10-31T06:03:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "company_ir:RKLB:5c9232304438abc2",
       "ticker": "RKLB",
@@ -1244,62 +1222,6 @@
       "event_subtype": "price_move",
       "priority": "Risk",
       "resolved_at": "2026-08-13T22:04:41+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:price-move:2026-08-13",
-      "ticker": "NBIS",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-13T19:22:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TE:price-drop:2026-08-13",
-      "ticker": "TE",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-13T19:22:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-move:2026-08-13",
-      "ticker": "IREN",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-13T19:22:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:price-move:2026-08-12",
-      "ticker": "NBIS",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-13T05:05:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TE:price-drop:2026-08-12",
-      "ticker": "TE",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-08-13T05:05:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-move:2026-08-12",
-      "ticker": "IREN",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-08-13T05:05:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:INDI:price-move:2026-08-12",
-      "ticker": "INDI",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-13T05:05:31+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
