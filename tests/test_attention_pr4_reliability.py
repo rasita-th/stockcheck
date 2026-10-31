@@ -135,6 +135,12 @@ class AttentionPR4ReliabilityTests(unittest.TestCase):
         self.assertEqual(urlopen.call_count, 1)
 
     def test_verified_finnhub_sec_index_is_used_when_official_transport_is_blocked(self):
+        self.check_verified_finnhub_sec_index(datetime(2026, 8, 13, tzinfo=p0.ET), expected_events=1)
+
+    def test_verified_finnhub_sec_index_filters_old_bootstrap_events(self):
+        self.check_verified_finnhub_sec_index(datetime(2027, 1, 1, tzinfo=p0.ET), expected_events=0)
+
+    def check_verified_finnhub_sec_index(self, now, *, expected_events):
         fallback = {
             "status": "ok",
             "updated_at": "2026-08-12T12:00:00+00:00",
@@ -152,6 +158,8 @@ class AttentionPR4ReliabilityTests(unittest.TestCase):
         with (
             patch.object(p0, "http_json", return_value=None),
             patch.object(p0, "fetch_sec_atom", return_value=[]),
+            patch.object(p0, "now_et", return_value=now),
+            patch.object(p0, "now_utc", return_value=now.astimezone(timezone.utc)),
         ):
             events, state, status, error = p0.fetch_sec_events(
                 {"ticker": "RKLB"},
@@ -162,8 +170,26 @@ class AttentionPR4ReliabilityTests(unittest.TestCase):
         self.assertEqual(status, "ok")
         self.assertIsNone(error)
         self.assertEqual(state["transport"], "finnhub_sec_index")
-        self.assertEqual(events[0]["source"]["url"], fallback["data"][0]["sourceUrl"])
-        self.assertEqual(events[0]["source"]["discovered_via"], "finnhub_sec_index")
+        self.assertEqual(len(events), expected_events)
+        if expected_events:
+            self.assertEqual(events[0]["source"]["url"], fallback["data"][0]["sourceUrl"])
+            self.assertEqual(events[0]["source"]["discovered_via"], "finnhub_sec_index")
+
+    def test_verified_empty_fallback_is_successful_without_events(self):
+        with (
+            patch.object(p0, "http_json", return_value=None),
+            patch.object(p0, "fetch_sec_atom", return_value=[]),
+        ):
+            events, state, status, error = p0.fetch_sec_events(
+                {"ticker": "RKLB"},
+                {"RKLB": {"cik_str": "0001819994"}},
+                {},
+                fallback_entry={"status": "empty", "data": []},
+            )
+        self.assertEqual(events, [])
+        self.assertEqual(status, "ok")
+        self.assertIsNone(error)
+        self.assertEqual(state["transport"], "finnhub_sec_index")
 
     def test_invalid_discovery_link_cannot_claim_sec_coverage(self):
         fallback = {

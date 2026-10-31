@@ -78,7 +78,7 @@ jobs:
           assert match and match.group(1) == payload['release'], 'deploy release must match release manifest'
           PY
       - name: Test production artifact contract
-        run: python -m unittest tests.test_production_artifact_contract -v
+        run: python -m unittest tests.test_production_artifact_contract tests.test_publisher_patch_apply -v
       - name: Test production verifier fault handling
         run: python -m unittest tests.test_production_verifier -v
       - name: Test Drawdown production browser verifier

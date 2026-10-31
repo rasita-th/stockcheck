@@ -7,6 +7,11 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.generate_health import MARKET_TZ, is_trading_day
+except ModuleNotFoundError:  # Direct script execution in Actions.
+    from generate_health import MARKET_TZ, is_trading_day
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORT = ROOT / "data" / "generated" / "source_freshness.json"
 TIMESTAMP_FIELDS = (
@@ -20,7 +25,10 @@ def parse_market_date(value: Any) -> date | None:
         return None
     if isinstance(value, (int, float)):
         try:
-            return datetime.fromtimestamp(float(value), tz=timezone.utc).date()
+            stamp = float(value)
+            if stamp > 10_000_000_000:
+                stamp /= 1000
+            return datetime.fromtimestamp(stamp, tz=MARKET_TZ).date()
         except (OverflowError, OSError, ValueError):
             return None
     raw = str(value).strip()
@@ -29,11 +37,12 @@ def parse_market_date(value: Any) -> date | None:
             stamp = float(raw)
             if stamp > 10_000_000_000:
                 stamp /= 1000
-            return datetime.fromtimestamp(stamp, tz=timezone.utc).date()
+            return datetime.fromtimestamp(stamp, tz=MARKET_TZ).date()
         except (OverflowError, OSError, ValueError):
             return None
     try:
-        return datetime.fromisoformat(raw.replace(" UTC", "+00:00").replace("Z", "+00:00")).date()
+        parsed = datetime.fromisoformat(raw.replace(" UTC", "+00:00").replace("Z", "+00:00"))
+        return parsed.astimezone(MARKET_TZ).date() if parsed.tzinfo else parsed.date()
     except ValueError:
         pass
     for fmt in ("%Y-%m-%d", "%Y%m%d", "%d/%m/%Y"):
@@ -46,7 +55,7 @@ def parse_market_date(value: Any) -> date | None:
 
 def previous_business_day(day: date) -> date:
     candidate = day
-    while candidate.weekday() >= 5:
+    while not is_trading_day(candidate):
         candidate = candidate.fromordinal(candidate.toordinal() - 1)
     return candidate
 
@@ -58,7 +67,7 @@ def business_day_lag(observed: date, expected: date) -> int:
     cursor = observed
     while cursor < expected:
         cursor = cursor.fromordinal(cursor.toordinal() + 1)
-        if cursor.weekday() < 5:
+        if is_trading_day(cursor):
             lag += 1
     return lag
 
@@ -86,7 +95,7 @@ def inspect(
     max_stale_ratio: float = 0.0,
 ) -> dict[str, Any]:
     rows = payload.get("rows") if isinstance(payload.get("rows"), list) else []
-    expected = previous_business_day(now.date())
+    expected = previous_business_day(now.astimezone(MARKET_TZ).date())
     observed: list[tuple[str, date]] = []
     missing: list[str] = []
     stale: list[dict[str, Any]] = []

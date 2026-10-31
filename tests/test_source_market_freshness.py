@@ -1,12 +1,35 @@
 from __future__ import annotations
 
 import unittest
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
-from scripts.check_source_market_freshness import inspect
+from scripts.check_source_market_freshness import inspect, parse_market_date
 
 
 class SourceMarketFreshnessTests(unittest.TestCase):
+    def test_epoch_seconds_and_milliseconds_use_market_timezone(self):
+        stamp = datetime(2026, 7, 30, 1, 0, tzinfo=timezone.utc).timestamp()
+        for value in (stamp, int(stamp * 1000), str(int(stamp)), str(int(stamp * 1000)), '2026-07-30T01:00:00Z'):
+            with self.subTest(value=value):
+                self.assertEqual(parse_market_date(value), date(2026, 7, 29))
+
+    def test_holiday_does_not_count_as_a_missing_market_session(self):
+        result = inspect(
+            {'rows': [{'symbol': 'NVDA', 'date': '2026-07-02'}]},
+            now=datetime(2026, 7, 6, 18, 0, tzinfo=timezone.utc),
+            max_business_day_lag=1, min_coverage=0.8,
+        )
+        self.assertEqual(result['status'], 'fresh')
+
+    def test_utc_midnight_does_not_advance_market_date(self):
+        result = inspect(
+            {'rows': [{'symbol': 'NVDA', 'date': '2026-07-29'}]},
+            now=datetime(2026, 7, 30, 1, 0, tzinfo=timezone.utc),
+            max_business_day_lag=0, min_coverage=0.8,
+        )
+        self.assertEqual(result['expected_market_date'], '2026-07-29')
+        self.assertEqual(result['status'], 'fresh')
+
     def now(self):
         return datetime(2026, 7, 29, 18, 0, tzinfo=timezone.utc)
 

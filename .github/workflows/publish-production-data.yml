@@ -112,9 +112,44 @@ jobs:
         run: |
           set -euo pipefail
           patch=/tmp/production-data/production-data.patch
-          git apply --check --3way "$patch"
+          # --check --3way alone can pass before the real merge conflicts.
+          # Merge into a disposable index first, keeping the production tree intact.
+          check_index="$(mktemp)"
+          trap 'rm -f "$check_index"' EXIT
+          cp "$(git rev-parse --git-path index)" "$check_index"
+          if ! GIT_INDEX_FILE="$check_index" git apply --cached --3way "$patch"; then
+            echo "::error::REJECTED_PATCH_BASE: validated artifact conflicts with current main; refusing to overwrite production data"
+            git status --short
+            python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          metadata = json.loads(Path('/tmp/production-data/metadata.json').read_text(encoding='utf-8'))
+          current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          evidence = {key: metadata.get(key) for key in (
+              'producer', 'producer_run_id', 'producer_run_attempt', 'producer_sha',
+              'base_sha', 'produced_at', 'patch_sha256', 'changed_paths',
+          )}
+          evidence['publisher_base_sha'] = current
+          print(json.dumps(evidence, indent=2))
+          Path('/tmp/production-data/apply-failure.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          PY
+            exit 1
+          fi
           git apply --index --3way "$patch"
           echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Retain publisher conflict evidence
+        if: failure() && steps.apply.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: publisher-conflict-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            /tmp/production-data/metadata.json
+            /tmp/production-data/apply-failure.json
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Synchronize Attention market fields from canonical live data
         if: steps.contract.outputs.status == 'READY' && steps.contract.outputs.producer == 'Refresh Live Data v10 PR3'
@@ -299,6 +334,9 @@ jobs:
       - name: Publish result summary
         if: always()
         env:
+          JOB_STATUS: ${{ job.status }}
+          APPLY_OUTCOME: ${{ steps.apply.outcome || 'not_run' }}
+          PUSH_OUTCOME: ${{ steps.push.outcome || 'not_run' }}
           STATUS: ${{ steps.contract.outputs.status || 'REJECTED_OR_FAILED' }}
           REASON: ${{ steps.contract.outputs.reason || 'artifact validation or publishing failed' }}
           PRODUCER: ${{ steps.contract.outputs.producer || steps.source.outputs.name }}
@@ -312,8 +350,11 @@ jobs:
           {
             echo "## Production publisher result"
             echo
-            echo "- Result: \`$STATUS\`"
-            echo "- Reason: $REASON"
+            echo "- Job result: \`$JOB_STATUS\`"
+            echo "- Artifact validation: \`$STATUS\`"
+            echo "- Validation reason: $REASON"
+            echo "- Patch apply: \`$APPLY_OUTCOME\`"
+            echo "- Commit and push: \`$PUSH_OUTCOME\`"
             echo "- Producer: $PRODUCER"
             echo "- Producer run: $RUN_ID / attempt $RUN_ATTEMPT"
             echo "- Changed paths: $CHANGED_COUNT"

@@ -157,6 +157,15 @@ jobs:
             --min-coverage 0.80 \
             --max-stale-ratio 0.01
 
+      - name: Retain source freshness evidence
+        if: always() && steps.window.outputs.run_refresh == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-freshness-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/generated/source_freshness.json
+          if-no-files-found: ignore
+          retention-days: 30
+
       - name: Build canonical intraday screener snapshot
         if: steps.window.outputs.run_refresh == 'true'
         run: |

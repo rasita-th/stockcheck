@@ -158,12 +158,14 @@ jobs:
             --sleep-seconds 5
           python scripts/verify_drawdown_browser.py --base-url "$BASE_URL"
 
-      - name: Upload browser failure screenshots
+      - name: Upload browser failure evidence
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: drawdown-production-browser-failures-${{ github.run_id }}
-          path: /tmp/drawdown-*-failure.png
+          path: |
+            /tmp/drawdown-*-failure.png
+            /tmp/drawdown-*-failure-*.json
           if-no-files-found: ignore
 
   report:

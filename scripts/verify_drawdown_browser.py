@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import time
 from dataclasses import asdict, dataclass
+from pathlib import Path
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -62,6 +64,7 @@ def read_items(driver: webdriver.Chrome, item_selector: str, metric_selector: st
       return Array.from(document.querySelectorAll(itemSelector), item => ({
         visible: !item.classList.contains('drawdown-filter-hidden'),
         text: item.querySelector(metricSelector)?.textContent || '',
+        currentPct: window.StockRadarDrawdownScreener?.metricFor(item.dataset.select)?.currentPct,
       }));
     """, item_selector, metric_selector)
     result: list[tuple[bool, float]] = []
@@ -69,7 +72,15 @@ def read_items(driver: webdriver.Chrome, item_selector: str, metric_selector: st
         value = parse_depth(str(item.get("text") or ""))
         if value is None:
             raise AssertionError("Drawdown metric is unavailable in a production Scanner row/card")
-        result.append((bool(item.get("visible")), value))
+        # Presets use the unrounded metric. Display text can round 14.99 to
+        # 15.0%, which belongs to a different range if used as the oracle.
+        current = item.get("currentPct")
+        if isinstance(current, bool) or not isinstance(current, (int, float)) or not math.isfinite(current):
+            raise AssertionError("Canonical Drawdown metric is unavailable in a production Scanner row/card")
+        depth = abs(min(0.0, current))
+        if abs(value - depth) > 0.051:
+            raise AssertionError(f"Rendered Drawdown metric disagrees with canonical depth: {value} vs {depth}")
+        result.append((bool(item.get("visible")), depth))
     return result
 
 
@@ -148,8 +159,33 @@ def browser_diagnostics(driver: webdriver.Chrome) -> dict:
         mobileCards: document.querySelectorAll('#technicalMobileCards > *').length,
         mobileStockCards: document.querySelectorAll('#technicalMobileCards > [data-select]').length,
         runtime: document.documentElement.dataset.drawdownScreener || '',
+        settings: window.StockRadarDrawdownScreener?.settings || null,
+        rows: Array.from(document.querySelectorAll('#technicalTableBody tr[data-select]'), row => ({
+          ticker: row.dataset.select,
+          visible: !row.classList.contains('drawdown-filter-hidden'),
+          text: row.querySelector('[data-drawdown-cell]')?.textContent || '',
+          metric: window.StockRadarDrawdownScreener?.metricFor(row.dataset.select) || null,
+        })),
       };
     """)
+
+
+def save_failure_evidence(driver, viewport: str) -> None:
+    # Evidence collection must not replace the original verifier exception.
+    for name, collect in (
+        ("diagnostics", lambda: browser_diagnostics(driver)),
+        ("console", lambda: driver.get_log("browser")),
+    ):
+        try:
+            Path(f"/tmp/drawdown-{viewport}-failure-{name}.json").write_text(
+                json.dumps(collect(), ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+        except Exception as exc:
+            print(f"Could not collect {viewport} {name}: {exc}")
+    try:
+        driver.save_screenshot(f"/tmp/drawdown-{viewport}-failure.png")
+    except Exception as exc:
+        print(f"Could not collect {viewport} screenshot: {exc}")
 
 
 def wait_stage(driver: webdriver.Chrome, wait: WebDriverWait, stage: str, condition):
@@ -243,7 +279,8 @@ def run_desktop(base_url: str) -> dict:
                 "presets": [asdict(result) for result in results],
                 "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener")}
     except Exception:
-        driver.save_screenshot("/tmp/drawdown-desktop-failure.png"); raise
+        save_failure_evidence(driver, "desktop")
+        raise
     finally:
         driver.quit()
 
@@ -274,7 +311,8 @@ def run_mobile(base_url: str) -> dict:
                 "presets": [asdict(result) for result in results],
                 "runtime": driver.execute_script("return document.documentElement.dataset.drawdownScreener")}
     except Exception:
-        driver.save_screenshot("/tmp/drawdown-mobile-failure.png"); raise
+        save_failure_evidence(driver, "mobile")
+        raise
     finally:
         driver.quit()
 
