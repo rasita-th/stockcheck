@@ -1,15 +1,15 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-10-31T06:03:46+00:00",
+  "updated_at": "2026-10-31T12:22:42+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 36,
+  "total_events": 47,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 2,
-    "Risk": 1,
+    "Critical": 7,
+    "Risk": 0,
     "Action": 0,
     "Watch": 0,
     "Developing": 0
@@ -64,15 +64,15 @@
       "status": "partial",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 7
+      "accepted_events": 2
     },
     "ir": {
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 7,
+      "ok": 4,
       "partial": 0,
-      "errors": 3,
+      "errors": 6,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -101,58 +101,59 @@
   },
   "items": [
     {
-      "ticker": "ZETA",
-      "name": "Zeta Global Holdings Corp.",
+      "ticker": "HOOD",
+      "name": "Robinhood Markets, Inc.",
       "portfolio_status": "holding",
-      "role": "Marketing technology",
+      "role": "Fintech growth",
       "priority": "Critical",
       "priority_score": 100,
       "why_today": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "A new periodic financial report is available for review.",
+        "The stock moved -7.3% today.",
         "An insider transaction was reported; transaction context still requires document review."
       ],
       "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "event_time": "2026-10-23T17:00:22-04:00",
+      "event_subtype": "periodic_report",
+      "event_time": "2026-10-27T17:33:28-04:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
-        "published_at": "2026-10-23T17:00:22-04:00",
-        "form": "424B7",
+        "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000167/hood-20260930.htm",
+        "published_at": "2026-10-27T17:33:28-04:00",
+        "form": "10-Q",
         "items": "",
-        "accession_number": "0001193125-26-430617",
+        "accession_number": "0001783879-26-000167",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
-      "price": 31.17,
-      "day_change_pct": -4.7954,
-      "relative_volume": 0.53,
+      "price": 84.9,
+      "day_change_pct": -7.3043,
+      "relative_volume": 0.88,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "sec:ZETA:0001193125-26-430617",
-          "ticker": "ZETA",
+          "event_id": "sec:HOOD:0001783879-26-000167",
+          "ticker": "HOOD",
           "event_type": "sec_filing",
-          "event_subtype": "capital_raise",
-          "headline": "424B7 capital-markets filing",
-          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "event_subtype": "periodic_report",
+          "headline": "New 10-Q filed",
+          "summary": "A new periodic financial report is available for review.",
+          "why_today": "A new periodic financial report is available for review.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-10-23T17:00:22-04:00",
-          "detected_at": "2026-10-31T06:01:17.565716+00:00",
+          "event_time": "2026-10-27T17:33:28-04:00",
+          "detected_at": "2026-10-31T12:20:51.931374+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
-            "published_at": "2026-10-23T17:00:22-04:00",
-            "form": "424B7",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000167/hood-20260930.htm",
+            "published_at": "2026-10-27T17:33:28-04:00",
+            "form": "10-Q",
             "items": "",
-            "accession_number": "0001193125-26-430617",
+            "accession_number": "0001783879-26-000167",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
@@ -165,24 +166,62 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
-              "published_at": "2026-10-23T17:00:22-04:00",
-              "form": "424B7",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000167/hood-20260930.htm",
+              "published_at": "2026-10-27T17:33:28-04:00",
+              "form": "10-Q",
               "items": "",
-              "accession_number": "0001193125-26-430617",
+              "accession_number": "0001783879-26-000167",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:ZETA:0001193125-26-430617"
+            "sec:HOOD:0001783879-26-000167"
           ],
-          "dedupe_key": "ZETA:capital_raise:22532ffe41c9d70c"
+          "dedupe_key": "HOOD:periodic_report:4aefcbb7dd2d053a"
         },
         {
-          "event_id": "event:ZETA:e38d58735b0ef013",
-          "ticker": "ZETA",
+          "event_id": "technical:HOOD:price-drop:2026-10-31",
+          "ticker": "HOOD",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.3%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.3% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-10-31T12:20:51.931437+00:00",
+          "detected_at": "2026-10-31T12:20:51.931440+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:HOOD:price-drop:2026-10-31"
+          ],
+          "dedupe_key": "HOOD:price_drop:9d1fbcfa97d0d48c"
+        },
+        {
+          "event_id": "event:HOOD:8a2b95df32446b70",
+          "ticker": "HOOD",
           "event_type": "sec_filing",
           "event_subtype": "insider_activity",
           "headline": "New Form 4 insider filing",
@@ -190,21 +229,21 @@
           "why_today": "An insider transaction was reported; transaction context still requires document review.",
           "materiality": "low",
           "urgency": "today",
-          "event_time": "2026-10-23T16:55:04-04:00",
-          "detected_at": "2026-10-31T06:01:17.565740+00:00",
+          "event_time": "2026-10-27T16:46:13-04:00",
+          "detected_at": "2026-10-31T12:20:51.931383+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430606/ownership.xml",
-            "published_at": "2026-10-23T16:58:03-04:00",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000095010326016560/ownership.xml",
+            "published_at": "2026-10-30T17:26:10-04:00",
             "form": "4",
             "items": "",
-            "accession_number": "0001193125-26-430606",
+            "accession_number": "0000950103-26-016560",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
-          "priority_score": 64,
+          "priority_score": 71,
           "priority": "Action",
           "attention_policy_decision": "allow",
           "verification_level": "corroborated",
@@ -213,54 +252,385 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430606/ownership.xml",
-              "published_at": "2026-10-23T16:58:03-04:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000095010326016560/ownership.xml",
+              "published_at": "2026-10-30T17:26:10-04:00",
               "form": "4",
               "items": "",
-              "accession_number": "0001193125-26-430606",
+              "accession_number": "0000950103-26-016560",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             },
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430600/ownership.xml",
-              "published_at": "2026-10-23T16:55:04-04:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000173/wk-form4_1793305809.xml",
+              "published_at": "2026-10-29T16:30:12-04:00",
               "form": "4",
               "items": "",
-              "accession_number": "0001193125-26-430600",
+              "accession_number": "0001783879-26-000173",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000166/wk-form4_1793133970.xml",
+              "published_at": "2026-10-27T16:46:13-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001783879-26-000166",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "event:ZETA:e38d58735b0ef013"
+            "event:HOOD:f0f76d0df0d95857",
+            "sec:HOOD:0001783879-26-000166"
           ],
-          "dedupe_key": "ZETA:insider_activity:d2b71c7eef1cd481"
+          "dedupe_key": "HOOD:insider_activity:054a04d8b6c348eb"
+        },
+        {
+          "event_id": "event:HOOD:cc9ac221109287bf",
+          "ticker": "HOOD",
+          "event_type": "sec_filing",
+          "event_subtype": "current_report",
+          "headline": "New 8-K current report",
+          "summary": "A current report was filed and requires item-level review.",
+          "why_today": "A current report was filed and requires item-level review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-27T16:06:05-04:00",
+          "detected_at": "2026-10-31T12:20:51.931394+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000170/hood-20261027.htm",
+            "published_at": "2026-10-27T20:46:28-04:00",
+            "form": "8-K/A",
+            "items": "",
+            "accession_number": "0001783879-26-000170",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 71,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000170/hood-20261027.htm",
+              "published_at": "2026-10-27T20:46:28-04:00",
+              "form": "8-K/A",
+              "items": "",
+              "accession_number": "0001783879-26-000170",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000164/hood-20261027.htm",
+              "published_at": "2026-10-27T16:06:05-04:00",
+              "form": "8-K",
+              "items": "",
+              "accession_number": "0001783879-26-000164",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "event:HOOD:cc9ac221109287bf"
+          ],
+          "dedupe_key": "HOOD:current_report:e1139df77d66c8d8"
+        },
+        {
+          "event_id": "event:HOOD:cef8172fbafa2a7f",
+          "ticker": "HOOD",
+          "event_type": "sec_filing",
+          "event_subtype": "insider_activity",
+          "headline": "New Form 4 insider filing",
+          "summary": "An insider transaction was reported; transaction context still requires document review.",
+          "why_today": "An insider transaction was reported; transaction context still requires document review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-23T16:33:08-04:00",
+          "detected_at": "2026-10-31T12:20:51.931410+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000157/wk-form4_1792788591.xml",
+            "published_at": "2026-10-23T16:49:54-04:00",
+            "form": "4",
+            "items": "",
+            "accession_number": "0001783879-26-000157",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 71,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000157/wk-form4_1792788591.xml",
+              "published_at": "2026-10-23T16:49:54-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001783879-26-000157",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1783879/000187091426000029/wk-form4_1792787586.xml",
+              "published_at": "2026-10-23T16:33:08-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001870914-26-000029",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "event:HOOD:cef8172fbafa2a7f"
+          ],
+          "dedupe_key": "HOOD:insider_activity:142e5775fe335e1f"
         }
       ],
       "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526430617/zeta-20261023.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1783879/000178387926000167/hood-20260930.htm",
+        "company_ir": "https://investors.robinhood.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-HOOD/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "capital_raise",
+      "primary_trigger": "periodic_report",
       "signals": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "A new periodic financial report is available for review.",
+        "The stock moved -7.3% today.",
         "An insider transaction was reported; transaction context still requires document review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 31.17,
-        "current_price": 31.17,
+        "baseline_price": 84.9,
+        "current_price": 84.9,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 114,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "sec_filing +6"
+      ]
+    },
+    {
+      "ticker": "TEM",
+      "name": "Tempus AI, Inc.",
+      "portfolio_status": "holding",
+      "role": "Healthcare AI",
+      "priority": "Critical",
+      "priority_score": 100,
+      "why_today": [
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "The stock moved -7.1% today.",
+        "A current report was filed and requires item-level review."
+      ],
+      "event_type": "sec_filing",
+      "event_subtype": "capital_raise",
+      "event_time": "2026-10-21T16:20:29-04:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526427866/d864810d424b3.htm",
+        "published_at": "2026-10-21T16:20:29-04:00",
+        "form": "424B3",
+        "items": "",
+        "accession_number": "0001193125-26-427866",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "price": 72.335,
+      "day_change_pct": -7.0722,
+      "relative_volume": 0.78,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "sec:TEM:0001193125-26-427866",
+          "ticker": "TEM",
+          "event_type": "sec_filing",
+          "event_subtype": "capital_raise",
+          "headline": "424B3 capital-markets filing",
+          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-21T16:20:29-04:00",
+          "detected_at": "2026-10-31T12:20:52.034355+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526427866/d864810d424b3.htm",
+            "published_at": "2026-10-21T16:20:29-04:00",
+            "form": "424B3",
+            "items": "",
+            "accession_number": "0001193125-26-427866",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 100,
+          "priority": "Critical",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526427866/d864810d424b3.htm",
+              "published_at": "2026-10-21T16:20:29-04:00",
+              "form": "424B3",
+              "items": "",
+              "accession_number": "0001193125-26-427866",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:TEM:0001193125-26-427866"
+          ],
+          "dedupe_key": "TEM:capital_raise:534500354337a26f"
+        },
+        {
+          "event_id": "technical:TEM:price-drop:2026-10-31",
+          "ticker": "TEM",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.1%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.1% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-10-31T12:20:52.034378+00:00",
+          "detected_at": "2026-10-31T12:20:52.034381+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TEM:price-drop:2026-10-31"
+          ],
+          "dedupe_key": "TEM:price_drop:43ec5ed8759438ae"
+        },
+        {
+          "event_id": "sec:TEM:0001193125-26-429533",
+          "ticker": "TEM",
+          "event_type": "sec_filing",
+          "event_subtype": "current_report",
+          "headline": "New 8-K current report",
+          "summary": "A current report was filed and requires item-level review.",
+          "why_today": "A current report was filed and requires item-level review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-23T09:00:30-04:00",
+          "detected_at": "2026-10-31T12:20:52.034339+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526429533/d135568d8k.htm",
+            "published_at": "2026-10-23T09:00:30-04:00",
+            "form": "8-K",
+            "items": "",
+            "accession_number": "0001193125-26-429533",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 71,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526429533/d135568d8k.htm",
+              "published_at": "2026-10-23T09:00:30-04:00",
+              "form": "8-K",
+              "items": "",
+              "accession_number": "0001193125-26-429533",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:TEM:0001193125-26-429533"
+          ],
+          "dedupe_key": "TEM:current_report:035b8209f9df4263"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526427866/d864810d424b3.htm",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "capital_raise",
+      "signals": [
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "The stock moved -7.1% today.",
+        "A current report was filed and requires item-level review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 72.335,
+        "current_price": 72.335,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -445,8 +815,8 @@
           "why_today": "The stock moved -10.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.420017+00:00",
-          "detected_at": "2026-10-31T06:01:17.420023+00:00",
+          "event_time": "2026-10-31T12:20:52.069474+00:00",
+          "detected_at": "2026-10-31T12:20:52.069485+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -488,9 +858,9 @@
         "A material agreement event was detected and requires source review."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-10-31T06:03:46+00:00",
         "active_days": 0
       },
@@ -507,44 +877,188 @@
       ]
     },
     {
-      "ticker": "CIFR",
-      "name": "Cipher Mining Inc.",
+      "ticker": "OSCR",
+      "name": "Oscar Health, Inc.",
       "portfolio_status": "holding",
-      "role": "Digital infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
+      "role": "Insurtech",
+      "priority": "Critical",
+      "priority_score": 97,
       "why_today": [
-        "The stock moved -10.1% today.",
-        "An insider transaction was reported; transaction context still requires document review."
+        "A earnings reported event was detected and requires source review."
       ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-10-31T06:01:17.503217+00:00",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-10-31T12:20:52+00:00",
       "verification_status": "confirmed",
-      "source_status": "internal",
+      "source_status": "primary",
       "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.hioscar.com/financial-information/financial-results",
+        "published_at": "2026-10-31T12:20:52+00:00",
+        "domain": "ir.hioscar.com"
       },
-      "price": 7.285,
-      "day_change_pct": -10.0617,
+      "price": 30.36,
+      "day_change_pct": -1.3966,
+      "relative_volume": 0.75,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "company_ir:OSCR:3781c82fee7f84bd",
+          "ticker": "OSCR",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Financial results",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T12:20:52+00:00",
+          "detected_at": "2026-10-31T12:20:52+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "medium",
+          "entity_confidence_reason": "article domain matches configured company domain",
+          "dedupe_key": "OSCR:earnings_reported:2026-10-31:d8b3779a0f7b",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.hioscar.com/financial-information/financial-results",
+            "published_at": "2026-10-31T12:20:52+00:00",
+            "domain": "ir.hioscar.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.hioscar.com/financial-information/financial-results",
+              "published_at": "2026-10-31T12:20:52+00:00",
+              "domain": "ir.hioscar.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:OSCR:3781c82fee7f84bd"
+          ],
+          "priority_score": 97,
+          "priority": "Critical"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://ir.hioscar.com/financial-information/financial-results",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-OSCR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 30.36,
+        "current_price": 30.36,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 113,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
+    {
+      "ticker": "UUUU",
+      "name": "Energy Fuels Inc.",
+      "portfolio_status": "holding",
+      "role": "Uranium and rare earths",
+      "priority": "Critical",
+      "priority_score": 100,
+      "why_today": [
+        "A transaction event was detected and requires source review.",
+        "The stock moved -6.2% today."
+      ],
+      "event_type": "corporate_event",
+      "event_subtype": "transaction",
+      "event_time": "2026-10-31T12:20:52+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
+        "published_at": "2026-10-31T12:20:52+00:00",
+        "domain": "investors.energyfuels.com"
+      },
+      "price": 7.72,
+      "day_change_pct": -6.1968,
       "relative_volume": 0.81,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:CIFR:price-drop:2026-10-31",
-          "ticker": "CIFR",
+          "event_id": "company_ir:UUUU:db5a0d0f82b5dc11",
+          "ticker": "UUUU",
+          "event_type": "corporate_event",
+          "event_subtype": "transaction",
+          "headline": "Energy Fuels Completes Acquisition of Australian Strategic Materials",
+          "summary": "A transaction event was detected and requires source review.",
+          "why_today": "A transaction event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T12:20:52+00:00",
+          "detected_at": "2026-10-31T12:20:52+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Energy Fuels",
+          "dedupe_key": "UUUU:transaction:2026-10-31:7ea281867b79",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
+            "published_at": "2026-10-31T12:20:52+00:00",
+            "domain": "investors.energyfuels.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
+              "published_at": "2026-10-31T12:20:52+00:00",
+              "domain": "investors.energyfuels.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:UUUU:db5a0d0f82b5dc11"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:UUUU:price-drop:2026-10-31",
+          "ticker": "UUUU",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -10.1%",
+          "headline": "Price -6.2%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.1% today.",
-          "materiality": "high",
+          "why_today": "The stock moved -6.2% today.",
+          "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.503217+00:00",
-          "detected_at": "2026-10-31T06:01:17.503220+00:00",
+          "event_time": "2026-10-31T12:20:52.135317+00:00",
+          "detected_at": "2026-10-31T12:20:52.135327+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -552,7 +1066,7 @@
             "url": "data/technical.json",
             "published_at": ""
           },
-          "priority_score": 99,
+          "priority_score": 75,
           "priority": "Risk",
           "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
@@ -567,36 +1081,99 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:CIFR:price-drop:2026-10-31"
+            "technical:UUUU:price-drop:2026-10-31"
           ],
-          "dedupe_key": "CIFR:price_drop:85ea7b11ec72bf42"
-        },
+          "dedupe_key": "UUUU:price_drop:df73dc2106806483"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
+        "tradingview": "https://www.tradingview.com/symbols/AMEX-UUUU/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "transaction",
+      "signals": [
+        "A transaction event was detected and requires source review.",
+        "The stock moved -6.2% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 7.72,
+        "current_price": 7.72,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 113,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "corporate_event +5"
+      ]
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "portfolio_status": "holding",
+      "role": "Core growth",
+      "priority": "Critical",
+      "priority_score": 97,
+      "why_today": [
+        "A new periodic financial report is available for review.",
+        "A current report was filed and requires item-level review."
+      ],
+      "event_type": "sec_filing",
+      "event_subtype": "periodic_report",
+      "event_time": "2026-10-29T18:20:46-04:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+        "published_at": "2026-10-29T18:20:46-04:00",
+        "form": "10-Q",
+        "items": "",
+        "accession_number": "0001018724-26-000040",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "price": 240.41,
+      "day_change_pct": -1.3864,
+      "relative_volume": 2.24,
+      "trigger_level": null,
+      "events": [
         {
-          "event_id": "sec:CIFR:0001123292-26-001436",
-          "ticker": "CIFR",
+          "event_id": "sec:AMZN:0001018724-26-000040",
+          "ticker": "AMZN",
           "event_type": "sec_filing",
-          "event_subtype": "insider_activity",
-          "headline": "New Form 4 insider filing",
-          "summary": "An insider transaction was reported; transaction context still requires document review.",
-          "why_today": "An insider transaction was reported; transaction context still requires document review.",
-          "materiality": "low",
+          "event_subtype": "periodic_report",
+          "headline": "New 10-Q filed",
+          "summary": "A new periodic financial report is available for review.",
+          "why_today": "A new periodic financial report is available for review.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-10-27T16:26:52-04:00",
-          "detected_at": "2026-10-31T06:01:17.503189+00:00",
+          "event_time": "2026-10-29T18:20:46-04:00",
+          "detected_at": "2026-10-31T12:20:51.919957+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000112329226001436/form4.xml",
-            "published_at": "2026-10-27T16:26:52-04:00",
-            "form": "4",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+            "published_at": "2026-10-29T18:20:46-04:00",
+            "form": "10-Q",
             "items": "",
-            "accession_number": "0001123292-26-001436",
+            "accession_number": "0001018724-26-000040",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
-          "priority_score": 78,
-          "priority": "Risk",
+          "priority_score": 97,
+          "priority": "Critical",
           "attention_policy_decision": "allow",
           "verification_level": "confirmed_primary",
           "verification_reason": "Matched a configured primary source.",
@@ -604,49 +1181,342 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000112329226001436/form4.xml",
-              "published_at": "2026-10-27T16:26:52-04:00",
-              "form": "4",
+              "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+              "published_at": "2026-10-29T18:20:46-04:00",
+              "form": "10-Q",
               "items": "",
-              "accession_number": "0001123292-26-001436",
+              "accession_number": "0001018724-26-000040",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:CIFR:0001123292-26-001436"
+            "sec:AMZN:0001018724-26-000040"
           ],
-          "dedupe_key": "CIFR:insider_activity:6b6c0fc6af43e475"
+          "dedupe_key": "AMZN:periodic_report:47186993a465b344"
+        },
+        {
+          "event_id": "sec:AMZN:0001018724-26-000038",
+          "ticker": "AMZN",
+          "event_type": "sec_filing",
+          "event_subtype": "current_report",
+          "headline": "New 8-K current report",
+          "summary": "A current report was filed and requires item-level review.",
+          "why_today": "A current report was filed and requires item-level review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-29T16:05:27-04:00",
+          "detected_at": "2026-10-31T12:20:51.919985+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20261029.htm",
+            "published_at": "2026-10-29T16:05:27-04:00",
+            "form": "8-K",
+            "items": "",
+            "accession_number": "0001018724-26-000038",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 64,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20261029.htm",
+              "published_at": "2026-10-29T16:05:27-04:00",
+              "form": "8-K",
+              "items": "",
+              "accession_number": "0001018724-26-000038",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:AMZN:0001018724-26-000038"
+          ],
+          "dedupe_key": "AMZN:current_report:57c2653f23a1f3ac"
         }
       ],
       "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+        "company_ir": "https://ir.aboutamazon.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMZN/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "price_drop",
+      "primary_trigger": "periodic_report",
       "signals": [
-        "The stock moved -10.1% today.",
-        "An insider transaction was reported; transaction context still requires document review."
+        "A new periodic financial report is available for review.",
+        "A current report was filed and requires item-level review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 7.285,
-        "current_price": 7.285,
+        "baseline_price": 240.41,
+        "current_price": 240.41,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 107,
+      "personal_priority_score": 111,
       "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
+        "หุ้นในพอร์ต +8",
+        "sec_filing +6"
+      ]
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "portfolio_status": "holding",
+      "role": "Core quality",
+      "priority": "Critical",
+      "priority_score": 97,
+      "why_today": [
+        "A new periodic financial report is available for review.",
+        "An insider transaction was reported; transaction context still requires document review.",
+        "A current report was filed and requires item-level review."
+      ],
+      "event_type": "sec_filing",
+      "event_subtype": "periodic_report",
+      "event_time": "2026-10-28T20:29:06-04:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+        "published_at": "2026-10-28T20:29:06-04:00",
+        "form": "10-Q",
+        "items": "",
+        "accession_number": "0001652044-26-000084",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "price": 279.76,
+      "day_change_pct": -1.4305,
+      "relative_volume": 4.52,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "sec:GOOGL:0001652044-26-000084",
+          "ticker": "GOOGL",
+          "event_type": "sec_filing",
+          "event_subtype": "periodic_report",
+          "headline": "New 10-Q filed",
+          "summary": "A new periodic financial report is available for review.",
+          "why_today": "A new periodic financial report is available for review.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-28T20:29:06-04:00",
+          "detected_at": "2026-10-31T12:20:52.000945+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+            "published_at": "2026-10-28T20:29:06-04:00",
+            "form": "10-Q",
+            "items": "",
+            "accession_number": "0001652044-26-000084",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 97,
+          "priority": "Critical",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+              "published_at": "2026-10-28T20:29:06-04:00",
+              "form": "10-Q",
+              "items": "",
+              "accession_number": "0001652044-26-000084",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:GOOGL:0001652044-26-000084"
+          ],
+          "dedupe_key": "GOOGL:periodic_report:b226cd7a70558d20"
+        },
+        {
+          "event_id": "event:GOOGL:4baedc2105b764f3",
+          "ticker": "GOOGL",
+          "event_type": "sec_filing",
+          "event_subtype": "insider_activity",
+          "headline": "New Form 4 insider filing",
+          "summary": "An insider transaction was reported; transaction context still requires document review.",
+          "why_today": "An insider transaction was reported; transaction context still requires document review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-27T21:30:13-04:00",
+          "detected_at": "2026-10-31T12:20:52.000987+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442116/ownership.xml",
+            "published_at": "2026-10-30T19:07:58-04:00",
+            "form": "4",
+            "items": "",
+            "accession_number": "0001193125-26-442116",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 64,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442116/ownership.xml",
+              "published_at": "2026-10-30T19:07:58-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-442116",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526434846/ownership.xml",
+              "published_at": "2026-10-27T21:35:07-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-434846",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526434840/ownership.xml",
+              "published_at": "2026-10-27T21:32:19-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-434840",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            },
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526434837/ownership.xml",
+              "published_at": "2026-10-27T21:30:13-04:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001193125-26-434837",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "event:GOOGL:4baedc2105b764f3"
+          ],
+          "dedupe_key": "GOOGL:insider_activity:a2145a1dad1f0bd0"
+        },
+        {
+          "event_id": "sec:GOOGL:0001652044-26-000080",
+          "ticker": "GOOGL",
+          "event_type": "sec_filing",
+          "event_subtype": "current_report",
+          "headline": "New 8-K current report",
+          "summary": "A current report was filed and requires item-level review.",
+          "why_today": "A current report was filed and requires item-level review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-10-28T16:01:33-04:00",
+          "detected_at": "2026-10-31T12:20:52.000961+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/goog-20261028.htm",
+            "published_at": "2026-10-28T16:01:33-04:00",
+            "form": "8-K",
+            "items": "",
+            "accession_number": "0001652044-26-000080",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 64,
+          "priority": "Action",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/goog-20261028.htm",
+              "published_at": "2026-10-28T16:01:33-04:00",
+              "form": "8-K",
+              "items": "",
+              "accession_number": "0001652044-26-000080",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:GOOGL:0001652044-26-000080"
+          ],
+          "dedupe_key": "GOOGL:current_report:52e62f3611313b41"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+        "company_ir": "https://abc.xyz/investor/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "periodic_report",
+      "signals": [
+        "A new periodic financial report is available for review.",
+        "An insider transaction was reported; transaction context still requires document review.",
+        "A current report was filed and requires item-level review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-10-31T12:22:42+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 279.76,
+        "current_price": 279.76,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 111,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "sec_filing +6"
       ]
     }
   ],
@@ -658,17 +1528,32 @@
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "PSIX",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "CIFR",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "RXRX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RR",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "OPEN",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -683,12 +1568,12 @@
     "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 7,
-    "active_discovered_event_count": 4,
+    "newly_discovered_event_count": 2,
+    "active_discovered_event_count": 6,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 1,
-    "technical_metric_repair_count": 4,
+    "technical_fill_count": 3,
+    "technical_metric_repair_count": 0,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -708,8 +1593,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 39,
-      "accepted_events": 39,
+      "evaluated_events": 54,
+      "accepted_events": 54,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -731,419 +1616,66 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 4
+    "total": 0
   },
-  "technical_watch": [
-    {
-      "ticker": "IREN",
-      "name": "IREN Limited",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -8.7% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-10-31T06:01:17.315530+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 23.9658,
-      "day_change_pct": -8.7017,
-      "relative_volume": 0.95,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:IREN:price-drop:2026-10-31",
-          "ticker": "IREN",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.7%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.7% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.315530+00:00",
-          "detected_at": "2026-10-31T06:01:17.315535+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:IREN:price-drop:2026-10-31"
-          ],
-          "dedupe_key": "IREN:price_drop:68e5b33ae7031b03",
-          "technical_score": 9.0,
-          "rsi14": 33.73,
-          "pct_vs_ema20": -22.59,
-          "pct_vs_ema200": -44.43,
-          "volume_ratio20": 0.95,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -8.7% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 23.9658,
-        "current_price": 23.9658,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -10.4% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-10-31T06:01:17.379201+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 154.1,
-      "day_change_pct": -10.4018,
-      "relative_volume": 0.79,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:NBIS:price-drop:2026-10-31",
-          "ticker": "NBIS",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -10.4%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.4% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.379201+00:00",
-          "detected_at": "2026-10-31T06:01:17.379206+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:NBIS:price-drop:2026-10-31"
-          ],
-          "dedupe_key": "NBIS:price_drop:2dcb68e16126f389",
-          "technical_score": 32.0,
-          "rsi14": 41.01,
-          "pct_vs_ema20": -17.52,
-          "pct_vs_ema200": -10.48,
-          "volume_ratio20": 0.79,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -10.4% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 154.1,
-        "current_price": 154.1,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "RR",
-      "name": "Richtech Robotics Inc.",
-      "portfolio_status": "holding",
-      "role": "Robotics",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -10.1% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-10-31T06:01:17.555053+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 0.9439,
-      "day_change_pct": -10.1048,
-      "relative_volume": 1.41,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:RR:price-drop:2026-10-31",
-          "ticker": "RR",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -10.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.1% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.555053+00:00",
-          "detected_at": "2026-10-31T06:01:17.555061+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:RR:price-drop:2026-10-31"
-          ],
-          "dedupe_key": "RR:price_drop:f232f58286f29be6",
-          "technical_score": 16.0,
-          "rsi14": 23.03,
-          "pct_vs_ema20": -27.95,
-          "pct_vs_ema200": -58.6,
-          "volume_ratio20": 1.41,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -10.1% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 0.9439,
-        "current_price": 0.9439,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "TMC",
-      "name": "TMC the metals company Inc.",
-      "portfolio_status": "holding",
-      "role": "Critical minerals",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -8.5% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-10-31T06:01:17.534405+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 2.6,
-      "day_change_pct": -8.4507,
-      "relative_volume": 1.03,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:TMC:price-drop:2026-10-31",
-          "ticker": "TMC",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.5%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.5% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17.534405+00:00",
-          "detected_at": "2026-10-31T06:01:17.534411+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:TMC:price-drop:2026-10-31"
-          ],
-          "dedupe_key": "TMC:price_drop:1d3570f4a5abed13",
-          "technical_score": 26.0,
-          "rsi14": 41.55,
-          "pct_vs_ema20": -11.56,
-          "pct_vs_ema200": -46.28,
-          "volume_ratio20": 1.03,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMC/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -8.5% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 2.6,
-        "current_price": 2.6,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    }
-  ],
+  "technical_watch": [],
   "changes_summary": {
-    "new": 7,
+    "new": 6,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 0,
+    "ongoing": 1,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:ZETA:0001193125-26-430617",
+      "ticker": "ZETA",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:CIFR:price-drop:2026-10-31",
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IREN:price-drop:2026-10-31",
+      "ticker": "IREN",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NBIS:price-drop:2026-10-31",
+      "ticker": "NBIS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:RR:price-drop:2026-10-31",
+      "ticker": "RR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:TMC:price-drop:2026-10-31",
+      "ticker": "TMC",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-10-31T12:22:42+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "event:RKLB:72d498ed73db6fdd",
       "ticker": "RKLB",
@@ -1174,54 +1706,6 @@
       "event_subtype": "product",
       "priority": "Action",
       "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-drop:2026-08-13",
-      "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:JEPQ:technical_setup:2026-08-13",
-      "ticker": "JEPQ",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NVDA:technical_setup:2026-08-13",
-      "ticker": "NVDA",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "company_ir:RKLB:5c9232304438abc2",
-      "ticker": "RKLB",
-      "event_subtype": "earnings_reported",
-      "priority": "Critical",
-      "resolved_at": "2026-08-14T02:47:30+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:technical_setup:2026-08-13",
-      "ticker": "NBIS",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-08-13T22:04:41+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:INDI:price-move:2026-08-13",
-      "ticker": "INDI",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-08-13T22:04:41+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
