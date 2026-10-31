@@ -1,4 +1,19 @@
 /* Notification Phase 2: interaction, priority, freshness, deep-link actions */
+#alertList > .alert-item[hidden] {
+  display: none !important;
+}
+
+#alertList > .alert-item[data-phase2-enhanced] {
+  flex-shrink: 0;
+}
+
+#alertList > .alert-item > .phase2-alert-meta,
+#alertList > .alert-item > .phase2-alert-actions {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+}
+
 .phase2-toolbar {
   display: flex;
   flex-wrap: wrap;

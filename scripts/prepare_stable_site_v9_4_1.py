@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import re
 from pathlib import Path
@@ -59,8 +60,15 @@ def strip_legacy_markup(html: str) -> str:
     return html
 
 
+def runtime_asset_version(asset: str) -> str:
+    if asset in {"styles.css", "notification-phase2.css", "notification-phase2.js"}:
+        digest = hashlib.sha256((SITE / asset).read_bytes()).hexdigest()[:12]
+        return f"{VERSION}-{digest}"
+    return VERSION
+
+
 def cache_bust(html: str, asset: str) -> str:
-    return re.sub(rf'({re.escape(asset)})(?:\?[^"\']*)?', rf'\1?v={VERSION}', html, flags=re.I)
+    return re.sub(rf'({re.escape(asset)})(?:\?[^"\']*)?', rf'\1?v={runtime_asset_version(asset)}', html, flags=re.I)
 
 
 def inject_once(html: str, pattern: str, tag: str, before: str) -> str:
@@ -258,7 +266,7 @@ def validate_clean_html() -> None:
         if token not in market:
             raise SystemExit(f"market briefing contract missing: {token}")
     for asset in RUNTIME_ASSETS:
-        expected_version = MEMO_RUNTIME_VERSION if asset == "memo-only-fix.js" else VERSION
+        expected_version = MEMO_RUNTIME_VERSION if asset == "memo-only-fix.js" else runtime_asset_version(asset)
         if f"{asset}?v={expected_version}" not in index:
             raise SystemExit(f"runtime asset missing cache-busted reference: {asset}")
     validate_guard_order(index, "app.js", "index.html")

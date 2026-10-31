@@ -1573,6 +1573,7 @@ body.memo-active .memo-page { display:block; }
   background: rgba(22,27,34,0.98);
   box-shadow: 0 20px 60px rgba(0,0,0,0.45);
 }
+.alert-toast[hidden] { display: none !important; }
 .alert-toast strong { font-size: 14px; }
 .alert-toast span { color: var(--muted); font-size: 12px; line-height: 1.35; }
 .alert-toast button {
@@ -2942,20 +2943,6 @@ body.attention-active .attention-page { display: block; }
     padding-bottom: 12px;
   }
 
-  #alertList::after,
-  .alert-list::after {
-    content: "ไม่มีการแจ้งเตือนเพิ่มเติม";
-    flex: 1;
-    min-height: 120px;
-    display: grid;
-    place-items: center;
-    margin-top: 8px;
-    border: 1px dashed var(--border-soft);
-    border-radius: 14px;
-    color: var(--muted);
-    background: rgba(139, 148, 158, 0.025);
-    font-size: 13px;
-  }
 }
 
 
@@ -3089,8 +3076,8 @@ body.attention-active .attention-page { display: block; }
     scroll-padding-top: 160px;
   }
 
-  #alertList > *,
-  .alert-list > * {
+  #alertList > .alert-item,
+  .alert-list > .alert-item {
     position: relative;
     min-height: 76px;
     border-radius: 14px;
@@ -3103,15 +3090,15 @@ body.attention-active .attention-page { display: block; }
       background 150ms ease;
   }
 
-  #alertList > *:hover,
-  .alert-list > *:hover {
+  #alertList > .alert-item:hover,
+  .alert-list > .alert-item:hover {
     transform: translateY(-1px);
     border-color: rgba(88, 166, 255, 0.40);
     background: linear-gradient(180deg, rgba(28, 35, 46, 0.98), rgba(17, 23, 31, 0.98));
   }
 
-  #alertList > *::before,
-  .alert-list > *::before {
+  #alertList > .alert-item::before,
+  .alert-list > .alert-item::before {
     content: "";
     position: absolute;
     inset: 10px auto 10px 0;
@@ -3121,13 +3108,6 @@ body.attention-active .attention-page { display: block; }
     opacity: 0.75;
   }
 
-  #alertList::after,
-  .alert-list::after {
-    border-color: rgba(88, 166, 255, 0.16);
-    background:
-      radial-gradient(circle at center, rgba(47, 129, 247, 0.06), transparent 58%);
-    color: color-mix(in srgb, var(--muted) 90%, white);
-  }
 
   .detail-panel,
   .sidebar {

@@ -3,7 +3,7 @@
 
   const STORAGE_KEY = "stockRadar.notificationPhase2.v1";
   const LIST_SELECTOR = "#alertList";
-  const CARD_SELECTOR = ":scope > *";
+  const CARD_SELECTOR = ":scope > .alert-item[data-alert-id]";
   const ENHANCED_ATTR = "data-phase2-enhanced";
 
   const state = loadState();
@@ -187,6 +187,19 @@
         visible = visible && (priority === "critical" || priority === "high");
       }
       card.hidden = !visible;
+    }
+
+    const cards = [...list.querySelectorAll(CARD_SELECTOR)];
+    const empty = list.querySelector(":scope > .phase2-empty-state");
+    if (cards.length && cards.every((card) => card.hidden)) {
+      if (!empty) {
+        const message = document.createElement("div");
+        message.className = "alert-empty phase2-empty-state";
+        message.textContent = "ไม่มีการแจ้งเตือนที่ตรงกับตัวกรองนี้";
+        list.append(message);
+      }
+    } else {
+      empty?.remove();
     }
 
     updateToolbarCounts();
