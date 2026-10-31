@@ -45,6 +45,8 @@ RUNTIME_ASSETS = (
     "final-ui-coordinator.js",
     "memo-only-fix.css",
     "memo-only-fix.js",
+    "product-guide.css",
+    "product-guide.js",
 )
 
 
@@ -61,7 +63,7 @@ def strip_legacy_markup(html: str) -> str:
 
 
 def runtime_asset_version(asset: str) -> str:
-    if asset in {"styles.css", "notification-phase2.css", "notification-phase2.js"}:
+    if asset in {"styles.css", "notification-phase2.css", "notification-phase2.js", "product-guide.css", "product-guide.js"}:
         digest = hashlib.sha256((SITE / asset).read_bytes()).hexdigest()[:12]
         return f"{VERSION}-{digest}"
     return VERSION
@@ -142,6 +144,8 @@ def prepare_market(path: Path) -> None:
         html = strip_asset(html, asset)
     html = cache_bust(html, "market.css")
     html = cache_bust(html, "market.js")
+    html = cache_bust(html, "product-guide.css")
+    html = cache_bust(html, "product-guide.js")
     html = inject_storage_guard(html, "market.js")
     clean_nav = (
         '<nav class="topnav" aria-label="Primary">'

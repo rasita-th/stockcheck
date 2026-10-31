@@ -1,0 +1,24 @@
+/* Scoped, opt-in product tours. No app data or form state is changed. */
+.guide-dock{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:12000;font:14px/1.5 'DM Sans',system-ui,sans-serif;color:#e6edf3}
+.guide-dock button,.guide-panel button,.guide-info{font:inherit;cursor:pointer;border:1px solid #52657b;border-radius:10px;background:#182536;color:#e6edf3;padding:8px 12px;min-height:40px}
+.guide-dock button:hover,.guide-panel button:hover{background:#233d58;border-color:#79c5ff}
+.guide-dock button:focus-visible,.guide-panel button:focus-visible,.guide-menu a:focus-visible,.guide-info:focus-visible{outline:3px solid #ffc86b;outline-offset:3px}
+.guide-menu{width:min(340px,calc(100vw - 32px));max-height:60dvh;overflow:auto;margin-bottom:8px;padding:18px;background:#111c2a;border:1px solid #52657b;border-radius:14px;box-shadow:0 12px 36px #0008}
+.guide-menu strong{font-size:17px}.guide-menu p{margin:8px 0 14px;color:#b6c5d5}.guide-menu>button{margin:0 6px 8px 0}
+.guide-topics{display:grid;gap:6px;border-top:1px solid #35475b;padding-top:12px}.guide-topics button{text-align:left}
+.guide-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}.guide-links a{color:#9bd5ff;text-decoration:underline}
+.guide-info{display:inline-flex;align-items:center;justify-content:center;padding:0;width:30px;min-height:30px;margin-inline-start:8px;border-radius:50%;font-size:17px;vertical-align:middle}
+.guide-layer{position:fixed;inset:0;z-index:30000;font:14px/1.6 'DM Sans',system-ui,sans-serif;color:#e6edf3}
+.guide-shield{position:absolute;inset:0;background:transparent}
+.guide-layer:has(.guide-spotlight[hidden]) .guide-shield{background:#040911bb}
+.guide-spotlight{position:fixed;pointer-events:none;border:2px solid #79c5ff;border-radius:12px;background:#79c5ff0a;box-shadow:0 0 0 9999px #03071088;animation:guide-pulse 2s ease-in-out infinite}
+.guide-panel{position:fixed;box-sizing:border-box;width:min(368px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;padding:18px;border:1px solid #79c5ff;border-radius:16px;background:#111c2a;box-shadow:0 16px 60px #0009;overscroll-behavior:contain}
+.guide-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#a8c4df;font-size:12px}.guide-top button{padding:4px 10px;min-height:36px}
+.guide-panel h2{font-size:20px;line-height:1.4;margin:12px 0 8px;color:#f0f6fc}.guide-panel p{margin:8px 0 14px}.guide-panel button:disabled{opacity:.45;cursor:default}
+.guide-figure{display:grid;gap:7px;margin:14px 0;padding:14px;border:1px solid #52657b;border-radius:12px;background:#0b1420}.guide-figure svg{width:100%;height:88px;overflow:visible}.guide-figure svg text{fill:#d5e9ff;font:12px system-ui,sans-serif}.guide-figure strong{color:#a4d8ff}.guide-figure small{color:#d0dce9}.guide-figure figcaption{font-size:11px;color:#a8b9cb;border-top:1px dashed #52657b;padding-top:7px}.guide-note{font-size:12px;color:#a8b9cb}.guide-footer{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}.guide-footer button:last-child{background:#22548a;color:#fff}
+.guide-layer[hidden],.guide-menu[hidden],.guide-spotlight[hidden]{display:none!important}
+@keyframes guide-pulse{50%{border-color:#c9eaff}}
+.guide-demo-click{justify-self:end;width:60px;height:40px}.guide-demo-click svg{height:40px}.guide-demo-click circle{animation:guide-click 1.8s ease-out infinite;transform-origin:30px 18px}
+@keyframes guide-click{0%{opacity:1;transform:scale(.5)}80%,100%{opacity:0;transform:scale(1.5)}}
+@media(max-width:767px){.guide-dock{left:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px))}.guide-menu{max-height:55dvh}.guide-panel{padding:14px}.guide-panel h2{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.guide-spotlight,.guide-demo-click circle{animation:none}}
