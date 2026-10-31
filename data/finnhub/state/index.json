@@ -1289,67 +1289,6 @@
         "missing_key": false,
         "refreshed": {
           "basic_financials": [
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "IZRL",
-            "JEPQ"
-          ],
-          "company_profile": [
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN"
-          ],
-          "recommendation_trends": [
-            "GILT",
-            "GLXY",
-            "GOOG",
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "JMIA"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-10-25T21:14:09+00:00",
-      "mode": "analyst",
-      "started_at": "2026-10-25T21:13:20+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
             "JMIA",
             "JOBY",
             "KDP",
@@ -2476,9 +2415,72 @@
       "mode": "analyst",
       "started_at": "2026-10-31T13:02:08+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-10-31T19:17:23+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP",
+            "KHC",
+            "KLAC",
+            "KO",
+            "KRC",
+            "KTOS",
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR"
+          ],
+          "sec_filings": [
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR",
+            "COPX",
+            "RR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-10-31T19:16:36+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-10-31T13:02:57+00:00"
+  "updated_at": "2026-10-31T19:17:24+00:00"
 }
