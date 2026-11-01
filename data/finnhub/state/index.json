@@ -1279,67 +1279,6 @@
   "runs": [
     {
       "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ODFL",
-            "OKLO",
-            "ONDS",
-            "OPEN",
-            "ORCL",
-            "ORLY",
-            "OSCR",
-            "OSS"
-          ],
-          "company_profile": [
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC"
-          ],
-          "recommendation_trends": [
-            "VRTX",
-            "VSAT",
-            "VST",
-            "WBD",
-            "WDAY",
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-10-28T06:16:28+00:00",
-      "mode": "analyst",
-      "started_at": "2026-10-28T06:15:42+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
           "recommendation_trends",
@@ -2502,9 +2441,72 @@
       "mode": "analyst",
       "started_at": "2026-11-01T18:05:50+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-01T19:39:12+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "RBRK",
+            "RDW",
+            "REGN",
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU",
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX",
+            "RXRX",
+            "SAIC",
+            "SATL",
+            "SBUX",
+            "SDGR",
+            "SE",
+            "SEI",
+            "SHOP",
+            "SIDU"
+          ],
+          "sec_filings": [
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR",
+            "NBIS",
+            "TEM",
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-01T19:38:24+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-01T18:06:39+00:00"
+  "updated_at": "2026-11-01T19:39:12+00:00"
 }
