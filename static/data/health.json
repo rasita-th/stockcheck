@@ -1,6 +1,6 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-10-31T21:53:40.307642+00:00",
+  "generated_at": "2026-11-01T00:11:42.748029+00:00",
   "market_session": {
     "timezone": "America/New_York",
     "phase": "weekend",
@@ -11,7 +11,7 @@
   "layers": {
     "quote": {
       "status": "latest-completed-session",
-      "age_minutes": 1249.0,
+      "age_minutes": 1387.1,
       "stale_after_minutes": 30,
       "timestamp": "2026-10-31T01:04:39+00:00",
       "row_count": 407,
@@ -27,7 +27,7 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 1248.8,
+      "age_minutes": 1386.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-10-31T01:04:53+00:00",
       "row_count": 406,
@@ -39,11 +39,11 @@
       "stale_after_minutes": 30
     },
     "attention": {
-      "status": "stale",
-      "age_minutes": 154.3,
+      "status": "partial",
+      "age_minutes": 1.2,
       "stale_after_minutes": 90,
-      "timestamp": "2026-10-31T19:19:23+00:00",
-      "row_count": 3,
+      "timestamp": "2026-11-01T00:10:29+00:00",
+      "row_count": 5,
       "source": null,
       "coverage_status": "partial",
       "source_health": {
@@ -96,15 +96,15 @@
           "status": "partial",
           "source": "Verified company IR discovery",
           "checked": 10,
-          "accepted_events": 0
+          "accepted_events": 3
         },
         "ir": {
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 6,
+          "ok": 8,
           "partial": 0,
-          "errors": 4,
+          "errors": 2,
           "registry": {
             "applicable": 35,
             "configured": 35,
@@ -133,16 +133,16 @@
       }
     },
     "events": {
-      "status": "stale",
-      "age_minutes": 154.3,
+      "status": "ok",
+      "age_minutes": 1.2,
       "stale_after_minutes": 90,
-      "timestamp": "2026-10-31T19:19:23+00:00",
+      "timestamp": "2026-11-01T00:10:29+00:00",
       "row_count": 33,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 1.5,
+      "age_minutes": 139.5,
       "stale_after_minutes": 1440,
       "timestamp": "2026-10-31T21:52:12+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 313.0,
+      "age_minutes": 451.1,
       "stale_after_minutes": 50400,
       "timestamp": "2026-10-31 16:40:39 UTC",
       "row_count": 406,
@@ -158,12 +158,12 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 265.4,
+      "age_minutes": 403.4,
       "stale_after_minutes": 780,
       "timestamp": "2026-10-31T17:28:18.201404+00:00",
       "row_count": null,
       "source": "Yahoo Finance via yfinance; indices and ETF proxies"
     }
   },
-  "status": "stale"
+  "status": "partial"
 }
