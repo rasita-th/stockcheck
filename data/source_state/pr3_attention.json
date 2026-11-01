@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-01T00:10:29+00:00",
+  "updated_at": "2026-11-01T05:59:46+00:00",
   "items": {
     "event:OKLO:db1ff37d23e1feee": {
       "ticker": "OKLO",
@@ -9,22 +9,10 @@
       "priority_score": 100,
       "personal_priority_score": 116,
       "first_seen_at": "2026-11-01T00:10:29+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 2,
       "baseline_price": 25.25,
       "current_price": 25.25
-    },
-    "sec:TE:0001213900-26-114461": {
-      "ticker": "TE",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "priority_score": 100,
-      "personal_priority_score": 114,
-      "first_seen_at": "2026-11-01T00:10:29+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
-      "event_count": 3,
-      "baseline_price": 2.695,
-      "current_price": 2.695
     },
     "company_ir:AMD:0453a8f863b62b77": {
       "ticker": "AMD",
@@ -33,7 +21,7 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T06:03:46+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 4,
       "baseline_price": 505.18,
       "current_price": 505.18
@@ -45,7 +33,7 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 1,
       "baseline_price": 30.36,
       "current_price": 30.36
@@ -57,37 +45,73 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 2,
       "baseline_price": 7.72,
       "current_price": 7.72
     },
-    "technical:CIFR:price-drop:2026-10-31": {
+    "technical:CIFR:price-drop:2026-11-01": {
       "ticker": "CIFR",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "priority_score": 99,
       "personal_priority_score": 107,
-      "first_seen_at": "2026-10-31T19:19:23+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "first_seen_at": "2026-11-01T05:59:46+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 1,
       "baseline_price": 7.285,
       "current_price": 7.285
     },
-    "technical:IREN:price-drop:2026-10-31": {
+    "technical:IREN:price-drop:2026-11-01": {
       "ticker": "IREN",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "priority_score": 99,
       "personal_priority_score": 107,
-      "first_seen_at": "2026-10-31T19:19:23+00:00",
-      "last_seen_at": "2026-11-01T00:10:29+00:00",
+      "first_seen_at": "2026-11-01T05:59:46+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
       "event_count": 1,
       "baseline_price": 23.9658,
       "current_price": 23.9658
+    },
+    "technical:NBIS:price-drop:2026-11-01": {
+      "ticker": "NBIS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-11-01T05:59:46+00:00",
+      "last_seen_at": "2026-11-01T05:59:46+00:00",
+      "event_count": 1,
+      "baseline_price": 154.1,
+      "current_price": 154.1
     }
   },
   "resolved": [
+    {
+      "history_key": "sec:TE:0001213900-26-114461",
+      "ticker": "TE",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-01T05:59:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:CIFR:price-drop:2026-10-31",
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-01T05:59:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IREN:price-drop:2026-10-31",
+      "ticker": "IREN",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-01T05:59:46+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:price-drop:2026-10-31",
       "ticker": "NBIS",
@@ -222,30 +246,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:JEPQ:technical_setup:2026-08-13",
-      "ticker": "JEPQ",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NVDA:technical_setup:2026-08-13",
-      "ticker": "NVDA",
-      "event_subtype": "technical_setup",
-      "priority": "Action",
-      "resolved_at": "2026-10-31T06:03:46+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "company_ir:RKLB:5c9232304438abc2",
-      "ticker": "RKLB",
-      "event_subtype": "earnings_reported",
-      "priority": "Critical",
-      "resolved_at": "2026-08-14T02:47:30+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ]
