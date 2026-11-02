@@ -1289,67 +1289,6 @@
         "missing_key": false,
         "refreshed": {
           "basic_financials": [
-            "PINS",
-            "PL",
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP"
-          ],
-          "company_profile": [
-            "KO",
-            "KRC",
-            "KTOS",
-            "LBRT"
-          ],
-          "recommendation_trends": [
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-10-28T22:51:24+00:00",
-      "mode": "analyst",
-      "started_at": "2026-10-28T22:50:36+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
             "PWR",
             "PYPL",
             "QCOM",
@@ -2510,9 +2449,72 @@
       "mode": "analyst",
       "started_at": "2026-11-01T22:24:04+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-02T00:41:03+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "SITM",
+            "SMCI",
+            "SMH",
+            "SNDK",
+            "SNOW",
+            "SNPS",
+            "SOFI",
+            "SOXX",
+            "SPCE",
+            "SPGI",
+            "SPIR",
+            "SSYS",
+            "STX",
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER"
+          ],
+          "sec_filings": [
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR",
+            "COPX",
+            "RR",
+            "ZETA",
+            "OPEN",
+            "COST",
+            "BEAM"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-02T00:40:17+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-01T22:24:52+00:00"
+  "updated_at": "2026-11-02T00:41:04+00:00"
 }
