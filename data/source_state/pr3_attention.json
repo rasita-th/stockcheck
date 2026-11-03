@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-02T21:44:26+00:00",
+  "updated_at": "2026-11-03T06:45:59+00:00",
   "items": {
     "event:OKLO:db1ff37d23e1feee": {
       "ticker": "OKLO",
@@ -9,10 +9,10 @@
       "priority_score": 100,
       "personal_priority_score": 116,
       "first_seen_at": "2026-11-01T00:10:29+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 2,
       "baseline_price": 25.25,
-      "current_price": 23.77
+      "current_price": 23.525
     },
     "company_ir:AMD:0453a8f863b62b77": {
       "ticker": "AMD",
@@ -21,10 +21,10 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T06:03:46+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 4,
       "baseline_price": 505.18,
-      "current_price": 475.115
+      "current_price": 466.7
     },
     "company_ir:OSCR:3781c82fee7f84bd": {
       "ticker": "OSCR",
@@ -33,10 +33,10 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 1,
       "baseline_price": 30.36,
-      "current_price": 31.4729
+      "current_price": 31.01
     },
     "company_ir:UUUU:db5a0d0f82b5dc11": {
       "ticker": "UUUU",
@@ -45,49 +45,73 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 1,
       "baseline_price": 7.72,
-      "current_price": 7.42
+      "current_price": 7.39
     },
-    "technical:TEM:price-move:2026-11-02": {
+    "technical:TEM:price-move:2026-11-03": {
       "ticker": "TEM",
       "event_subtype": "price_move",
       "priority": "Critical",
       "priority_score": 99,
       "personal_priority_score": 107,
-      "first_seen_at": "2026-11-02T21:44:26+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "first_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 1,
-      "baseline_price": 80.61,
-      "current_price": 80.61
+      "baseline_price": 78.47,
+      "current_price": 78.47
     },
-    "technical:ASTS:price-drop:2026-11-02": {
+    "technical:ASTS:price-drop:2026-11-03": {
       "ticker": "ASTS",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "priority_score": 99,
       "personal_priority_score": 107,
-      "first_seen_at": "2026-11-02T21:44:26+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "first_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 1,
-      "baseline_price": 36.895,
-      "current_price": 36.895
+      "baseline_price": 36.33,
+      "current_price": 36.33
     },
-    "technical:ORCL:price-drop:2026-11-02": {
-      "ticker": "ORCL",
+    "technical:INDI:price-drop:2026-11-03": {
+      "ticker": "INDI",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "priority_score": 99,
       "personal_priority_score": 107,
-      "first_seen_at": "2026-11-02T21:44:26+00:00",
-      "last_seen_at": "2026-11-02T21:44:26+00:00",
+      "first_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T06:45:59+00:00",
       "event_count": 1,
-      "baseline_price": 119.59,
-      "current_price": 119.59
+      "baseline_price": 1.505,
+      "current_price": 1.505
     }
   },
   "resolved": [
+    {
+      "history_key": "technical:TEM:price-move:2026-11-02",
+      "ticker": "TEM",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T06:45:59+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ASTS:price-drop:2026-11-02",
+      "ticker": "ASTS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-03T06:45:59+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ORCL:price-drop:2026-11-02",
+      "ticker": "ORCL",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-03T06:45:59+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:CIFR:price-drop:2026-11-02",
       "ticker": "CIFR",
@@ -219,30 +243,6 @@
     {
       "history_key": "technical:CIFR:price-drop:2026-10-31",
       "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-10-31T12:22:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-drop:2026-10-31",
-      "ticker": "IREN",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-10-31T12:22:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:price-drop:2026-10-31",
-      "ticker": "NBIS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-10-31T12:22:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:RR:price-drop:2026-10-31",
-      "ticker": "RR",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-10-31T12:22:42+00:00",
