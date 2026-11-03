@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-03T06:45:59+00:00",
+  "updated_at": "2026-11-03T17:05:00+00:00",
   "items": {
     "event:OKLO:db1ff37d23e1feee": {
       "ticker": "OKLO",
@@ -9,10 +9,46 @@
       "priority_score": 100,
       "personal_priority_score": 116,
       "first_seen_at": "2026-11-01T00:10:29+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
-      "event_count": 2,
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
+      "event_count": 3,
       "baseline_price": 25.25,
       "current_price": 23.525
+    },
+    "sec:GOOGL:0001193125-26-442515": {
+      "ticker": "GOOGL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "priority_score": 100,
+      "personal_priority_score": 114,
+      "first_seen_at": "2026-11-03T17:05:00+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
+      "event_count": 1,
+      "baseline_price": 279.03,
+      "current_price": 279.03
+    },
+    "event:ORCL:4d7479d45c32d381": {
+      "ticker": "ORCL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "priority_score": 100,
+      "personal_priority_score": 114,
+      "first_seen_at": "2026-11-03T17:05:00+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
+      "event_count": 2,
+      "baseline_price": 119.115,
+      "current_price": 119.115
+    },
+    "sec:TEM:0001193125-26-442624": {
+      "ticker": "TEM",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "priority_score": 100,
+      "personal_priority_score": 114,
+      "first_seen_at": "2026-11-03T17:05:00+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
+      "event_count": 3,
+      "baseline_price": 78.47,
+      "current_price": 78.47
     },
     "company_ir:AMD:0453a8f863b62b77": {
       "ticker": "AMD",
@@ -21,7 +57,7 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T06:03:46+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
       "event_count": 4,
       "baseline_price": 505.18,
       "current_price": 466.7
@@ -33,7 +69,7 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
       "event_count": 1,
       "baseline_price": 30.36,
       "current_price": 31.01
@@ -45,49 +81,37 @@
       "priority_score": 97,
       "personal_priority_score": 110,
       "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
+      "last_seen_at": "2026-11-03T17:05:00+00:00",
       "event_count": 1,
       "baseline_price": 7.72,
       "current_price": 7.39
-    },
-    "technical:TEM:price-move:2026-11-03": {
-      "ticker": "TEM",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "priority_score": 99,
-      "personal_priority_score": 107,
-      "first_seen_at": "2026-11-03T06:45:59+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
-      "event_count": 1,
-      "baseline_price": 78.47,
-      "current_price": 78.47
-    },
-    "technical:ASTS:price-drop:2026-11-03": {
-      "ticker": "ASTS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "priority_score": 99,
-      "personal_priority_score": 107,
-      "first_seen_at": "2026-11-03T06:45:59+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
-      "event_count": 1,
-      "baseline_price": 36.33,
-      "current_price": 36.33
-    },
-    "technical:INDI:price-drop:2026-11-03": {
-      "ticker": "INDI",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "priority_score": 99,
-      "personal_priority_score": 107,
-      "first_seen_at": "2026-11-03T06:45:59+00:00",
-      "last_seen_at": "2026-11-03T06:45:59+00:00",
-      "event_count": 1,
-      "baseline_price": 1.505,
-      "current_price": 1.505
     }
   },
   "resolved": [
+    {
+      "history_key": "technical:TEM:price-move:2026-11-03",
+      "ticker": "TEM",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T17:05:00+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ASTS:price-drop:2026-11-03",
+      "ticker": "ASTS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-03T17:05:00+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:INDI:price-drop:2026-11-03",
+      "ticker": "INDI",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-03T17:05:00+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:TEM:price-move:2026-11-02",
       "ticker": "TEM",
@@ -222,30 +246,6 @@
       "event_subtype": "periodic_report",
       "priority": "Critical",
       "resolved_at": "2026-10-31T19:19:23+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "sec:GOOGL:0001652044-26-000084",
-      "ticker": "GOOGL",
-      "event_subtype": "periodic_report",
-      "priority": "Critical",
-      "resolved_at": "2026-10-31T19:19:23+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "sec:ZETA:0001193125-26-430617",
-      "ticker": "ZETA",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "resolved_at": "2026-10-31T12:22:42+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-drop:2026-10-31",
-      "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-10-31T12:22:42+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ]
