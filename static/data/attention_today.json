@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-03T17:05:00+00:00",
+  "updated_at": "2026-11-03T23:19:50+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 33,
+  "total_events": 23,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 7,
+    "Critical": 3,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
+      "ok": 6,
       "partial": 0,
-      "errors": 6,
+      "errors": 4,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "partial",
+      "status": "optional_unavailable",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 3,
-      "unavailable": 7,
+      "ok": 0,
+      "unavailable": 10,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -101,519 +101,41 @@
   },
   "items": [
     {
-      "ticker": "OKLO",
-      "name": "Oklo Inc.",
+      "ticker": "CIFR",
+      "name": "Cipher Mining Inc.",
       "portfolio_status": "holding",
-      "role": "Advanced nuclear",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -6.8% today.",
-        "An insider transaction was reported; transaction context still requires document review."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "earnings_reported",
-      "event_time": "2026-11-01T00:07:49+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://investor.oklo.com/financials/quarterly-results/default.aspx",
-        "published_at": "2026-11-01T00:07:49+00:00",
-        "domain": "investor.oklo.com"
-      },
-      "price": 23.5,
-      "day_change_pct": -0.085,
-      "relative_volume": 0.89,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "event:OKLO:db1ff37d23e1feee",
-          "ticker": "OKLO",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Quarterly results",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-01T00:07:49+00:00",
-          "detected_at": "2026-11-01T00:07:49+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "article domain matches configured company domain",
-          "dedupe_key": "OKLO:earnings_reported:2026-11-01:ebf01aeb9dd2",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investor.oklo.com/financials/quarterly-results/default.aspx",
-            "published_at": "2026-11-01T00:07:49+00:00",
-            "domain": "investor.oklo.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investor.oklo.com/financials/quarterly-results/default.aspx",
-              "published_at": "2026-11-01T00:07:49+00:00",
-              "domain": "investor.oklo.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://oklo.com/financials/quarterly-results/default.aspx",
-              "published_at": "2026-11-01T00:07:49+00:00",
-              "domain": "oklo.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:OKLO:db1ff37d23e1feee"
-          ],
-          "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "technical:OKLO:price-drop:2026-11-03",
-          "ticker": "OKLO",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -6.8%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -6.8% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-03T17:02:19.357497+00:00",
-          "detected_at": "2026-11-03T17:02:19.357498+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:OKLO:price-drop:2026-11-03"
-          ],
-          "dedupe_key": "OKLO:price_drop:27ec78f9dd9db8d7"
-        },
-        {
-          "event_id": "event:OKLO:f9f0bf13772081cc",
-          "ticker": "OKLO",
-          "event_type": "sec_filing",
-          "event_subtype": "insider_activity",
-          "headline": "New Form 4 insider filing",
-          "summary": "An insider transaction was reported; transaction context still requires document review.",
-          "why_today": "An insider transaction was reported; transaction context still requires document review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-02T16:28:44-05:00",
-          "detected_at": "2026-11-03T17:02:19.357471+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214682826000012/wk-form4_1793655014.xml",
-            "published_at": "2026-11-02T16:30:17-05:00",
-            "form": "4",
-            "items": "",
-            "accession_number": "0002146828-26-000012",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 71,
-          "priority": "Action",
-          "attention_policy_decision": "allow",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214682826000012/wk-form4_1793655014.xml",
-              "published_at": "2026-11-02T16:30:17-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0002146828-26-000012",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214768026000016/wk-form4_1793654922.xml",
-              "published_at": "2026-11-02T16:28:44-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0002147680-26-000016",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "event:OKLO:f9f0bf13772081cc"
-          ],
-          "dedupe_key": "OKLO:insider_activity:9a259d605b8fbbbd"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://investor.oklo.com/financials/quarterly-results/default.aspx",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-OKLO/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "earnings_reported",
-      "signals": [
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -6.8% today.",
-        "An insider transaction was reported; transaction context still requires document review."
-      ],
-      "change": {
-        "status": "updated",
-        "label_th": "มีข้อมูลใหม่เพิ่ม",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-01T00:10:29+00:00",
-        "active_days": 2
-      },
-      "impact": {
-        "baseline_price": 25.25,
-        "current_price": 23.5,
-        "change_pct": -6.93,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.9%"
-      },
-      "personal_priority_score": 116,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
-    },
-    {
-      "ticker": "GOOGL",
-      "name": "Alphabet Inc.",
-      "portfolio_status": "holding",
-      "role": "Core quality",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk."
-      ],
-      "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "event_time": "2026-11-02T06:04:43-05:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442515/d125079d424b5.htm",
-        "published_at": "2026-11-02T06:04:43-05:00",
-        "form": "424B5",
-        "items": "",
-        "accession_number": "0001193125-26-442515",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "price": 279.91,
-      "day_change_pct": 0.3298,
-      "relative_volume": 0.73,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "sec:GOOGL:0001193125-26-442515",
-          "ticker": "GOOGL",
-          "event_type": "sec_filing",
-          "event_subtype": "capital_raise",
-          "headline": "424B5 capital-markets filing",
-          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-02T06:04:43-05:00",
-          "detected_at": "2026-11-03T17:02:19.380478+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442515/d125079d424b5.htm",
-            "published_at": "2026-11-02T06:04:43-05:00",
-            "form": "424B5",
-            "items": "",
-            "accession_number": "0001193125-26-442515",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442515/d125079d424b5.htm",
-              "published_at": "2026-11-02T06:04:43-05:00",
-              "form": "424B5",
-              "items": "",
-              "accession_number": "0001193125-26-442515",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:GOOGL:0001193125-26-442515"
-          ],
-          "dedupe_key": "GOOGL:capital_raise:cd7c05a97b097988"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526442515/d125079d424b5.htm",
-        "company_ir": "https://abc.xyz/investor/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "capital_raise",
-      "signals": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-03T17:05:00+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 279.03,
-        "current_price": 279.91,
-        "change_pct": 0.32,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
-    {
-      "ticker": "ORCL",
-      "name": "Oracle Corporation",
-      "portfolio_status": "holding",
-      "role": "Cloud infrastructure",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-        "The stock moved -8.8% today."
-      ],
-      "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "event_time": "2026-11-02T08:12:55-05:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
-        "published_at": "2026-11-02T08:16:06-05:00",
-        "form": "424B5",
-        "items": "",
-        "accession_number": "0001193125-26-442729",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "price": 126.22,
-      "day_change_pct": 5.8715,
-      "relative_volume": 1.68,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "event:ORCL:4d7479d45c32d381",
-          "ticker": "ORCL",
-          "event_type": "sec_filing",
-          "event_subtype": "capital_raise",
-          "headline": "424B2 capital-markets filing",
-          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-02T08:12:55-05:00",
-          "detected_at": "2026-11-03T17:02:19.454391+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
-            "published_at": "2026-11-02T08:16:06-05:00",
-            "form": "424B5",
-            "items": "",
-            "accession_number": "0001193125-26-442729",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
-              "published_at": "2026-11-02T08:16:06-05:00",
-              "form": "424B5",
-              "items": "",
-              "accession_number": "0001193125-26-442729",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442722/d181336d424b2.htm",
-              "published_at": "2026-11-02T08:12:55-05:00",
-              "form": "424B2",
-              "items": "",
-              "accession_number": "0001193125-26-442722",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "event:ORCL:4d7479d45c32d381"
-          ],
-          "dedupe_key": "ORCL:capital_raise:680575120ea1f1ae"
-        },
-        {
-          "event_id": "technical:ORCL:price-drop:2026-11-03",
-          "ticker": "ORCL",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.8%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.8% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-03T17:02:19.454417+00:00",
-          "detected_at": "2026-11-03T17:02:19.454418+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:ORCL:price-drop:2026-11-03"
-          ],
-          "dedupe_key": "ORCL:price_drop:4728347c895b1bc7"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ORCL/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "capital_raise",
-      "signals": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-        "The stock moved -8.8% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-03T17:05:00+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 119.115,
-        "current_price": 126.22,
-        "change_pct": 5.96,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 6.0%"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
-    {
-      "ticker": "TEM",
-      "name": "Tempus AI, Inc.",
-      "portfolio_status": "holding",
-      "role": "Healthcare AI",
+      "role": "Digital infrastructure",
       "priority": "Critical",
       "priority_score": 100,
       "why_today": [
         "A new periodic financial report is available for review.",
-        "The stock moved +8.7% today.",
+        "The stock moved +18.5% today.",
         "A current report was filed and requires item-level review."
       ],
       "event_type": "sec_filing",
       "event_subtype": "periodic_report",
-      "event_time": "2026-11-02T07:04:16-05:00",
+      "event_time": "2026-11-02T09:14:01-05:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442624/tem-20260930.htm",
-        "published_at": "2026-11-02T07:04:16-05:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
+        "published_at": "2026-11-02T09:14:01-05:00",
         "form": "10-Q",
         "items": "",
-        "accession_number": "0001193125-26-442624",
+        "accession_number": "0001819989-26-000050",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
-      "price": 77.8,
-      "day_change_pct": -0.8665,
-      "relative_volume": 0.8,
+      "price": 8.13,
+      "day_change_pct": 18.5131,
+      "relative_volume": 0.96,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "sec:TEM:0001193125-26-442624",
-          "ticker": "TEM",
+          "event_id": "sec:CIFR:0001819989-26-000050",
+          "ticker": "CIFR",
           "event_type": "sec_filing",
           "event_subtype": "periodic_report",
           "headline": "New 10-Q filed",
@@ -621,17 +143,17 @@
           "why_today": "A new periodic financial report is available for review.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-02T07:04:16-05:00",
-          "detected_at": "2026-11-03T17:02:19.412061+00:00",
+          "event_time": "2026-11-02T09:14:01-05:00",
+          "detected_at": "2026-11-03T23:17:57.525458+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442624/tem-20260930.htm",
-            "published_at": "2026-11-02T07:04:16-05:00",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
+            "published_at": "2026-11-02T09:14:01-05:00",
             "form": "10-Q",
             "items": "",
-            "accession_number": "0001193125-26-442624",
+            "accession_number": "0001819989-26-000050",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
@@ -644,33 +166,33 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442624/tem-20260930.htm",
-              "published_at": "2026-11-02T07:04:16-05:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
+              "published_at": "2026-11-02T09:14:01-05:00",
               "form": "10-Q",
               "items": "",
-              "accession_number": "0001193125-26-442624",
+              "accession_number": "0001819989-26-000050",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:TEM:0001193125-26-442624"
+            "sec:CIFR:0001819989-26-000050"
           ],
-          "dedupe_key": "TEM:periodic_report:b80e93ef41bfbabd"
+          "dedupe_key": "CIFR:periodic_report:41195ec14aaf228a"
         },
         {
-          "event_id": "technical:TEM:price-move:2026-11-03",
-          "ticker": "TEM",
+          "event_id": "technical:CIFR:price-move:2026-11-03",
+          "ticker": "CIFR",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +8.7%",
+          "headline": "Price +18.5%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.7% today.",
+          "why_today": "The stock moved +18.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-03T17:02:19.412108+00:00",
-          "detected_at": "2026-11-03T17:02:19.412110+00:00",
+          "event_time": "2026-11-03T23:17:57.525499+00:00",
+          "detected_at": "2026-11-03T23:17:57.525501+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -693,13 +215,13 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:TEM:price-move:2026-11-03"
+            "technical:CIFR:price-move:2026-11-03"
           ],
-          "dedupe_key": "TEM:price_move:9510a48564c76c97"
+          "dedupe_key": "CIFR:price_move:206ae050df13ae12"
         },
         {
-          "event_id": "sec:TEM:0001193125-26-442619",
-          "ticker": "TEM",
+          "event_id": "sec:CIFR:0001819989-26-000047",
+          "ticker": "CIFR",
           "event_type": "sec_filing",
           "event_subtype": "current_report",
           "headline": "New 8-K current report",
@@ -707,17 +229,17 @@
           "why_today": "A current report was filed and requires item-level review.",
           "materiality": "low",
           "urgency": "today",
-          "event_time": "2026-11-02T07:00:15-05:00",
-          "detected_at": "2026-11-03T17:02:19.412086+00:00",
+          "event_time": "2026-11-02T07:17:40-05:00",
+          "detected_at": "2026-11-03T23:17:57.525482+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442619/tem-20261102.htm",
-            "published_at": "2026-11-02T07:00:15-05:00",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000047/cifr-20261102.htm",
+            "published_at": "2026-11-02T07:17:40-05:00",
             "form": "8-K",
             "items": "",
-            "accession_number": "0001193125-26-442619",
+            "accession_number": "0001819989-26-000047",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
@@ -730,287 +252,51 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442619/tem-20261102.htm",
-              "published_at": "2026-11-02T07:00:15-05:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000047/cifr-20261102.htm",
+              "published_at": "2026-11-02T07:17:40-05:00",
               "form": "8-K",
               "items": "",
-              "accession_number": "0001193125-26-442619",
+              "accession_number": "0001819989-26-000047",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:TEM:0001193125-26-442619"
+            "sec:CIFR:0001819989-26-000047"
           ],
-          "dedupe_key": "TEM:current_report:1a3c5136c3dbe418"
+          "dedupe_key": "CIFR:current_report:569aac5efccaa4a4"
         }
       ],
       "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526442624/tem-20260930.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "periodic_report",
       "signals": [
         "A new periodic financial report is available for review.",
-        "The stock moved +8.7% today.",
+        "The stock moved +18.5% today.",
         "A current report was filed and requires item-level review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-03T17:05:00+00:00",
+        "first_seen_at": "2026-11-03T23:19:50+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 78.47,
-        "current_price": 77.8,
-        "change_pct": -0.85,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.8%"
+        "baseline_price": 8.13,
+        "current_price": 8.13,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 114,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
         "sec_filing +6"
-      ]
-    },
-    {
-      "ticker": "AMD",
-      "name": "Advanced Micro Devices, Inc.",
-      "portfolio_status": "holding",
-      "role": "AI semiconductors",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A transaction event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review.",
-        "A material agreement event was detected and requires source review."
-      ],
-      "event_type": "corporate_event",
-      "event_subtype": "transaction",
-      "event_time": "2026-10-31T06:01:17+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
-        "published_at": "2026-10-31T06:01:17+00:00",
-        "domain": "ir.amd.com"
-      },
-      "price": 484.47,
-      "day_change_pct": 3.7765,
-      "relative_volume": 0.95,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "company_ir:AMD:0453a8f863b62b77",
-          "ticker": "AMD",
-          "event_type": "corporate_event",
-          "event_subtype": "transaction",
-          "headline": "AMD to Acquire World Labs to Advance the Future of AI Compute",
-          "summary": "A transaction event was detected and requires source review.",
-          "why_today": "A transaction event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17+00:00",
-          "detected_at": "2026-10-31T06:01:17+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:transaction:2026-10-31:908f191aed5c",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
-            "published_at": "2026-10-31T06:01:17+00:00",
-            "domain": "ir.amd.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
-              "published_at": "2026-10-31T06:01:17+00:00",
-              "domain": "ir.amd.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:AMD:0453a8f863b62b77"
-          ],
-          "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "event:AMD:a25e96a39c37de22",
-          "ticker": "AMD",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "AMD Fiscal Third Quarter 2026 Financial Results View Event",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17+00:00",
-          "detected_at": "2026-10-31T06:01:17+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:earnings_reported:2026-10-31:9b89033d2a1b",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
-            "published_at": "2026-10-31T06:01:17+00:00",
-            "domain": "ir.amd.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
-              "published_at": "2026-10-31T06:01:17+00:00",
-              "domain": "ir.amd.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results",
-              "published_at": "2026-10-31T06:01:17+00:00",
-              "domain": "ir.amd.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:AMD:a25e96a39c37de22"
-          ],
-          "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "company_ir:AMD:a763319f57e7309e",
-          "ticker": "AMD",
-          "event_type": "corporate_event",
-          "event_subtype": "material_agreement",
-          "headline": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
-          "summary": "A material agreement event was detected and requires source review.",
-          "why_today": "A material agreement event was detected and requires source review.",
-          "materiality": "medium",
-          "reported_materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-10-31T06:01:17+00:00",
-          "detected_at": "2026-10-31T06:01:17+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: AMD",
-          "dedupe_key": "AMD:material_agreement:2026-10-31:19b59f9ec012",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
-            "published_at": "2026-10-31T06:01:17+00:00",
-            "domain": "ir.amd.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
-              "published_at": "2026-10-31T06:01:17+00:00",
-              "domain": "ir.amd.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:AMD:a763319f57e7309e"
-          ],
-          "priority_score": 87,
-          "priority": "Risk"
-        },
-        {
-          "event_id": "technical:AMD:price-drop:2026-11-03",
-          "ticker": "AMD",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -7.5%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.5% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-03T17:02:19.443830+00:00",
-          "detected_at": "2026-11-03T17:02:19.443837+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:AMD:price-drop:2026-11-03"
-          ],
-          "dedupe_key": "AMD:price_drop:8ef0842c578c0d0a"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
-        "company_ir": "https://ir.amd.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "transaction",
-      "signals": [
-        "A transaction event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review.",
-        "A material agreement event was detected and requires source review."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 3
-      },
-      "impact": {
-        "baseline_price": 505.18,
-        "current_price": 484.47,
-        "change_pct": -4.1,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 4.1%"
-      },
-      "personal_priority_score": 113,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "corporate_event +5"
       ]
     },
     {
@@ -1114,98 +400,196 @@
       ]
     },
     {
-      "ticker": "UUUU",
-      "name": "Energy Fuels Inc.",
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
       "portfolio_status": "holding",
-      "role": "Uranium and rare earths",
+      "role": "AI semiconductors",
       "priority": "Critical",
       "priority_score": 97,
       "why_today": [
-        "A transaction event was detected and requires source review."
+        "A transaction event was detected and requires source review.",
+        "A earnings reported event was detected and requires source review.",
+        "A material agreement event was detected and requires source review."
       ],
       "event_type": "corporate_event",
       "event_subtype": "transaction",
-      "event_time": "2026-10-31T12:20:52+00:00",
+      "event_time": "2026-10-31T06:01:17+00:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "company_ir",
         "quality": "primary",
-        "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
-        "published_at": "2026-10-31T12:20:52+00:00",
-        "domain": "investors.energyfuels.com"
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+        "published_at": "2026-10-31T06:01:17+00:00",
+        "domain": "ir.amd.com"
       },
-      "price": 7.255,
-      "day_change_pct": -1.8268,
-      "relative_volume": 0.53,
+      "price": 484.47,
+      "day_change_pct": 3.7765,
+      "relative_volume": 0.95,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "company_ir:UUUU:db5a0d0f82b5dc11",
-          "ticker": "UUUU",
+          "event_id": "company_ir:AMD:0453a8f863b62b77",
+          "ticker": "AMD",
           "event_type": "corporate_event",
           "event_subtype": "transaction",
-          "headline": "Energy Fuels Completes Acquisition of Australian Strategic Materials",
+          "headline": "AMD to Acquire World Labs to Advance the Future of AI Compute",
           "summary": "A transaction event was detected and requires source review.",
           "why_today": "A transaction event was detected and requires source review.",
           "materiality": "high",
           "reported_materiality": "high",
           "urgency": "today",
-          "event_time": "2026-10-31T12:20:52+00:00",
-          "detected_at": "2026-10-31T12:20:52+00:00",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
           "verification_status": "confirmed",
           "verification_level": "confirmed_primary",
           "verification_reason": "Matched a configured primary source.",
           "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Energy Fuels",
-          "dedupe_key": "UUUU:transaction:2026-10-31:7ea281867b79",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:transaction:2026-10-31:908f191aed5c",
           "source": {
             "type": "company_ir",
             "quality": "primary",
-            "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
-            "published_at": "2026-10-31T12:20:52+00:00",
-            "domain": "investors.energyfuels.com"
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+            "published_at": "2026-10-31T06:01:17+00:00",
+            "domain": "ir.amd.com"
           },
           "source_chain": [
             {
               "type": "company_ir",
               "quality": "primary",
-              "url": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
-              "published_at": "2026-10-31T12:20:52+00:00",
-              "domain": "investors.energyfuels.com"
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
             }
           ],
           "secondary_source_count": 0,
           "attention_policy_decision": "allow",
           "related_event_ids": [
-            "company_ir:UUUU:db5a0d0f82b5dc11"
+            "company_ir:AMD:0453a8f863b62b77"
           ],
           "priority_score": 97,
           "priority": "Critical"
+        },
+        {
+          "event_id": "event:AMD:a25e96a39c37de22",
+          "ticker": "AMD",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "AMD Fiscal Third Quarter 2026 Financial Results View Event",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:earnings_reported:2026-10-31:9b89033d2a1b",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
+            "published_at": "2026-10-31T06:01:17+00:00",
+            "domain": "ir.amd.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/ir-calendar/detail/20261103-amd-fiscal-third-quarter-2026-financial-results",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:AMD:a25e96a39c37de22"
+          ],
+          "priority_score": 97,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "company_ir:AMD:a763319f57e7309e",
+          "ticker": "AMD",
+          "event_type": "corporate_event",
+          "event_subtype": "material_agreement",
+          "headline": "AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure",
+          "summary": "A material agreement event was detected and requires source review.",
+          "why_today": "A material agreement event was detected and requires source review.",
+          "materiality": "medium",
+          "reported_materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-10-31T06:01:17+00:00",
+          "detected_at": "2026-10-31T06:01:17+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: AMD",
+          "dedupe_key": "AMD:material_agreement:2026-10-31:19b59f9ec012",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
+            "published_at": "2026-10-31T06:01:17+00:00",
+            "domain": "ir.amd.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure",
+              "published_at": "2026-10-31T06:01:17+00:00",
+              "domain": "ir.amd.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:AMD:a763319f57e7309e"
+          ],
+          "priority_score": 80,
+          "priority": "Risk"
         }
       ],
       "actions": {
-        "primary_source": "https://investors.energyfuels.com/2026-08-28-Energy-Fuels-Completes-Acquisition-of-Australian-Strategic-Materials",
-        "tradingview": "https://www.tradingview.com/symbols/AMEX-UUUU/",
+        "primary_source": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+        "company_ir": "https://ir.amd.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "transaction",
       "signals": [
-        "A transaction event was detected and requires source review."
+        "A transaction event was detected and requires source review.",
+        "A earnings reported event was detected and requires source review.",
+        "A material agreement event was detected and requires source review."
       ],
       "change": {
         "status": "ongoing",
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
-        "first_seen_at": "2026-10-31T12:22:42+00:00",
+        "first_seen_at": "2026-10-31T06:03:46+00:00",
         "active_days": 3
       },
       "impact": {
-        "baseline_price": 7.72,
-        "current_price": 7.255,
-        "change_pct": -6.02,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.0%"
+        "baseline_price": 505.18,
+        "current_price": 484.47,
+        "change_pct": -4.1,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 4.1%"
       },
       "personal_priority_score": 110,
       "personalization_reasons": [
@@ -1222,32 +606,22 @@
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -1266,8 +640,8 @@
     "active_discovered_event_count": 8,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 3,
-    "technical_metric_repair_count": 0,
+    "technical_fill_count": 1,
+    "technical_metric_repair_count": 4,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -1287,8 +661,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 34,
-      "accepted_events": 34,
+      "evaluated_events": 24,
+      "accepted_events": 24,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1310,18 +684,459 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 0
+    "total": 4
   },
-  "technical_watch": [],
+  "technical_watch": [
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +8.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-03T23:17:57.491839+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 1.91,
+      "day_change_pct": 8.5227,
+      "relative_volume": 0.37,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-move:2026-11-03",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +8.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +8.5% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-03T23:17:57.491839+00:00",
+          "detected_at": "2026-11-03T23:17:57.491843+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-move:2026-11-03"
+          ],
+          "dedupe_key": "EOSE:price_move:7c2962ea35d8ddf9",
+          "technical_score": 22.0,
+          "rsi14": 36.77,
+          "pct_vs_ema20": -9.48,
+          "pct_vs_ema200": -70.84,
+          "volume_ratio20": 0.37,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +8.5% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 1.91,
+        "current_price": 1.91,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "IREN",
+      "name": "IREN Limited",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +11.2% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-03T23:17:57.372072+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 24.49,
+      "day_change_pct": 11.2171,
+      "relative_volume": 0.71,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:IREN:price-move:2026-11-03",
+          "ticker": "IREN",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +11.2%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +11.2% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-03T23:17:57.372072+00:00",
+          "detected_at": "2026-11-03T23:17:57.372076+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:IREN:price-move:2026-11-03"
+          ],
+          "dedupe_key": "IREN:price_move:24749c8d15cb6e1e",
+          "technical_score": 9.0,
+          "rsi14": 34.89,
+          "pct_vs_ema20": -15.58,
+          "pct_vs_ema200": -42.4,
+          "volume_ratio20": 0.71,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +11.2% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 24.49,
+        "current_price": 24.49,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "RR",
+      "name": "Richtech Robotics Inc.",
+      "portfolio_status": "holding",
+      "role": "Robotics",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +9.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-03T23:17:57.567799+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 0.9294,
+      "day_change_pct": 9.47,
+      "relative_volume": 1.35,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:RR:price-move:2026-11-03",
+          "ticker": "RR",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +9.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +9.5% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-03T23:17:57.567799+00:00",
+          "detected_at": "2026-11-03T23:17:57.567802+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:RR:price-move:2026-11-03"
+          ],
+          "dedupe_key": "RR:price_move:57c2954b869e96ae",
+          "technical_score": 16.0,
+          "rsi14": 26.87,
+          "pct_vs_ema20": -22.55,
+          "pct_vs_ema200": -58.51,
+          "volume_ratio20": 1.35,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +9.5% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 0.9294,
+        "current_price": 0.9294,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "TE",
+      "name": "T1 Energy Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy technology",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +10.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-03T23:17:57.618679+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 2.83,
+      "day_change_pct": 10.5469,
+      "relative_volume": 1.15,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:TE:price-move:2026-11-03",
+          "ticker": "TE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +10.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +10.5% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-03T23:17:57.618679+00:00",
+          "detected_at": "2026-11-03T23:17:57.618683+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TE:price-move:2026-11-03"
+          ],
+          "dedupe_key": "TE:price_move:92ec32bdc4c5728f",
+          "technical_score": 37.0,
+          "rsi14": 46.32,
+          "pct_vs_ema20": -0.7,
+          "pct_vs_ema200": -46.6,
+          "volume_ratio20": 1.15,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +10.5% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 2.83,
+        "current_price": 2.83,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    }
+  ],
   "changes_summary": {
-    "new": 3,
+    "new": 5,
     "escalated": 0,
-    "updated": 1,
-    "ongoing": 3,
+    "updated": 0,
+    "ongoing": 2,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "event:OKLO:db1ff37d23e1feee",
+      "ticker": "OKLO",
+      "event_subtype": "earnings_reported",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T23:19:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "sec:GOOGL:0001193125-26-442515",
+      "ticker": "GOOGL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T23:19:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "event:ORCL:4d7479d45c32d381",
+      "ticker": "ORCL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T23:19:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "sec:TEM:0001193125-26-442624",
+      "ticker": "TEM",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T23:19:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "company_ir:UUUU:db5a0d0f82b5dc11",
+      "ticker": "UUUU",
+      "event_subtype": "transaction",
+      "priority": "Critical",
+      "resolved_at": "2026-11-03T23:19:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:TEM:price-move:2026-11-03",
       "ticker": "TEM",
@@ -1360,46 +1175,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-11-03T06:45:59+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ORCL:price-drop:2026-11-02",
-      "ticker": "ORCL",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-03T06:45:59+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-drop:2026-11-02",
-      "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-02T21:44:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-drop:2026-11-02",
-      "ticker": "IREN",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-02T21:44:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:price-drop:2026-11-02",
-      "ticker": "NBIS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-02T21:44:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-drop:2026-11-01",
-      "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-02T10:59:59+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
