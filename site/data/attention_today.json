@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-03T23:19:50+00:00",
+  "updated_at": "2026-11-04T06:14:21+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 23,
+  "total_events": 17,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 3,
+    "Critical": 2,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -37,18 +37,18 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 236,
+      "rows": 238,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 236,
+      "canonical_rows": 238,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 235,
+      "policy_reject_rows": 237,
       "allowed_rows": 1,
-      "rejected_rows": 235
+      "rejected_rows": 237
     },
     "market_data": {
       "status": "ok",
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 6,
+      "ok": 7,
       "partial": 0,
-      "errors": 4,
+      "errors": 3,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "optional_unavailable",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 0,
-      "unavailable": 10,
+      "ok": 2,
+      "unavailable": 8,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -100,205 +100,6 @@
     }
   },
   "items": [
-    {
-      "ticker": "CIFR",
-      "name": "Cipher Mining Inc.",
-      "portfolio_status": "holding",
-      "role": "Digital infrastructure",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A new periodic financial report is available for review.",
-        "The stock moved +18.5% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "event_type": "sec_filing",
-      "event_subtype": "periodic_report",
-      "event_time": "2026-11-02T09:14:01-05:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
-        "published_at": "2026-11-02T09:14:01-05:00",
-        "form": "10-Q",
-        "items": "",
-        "accession_number": "0001819989-26-000050",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "price": 8.13,
-      "day_change_pct": 18.5131,
-      "relative_volume": 1.08,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "sec:CIFR:0001819989-26-000050",
-          "ticker": "CIFR",
-          "event_type": "sec_filing",
-          "event_subtype": "periodic_report",
-          "headline": "New 10-Q filed",
-          "summary": "A new periodic financial report is available for review.",
-          "why_today": "A new periodic financial report is available for review.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-02T09:14:01-05:00",
-          "detected_at": "2026-11-03T23:17:57.525458+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
-            "published_at": "2026-11-02T09:14:01-05:00",
-            "form": "10-Q",
-            "items": "",
-            "accession_number": "0001819989-26-000050",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
-              "published_at": "2026-11-02T09:14:01-05:00",
-              "form": "10-Q",
-              "items": "",
-              "accession_number": "0001819989-26-000050",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:CIFR:0001819989-26-000050"
-          ],
-          "dedupe_key": "CIFR:periodic_report:41195ec14aaf228a"
-        },
-        {
-          "event_id": "technical:CIFR:price-move:2026-11-03",
-          "ticker": "CIFR",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +18.5%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +18.5% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-03T23:17:57.525499+00:00",
-          "detected_at": "2026-11-03T23:17:57.525501+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:CIFR:price-move:2026-11-03"
-          ],
-          "dedupe_key": "CIFR:price_move:206ae050df13ae12"
-        },
-        {
-          "event_id": "sec:CIFR:0001819989-26-000047",
-          "ticker": "CIFR",
-          "event_type": "sec_filing",
-          "event_subtype": "current_report",
-          "headline": "New 8-K current report",
-          "summary": "A current report was filed and requires item-level review.",
-          "why_today": "A current report was filed and requires item-level review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-02T07:17:40-05:00",
-          "detected_at": "2026-11-03T23:17:57.525482+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000047/cifr-20261102.htm",
-            "published_at": "2026-11-02T07:17:40-05:00",
-            "form": "8-K",
-            "items": "",
-            "accession_number": "0001819989-26-000047",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 78,
-          "priority": "Risk",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000047/cifr-20261102.htm",
-              "published_at": "2026-11-02T07:17:40-05:00",
-              "form": "8-K",
-              "items": "",
-              "accession_number": "0001819989-26-000047",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:CIFR:0001819989-26-000047"
-          ],
-          "dedupe_key": "CIFR:current_report:569aac5efccaa4a4"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000050/cifr-20260930.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "periodic_report",
-      "signals": [
-        "A new periodic financial report is available for review.",
-        "The stock moved +18.5% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-03T23:19:50+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 8.13,
-        "current_price": 8.13,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
     {
       "ticker": "OSCR",
       "name": "Oscar Health, Inc.",
@@ -385,7 +186,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-10-31T12:22:42+00:00",
-        "active_days": 3
+        "active_days": 4
       },
       "impact": {
         "baseline_price": 30.36,
@@ -583,7 +384,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-10-31T06:03:46+00:00",
-        "active_days": 3
+        "active_days": 4
       },
       "impact": {
         "baseline_price": 505.18,
@@ -606,22 +407,17 @@
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "RKLB",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
+      "ticker": "HOOD",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
+      "ticker": "TSLA",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -641,7 +437,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 4,
+    "technical_metric_repair_count": 5,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -650,19 +446,19 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 236,
-      "canonical_rows": 236,
+      "rows": 238,
+      "canonical_rows": 238,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 235,
+      "policy_reject_rows": 237,
       "allowed_rows": 1,
-      "rejected_rows": 235
+      "rejected_rows": 237
     },
     "attention_policy_gate": {
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 24,
-      "accepted_events": 24,
+      "evaluated_events": 18,
+      "accepted_events": 18,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -684,22 +480,22 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 4
+    "total": 5
   },
   "technical_watch": [
     {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
+      "ticker": "CIFR",
+      "name": "Cipher Mining Inc.",
       "portfolio_status": "holding",
-      "role": "Energy storage",
+      "role": "Digital infrastructure",
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +8.5% today."
+        "The stock moved +18.5% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-03T23:17:57.491839+00:00",
+      "event_time": "2026-11-04T06:12:14.134919+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -708,23 +504,23 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 1.91,
-      "day_change_pct": 8.5227,
-      "relative_volume": 0.75,
+      "price": 8.13,
+      "day_change_pct": 18.5131,
+      "relative_volume": 1.08,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:EOSE:price-move:2026-11-03",
-          "ticker": "EOSE",
+          "event_id": "technical:CIFR:price-move:2026-11-04",
+          "ticker": "CIFR",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +8.5%",
+          "headline": "Price +18.5%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.5% today.",
+          "why_today": "The stock moved +18.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-03T23:17:57.491839+00:00",
-          "detected_at": "2026-11-03T23:17:57.491843+00:00",
+          "event_time": "2026-11-04T06:12:14.134919+00:00",
+          "detected_at": "2026-11-04T06:12:14.134928+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -747,9 +543,109 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:EOSE:price-move:2026-11-03"
+            "technical:CIFR:price-move:2026-11-04"
           ],
-          "dedupe_key": "EOSE:price_move:7c2962ea35d8ddf9",
+          "dedupe_key": "CIFR:price_move:ba626f400f61f2c2",
+          "technical_score": 18.0,
+          "rsi14": 24.07,
+          "pct_vs_ema20": -18.37,
+          "pct_vs_ema200": -50.91,
+          "volume_ratio20": 1.08,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +18.5% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-04T06:14:21+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 8.13,
+        "current_price": 8.13,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +8.5% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-04T06:12:14.082845+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 1.91,
+      "day_change_pct": 8.5227,
+      "relative_volume": 0.75,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-move:2026-11-04",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +8.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +8.5% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-04T06:12:14.082845+00:00",
+          "detected_at": "2026-11-04T06:12:14.082854+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-move:2026-11-04"
+          ],
+          "dedupe_key": "EOSE:price_move:7e150df8a1769e3e",
           "technical_score": 14.0,
           "rsi14": 32.96,
           "pct_vs_ema20": -10.75,
@@ -773,7 +669,7 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "first_seen_at": "2026-11-04T06:14:21+00:00",
         "active_days": 0
       },
       "impact": {
@@ -799,7 +695,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-03T23:17:57.372072+00:00",
+      "event_time": "2026-11-04T06:12:13.886546+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -814,7 +710,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:IREN:price-move:2026-11-03",
+          "event_id": "technical:IREN:price-move:2026-11-04",
           "ticker": "IREN",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -823,8 +719,8 @@
           "why_today": "The stock moved +11.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-03T23:17:57.372072+00:00",
-          "detected_at": "2026-11-03T23:17:57.372076+00:00",
+          "event_time": "2026-11-04T06:12:13.886546+00:00",
+          "detected_at": "2026-11-04T06:12:13.886557+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -847,9 +743,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:IREN:price-move:2026-11-03"
+            "technical:IREN:price-move:2026-11-04"
           ],
-          "dedupe_key": "IREN:price_move:24749c8d15cb6e1e",
+          "dedupe_key": "IREN:price_move:80e0d59f665d0426",
           "technical_score": 9.0,
           "rsi14": 27.59,
           "pct_vs_ema20": -16.98,
@@ -873,7 +769,7 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "first_seen_at": "2026-11-04T06:14:21+00:00",
         "active_days": 0
       },
       "impact": {
@@ -899,7 +795,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-03T23:17:57.567799+00:00",
+      "event_time": "2026-11-04T06:12:14.200991+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -914,7 +810,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:RR:price-move:2026-11-03",
+          "event_id": "technical:RR:price-move:2026-11-04",
           "ticker": "RR",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -923,8 +819,8 @@
           "why_today": "The stock moved +9.5% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-03T23:17:57.567799+00:00",
-          "detected_at": "2026-11-03T23:17:57.567802+00:00",
+          "event_time": "2026-11-04T06:12:14.200991+00:00",
+          "detected_at": "2026-11-04T06:12:14.200999+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -947,9 +843,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:RR:price-move:2026-11-03"
+            "technical:RR:price-move:2026-11-04"
           ],
-          "dedupe_key": "RR:price_move:57c2954b869e96ae",
+          "dedupe_key": "RR:price_move:6791c860027c79a8",
           "technical_score": 16.0,
           "rsi14": 17.02,
           "pct_vs_ema20": -24.44,
@@ -973,7 +869,7 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "first_seen_at": "2026-11-04T06:14:21+00:00",
         "active_days": 0
       },
       "impact": {
@@ -999,7 +895,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-03T23:17:57.618679+00:00",
+      "event_time": "2026-11-04T06:12:14.279687+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1014,7 +910,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:TE:price-move:2026-11-03",
+          "event_id": "technical:TE:price-move:2026-11-04",
           "ticker": "TE",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -1023,8 +919,8 @@
           "why_today": "The stock moved +10.9% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-03T23:17:57.618679+00:00",
-          "detected_at": "2026-11-03T23:17:57.618683+00:00",
+          "event_time": "2026-11-04T06:12:14.279687+00:00",
+          "detected_at": "2026-11-04T06:12:14.279694+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1047,9 +943,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:TE:price-move:2026-11-03"
+            "technical:TE:price-move:2026-11-04"
           ],
-          "dedupe_key": "TE:price_move:92ec32bdc4c5728f",
+          "dedupe_key": "TE:price_move:3486648f0e5c92a7",
           "technical_score": 17.0,
           "rsi14": 38.52,
           "pct_vs_ema20": -0.35,
@@ -1073,13 +969,13 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-03T23:19:50+00:00",
+        "first_seen_at": "2026-11-04T06:14:21+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 2.83,
+        "baseline_price": 2.84,
         "current_price": 2.84,
-        "change_pct": 0.35,
+        "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
@@ -1097,6 +993,46 @@
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:CIFR:0001819989-26-000050",
+      "ticker": "CIFR",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-04T06:14:21+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:price-move:2026-11-03",
+      "ticker": "EOSE",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-04T06:14:21+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IREN:price-move:2026-11-03",
+      "ticker": "IREN",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-04T06:14:21+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:RR:price-move:2026-11-03",
+      "ticker": "RR",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-04T06:14:21+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:TE:price-move:2026-11-03",
+      "ticker": "TE",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-04T06:14:21+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "event:OKLO:db1ff37d23e1feee",
       "ticker": "OKLO",
@@ -1135,46 +1071,6 @@
       "event_subtype": "transaction",
       "priority": "Critical",
       "resolved_at": "2026-11-03T23:19:50+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TEM:price-move:2026-11-03",
-      "ticker": "TEM",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-03T17:05:00+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-drop:2026-11-03",
-      "ticker": "ASTS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-03T17:05:00+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:INDI:price-drop:2026-11-03",
-      "ticker": "INDI",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-03T17:05:00+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TEM:price-move:2026-11-02",
-      "ticker": "TEM",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-03T06:45:59+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-drop:2026-11-02",
-      "ticker": "ASTS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-03T06:45:59+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
