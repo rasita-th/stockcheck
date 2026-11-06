@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-02T00:41:03+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW",
-            "SNPS",
-            "SOFI",
-            "SOXX",
-            "SPCE",
-            "SPGI",
-            "SPIR",
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER"
-          ],
-          "sec_filings": [
-            "EOSE",
-            "PLTR",
-            "UUUU",
-            "PSIX",
-            "CIFR",
-            "RXRX",
-            "JEPQ",
-            "SYM",
-            "TMC",
-            "OSCR",
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN",
-            "COST",
-            "BEAM"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-02T00:40:17+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2522,9 +2459,70 @@
       "mode": "events",
       "started_at": "2026-11-06T01:31:51+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT"
+          ],
+          "company_profile": [
+            "ROP",
+            "ROST",
+            "RR",
+            "RTX"
+          ],
+          "recommendation_trends": [
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS",
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX",
+            "PUMP",
+            "PWR",
+            "PYPL",
+            "QCOM",
+            "QQQI",
+            "RACE",
+            "RBLX",
+            "RBRK",
+            "RDW",
+            "REGN",
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-06T07:23:11+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-06T07:22:23+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-06T01:32:39+00:00"
+  "updated_at": "2026-11-06T07:23:12+00:00"
 }
