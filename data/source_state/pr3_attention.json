@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-05T19:57:15+00:00",
+  "updated_at": "2026-11-06T01:34:47+00:00",
   "items": {
     "event:OKLO:db1ff37d23e1feee": {
       "ticker": "OKLO",
@@ -9,34 +9,22 @@
       "priority_score": 100,
       "personal_priority_score": 116,
       "first_seen_at": "2026-11-04T21:20:33+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 3,
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 2,
       "baseline_price": 22.11,
-      "current_price": 19.56
+      "current_price": 19.195
     },
-    "sec:GOOGL:0001193125-26-447343": {
-      "ticker": "GOOGL",
-      "event_subtype": "capital_raise",
+    "company_ir:OSCR:3781c82fee7f84bd": {
+      "ticker": "OSCR",
+      "event_subtype": "earnings_reported",
       "priority": "Critical",
       "priority_score": 100,
-      "personal_priority_score": 114,
-      "first_seen_at": "2026-11-05T19:57:15+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 1,
-      "baseline_price": 285.31,
-      "current_price": 285.31
-    },
-    "event:ORCL:faee2aadb7819d26": {
-      "ticker": "ORCL",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "priority_score": 100,
-      "personal_priority_score": 114,
-      "first_seen_at": "2026-11-05T19:57:15+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 3,
-      "baseline_price": 116.41,
-      "current_price": 116.41
+      "personal_priority_score": 116,
+      "first_seen_at": "2026-10-31T12:22:42+00:00",
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 2,
+      "baseline_price": 30.36,
+      "current_price": 33.19
     },
     "company_ir:AMD:0453a8f863b62b77": {
       "ticker": "AMD",
@@ -45,22 +33,10 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-10-31T06:03:46+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 6,
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 5,
       "baseline_price": 505.18,
-      "current_price": 419.99
-    },
-    "company_ir:OSCR:3781c82fee7f84bd": {
-      "ticker": "OSCR",
-      "event_subtype": "earnings_reported",
-      "priority": "Critical",
-      "priority_score": 97,
-      "personal_priority_score": 113,
-      "first_seen_at": "2026-10-31T12:22:42+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 1,
-      "baseline_price": 30.36,
-      "current_price": 34.66
+      "current_price": 402.51
     },
     "company_ir:UUUU:db5a0d0f82b5dc11": {
       "ticker": "UUUU",
@@ -69,10 +45,22 @@
       "priority_score": 100,
       "personal_priority_score": 113,
       "first_seen_at": "2026-11-04T21:20:33+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
-      "event_count": 2,
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 3,
       "baseline_price": 7.205,
-      "current_price": 6.565
+      "current_price": 6.58
+    },
+    "technical:CIFR:price-drop:2026-11-05": {
+      "ticker": "CIFR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-11-06T01:34:47+00:00",
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 2,
+      "baseline_price": 5.54,
+      "current_price": 5.54
     },
     "technical:ASTS:price-drop:2026-11-05": {
       "ticker": "ASTS",
@@ -81,13 +69,41 @@
       "priority_score": 99,
       "personal_priority_score": 107,
       "first_seen_at": "2026-11-05T19:57:15+00:00",
-      "last_seen_at": "2026-11-05T19:57:15+00:00",
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
       "event_count": 1,
       "baseline_price": 31.35,
-      "current_price": 31.35
+      "current_price": 30.12
+    },
+    "technical:BMNR:price-drop:2026-11-05": {
+      "ticker": "BMNR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-11-06T01:34:47+00:00",
+      "last_seen_at": "2026-11-06T01:34:47+00:00",
+      "event_count": 1,
+      "baseline_price": 18.98,
+      "current_price": 18.98
     }
   },
   "resolved": [
+    {
+      "history_key": "sec:GOOGL:0001193125-26-447343",
+      "ticker": "GOOGL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-06T01:34:47+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "event:ORCL:faee2aadb7819d26",
+      "ticker": "ORCL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-06T01:34:47+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:EOSE:price-move:2026-11-05",
       "ticker": "EOSE",
@@ -228,22 +244,6 @@
       "history_key": "sec:GOOGL:0001193125-26-442515",
       "ticker": "GOOGL",
       "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "resolved_at": "2026-11-03T23:19:50+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "event:ORCL:4d7479d45c32d381",
-      "ticker": "ORCL",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "resolved_at": "2026-11-03T23:19:50+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "sec:TEM:0001193125-26-442624",
-      "ticker": "TEM",
-      "event_subtype": "periodic_report",
       "priority": "Critical",
       "resolved_at": "2026-11-03T23:19:50+00:00",
       "label_th": "ออกจากรายการแล้ว"
