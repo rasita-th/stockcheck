@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB",
-            "ALNY"
-          ],
-          "company_profile": [
-            "PANW",
-            "PATH",
-            "PAYX",
-            "PCAR"
-          ],
-          "recommendation_trends": [
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA",
-            "CDNS",
-            "CEG",
-            "CHTR",
-            "CIFR"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-02T06:47:31+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-02T06:46:45+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2520,9 +2459,72 @@
       "mode": "analyst",
       "started_at": "2026-11-06T07:22:23+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-06T10:48:30+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "ORLY",
+            "OSCR",
+            "OSS",
+            "PACB",
+            "PANW",
+            "PATH",
+            "PAYX",
+            "PCAR",
+            "PDD",
+            "PEP",
+            "PERI",
+            "PINS",
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX",
+            "PUMP",
+            "PWR"
+          ],
+          "sec_filings": [
+            "NASA",
+            "INDI",
+            "RKLB",
+            "AMZN",
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR",
+            "NBIS",
+            "TEM",
+            "MP",
+            "IONQ"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-06T10:47:43+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-06T07:23:12+00:00"
+  "updated_at": "2026-11-06T10:48:31+00:00"
 }
