@@ -1283,69 +1283,6 @@
         "row_count": 1500,
         "status": "ok"
       },
-      "completed_at": "2026-11-03T17:02:16+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "AMGN",
-            "AMPH",
-            "AMSC",
-            "AMZN",
-            "ANET",
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS",
-            "AVAV",
-            "AVEX",
-            "AVGO",
-            "AXON"
-          ],
-          "sec_filings": [
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR",
-            "NBIS",
-            "TEM",
-            "MP",
-            "IONQ",
-            "AMD",
-            "ORCL",
-            "EQT",
-            "TMDX",
-            "EOSE",
-            "PLTR",
-            "UUUU",
-            "PSIX"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-03T17:01:28+00:00",
-      "universe_count": 305
-    },
-    {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
       "completed_at": "2026-11-03T23:17:55+00:00",
       "events": {
         "calls_used": 36,
@@ -2522,9 +2459,70 @@
       "mode": "events",
       "started_at": "2026-11-07T10:00:49+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM"
+          ],
+          "company_profile": [
+            "SMCI",
+            "SMH",
+            "SIDU",
+            "SITM"
+          ],
+          "recommendation_trends": [
+            "TXN",
+            "TXT",
+            "U",
+            "UFO",
+            "UNH",
+            "UUUU",
+            "VCYT",
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD",
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-07T13:33:03+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-07T13:32:15+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-07T10:01:39+00:00"
+  "updated_at": "2026-11-07T13:33:04+00:00"
 }
