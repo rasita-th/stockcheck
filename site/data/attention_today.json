@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-08T13:20:34+00:00",
+  "updated_at": "2026-11-08T19:42:24+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -16,13 +16,13 @@
   },
   "source_health": {
     "sec": {
-      "status": "ok",
+      "status": "partial",
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 35,
+      "ok": 34,
       "partial": 0,
-      "errors": 0,
+      "errors": 1,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -30,25 +30,25 @@
         "missing": 0
       },
       "transport": {
-        "status": "ok",
-        "ok": 35,
-        "errors": 0
+        "status": "partial",
+        "ok": 34,
+        "errors": 1
       }
     },
     "earnings": {
       "status": "partial",
-      "rows": 246,
+      "rows": 252,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 246,
+      "canonical_rows": 252,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 245,
+      "policy_reject_rows": 251,
       "allowed_rows": 1,
-      "rejected_rows": 245
+      "rejected_rows": 251
     },
     "market_data": {
       "status": "ok",
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "partial",
+      "status": "optional_unavailable",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 0,
+      "unavailable": 10,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -181,8 +181,8 @@
           "why_today": "The stock moved +11.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:33.899070+00:00",
-          "detected_at": "2026-11-08T13:18:33.899076+00:00",
+          "event_time": "2026-11-08T19:40:27.295969+00:00",
+          "detected_at": "2026-11-08T19:40:27.295973+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -244,18 +244,23 @@
   ],
   "errors": [
     {
+      "source": "sec",
+      "ticker": "*",
+      "message": "SEC transport unavailable for 1 applicable tickers"
+    },
+    {
       "source": "ir",
-      "ticker": "RKLB",
+      "ticker": "TEM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "HOOD",
+      "ticker": "TMDX",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
+      "ticker": "EOSE",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -284,12 +289,12 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 246,
-      "canonical_rows": 246,
+      "rows": 252,
+      "canonical_rows": 252,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 245,
+      "policy_reject_rows": 251,
       "allowed_rows": 1,
-      "rejected_rows": 245
+      "rejected_rows": 251
     },
     "attention_policy_gate": {
       "phase": "P5",
@@ -333,7 +338,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:33.961826+00:00",
+      "event_time": "2026-11-08T19:40:27.362083+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -357,8 +362,8 @@
           "why_today": "The stock moved +17.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:33.961826+00:00",
-          "detected_at": "2026-11-08T13:18:33.961829+00:00",
+          "event_time": "2026-11-08T19:40:27.362083+00:00",
+          "detected_at": "2026-11-08T19:40:27.362087+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -433,7 +438,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:34.055340+00:00",
+      "event_time": "2026-11-08T19:40:27.460885+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -457,8 +462,8 @@
           "why_today": "The stock moved +33.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:34.055340+00:00",
-          "detected_at": "2026-11-08T13:18:34.055345+00:00",
+          "event_time": "2026-11-08T19:40:27.460885+00:00",
+          "detected_at": "2026-11-08T19:40:27.460888+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -533,7 +538,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:33.891280+00:00",
+      "event_time": "2026-11-08T19:40:27.287704+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -557,8 +562,8 @@
           "why_today": "The stock moved +23.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:33.891280+00:00",
-          "detected_at": "2026-11-08T13:18:33.891285+00:00",
+          "event_time": "2026-11-08T19:40:27.287704+00:00",
+          "detected_at": "2026-11-08T19:40:27.287709+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -633,7 +638,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:33.820883+00:00",
+      "event_time": "2026-11-08T19:40:27.203415+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -657,8 +662,8 @@
           "why_today": "The stock moved +20.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:33.820883+00:00",
-          "detected_at": "2026-11-08T13:18:33.820890+00:00",
+          "event_time": "2026-11-08T19:40:27.203415+00:00",
+          "detected_at": "2026-11-08T19:40:27.203419+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -733,7 +738,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:34.047749+00:00",
+      "event_time": "2026-11-08T19:40:27.452607+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -757,8 +762,8 @@
           "why_today": "The stock moved +9.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:34.047749+00:00",
-          "detected_at": "2026-11-08T13:18:34.047753+00:00",
+          "event_time": "2026-11-08T19:40:27.452607+00:00",
+          "detected_at": "2026-11-08T19:40:27.452610+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -832,7 +837,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-08T13:18:33.836179+00:00",
+      "event_time": "2026-11-08T19:40:27.219979+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -856,8 +861,8 @@
           "why_today": "The stock moved +22.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-08T13:18:33.836179+00:00",
-          "detected_at": "2026-11-08T13:18:33.836184+00:00",
+          "event_time": "2026-11-08T19:40:27.219979+00:00",
+          "detected_at": "2026-11-08T19:40:27.219983+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",

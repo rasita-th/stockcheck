@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS"
-          ],
-          "company_profile": [
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN"
-          ],
-          "recommendation_trends": [
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR",
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA",
-            "NBIS"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-05T07:22:25+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-05T07:21:38+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2518,9 +2457,72 @@
       "mode": "analyst",
       "started_at": "2026-11-08T18:04:26+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-08T19:40:24+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "CACI",
+            "CAMT",
+            "CBRS",
+            "CCEP",
+            "CDNA",
+            "CDNS",
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL"
+          ],
+          "sec_filings": [
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-08T19:39:37+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-08T18:05:15+00:00"
+  "updated_at": "2026-11-08T19:40:25+00:00"
 }
