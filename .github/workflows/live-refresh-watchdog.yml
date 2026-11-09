@@ -1,6 +1,14 @@
 name: Maintain Live Data Freshness
 
 on:
+  # A second ingress: another successful data producer can recover stale
+  # quotes when GitHub delays or drops the live producer's scheduled runs.
+  workflow_run:
+    workflows:
+      - "Refresh Market Pulse v9.6"
+      - "Refresh Finnhub Earnings Events"
+      - "Refresh Finnhub Analyst Features"
+    types: [completed]
   schedule:
     # Recovery seed only. The completion chain is the primary cadence owner.
     - cron: "13,33,53 * * * 1-5"
