@@ -22,7 +22,10 @@ class LiveRefreshWatchdogWorkflowTests(unittest.TestCase):
         self.assertIn("timeout-minutes: 28", workflow)
         self.assertNotIn("contents: write", workflow)
         self.assertNotIn("git push", workflow)
-        self.assertNotIn("workflow_run:", workflow)
+        self.assertIn("workflow_run:", workflow)
+        self.assertIn("Refresh Market Pulse v9.6", workflow)
+        self.assertIn("Refresh Finnhub Earnings Events", workflow)
+        self.assertIn("Refresh Finnhub Analyst Features", workflow)
 
     def test_existing_producer_remains_the_only_live_data_producer(self):
         producer = (ROOT / ".github/workflows/refresh-live-v9-1.yml").read_text(
