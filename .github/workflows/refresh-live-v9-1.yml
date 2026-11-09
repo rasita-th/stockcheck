@@ -48,14 +48,30 @@ jobs:
               branch: "main",
               per_page: 20,
             });
+            let quoteTimestamp = null;
+            try {
+              const file = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: "data/generated/quote_latest.json",
+                ref: "main",
+              });
+              if (!Array.isArray(file.data) && file.data.type === "file") {
+                const payload = JSON.parse(Buffer.from(file.data.content, "base64").toString("utf8"));
+                quoteTimestamp = payload.generated_at || payload.market_as_of || null;
+              }
+            } catch (error) {
+              core.warning(`Canonical quote receipt unavailable: ${error.message}`);
+            }
             const decision = resolveProducerAdmission({
               eventName: context.eventName,
               eventSchedule: context.payload.schedule || "",
               currentRunId: context.runId,
               runs: response.data.workflow_runs,
+              quoteTimestamp,
               now: new Date(),
             });
-            core.info(`Producer admission: ${JSON.stringify(decision)}`);
+            core.info(`Producer admission: ${JSON.stringify({ ...decision, quoteTimestamp })}`);
             core.setOutput("run_refresh", decision.allow ? "true" : "false");
             if (decision.allow) return;
 
@@ -182,6 +198,8 @@ jobs:
           node --check site/drawdown-screener-v10-9.js
           cmp site/drawdown-screener-v10-9.js static/drawdown-screener-v10-9.js
           cmp site/drawdown-screener-v10-9.css static/drawdown-screener-v10-9.css
+          node tests/live_refresh_dedupe.test.js
+          node tests/live_refresh_watchdog.test.js
           node tests/technical_shards_runtime.test.js
           node tests/drawdown_screener_runtime.test.js
           python scripts/verify_drawdown_snapshot.py \
