@@ -1,0 +1,26 @@
+name: Validate Live Producer Receipt
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/report-live-producer-status.yml"
+      - ".github/workflows/validate-live-producer-receipt.yml"
+      - "scripts/live-producer-execution.js"
+      - "tests/live_producer_execution.test.js"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate producer receipt policy
+        run: |
+          node --check scripts/live-producer-execution.js
+          node tests/live_producer_execution.test.js
