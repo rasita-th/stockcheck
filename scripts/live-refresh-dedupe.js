@@ -26,6 +26,7 @@ function resolveProducerAdmission({
   eventSchedule,
   currentRunId,
   runs,
+  quoteTimestamp = null,
   now = new Date(),
 }) {
   if (eventName !== "schedule") {
@@ -53,10 +54,20 @@ function resolveProducerAdmission({
   }
 
   const nowMs = now.getTime();
+  // Workflow success is not a data receipt: a successful no-op must never
+  // suppress the next scheduled refresh. Verify both quote age and lineage.
+  const quoteMs = Date.parse(String(quoteTimestamp || ""));
+  const quoteAgeMs = nowMs - quoteMs;
+  const quoteIsFresh = Number.isFinite(quoteMs)
+    && quoteAgeMs >= 0 && quoteAgeMs <= 15 * 60 * 1000;
   const recentSuccess = runs.find((run) => {
     if (Number(run.id) === currentId || run.status !== "completed" || run.conclusion !== "success") {
       return false;
     }
+    const runStartedMs = Date.parse(run.run_started_at || run.created_at || "");
+    if (!quoteIsFresh || !Number.isFinite(runStartedMs)) return false;
+    // A quote that pre-dates the producer is not evidence it generated data.
+    if (quoteMs < runStartedMs - 2 * 60 * 1000) return false;
     if (!isMarketSession(run.run_started_at || run.created_at)) return false;
     const completedMs = Date.parse(run.completed_at || run.updated_at || "");
     const ageMs = nowMs - completedMs;
