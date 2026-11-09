@@ -47,6 +47,7 @@ assert.equal(
       run_started_at: "2026-08-11T16:23:00Z",
       completed_at: "2026-08-11T16:25:00Z",
     }],
+    quoteTimestamp: "2026-08-11T16:24:00Z",
   }).reason,
   "recent_success",
 );
@@ -97,5 +98,45 @@ assert.equal(
 
 assert.equal(isMarketSession("2026-08-11T13:25:00Z"), true);
 assert.equal(isMarketSession("2026-08-11T13:24:00Z"), false);
+
+
+assert.equal(
+  decide({
+    runs: [{
+      id: 198, status: "completed", conclusion: "success",
+      run_started_at: "2026-08-11T16:23:00Z",
+      completed_at: "2026-08-11T16:25:00Z",
+    }],
+    quoteTimestamp: "2026-08-11T13:00:00Z",
+  }).allow,
+  true,
+  "a green workflow with stale canonical data must NOT block a due refresh",
+);
+
+assert.equal(
+  decide({
+    runs: [{
+      id: 198, status: "completed", conclusion: "success",
+      run_started_at: "2026-08-11T16:23:00Z",
+      completed_at: "2026-08-11T16:25:00Z",
+    }],
+    quoteTimestamp: null,
+  }).allow,
+  true,
+  "missing canonical quote receipt must not count as refreshed data",
+);
+
+assert.equal(
+  decide({
+    runs: [{
+      id: 198, status: "completed", conclusion: "success",
+      run_started_at: "2026-08-11T16:23:00Z",
+      completed_at: "2026-08-11T16:25:00Z",
+    }],
+    quoteTimestamp: "2026-08-11T16:10:00Z",
+  }).allow,
+  true,
+  "fresh-looking quote data generated before the candidate producer must not count as its successful output",
+);
 
 console.log("live refresh delayed-schedule admission policy passed");

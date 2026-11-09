@@ -4,6 +4,13 @@ on:
   pull_request:
     paths:
       - ".github/workflows/refresh-live-v9-1.yml"
+      - ".github/workflows/live-refresh-watchdog.yml"
+      - "scripts/live-refresh-dedupe.js"
+      - "scripts/live-refresh-watchdog.js"
+      - "tests/live_refresh_dedupe.test.js"
+      - "tests/live_refresh_watchdog.test.js"
+      - "tests/test_live_refresh_watchdog_workflow.py"
+      - "tests/test_live_refresh_mode.py"
       - ".github/workflows/validate-attention-p0.yml"
       - ".github/workflows/deploy-pages.yml"
       - ".github/workflows/deploy-pages-after-pr3.yml"
@@ -118,6 +125,9 @@ jobs:
           python -m unittest tests.test_screener_snapshot -v
           node tests/technical_shards_runtime.test.js
           node tests/drawdown_screener_runtime.test.js
+          node tests/live_refresh_dedupe.test.js
+          node tests/live_refresh_watchdog.test.js
+          python -m unittest tests.test_live_refresh_watchdog_workflow tests.test_live_refresh_mode -v
       - name: Build deterministic market-wide fixtures
         env:
           EARNINGS_RADAR_DAYS_BACK: "1"
