@@ -24,7 +24,8 @@ permissions:
 jobs:
   smoke:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+    # Playwright 1.55.0 chromium install does not support ubuntu26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       SMOKE_OUT_DIR: production-smoke-artifacts
