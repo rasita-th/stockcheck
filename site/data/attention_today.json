@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-09T22:20:44+00:00",
+  "updated_at": "2026-11-10T07:15:22+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -37,22 +37,22 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 256,
+      "rows": 257,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 256,
+      "canonical_rows": 257,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 255,
+      "policy_reject_rows": 256,
       "allowed_rows": 1,
-      "rejected_rows": 255
+      "rejected_rows": 256
     },
     "market_data": {
       "status": "ok",
-      "rows": 406,
+      "rows": 405,
       "source": "technical.json"
     },
     "sec_ticker_map": {
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 8,
+      "ok": 4,
       "partial": 0,
-      "errors": 2,
+      "errors": 6,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 2,
+      "unavailable": 8,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -109,7 +109,7 @@
       "priority_score": 100,
       "why_today": [
         "A earnings reported event was detected and requires source review.",
-        "The stock moved +12.1% today."
+        "The stock moved +13.4% today."
       ],
       "event_type": "earnings",
       "event_subtype": "earnings_reported",
@@ -172,17 +172,17 @@
           "priority": "Critical"
         },
         {
-          "event_id": "technical:AMD:price-move:2026-11-09",
+          "event_id": "technical:AMD:price-move:2026-11-10",
           "ticker": "AMD",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +12.1%",
+          "headline": "Price +13.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +12.1% today.",
+          "why_today": "The stock moved +13.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.907251+00:00",
-          "detected_at": "2026-11-09T22:18:34.907255+00:00",
+          "event_time": "2026-11-10T07:13:12.486035+00:00",
+          "detected_at": "2026-11-10T07:13:12.486039+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -205,9 +205,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:AMD:price-move:2026-11-09"
+            "technical:AMD:price-move:2026-11-10"
           ],
-          "dedupe_key": "AMD:price_move:0980ccbe7e245955"
+          "dedupe_key": "AMD:price_move:68d05e420dc82d66"
         }
       ],
       "actions": {
@@ -220,14 +220,14 @@
       "primary_trigger": "earnings_reported",
       "signals": [
         "A earnings reported event was detected and requires source review.",
-        "The stock moved +12.1% today."
+        "The stock moved +13.4% today."
       ],
       "change": {
         "status": "ongoing",
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-11-07T10:03:57+00:00",
-        "active_days": 2
+        "active_days": 3
       },
       "impact": {
         "baseline_price": 449.03,
@@ -250,12 +250,32 @@
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
+      "ticker": "TMDX",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "EOSE",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "PSIX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "CIFR",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -284,12 +304,12 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 256,
-      "canonical_rows": 256,
+      "rows": 257,
+      "canonical_rows": 257,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 255,
+      "policy_reject_rows": 256,
       "allowed_rows": 1,
-      "rejected_rows": 255
+      "rejected_rows": 256
     },
     "attention_policy_gate": {
       "phase": "P5",
@@ -333,7 +353,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:34.830793+00:00",
+      "event_time": "2026-11-10T07:13:12.385139+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -348,7 +368,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:ASTS:price-move:2026-11-09",
+          "event_id": "technical:ASTS:price-move:2026-11-10",
           "ticker": "ASTS",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -357,8 +377,8 @@
           "why_today": "The stock moved +14.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.830793+00:00",
-          "detected_at": "2026-11-09T22:18:34.830798+00:00",
+          "event_time": "2026-11-10T07:13:12.385139+00:00",
+          "detected_at": "2026-11-10T07:13:12.385144+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -381,9 +401,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:ASTS:price-move:2026-11-09"
+            "technical:ASTS:price-move:2026-11-10"
           ],
-          "dedupe_key": "ASTS:price_move:4fe11d28a2fccffc",
+          "dedupe_key": "ASTS:price_move:fb032d107d3a34aa",
           "technical_score": 29.0,
           "rsi14": 39.89,
           "pct_vs_ema20": -9.38,
@@ -407,13 +427,13 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-09T22:20:44+00:00",
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 37.07,
+        "baseline_price": 36.89,
         "current_price": 36.89,
-        "change_pct": -0.49,
+        "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
@@ -433,7 +453,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:35.075092+00:00",
+      "event_time": "2026-11-10T07:13:12.712591+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -448,7 +468,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:INDI:price-move:2026-11-09",
+          "event_id": "technical:INDI:price-move:2026-11-10",
           "ticker": "INDI",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -457,8 +477,8 @@
           "why_today": "The stock moved +21.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:35.075092+00:00",
-          "detected_at": "2026-11-09T22:18:35.075096+00:00",
+          "event_time": "2026-11-10T07:13:12.712591+00:00",
+          "detected_at": "2026-11-10T07:13:12.712596+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -481,9 +501,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:INDI:price-move:2026-11-09"
+            "technical:INDI:price-move:2026-11-10"
           ],
-          "dedupe_key": "INDI:price_move:058109e5287937a8",
+          "dedupe_key": "INDI:price_move:7498773a687d39e0",
           "technical_score": 50.0,
           "rsi14": 54.67,
           "pct_vs_ema20": 16.67,
@@ -504,17 +524,17 @@
         "The stock moved +21.8% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-09T11:27:53+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 1.805,
+        "baseline_price": 2.205,
         "current_price": 2.205,
-        "change_pct": 22.16,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 22.2%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -533,7 +553,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:34.898944+00:00",
+      "event_time": "2026-11-10T07:13:12.474879+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -548,7 +568,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:IONQ:price-move:2026-11-09",
+          "event_id": "technical:IONQ:price-move:2026-11-10",
           "ticker": "IONQ",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -557,8 +577,8 @@
           "why_today": "The stock moved +8.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.898944+00:00",
-          "detected_at": "2026-11-09T22:18:34.898948+00:00",
+          "event_time": "2026-11-10T07:13:12.474879+00:00",
+          "detected_at": "2026-11-10T07:13:12.474883+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -581,9 +601,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:IONQ:price-move:2026-11-09"
+            "technical:IONQ:price-move:2026-11-10"
           ],
-          "dedupe_key": "IONQ:price_move:1c59a4402c17fd3b",
+          "dedupe_key": "IONQ:price_move:bc7d468220dd0b0f",
           "technical_score": 50.0,
           "rsi14": 53.92,
           "pct_vs_ema20": 8.7,
@@ -604,17 +624,17 @@
         "The stock moved +8.4% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-09T11:27:53+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 32.585,
+        "baseline_price": 35.35,
         "current_price": 35.35,
-        "change_pct": 8.49,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.5%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -633,7 +653,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:35.066611+00:00",
+      "event_time": "2026-11-10T07:13:12.701341+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -648,7 +668,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NASA:price-move:2026-11-09",
+          "event_id": "technical:NASA:price-move:2026-11-10",
           "ticker": "NASA",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -657,8 +677,8 @@
           "why_today": "The stock moved +9.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:35.066611+00:00",
-          "detected_at": "2026-11-09T22:18:35.066614+00:00",
+          "event_time": "2026-11-10T07:13:12.701341+00:00",
+          "detected_at": "2026-11-10T07:13:12.701346+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -681,9 +701,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NASA:price-move:2026-11-09"
+            "technical:NASA:price-move:2026-11-10"
           ],
-          "dedupe_key": "NASA:price_move:40e6fe93a93a43c2",
+          "dedupe_key": "NASA:price_move:525363927799ac02",
           "technical_score": 43.0,
           "rsi14": 49.17,
           "pct_vs_ema20": 1.15,
@@ -703,17 +723,17 @@
         "The stock moved +9.4% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-09T11:27:53+00:00",
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 19.29,
+        "baseline_price": 21.1,
         "current_price": 21.1,
-        "change_pct": 9.38,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 9.4%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -721,18 +741,18 @@
       ]
     },
     {
-      "ticker": "OKLO",
-      "name": "Oklo Inc.",
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
       "portfolio_status": "holding",
-      "role": "Advanced nuclear",
+      "role": "AI infrastructure",
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +13.9% today."
+        "The stock moved +9.3% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:34.839145+00:00",
+      "event_time": "2026-11-10T07:13:12.441591+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -741,23 +761,23 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 26.83,
-      "day_change_pct": 13.9278,
-      "relative_volume": 1.86,
+      "price": 141.5,
+      "day_change_pct": 9.2748,
+      "relative_volume": 0.74,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:OKLO:price-move:2026-11-09",
-          "ticker": "OKLO",
+          "event_id": "technical:NBIS:price-move:2026-11-10",
+          "ticker": "NBIS",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +13.9%",
+          "headline": "Price +9.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +13.9% today.",
+          "why_today": "The stock moved +9.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.839145+00:00",
-          "detected_at": "2026-11-09T22:18:34.839148+00:00",
+          "event_time": "2026-11-10T07:13:12.441591+00:00",
+          "detected_at": "2026-11-10T07:13:12.441595+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -780,9 +800,109 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:OKLO:price-move:2026-11-09"
+            "technical:NBIS:price-move:2026-11-10"
           ],
-          "dedupe_key": "OKLO:price_move:cc765486cb1f5b56",
+          "dedupe_key": "NBIS:price_move:0e2b5dc6bb8676a5",
+          "technical_score": 32.0,
+          "rsi14": 39.3,
+          "pct_vs_ema20": -12.99,
+          "pct_vs_ema200": -16.45,
+          "volume_ratio20": 0.74,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +9.3% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 141.5,
+        "current_price": 141.5,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "OKLO",
+      "name": "Oklo Inc.",
+      "portfolio_status": "holding",
+      "role": "Advanced nuclear",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +13.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-10T07:13:12.396246+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 26.83,
+      "day_change_pct": 13.9278,
+      "relative_volume": 1.86,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:OKLO:price-move:2026-11-10",
+          "ticker": "OKLO",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +13.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +13.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-10T07:13:12.396246+00:00",
+          "detected_at": "2026-11-10T07:13:12.396250+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:OKLO:price-move:2026-11-10"
+          ],
+          "dedupe_key": "OKLO:price_move:e4cd1819db06d5e4",
           "technical_score": 50.0,
           "rsi14": 46.63,
           "pct_vs_ema20": 0.45,
@@ -803,133 +923,81 @@
         "The stock moved +13.9% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-09T11:27:53+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 23.56,
-        "current_price": 26.83,
-        "change_pct": 13.88,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 13.9%"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy storage",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved +7.8% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:34.941123+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 1.875,
-      "day_change_pct": 7.7586,
-      "relative_volume": 0.9,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:EOSE:price-move:2026-11-09",
-          "ticker": "EOSE",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +7.8%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +7.8% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.941123+00:00",
-          "detected_at": "2026-11-09T22:18:34.941127+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:EOSE:price-move:2026-11-09"
-          ],
-          "dedupe_key": "EOSE:price_move:39e959229e11435f",
-          "technical_score": 22.0,
-          "rsi14": 41.63,
-          "pct_vs_ema20": -8.54,
-          "pct_vs_ema200": -70.47,
-          "volume_ratio20": 0.9,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +7.8% today."
-      ],
-      "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-09T22:20:44+00:00",
+        "first_seen_at": "2026-11-10T07:15:22+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 1.885,
-        "current_price": 1.875,
-        "change_pct": -0.53,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.5%"
+        "baseline_price": 26.83,
+        "current_price": 26.83,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 83,
+      "personal_priority_score": 107,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
     }
   ],
   "changes_summary": {
-    "new": 2,
+    "new": 6,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 5,
+    "ongoing": 1,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:ASTS:price-move:2026-11-09",
+      "ticker": "ASTS",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:price-move:2026-11-09",
+      "ticker": "EOSE",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:INDI:price-move:2026-11-09",
+      "ticker": "INDI",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IONQ:price-move:2026-11-09",
+      "ticker": "IONQ",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NASA:price-move:2026-11-09",
+      "ticker": "NASA",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:OKLO:price-move:2026-11-09",
+      "ticker": "OKLO",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-10T07:15:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:CIFR:price-move:2026-11-09",
       "ticker": "CIFR",
@@ -960,54 +1028,6 @@
       "event_subtype": "price_move",
       "priority": "Critical",
       "resolved_at": "2026-11-09T11:27:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:price-move:2026-11-08",
-      "ticker": "IONQ",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-09T11:27:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-move:2026-11-08",
-      "ticker": "IREN",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-09T11:27:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NASA:price-move:2026-11-08",
-      "ticker": "NASA",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-09T11:27:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OKLO:price-move:2026-11-08",
-      "ticker": "OKLO",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-09T11:27:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "event:OKLO:db1ff37d23e1feee",
-      "ticker": "OKLO",
-      "event_subtype": "earnings_reported",
-      "priority": "Critical",
-      "resolved_at": "2026-11-08T05:58:47+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-move:2026-11-07",
-      "ticker": "CIFR",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-08T05:58:47+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
