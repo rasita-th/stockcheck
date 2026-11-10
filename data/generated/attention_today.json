@@ -123,9 +123,9 @@
         "published_at": "2026-11-04T14:27:53+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 503.464,
-      "day_change_pct": 12.1201,
-      "relative_volume": 0.96,
+      "price": 509.01,
+      "day_change_pct": 13.3552,
+      "relative_volume": 1.74,
       "trigger_level": null,
       "events": [
         {
@@ -231,9 +231,9 @@
       },
       "impact": {
         "baseline_price": 449.03,
-        "current_price": 503.464,
-        "change_pct": 12.12,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 12.1%"
+        "current_price": 509.01,
+        "change_pct": 13.36,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 13.4%"
       },
       "personal_priority_score": 116,
       "personalization_reasons": [
@@ -329,7 +329,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +14.7% today."
+        "The stock moved +14.1% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -342,9 +342,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 37.07,
-      "day_change_pct": 14.6613,
-      "relative_volume": 0.84,
+      "price": 36.89,
+      "day_change_pct": 14.1045,
+      "relative_volume": 1.52,
       "trigger_level": null,
       "events": [
         {
@@ -352,9 +352,9 @@
           "ticker": "ASTS",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +14.7%",
+          "headline": "Price +14.1%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +14.7% today.",
+          "why_today": "The stock moved +14.1% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-09T22:18:34.830793+00:00",
@@ -384,11 +384,11 @@
             "technical:ASTS:price-move:2026-11-09"
           ],
           "dedupe_key": "ASTS:price_move:4fe11d28a2fccffc",
-          "technical_score": 27.0,
-          "rsi14": 40.23,
-          "pct_vs_ema20": -8.99,
-          "pct_vs_ema200": -46.37,
-          "volume_ratio20": 0.84,
+          "technical_score": 29.0,
+          "rsi14": 39.89,
+          "pct_vs_ema20": -9.38,
+          "pct_vs_ema200": -46.62,
+          "volume_ratio20": 1.52,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -401,7 +401,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +14.7% today."
+        "The stock moved +14.1% today."
       ],
       "change": {
         "status": "new",
@@ -412,108 +412,8 @@
       },
       "impact": {
         "baseline_price": 37.07,
-        "current_price": 37.07,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy storage",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +8.3% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-09T22:18:34.941123+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 1.885,
-      "day_change_pct": 8.3333,
-      "relative_volume": 0.51,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:EOSE:price-move:2026-11-09",
-          "ticker": "EOSE",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +8.3%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.3% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-09T22:18:34.941123+00:00",
-          "detected_at": "2026-11-09T22:18:34.941127+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:EOSE:price-move:2026-11-09"
-          ],
-          "dedupe_key": "EOSE:price_move:39e959229e11435f",
-          "technical_score": 22.0,
-          "rsi14": 41.62,
-          "pct_vs_ema20": -8.05,
-          "pct_vs_ema200": -70.31,
-          "volume_ratio20": 0.51,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +8.3% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-09T22:20:44+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 1.885,
-        "current_price": 1.885,
-        "change_pct": 0.0,
+        "current_price": 36.89,
+        "change_pct": -0.49,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
@@ -529,7 +429,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +15.7% today."
+        "The stock moved +21.8% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -542,9 +442,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 2.095,
-      "day_change_pct": 15.7459,
-      "relative_volume": 1.01,
+      "price": 2.205,
+      "day_change_pct": 21.8232,
+      "relative_volume": 1.91,
       "trigger_level": null,
       "events": [
         {
@@ -552,9 +452,9 @@
           "ticker": "INDI",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +15.7%",
+          "headline": "Price +21.8%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +15.7% today.",
+          "why_today": "The stock moved +21.8% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-09T22:18:35.075092+00:00",
@@ -584,11 +484,11 @@
             "technical:INDI:price-move:2026-11-09"
           ],
           "dedupe_key": "INDI:price_move:058109e5287937a8",
-          "technical_score": 47.0,
-          "rsi14": 49.98,
-          "pct_vs_ema20": 12.03,
-          "pct_vs_ema200": -36.13,
-          "volume_ratio20": 1.01,
+          "technical_score": 50.0,
+          "rsi14": 54.67,
+          "pct_vs_ema20": 16.67,
+          "pct_vs_ema200": -32.98,
+          "volume_ratio20": 1.91,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -601,7 +501,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +15.7% today."
+        "The stock moved +21.8% today."
       ],
       "change": {
         "status": "ongoing",
@@ -612,9 +512,9 @@
       },
       "impact": {
         "baseline_price": 1.805,
-        "current_price": 2.095,
-        "change_pct": 16.07,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 16.1%"
+        "current_price": 2.205,
+        "change_pct": 22.16,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 22.2%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -629,7 +529,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +9.4% today."
+        "The stock moved +8.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -642,9 +542,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 35.69,
-      "day_change_pct": 9.4114,
-      "relative_volume": 0.75,
+      "price": 35.35,
+      "day_change_pct": 8.3691,
+      "relative_volume": 1.35,
       "trigger_level": null,
       "events": [
         {
@@ -652,9 +552,9 @@
           "ticker": "IONQ",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +9.4%",
+          "headline": "Price +8.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +9.4% today.",
+          "why_today": "The stock moved +8.4% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-09T22:18:34.898944+00:00",
@@ -684,11 +584,11 @@
             "technical:IONQ:price-move:2026-11-09"
           ],
           "dedupe_key": "IONQ:price_move:1c59a4402c17fd3b",
-          "technical_score": 43.0,
-          "rsi14": 54.28,
-          "pct_vs_ema20": 9.68,
-          "pct_vs_ema200": -13.58,
-          "volume_ratio20": 0.75,
+          "technical_score": 50.0,
+          "rsi14": 53.92,
+          "pct_vs_ema20": 8.7,
+          "pct_vs_ema200": -14.41,
+          "volume_ratio20": 1.35,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -701,7 +601,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +9.4% today."
+        "The stock moved +8.4% today."
       ],
       "change": {
         "status": "ongoing",
@@ -712,9 +612,9 @@
       },
       "impact": {
         "baseline_price": 32.585,
-        "current_price": 35.69,
-        "change_pct": 9.53,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 9.5%"
+        "current_price": 35.35,
+        "change_pct": 8.49,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.5%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -729,7 +629,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +8.4% today."
+        "The stock moved +9.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -742,9 +642,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 20.9197,
-      "day_change_pct": 8.4484,
-      "relative_volume": 0.51,
+      "price": 21.1,
+      "day_change_pct": 9.3831,
+      "relative_volume": 0.91,
       "trigger_level": null,
       "events": [
         {
@@ -752,9 +652,9 @@
           "ticker": "NASA",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +8.4%",
+          "headline": "Price +9.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.4% today.",
+          "why_today": "The stock moved +9.4% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-09T22:18:35.066611+00:00",
@@ -785,9 +685,9 @@
           ],
           "dedupe_key": "NASA:price_move:40e6fe93a93a43c2",
           "technical_score": 43.0,
-          "rsi14": 48.25,
-          "pct_vs_ema20": 0.38,
-          "volume_ratio20": 0.51,
+          "rsi14": 49.17,
+          "pct_vs_ema20": 1.15,
+          "volume_ratio20": 0.91,
           "technical_signal": "WEAK / Avoid",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -800,7 +700,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +8.4% today."
+        "The stock moved +9.4% today."
       ],
       "change": {
         "status": "ongoing",
@@ -811,9 +711,9 @@
       },
       "impact": {
         "baseline_price": 19.29,
-        "current_price": 20.9197,
-        "change_pct": 8.45,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.4%"
+        "current_price": 21.1,
+        "change_pct": 9.38,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 9.4%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -828,7 +728,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +14.3% today."
+        "The stock moved +13.9% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -841,9 +741,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 26.9199,
-      "day_change_pct": 14.3096,
-      "relative_volume": 0.83,
+      "price": 26.83,
+      "day_change_pct": 13.9278,
+      "relative_volume": 1.86,
       "trigger_level": null,
       "events": [
         {
@@ -851,9 +751,9 @@
           "ticker": "OKLO",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +14.3%",
+          "headline": "Price +13.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +14.3% today.",
+          "why_today": "The stock moved +13.9% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-09T22:18:34.839145+00:00",
@@ -883,11 +783,11 @@
             "technical:OKLO:price-move:2026-11-09"
           ],
           "dedupe_key": "OKLO:price_move:cc765486cb1f5b56",
-          "technical_score": 43.0,
-          "rsi14": 46.2,
-          "pct_vs_ema20": 0.82,
-          "pct_vs_ema200": -49.3,
-          "volume_ratio20": 0.83,
+          "technical_score": 50.0,
+          "rsi14": 46.63,
+          "pct_vs_ema20": 0.45,
+          "pct_vs_ema200": -49.47,
+          "volume_ratio20": 1.86,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -900,7 +800,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +14.3% today."
+        "The stock moved +13.9% today."
       ],
       "change": {
         "status": "ongoing",
@@ -911,11 +811,111 @@
       },
       "impact": {
         "baseline_price": 23.56,
-        "current_price": 26.9199,
-        "change_pct": 14.26,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 14.3%"
+        "current_price": 26.83,
+        "change_pct": 13.88,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 13.9%"
       },
       "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +7.8% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-09T22:18:34.941123+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 1.875,
+      "day_change_pct": 7.7586,
+      "relative_volume": 0.9,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-move:2026-11-09",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +7.8%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +7.8% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-09T22:18:34.941123+00:00",
+          "detected_at": "2026-11-09T22:18:34.941127+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-move:2026-11-09"
+          ],
+          "dedupe_key": "EOSE:price_move:39e959229e11435f",
+          "technical_score": 22.0,
+          "rsi14": 41.63,
+          "pct_vs_ema20": -8.54,
+          "pct_vs_ema200": -70.47,
+          "volume_ratio20": 0.9,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-EOSE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +7.8% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-09T22:20:44+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 1.885,
+        "current_price": 1.875,
+        "change_pct": -0.53,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.5%"
+      },
+      "personal_priority_score": 83,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
