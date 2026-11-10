@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG"
-          ],
-          "company_profile": [
-            "SDGR",
-            "SE",
-            "SEI",
-            "SHOP"
-          ],
-          "recommendation_trends": [
-            "SSYS",
-            "STX",
-            "SYM",
-            "SYNA",
-            "TDG",
-            "TDOC",
-            "TE",
-            "TEM",
-            "TER",
-            "TGT",
-            "TMC",
-            "TMDX",
-            "TMUS",
-            "TOST",
-            "TRI",
-            "TRMB",
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM",
-            "TTWO",
-            "TWLO",
-            "TWST",
-            "TXG"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-07T06:35:32+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-07T06:34:43+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2516,9 +2455,72 @@
       "mode": "analyst",
       "started_at": "2026-11-10T19:59:58+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-10T23:17:16+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "LBRT",
+            "LDOS",
+            "LHX",
+            "LIN",
+            "LITE",
+            "LLY",
+            "LMT",
+            "LRCX",
+            "LUNR",
+            "MAR",
+            "MARA",
+            "MCHP",
+            "MDB",
+            "MDLZ",
+            "MELI",
+            "META",
+            "MNDY",
+            "MNST",
+            "MP",
+            "MPWR"
+          ],
+          "sec_filings": [
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR",
+            "COPX",
+            "RR",
+            "ZETA",
+            "OPEN"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-10T23:16:29+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-10T20:00:54+00:00"
+  "updated_at": "2026-11-10T23:17:16+00:00"
 }
