@@ -122,8 +122,8 @@
         "published_at": "2026-11-04T14:27:53+00:00",
         "domain": "ir.amd.com"
       },
-      "price": 560.55,
-      "day_change_pct": 8.8003,
+      "price": 559.09,
+      "day_change_pct": 8.5169,
       "relative_volume": 1.04,
       "trigger_level": null,
       "events": [
@@ -191,9 +191,9 @@
       },
       "impact": {
         "baseline_price": 449.03,
-        "current_price": 560.55,
-        "change_pct": 24.84,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 24.8%"
+        "current_price": 559.09,
+        "change_pct": 24.51,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 24.5%"
       },
       "personal_priority_score": 113,
       "personalization_reasons": [
@@ -294,7 +294,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +11.6% today."
+        "The stock moved +12.9% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -307,8 +307,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 1.9411,
-      "day_change_pct": 11.5575,
+      "price": 1.965,
+      "day_change_pct": 12.931,
       "relative_volume": 0.71,
       "trigger_level": null,
       "events": [
@@ -317,9 +317,9 @@
           "ticker": "EOSE",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +11.6%",
+          "headline": "Price +12.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +11.6% today.",
+          "why_today": "The stock moved +12.9% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-11T14:14:35.495545+00:00",
@@ -350,8 +350,8 @@
           ],
           "technical_score": 27.0,
           "rsi14": 44.64,
-          "pct_vs_ema20": -3.43,
-          "pct_vs_ema200": -68.89,
+          "pct_vs_ema20": -2.24,
+          "pct_vs_ema200": -68.51,
           "volume_ratio20": 0.71,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
@@ -365,7 +365,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +11.6% today."
+        "The stock moved +12.9% today."
       ],
       "change": {
         "status": "ongoing",
@@ -376,109 +376,9 @@
       },
       "impact": {
         "baseline_price": 1.745,
-        "current_price": 1.9411,
-        "change_pct": 11.24,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 11.2%"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "ZETA",
-      "name": "Zeta Global Holdings Corp.",
-      "portfolio_status": "holding",
-      "role": "Marketing technology",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +8.2% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-11T14:14:35.597687+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 37.9628,
-      "day_change_pct": 8.2486,
-      "relative_volume": 1.19,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:ZETA:price-move:2026-11-11",
-          "ticker": "ZETA",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +8.2%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.2% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-11T14:14:35.597687+00:00",
-          "detected_at": "2026-11-11T14:14:35.597693+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:ZETA:price-move:2026-11-11"
-          ],
-          "dedupe_key": "ZETA:price_move:ec477f3a492fafcd",
-          "technical_score": 91.0,
-          "rsi14": 68.04,
-          "pct_vs_ema20": 15.7,
-          "pct_vs_ema200": 53.39,
-          "volume_ratio20": 1.19,
-          "technical_signal": "BUY ZONE / Trend Confirmed",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +8.2% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-11T06:10:10+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 35.089,
-        "current_price": 37.9628,
-        "change_pct": 8.19,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.2%"
+        "current_price": 1.965,
+        "change_pct": 12.61,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 12.6%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -493,7 +393,7 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved +7.3% today."
+        "The stock moved +7.1% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -506,8 +406,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 36.15,
-      "day_change_pct": 7.3019,
+      "price": 36.095,
+      "day_change_pct": 7.1386,
       "relative_volume": 0.67,
       "trigger_level": null,
       "events": [
@@ -516,9 +416,9 @@
           "ticker": "ASTS",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +7.3%",
+          "headline": "Price +7.1%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +7.3% today.",
+          "why_today": "The stock moved +7.1% today.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-11-11T14:14:35.361473+00:00",
@@ -549,8 +449,8 @@
           ],
           "technical_score": 27.0,
           "rsi14": 40.95,
-          "pct_vs_ema20": -8.9,
-          "pct_vs_ema200": -47.26,
+          "pct_vs_ema20": -9.03,
+          "pct_vs_ema200": -47.35,
           "volume_ratio20": 0.67,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
@@ -564,7 +464,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +7.3% today."
+        "The stock moved +7.1% today."
       ],
       "change": {
         "status": "new",
@@ -575,9 +475,9 @@
       },
       "impact": {
         "baseline_price": 33.665,
-        "current_price": 36.15,
-        "change_pct": 7.38,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.4%"
+        "current_price": 36.095,
+        "change_pct": 7.22,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.2%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
@@ -592,7 +492,7 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved +5.9% today."
+        "The stock moved +6.7% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -605,8 +505,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 20.89,
-      "day_change_pct": 5.8794,
+      "price": 21.0532,
+      "day_change_pct": 6.7065,
       "relative_volume": 0.92,
       "trigger_level": null,
       "events": [
@@ -615,9 +515,9 @@
           "ticker": "IREN",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +5.9%",
+          "headline": "Price +6.7%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +5.9% today.",
+          "why_today": "The stock moved +6.7% today.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-11-11T14:14:35.351267+00:00",
@@ -646,10 +546,10 @@
           "related_event_ids": [
             "technical:IREN:price-move:2026-11-11"
           ],
-          "technical_score": 12.0,
+          "technical_score": 17.0,
           "rsi14": 36.48,
-          "pct_vs_ema20": -17.1,
-          "pct_vs_ema200": -49.05,
+          "pct_vs_ema20": -16.46,
+          "pct_vs_ema200": -48.65,
           "volume_ratio20": 0.92,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
@@ -663,7 +563,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +5.9% today."
+        "The stock moved +6.7% today."
       ],
       "change": {
         "status": "new",
@@ -674,9 +574,109 @@
       },
       "impact": {
         "baseline_price": 19.72,
-        "current_price": 20.89,
-        "change_pct": 5.93,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.9%"
+        "current_price": 21.0532,
+        "change_pct": 6.76,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 6.8%"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "ZETA",
+      "name": "Zeta Global Holdings Corp.",
+      "portfolio_status": "holding",
+      "role": "Marketing technology",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved +7.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-11T14:14:35.597687+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 37.8499,
+      "day_change_pct": 7.9267,
+      "relative_volume": 1.19,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:ZETA:price-move:2026-11-11",
+          "ticker": "ZETA",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +7.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +7.9% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-11T14:14:35.597687+00:00",
+          "detected_at": "2026-11-11T14:14:35.597693+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:ZETA:price-move:2026-11-11"
+          ],
+          "dedupe_key": "ZETA:price_move:ec477f3a492fafcd",
+          "technical_score": 91.0,
+          "rsi14": 68.04,
+          "pct_vs_ema20": 15.36,
+          "pct_vs_ema200": 52.93,
+          "volume_ratio20": 1.19,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-ZETA/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_move",
+      "signals": [
+        "The stock moved +7.9% today."
+      ],
+      "change": {
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
+        "first_seen_at": "2026-11-11T06:10:10+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 35.089,
+        "current_price": 37.8499,
+        "change_pct": 7.87,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 7.9%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
