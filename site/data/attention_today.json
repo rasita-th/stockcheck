@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-11T06:10:10+00:00",
+  "updated_at": "2026-11-11T14:16:58+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 21,
+  "total_events": 17,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 3,
+    "Critical": 1,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 3,
-      "unavailable": 7,
+      "ok": 1,
+      "unavailable": 9,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -100,405 +100,6 @@
     }
   },
   "items": [
-    {
-      "ticker": "ASTS",
-      "name": "AST SpaceMobile, Inc.",
-      "portfolio_status": "holding",
-      "role": "Space communications",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A new periodic financial report is available for review.",
-        "The stock moved -8.7% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "event_type": "sec_filing",
-      "event_subtype": "periodic_report",
-      "event_time": "2026-11-09T16:50:49-05:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453759/asts-20260930.htm",
-        "published_at": "2026-11-09T16:50:49-05:00",
-        "form": "10-Q",
-        "items": "",
-        "accession_number": "0001193125-26-453759",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "price": 33.665,
-      "day_change_pct": -8.7422,
-      "relative_volume": 1.53,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "sec:ASTS:0001193125-26-453759",
-          "ticker": "ASTS",
-          "event_type": "sec_filing",
-          "event_subtype": "periodic_report",
-          "headline": "New 10-Q filed",
-          "summary": "A new periodic financial report is available for review.",
-          "why_today": "A new periodic financial report is available for review.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-09T16:50:49-05:00",
-          "detected_at": "2026-11-11T06:07:52.944591+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453759/asts-20260930.htm",
-            "published_at": "2026-11-09T16:50:49-05:00",
-            "form": "10-Q",
-            "items": "",
-            "accession_number": "0001193125-26-453759",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453759/asts-20260930.htm",
-              "published_at": "2026-11-09T16:50:49-05:00",
-              "form": "10-Q",
-              "items": "",
-              "accession_number": "0001193125-26-453759",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:ASTS:0001193125-26-453759"
-          ],
-          "dedupe_key": "ASTS:periodic_report:dbd913c465b687b9"
-        },
-        {
-          "event_id": "technical:ASTS:price-drop:2026-11-11",
-          "ticker": "ASTS",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.7%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.7% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-11T06:07:52.944619+00:00",
-          "detected_at": "2026-11-11T06:07:52.944621+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:ASTS:price-drop:2026-11-11"
-          ],
-          "dedupe_key": "ASTS:price_drop:343f6cf0ed6e0755"
-        },
-        {
-          "event_id": "sec:ASTS:0001193125-26-453758",
-          "ticker": "ASTS",
-          "event_type": "sec_filing",
-          "event_subtype": "current_report",
-          "headline": "New 8-K current report",
-          "summary": "A current report was filed and requires item-level review.",
-          "why_today": "A current report was filed and requires item-level review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-09T16:49:10-05:00",
-          "detected_at": "2026-11-11T06:07:52.944606+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453758/asts-20261109.htm",
-            "published_at": "2026-11-09T16:49:10-05:00",
-            "form": "8-K",
-            "items": "",
-            "accession_number": "0001193125-26-453758",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 78,
-          "priority": "Risk",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453758/asts-20261109.htm",
-              "published_at": "2026-11-09T16:49:10-05:00",
-              "form": "8-K",
-              "items": "",
-              "accession_number": "0001193125-26-453758",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:ASTS:0001193125-26-453758"
-          ],
-          "dedupe_key": "ASTS:current_report:74903943fb471c5c"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1780312/000119312526453759/asts-20260930.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "periodic_report",
-      "signals": [
-        "A new periodic financial report is available for review.",
-        "The stock moved -8.7% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-11T06:10:10+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 33.665,
-        "current_price": 33.665,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
-    {
-      "ticker": "RKLB",
-      "name": "Rocket Lab USA, Inc.",
-      "portfolio_status": "holding",
-      "role": "Space growth",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A new periodic financial report is available for review.",
-        "The stock moved +6.6% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "event_type": "sec_filing",
-      "event_subtype": "periodic_report",
-      "event_time": "2026-11-09T16:15:53-05:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000074/rklb-20260930.htm",
-        "published_at": "2026-11-09T16:15:53-05:00",
-        "form": "10-Q",
-        "items": "",
-        "accession_number": "0001819994-26-000074",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "price": 62.74,
-      "day_change_pct": 6.5919,
-      "relative_volume": 1.55,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "sec:RKLB:0001819994-26-000074",
-          "ticker": "RKLB",
-          "event_type": "sec_filing",
-          "event_subtype": "periodic_report",
-          "headline": "New 10-Q filed",
-          "summary": "A new periodic financial report is available for review.",
-          "why_today": "A new periodic financial report is available for review.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-09T16:15:53-05:00",
-          "detected_at": "2026-11-11T06:07:52.908833+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000074/rklb-20260930.htm",
-            "published_at": "2026-11-09T16:15:53-05:00",
-            "form": "10-Q",
-            "items": "",
-            "accession_number": "0001819994-26-000074",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000074/rklb-20260930.htm",
-              "published_at": "2026-11-09T16:15:53-05:00",
-              "form": "10-Q",
-              "items": "",
-              "accession_number": "0001819994-26-000074",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:RKLB:0001819994-26-000074"
-          ],
-          "dedupe_key": "RKLB:periodic_report:1c44c47c10e10a45"
-        },
-        {
-          "event_id": "technical:RKLB:price-move:2026-11-11",
-          "ticker": "RKLB",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +6.6%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.6% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-11T06:07:52.908885+00:00",
-          "detected_at": "2026-11-11T06:07:52.908887+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:RKLB:price-move:2026-11-11"
-          ],
-          "dedupe_key": "RKLB:price_move:6c588f2d9f920822"
-        },
-        {
-          "event_id": "sec:RKLB:0001819994-26-000073",
-          "ticker": "RKLB",
-          "event_type": "sec_filing",
-          "event_subtype": "current_report",
-          "headline": "New 8-K current report",
-          "summary": "A current report was filed and requires item-level review.",
-          "why_today": "A current report was filed and requires item-level review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-09T16:06:21-05:00",
-          "detected_at": "2026-11-11T06:07:52.908857+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000073/rklb-20261109.htm",
-            "published_at": "2026-11-09T16:06:21-05:00",
-            "form": "8-K",
-            "items": "",
-            "accession_number": "0001819994-26-000073",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 71,
-          "priority": "Action",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000073/rklb-20261109.htm",
-              "published_at": "2026-11-09T16:06:21-05:00",
-              "form": "8-K",
-              "items": "",
-              "accession_number": "0001819994-26-000073",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:RKLB:0001819994-26-000073"
-          ],
-          "dedupe_key": "RKLB:current_report:60cb4cd953acc629"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000074/rklb-20260930.htm",
-        "company_ir": "https://investors.rocketlabusa.com/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RKLB/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "periodic_report",
-      "signals": [
-        "A new periodic financial report is available for review.",
-        "The stock moved +6.6% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-11T06:10:10+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 62.74,
-        "current_price": 62.74,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
     {
       "ticker": "AMD",
       "name": "Advanced Micro Devices, Inc.",
@@ -609,17 +210,17 @@
     },
     {
       "source": "ir",
-      "ticker": "RKLB",
+      "ticker": "TEM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "HOOD",
+      "ticker": "TMDX",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
+      "ticker": "EOSE",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -639,7 +240,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 4,
+    "technical_metric_repair_count": 6,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -659,8 +260,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 20,
-      "accepted_events": 20,
+      "evaluated_events": 16,
+      "accepted_events": 16,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -682,7 +283,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 4
+    "total": 6
   },
   "technical_watch": [
     {
@@ -697,7 +298,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-11T06:07:53.114812+00:00",
+      "event_time": "2026-11-11T14:14:35.597687+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -721,8 +322,8 @@
           "why_today": "The stock moved +8.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-11T06:07:53.114812+00:00",
-          "detected_at": "2026-11-11T06:07:53.114814+00:00",
+          "event_time": "2026-11-11T14:14:35.597687+00:00",
+          "detected_at": "2026-11-11T14:14:35.597693+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -768,15 +369,115 @@
         "The stock moved +8.2% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
         "first_seen_at": "2026-11-11T06:10:10+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 35.089,
         "current_price": 35.089,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "ASTS",
+      "name": "AST SpaceMobile, Inc.",
+      "portfolio_status": "holding",
+      "role": "Space communications",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -8.7% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-11T14:14:35.361473+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 33.665,
+      "day_change_pct": -8.7422,
+      "relative_volume": 1.53,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:ASTS:price-drop:2026-11-11",
+          "ticker": "ASTS",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -8.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -8.7% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-11T14:14:35.361473+00:00",
+          "detected_at": "2026-11-11T14:14:35.361479+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:ASTS:price-drop:2026-11-11"
+          ],
+          "dedupe_key": "ASTS:price_drop:343f6cf0ed6e0755",
+          "technical_score": 24.0,
+          "rsi14": 39.89,
+          "pct_vs_ema20": -17.31,
+          "pct_vs_ema200": -51.37,
+          "volume_ratio20": 1.53,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -8.7% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-11T14:16:58+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 33.665,
+        "current_price": 33.665,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -797,7 +498,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-11T06:07:53.151540+00:00",
+      "event_time": "2026-11-11T14:14:35.648380+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -821,8 +522,8 @@
           "why_today": "The stock moved -9.8% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-11T06:07:53.151540+00:00",
-          "detected_at": "2026-11-11T06:07:53.151545+00:00",
+          "event_time": "2026-11-11T14:14:35.648380+00:00",
+          "detected_at": "2026-11-11T14:14:35.648386+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -868,9 +569,9 @@
         "The stock moved -9.8% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-11T06:10:10+00:00",
         "active_days": 0
       },
@@ -897,7 +598,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-11T06:07:53.136774+00:00",
+      "event_time": "2026-11-11T14:14:35.628286+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -921,8 +622,8 @@
           "why_today": "The stock moved -6.9% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-11T06:07:53.136774+00:00",
-          "detected_at": "2026-11-11T06:07:53.136776+00:00",
+          "event_time": "2026-11-11T14:14:35.628286+00:00",
+          "detected_at": "2026-11-11T14:14:35.628291+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -968,9 +669,9 @@
         "The stock moved -6.9% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-11T06:10:10+00:00",
         "active_days": 0
       },
@@ -997,7 +698,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-11T06:07:53.043021+00:00",
+      "event_time": "2026-11-11T14:14:35.495545+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1021,8 +722,8 @@
           "why_today": "The stock moved -7.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-11T06:07:53.043021+00:00",
-          "detected_at": "2026-11-11T06:07:53.043025+00:00",
+          "event_time": "2026-11-11T14:14:35.495545+00:00",
+          "detected_at": "2026-11-11T14:14:35.495550+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1068,9 +769,9 @@
         "The stock moved -7.2% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-11T06:10:10+00:00",
         "active_days": 0
       },
@@ -1084,17 +785,133 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
+    },
+    {
+      "ticker": "IREN",
+      "name": "IREN Limited",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-11T14:14:35.351267+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 19.72,
+      "day_change_pct": -7.8935,
+      "relative_volume": 1.27,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:IREN:price-drop:2026-11-11",
+          "ticker": "IREN",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.9% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-11T14:14:35.351267+00:00",
+          "detected_at": "2026-11-11T14:14:35.351273+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:IREN:price-drop:2026-11-11"
+          ],
+          "dedupe_key": "IREN:price_drop:498390ddbdd6c839",
+          "technical_score": 19.0,
+          "rsi14": 35.97,
+          "pct_vs_ema20": -24.99,
+          "pct_vs_ema200": -52.39,
+          "volume_ratio20": 1.27,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-11T14:16:58+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 19.72,
+        "current_price": 19.72,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
   "changes_summary": {
-    "new": 6,
+    "new": 2,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 1,
+    "ongoing": 5,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:ASTS:0001193125-26-453759",
+      "ticker": "ASTS",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-11T14:16:58+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "sec:RKLB:0001819994-26-000074",
+      "ticker": "RKLB",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-11T14:16:58+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "sec:ZETA:0001193125-26-453696",
       "ticker": "ZETA",
@@ -1154,22 +971,6 @@
     {
       "history_key": "technical:INDI:price-move:2026-11-10",
       "ticker": "INDI",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-10T23:19:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:price-move:2026-11-10",
-      "ticker": "IONQ",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-10T23:19:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NASA:price-move:2026-11-10",
-      "ticker": "NASA",
       "event_subtype": "price_move",
       "priority": "Critical",
       "resolved_at": "2026-11-10T23:19:22+00:00",
