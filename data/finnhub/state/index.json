@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-09T00:51:34+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "CRDO",
-            "CRM",
-            "CRSP",
-            "CRWD",
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG",
-            "DE",
-            "DELL",
-            "DKNG",
-            "DLO",
-            "DNA"
-          ],
-          "sec_filings": [
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN",
-            "COST",
-            "BEAM",
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI",
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-09T00:50:46+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2520,9 +2457,70 @@
       "mode": "events",
       "started_at": "2026-11-13T06:36:36+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS",
+            "OPEN",
+            "ORCL",
+            "ORLY",
+            "OSCR"
+          ],
+          "company_profile": [
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI"
+          ],
+          "recommendation_trends": [
+            "VICR",
+            "VRSK",
+            "VRT",
+            "VRTX",
+            "VSAT",
+            "VST",
+            "WBD",
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI",
+            "AAPL",
+            "ABBV",
+            "ABCL",
+            "ABNB",
+            "ACHR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-13T07:15:02+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-13T07:14:16+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-13T06:37:24+00:00"
+  "updated_at": "2026-11-13T07:15:03+00:00"
 }
