@@ -128,9 +128,9 @@
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
-      "price": 1.725,
-      "day_change_pct": -12.4365,
-      "relative_volume": 1.05,
+      "price": 1.765,
+      "day_change_pct": -10.4061,
+      "relative_volume": 1.19,
       "trigger_level": null,
       "events": [
         {
@@ -289,9 +289,9 @@
       },
       "impact": {
         "baseline_price": 1.685,
-        "current_price": 1.725,
-        "change_pct": 2.37,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 2.4%"
+        "current_price": 1.765,
+        "change_pct": 4.75,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 4.8%"
       },
       "personal_priority_score": 114,
       "personalization_reasons": [
@@ -381,7 +381,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 6
+    "total": 5
   },
   "technical_watch": [
     {
@@ -392,7 +392,7 @@
       "priority": "Risk",
       "priority_score": 99,
       "why_today": [
-        "The stock moved -10.5% today."
+        "The stock moved -9.6% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
@@ -405,9 +405,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 523.63,
-      "day_change_pct": -10.5365,
-      "relative_volume": 0.83,
+      "price": 529.35,
+      "day_change_pct": -9.5592,
+      "relative_volume": 0.97,
       "trigger_level": null,
       "events": [
         {
@@ -415,9 +415,9 @@
           "ticker": "AMD",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -10.5%",
+          "headline": "Price -9.6%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.5% today.",
+          "why_today": "The stock moved -9.6% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-13T17:11:39.911426+00:00",
@@ -447,12 +447,12 @@
             "technical:AMD:price-drop:2026-11-13"
           ],
           "dedupe_key": "AMD:price_drop:e441b56ac0560ec0",
-          "technical_score": 73.0,
-          "rsi14": 49.06,
-          "pct_vs_ema20": -0.42,
-          "pct_vs_ema200": 23.66,
-          "volume_ratio20": 0.83,
-          "technical_signal": "WATCH FOR ENTRY",
+          "technical_score": 83.0,
+          "rsi14": 49.8,
+          "pct_vs_ema20": 0.56,
+          "pct_vs_ema200": 25.0,
+          "volume_ratio20": 0.97,
+          "technical_signal": "BUY ZONE / Trend Confirmed",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
@@ -465,7 +465,7 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -10.5% today."
+        "The stock moved -9.6% today."
       ],
       "change": {
         "status": "new",
@@ -476,209 +476,9 @@
       },
       "impact": {
         "baseline_price": 525.48,
-        "current_price": 523.63,
-        "change_pct": -0.35,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "IREN",
-      "name": "IREN Limited",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -8.5% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-13T17:11:39.837178+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 17.82,
-      "day_change_pct": -8.5216,
-      "relative_volume": 0.6,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:IREN:price-drop:2026-11-13",
-          "ticker": "IREN",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.5%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.5% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-13T17:11:39.837178+00:00",
-          "detected_at": "2026-11-13T17:11:39.837182+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:IREN:price-drop:2026-11-13"
-          ],
-          "dedupe_key": "IREN:price_drop:d6554f6efc059775",
-          "technical_score": 9.0,
-          "rsi14": 32.19,
-          "pct_vs_ema20": -25.75,
-          "pct_vs_ema200": -56.05,
-          "volume_ratio20": 0.6,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -8.5% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-13T17:13:39+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 17.735,
-        "current_price": 17.82,
-        "change_pct": 0.48,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -9.9% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-13T17:11:39.882290+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 115.87,
-      "day_change_pct": -9.9269,
-      "relative_volume": 1.25,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:NBIS:price-drop:2026-11-13",
-          "ticker": "NBIS",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -9.9%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -9.9% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-13T17:11:39.882290+00:00",
-          "detected_at": "2026-11-13T17:11:39.882294+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:NBIS:price-drop:2026-11-13"
-          ],
-          "dedupe_key": "NBIS:price_drop:fd74324fb581062f",
-          "technical_score": 29.0,
-          "rsi14": 35.74,
-          "pct_vs_ema20": -24.06,
-          "pct_vs_ema200": -30.99,
-          "volume_ratio20": 1.25,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -9.9% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-13T06:39:24+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 128.7316,
-        "current_price": 115.87,
-        "change_pct": -9.99,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 10.0%"
+        "current_price": 529.35,
+        "change_pct": 0.74,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.7%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -693,7 +493,7 @@
       "priority": "Risk",
       "priority_score": 99,
       "why_today": [
-        "The stock moved -8.2% today."
+        "The stock moved -8.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
@@ -706,9 +506,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 0.7519,
-      "day_change_pct": -8.1929,
-      "relative_volume": 0.94,
+      "price": 0.7502,
+      "day_change_pct": -8.4005,
+      "relative_volume": 1.02,
       "trigger_level": null,
       "events": [
         {
@@ -716,9 +516,9 @@
           "ticker": "RR",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -8.2%",
+          "headline": "Price -8.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.2% today.",
+          "why_today": "The stock moved -8.4% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-13T17:11:40.007195+00:00",
@@ -748,11 +548,11 @@
             "technical:RR:price-drop:2026-11-13"
           ],
           "dedupe_key": "RR:price_drop:323d404c2ba11d04",
-          "technical_score": 9.0,
-          "rsi14": 27.24,
-          "pct_vs_ema20": -26.28,
-          "pct_vs_ema200": -64.53,
-          "volume_ratio20": 0.94,
+          "technical_score": 13.0,
+          "rsi14": 27.17,
+          "pct_vs_ema20": -26.45,
+          "pct_vs_ema200": -64.61,
+          "volume_ratio20": 1.02,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -765,7 +565,7 @@
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -8.2% today."
+        "The stock moved -8.4% today."
       ],
       "change": {
         "status": "ongoing",
@@ -776,9 +576,9 @@
       },
       "impact": {
         "baseline_price": 0.8187,
-        "current_price": 0.7519,
-        "change_pct": -8.16,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.2%"
+        "current_price": 0.7502,
+        "change_pct": -8.37,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.4%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -786,118 +586,18 @@
       ]
     },
     {
-      "ticker": "TEM",
-      "name": "Tempus AI, Inc.",
+      "ticker": "IREN",
+      "name": "IREN Limited",
       "portfolio_status": "holding",
-      "role": "Healthcare AI",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -8.0% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-13T17:11:39.889580+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 69.8,
-      "day_change_pct": -8.0248,
-      "relative_volume": 0.42,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:TEM:price-drop:2026-11-13",
-          "ticker": "TEM",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -8.0%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -8.0% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-13T17:11:39.889580+00:00",
-          "detected_at": "2026-11-13T17:11:39.889585+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:TEM:price-drop:2026-11-13"
-          ],
-          "dedupe_key": "TEM:price_drop:340bb68da0cc149a",
-          "technical_score": 73.0,
-          "rsi14": 45.73,
-          "pct_vs_ema20": -6.4,
-          "pct_vs_ema200": 10.69,
-          "volume_ratio20": 0.42,
-          "technical_signal": "WATCH FOR ENTRY",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -8.0% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-13T17:13:39+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 69.255,
-        "current_price": 69.8,
-        "change_pct": 0.79,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 0.8%"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "ASTS",
-      "name": "AST SpaceMobile, Inc.",
-      "portfolio_status": "holding",
-      "role": "Space communications",
+      "role": "AI infrastructure",
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved -6.2% today."
+        "The stock moved -7.9% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-13T17:11:39.844419+00:00",
+      "event_time": "2026-11-13T17:11:39.837178+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -906,23 +606,23 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 32.37,
-      "day_change_pct": -6.1739,
-      "relative_volume": 0.48,
+      "price": 17.935,
+      "day_change_pct": -7.9312,
+      "relative_volume": 0.69,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:ASTS:price-drop:2026-11-13",
-          "ticker": "ASTS",
+          "event_id": "technical:IREN:price-drop:2026-11-13",
+          "ticker": "IREN",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -6.2%",
+          "headline": "Price -7.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -6.2% today.",
+          "why_today": "The stock moved -7.9% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-13T17:11:39.844419+00:00",
-          "detected_at": "2026-11-13T17:11:39.844423+00:00",
+          "event_time": "2026-11-13T17:11:39.837178+00:00",
+          "detected_at": "2026-11-13T17:11:39.837182+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -945,27 +645,127 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:ASTS:price-drop:2026-11-13"
+            "technical:IREN:price-drop:2026-11-13"
           ],
-          "dedupe_key": "ASTS:price_drop:68ff273139bb2f6b",
-          "technical_score": 12.0,
-          "rsi14": 36.5,
-          "pct_vs_ema20": -16.07,
-          "pct_vs_ema200": -52.45,
-          "volume_ratio20": 0.48,
+          "dedupe_key": "IREN:price_drop:d6554f6efc059775",
+          "technical_score": 9.0,
+          "rsi14": 32.39,
+          "pct_vs_ema20": -25.33,
+          "pct_vs_ema200": -55.77,
+          "volume_ratio20": 0.69,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -6.2% today."
+        "The stock moved -7.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-13T17:13:39+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 17.735,
+        "current_price": 17.935,
+        "change_pct": 1.13,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.1%"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -8.0% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-13T17:11:39.882290+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 118.35,
+      "day_change_pct": -7.9991,
+      "relative_volume": 1.41,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:NBIS:price-drop:2026-11-13",
+          "ticker": "NBIS",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -8.0%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -8.0% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-13T17:11:39.882290+00:00",
+          "detected_at": "2026-11-13T17:11:39.882294+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:NBIS:price-drop:2026-11-13"
+          ],
+          "dedupe_key": "NBIS:price_drop:fd74324fb581062f",
+          "technical_score": 29.0,
+          "rsi14": 36.31,
+          "pct_vs_ema20": -22.57,
+          "pct_vs_ema200": -29.53,
+          "volume_ratio20": 1.41,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -8.0% today."
       ],
       "change": {
         "status": "ongoing",
@@ -975,10 +775,110 @@
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 34.481,
-        "current_price": 32.37,
-        "change_pct": -6.12,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.1%"
+        "baseline_price": 128.7316,
+        "current_price": 118.35,
+        "change_pct": -8.06,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 8.1%"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "TEM",
+      "name": "Tempus AI, Inc.",
+      "portfolio_status": "holding",
+      "role": "Healthcare AI",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.2% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-13T17:11:39.889580+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 70.4,
+      "day_change_pct": -7.2342,
+      "relative_volume": 0.51,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:TEM:price-drop:2026-11-13",
+          "ticker": "TEM",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.2%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.2% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-13T17:11:39.889580+00:00",
+          "detected_at": "2026-11-13T17:11:39.889585+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TEM:price-drop:2026-11-13"
+          ],
+          "dedupe_key": "TEM:price_drop:340bb68da0cc149a",
+          "technical_score": 73.0,
+          "rsi14": 46.58,
+          "pct_vs_ema20": -5.71,
+          "pct_vs_ema200": 11.62,
+          "volume_ratio20": 0.51,
+          "technical_signal": "WATCH FOR ENTRY",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TEM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.2% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-13T17:13:39+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 69.255,
+        "current_price": 70.4,
+        "change_pct": 1.65,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 1.6%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
