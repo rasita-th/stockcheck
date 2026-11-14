@@ -1289,67 +1289,6 @@
         "missing_key": false,
         "refreshed": {
           "basic_financials": [
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC"
-          ],
-          "company_profile": [
-            "TSAT",
-            "TSEM",
-            "TSLA",
-            "TSM"
-          ],
-          "recommendation_trends": [
-            "IREN",
-            "ISRG",
-            "JMIA",
-            "IZRL",
-            "JEPQ",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS",
-            "LBRT",
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE",
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-10T07:44:28+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-10T07:43:42+00:00",
-      "universe_count": 305
-    },
-    {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
             "KTOS",
             "LBRT",
             "LDOS",
@@ -2515,9 +2454,72 @@
       "mode": "analyst",
       "started_at": "2026-11-14T06:59:37+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-14T13:29:49+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL",
+            "CRDO",
+            "CRM",
+            "CRSP",
+            "CRWD",
+            "CRWV",
+            "CSCO",
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH",
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG"
+          ],
+          "sec_filings": [
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR",
+            "NBIS",
+            "TEM",
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-14T13:29:02+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-14T07:00:23+00:00"
+  "updated_at": "2026-11-14T13:29:50+00:00"
 }

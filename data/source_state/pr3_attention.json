@@ -1,30 +1,18 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-14T06:17:31+00:00",
+  "updated_at": "2026-11-14T13:32:06+00:00",
   "items": {
-    "sec:TMC:0001628280-26-073463": {
-      "ticker": "TMC",
-      "event_subtype": "periodic_report",
+    "sec:IONQ:0001193125-26-461012": {
+      "ticker": "IONQ",
+      "event_subtype": "capital_raise",
       "priority": "Critical",
-      "priority_score": 97,
-      "personal_priority_score": 111,
-      "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
-      "event_count": 2,
-      "baseline_price": 2.315,
-      "current_price": 2.315
-    },
-    "technical:AMD:price-drop:2026-11-14": {
-      "ticker": "AMD",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "priority_score": 99,
-      "personal_priority_score": 107,
-      "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
-      "event_count": 1,
-      "baseline_price": 534.09,
-      "current_price": 534.09
+      "priority_score": 100,
+      "personal_priority_score": 114,
+      "first_seen_at": "2026-11-14T13:32:06+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
+      "event_count": 3,
+      "baseline_price": 28.86,
+      "current_price": 28.86
     },
     "technical:NBIS:price-drop:2026-11-14": {
       "ticker": "NBIS",
@@ -33,10 +21,22 @@
       "priority_score": 99,
       "personal_priority_score": 107,
       "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
-      "event_count": 1,
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
+      "event_count": 2,
       "baseline_price": 115.81,
       "current_price": 115.81
+    },
+    "technical:AMD:price-drop:2026-11-14": {
+      "ticker": "AMD",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 99,
+      "personal_priority_score": 107,
+      "first_seen_at": "2026-11-14T06:17:31+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
+      "event_count": 1,
+      "baseline_price": 534.09,
+      "current_price": 534.09
     },
     "technical:ASTS:price-drop:2026-11-14": {
       "ticker": "ASTS",
@@ -45,7 +45,7 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
       "event_count": 1,
       "baseline_price": 32.6,
       "current_price": 32.6
@@ -57,22 +57,10 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
       "event_count": 1,
       "baseline_price": 1.905,
       "current_price": 1.905
-    },
-    "technical:IONQ:price-drop:2026-11-14": {
-      "ticker": "IONQ",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "priority_score": 75,
-      "personal_priority_score": 83,
-      "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
-      "event_count": 1,
-      "baseline_price": 28.86,
-      "current_price": 28.86
     },
     "technical:IREN:price-drop:2026-11-14": {
       "ticker": "IREN",
@@ -81,13 +69,41 @@
       "priority_score": 75,
       "personal_priority_score": 83,
       "first_seen_at": "2026-11-14T06:17:31+00:00",
-      "last_seen_at": "2026-11-14T06:17:31+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
       "event_count": 1,
       "baseline_price": 18.16,
       "current_price": 18.16
+    },
+    "technical:RR:price-drop:2026-11-14": {
+      "ticker": "RR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-11-14T13:32:06+00:00",
+      "last_seen_at": "2026-11-14T13:32:06+00:00",
+      "event_count": 1,
+      "baseline_price": 0.7561,
+      "current_price": 0.7561
     }
   },
   "resolved": [
+    {
+      "history_key": "sec:TMC:0001628280-26-073463",
+      "ticker": "TMC",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-14T13:32:06+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IONQ:price-drop:2026-11-14",
+      "ticker": "IONQ",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-14T13:32:06+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:price-drop:2026-11-13",
       "ticker": "NBIS",
@@ -227,22 +243,6 @@
     {
       "history_key": "technical:RR:price-drop:2026-11-12",
       "ticker": "RR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-13T06:39:24+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:AMD:price-move:2026-11-12",
-      "ticker": "AMD",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-13T06:39:24+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-drop:2026-11-12",
-      "ticker": "ASTS",
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-11-13T06:39:24+00:00",

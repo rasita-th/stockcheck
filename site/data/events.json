@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-11-14T06:17:31+00:00",
-  "row_count": 11,
+  "generated_at": "2026-11-14T13:32:06+00:00",
+  "row_count": 12,
   "events": [
     {
       "event_id": "technical:RR:price-drop:2026-11-14",
@@ -14,8 +14,8 @@
       "why_today": "The stock moved -7.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.700608+00:00",
-      "detected_at": "2026-11-14T06:15:27.700613+00:00",
+      "event_time": "2026-11-14T13:29:51.777145+00:00",
+      "detected_at": "2026-11-14T13:29:51.777150+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -40,7 +40,14 @@
       "related_event_ids": [
         "technical:RR:price-drop:2026-11-14"
       ],
-      "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca"
+      "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca",
+      "technical_score": 13.0,
+      "rsi14": 29.69,
+      "pct_vs_ema20": -27.99,
+      "pct_vs_ema200": -64.67,
+      "volume_ratio20": 1.12,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
       "event_id": "technical:EOSE:price-move:2026-11-14",
@@ -52,8 +59,8 @@
       "why_today": "The stock moved +5.2% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.599287+00:00",
-      "detected_at": "2026-11-14T06:15:27.599292+00:00",
+      "event_time": "2026-11-14T13:29:51.710316+00:00",
+      "detected_at": "2026-11-14T13:29:51.710320+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -97,8 +104,8 @@
       "why_today": "The stock moved -8.7% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.553898+00:00",
-      "detected_at": "2026-11-14T06:15:27.553904+00:00",
+      "event_time": "2026-11-14T13:29:51.680643+00:00",
+      "detected_at": "2026-11-14T13:29:51.680647+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -142,8 +149,8 @@
       "why_today": "The stock moved -6.5% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.542442+00:00",
-      "detected_at": "2026-11-14T06:15:27.542447+00:00",
+      "event_time": "2026-11-14T13:29:51.673329+00:00",
+      "detected_at": "2026-11-14T13:29:51.673330+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -168,14 +175,7 @@
       "related_event_ids": [
         "technical:IONQ:price-drop:2026-11-14"
       ],
-      "dedupe_key": "IONQ:price_drop:ad1f2cf796b14f89",
-      "technical_score": 17.0,
-      "rsi14": 44.44,
-      "pct_vs_ema20": -11.72,
-      "pct_vs_ema200": -29.7,
-      "volume_ratio20": 0.95,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "IONQ:price_drop:ad1f2cf796b14f89"
     },
     {
       "event_id": "technical:TEM:price-drop:2026-11-14",
@@ -187,8 +187,8 @@
       "why_today": "The stock moved -5.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.519806+00:00",
-      "detected_at": "2026-11-14T06:15:27.519810+00:00",
+      "event_time": "2026-11-14T13:29:51.658483+00:00",
+      "detected_at": "2026-11-14T13:29:51.658487+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -225,8 +225,8 @@
       "why_today": "The stock moved -10.0% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.508629+00:00",
-      "detected_at": "2026-11-14T06:15:27.508633+00:00",
+      "event_time": "2026-11-14T13:29:51.650997+00:00",
+      "detected_at": "2026-11-14T13:29:51.650998+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -251,14 +251,7 @@
       "related_event_ids": [
         "technical:NBIS:price-drop:2026-11-14"
       ],
-      "dedupe_key": "NBIS:price_drop:331f964bf4f81d69",
-      "technical_score": 29.0,
-      "rsi14": 38.66,
-      "pct_vs_ema20": -25.99,
-      "pct_vs_ema200": -31.26,
-      "volume_ratio20": 2.56,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
+      "dedupe_key": "NBIS:price_drop:331f964bf4f81d69"
     },
     {
       "event_id": "technical:ASTS:price-drop:2026-11-14",
@@ -270,8 +263,8 @@
       "why_today": "The stock moved -5.5% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.451463+00:00",
-      "detected_at": "2026-11-14T06:15:27.451468+00:00",
+      "event_time": "2026-11-14T13:29:51.612625+00:00",
+      "detected_at": "2026-11-14T13:29:51.612629+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -315,8 +308,8 @@
       "why_today": "The stock moved -6.8% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-14T06:15:27.440245+00:00",
-      "detected_at": "2026-11-14T06:15:27.440250+00:00",
+      "event_time": "2026-11-14T13:29:51.605237+00:00",
+      "detected_at": "2026-11-14T13:29:51.605241+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -351,6 +344,150 @@
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
+      "event_id": "sec:IONQ:0001193125-26-461016",
+      "ticker": "IONQ",
+      "event_type": "sec_filing",
+      "event_subtype": "current_report",
+      "headline": "New 8-K current report",
+      "summary": "A current report was filed and requires item-level review.",
+      "why_today": "A current report was filed and requires item-level review.",
+      "materiality": "low",
+      "urgency": "today",
+      "event_time": "2026-11-13T17:21:13-05:00",
+      "detected_at": "2026-11-14T13:29:51.673299+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461016/ionq-20261110.htm",
+        "published_at": "2026-11-13T17:21:13-05:00",
+        "form": "8-K",
+        "items": "",
+        "accession_number": "0001193125-26-461016",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "priority_score": 71,
+      "priority": "Action",
+      "attention_policy_decision": "allow",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "source_chain": [
+        {
+          "type": "sec",
+          "quality": "primary",
+          "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461016/ionq-20261110.htm",
+          "published_at": "2026-11-13T17:21:13-05:00",
+          "form": "8-K",
+          "items": "",
+          "accession_number": "0001193125-26-461016",
+          "report_date": "",
+          "discovered_via": "finnhub_sec_index"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "sec:IONQ:0001193125-26-461016"
+      ],
+      "dedupe_key": "IONQ:current_report:35bf616cbd59fac4"
+    },
+    {
+      "event_id": "sec:IONQ:0001193125-26-461012",
+      "ticker": "IONQ",
+      "event_type": "sec_filing",
+      "event_subtype": "capital_raise",
+      "headline": "424B7 capital-markets filing",
+      "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+      "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+      "materiality": "high",
+      "urgency": "today",
+      "event_time": "2026-11-13T17:20:20-05:00",
+      "detected_at": "2026-11-14T13:29:51.673312+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+        "published_at": "2026-11-13T17:20:20-05:00",
+        "form": "424B7",
+        "items": "",
+        "accession_number": "0001193125-26-461012",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "priority_score": 100,
+      "priority": "Critical",
+      "attention_policy_decision": "allow",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "source_chain": [
+        {
+          "type": "sec",
+          "quality": "primary",
+          "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+          "published_at": "2026-11-13T17:20:20-05:00",
+          "form": "424B7",
+          "items": "",
+          "accession_number": "0001193125-26-461012",
+          "report_date": "",
+          "discovered_via": "finnhub_sec_index"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "sec:IONQ:0001193125-26-461012"
+      ],
+      "dedupe_key": "IONQ:capital_raise:d727ba4e109e4ab5"
+    },
+    {
+      "event_id": "sec:NBIS:0001513845-26-000149",
+      "ticker": "NBIS",
+      "event_type": "sec_filing",
+      "event_subtype": "insider_activity",
+      "headline": "New Form 4 insider filing",
+      "summary": "An insider transaction was reported; transaction context still requires document review.",
+      "why_today": "An insider transaction was reported; transaction context still requires document review.",
+      "materiality": "low",
+      "urgency": "today",
+      "event_time": "2026-11-13T16:48:42-05:00",
+      "detected_at": "2026-11-14T13:29:51.650976+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000149/form4.xml",
+        "published_at": "2026-11-13T16:48:42-05:00",
+        "form": "4",
+        "items": "",
+        "accession_number": "0001513845-26-000149",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "priority_score": 78,
+      "priority": "Risk",
+      "attention_policy_decision": "allow",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "source_chain": [
+        {
+          "type": "sec",
+          "quality": "primary",
+          "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000149/form4.xml",
+          "published_at": "2026-11-13T16:48:42-05:00",
+          "form": "4",
+          "items": "",
+          "accession_number": "0001513845-26-000149",
+          "report_date": "",
+          "discovered_via": "finnhub_sec_index"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "sec:NBIS:0001513845-26-000149"
+      ],
+      "dedupe_key": "NBIS:insider_activity:311fe4ed9c415413"
+    },
+    {
       "event_id": "technical:AMZN:technical_setup:2026-11-13",
       "ticker": "AMZN",
       "event_type": "technical",
@@ -361,7 +498,7 @@
       "materiality": "medium",
       "urgency": "developing",
       "event_time": "2026-11-13",
-      "detected_at": "2026-11-14T06:17:31+00:00",
+      "detected_at": "2026-11-14T13:32:06+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -393,102 +530,6 @@
       "dedupe_key": "AMZN:technical_setup:1633d6fb76f25ed5",
       "priority_score": 48,
       "priority": "Watch"
-    },
-    {
-      "event_id": "sec:TMC:0001628280-26-073463",
-      "ticker": "TMC",
-      "event_type": "sec_filing",
-      "event_subtype": "periodic_report",
-      "headline": "New 10-Q filed",
-      "summary": "A new periodic financial report is available for review.",
-      "why_today": "A new periodic financial report is available for review.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-12T16:48:49-05:00",
-      "detected_at": "2026-11-14T06:15:27.677602+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-        "published_at": "2026-11-12T16:48:49-05:00",
-        "form": "10-Q",
-        "items": "",
-        "accession_number": "0001628280-26-073463",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 97,
-      "priority": "Critical",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-          "published_at": "2026-11-12T16:48:49-05:00",
-          "form": "10-Q",
-          "items": "",
-          "accession_number": "0001628280-26-073463",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:TMC:0001628280-26-073463"
-      ],
-      "dedupe_key": "TMC:periodic_report:3f09ea0799032f96"
-    },
-    {
-      "event_id": "sec:TMC:0001104659-26-126230",
-      "ticker": "TMC",
-      "event_type": "sec_filing",
-      "event_subtype": "current_report",
-      "headline": "New 8-K current report",
-      "summary": "A current report was filed and requires item-level review.",
-      "why_today": "A current report was filed and requires item-level review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-12T16:07:14-05:00",
-      "detected_at": "2026-11-14T06:15:27.677633+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1798562/000110465926126230/tm2629328d2_8k.htm",
-        "published_at": "2026-11-12T16:07:14-05:00",
-        "form": "8-K",
-        "items": "",
-        "accession_number": "0001104659-26-126230",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 64,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1798562/000110465926126230/tm2629328d2_8k.htm",
-          "published_at": "2026-11-12T16:07:14-05:00",
-          "form": "8-K",
-          "items": "",
-          "accession_number": "0001104659-26-126230",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:TMC:0001104659-26-126230"
-      ],
-      "dedupe_key": "TMC:current_report:aea06e5fd4396dc6"
     }
   ]
 }

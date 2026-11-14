@@ -1,15 +1,15 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-14T06:17:31+00:00",
+  "updated_at": "2026-11-14T13:32:06+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 11,
+  "total_events": 12,
   "coverage_status": "partial",
   "summary": {
     "Critical": 1,
-    "Risk": 0,
+    "Risk": 1,
     "Action": 0,
     "Watch": 0,
     "Developing": 0
@@ -20,9 +20,9 @@
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 33,
+      "ok": 32,
       "partial": 0,
-      "errors": 2,
+      "errors": 3,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -31,8 +31,8 @@
       },
       "transport": {
         "status": "partial",
-        "ok": 33,
-        "errors": 2
+        "ok": 32,
+        "errors": 3
       }
     },
     "earnings": {
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
+      "ok": 6,
       "partial": 0,
-      "errors": 6,
+      "errors": 4,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -101,62 +101,63 @@
   },
   "items": [
     {
-      "ticker": "TMC",
-      "name": "TMC the metals company Inc.",
+      "ticker": "IONQ",
+      "name": "IonQ, Inc.",
       "portfolio_status": "holding",
-      "role": "Critical minerals",
+      "role": "Quantum computing",
       "priority": "Critical",
-      "priority_score": 97,
+      "priority_score": 100,
       "why_today": [
-        "A new periodic financial report is available for review.",
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "The stock moved -6.5% today.",
         "A current report was filed and requires item-level review."
       ],
       "event_type": "sec_filing",
-      "event_subtype": "periodic_report",
-      "event_time": "2026-11-12T16:48:49-05:00",
+      "event_subtype": "capital_raise",
+      "event_time": "2026-11-13T17:20:20-05:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-        "published_at": "2026-11-12T16:48:49-05:00",
-        "form": "10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+        "published_at": "2026-11-13T17:20:20-05:00",
+        "form": "424B7",
         "items": "",
-        "accession_number": "0001628280-26-073463",
+        "accession_number": "0001193125-26-461012",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
-      "price": 2.315,
-      "day_change_pct": 0.6522,
-      "relative_volume": 1.19,
+      "price": 28.86,
+      "day_change_pct": -6.4809,
+      "relative_volume": 0.95,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "sec:TMC:0001628280-26-073463",
-          "ticker": "TMC",
+          "event_id": "sec:IONQ:0001193125-26-461012",
+          "ticker": "IONQ",
           "event_type": "sec_filing",
-          "event_subtype": "periodic_report",
-          "headline": "New 10-Q filed",
-          "summary": "A new periodic financial report is available for review.",
-          "why_today": "A new periodic financial report is available for review.",
+          "event_subtype": "capital_raise",
+          "headline": "424B7 capital-markets filing",
+          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-12T16:48:49-05:00",
-          "detected_at": "2026-11-14T06:15:27.677602+00:00",
+          "event_time": "2026-11-13T17:20:20-05:00",
+          "detected_at": "2026-11-14T13:29:51.673312+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-            "published_at": "2026-11-12T16:48:49-05:00",
-            "form": "10-Q",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+            "published_at": "2026-11-13T17:20:20-05:00",
+            "form": "424B7",
             "items": "",
-            "accession_number": "0001628280-26-073463",
+            "accession_number": "0001193125-26-461012",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
-          "priority_score": 97,
+          "priority_score": 100,
           "priority": "Critical",
           "attention_policy_decision": "allow",
           "verification_level": "confirmed_primary",
@@ -165,24 +166,62 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-              "published_at": "2026-11-12T16:48:49-05:00",
-              "form": "10-Q",
+              "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+              "published_at": "2026-11-13T17:20:20-05:00",
+              "form": "424B7",
               "items": "",
-              "accession_number": "0001628280-26-073463",
+              "accession_number": "0001193125-26-461012",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:TMC:0001628280-26-073463"
+            "sec:IONQ:0001193125-26-461012"
           ],
-          "dedupe_key": "TMC:periodic_report:3f09ea0799032f96"
+          "dedupe_key": "IONQ:capital_raise:d727ba4e109e4ab5"
         },
         {
-          "event_id": "sec:TMC:0001104659-26-126230",
-          "ticker": "TMC",
+          "event_id": "technical:IONQ:price-drop:2026-11-14",
+          "ticker": "IONQ",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -6.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -6.5% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-14T13:29:51.673329+00:00",
+          "detected_at": "2026-11-14T13:29:51.673330+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:IONQ:price-drop:2026-11-14"
+          ],
+          "dedupe_key": "IONQ:price_drop:ad1f2cf796b14f89"
+        },
+        {
+          "event_id": "sec:IONQ:0001193125-26-461016",
+          "ticker": "IONQ",
           "event_type": "sec_filing",
           "event_subtype": "current_report",
           "headline": "New 8-K current report",
@@ -190,21 +229,21 @@
           "why_today": "A current report was filed and requires item-level review.",
           "materiality": "low",
           "urgency": "today",
-          "event_time": "2026-11-12T16:07:14-05:00",
-          "detected_at": "2026-11-14T06:15:27.677633+00:00",
+          "event_time": "2026-11-13T17:21:13-05:00",
+          "detected_at": "2026-11-14T13:29:51.673299+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1798562/000110465926126230/tm2629328d2_8k.htm",
-            "published_at": "2026-11-12T16:07:14-05:00",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461016/ionq-20261110.htm",
+            "published_at": "2026-11-13T17:21:13-05:00",
             "form": "8-K",
             "items": "",
-            "accession_number": "0001104659-26-126230",
+            "accession_number": "0001193125-26-461016",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
-          "priority_score": 64,
+          "priority_score": 71,
           "priority": "Action",
           "attention_policy_decision": "allow",
           "verification_level": "confirmed_primary",
@@ -213,50 +252,194 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1798562/000110465926126230/tm2629328d2_8k.htm",
-              "published_at": "2026-11-12T16:07:14-05:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461016/ionq-20261110.htm",
+              "published_at": "2026-11-13T17:21:13-05:00",
               "form": "8-K",
               "items": "",
-              "accession_number": "0001104659-26-126230",
+              "accession_number": "0001193125-26-461016",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:TMC:0001104659-26-126230"
+            "sec:IONQ:0001193125-26-461016"
           ],
-          "dedupe_key": "TMC:current_report:aea06e5fd4396dc6"
+          "dedupe_key": "IONQ:current_report:35bf616cbd59fac4"
         }
       ],
       "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1798562/000162828026073463/tmc-20260930.htm",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMC/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526461012/ionq-20261113.htm",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-IONQ/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "periodic_report",
+      "primary_trigger": "capital_raise",
       "signals": [
-        "A new periodic financial report is available for review.",
+        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+        "The stock moved -6.5% today.",
         "A current report was filed and requires item-level review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
+        "first_seen_at": "2026-11-14T13:32:06+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 28.86,
+        "current_price": 28.86,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 114,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "sec_filing +6"
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -10.0% today.",
+        "An insider transaction was reported; transaction context still requires document review."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-14T13:29:51.650997+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 115.81,
+      "day_change_pct": -9.9736,
+      "relative_volume": 2.56,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:NBIS:price-drop:2026-11-14",
+          "ticker": "NBIS",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.0%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.0% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-14T13:29:51.650997+00:00",
+          "detected_at": "2026-11-14T13:29:51.650998+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:NBIS:price-drop:2026-11-14"
+          ],
+          "dedupe_key": "NBIS:price_drop:331f964bf4f81d69"
+        },
+        {
+          "event_id": "sec:NBIS:0001513845-26-000149",
+          "ticker": "NBIS",
+          "event_type": "sec_filing",
+          "event_subtype": "insider_activity",
+          "headline": "New Form 4 insider filing",
+          "summary": "An insider transaction was reported; transaction context still requires document review.",
+          "why_today": "An insider transaction was reported; transaction context still requires document review.",
+          "materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-11-13T16:48:42-05:00",
+          "detected_at": "2026-11-14T13:29:51.650976+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "sec",
+            "quality": "primary",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000149/form4.xml",
+            "published_at": "2026-11-13T16:48:42-05:00",
+            "form": "4",
+            "items": "",
+            "accession_number": "0001513845-26-000149",
+            "report_date": "",
+            "discovered_via": "finnhub_sec_index"
+          },
+          "priority_score": 78,
+          "priority": "Risk",
+          "attention_policy_decision": "allow",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "source_chain": [
+            {
+              "type": "sec",
+              "quality": "primary",
+              "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000149/form4.xml",
+              "published_at": "2026-11-13T16:48:42-05:00",
+              "form": "4",
+              "items": "",
+              "accession_number": "0001513845-26-000149",
+              "report_date": "",
+              "discovered_via": "finnhub_sec_index"
+            }
+          ],
+          "secondary_source_count": 0,
+          "related_event_ids": [
+            "sec:NBIS:0001513845-26-000149"
+          ],
+          "dedupe_key": "NBIS:insider_activity:311fe4ed9c415413"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -10.0% today.",
+        "An insider transaction was reported; transaction context still requires document review."
+      ],
+      "change": {
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 2.315,
-        "current_price": 2.315,
+        "baseline_price": 115.81,
+        "current_price": 115.81,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 111,
+      "personal_priority_score": 107,
       "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
+        "หุ้นในพอร์ต +8"
       ]
     }
   ],
@@ -264,36 +447,26 @@
     {
       "source": "sec",
       "ticker": "*",
-      "message": "SEC transport unavailable for 2 applicable tickers"
+      "message": "SEC transport unavailable for 3 applicable tickers"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
+      "ticker": "TE",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "RXRX",
+      "ticker": "RKLB",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "SYM",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RR",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "OPEN",
+      "ticker": "HOOD",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -313,7 +486,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 6,
+    "technical_metric_repair_count": 5,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -333,8 +506,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 10,
-      "accepted_events": 10,
+      "evaluated_events": 11,
+      "accepted_events": 11,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -356,7 +529,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 6
+    "total": 5
   },
   "technical_watch": [
     {
@@ -371,7 +544,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T06:15:27.553898+00:00",
+      "event_time": "2026-11-14T13:29:51.680643+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -395,8 +568,8 @@
           "why_today": "The stock moved -8.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.553898+00:00",
-          "detected_at": "2026-11-14T06:15:27.553904+00:00",
+          "event_time": "2026-11-14T13:29:51.680643+00:00",
+          "detected_at": "2026-11-14T13:29:51.680647+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -443,115 +616,15 @@
         "The stock moved -8.7% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 534.09,
         "current_price": 534.09,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
-      "portfolio_status": "holding",
-      "role": "AI infrastructure",
-      "priority": "Risk",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved -10.0% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-14T06:15:27.508629+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 115.81,
-      "day_change_pct": -9.9736,
-      "relative_volume": 2.56,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:NBIS:price-drop:2026-11-14",
-          "ticker": "NBIS",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -10.0%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -10.0% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.508629+00:00",
-          "detected_at": "2026-11-14T06:15:27.508633+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:NBIS:price-drop:2026-11-14"
-          ],
-          "dedupe_key": "NBIS:price_drop:331f964bf4f81d69",
-          "technical_score": 29.0,
-          "rsi14": 38.66,
-          "pct_vs_ema20": -25.99,
-          "pct_vs_ema200": -31.26,
-          "volume_ratio20": 2.56,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -10.0% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 115.81,
-        "current_price": 115.81,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -572,7 +645,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T06:15:27.451463+00:00",
+      "event_time": "2026-11-14T13:29:51.612625+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -596,8 +669,8 @@
           "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.451463+00:00",
-          "detected_at": "2026-11-14T06:15:27.451468+00:00",
+          "event_time": "2026-11-14T13:29:51.612625+00:00",
+          "detected_at": "2026-11-14T13:29:51.612629+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -643,9 +716,9 @@
         "The stock moved -5.5% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
         "active_days": 0
       },
@@ -672,7 +745,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-14T06:15:27.599287+00:00",
+      "event_time": "2026-11-14T13:29:51.710316+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -696,8 +769,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.599287+00:00",
-          "detected_at": "2026-11-14T06:15:27.599292+00:00",
+          "event_time": "2026-11-14T13:29:51.710316+00:00",
+          "detected_at": "2026-11-14T13:29:51.710320+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -743,115 +816,15 @@
         "The stock moved +5.2% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
         "active_days": 0
       },
       "impact": {
         "baseline_price": 1.905,
         "current_price": 1.905,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "IONQ",
-      "name": "IonQ, Inc.",
-      "portfolio_status": "holding",
-      "role": "Quantum computing",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved -6.5% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-14T06:15:27.542442+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 28.86,
-      "day_change_pct": -6.4809,
-      "relative_volume": 0.95,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:IONQ:price-drop:2026-11-14",
-          "ticker": "IONQ",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -6.5%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -6.5% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.542442+00:00",
-          "detected_at": "2026-11-14T06:15:27.542447+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:IONQ:price-drop:2026-11-14"
-          ],
-          "dedupe_key": "IONQ:price_drop:ad1f2cf796b14f89",
-          "technical_score": 17.0,
-          "rsi14": 44.44,
-          "pct_vs_ema20": -11.72,
-          "pct_vs_ema200": -29.7,
-          "volume_ratio20": 0.95,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-IONQ/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -6.5% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 28.86,
-        "current_price": 28.86,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -872,7 +845,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T06:15:27.440245+00:00",
+      "event_time": "2026-11-14T13:29:51.605237+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -896,8 +869,8 @@
           "why_today": "The stock moved -6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T06:15:27.440245+00:00",
-          "detected_at": "2026-11-14T06:15:27.440250+00:00",
+          "event_time": "2026-11-14T13:29:51.605237+00:00",
+          "detected_at": "2026-11-14T13:29:51.605241+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -943,9 +916,9 @@
         "The stock moved -6.8% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
         "active_days": 0
       },
@@ -959,17 +932,133 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
+    },
+    {
+      "ticker": "RR",
+      "name": "Richtech Robotics Inc.",
+      "portfolio_status": "holding",
+      "role": "Robotics",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.7% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-14T13:29:51.777145+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 0.7561,
+      "day_change_pct": -7.6801,
+      "relative_volume": 1.12,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:RR:price-drop:2026-11-14",
+          "ticker": "RR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.7% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-14T13:29:51.777145+00:00",
+          "detected_at": "2026-11-14T13:29:51.777150+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:RR:price-drop:2026-11-14"
+          ],
+          "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca",
+          "technical_score": 13.0,
+          "rsi14": 29.69,
+          "pct_vs_ema20": -27.99,
+          "pct_vs_ema200": -64.67,
+          "volume_ratio20": 1.12,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.7% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-14T13:32:06+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 0.7561,
+        "current_price": 0.7561,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
   "changes_summary": {
-    "new": 7,
+    "new": 2,
     "escalated": 0,
-    "updated": 0,
-    "ongoing": 0,
+    "updated": 1,
+    "ongoing": 4,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:TMC:0001628280-26-073463",
+      "ticker": "TMC",
+      "event_subtype": "periodic_report",
+      "priority": "Critical",
+      "resolved_at": "2026-11-14T13:32:06+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IONQ:price-drop:2026-11-14",
+      "ticker": "IONQ",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-14T13:32:06+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:NBIS:price-drop:2026-11-13",
       "ticker": "NBIS",
@@ -1032,22 +1121,6 @@
       "event_subtype": "periodic_report",
       "priority": "Critical",
       "resolved_at": "2026-11-13T23:34:07+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TEM:price-drop:2026-11-13",
-      "ticker": "TEM",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-13T23:34:07+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:EOSE:price-drop:2026-11-13",
-      "ticker": "EOSE",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-13T17:13:39+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
