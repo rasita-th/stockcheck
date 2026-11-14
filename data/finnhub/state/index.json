@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-10T07:13:09+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "IZRL",
-            "JEPQ",
-            "JMIA",
-            "JOBY",
-            "KDP",
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS"
-          ],
-          "sec_filings": [
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS",
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR",
-            "NBIS",
-            "TEM",
-            "MP",
-            "IONQ",
-            "AMD",
-            "ORCL"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-10T07:12:24+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2520,9 +2457,67 @@
       "mode": "events",
       "started_at": "2026-11-14T06:14:38+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 33,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "PERI",
+            "PINS",
+            "PL",
+            "PLTR",
+            "PRCT",
+            "PRME",
+            "PRNT",
+            "PSIX"
+          ],
+          "company_profile": [
+            "ZS"
+          ],
+          "recommendation_trends": [
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE",
+            "BEAM",
+            "BILL",
+            "BKNG",
+            "BKR",
+            "BKSY",
+            "BLSH",
+            "BMNR",
+            "BRK-B",
+            "BTDR"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-14T07:00:22+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-14T06:59:37+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-14T06:15:26+00:00"
+  "updated_at": "2026-11-14T07:00:23+00:00"
 }
