@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-11T06:07:50+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA",
-            "NBIS",
-            "NFLX",
-            "NICE",
-            "NNDM",
-            "NOC",
-            "NOW",
-            "NTLA",
-            "NTRA",
-            "NU",
-            "NVDA",
-            "NVTS",
-            "NXPI"
-          ],
-          "sec_filings": [
-            "COST",
-            "BEAM",
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI",
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS",
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-11T06:07:03+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2511,9 +2448,64 @@
       "mode": "events",
       "started_at": "2026-11-14T19:55:38+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 32,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "RDW",
+            "REGN",
+            "RGNX",
+            "RIOT",
+            "RKLB",
+            "ROKU",
+            "ROP",
+            "ROST"
+          ],
+          "recommendation_trends": [
+            "CRWD",
+            "CRWV",
+            "CSCO",
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH",
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-14T22:44:47+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-14T22:44:04+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-14T19:56:26+00:00"
+  "updated_at": "2026-11-14T22:44:48+00:00"
 }
