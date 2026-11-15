@@ -1,15 +1,15 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-14T19:58:21+00:00",
+  "updated_at": "2026-11-15T01:04:00+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 14,
+  "total_events": 9,
   "coverage_status": "partial",
   "summary": {
     "Critical": 0,
-    "Risk": 1,
+    "Risk": 0,
     "Action": 0,
     "Watch": 0,
     "Developing": 0
@@ -20,9 +20,9 @@
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 31,
+      "ok": 30,
       "partial": 0,
-      "errors": 4,
+      "errors": 5,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -31,8 +31,8 @@
       },
       "transport": {
         "status": "partial",
-        "ok": 31,
-        "errors": 4
+        "ok": 30,
+        "errors": 5
       }
     },
     "earnings": {
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 8,
+      "ok": 4,
       "partial": 0,
-      "errors": 2,
+      "errors": 6,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "optional_unavailable",
+      "status": "partial",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 0,
-      "unavailable": 10,
+      "ok": 1,
+      "unavailable": 9,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -99,209 +99,41 @@
       "accepted_events": 0
     }
   },
-  "items": [
-    {
-      "ticker": "RR",
-      "name": "Richtech Robotics Inc.",
-      "portfolio_status": "holding",
-      "role": "Robotics",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved -7.7% today.",
-        "An insider transaction was reported; transaction context still requires document review."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.576320+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 0.7561,
-      "day_change_pct": -7.6801,
-      "relative_volume": 1.12,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:RR:price-drop:2026-11-14",
-          "ticker": "RR",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -7.7%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.7% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.576320+00:00",
-          "detected_at": "2026-11-14T19:56:27.576322+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:RR:price-drop:2026-11-14"
-          ],
-          "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca"
-        },
-        {
-          "event_id": "event:RR:f7cbc330806e53f5",
-          "ticker": "RR",
-          "event_type": "sec_filing",
-          "event_subtype": "insider_activity",
-          "headline": "New Form 4 insider filing",
-          "summary": "An insider transaction was reported; transaction context still requires document review.",
-          "why_today": "An insider transaction was reported; transaction context still requires document review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-13T20:17:37-05:00",
-          "detected_at": "2026-11-14T19:56:27.576303+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026120000/ownership.xml",
-            "published_at": "2026-11-13T20:19:32-05:00",
-            "form": "4",
-            "items": "",
-            "accession_number": "0001213900-26-120000",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 71,
-          "priority": "Action",
-          "attention_policy_decision": "allow",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026120000/ownership.xml",
-              "published_at": "2026-11-13T20:19:32-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0001213900-26-120000",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026119998/ownership.xml",
-              "published_at": "2026-11-13T20:18:47-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0001213900-26-119998",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026119997/ownership.xml",
-              "published_at": "2026-11-13T20:18:26-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0001213900-26-119997",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026119996/ownership.xml",
-              "published_at": "2026-11-13T20:18:04-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0001213900-26-119996",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            },
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026119995/ownership.xml",
-              "published_at": "2026-11-13T20:17:37-05:00",
-              "form": "4",
-              "items": "",
-              "accession_number": "0001213900-26-119995",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "event:RR:f7cbc330806e53f5"
-          ],
-          "dedupe_key": "RR:insider_activity:58a273b4312b0736"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -7.7% today.",
-        "An insider transaction was reported; transaction context still requires document review."
-      ],
-      "change": {
-        "status": "updated",
-        "label_th": "มีข้อมูลใหม่เพิ่ม",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T13:32:06+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 0.7561,
-        "current_price": 0.7561,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    }
-  ],
+  "items": [],
   "errors": [
     {
       "source": "sec",
       "ticker": "*",
-      "message": "SEC transport unavailable for 4 applicable tickers"
+      "message": "SEC transport unavailable for 5 applicable tickers"
     },
     {
       "source": "ir",
-      "ticker": "TSLA",
+      "ticker": "TMDX",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TEM",
+      "ticker": "EOSE",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "PSIX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "CIFR",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "RXRX",
+      "message": "Configured IR sources were unavailable"
+    },
+    {
+      "source": "ir",
+      "ticker": "SYM",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -321,7 +153,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 6,
+    "technical_metric_repair_count": 7,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -341,8 +173,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 24,
-      "accepted_events": 24,
+      "evaluated_events": 8,
+      "accepted_events": 8,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -364,7 +196,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 6
+    "total": 7
   },
   "technical_watch": [
     {
@@ -379,7 +211,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.477394+00:00",
+      "event_time": "2026-11-15T01:01:49.672854+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -403,8 +235,8 @@
           "why_today": "The stock moved -8.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.477394+00:00",
-          "detected_at": "2026-11-14T19:56:27.477399+00:00",
+          "event_time": "2026-11-15T01:01:49.672854+00:00",
+          "detected_at": "2026-11-15T01:01:49.672859+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -455,7 +287,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 534.09,
@@ -480,7 +312,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.447314+00:00",
+      "event_time": "2026-11-15T01:01:49.639703+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -504,8 +336,8 @@
           "why_today": "The stock moved -10.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.447314+00:00",
-          "detected_at": "2026-11-14T19:56:27.447318+00:00",
+          "event_time": "2026-11-15T01:01:49.639703+00:00",
+          "detected_at": "2026-11-15T01:01:49.639707+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -555,7 +387,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 115.81,
@@ -580,7 +412,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.408109+00:00",
+      "event_time": "2026-11-15T01:01:49.596758+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -604,8 +436,8 @@
           "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.408109+00:00",
-          "detected_at": "2026-11-14T19:56:27.408113+00:00",
+          "event_time": "2026-11-15T01:01:49.596758+00:00",
+          "detected_at": "2026-11-15T01:01:49.596763+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -655,7 +487,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 32.6,
@@ -680,7 +512,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-14T19:56:27.507704+00:00",
+      "event_time": "2026-11-15T01:01:49.706097+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -704,8 +536,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.507704+00:00",
-          "detected_at": "2026-11-14T19:56:27.507708+00:00",
+          "event_time": "2026-11-15T01:01:49.706097+00:00",
+          "detected_at": "2026-11-15T01:01:49.706101+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -755,7 +587,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 1.905,
@@ -780,7 +612,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.469933+00:00",
+      "event_time": "2026-11-15T01:01:49.664532+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -804,8 +636,8 @@
           "why_today": "The stock moved -6.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.469933+00:00",
-          "detected_at": "2026-11-14T19:56:27.469937+00:00",
+          "event_time": "2026-11-15T01:01:49.664532+00:00",
+          "detected_at": "2026-11-15T01:01:49.664536+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -851,11 +683,11 @@
         "The stock moved -6.5% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T19:58:21+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 28.86,
@@ -880,7 +712,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-14T19:56:27.400563+00:00",
+      "event_time": "2026-11-15T01:01:49.588370+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -904,8 +736,8 @@
           "why_today": "The stock moved -6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-14T19:56:27.400563+00:00",
-          "detected_at": "2026-11-14T19:56:27.400568+00:00",
+          "event_time": "2026-11-15T01:01:49.588370+00:00",
+          "detected_at": "2026-11-15T01:01:49.588376+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -955,7 +787,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 18.16,
@@ -967,13 +799,113 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
+    },
+    {
+      "ticker": "RR",
+      "name": "Richtech Robotics Inc.",
+      "portfolio_status": "holding",
+      "role": "Robotics",
+      "priority": "Risk",
+      "priority_score": 75,
+      "why_today": [
+        "The stock moved -7.7% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-15T01:01:49.781001+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 0.7561,
+      "day_change_pct": -7.6801,
+      "relative_volume": 1.12,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:RR:price-drop:2026-11-14",
+          "ticker": "RR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.7% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-15T01:01:49.781001+00:00",
+          "detected_at": "2026-11-15T01:01:49.781005+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:RR:price-drop:2026-11-14"
+          ],
+          "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca",
+          "technical_score": 13.0,
+          "rsi14": 29.69,
+          "pct_vs_ema20": -27.99,
+          "pct_vs_ema200": -64.67,
+          "volume_ratio20": 1.12,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -7.7% today."
+      ],
+      "change": {
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Risk",
+        "first_seen_at": "2026-11-14T13:32:06+00:00",
+        "active_days": 1
+      },
+      "impact": {
+        "baseline_price": 0.7561,
+        "current_price": 0.7561,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 83,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
   "changes_summary": {
-    "new": 1,
+    "new": 0,
     "escalated": 0,
-    "updated": 1,
-    "ongoing": 5,
+    "updated": 0,
+    "ongoing": 7,
     "eased": 0,
     "resolved": 20
   },
