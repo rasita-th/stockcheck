@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-15T01:04:00+00:00",
+  "updated_at": "2026-11-15T10:49:32+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 4,
+      "ok": 6,
       "partial": 0,
-      "errors": 6,
+      "errors": 4,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -81,12 +81,12 @@
       }
     },
     "gdelt": {
-      "status": "partial",
+      "status": "optional_unavailable",
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 0,
+      "unavailable": 10,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -108,32 +108,22 @@
     },
     {
       "source": "ir",
-      "ticker": "TMDX",
+      "ticker": "RR",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "EOSE",
+      "ticker": "OPEN",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "PSIX",
+      "ticker": "BEAM",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "CIFR",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
+      "ticker": "TE",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -211,7 +201,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.672854+00:00",
+      "event_time": "2026-11-15T10:47:36.630365+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -226,7 +216,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:AMD:price-drop:2026-11-14",
+          "event_id": "technical:AMD:price-drop:2026-11-15",
           "ticker": "AMD",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -235,8 +225,8 @@
           "why_today": "The stock moved -8.7% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.672854+00:00",
-          "detected_at": "2026-11-15T01:01:49.672859+00:00",
+          "event_time": "2026-11-15T10:47:36.630365+00:00",
+          "detected_at": "2026-11-15T10:47:36.630372+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -259,9 +249,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:AMD:price-drop:2026-11-14"
+            "technical:AMD:price-drop:2026-11-15"
           ],
-          "dedupe_key": "AMD:price_drop:b4ad5f9c462ee7d3",
+          "dedupe_key": "AMD:price_drop:ab164f1191e46a0d",
           "technical_score": 90.0,
           "rsi14": 50.36,
           "pct_vs_ema20": 1.37,
@@ -283,11 +273,11 @@
         "The stock moved -8.7% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 534.09,
@@ -312,7 +302,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.639703+00:00",
+      "event_time": "2026-11-15T10:47:36.583089+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -327,7 +317,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NBIS:price-drop:2026-11-14",
+          "event_id": "technical:NBIS:price-drop:2026-11-15",
           "ticker": "NBIS",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -336,8 +326,8 @@
           "why_today": "The stock moved -10.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.639703+00:00",
-          "detected_at": "2026-11-15T01:01:49.639707+00:00",
+          "event_time": "2026-11-15T10:47:36.583089+00:00",
+          "detected_at": "2026-11-15T10:47:36.583096+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -360,9 +350,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NBIS:price-drop:2026-11-14"
+            "technical:NBIS:price-drop:2026-11-15"
           ],
-          "dedupe_key": "NBIS:price_drop:331f964bf4f81d69",
+          "dedupe_key": "NBIS:price_drop:17b8aed56ef73386",
           "technical_score": 29.0,
           "rsi14": 38.66,
           "pct_vs_ema20": -25.99,
@@ -383,11 +373,11 @@
         "The stock moved -10.0% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 115.81,
@@ -412,7 +402,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.596758+00:00",
+      "event_time": "2026-11-15T10:47:36.519891+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -427,7 +417,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:ASTS:price-drop:2026-11-14",
+          "event_id": "technical:ASTS:price-drop:2026-11-15",
           "ticker": "ASTS",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -436,8 +426,8 @@
           "why_today": "The stock moved -5.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.596758+00:00",
-          "detected_at": "2026-11-15T01:01:49.596763+00:00",
+          "event_time": "2026-11-15T10:47:36.519891+00:00",
+          "detected_at": "2026-11-15T10:47:36.519898+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -460,9 +450,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:ASTS:price-drop:2026-11-14"
+            "technical:ASTS:price-drop:2026-11-15"
           ],
-          "dedupe_key": "ASTS:price_drop:22fa5442fc003524",
+          "dedupe_key": "ASTS:price_drop:e9664090753207cb",
           "technical_score": 12.0,
           "rsi14": 38.98,
           "pct_vs_ema20": -16.88,
@@ -483,11 +473,11 @@
         "The stock moved -5.5% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 32.6,
@@ -512,7 +502,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-15T01:01:49.706097+00:00",
+      "event_time": "2026-11-15T10:47:36.678737+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -527,7 +517,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:EOSE:price-move:2026-11-14",
+          "event_id": "technical:EOSE:price-move:2026-11-15",
           "ticker": "EOSE",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -536,8 +526,8 @@
           "why_today": "The stock moved +5.2% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.706097+00:00",
-          "detected_at": "2026-11-15T01:01:49.706101+00:00",
+          "event_time": "2026-11-15T10:47:36.678737+00:00",
+          "detected_at": "2026-11-15T10:47:36.678743+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -560,9 +550,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:EOSE:price-move:2026-11-14"
+            "technical:EOSE:price-move:2026-11-15"
           ],
-          "dedupe_key": "EOSE:price_move:1cccf104540f0290",
+          "dedupe_key": "EOSE:price_move:2489df684cc157ff",
           "technical_score": 22.0,
           "rsi14": 42.11,
           "pct_vs_ema20": -4.27,
@@ -583,11 +573,11 @@
         "The stock moved +5.2% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 1.905,
@@ -612,7 +602,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.664532+00:00",
+      "event_time": "2026-11-15T10:47:36.618023+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -627,7 +617,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:IONQ:price-drop:2026-11-14",
+          "event_id": "technical:IONQ:price-drop:2026-11-15",
           "ticker": "IONQ",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -636,8 +626,8 @@
           "why_today": "The stock moved -6.5% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.664532+00:00",
-          "detected_at": "2026-11-15T01:01:49.664536+00:00",
+          "event_time": "2026-11-15T10:47:36.618023+00:00",
+          "detected_at": "2026-11-15T10:47:36.618029+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -660,9 +650,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:IONQ:price-drop:2026-11-14"
+            "technical:IONQ:price-drop:2026-11-15"
           ],
-          "dedupe_key": "IONQ:price_drop:ad1f2cf796b14f89",
+          "dedupe_key": "IONQ:price_drop:552dfd85d34c63a9",
           "technical_score": 17.0,
           "rsi14": 44.44,
           "pct_vs_ema20": -11.72,
@@ -683,11 +673,11 @@
         "The stock moved -6.5% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T19:58:21+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 28.86,
@@ -712,7 +702,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.588370+00:00",
+      "event_time": "2026-11-15T10:47:36.507752+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -727,7 +717,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:IREN:price-drop:2026-11-14",
+          "event_id": "technical:IREN:price-drop:2026-11-15",
           "ticker": "IREN",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -736,8 +726,8 @@
           "why_today": "The stock moved -6.8% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.588370+00:00",
-          "detected_at": "2026-11-15T01:01:49.588376+00:00",
+          "event_time": "2026-11-15T10:47:36.507752+00:00",
+          "detected_at": "2026-11-15T10:47:36.507758+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -760,9 +750,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:IREN:price-drop:2026-11-14"
+            "technical:IREN:price-drop:2026-11-15"
           ],
-          "dedupe_key": "IREN:price_drop:caebbe8d099242e7",
+          "dedupe_key": "IREN:price_drop:1b828db768ba640c",
           "technical_score": 13.0,
           "rsi14": 34.56,
           "pct_vs_ema20": -26.36,
@@ -783,11 +773,11 @@
         "The stock moved -6.8% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T06:17:31+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 18.16,
@@ -812,7 +802,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-15T01:01:49.781001+00:00",
+      "event_time": "2026-11-15T10:47:36.786353+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -827,7 +817,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:RR:price-drop:2026-11-14",
+          "event_id": "technical:RR:price-drop:2026-11-15",
           "ticker": "RR",
           "event_type": "technical",
           "event_subtype": "price_drop",
@@ -836,8 +826,8 @@
           "why_today": "The stock moved -7.7% today.",
           "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-15T01:01:49.781001+00:00",
-          "detected_at": "2026-11-15T01:01:49.781005+00:00",
+          "event_time": "2026-11-15T10:47:36.786353+00:00",
+          "detected_at": "2026-11-15T10:47:36.786360+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -860,9 +850,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:RR:price-drop:2026-11-14"
+            "technical:RR:price-drop:2026-11-15"
           ],
-          "dedupe_key": "RR:price_drop:f7c80f355e4ba1ca",
+          "dedupe_key": "RR:price_drop:b90f4c27a04aec7d",
           "technical_score": 13.0,
           "rsi14": 29.69,
           "pct_vs_ema20": -27.99,
@@ -883,11 +873,11 @@
         "The stock moved -7.7% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-14T13:32:06+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-15T10:49:32+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 0.7561,
@@ -902,14 +892,70 @@
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 7,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 0,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:AMD:price-drop:2026-11-14",
+      "ticker": "AMD",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NBIS:price-drop:2026-11-14",
+      "ticker": "NBIS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ASTS:price-drop:2026-11-14",
+      "ticker": "ASTS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:EOSE:price-move:2026-11-14",
+      "ticker": "EOSE",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IONQ:price-drop:2026-11-14",
+      "ticker": "IONQ",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IREN:price-drop:2026-11-14",
+      "ticker": "IREN",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:RR:price-drop:2026-11-14",
+      "ticker": "RR",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-15T10:49:32+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "sec:IONQ:0001193125-26-461012",
       "ticker": "IONQ",
@@ -932,62 +978,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-11-14T13:32:06+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:NBIS:price-drop:2026-11-13",
-      "ticker": "NBIS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:AMD:price-drop:2026-11-13",
-      "ticker": "AMD",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-drop:2026-11-13",
-      "ticker": "ASTS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:EOSE:price-move:2026-11-13",
-      "ticker": "EOSE",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:price-drop:2026-11-13",
-      "ticker": "IONQ",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-drop:2026-11-13",
-      "ticker": "IREN",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:RR:price-drop:2026-11-13",
-      "ticker": "RR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-14T06:17:31+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],

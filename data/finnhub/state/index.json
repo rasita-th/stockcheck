@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR",
-            "MRAM",
-            "MRCY",
-            "MRVL"
-          ],
-          "company_profile": [
-            "UNH",
-            "UUUU",
-            "VCYT",
-            "VICR"
-          ],
-          "recommendation_trends": [
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT",
-            "RKLB",
-            "ROKU",
-            "ROP",
-            "ROST",
-            "RR",
-            "RTX",
-            "RXRX",
-            "SAIC",
-            "SATL"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-11T19:52:18+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-11T19:51:31+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2497,9 +2436,72 @@
       "mode": "analyst",
       "started_at": "2026-11-15T07:09:07+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-15T10:47:33+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "HON",
+            "HOOD",
+            "HUT",
+            "HWM",
+            "IDXX",
+            "ILMN",
+            "INDI",
+            "INSM",
+            "INTC",
+            "INTU",
+            "IONQ",
+            "IOT",
+            "IRDM",
+            "IREN",
+            "ISRG",
+            "IZRL",
+            "JEPQ",
+            "JMIA",
+            "JOBY",
+            "KDP"
+          ],
+          "sec_filings": [
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR",
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-15T10:46:47+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-15T07:09:48+00:00"
+  "updated_at": "2026-11-15T10:47:34+00:00"
 }
