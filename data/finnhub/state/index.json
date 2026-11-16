@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-13T06:37:23+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "WDC",
-            "WIX",
-            "WM",
-            "WMT",
-            "WYFI",
-            "XEL",
-            "XYZ",
-            "Z",
-            "ZETA",
-            "ZS",
-            "AAOI",
-            "AAPL",
-            "ABBV",
-            "ABCL",
-            "ABNB",
-            "ACHR",
-            "ADBE",
-            "ADI",
-            "ADP",
-            "ADSK"
-          ],
-          "sec_filings": [
-            "AMD",
-            "ORCL",
-            "EQT",
-            "TMDX",
-            "EOSE",
-            "PLTR",
-            "UUUU",
-            "PSIX",
-            "CIFR",
-            "RXRX",
-            "JEPQ",
-            "SYM",
-            "TMC",
-            "OSCR",
-            "COPX",
-            "RR"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-13T06:36:36+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2493,9 +2430,70 @@
       "mode": "events",
       "started_at": "2026-11-16T21:58:47+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "SYM",
+            "SYNA",
+            "TDG",
+            "TDOC",
+            "TE",
+            "TEM",
+            "TER",
+            "TGT"
+          ],
+          "company_profile": [
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI"
+          ],
+          "recommendation_trends": [
+            "MPWR",
+            "MRAM",
+            "MRCY",
+            "MRVL",
+            "MSFT",
+            "MSTR",
+            "MTLS",
+            "MU",
+            "NASA",
+            "NBIS",
+            "NFLX",
+            "NICE",
+            "NNDM",
+            "NOC",
+            "NOW",
+            "NTLA",
+            "NTRA",
+            "NU",
+            "NVDA",
+            "NVTS",
+            "NXPI",
+            "ODFL",
+            "OKLO",
+            "ONDS"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-16T22:30:41+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-16T22:29:52+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-16T21:59:34+00:00"
+  "updated_at": "2026-11-16T22:30:42+00:00"
 }
