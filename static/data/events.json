@@ -1,66 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-11-18T20:30:47+00:00",
-  "row_count": 23,
+  "generated_at": "2026-11-19T02:35:22+00:00",
+  "row_count": 16,
   "events": [
-    {
-      "event_id": "technical:BEAM:price-move:2026-11-18",
-      "ticker": "BEAM",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +5.7%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.7% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-18T20:28:46.039010+00:00",
-      "detected_at": "2026-11-18T20:28:46.039015+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:BEAM:price-move:2026-11-18"
-      ],
-      "dedupe_key": "BEAM:price_move:e0f498bb8088fde5",
-      "technical_score": 12.0,
-      "rsi14": 39.85,
-      "pct_vs_ema20": -10.39,
-      "pct_vs_ema200": -19.24,
-      "volume_ratio20": 0.61,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
-    },
     {
       "event_id": "technical:OPEN:price-move:2026-11-18",
       "ticker": "OPEN",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +14.0%",
+      "headline": "Price +8.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +14.0% today.",
+      "why_today": "The stock moved +8.5% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:46.016680+00:00",
-      "detected_at": "2026-11-18T20:28:46.016685+00:00",
+      "event_time": "2026-11-19T02:33:20.054717+00:00",
+      "detected_at": "2026-11-19T02:33:20.054723+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -92,13 +47,13 @@
       "ticker": "COPX",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -6.3%",
+      "headline": "Price -6.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -6.3% today.",
+      "why_today": "The stock moved -6.4% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:45.983011+00:00",
-      "detected_at": "2026-11-18T20:28:45.983013+00:00",
+      "event_time": "2026-11-19T02:33:20.013180+00:00",
+      "detected_at": "2026-11-19T02:33:20.013182+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -123,20 +78,27 @@
       "related_event_ids": [
         "technical:COPX:price-drop:2026-11-18"
       ],
-      "dedupe_key": "COPX:price_drop:83ec2c7dd330d31e"
+      "dedupe_key": "COPX:price_drop:83ec2c7dd330d31e",
+      "technical_score": 16.0,
+      "rsi14": 26.54,
+      "pct_vs_ema20": -14.76,
+      "pct_vs_ema200": -23.61,
+      "volume_ratio20": 2.33,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
       "event_id": "technical:OSCR:price-drop:2026-11-18",
       "ticker": "OSCR",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -5.3%",
+      "headline": "Price -7.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -5.3% today.",
+      "why_today": "The stock moved -7.6% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:45.982989+00:00",
-      "detected_at": "2026-11-18T20:28:45.982994+00:00",
+      "event_time": "2026-11-19T02:33:20.013159+00:00",
+      "detected_at": "2026-11-19T02:33:20.013163+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -164,17 +126,17 @@
       "dedupe_key": "OSCR:price_drop:6c2d6b2b2ca26747"
     },
     {
-      "event_id": "technical:RXRX:price-move:2026-11-18",
-      "ticker": "RXRX",
+      "event_id": "technical:TMC:price-drop:2026-11-18",
+      "ticker": "TMC",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +7.9%",
+      "event_subtype": "price_drop",
+      "headline": "Price -7.5%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +7.9% today.",
+      "why_today": "The stock moved -7.5% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:45.949423+00:00",
-      "detected_at": "2026-11-18T20:28:45.949428+00:00",
+      "event_time": "2026-11-19T02:33:20.002047+00:00",
+      "detected_at": "2026-11-19T02:33:20.002052+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -197,22 +159,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:RXRX:price-move:2026-11-18"
+        "technical:TMC:price-drop:2026-11-18"
       ],
-      "dedupe_key": "RXRX:price_move:771f83426a7cda60"
+      "dedupe_key": "TMC:price_drop:dff6fcd82051c22a"
     },
     {
-      "event_id": "technical:CIFR:price-move:2026-11-18",
-      "ticker": "CIFR",
+      "event_id": "technical:AMD:price-move:2026-11-18",
+      "ticker": "AMD",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +5.5%",
+      "headline": "Price +5.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.5% today.",
+      "why_today": "The stock moved +5.4% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:45.938044+00:00",
-      "detected_at": "2026-11-18T20:28:45.938051+00:00",
+      "event_time": "2026-11-19T02:33:19.866821+00:00",
+      "detected_at": "2026-11-19T02:33:19.866825+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -235,22 +197,60 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:CIFR:price-move:2026-11-18"
+        "technical:AMD:price-move:2026-11-18"
       ],
-      "dedupe_key": "CIFR:price_move:c7d1a84098368022"
+      "dedupe_key": "AMD:price_move:40b4e351aa3be7ee"
+    },
+    {
+      "event_id": "technical:IONQ:price-drop:2026-11-18",
+      "ticker": "IONQ",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -5.5%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -5.5% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-11-19T02:33:19.855558+00:00",
+      "detected_at": "2026-11-19T02:33:19.855563+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:IONQ:price-drop:2026-11-18"
+      ],
+      "dedupe_key": "IONQ:price_drop:dd3f21b9fe66e637"
     },
     {
       "event_id": "technical:ASTS:price-drop:2026-11-18",
       "ticker": "ASTS",
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "headline": "Price -5.4%",
+      "headline": "Price -7.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved -5.4% today.",
+      "why_today": "The stock moved -7.6% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-18T20:28:45.740040+00:00",
-      "detected_at": "2026-11-18T20:28:45.740042+00:00",
+      "event_time": "2026-11-19T02:33:19.762401+00:00",
+      "detected_at": "2026-11-19T02:33:19.762407+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -275,7 +275,14 @@
       "related_event_ids": [
         "technical:ASTS:price-drop:2026-11-18"
       ],
-      "dedupe_key": "ASTS:price_drop:d3a5b2a7c756f843"
+      "dedupe_key": "ASTS:price_drop:d3a5b2a7c756f843",
+      "technical_score": 9.0,
+      "rsi14": 29.64,
+      "pct_vs_ema20": -28.43,
+      "pct_vs_ema200": -62.1,
+      "volume_ratio20": 0.93,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
       "event_id": "technical:AMZN:technical_setup:2026-11-18",
@@ -284,11 +291,11 @@
       "event_subtype": "technical_setup",
       "headline": "Latest technical scan · 93/100",
       "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-11-18: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.5, +2.6% vs EMA20, +8.4% vs EMA200, volume 0.36x 20-day average.",
+      "why_today": "Latest technical scan dated 2026-11-18: score 93/100, BUY ZONE / Trend Confirmed, RSI 56.1, +3.0% vs EMA20, +8.9% vs EMA200, volume 0.57x 20-day average.",
       "materiality": "medium",
       "urgency": "today",
       "event_time": "2026-11-18",
-      "detected_at": "2026-11-18T20:30:47+00:00",
+      "detected_at": "2026-11-19T02:35:22+00:00",
       "verification_status": "confirmed",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -309,10 +316,10 @@
       "technical_score": 93.0,
       "technical_signal": "BUY ZONE / Trend Confirmed",
       "scan_age_days": 0,
-      "rsi14": 56.54,
-      "pct_vs_ema20": 2.57,
-      "pct_vs_ema200": 8.42,
-      "volume_ratio20": 0.36,
+      "rsi14": 56.06,
+      "pct_vs_ema20": 3.05,
+      "pct_vs_ema200": 8.9,
+      "volume_ratio20": 0.57,
       "secondary_source_count": 1,
       "related_event_ids": [
         "technical:AMZN:technical_setup:2026-11-18"
@@ -322,52 +329,8 @@
       "priority": "Action"
     },
     {
-      "event_id": "technical:IREN:technical_risk:2026-11-18",
-      "ticker": "IREN",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-11-18: score 9/100, AVOID / Turnaround only, RSI 29.4, -30.0% vs EMA20, -61.5% vs EMA200, volume 0.79x 20-day average.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-18",
-      "detected_at": "2026-11-18T20:30:47+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-11-18"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-11-18"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 0,
-      "rsi14": 29.41,
-      "pct_vs_ema20": -30.04,
-      "pct_vs_ema200": -61.47,
-      "volume_ratio20": 0.79,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:IREN:technical_risk:2026-11-18"
-      ],
-      "dedupe_key": "IREN:technical_risk:c5ee9169f1266222",
-      "priority_score": 68,
-      "priority": "Action"
-    },
-    {
-      "event_id": "sec:MP:0001831686-26-000014",
-      "ticker": "MP",
+      "event_id": "sec:UUUU:0000912282-26-001523",
+      "ticker": "UUUU",
       "event_type": "sec_filing",
       "event_subtype": "insider_activity",
       "headline": "New Form 4 insider filing",
@@ -375,17 +338,17 @@
       "why_today": "An insider transaction was reported; transaction context still requires document review.",
       "materiality": "low",
       "urgency": "today",
-      "event_time": "2026-11-17T20:08:52-05:00",
-      "detected_at": "2026-11-18T20:28:45.821973+00:00",
+      "event_time": "2026-11-17T19:23:40-05:00",
+      "detected_at": "2026-11-19T02:33:19.946190+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1801368/000183168626000014/wk-form4_1794964129.xml",
-        "published_at": "2026-11-17T20:08:52-05:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1385849/000091228226001523/form4.xml",
+        "published_at": "2026-11-17T19:23:40-05:00",
         "form": "4",
         "items": "",
-        "accession_number": "0001831686-26-000014",
+        "accession_number": "0000912282-26-001523",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
@@ -398,293 +361,20 @@
         {
           "type": "sec",
           "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1801368/000183168626000014/wk-form4_1794964129.xml",
-          "published_at": "2026-11-17T20:08:52-05:00",
+          "url": "https://www.sec.gov/Archives/edgar/data/1385849/000091228226001523/form4.xml",
+          "published_at": "2026-11-17T19:23:40-05:00",
           "form": "4",
           "items": "",
-          "accession_number": "0001831686-26-000014",
+          "accession_number": "0000912282-26-001523",
           "report_date": "",
           "discovered_via": "finnhub_sec_index"
         }
       ],
       "secondary_source_count": 0,
       "related_event_ids": [
-        "sec:MP:0001831686-26-000014"
+        "sec:UUUU:0000912282-26-001523"
       ],
-      "dedupe_key": "MP:insider_activity:b03f1eef97b0f79a"
-    },
-    {
-      "event_id": "sec:PLTR:0001823952-26-000026",
-      "ticker": "PLTR",
-      "event_type": "sec_filing",
-      "event_subtype": "insider_activity",
-      "headline": "New Form 4 insider filing",
-      "summary": "An insider transaction was reported; transaction context still requires document review.",
-      "why_today": "An insider transaction was reported; transaction context still requires document review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-17T20:01:35-05:00",
-      "detected_at": "2026-11-18T20:28:45.902625+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000026/wk-form4_1794963692.xml",
-        "published_at": "2026-11-17T20:01:35-05:00",
-        "form": "4",
-        "items": "",
-        "accession_number": "0001823952-26-000026",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 64,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000026/wk-form4_1794963692.xml",
-          "published_at": "2026-11-17T20:01:35-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0001823952-26-000026",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:PLTR:0001823952-26-000026"
-      ],
-      "dedupe_key": "PLTR:insider_activity:b2e77731b3b19544"
-    },
-    {
-      "event_id": "event:OKLO:058cbff456845edf",
-      "ticker": "OKLO",
-      "event_type": "sec_filing",
-      "event_subtype": "insider_activity",
-      "headline": "New Form 4 insider filing",
-      "summary": "An insider transaction was reported; transaction context still requires document review.",
-      "why_today": "An insider transaction was reported; transaction context still requires document review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-17T16:37:14-05:00",
-      "detected_at": "2026-11-18T20:28:45.751452+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1849056/000216335426000004/wk-form4_1794951615.xml",
-        "published_at": "2026-11-17T16:40:17-05:00",
-        "form": "4",
-        "items": "",
-        "accession_number": "0002163354-26-000004",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 64,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "corroborated",
-      "verification_reason": "Matched a configured primary source and additional coverage.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000216335426000004/wk-form4_1794951615.xml",
-          "published_at": "2026-11-17T16:40:17-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0002163354-26-000004",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        },
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214768026000018/wk-form4_1794951544.xml",
-          "published_at": "2026-11-17T16:39:06-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0002147680-26-000018",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        },
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214682826000014/wk-form4_1794951467.xml",
-          "published_at": "2026-11-17T16:37:49-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0002146828-26-000014",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        },
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214679026000029/wk-form4_1794951432.xml",
-          "published_at": "2026-11-17T16:37:14-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0002146790-26-000029",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "event:OKLO:058cbff456845edf"
-      ],
-      "dedupe_key": "OKLO:insider_activity:f73e856d7022ae16"
-    },
-    {
-      "event_id": "sec:OKLO:0001849056-26-000055",
-      "ticker": "OKLO",
-      "event_type": "sec_filing",
-      "event_subtype": "current_report",
-      "headline": "New 8-K current report",
-      "summary": "A current report was filed and requires item-level review.",
-      "why_today": "A current report was filed and requires item-level review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-17T16:35:33-05:00",
-      "detected_at": "2026-11-18T20:28:45.751468+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1849056/000184905626000055/oklo-20261111.htm",
-        "published_at": "2026-11-17T16:35:33-05:00",
-        "form": "8-K",
-        "items": "",
-        "accession_number": "0001849056-26-000055",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 64,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000184905626000055/oklo-20261111.htm",
-          "published_at": "2026-11-17T16:35:33-05:00",
-          "form": "8-K",
-          "items": "",
-          "accession_number": "0001849056-26-000055",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:OKLO:0001849056-26-000055"
-      ],
-      "dedupe_key": "OKLO:current_report:b5fd117033fa2cdd"
-    },
-    {
-      "event_id": "sec:ASTS:0001493152-26-052865",
-      "ticker": "ASTS",
-      "event_type": "sec_filing",
-      "event_subtype": "current_report",
-      "headline": "New 8-K current report",
-      "summary": "A current report was filed and requires item-level review.",
-      "why_today": "A current report was filed and requires item-level review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-17T16:35:20-05:00",
-      "detected_at": "2026-11-18T20:28:45.739987+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1780312/000149315226052865/form8-k.htm",
-        "published_at": "2026-11-17T16:35:20-05:00",
-        "form": "8-K",
-        "items": "",
-        "accession_number": "0001493152-26-052865",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 71,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1780312/000149315226052865/form8-k.htm",
-          "published_at": "2026-11-17T16:35:20-05:00",
-          "form": "8-K",
-          "items": "",
-          "accession_number": "0001493152-26-052865",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:ASTS:0001493152-26-052865"
-      ],
-      "dedupe_key": "ASTS:current_report:bce25a924227be2c"
-    },
-    {
-      "event_id": "sec:ASTS:0001493152-26-052716",
-      "ticker": "ASTS",
-      "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "headline": "424B5 capital-markets filing",
-      "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-      "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-17T08:30:46-05:00",
-      "detected_at": "2026-11-18T20:28:45.740010+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1780312/000149315226052716/form424b5.htm",
-        "published_at": "2026-11-17T08:30:46-05:00",
-        "form": "424B5",
-        "items": "",
-        "accession_number": "0001493152-26-052716",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 100,
-      "priority": "Critical",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1780312/000149315226052716/form424b5.htm",
-          "published_at": "2026-11-17T08:30:46-05:00",
-          "form": "424B5",
-          "items": "",
-          "accession_number": "0001493152-26-052716",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:ASTS:0001493152-26-052716"
-      ],
-      "dedupe_key": "ASTS:capital_raise:cc542ed99b01a9c3"
+      "dedupe_key": "UUUU:insider_activity:4f6cfa6cc73bd668"
     },
     {
       "event_id": "company_ir:AMD:df5bb517e16f336f",
@@ -726,56 +416,8 @@
       "related_event_ids": [
         "company_ir:AMD:df5bb517e16f336f"
       ],
-      "priority_score": 97,
+      "priority_score": 100,
       "priority": "Critical"
-    },
-    {
-      "event_id": "sec:NBIS:0001513845-26-000151",
-      "ticker": "NBIS",
-      "event_type": "sec_filing",
-      "event_subtype": "insider_activity",
-      "headline": "New Form 4 insider filing",
-      "summary": "An insider transaction was reported; transaction context still requires document review.",
-      "why_today": "An insider transaction was reported; transaction context still requires document review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-17T06:56:19-05:00",
-      "detected_at": "2026-11-18T20:28:45.799167+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000151/form4.xml",
-        "published_at": "2026-11-17T06:56:19-05:00",
-        "form": "4",
-        "items": "",
-        "accession_number": "0001513845-26-000151",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 64,
-      "priority": "Action",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1513845/000151384526000151/form4.xml",
-          "published_at": "2026-11-17T06:56:19-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0001513845-26-000151",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:NBIS:0001513845-26-000151"
-      ],
-      "dedupe_key": "NBIS:insider_activity:3816521e9c65969a"
     },
     {
       "event_id": "company_ir:OPEN:490b1b0cf1beaa77",
@@ -910,7 +552,7 @@
       "related_event_ids": [
         "company_ir:RXRX:afb675d032e4479e"
       ],
-      "priority_score": 71,
+      "priority_score": 64,
       "priority": "Action"
     },
     {
@@ -953,7 +595,7 @@
       "related_event_ids": [
         "company_ir:RXRX:b6599317f0b602c9"
       ],
-      "priority_score": 100,
+      "priority_score": 97,
       "priority": "Critical"
     },
     {

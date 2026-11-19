@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-11-18T20:30:47+00:00",
+  "updated_at": "2026-11-19T02:35:22+00:00",
   "items": {
     "company_ir:OPEN:490b1b0cf1beaa77": {
       "ticker": "OPEN",
@@ -9,34 +9,22 @@
       "priority_score": 100,
       "personal_priority_score": 116,
       "first_seen_at": "2026-11-16T11:09:58+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
       "event_count": 2,
       "baseline_price": 1.185,
-      "current_price": 1.345
+      "current_price": 1.28
     },
-    "company_ir:RXRX:b6599317f0b602c9": {
-      "ticker": "RXRX",
-      "event_subtype": "earnings_reported",
+    "company_ir:AMD:df5bb517e16f336f": {
+      "ticker": "AMD",
+      "event_subtype": "transaction",
       "priority": "Critical",
       "priority_score": 100,
-      "personal_priority_score": 116,
-      "first_seen_at": "2026-11-16T11:09:58+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
-      "event_count": 3,
-      "baseline_price": 3.185,
-      "current_price": 2.935
-    },
-    "sec:ASTS:0001493152-26-052716": {
-      "ticker": "ASTS",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "priority_score": 100,
-      "personal_priority_score": 114,
-      "first_seen_at": "2026-11-18T20:30:47+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
-      "event_count": 3,
-      "baseline_price": 26.1,
-      "current_price": 26.1
+      "personal_priority_score": 113,
+      "first_seen_at": "2026-11-17T07:53:24+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
+      "event_count": 2,
+      "baseline_price": 504.37,
+      "current_price": 530.81
     },
     "event:PSIX:e294643911dfa0ec": {
       "ticker": "PSIX",
@@ -45,10 +33,22 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-11-16T11:09:58+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
       "event_count": 1,
       "baseline_price": 38.935,
-      "current_price": 33.5
+      "current_price": 33.07
+    },
+    "company_ir:RXRX:b6599317f0b602c9": {
+      "ticker": "RXRX",
+      "event_subtype": "earnings_reported",
+      "priority": "Critical",
+      "priority_score": 97,
+      "personal_priority_score": 113,
+      "first_seen_at": "2026-11-16T11:09:58+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
+      "event_count": 2,
+      "baseline_price": 3.185,
+      "current_price": 2.825
     },
     "company_ir:TMDX:1874a90660a6bb78": {
       "ticker": "TMDX",
@@ -57,37 +57,53 @@
       "priority_score": 97,
       "personal_priority_score": 113,
       "first_seen_at": "2026-11-16T01:03:13+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
       "event_count": 2,
       "baseline_price": 91.42,
-      "current_price": 97.94
+      "current_price": 96.5
     },
-    "company_ir:AMD:df5bb517e16f336f": {
-      "ticker": "AMD",
-      "event_subtype": "transaction",
-      "priority": "Critical",
-      "priority_score": 97,
-      "personal_priority_score": 110,
-      "first_seen_at": "2026-11-17T07:53:24+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
-      "event_count": 1,
-      "baseline_price": 504.37,
-      "current_price": 514.27
-    },
-    "technical:BEAM:price-move:2026-11-18": {
-      "ticker": "BEAM",
-      "event_subtype": "price_move",
+    "technical:ASTS:price-drop:2026-11-18": {
+      "ticker": "ASTS",
+      "event_subtype": "price_drop",
       "priority": "Risk",
       "priority_score": 75,
       "personal_priority_score": 83,
-      "first_seen_at": "2026-11-18T20:30:47+00:00",
-      "last_seen_at": "2026-11-18T20:30:47+00:00",
+      "first_seen_at": "2026-11-19T02:35:22+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
       "event_count": 1,
-      "baseline_price": 21.83,
-      "current_price": 21.83
+      "baseline_price": 25.485,
+      "current_price": 25.485
+    },
+    "technical:COPX:price-drop:2026-11-18": {
+      "ticker": "COPX",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "priority_score": 75,
+      "personal_priority_score": 83,
+      "first_seen_at": "2026-11-19T02:35:22+00:00",
+      "last_seen_at": "2026-11-19T02:35:22+00:00",
+      "event_count": 1,
+      "baseline_price": 61.15,
+      "current_price": 61.15
     }
   },
   "resolved": [
+    {
+      "history_key": "sec:ASTS:0001493152-26-052716",
+      "ticker": "ASTS",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-19T02:35:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:BEAM:price-move:2026-11-18",
+      "ticker": "BEAM",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-11-19T02:35:22+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:RR:price-drop:2026-11-18",
       "ticker": "RR",
@@ -230,22 +246,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-11-16T11:09:58+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IREN:price-drop:2026-11-15",
-      "ticker": "IREN",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-16T11:09:58+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:RR:price-drop:2026-11-15",
-      "ticker": "RR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-16T01:03:13+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ]

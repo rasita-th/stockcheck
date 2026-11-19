@@ -1278,61 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 32,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT",
-            "RKLB",
-            "ROKU",
-            "ROP",
-            "ROST"
-          ],
-          "recommendation_trends": [
-            "CRWD",
-            "CRWV",
-            "CSCO",
-            "CSGP",
-            "CSX",
-            "CTAS",
-            "CTSH",
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG",
-            "DE",
-            "DELL",
-            "DKNG",
-            "DLO",
-            "DNA",
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-14T22:44:47+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-14T22:44:04+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2500,9 +2445,72 @@
       "mode": "analyst",
       "started_at": "2026-11-18T20:54:32+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1500,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-19T02:33:17+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON",
+            "AXP",
+            "BA",
+            "BAC",
+            "BAH",
+            "BE"
+          ],
+          "sec_filings": [
+            "UUUU",
+            "PSIX",
+            "CIFR",
+            "RXRX",
+            "JEPQ",
+            "SYM",
+            "TMC",
+            "OSCR",
+            "COPX",
+            "RR",
+            "ZETA",
+            "OPEN",
+            "COST",
+            "BEAM",
+            "NOW",
+            "TE"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-19T02:32:31+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-18T20:55:23+00:00"
+  "updated_at": "2026-11-19T02:33:18+00:00"
 }
