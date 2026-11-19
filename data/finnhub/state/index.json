@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-15T18:49:18+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "KHC",
-            "KLAC",
-            "KO",
-            "KRC",
-            "KTOS",
-            "LBRT",
-            "LDOS",
-            "LHX",
-            "LIN",
-            "LITE",
-            "LLY",
-            "LMT",
-            "LRCX",
-            "LUNR",
-            "MAR",
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI"
-          ],
-          "sec_filings": [
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN",
-            "COST",
-            "BEAM",
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI",
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-15T18:48:30+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2514,9 +2451,70 @@
       "mode": "events",
       "started_at": "2026-11-19T20:31:03+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "AAPL",
+            "ABBV",
+            "ABCL",
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI",
+            "ADP"
+          ],
+          "company_profile": [
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW"
+          ],
+          "recommendation_trends": [
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-19T20:58:45+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-19T20:58:00+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-19T20:31:56+00:00"
+  "updated_at": "2026-11-19T20:58:47+00:00"
 }
