@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-15T01:01:47+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "FATE",
-            "FER",
-            "FICO",
-            "FPS",
-            "FROG",
-            "FTNT",
-            "FUTU",
-            "GD",
-            "GEHC",
-            "GEV",
-            "GH",
-            "GILD",
-            "GILT",
-            "GLXY",
-            "GOOG",
-            "GOOGL",
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS"
-          ],
-          "sec_filings": [
-            "NOW",
-            "TE",
-            "NASA",
-            "INDI",
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS",
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR",
-            "NBIS",
-            "TEM"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-15T01:00:58+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 32,
         "enabled_endpoints": [
@@ -2508,9 +2445,70 @@
       "mode": "events",
       "started_at": "2026-11-19T02:32:31+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI"
+          ],
+          "company_profile": [
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF"
+          ],
+          "recommendation_trends": [
+            "WDAY",
+            "WDC",
+            "WIX",
+            "WM",
+            "WMT",
+            "WYFI",
+            "XEL",
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI",
+            "AAPL",
+            "ABBV",
+            "ABCL",
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY",
+            "AEHR",
+            "AEP"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-19T07:55:03+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-19T07:54:17+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-19T02:33:18+00:00"
+  "updated_at": "2026-11-19T07:55:04+00:00"
 }
