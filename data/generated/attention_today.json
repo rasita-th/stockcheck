@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-20T11:32:42+00:00",
+  "updated_at": "2026-11-20T20:10:56+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 21,
+  "total_events": 37,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 6,
+    "Critical": 5,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -37,22 +37,22 @@
     },
     "earnings": {
       "status": "partial",
-      "rows": 272,
+      "rows": 274,
       "source": "Company/SEC-confirmed curated calendar",
       "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
       "phase": "P5",
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "canonical_rows": 272,
+      "canonical_rows": 274,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 271,
+      "policy_reject_rows": 273,
       "allowed_rows": 1,
-      "rejected_rows": 271
+      "rejected_rows": 273
     },
     "market_data": {
       "status": "ok",
-      "rows": 404,
+      "rows": 405,
       "source": "technical.json"
     },
     "sec_ticker_map": {
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 6,
+      "ok": 7,
       "partial": 0,
-      "errors": 4,
+      "errors": 3,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -109,7 +109,7 @@
       "priority_score": 100,
       "why_today": [
         "A earnings reported event was detected and requires source review.",
-        "The stock moved +16.1% today."
+        "The stock moved -6.8% today."
       ],
       "event_type": "earnings",
       "event_subtype": "earnings_reported",
@@ -172,17 +172,17 @@
           "priority": "Critical"
         },
         {
-          "event_id": "technical:OPEN:price-move:2026-11-20",
+          "event_id": "technical:OPEN:price-drop:2026-11-20",
           "ticker": "OPEN",
           "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +16.1%",
+          "event_subtype": "price_drop",
+          "headline": "Price -6.8%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +16.1% today.",
-          "materiality": "high",
+          "why_today": "The stock moved -6.8% today.",
+          "materiality": "medium",
           "urgency": "today",
-          "event_time": "2026-11-20T11:30:07.866738+00:00",
-          "detected_at": "2026-11-20T11:30:07.866742+00:00",
+          "event_time": "2026-11-20T20:08:46.687279+00:00",
+          "detected_at": "2026-11-20T20:08:46.687281+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -190,8 +190,8 @@
             "url": "data/technical.json",
             "published_at": ""
           },
-          "priority_score": 99,
-          "priority": "Critical",
+          "priority_score": 75,
+          "priority": "Risk",
           "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
           "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -205,9 +205,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:OPEN:price-move:2026-11-20"
+            "technical:OPEN:price-drop:2026-11-20"
           ],
-          "dedupe_key": "OPEN:price_move:083d3f2a08bbd691"
+          "dedupe_key": "OPEN:price_drop:22518c630a2eebc8"
         }
       ],
       "actions": {
@@ -219,7 +219,7 @@
       "primary_trigger": "earnings_reported",
       "signals": [
         "A earnings reported event was detected and requires source review.",
-        "The stock moved +16.1% today."
+        "The stock moved -6.8% today."
       ],
       "change": {
         "status": "ongoing",
@@ -241,113 +241,527 @@
       ]
     },
     {
-      "ticker": "GOOGL",
-      "name": "Alphabet Inc.",
+      "ticker": "PSIX",
+      "name": "Power Solutions International, Inc.",
       "portfolio_status": "holding",
-      "role": "Core quality",
+      "role": "Industrial power",
       "priority": "Critical",
       "priority_score": 100,
       "why_today": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk."
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -9.7% today."
       ],
-      "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "event_time": "2026-11-19T09:34:38-05:00",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-11-16T11:07:51+00:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
-        "type": "sec",
+        "type": "company_ir",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526467927/d115240d424b5.htm",
-        "published_at": "2026-11-19T09:34:38-05:00",
-        "form": "424B5",
-        "items": "",
-        "accession_number": "0001193125-26-467927",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
+        "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
+        "published_at": "2026-11-16T11:07:51+00:00",
+        "domain": "investors.psiengines.com"
       },
-      "price": 270.1873,
-      "day_change_pct": -0.9069,
+      "price": 28.685,
+      "day_change_pct": -9.7104,
+      "relative_volume": 0.45,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "event:PSIX:e294643911dfa0ec",
+          "ticker": "PSIX",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Power Solutions International Announces Third Quarter 2026 Financial Results",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-16T11:07:51+00:00",
+          "detected_at": "2026-11-16T11:07:51+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Power Solutions International",
+          "dedupe_key": "PSIX:earnings_reported:2026-11-16:4883acb55a44",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
+            "published_at": "2026-11-16T11:07:51+00:00",
+            "domain": "investors.psiengines.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
+              "published_at": "2026-11-16T11:07:51+00:00",
+              "domain": "investors.psiengines.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-sets-date-third-quarter-2026",
+              "published_at": "2026-11-16T11:07:51+00:00",
+              "domain": "investors.psiengines.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:PSIX:e294643911dfa0ec"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:PSIX:price-drop:2026-11-20",
+          "ticker": "PSIX",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -9.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -9.7% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-20T20:08:46.625090+00:00",
+          "detected_at": "2026-11-20T20:08:46.625093+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:PSIX:price-drop:2026-11-20"
+          ],
+          "dedupe_key": "PSIX:price_drop:6a620943fdb72d2b"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-PSIX/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -9.7% today."
+      ],
+      "change": {
+        "status": "ongoing",
+        "label_th": "ยังต้องติดตามต่อ",
+        "previous_priority": "Critical",
+        "first_seen_at": "2026-11-16T11:09:58+00:00",
+        "active_days": 4
+      },
+      "impact": {
+        "baseline_price": 38.935,
+        "current_price": 28.685,
+        "change_pct": -26.33,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 26.3%"
+      },
+      "personal_priority_score": 116,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
+    {
+      "ticker": "RXRX",
+      "name": "Recursion Pharmaceuticals, Inc.",
+      "portfolio_status": "holding",
+      "role": "Biotech AI",
+      "priority": "Critical",
+      "priority_score": 100,
+      "why_today": [
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -7.5% today.",
+        "A product event was detected and requires source review."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-11-16T11:07:51+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
+        "published_at": "2026-11-16T11:07:51+00:00",
+        "domain": "ir.recursion.com"
+      },
+      "price": 2.515,
+      "day_change_pct": -7.5368,
+      "relative_volume": 0.73,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "company_ir:RXRX:b6599317f0b602c9",
+          "ticker": "RXRX",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Recursion Reports Third Quarter 2026 Financial Results and Extends Cash Runway; Highlights Positive Clinical Data in REC-4881 and REC-1245, Sanofi Development Candidate Option and Appointment of Fred Hassan as Chair",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-16T11:07:51+00:00",
+          "detected_at": "2026-11-16T11:07:51+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Recursion",
+          "dedupe_key": "RXRX:earnings_reported:2026-11-16:0a53d417f7d4",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
+            "published_at": "2026-11-16T11:07:51+00:00",
+            "domain": "ir.recursion.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
+              "published_at": "2026-11-16T11:07:51+00:00",
+              "domain": "ir.recursion.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:RXRX:b6599317f0b602c9"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:RXRX:price-drop:2026-11-20",
+          "ticker": "RXRX",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -7.5%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -7.5% today.",
+          "materiality": "medium",
+          "urgency": "today",
+          "event_time": "2026-11-20T20:08:46.640654+00:00",
+          "detected_at": "2026-11-20T20:08:46.640656+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 75,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:RXRX:price-drop:2026-11-20"
+          ],
+          "dedupe_key": "RXRX:price_drop:3425227c0c6c7b2b"
+        },
+        {
+          "event_id": "company_ir:RXRX:afb675d032e4479e",
+          "ticker": "RXRX",
+          "event_type": "corporate_event",
+          "event_subtype": "product",
+          "headline": "New Phase 2 REC-4881 Data Presented at CGA-IGC Show Deep, Durable Polyp Burden Reductions in FAP, with Activity Across the GI Tract and in Larger, Higher-Risk Polyps",
+          "summary": "A product event was detected and requires source review.",
+          "why_today": "A product event was detected and requires source review.",
+          "materiality": "low",
+          "reported_materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-11-16T11:07:51+00:00",
+          "detected_at": "2026-11-16T11:07:51+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "medium",
+          "entity_confidence_reason": "article domain matches configured company domain",
+          "dedupe_key": "RXRX:product:2026-11-16:05a2101ab108",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.recursion.com/news-releases/news-release-details/new-phase-2-rec-4881-data-presented-cga-igc-show-deep-durable",
+            "published_at": "2026-11-16T11:07:51+00:00",
+            "domain": "ir.recursion.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.recursion.com/news-releases/news-release-details/new-phase-2-rec-4881-data-presented-cga-igc-show-deep-durable",
+              "published_at": "2026-11-16T11:07:51+00:00",
+              "domain": "ir.recursion.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:RXRX:afb675d032e4479e"
+          ],
+          "priority_score": 71,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RXRX/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -7.5% today.",
+        "A product event was detected and requires source review."
+      ],
+      "change": {
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
+        "previous_priority": "Critical",
+        "first_seen_at": "2026-11-16T11:09:58+00:00",
+        "active_days": 4
+      },
+      "impact": {
+        "baseline_price": 3.185,
+        "current_price": 2.515,
+        "change_pct": -21.04,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 21.0%"
+      },
+      "personal_priority_score": 116,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
+    {
+      "ticker": "TMDX",
+      "name": "TransMedics Group, Inc.",
+      "portfolio_status": "holding",
+      "role": "Medtech",
+      "priority": "Critical",
+      "priority_score": 100,
+      "why_today": [
+        "A guidance event was detected and requires source review.",
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -10.3% today."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "guidance",
+      "event_time": "2026-11-16T01:00:39+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
+        "published_at": "2026-11-16T01:00:39+00:00",
+        "domain": "investors.transmedics.com"
+      },
+      "price": 84.29,
+      "day_change_pct": -10.3489,
       "relative_volume": 0.75,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "sec:GOOGL:0001193125-26-467927",
-          "ticker": "GOOGL",
-          "event_type": "sec_filing",
-          "event_subtype": "capital_raise",
-          "headline": "424B5 capital-markets filing",
-          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "event_id": "company_ir:TMDX:1874a90660a6bb78",
+          "ticker": "TMDX",
+          "event_type": "earnings",
+          "event_subtype": "guidance",
+          "headline": "TransMedics Appoints Fernando Araujo as Chief Financial Officer and Reiterates 2026 Financial Outlook",
+          "summary": "A guidance event was detected and requires source review.",
+          "why_today": "A guidance event was detected and requires source review.",
           "materiality": "high",
+          "reported_materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-19T09:34:38-05:00",
-          "detected_at": "2026-11-20T11:30:07.685669+00:00",
+          "event_time": "2026-11-16T01:00:39+00:00",
+          "detected_at": "2026-11-16T01:00:39+00:00",
           "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526467927/d115240d424b5.htm",
-            "published_at": "2026-11-19T09:34:38-05:00",
-            "form": "424B5",
-            "items": "",
-            "accession_number": "0001193125-26-467927",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 100,
-          "priority": "Critical",
-          "attention_policy_decision": "allow",
           "verification_level": "confirmed_primary",
           "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: TransMedics",
+          "dedupe_key": "TMDX:guidance:2026-11-16:7f0d9c8a8c7b",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
+            "published_at": "2026-11-16T01:00:39+00:00",
+            "domain": "investors.transmedics.com"
+          },
           "source_chain": [
             {
-              "type": "sec",
+              "type": "company_ir",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526467927/d115240d424b5.htm",
-              "published_at": "2026-11-19T09:34:38-05:00",
-              "form": "424B5",
-              "items": "",
-              "accession_number": "0001193125-26-467927",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
+              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
+              "published_at": "2026-11-16T01:00:39+00:00",
+              "domain": "investors.transmedics.com"
             }
           ],
           "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
           "related_event_ids": [
-            "sec:GOOGL:0001193125-26-467927"
+            "company_ir:TMDX:1874a90660a6bb78"
           ],
-          "dedupe_key": "GOOGL:capital_raise:be1ad289669041f5"
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "event:TMDX:14f90072ae211d17",
+          "ticker": "TMDX",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "TransMedics Reports Third Quarter 2026 Financial Results",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-16T01:00:39+00:00",
+          "detected_at": "2026-11-16T01:00:39+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: TransMedics",
+          "dedupe_key": "TMDX:earnings_reported:2026-11-16:fa91992b3c5c",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
+            "published_at": "2026-11-16T01:00:39+00:00",
+            "domain": "investors.transmedics.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
+              "published_at": "2026-11-16T01:00:39+00:00",
+              "domain": "investors.transmedics.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-report-third-quarter-2026-financial-results-november",
+              "published_at": "2026-11-16T01:00:39+00:00",
+              "domain": "investors.transmedics.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:TMDX:14f90072ae211d17"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:TMDX:price-drop:2026-11-20",
+          "ticker": "TMDX",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.3%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.3% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-20T20:08:46.594065+00:00",
+          "detected_at": "2026-11-20T20:08:46.594067+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:TMDX:price-drop:2026-11-20"
+          ],
+          "dedupe_key": "TMDX:price_drop:6d129eafd40a66c3"
         }
       ],
       "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526467927/d115240d424b5.htm",
-        "company_ir": "https://abc.xyz/investor/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
+        "primary_source": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMDX/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "capital_raise",
+      "primary_trigger": "guidance",
       "signals": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk."
+        "A guidance event was detected and requires source review.",
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved -10.3% today."
       ],
       "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-20T11:32:42+00:00",
-        "active_days": 0
+        "status": "updated",
+        "label_th": "มีข้อมูลใหม่เพิ่ม",
+        "previous_priority": "Critical",
+        "first_seen_at": "2026-11-16T01:03:13+00:00",
+        "active_days": 4
       },
       "impact": {
-        "baseline_price": 272.5,
-        "current_price": 270.1873,
-        "change_pct": -0.85,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 0.8%"
+        "baseline_price": 91.42,
+        "current_price": 84.29,
+        "change_pct": -7.8,
+        "label_th": "ราคาหลังเริ่มติดตามปรับลง 7.8%"
       },
-      "personal_priority_score": 114,
+      "personal_priority_score": 116,
       "personalization_reasons": [
         "หุ้นในพอร์ต +8",
-        "sec_filing +6"
+        "earnings +8"
       ]
     },
     {
@@ -359,7 +773,7 @@
       "priority_score": 100,
       "why_today": [
         "A transaction event was detected and requires source review.",
-        "The stock moved -7.7% today."
+        "The stock moved -11.9% today."
       ],
       "event_type": "corporate_event",
       "event_subtype": "transaction",
@@ -426,13 +840,13 @@
           "ticker": "AMD",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -7.7%",
+          "headline": "Price -11.9%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -7.7% today.",
-          "materiality": "medium",
+          "why_today": "The stock moved -11.9% today.",
+          "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-20T11:30:07.740516+00:00",
-          "detected_at": "2026-11-20T11:30:07.740520+00:00",
+          "event_time": "2026-11-20T20:08:46.570903+00:00",
+          "detected_at": "2026-11-20T20:08:46.570906+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -440,7 +854,7 @@
             "url": "data/technical.json",
             "published_at": ""
           },
-          "priority_score": 75,
+          "priority_score": 99,
           "priority": "Risk",
           "attention_policy_decision": "allow_internal_only",
           "verification_level": "confirmed_internal",
@@ -470,7 +884,7 @@
       "primary_trigger": "transaction",
       "signals": [
         "A transaction event was detected and requires source review.",
-        "The stock moved -7.7% today."
+        "The stock moved -11.9% today."
       ],
       "change": {
         "status": "ongoing",
@@ -490,460 +904,6 @@
         "หุ้นในพอร์ต +8",
         "corporate_event +5"
       ]
-    },
-    {
-      "ticker": "PSIX",
-      "name": "Power Solutions International, Inc.",
-      "portfolio_status": "holding",
-      "role": "Industrial power",
-      "priority": "Critical",
-      "priority_score": 97,
-      "why_today": [
-        "A earnings reported event was detected and requires source review.",
-        "A current report was filed and requires item-level review."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "earnings_reported",
-      "event_time": "2026-11-16T11:07:51+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
-        "published_at": "2026-11-16T11:07:51+00:00",
-        "domain": "investors.psiengines.com"
-      },
-      "price": 28.685,
-      "day_change_pct": -9.7104,
-      "relative_volume": 0.45,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "event:PSIX:e294643911dfa0ec",
-          "ticker": "PSIX",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Power Solutions International Announces Third Quarter 2026 Financial Results",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T11:07:51+00:00",
-          "detected_at": "2026-11-16T11:07:51+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Power Solutions International",
-          "dedupe_key": "PSIX:earnings_reported:2026-11-16:4883acb55a44",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
-            "published_at": "2026-11-16T11:07:51+00:00",
-            "domain": "investors.psiengines.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
-              "published_at": "2026-11-16T11:07:51+00:00",
-              "domain": "investors.psiengines.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-sets-date-third-quarter-2026",
-              "published_at": "2026-11-16T11:07:51+00:00",
-              "domain": "investors.psiengines.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:PSIX:e294643911dfa0ec"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "sec:PSIX:0001193125-26-468525",
-          "ticker": "PSIX",
-          "event_type": "sec_filing",
-          "event_subtype": "current_report",
-          "headline": "New 8-K current report",
-          "summary": "A current report was filed and requires item-level review.",
-          "why_today": "A current report was filed and requires item-level review.",
-          "materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-19T16:01:10-05:00",
-          "detected_at": "2026-11-20T11:30:07.799486+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "sec",
-            "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1137091/000119312526468525/d163385d8k.htm",
-            "published_at": "2026-11-19T16:01:10-05:00",
-            "form": "8-K",
-            "items": "",
-            "accession_number": "0001193125-26-468525",
-            "report_date": "",
-            "discovered_via": "finnhub_sec_index"
-          },
-          "priority_score": 64,
-          "priority": "Action",
-          "attention_policy_decision": "allow",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "source_chain": [
-            {
-              "type": "sec",
-              "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1137091/000119312526468525/d163385d8k.htm",
-              "published_at": "2026-11-19T16:01:10-05:00",
-              "form": "8-K",
-              "items": "",
-              "accession_number": "0001193125-26-468525",
-              "report_date": "",
-              "discovered_via": "finnhub_sec_index"
-            }
-          ],
-          "secondary_source_count": 0,
-          "related_event_ids": [
-            "sec:PSIX:0001193125-26-468525"
-          ],
-          "dedupe_key": "PSIX:current_report:5c8ffa0b288cfd8a"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://investors.psiengines.com/news-releases/news-release-details/power-solutions-international-announces-third-quarter-2026",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-PSIX/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "earnings_reported",
-      "signals": [
-        "A earnings reported event was detected and requires source review.",
-        "A current report was filed and requires item-level review."
-      ],
-      "change": {
-        "status": "updated",
-        "label_th": "มีข้อมูลใหม่เพิ่ม",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-16T11:09:58+00:00",
-        "active_days": 4
-      },
-      "impact": {
-        "baseline_price": 38.935,
-        "current_price": 28.685,
-        "change_pct": -26.33,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 26.3%"
-      },
-      "personal_priority_score": 113,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
-    },
-    {
-      "ticker": "RXRX",
-      "name": "Recursion Pharmaceuticals, Inc.",
-      "portfolio_status": "holding",
-      "role": "Biotech AI",
-      "priority": "Critical",
-      "priority_score": 97,
-      "why_today": [
-        "A earnings reported event was detected and requires source review.",
-        "A product event was detected and requires source review."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "earnings_reported",
-      "event_time": "2026-11-16T11:07:51+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
-        "published_at": "2026-11-16T11:07:51+00:00",
-        "domain": "ir.recursion.com"
-      },
-      "price": 2.515,
-      "day_change_pct": -7.5368,
-      "relative_volume": 0.73,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "company_ir:RXRX:b6599317f0b602c9",
-          "ticker": "RXRX",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "Recursion Reports Third Quarter 2026 Financial Results and Extends Cash Runway; Highlights Positive Clinical Data in REC-4881 and REC-1245, Sanofi Development Candidate Option and Appointment of Fred Hassan as Chair",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T11:07:51+00:00",
-          "detected_at": "2026-11-16T11:07:51+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: Recursion",
-          "dedupe_key": "RXRX:earnings_reported:2026-11-16:0a53d417f7d4",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
-            "published_at": "2026-11-16T11:07:51+00:00",
-            "domain": "ir.recursion.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
-              "published_at": "2026-11-16T11:07:51+00:00",
-              "domain": "ir.recursion.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:RXRX:b6599317f0b602c9"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "company_ir:RXRX:afb675d032e4479e",
-          "ticker": "RXRX",
-          "event_type": "corporate_event",
-          "event_subtype": "product",
-          "headline": "New Phase 2 REC-4881 Data Presented at CGA-IGC Show Deep, Durable Polyp Burden Reductions in FAP, with Activity Across the GI Tract and in Larger, Higher-Risk Polyps",
-          "summary": "A product event was detected and requires source review.",
-          "why_today": "A product event was detected and requires source review.",
-          "materiality": "low",
-          "reported_materiality": "low",
-          "urgency": "today",
-          "event_time": "2026-11-16T11:07:51+00:00",
-          "detected_at": "2026-11-16T11:07:51+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "medium",
-          "entity_confidence_reason": "article domain matches configured company domain",
-          "dedupe_key": "RXRX:product:2026-11-16:05a2101ab108",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://ir.recursion.com/news-releases/news-release-details/new-phase-2-rec-4881-data-presented-cga-igc-show-deep-durable",
-            "published_at": "2026-11-16T11:07:51+00:00",
-            "domain": "ir.recursion.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://ir.recursion.com/news-releases/news-release-details/new-phase-2-rec-4881-data-presented-cga-igc-show-deep-durable",
-              "published_at": "2026-11-16T11:07:51+00:00",
-              "domain": "ir.recursion.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:RXRX:afb675d032e4479e"
-          ],
-          "priority_score": 64,
-          "priority": "Action"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-third-quarter-2026-financial-results-and",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-RXRX/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "earnings_reported",
-      "signals": [
-        "A earnings reported event was detected and requires source review.",
-        "A product event was detected and requires source review."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-16T11:09:58+00:00",
-        "active_days": 4
-      },
-      "impact": {
-        "baseline_price": 3.185,
-        "current_price": 2.515,
-        "change_pct": -21.04,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 21.0%"
-      },
-      "personal_priority_score": 113,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
-    },
-    {
-      "ticker": "TMDX",
-      "name": "TransMedics Group, Inc.",
-      "portfolio_status": "holding",
-      "role": "Medtech",
-      "priority": "Critical",
-      "priority_score": 97,
-      "why_today": [
-        "A guidance event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "guidance",
-      "event_time": "2026-11-16T01:00:39+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-        "published_at": "2026-11-16T01:00:39+00:00",
-        "domain": "investors.transmedics.com"
-      },
-      "price": 84.29,
-      "day_change_pct": -10.3489,
-      "relative_volume": 0.75,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "company_ir:TMDX:1874a90660a6bb78",
-          "ticker": "TMDX",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "TransMedics Appoints Fernando Araujo as Chief Financial Officer and Reiterates 2026 Financial Outlook",
-          "summary": "A guidance event was detected and requires source review.",
-          "why_today": "A guidance event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T01:00:39+00:00",
-          "detected_at": "2026-11-16T01:00:39+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: TransMedics",
-          "dedupe_key": "TMDX:guidance:2026-11-16:7f0d9c8a8c7b",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-            "published_at": "2026-11-16T01:00:39+00:00",
-            "domain": "investors.transmedics.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:TMDX:1874a90660a6bb78"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "event:TMDX:14f90072ae211d17",
-          "ticker": "TMDX",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "TransMedics Reports Third Quarter 2026 Financial Results",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T01:00:39+00:00",
-          "detected_at": "2026-11-16T01:00:39+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: TransMedics",
-          "dedupe_key": "TMDX:earnings_reported:2026-11-16:fa91992b3c5c",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
-            "published_at": "2026-11-16T01:00:39+00:00",
-            "domain": "investors.transmedics.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-report-third-quarter-2026-financial-results-november",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:TMDX:14f90072ae211d17"
-          ],
-          "priority_score": 97,
-          "priority": "Critical"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMDX/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "guidance",
-      "signals": [
-        "A guidance event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-16T01:03:13+00:00",
-        "active_days": 4
-      },
-      "impact": {
-        "baseline_price": 91.42,
-        "current_price": 84.29,
-        "change_pct": -7.8,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 7.8%"
-      },
-      "personal_priority_score": 113,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
     }
   ],
   "errors": [
@@ -954,22 +914,17 @@
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "RKLB",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
+      "ticker": "HOOD",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
+      "ticker": "TSLA",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -988,8 +943,8 @@
     "active_discovered_event_count": 9,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 2,
-    "technical_metric_repair_count": 1,
+    "technical_fill_count": 1,
+    "technical_metric_repair_count": 2,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -998,19 +953,19 @@
       "read_order": "canonical_only",
       "policy_enforced": true,
       "legacy_fallback_retired": true,
-      "rows": 272,
-      "canonical_rows": 272,
+      "rows": 274,
+      "canonical_rows": 274,
       "legacy_fallback_rows": 0,
-      "policy_reject_rows": 271,
+      "policy_reject_rows": 273,
       "allowed_rows": 1,
-      "rejected_rows": 271
+      "rejected_rows": 273
     },
     "attention_policy_gate": {
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 24,
-      "accepted_events": 24,
+      "evaluated_events": 41,
+      "accepted_events": 41,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -1032,22 +987,22 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 1
+    "total": 2
   },
   "technical_watch": [
     {
-      "ticker": "NBIS",
-      "name": "Nebius Group N.V.",
+      "ticker": "ASTS",
+      "name": "AST SpaceMobile, Inc.",
       "portfolio_status": "holding",
-      "role": "AI infrastructure",
+      "role": "Space communications",
       "priority": "Risk",
       "priority_score": 99,
       "why_today": [
-        "The stock moved -14.1% today."
+        "The stock moved -9.2% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-20T11:30:07.702766+00:00",
+      "event_time": "2026-11-20T20:08:46.499058+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1056,23 +1011,23 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 83.2199,
-      "day_change_pct": -14.1355,
-      "relative_volume": 1.19,
+      "price": 23.2,
+      "day_change_pct": -9.1976,
+      "relative_volume": 0.84,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:NBIS:price-drop:2026-11-20",
-          "ticker": "NBIS",
+          "event_id": "technical:ASTS:price-drop:2026-11-20",
+          "ticker": "ASTS",
           "event_type": "technical",
           "event_subtype": "price_drop",
-          "headline": "Price -14.1%",
+          "headline": "Price -9.2%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -14.1% today.",
+          "why_today": "The stock moved -9.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-20T11:30:07.702766+00:00",
-          "detected_at": "2026-11-20T11:30:07.702771+00:00",
+          "event_time": "2026-11-20T20:08:46.499058+00:00",
+          "detected_at": "2026-11-20T20:08:46.499060+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1095,40 +1050,140 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:NBIS:price-drop:2026-11-20"
+            "technical:ASTS:price-drop:2026-11-20"
           ],
-          "dedupe_key": "NBIS:price_drop:6d8b57715c4b0e83",
-          "technical_score": 23.0,
-          "rsi14": 28.97,
-          "pct_vs_ema20": -36.71,
-          "pct_vs_ema200": -49.42,
-          "volume_ratio20": 1.19,
+          "dedupe_key": "ASTS:price_drop:3b413edbb57cefbd",
+          "technical_score": 9.0,
+          "rsi14": 27.71,
+          "pct_vs_ema20": -30.91,
+          "pct_vs_ema200": -65.18,
+          "volume_ratio20": 0.84,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
         "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
       "primary_trigger": "price_drop",
       "signals": [
-        "The stock moved -14.1% today."
+        "The stock moved -9.2% today."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-20T11:32:42+00:00",
+        "first_seen_at": "2026-11-20T20:10:56+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 96.845,
-        "current_price": 83.2199,
-        "change_pct": -14.07,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 14.1%"
+        "baseline_price": 23.2,
+        "current_price": 23.2,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "BMNR",
+      "name": "BitMine Immersion Technologies, Inc.",
+      "portfolio_status": "holding",
+      "role": "Digital assets",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -11.3% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-20T20:08:46.531658+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 13.365,
+      "day_change_pct": -11.3139,
+      "relative_volume": 1.12,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:BMNR:price-drop:2026-11-20",
+          "ticker": "BMNR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -11.3%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -11.3% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-20T20:08:46.531658+00:00",
+          "detected_at": "2026-11-20T20:08:46.531660+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:BMNR:price-drop:2026-11-20"
+          ],
+          "dedupe_key": "BMNR:price_drop:d7d49c328d43769e",
+          "technical_score": 13.0,
+          "rsi14": 24.81,
+          "pct_vs_ema20": -26.85,
+          "pct_vs_ema200": -39.72,
+          "volume_ratio20": 1.12,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/AMEX-BMNR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -11.3% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-20T20:10:56+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 13.365,
+        "current_price": 13.365,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -1139,12 +1194,28 @@
   "changes_summary": {
     "new": 2,
     "escalated": 0,
-    "updated": 1,
-    "ongoing": 4,
+    "updated": 2,
+    "ongoing": 3,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:GOOGL:0001193125-26-467927",
+      "ticker": "GOOGL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-20T20:10:56+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:NBIS:price-drop:2026-11-20",
+      "ticker": "NBIS",
+      "event_subtype": "price_drop",
+      "priority": "Risk",
+      "resolved_at": "2026-11-20T20:10:56+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "sec:TE:0001213900-26-121839",
       "ticker": "TE",
@@ -1207,22 +1278,6 @@
       "event_subtype": "capital_raise",
       "priority": "Critical",
       "resolved_at": "2026-11-19T02:35:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:BEAM:price-move:2026-11-18",
-      "ticker": "BEAM",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-19T02:35:22+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:RR:price-drop:2026-11-18",
-      "ticker": "RR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-18T20:30:47+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
