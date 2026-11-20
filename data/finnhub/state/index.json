@@ -1278,61 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 32,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "SEI",
-            "SHOP",
-            "SIDU",
-            "SITM",
-            "SMCI",
-            "SMH",
-            "SNDK",
-            "SNOW"
-          ],
-          "recommendation_trends": [
-            "GRMN",
-            "GSAT",
-            "HEI",
-            "HIMS",
-            "HON",
-            "HOOD",
-            "HUT",
-            "HWM",
-            "IDXX",
-            "ILMN",
-            "INDI",
-            "INSM",
-            "INTC",
-            "INTU",
-            "IONQ",
-            "IOT",
-            "IRDM",
-            "IREN",
-            "ISRG",
-            "JMIA",
-            "IZRL",
-            "JEPQ",
-            "JOBY",
-            "KDP"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-15T19:06:24+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-15T19:05:41+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1500,
@@ -2512,9 +2457,72 @@
       "mode": "analyst",
       "started_at": "2026-11-19T20:58:00+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 1058,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-20T02:18:32+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT"
+          ],
+          "sec_filings": [
+            "ZETA",
+            "OPEN",
+            "COST",
+            "BEAM",
+            "NOW",
+            "TE",
+            "NASA",
+            "INDI",
+            "RKLB",
+            "AMZN",
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-20T02:17:44+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-19T20:58:47+00:00"
+  "updated_at": "2026-11-20T02:18:32+00:00"
 }
