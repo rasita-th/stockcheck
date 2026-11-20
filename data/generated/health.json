@@ -1,6 +1,6 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-11-20T07:57:43.220600+00:00",
+  "generated_at": "2026-11-20T11:34:12.969500+00:00",
   "market_session": {
     "timezone": "America/New_York",
     "phase": "pre-market",
@@ -11,7 +11,7 @@
   "layers": {
     "quote": {
       "status": "latest-completed-session",
-      "age_minutes": 639.4,
+      "age_minutes": 855.8,
       "stale_after_minutes": 30,
       "timestamp": "2026-11-19T21:18:22+00:00",
       "row_count": 406,
@@ -27,7 +27,7 @@
     },
     "technical": {
       "status": "ok",
-      "age_minutes": 639.3,
+      "age_minutes": 855.8,
       "stale_after_minutes": 1440,
       "timestamp": "2026-11-19T21:18:24+00:00",
       "row_count": 404,
@@ -39,10 +39,10 @@
       "stale_after_minutes": 30
     },
     "attention": {
-      "status": "stale",
-      "age_minutes": 336.6,
+      "status": "partial",
+      "age_minutes": 1.5,
       "stale_after_minutes": 90,
-      "timestamp": "2026-11-20T02:21:10+00:00",
+      "timestamp": "2026-11-20T11:32:42+00:00",
       "row_count": 6,
       "source": null,
       "coverage_status": "partial",
@@ -69,18 +69,18 @@
         },
         "earnings": {
           "status": "partial",
-          "rows": 271,
+          "rows": 272,
           "source": "Company/SEC-confirmed curated calendar",
           "note": "IR auto-discovery is scheduled for PR2; unconfirmed dates remain estimated.",
           "phase": "P5",
           "read_order": "canonical_only",
           "policy_enforced": true,
           "legacy_fallback_retired": true,
-          "canonical_rows": 271,
+          "canonical_rows": 272,
           "legacy_fallback_rows": 0,
-          "policy_reject_rows": 270,
+          "policy_reject_rows": 271,
           "allowed_rows": 1,
-          "rejected_rows": 270
+          "rejected_rows": 271
         },
         "market_data": {
           "status": "ok",
@@ -102,9 +102,9 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 4,
+          "ok": 6,
           "partial": 0,
-          "errors": 6,
+          "errors": 4,
           "registry": {
             "applicable": 35,
             "configured": 35,
@@ -113,12 +113,12 @@
           }
         },
         "gdelt": {
-          "status": "partial",
+          "status": "optional_unavailable",
           "source": "GDELT DOC 2.0",
           "role": "discovery_only",
           "checked": 10,
-          "ok": 1,
-          "unavailable": 9,
+          "ok": 0,
+          "unavailable": 10,
           "note": "Optional secondary discovery does not downgrade verified-source coverage."
         },
         "regulators": {
@@ -133,16 +133,16 @@
       }
     },
     "events": {
-      "status": "stale",
-      "age_minutes": 336.6,
+      "status": "ok",
+      "age_minutes": 1.5,
       "stale_after_minutes": 90,
-      "timestamp": "2026-11-20T02:21:10+00:00",
-      "row_count": 20,
+      "timestamp": "2026-11-20T11:32:42+00:00",
+      "row_count": 21,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 13.4,
+      "age_minutes": 229.9,
       "stale_after_minutes": 1440,
       "timestamp": "2026-11-20T07:44:17+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 2.6,
+      "age_minutes": 219.1,
       "stale_after_minutes": 50400,
       "timestamp": "2026-11-20 07:55:05 UTC",
       "row_count": 406,
@@ -158,12 +158,12 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 1.5,
+      "age_minutes": 218.0,
       "stale_after_minutes": 780,
       "timestamp": "2026-11-20T07:56:12.250661+00:00",
       "row_count": null,
       "source": "Yahoo Finance via yfinance; indices and ETF proxies"
     }
   },
-  "status": "stale"
+  "status": "partial"
 }
