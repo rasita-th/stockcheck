@@ -1278,69 +1278,6 @@
   },
   "runs": [
     {
-      "calendar": {
-        "calls_used": 1,
-        "row_count": 1500,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-16T21:59:33+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "PERI",
-            "PINS",
-            "PL",
-            "PLTR",
-            "PRCT",
-            "PRME",
-            "PRNT",
-            "PSIX",
-            "PUMP",
-            "PWR",
-            "PYPL",
-            "QCOM",
-            "QQQI",
-            "RACE",
-            "RBLX",
-            "RBRK",
-            "RDW",
-            "REGN",
-            "RGNX",
-            "RIOT"
-          ],
-          "sec_filings": [
-            "RKLB",
-            "AMZN",
-            "HOOD",
-            "NVDA",
-            "IREN",
-            "ASTS",
-            "OKLO",
-            "TSLA",
-            "GOOGL",
-            "BMNR",
-            "NBIS",
-            "TEM",
-            "MP",
-            "IONQ",
-            "AMD",
-            "ORCL"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-16T21:58:47+00:00",
-      "universe_count": 305
-    },
-    {
       "analyst": {
         "calls_used": 36,
         "enabled_endpoints": [
@@ -2520,9 +2457,70 @@
       "mode": "events",
       "started_at": "2026-11-20T20:07:56+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "ALNY",
+            "AMAT",
+            "AMD",
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET"
+          ],
+          "company_profile": [
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON"
+          ],
+          "recommendation_trends": [
+            "CEG",
+            "CHTR",
+            "CIFR",
+            "CLFD",
+            "CLPT",
+            "CLSK",
+            "CMCSA",
+            "COHR",
+            "COIN",
+            "COPX",
+            "CORZ",
+            "COST",
+            "CPRT",
+            "CRCL",
+            "CRDO",
+            "CRM",
+            "CRSP",
+            "CRWD",
+            "CRWV",
+            "CSCO",
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-20T20:43:46+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-20T20:43:00+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-20T20:08:45+00:00"
+  "updated_at": "2026-11-20T20:43:48+00:00"
 }
