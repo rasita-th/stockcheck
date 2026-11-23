@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-22T19:35:41+00:00",
+  "updated_at": "2026-11-23T01:42:23+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 38,
+  "total_events": 36,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 5,
+    "Critical": 4,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 6,
+      "ok": 7,
       "partial": 0,
-      "errors": 4,
+      "errors": 3,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 2,
-      "unavailable": 8,
+      "ok": 3,
+      "unavailable": 7,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -181,8 +181,8 @@
           "why_today": "The stock moved -10.6% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:34.063872+00:00",
-          "detected_at": "2026-11-22T19:33:34.063878+00:00",
+          "event_time": "2026-11-23T01:40:17.455473+00:00",
+          "detected_at": "2026-11-23T01:40:17.455477+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -226,7 +226,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-11-16T11:09:58+00:00",
-        "active_days": 6
+        "active_days": 7
       },
       "impact": {
         "baseline_price": 1.185,
@@ -328,8 +328,8 @@
           "why_today": "The stock moved -11.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.970261+00:00",
-          "detected_at": "2026-11-22T19:33:33.970265+00:00",
+          "event_time": "2026-11-23T01:40:17.365737+00:00",
+          "detected_at": "2026-11-23T01:40:17.365741+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -373,7 +373,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-11-16T11:09:58+00:00",
-        "active_days": 6
+        "active_days": 7
       },
       "impact": {
         "baseline_price": 38.935,
@@ -469,8 +469,8 @@
           "why_today": "The stock moved -10.1% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.992663+00:00",
-          "detected_at": "2026-11-22T19:33:33.992667+00:00",
+          "event_time": "2026-11-23T01:40:17.387973+00:00",
+          "detected_at": "2026-11-23T01:40:17.387977+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -558,205 +558,13 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-11-16T11:09:58+00:00",
-        "active_days": 6
+        "active_days": 7
       },
       "impact": {
         "baseline_price": 3.185,
         "current_price": 2.445,
         "change_pct": -23.23,
         "label_th": "ราคาหลังเริ่มติดตามปรับลง 23.2%"
-      },
-      "personal_priority_score": 116,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "earnings +8"
-      ]
-    },
-    {
-      "ticker": "TMDX",
-      "name": "TransMedics Group, Inc.",
-      "portfolio_status": "holding",
-      "role": "Medtech",
-      "priority": "Critical",
-      "priority_score": 100,
-      "why_today": [
-        "A guidance event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -9.3% today."
-      ],
-      "event_type": "earnings",
-      "event_subtype": "guidance",
-      "event_time": "2026-11-16T01:00:39+00:00",
-      "verification_status": "confirmed",
-      "source_status": "primary",
-      "source": {
-        "type": "company_ir",
-        "quality": "primary",
-        "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-        "published_at": "2026-11-16T01:00:39+00:00",
-        "domain": "investors.transmedics.com"
-      },
-      "price": 85.3,
-      "day_change_pct": -9.2746,
-      "relative_volume": 1.22,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "company_ir:TMDX:1874a90660a6bb78",
-          "ticker": "TMDX",
-          "event_type": "earnings",
-          "event_subtype": "guidance",
-          "headline": "TransMedics Appoints Fernando Araujo as Chief Financial Officer and Reiterates 2026 Financial Outlook",
-          "summary": "A guidance event was detected and requires source review.",
-          "why_today": "A guidance event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T01:00:39+00:00",
-          "detected_at": "2026-11-16T01:00:39+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "confirmed_primary",
-          "verification_reason": "Matched a configured primary source.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: TransMedics",
-          "dedupe_key": "TMDX:guidance:2026-11-16:7f0d9c8a8c7b",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-            "published_at": "2026-11-16T01:00:39+00:00",
-            "domain": "investors.transmedics.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "company_ir:TMDX:1874a90660a6bb78"
-          ],
-          "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "event:TMDX:14f90072ae211d17",
-          "ticker": "TMDX",
-          "event_type": "earnings",
-          "event_subtype": "earnings_reported",
-          "headline": "TransMedics Reports Third Quarter 2026 Financial Results",
-          "summary": "A earnings reported event was detected and requires source review.",
-          "why_today": "A earnings reported event was detected and requires source review.",
-          "materiality": "high",
-          "reported_materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-16T01:00:39+00:00",
-          "detected_at": "2026-11-16T01:00:39+00:00",
-          "verification_status": "confirmed",
-          "verification_level": "corroborated",
-          "verification_reason": "Matched a configured primary source and additional coverage.",
-          "entity_confidence": "high",
-          "entity_confidence_reason": "headline contains alias: TransMedics",
-          "dedupe_key": "TMDX:earnings_reported:2026-11-16:fa91992b3c5c",
-          "source": {
-            "type": "company_ir",
-            "quality": "primary",
-            "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
-            "published_at": "2026-11-16T01:00:39+00:00",
-            "domain": "investors.transmedics.com"
-          },
-          "source_chain": [
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-reports-third-quarter-2026-financial-results",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            },
-            {
-              "type": "company_ir",
-              "quality": "primary",
-              "url": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-report-third-quarter-2026-financial-results-november",
-              "published_at": "2026-11-16T01:00:39+00:00",
-              "domain": "investors.transmedics.com"
-            }
-          ],
-          "secondary_source_count": 0,
-          "attention_policy_decision": "allow",
-          "related_event_ids": [
-            "event:TMDX:14f90072ae211d17"
-          ],
-          "priority_score": 100,
-          "priority": "Critical"
-        },
-        {
-          "event_id": "technical:TMDX:price-drop:2026-11-22",
-          "ticker": "TMDX",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -9.3%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -9.3% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.924321+00:00",
-          "detected_at": "2026-11-22T19:33:33.924325+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:TMDX:price-drop:2026-11-22"
-          ],
-          "dedupe_key": "TMDX:price_drop:5509b230b4d2c9b6"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://investors.transmedics.com/news-releases/news-release-details/transmedics-appoints-fernando-araujo-chief-financial-officer-and",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-TMDX/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "guidance",
-      "signals": [
-        "A guidance event was detected and requires source review.",
-        "A earnings reported event was detected and requires source review.",
-        "The stock moved -9.3% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-16T01:03:13+00:00",
-        "active_days": 6
-      },
-      "impact": {
-        "baseline_price": 91.42,
-        "current_price": 85.3,
-        "change_pct": -6.69,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 6.7%"
       },
       "personal_priority_score": 116,
       "personalization_reasons": [
@@ -845,8 +653,8 @@
           "why_today": "The stock moved -13.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.890705+00:00",
-          "detected_at": "2026-11-22T19:33:33.890711+00:00",
+          "event_time": "2026-11-23T01:40:17.287610+00:00",
+          "detected_at": "2026-11-23T01:40:17.287615+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -891,7 +699,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Critical",
         "first_seen_at": "2026-11-17T07:53:24+00:00",
-        "active_days": 5
+        "active_days": 6
       },
       "impact": {
         "baseline_price": 504.37,
@@ -914,22 +722,17 @@
     },
     {
       "source": "ir",
-      "ticker": "RR",
+      "ticker": "RKLB",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "OPEN",
+      "ticker": "HOOD",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "TE",
+      "ticker": "TSLA",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -945,11 +748,11 @@
     "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
     "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
     "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 9,
+    "active_discovered_event_count": 6,
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 2,
+    "technical_metric_repair_count": 3,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -969,8 +772,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 39,
-      "accepted_events": 39,
+      "evaluated_events": 36,
+      "accepted_events": 36,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -992,7 +795,7 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 2
+    "total": 3
   },
   "technical_watch": [
     {
@@ -1007,7 +810,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-22T19:33:33.786999+00:00",
+      "event_time": "2026-11-23T01:40:17.184814+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1031,8 +834,8 @@
           "why_today": "The stock moved -8.9% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.786999+00:00",
-          "detected_at": "2026-11-22T19:33:33.787003+00:00",
+          "event_time": "2026-11-23T01:40:17.184814+00:00",
+          "detected_at": "2026-11-23T01:40:17.184818+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1082,7 +885,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-22T11:17:57+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 23.27,
@@ -1107,7 +910,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-22T19:33:33.833560+00:00",
+      "event_time": "2026-11-23T01:40:17.231445+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -1131,8 +934,8 @@
           "why_today": "The stock moved -14.0% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-22T19:33:33.833560+00:00",
-          "detected_at": "2026-11-22T19:33:33.833564+00:00",
+          "event_time": "2026-11-23T01:40:17.231445+00:00",
+          "detected_at": "2026-11-23T01:40:17.231450+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -1182,7 +985,7 @@
         "label_th": "ยังต้องติดตามต่อ",
         "previous_priority": "Risk",
         "first_seen_at": "2026-11-22T11:17:57+00:00",
-        "active_days": 0
+        "active_days": 1
       },
       "impact": {
         "baseline_price": 12.96,
@@ -1194,17 +997,125 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
+    },
+    {
+      "ticker": "CIFR",
+      "name": "Cipher Mining Inc.",
+      "portfolio_status": "holding",
+      "role": "Digital infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -16.0% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-23T01:40:17.376865+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 5.44,
+      "day_change_pct": -16.0494,
+      "relative_volume": 1.01,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:CIFR:price-drop:2026-11-22",
+          "ticker": "CIFR",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -16.0%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -16.0% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-23T01:40:17.376865+00:00",
+          "detected_at": "2026-11-23T01:40:17.376870+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:CIFR:price-drop:2026-11-22"
+          ],
+          "dedupe_key": "CIFR:price_drop:0b54b9b081b560b4",
+          "technical_score": 13.0,
+          "rsi14": 30.88,
+          "pct_vs_ema20": -26.09,
+          "pct_vs_ema200": -64.58,
+          "volume_ratio20": 1.01,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-CIFR/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -16.0% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-23T01:42:23+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 5.44,
+        "current_price": 5.44,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 1,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 6,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "company_ir:TMDX:1874a90660a6bb78",
+      "ticker": "TMDX",
+      "event_subtype": "guidance",
+      "priority": "Critical",
+      "resolved_at": "2026-11-23T01:42:23+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:ASTS:price-drop:2026-11-21",
       "ticker": "ASTS",
@@ -1275,14 +1186,6 @@
       "event_subtype": "price_drop",
       "priority": "Risk",
       "resolved_at": "2026-11-20T02:21:10+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "sec:ASTS:0001493152-26-053004",
-      "ticker": "ASTS",
-      "event_subtype": "capital_raise",
-      "priority": "Critical",
-      "resolved_at": "2026-11-19T20:34:11+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
