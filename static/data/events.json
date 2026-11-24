@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "contract_version": "1.3-pr3",
-  "generated_at": "2026-11-24T13:40:08+00:00",
-  "row_count": 36,
+  "generated_at": "2026-11-24T23:56:53+00:00",
+  "row_count": 19,
   "events": [
     {
-      "event_id": "technical:INDI:price-move:2026-11-24",
+      "event_id": "technical:INDI:price-drop:2026-11-24",
       "ticker": "INDI",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.9%",
+      "event_subtype": "price_drop",
+      "headline": "Price -8.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.9% today.",
-      "materiality": "medium",
+      "why_today": "The stock moved -8.9% today.",
+      "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.139686+00:00",
-      "detected_at": "2026-11-24T13:38:00.139690+00:00",
+      "event_time": "2026-11-24T23:54:20.407841+00:00",
+      "detected_at": "2026-11-24T23:54:20.407845+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -23,7 +23,7 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 75,
+      "priority_score": 99,
       "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
@@ -38,143 +38,67 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:INDI:price-move:2026-11-24"
+        "technical:INDI:price-drop:2026-11-24"
       ],
-      "dedupe_key": "INDI:price_move:5f98fae3de7ae89c"
-    },
-    {
-      "event_id": "technical:NASA:price-move:2026-11-24",
-      "ticker": "NASA",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.5% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.128479+00:00",
-      "detected_at": "2026-11-24T13:38:00.128481+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:NASA:price-move:2026-11-24"
-      ],
-      "dedupe_key": "NASA:price_move:3ffb0cea3c96802b"
-    },
-    {
-      "event_id": "technical:TE:price-move:2026-11-24",
-      "ticker": "TE",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +9.0%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +9.0% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.128462+00:00",
-      "detected_at": "2026-11-24T13:38:00.128464+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:TE:price-move:2026-11-24"
-      ],
-      "dedupe_key": "TE:price_move:294f7c31d7bf7322"
-    },
-    {
-      "event_id": "technical:BEAM:price-move:2026-11-24",
-      "ticker": "BEAM",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +9.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +9.5% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.105964+00:00",
-      "detected_at": "2026-11-24T13:38:00.105968+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:BEAM:price-move:2026-11-24"
-      ],
-      "dedupe_key": "BEAM:price_move:c3ca6f676ae2c010",
-      "technical_score": 33.0,
-      "rsi14": 45.39,
-      "pct_vs_ema20": -3.01,
-      "pct_vs_ema200": -15.2,
-      "volume_ratio20": 0.83,
+      "dedupe_key": "INDI:price_drop:822c89c6c9238379",
+      "technical_score": 12.0,
+      "rsi14": 36.88,
+      "pct_vs_ema20": -19.29,
+      "pct_vs_ema200": -52.86,
+      "volume_ratio20": 0.17,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:ZETA:price-move:2026-11-24",
-      "ticker": "ZETA",
+      "event_id": "technical:NASA:price-drop:2026-11-24",
+      "ticker": "NASA",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +10.0%",
+      "event_subtype": "price_drop",
+      "headline": "Price -5.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +10.0% today.",
+      "why_today": "The stock moved -5.6% today.",
+      "materiality": "medium",
+      "urgency": "today",
+      "event_time": "2026-11-24T23:54:20.397708+00:00",
+      "detected_at": "2026-11-24T23:54:20.397710+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "priority_score": 75,
+      "priority": "Risk",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
+      "source_chain": [
+        {
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
+        }
+      ],
+      "secondary_source_count": 1,
+      "related_event_ids": [
+        "technical:NASA:price-drop:2026-11-24"
+      ],
+      "dedupe_key": "NASA:price_drop:59886b89d038f28c"
+    },
+    {
+      "event_id": "technical:TE:price-drop:2026-11-24",
+      "ticker": "TE",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -10.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -10.4% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.072578+00:00",
-      "detected_at": "2026-11-24T13:38:00.072582+00:00",
+      "event_time": "2026-11-24T23:54:20.397689+00:00",
+      "detected_at": "2026-11-24T23:54:20.397693+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -183,44 +107,6 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:ZETA:price-move:2026-11-24"
-      ],
-      "dedupe_key": "ZETA:price_move:92236105b7c51df7"
-    },
-    {
-      "event_id": "technical:COPX:price-move:2026-11-24",
-      "ticker": "COPX",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.8%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.8% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.050397+00:00",
-      "detected_at": "2026-11-24T13:38:00.050401+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
       "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
@@ -235,22 +121,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:COPX:price-move:2026-11-24"
+        "technical:TE:price-drop:2026-11-24"
       ],
-      "dedupe_key": "COPX:price_move:a301a40504a306db"
+      "dedupe_key": "TE:price_drop:49bd58c7e3bcf992"
     },
     {
-      "event_id": "technical:TMC:price-move:2026-11-24",
+      "event_id": "technical:TMC:price-drop:2026-11-24",
       "ticker": "TMC",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +7.6%",
+      "event_subtype": "price_drop",
+      "headline": "Price -5.2%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +7.6% today.",
+      "why_today": "The stock moved -5.2% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.039173+00:00",
-      "detected_at": "2026-11-24T13:38:00.039177+00:00",
+      "event_time": "2026-11-24T23:54:20.315405+00:00",
+      "detected_at": "2026-11-24T23:54:20.315410+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -273,22 +159,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:TMC:price-move:2026-11-24"
+        "technical:TMC:price-drop:2026-11-24"
       ],
-      "dedupe_key": "TMC:price_move:fed96fbc39ffe1a2"
+      "dedupe_key": "TMC:price_drop:a79b4db81436efa9"
     },
     {
       "event_id": "technical:SYM:price-move:2026-11-24",
       "ticker": "SYM",
       "event_type": "technical",
       "event_subtype": "price_move",
-      "headline": "Price +12.4%",
+      "headline": "Price +9.4%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +12.4% today.",
+      "why_today": "The stock moved +9.4% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.028170+00:00",
-      "detected_at": "2026-11-24T13:38:00.028174+00:00",
+      "event_time": "2026-11-24T23:54:20.305245+00:00",
+      "detected_at": "2026-11-24T23:54:20.305247+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -316,93 +202,17 @@
       "dedupe_key": "SYM:price_move:1314cc610d9876d3"
     },
     {
-      "event_id": "technical:JEPQ:price-move:2026-11-24",
-      "ticker": "JEPQ",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.3%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.3% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.017099+00:00",
-      "detected_at": "2026-11-24T13:38:00.017101+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:JEPQ:price-move:2026-11-24"
-      ],
-      "dedupe_key": "JEPQ:price_move:8d7b47712321c033"
-    },
-    {
-      "event_id": "technical:RXRX:price-move:2026-11-24",
-      "ticker": "RXRX",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.8%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.8% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.017078+00:00",
-      "detected_at": "2026-11-24T13:38:00.017082+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:RXRX:price-move:2026-11-24"
-      ],
-      "dedupe_key": "RXRX:price_move:f23c8fbae6cafa64"
-    },
-    {
-      "event_id": "technical:CIFR:price-move:2026-11-24",
+      "event_id": "technical:CIFR:price-drop:2026-11-24",
       "ticker": "CIFR",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +13.9%",
+      "event_subtype": "price_drop",
+      "headline": "Price -9.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +13.9% today.",
+      "why_today": "The stock moved -9.9% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:38:00.005934+00:00",
-      "detected_at": "2026-11-24T13:38:00.005939+00:00",
+      "event_time": "2026-11-24T23:54:20.284703+00:00",
+      "detected_at": "2026-11-24T23:54:20.284709+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -411,7 +221,7 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -425,67 +235,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:CIFR:price-move:2026-11-24"
+        "technical:CIFR:price-drop:2026-11-24"
       ],
-      "dedupe_key": "CIFR:price_move:78281e6be9018ebf",
+      "dedupe_key": "CIFR:price_drop:38dad26c8cbc47e6",
       "technical_score": 12.0,
-      "rsi14": 37.73,
-      "pct_vs_ema20": -14.62,
-      "pct_vs_ema200": -59.52,
-      "volume_ratio20": 0.99,
+      "rsi14": 35.11,
+      "pct_vs_ema20": -21.34,
+      "pct_vs_ema200": -63.23,
+      "volume_ratio20": 0.12,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:PSIX:price-move:2026-11-24",
-      "ticker": "PSIX",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +9.6%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +9.6% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.994528+00:00",
-      "detected_at": "2026-11-24T13:37:59.994532+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:PSIX:price-move:2026-11-24"
-      ],
-      "dedupe_key": "PSIX:price_move:96654ab493f7c58e"
-    },
-    {
-      "event_id": "technical:UUUU:price-move:2026-11-24",
+      "event_id": "technical:UUUU:price-drop:2026-11-24",
       "ticker": "UUUU",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +5.2%",
+      "event_subtype": "price_drop",
+      "headline": "Price -5.7%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.2% today.",
+      "why_today": "The stock moved -5.7% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.983216+00:00",
-      "detected_at": "2026-11-24T13:37:59.983221+00:00",
+      "event_time": "2026-11-24T23:54:20.263490+00:00",
+      "detected_at": "2026-11-24T23:54:20.263495+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -508,212 +280,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:UUUU:price-move:2026-11-24"
+        "technical:UUUU:price-drop:2026-11-24"
       ],
-      "dedupe_key": "UUUU:price_move:4cb4ede8a6400b9e"
+      "dedupe_key": "UUUU:price_drop:6a536b3acc218227"
     },
     {
-      "event_id": "technical:PLTR:price-move:2026-11-24",
-      "ticker": "PLTR",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +11.1%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +11.1% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.972041+00:00",
-      "detected_at": "2026-11-24T13:37:59.972046+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:PLTR:price-move:2026-11-24"
-      ],
-      "dedupe_key": "PLTR:price_move:f3e3dd27ea892bc4"
-    },
-    {
-      "event_id": "technical:EOSE:price-move:2026-11-24",
-      "ticker": "EOSE",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.3%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.3% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.959286+00:00",
-      "detected_at": "2026-11-24T13:37:59.959290+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:EOSE:price-move:2026-11-24"
-      ],
-      "dedupe_key": "EOSE:price_move:248befad3b4b5604"
-    },
-    {
-      "event_id": "technical:TMDX:price-move:2026-11-24",
-      "ticker": "TMDX",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.7%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.7% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.948154+00:00",
-      "detected_at": "2026-11-24T13:37:59.948159+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:TMDX:price-move:2026-11-24"
-      ],
-      "dedupe_key": "TMDX:price_move:ae6d91b13dfd5447"
-    },
-    {
-      "event_id": "technical:ORCL:price-move:2026-11-24",
-      "ticker": "ORCL",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +12.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +12.5% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.923964+00:00",
-      "detected_at": "2026-11-24T13:37:59.923969+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:ORCL:price-move:2026-11-24"
-      ],
-      "dedupe_key": "ORCL:price_move:8b0d6d2c0cd0c6c1"
-    },
-    {
-      "event_id": "technical:AMD:price-move:2026-11-24",
+      "event_id": "technical:AMD:price-drop:2026-11-24",
       "ticker": "AMD",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +7.0%",
+      "event_subtype": "price_drop",
+      "headline": "Price -9.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +7.0% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.912889+00:00",
-      "detected_at": "2026-11-24T13:37:59.912893+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
-      "priority": "Risk",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:AMD:price-move:2026-11-24"
-      ],
-      "dedupe_key": "AMD:price_move:05151dca4d47e37a"
-    },
-    {
-      "event_id": "technical:IONQ:price-move:2026-11-24",
-      "ticker": "IONQ",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +12.7%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +12.7% today.",
+      "why_today": "The stock moved -9.9% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.901697+00:00",
-      "detected_at": "2026-11-24T13:37:59.901701+00:00",
+      "event_time": "2026-11-24T23:54:20.200311+00:00",
+      "detected_at": "2026-11-24T23:54:20.200315+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -722,51 +304,6 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:IONQ:price-move:2026-11-24"
-      ],
-      "dedupe_key": "IONQ:price_move:67f49b445cdeea5b",
-      "technical_score": 16.0,
-      "rsi14": 36.54,
-      "pct_vs_ema20": -17.4,
-      "pct_vs_ema200": -41.59,
-      "volume_ratio20": 1.1,
-      "technical_signal": "AVOID / Turnaround only",
-      "technical_metrics_source": "canonical_technical_snapshot"
-    },
-    {
-      "event_id": "technical:TEM:price-move:2026-11-24",
-      "ticker": "TEM",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +5.5%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +5.5% today.",
-      "materiality": "medium",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.879388+00:00",
-      "detected_at": "2026-11-24T13:37:59.879393+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 75,
       "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
@@ -781,22 +318,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:TEM:price-move:2026-11-24"
+        "technical:AMD:price-drop:2026-11-24"
       ],
-      "dedupe_key": "TEM:price_move:56cfce2195d78fdd"
+      "dedupe_key": "AMD:price_drop:ecc368298325dad4",
+      "technical_score": 22.0,
+      "rsi14": 38.94,
+      "pct_vs_ema20": -17.82,
+      "pct_vs_ema200": -4.16,
+      "volume_ratio20": 0.23,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:NBIS:price-move:2026-11-24",
+      "event_id": "technical:NBIS:price-drop:2026-11-24",
       "ticker": "NBIS",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +20.2%",
+      "event_subtype": "price_drop",
+      "headline": "Price -10.9%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +20.2% today.",
+      "why_today": "The stock moved -10.9% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.868161+00:00",
-      "detected_at": "2026-11-24T13:37:59.868166+00:00",
+      "event_time": "2026-11-24T23:54:20.159614+00:00",
+      "detected_at": "2026-11-24T23:54:20.159619+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -805,7 +349,7 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -819,60 +363,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:NBIS:price-move:2026-11-24"
+        "technical:NBIS:price-drop:2026-11-24"
       ],
-      "dedupe_key": "NBIS:price_move:ac97759968ec5af9"
+      "dedupe_key": "NBIS:price_drop:48031f16fb50a29d",
+      "technical_score": 19.0,
+      "rsi14": 34.05,
+      "pct_vs_ema20": -29.93,
+      "pct_vs_ema200": -46.56,
+      "volume_ratio20": 0.21,
+      "technical_signal": "AVOID / Turnaround only",
+      "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:BMNR:price-move:2026-11-24",
+      "event_id": "technical:BMNR:price-drop:2026-11-24",
       "ticker": "BMNR",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +10.9%",
+      "event_subtype": "price_drop",
+      "headline": "Price -5.3%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +10.9% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.856948+00:00",
-      "detected_at": "2026-11-24T13:37:59.856950+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:BMNR:price-move:2026-11-24"
-      ],
-      "dedupe_key": "BMNR:price_move:8e05d4336bbf558a"
-    },
-    {
-      "event_id": "technical:GOOGL:price-move:2026-11-24",
-      "ticker": "GOOGL",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +6.4%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +6.4% today.",
+      "why_today": "The stock moved -5.3% today.",
       "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.845426+00:00",
-      "detected_at": "2026-11-24T13:37:59.845428+00:00",
+      "event_time": "2026-11-24T23:54:20.149373+00:00",
+      "detected_at": "2026-11-24T23:54:20.149378+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -895,22 +408,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:GOOGL:price-move:2026-11-24"
+        "technical:BMNR:price-drop:2026-11-24"
       ],
-      "dedupe_key": "GOOGL:price_move:1aff6bb09c03cc7a"
+      "dedupe_key": "BMNR:price_drop:950d5f41e523dd8e"
     },
     {
-      "event_id": "technical:TSLA:price-move:2026-11-24",
-      "ticker": "TSLA",
+      "event_id": "technical:OKLO:price-drop:2026-11-24",
+      "ticker": "OKLO",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +11.6%",
+      "event_subtype": "price_drop",
+      "headline": "Price -7.0%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +11.6% today.",
-      "materiality": "high",
+      "why_today": "The stock moved -7.0% today.",
+      "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.834167+00:00",
-      "detected_at": "2026-11-24T13:37:59.834171+00:00",
+      "event_time": "2026-11-24T23:54:20.116826+00:00",
+      "detected_at": "2026-11-24T23:54:20.116831+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -918,8 +431,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 99,
-      "priority": "Critical",
+      "priority_score": 75,
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -933,22 +446,22 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:TSLA:price-move:2026-11-24"
+        "technical:OKLO:price-drop:2026-11-24"
       ],
-      "dedupe_key": "TSLA:price_move:83ce79b70229cb08"
+      "dedupe_key": "OKLO:price_drop:924cbc094f182d35"
     },
     {
-      "event_id": "technical:ASTS:price-move:2026-11-24",
+      "event_id": "technical:ASTS:price-drop:2026-11-24",
       "ticker": "ASTS",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +10.3%",
+      "event_subtype": "price_drop",
+      "headline": "Price -10.2%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +10.3% today.",
+      "why_today": "The stock moved -10.2% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.810566+00:00",
-      "detected_at": "2026-11-24T13:37:59.810570+00:00",
+      "event_time": "2026-11-24T23:54:20.106369+00:00",
+      "detected_at": "2026-11-24T23:54:20.106375+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -957,7 +470,7 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -971,29 +484,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:ASTS:price-move:2026-11-24"
+        "technical:ASTS:price-drop:2026-11-24"
       ],
-      "dedupe_key": "ASTS:price_move:b99994419b87c015",
-      "technical_score": 13.0,
-      "rsi14": 33.16,
-      "pct_vs_ema20": -21.8,
-      "pct_vs_ema200": -61.42,
-      "volume_ratio20": 1.0,
+      "dedupe_key": "ASTS:price_drop:64fb5b2d57afb12b",
+      "technical_score": 9.0,
+      "rsi14": 31.09,
+      "pct_vs_ema20": -27.82,
+      "pct_vs_ema200": -65.11,
+      "volume_ratio20": 0.14,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:IREN:price-move:2026-11-24",
+      "event_id": "technical:IREN:price-drop:2026-11-24",
       "ticker": "IREN",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +23.8%",
+      "event_subtype": "price_drop",
+      "headline": "Price -12.6%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +23.8% today.",
+      "why_today": "The stock moved -12.6% today.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.799443+00:00",
-      "detected_at": "2026-11-24T13:37:59.799447+00:00",
+      "event_time": "2026-11-24T23:54:20.095782+00:00",
+      "detected_at": "2026-11-24T23:54:20.095789+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -1002,7 +515,7 @@
         "published_at": ""
       },
       "priority_score": 99,
-      "priority": "Critical",
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1016,105 +529,29 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:IREN:price-move:2026-11-24"
+        "technical:IREN:price-drop:2026-11-24"
       ],
-      "dedupe_key": "IREN:price_move:5fc44b76ffe94575"
-    },
-    {
-      "event_id": "technical:NVDA:price-move:2026-11-24",
-      "ticker": "NVDA",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +31.6%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +31.6% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.788371+00:00",
-      "detected_at": "2026-11-24T13:37:59.788373+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:NVDA:price-move:2026-11-24"
-      ],
-      "dedupe_key": "NVDA:price_move:ba64a63619dbc805"
-    },
-    {
-      "event_id": "technical:HOOD:price-move:2026-11-24",
-      "ticker": "HOOD",
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +8.4%",
-      "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +8.4% today.",
-      "materiality": "high",
-      "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.777132+00:00",
-      "detected_at": "2026-11-24T13:37:59.777137+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "priority_score": 99,
-      "priority": "Critical",
-      "attention_policy_decision": "allow_internal_only",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": ""
-        }
-      ],
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:HOOD:price-move:2026-11-24"
-      ],
-      "dedupe_key": "HOOD:price_move:f5026cd7390e54fa",
+      "dedupe_key": "IREN:price_drop:35cdc5b1f87046f8",
       "technical_score": 9.0,
-      "rsi14": 31.64,
-      "pct_vs_ema20": -14.75,
-      "pct_vs_ema200": -29.29,
-      "volume_ratio20": 0.95,
+      "rsi14": 31.07,
+      "pct_vs_ema20": -33.0,
+      "pct_vs_ema200": -67.03,
+      "volume_ratio20": 0.23,
       "technical_signal": "AVOID / Turnaround only",
       "technical_metrics_source": "canonical_technical_snapshot"
     },
     {
-      "event_id": "technical:RKLB:price-move:2026-11-24",
-      "ticker": "RKLB",
+      "event_id": "technical:NVDA:price-drop:2026-11-24",
+      "ticker": "NVDA",
       "event_type": "technical",
-      "event_subtype": "price_move",
-      "headline": "Price +9.2%",
+      "event_subtype": "price_drop",
+      "headline": "Price -7.1%",
       "summary": "A large daily price move requires context from filings, earnings or other company events.",
-      "why_today": "The stock moved +9.2% today.",
-      "materiality": "high",
+      "why_today": "The stock moved -7.1% today.",
+      "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-24T13:37:59.754270+00:00",
-      "detected_at": "2026-11-24T13:37:59.754275+00:00",
+      "event_time": "2026-11-24T23:54:20.085567+00:00",
+      "detected_at": "2026-11-24T23:54:20.085573+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "technical_json",
@@ -1122,8 +559,8 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "priority_score": 99,
-      "priority": "Critical",
+      "priority_score": 75,
+      "priority": "Risk",
       "attention_policy_decision": "allow_internal_only",
       "verification_level": "confirmed_internal",
       "verification_reason": "Derived directly from the repository's latest technical.json row.",
@@ -1137,109 +574,95 @@
       ],
       "secondary_source_count": 1,
       "related_event_ids": [
-        "technical:RKLB:price-move:2026-11-24"
+        "technical:NVDA:price-drop:2026-11-24"
       ],
-      "dedupe_key": "RKLB:price_move:48785eb7bb1f166c"
+      "dedupe_key": "NVDA:price_drop:219889fa65512da7"
     },
     {
-      "event_id": "sec:TE:0000912282-26-001539",
-      "ticker": "TE",
-      "event_type": "sec_filing",
-      "event_subtype": "insider_activity",
-      "headline": "New Form 4 insider filing",
-      "summary": "An insider transaction was reported; transaction context still requires document review.",
-      "why_today": "An insider transaction was reported; transaction context still requires document review.",
-      "materiality": "low",
+      "event_id": "technical:RKLB:price-drop:2026-11-24",
+      "ticker": "RKLB",
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "headline": "Price -8.4%",
+      "summary": "A large daily price move requires context from filings, earnings or other company events.",
+      "why_today": "The stock moved -8.4% today.",
+      "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-23T17:43:51-05:00",
-      "detected_at": "2026-11-24T13:38:00.128435+00:00",
+      "event_time": "2026-11-24T23:54:20.053548+00:00",
+      "detected_at": "2026-11-24T23:54:20.053554+00:00",
       "verification_status": "confirmed",
       "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1992243/000091228226001539/form4.xml",
-        "published_at": "2026-11-23T17:43:51-05:00",
-        "form": "4",
-        "items": "",
-        "accession_number": "0000912282-26-001539",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
       },
-      "priority_score": 78,
+      "priority_score": 99,
       "priority": "Risk",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
+      "attention_policy_decision": "allow_internal_only",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
       "source_chain": [
         {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1992243/000091228226001539/form4.xml",
-          "published_at": "2026-11-23T17:43:51-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0000912282-26-001539",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": ""
         }
       ],
-      "secondary_source_count": 0,
+      "secondary_source_count": 1,
       "related_event_ids": [
-        "sec:TE:0000912282-26-001539"
+        "technical:RKLB:price-drop:2026-11-24"
       ],
-      "dedupe_key": "TE:insider_activity:4f8afceb4b9fc13f"
+      "dedupe_key": "RKLB:price_drop:7f6e9d250e263f4d"
     },
     {
-      "event_id": "sec:NVDA:0001696841-26-000016",
-      "ticker": "NVDA",
-      "event_type": "sec_filing",
-      "event_subtype": "insider_activity",
-      "headline": "New Form 4 insider filing",
-      "summary": "An insider transaction was reported; transaction context still requires document review.",
-      "why_today": "An insider transaction was reported; transaction context still requires document review.",
-      "materiality": "low",
+      "event_id": "technical:BMNR:technical_risk:2026-11-24",
+      "ticker": "BMNR",
+      "event_type": "technical",
+      "event_subtype": "technical_risk",
+      "headline": "Latest technical scan · 9/100",
+      "summary": "Technical context from the latest market scan; this is not a recommendation.",
+      "why_today": "Latest technical scan dated 2026-11-24: score 9/100, AVOID / Turnaround only, RSI 30.8, -21.9% vs EMA20, -37.8% vs EMA200, volume 0.23x 20-day average.",
+      "materiality": "medium",
       "urgency": "today",
-      "event_time": "2026-11-23T16:54:28-05:00",
-      "detected_at": "2026-11-24T13:37:59.788322+00:00",
+      "event_time": "2026-11-24",
+      "detected_at": "2026-11-24T23:56:53+00:00",
       "verification_status": "confirmed",
+      "verification_level": "confirmed_internal",
+      "verification_reason": "Derived directly from the repository's latest technical.json row.",
       "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000169684126000016/wk-form4_1795470863.xml",
-        "published_at": "2026-11-23T16:54:28-05:00",
-        "form": "4",
-        "items": "",
-        "accession_number": "0001696841-26-000016",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": "2026-11-24"
       },
-      "priority_score": 78,
-      "priority": "Risk",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
       "source_chain": [
         {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000169684126000016/wk-form4_1795470863.xml",
-          "published_at": "2026-11-23T16:54:28-05:00",
-          "form": "4",
-          "items": "",
-          "accession_number": "0001696841-26-000016",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
+          "type": "technical_json",
+          "quality": "internal",
+          "url": "data/technical.json",
+          "published_at": "2026-11-24"
         }
       ],
-      "secondary_source_count": 0,
+      "technical_score": 9.0,
+      "technical_signal": "AVOID / Turnaround only",
+      "scan_age_days": 0,
+      "rsi14": 30.84,
+      "pct_vs_ema20": -21.85,
+      "pct_vs_ema200": -37.82,
+      "volume_ratio20": 0.23,
+      "secondary_source_count": 1,
       "related_event_ids": [
-        "sec:NVDA:0001696841-26-000016"
+        "technical:BMNR:technical_risk:2026-11-24"
       ],
-      "dedupe_key": "NVDA:insider_activity:95727f4b17dd3455"
+      "dedupe_key": "BMNR:technical_risk:c68ee26b45f12f16",
+      "priority_score": 75,
+      "priority": "Risk"
     },
     {
-      "event_id": "sec:OKLO:0002146790-26-000033",
-      "ticker": "OKLO",
+      "event_id": "sec:PLTR:0001824159-26-000019",
+      "ticker": "PLTR",
       "event_type": "sec_filing",
       "event_subtype": "insider_activity",
       "headline": "New Form 4 insider filing",
@@ -1247,17 +670,17 @@
       "why_today": "An insider transaction was reported; transaction context still requires document review.",
       "materiality": "low",
       "urgency": "today",
-      "event_time": "2026-11-23T16:33:22-05:00",
-      "detected_at": "2026-11-24T13:37:59.821793+00:00",
+      "event_time": "2026-11-23T20:02:15-05:00",
+      "detected_at": "2026-11-24T23:54:20.253143+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214679026000033/wk-form4_1795469599.xml",
-        "published_at": "2026-11-23T16:33:22-05:00",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000019/wk-form4_1795482132.xml",
+        "published_at": "2026-11-23T20:02:15-05:00",
         "form": "4",
         "items": "",
-        "accession_number": "0002146790-26-000033",
+        "accession_number": "0001824159-26-000019",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
@@ -1270,182 +693,42 @@
         {
           "type": "sec",
           "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1849056/000214679026000033/wk-form4_1795469599.xml",
-          "published_at": "2026-11-23T16:33:22-05:00",
+          "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000019/wk-form4_1795482132.xml",
+          "published_at": "2026-11-23T20:02:15-05:00",
           "form": "4",
           "items": "",
-          "accession_number": "0002146790-26-000033",
+          "accession_number": "0001824159-26-000019",
           "report_date": "",
           "discovered_via": "finnhub_sec_index"
         }
       ],
       "secondary_source_count": 0,
       "related_event_ids": [
-        "sec:OKLO:0002146790-26-000033"
+        "sec:PLTR:0001824159-26-000019"
       ],
-      "dedupe_key": "OKLO:insider_activity:b1967fcec5244bd6"
+      "dedupe_key": "PLTR:insider_activity:7820646436969048"
     },
     {
-      "event_id": "sec:NVDA:0001045810-26-000090",
-      "ticker": "NVDA",
+      "event_id": "sec:SYM:0001837240-26-000049",
+      "ticker": "SYM",
       "event_type": "sec_filing",
-      "event_subtype": "current_report",
-      "headline": "New 8-K current report",
-      "summary": "A current report was filed and requires item-level review.",
-      "why_today": "A current report was filed and requires item-level review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-23T08:57:54-05:00",
-      "detected_at": "2026-11-24T13:37:59.788350+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
-        "published_at": "2026-11-23T08:57:54-05:00",
-        "form": "8-K",
-        "items": "",
-        "accession_number": "0001045810-26-000090",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 78,
-      "priority": "Risk",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
-          "published_at": "2026-11-23T08:57:54-05:00",
-          "form": "8-K",
-          "items": "",
-          "accession_number": "0001045810-26-000090",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:NVDA:0001045810-26-000090"
-      ],
-      "dedupe_key": "NVDA:current_report:518715ae6982d363"
-    },
-    {
-      "event_id": "sec:BMNR:0001493152-26-053668",
-      "ticker": "BMNR",
-      "event_type": "sec_filing",
-      "event_subtype": "current_report",
-      "headline": "New 8-K current report",
-      "summary": "A current report was filed and requires item-level review.",
-      "why_today": "A current report was filed and requires item-level review.",
-      "materiality": "low",
-      "urgency": "today",
-      "event_time": "2026-11-23T08:45:27-05:00",
-      "detected_at": "2026-11-24T13:37:59.856926+00:00",
-      "verification_status": "confirmed",
-      "source": {
-        "type": "sec",
-        "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226053668/form8-k.htm",
-        "published_at": "2026-11-23T08:45:27-05:00",
-        "form": "8-K",
-        "items": "",
-        "accession_number": "0001493152-26-053668",
-        "report_date": "",
-        "discovered_via": "finnhub_sec_index"
-      },
-      "priority_score": 78,
-      "priority": "Risk",
-      "attention_policy_decision": "allow",
-      "verification_level": "confirmed_primary",
-      "verification_reason": "Matched a configured primary source.",
-      "source_chain": [
-        {
-          "type": "sec",
-          "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226053668/form8-k.htm",
-          "published_at": "2026-11-23T08:45:27-05:00",
-          "form": "8-K",
-          "items": "",
-          "accession_number": "0001493152-26-053668",
-          "report_date": "",
-          "discovered_via": "finnhub_sec_index"
-        }
-      ],
-      "secondary_source_count": 0,
-      "related_event_ids": [
-        "sec:BMNR:0001493152-26-053668"
-      ],
-      "dedupe_key": "BMNR:current_report:cd281a20be958efe"
-    },
-    {
-      "event_id": "technical:UUUU:technical_risk:2026-11-23",
-      "ticker": "UUUU",
-      "event_type": "technical",
-      "event_subtype": "technical_risk",
-      "headline": "Latest technical scan · 9/100",
-      "summary": "Technical context from the latest market scan; this is not a recommendation.",
-      "why_today": "Latest technical scan dated 2026-11-23: score 9/100, AVOID / Turnaround only, RSI 25.7, -21.5% vs EMA20, -62.3% vs EMA200, volume 0.99x 20-day average.",
-      "materiality": "medium",
-      "urgency": "developing",
-      "event_time": "2026-11-23",
-      "detected_at": "2026-11-24T13:40:08+00:00",
-      "verification_status": "confirmed",
-      "verification_level": "confirmed_internal",
-      "verification_reason": "Derived directly from the repository's latest technical.json row.",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": "2026-11-23"
-      },
-      "source_chain": [
-        {
-          "type": "technical_json",
-          "quality": "internal",
-          "url": "data/technical.json",
-          "published_at": "2026-11-23"
-        }
-      ],
-      "technical_score": 9.0,
-      "technical_signal": "AVOID / Turnaround only",
-      "scan_age_days": 1,
-      "rsi14": 25.74,
-      "pct_vs_ema20": -21.5,
-      "pct_vs_ema200": -62.31,
-      "volume_ratio20": 0.99,
-      "secondary_source_count": 1,
-      "related_event_ids": [
-        "technical:UUUU:technical_risk:2026-11-23"
-      ],
-      "dedupe_key": "UUUU:technical_risk:1782bb4a5e70a1c6",
-      "priority_score": 55,
-      "priority": "Action"
-    },
-    {
-      "event_id": "sec:GOOGL:0001193125-26-470750",
-      "ticker": "GOOGL",
-      "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "headline": "424B2 capital-markets filing",
-      "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-      "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+      "event_subtype": "periodic_report",
+      "headline": "New 10-K filed",
+      "summary": "A new periodic financial report is available for review.",
+      "why_today": "A new periodic financial report is available for review.",
       "materiality": "high",
       "urgency": "today",
-      "event_time": "2026-11-20T21:47:11-05:00",
-      "detected_at": "2026-11-24T13:37:59.845402+00:00",
+      "event_time": "2026-11-23T16:06:57-05:00",
+      "detected_at": "2026-11-24T23:54:20.305203+00:00",
       "verification_status": "confirmed",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-        "published_at": "2026-11-20T21:47:11-05:00",
-        "form": "424B2",
+        "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+        "published_at": "2026-11-23T16:06:57-05:00",
+        "form": "10-K",
         "items": "",
-        "accession_number": "0001193125-26-470750",
+        "accession_number": "0001837240-26-000049",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
@@ -1458,20 +741,68 @@
         {
           "type": "sec",
           "quality": "primary",
-          "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-          "published_at": "2026-11-20T21:47:11-05:00",
-          "form": "424B2",
+          "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+          "published_at": "2026-11-23T16:06:57-05:00",
+          "form": "10-K",
           "items": "",
-          "accession_number": "0001193125-26-470750",
+          "accession_number": "0001837240-26-000049",
           "report_date": "",
           "discovered_via": "finnhub_sec_index"
         }
       ],
       "secondary_source_count": 0,
       "related_event_ids": [
-        "sec:GOOGL:0001193125-26-470750"
+        "sec:SYM:0001837240-26-000049"
       ],
-      "dedupe_key": "GOOGL:capital_raise:db4eda763b74f233"
+      "dedupe_key": "SYM:periodic_report:11902f171ee6c0d4"
+    },
+    {
+      "event_id": "sec:SYM:0001837240-26-000047",
+      "ticker": "SYM",
+      "event_type": "sec_filing",
+      "event_subtype": "current_report",
+      "headline": "New 8-K current report",
+      "summary": "A current report was filed and requires item-level review.",
+      "why_today": "A current report was filed and requires item-level review.",
+      "materiality": "low",
+      "urgency": "today",
+      "event_time": "2026-11-23T16:02:02-05:00",
+      "detected_at": "2026-11-24T23:54:20.305226+00:00",
+      "verification_status": "confirmed",
+      "source": {
+        "type": "sec",
+        "quality": "primary",
+        "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000047/sym-20261123.htm",
+        "published_at": "2026-11-23T16:02:02-05:00",
+        "form": "8-K",
+        "items": "",
+        "accession_number": "0001837240-26-000047",
+        "report_date": "",
+        "discovered_via": "finnhub_sec_index"
+      },
+      "priority_score": 78,
+      "priority": "Risk",
+      "attention_policy_decision": "allow",
+      "verification_level": "confirmed_primary",
+      "verification_reason": "Matched a configured primary source.",
+      "source_chain": [
+        {
+          "type": "sec",
+          "quality": "primary",
+          "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000047/sym-20261123.htm",
+          "published_at": "2026-11-23T16:02:02-05:00",
+          "form": "8-K",
+          "items": "",
+          "accession_number": "0001837240-26-000047",
+          "report_date": "",
+          "discovered_via": "finnhub_sec_index"
+        }
+      ],
+      "secondary_source_count": 0,
+      "related_event_ids": [
+        "sec:SYM:0001837240-26-000047"
+      ],
+      "dedupe_key": "SYM:current_report:6bd01b3ab2f13be2"
     }
   ]
 }

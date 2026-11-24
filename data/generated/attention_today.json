@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-24T13:40:08+00:00",
+  "updated_at": "2026-11-24T23:56:53+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 36,
+  "total_events": 19,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 2,
+    "Critical": 1,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -70,9 +70,9 @@
       "status": "partial",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 6,
+      "ok": 8,
       "partial": 0,
-      "errors": 4,
+      "errors": 2,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -85,8 +85,8 @@
       "source": "GDELT DOC 2.0",
       "role": "discovery_only",
       "checked": 10,
-      "ok": 1,
-      "unavailable": 9,
+      "ok": 4,
+      "unavailable": 6,
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
@@ -101,58 +101,59 @@
   },
   "items": [
     {
-      "ticker": "GOOGL",
-      "name": "Alphabet Inc.",
+      "ticker": "SYM",
+      "name": "Symbotic Inc.",
       "portfolio_status": "holding",
-      "role": "Core quality",
+      "role": "Automation",
       "priority": "Critical",
       "priority_score": 100,
       "why_today": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-        "The stock moved +6.4% today."
+        "A new periodic financial report is available for review.",
+        "The stock moved +9.4% today.",
+        "A current report was filed and requires item-level review."
       ],
       "event_type": "sec_filing",
-      "event_subtype": "capital_raise",
-      "event_time": "2026-11-20T21:47:11-05:00",
+      "event_subtype": "periodic_report",
+      "event_time": "2026-11-23T16:06:57-05:00",
       "verification_status": "confirmed",
       "source_status": "primary",
       "source": {
         "type": "sec",
         "quality": "primary",
-        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-        "published_at": "2026-11-20T21:47:11-05:00",
-        "form": "424B2",
+        "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+        "published_at": "2026-11-23T16:06:57-05:00",
+        "form": "10-K",
         "items": "",
-        "accession_number": "0001193125-26-470750",
+        "accession_number": "0001837240-26-000049",
         "report_date": "",
         "discovered_via": "finnhub_sec_index"
       },
-      "price": 279.215,
-      "day_change_pct": -1.0227,
-      "relative_volume": 0.12,
+      "price": 38.245,
+      "day_change_pct": 9.3652,
+      "relative_volume": 0.47,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "sec:GOOGL:0001193125-26-470750",
-          "ticker": "GOOGL",
+          "event_id": "sec:SYM:0001837240-26-000049",
+          "ticker": "SYM",
           "event_type": "sec_filing",
-          "event_subtype": "capital_raise",
-          "headline": "424B2 capital-markets filing",
-          "summary": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-          "why_today": "A securities registration or prospectus filing may create capital-raise or dilution risk.",
+          "event_subtype": "periodic_report",
+          "headline": "New 10-K filed",
+          "summary": "A new periodic financial report is available for review.",
+          "why_today": "A new periodic financial report is available for review.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-20T21:47:11-05:00",
-          "detected_at": "2026-11-24T13:37:59.845402+00:00",
+          "event_time": "2026-11-23T16:06:57-05:00",
+          "detected_at": "2026-11-24T23:54:20.305203+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-            "published_at": "2026-11-20T21:47:11-05:00",
-            "form": "424B2",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+            "published_at": "2026-11-23T16:06:57-05:00",
+            "form": "10-K",
             "items": "",
-            "accession_number": "0001193125-26-470750",
+            "accession_number": "0001837240-26-000049",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
@@ -165,130 +166,33 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-              "published_at": "2026-11-20T21:47:11-05:00",
-              "form": "424B2",
+              "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+              "published_at": "2026-11-23T16:06:57-05:00",
+              "form": "10-K",
               "items": "",
-              "accession_number": "0001193125-26-470750",
+              "accession_number": "0001837240-26-000049",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:GOOGL:0001193125-26-470750"
+            "sec:SYM:0001837240-26-000049"
           ],
-          "dedupe_key": "GOOGL:capital_raise:db4eda763b74f233"
+          "dedupe_key": "SYM:periodic_report:11902f171ee6c0d4"
         },
         {
-          "event_id": "technical:GOOGL:price-move:2026-11-24",
-          "ticker": "GOOGL",
+          "event_id": "technical:SYM:price-move:2026-11-24",
+          "ticker": "SYM",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +6.4%",
+          "headline": "Price +9.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.4% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-24T13:37:59.845426+00:00",
-          "detected_at": "2026-11-24T13:37:59.845428+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:GOOGL:price-move:2026-11-24"
-          ],
-          "dedupe_key": "GOOGL:price_move:1aff6bb09c03cc7a"
-        }
-      ],
-      "actions": {
-        "primary_source": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526470750/d115240d424b2.htm",
-        "company_ir": "https://abc.xyz/investor/",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-GOOGL/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "capital_raise",
-      "signals": [
-        "A securities registration or prospectus filing may create capital-raise or dilution risk.",
-        "The stock moved +6.4% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-24T13:40:08+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 282.31,
-        "current_price": 279.215,
-        "change_pct": -1.1,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 1.1%"
-      },
-      "personal_priority_score": 114,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8",
-        "sec_filing +6"
-      ]
-    },
-    {
-      "ticker": "BMNR",
-      "name": "BitMine Immersion Technologies, Inc.",
-      "portfolio_status": "holding",
-      "role": "Digital assets",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +10.9% today.",
-        "A current report was filed and requires item-level review."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-24T13:37:59.856948+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 13.66,
-      "day_change_pct": -5.2705,
-      "relative_volume": 0.23,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:BMNR:price-move:2026-11-24",
-          "ticker": "BMNR",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +10.9%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +10.9% today.",
+          "why_today": "The stock moved +9.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-24T13:37:59.856948+00:00",
-          "detected_at": "2026-11-24T13:37:59.856950+00:00",
+          "event_time": "2026-11-24T23:54:20.305245+00:00",
+          "detected_at": "2026-11-24T23:54:20.305247+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -311,13 +215,13 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:BMNR:price-move:2026-11-24"
+            "technical:SYM:price-move:2026-11-24"
           ],
-          "dedupe_key": "BMNR:price_move:8e05d4336bbf558a"
+          "dedupe_key": "SYM:price_move:1314cc610d9876d3"
         },
         {
-          "event_id": "sec:BMNR:0001493152-26-053668",
-          "ticker": "BMNR",
+          "event_id": "sec:SYM:0001837240-26-000047",
+          "ticker": "SYM",
           "event_type": "sec_filing",
           "event_subtype": "current_report",
           "headline": "New 8-K current report",
@@ -325,17 +229,17 @@
           "why_today": "A current report was filed and requires item-level review.",
           "materiality": "low",
           "urgency": "today",
-          "event_time": "2026-11-23T08:45:27-05:00",
-          "detected_at": "2026-11-24T13:37:59.856926+00:00",
+          "event_time": "2026-11-23T16:02:02-05:00",
+          "detected_at": "2026-11-24T23:54:20.305226+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "sec",
             "quality": "primary",
-            "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226053668/form8-k.htm",
-            "published_at": "2026-11-23T08:45:27-05:00",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000047/sym-20261123.htm",
+            "published_at": "2026-11-23T16:02:02-05:00",
             "form": "8-K",
             "items": "",
-            "accession_number": "0001493152-26-053668",
+            "accession_number": "0001837240-26-000047",
             "report_date": "",
             "discovered_via": "finnhub_sec_index"
           },
@@ -348,49 +252,51 @@
             {
               "type": "sec",
               "quality": "primary",
-              "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226053668/form8-k.htm",
-              "published_at": "2026-11-23T08:45:27-05:00",
+              "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000047/sym-20261123.htm",
+              "published_at": "2026-11-23T16:02:02-05:00",
               "form": "8-K",
               "items": "",
-              "accession_number": "0001493152-26-053668",
+              "accession_number": "0001837240-26-000047",
               "report_date": "",
               "discovered_via": "finnhub_sec_index"
             }
           ],
           "secondary_source_count": 0,
           "related_event_ids": [
-            "sec:BMNR:0001493152-26-053668"
+            "sec:SYM:0001837240-26-000047"
           ],
-          "dedupe_key": "BMNR:current_report:cd281a20be958efe"
+          "dedupe_key": "SYM:current_report:6bd01b3ab2f13be2"
         }
       ],
       "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/AMEX-BMNR/",
+        "primary_source": "https://www.sec.gov/Archives/edgar/data/1837240/000183724026000049/sym-20260926.htm",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-SYM/",
         "raw_data": "data/technical.json"
       },
       "severity": "high",
-      "primary_trigger": "price_move",
+      "primary_trigger": "periodic_report",
       "signals": [
-        "The stock moved +10.9% today.",
+        "A new periodic financial report is available for review.",
+        "The stock moved +9.4% today.",
         "A current report was filed and requires item-level review."
       ],
       "change": {
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-24T13:40:08+00:00",
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 14.4,
-        "current_price": 13.66,
-        "change_pct": -5.14,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 5.1%"
+        "baseline_price": 38.245,
+        "current_price": 38.245,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
-      "personal_priority_score": 107,
+      "personal_priority_score": 114,
       "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
+        "หุ้นในพอร์ต +8",
+        "sec_filing +6"
       ]
     }
   ],
@@ -402,22 +308,12 @@
     },
     {
       "source": "ir",
-      "ticker": "BEAM",
+      "ticker": "TSLA",
       "message": "Configured IR sources were unavailable"
     },
     {
       "source": "ir",
-      "ticker": "TE",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RKLB",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "HOOD",
+      "ticker": "TEM",
       "message": "Configured IR sources were unavailable"
     }
   ],
@@ -437,7 +333,7 @@
     "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
     "attention_policy": "company catalysts remain above technical-only context",
     "technical_fill_count": 1,
-    "technical_metric_repair_count": 5,
+    "technical_metric_repair_count": 6,
     "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
     "technical_watch_minimum": 3,
     "technical_max_age_days": 3,
@@ -457,8 +353,8 @@
       "phase": "P5",
       "owner": "scripts/contracts/attention_policy.py",
       "policy_enforced": true,
-      "evaluated_events": 35,
-      "accepted_events": 35,
+      "evaluated_events": 18,
+      "accepted_events": 18,
       "rejected_events": 0,
       "reject_reasons": []
     }
@@ -480,9 +376,110 @@
   "technical_summary": {
     "risk": 0,
     "setup": 0,
-    "total": 2
+    "total": 6
   },
   "technical_watch": [
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "portfolio_status": "holding",
+      "role": "AI semiconductors",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -9.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-24T23:54:20.200311+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 408.4699,
+      "day_change_pct": -9.9215,
+      "relative_volume": 0.23,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:AMD:price-drop:2026-11-24",
+          "ticker": "AMD",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -9.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -9.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-24T23:54:20.200311+00:00",
+          "detected_at": "2026-11-24T23:54:20.200315+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:AMD:price-drop:2026-11-24"
+          ],
+          "dedupe_key": "AMD:price_drop:ecc368298325dad4",
+          "technical_score": 22.0,
+          "rsi14": 38.94,
+          "pct_vs_ema20": -17.82,
+          "pct_vs_ema200": -4.16,
+          "volume_ratio20": 0.23,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "company_ir": "https://ir.amd.com/",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-AMD/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -9.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 408.4699,
+        "current_price": 408.4699,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
     {
       "ticker": "ASTS",
       "name": "AST SpaceMobile, Inc.",
@@ -495,7 +492,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-24T13:37:59.810566+00:00",
+      "event_time": "2026-11-24T23:54:20.106369+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -519,8 +516,8 @@
           "why_today": "The stock moved -10.2% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-24T13:37:59.810566+00:00",
-          "detected_at": "2026-11-24T13:37:59.810570+00:00",
+          "event_time": "2026-11-24T23:54:20.106369+00:00",
+          "detected_at": "2026-11-24T23:54:20.106375+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -545,6 +542,7 @@
           "related_event_ids": [
             "technical:ASTS:price-drop:2026-11-24"
           ],
+          "dedupe_key": "ASTS:price_drop:64fb5b2d57afb12b",
           "technical_score": 9.0,
           "rsi14": 31.09,
           "pct_vs_ema20": -27.82,
@@ -568,14 +566,14 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-24T13:40:08+00:00",
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 25.665,
+        "baseline_price": 23.06,
         "current_price": 23.06,
-        "change_pct": -10.15,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 10.2%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -594,7 +592,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_drop",
-      "event_time": "2026-11-24T13:38:00.005934+00:00",
+      "event_time": "2026-11-24T23:54:20.284703+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -618,8 +616,8 @@
           "why_today": "The stock moved -9.9% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-24T13:38:00.005934+00:00",
-          "detected_at": "2026-11-24T13:38:00.005939+00:00",
+          "event_time": "2026-11-24T23:54:20.284703+00:00",
+          "detected_at": "2026-11-24T23:54:20.284709+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -644,6 +642,7 @@
           "related_event_ids": [
             "technical:CIFR:price-drop:2026-11-24"
           ],
+          "dedupe_key": "CIFR:price_drop:38dad26c8cbc47e6",
           "technical_score": 12.0,
           "rsi14": 35.11,
           "pct_vs_ema20": -21.34,
@@ -667,14 +666,314 @@
         "status": "new",
         "label_th": "เพิ่มเข้ามาวันนี้",
         "previous_priority": null,
-        "first_seen_at": "2026-11-24T13:40:08+00:00",
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
         "active_days": 0
       },
       "impact": {
-        "baseline_price": 6.19,
+        "baseline_price": 5.585,
         "current_price": 5.585,
-        "change_pct": -9.77,
-        "label_th": "ราคาหลังเริ่มติดตามปรับลง 9.8%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "INDI",
+      "name": "indie Semiconductor, Inc.",
+      "portfolio_status": "holding",
+      "role": "Automotive semiconductors",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -8.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-24T23:54:20.407841+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 1.485,
+      "day_change_pct": -8.8957,
+      "relative_volume": 0.17,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:INDI:price-drop:2026-11-24",
+          "ticker": "INDI",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -8.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -8.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-24T23:54:20.407841+00:00",
+          "detected_at": "2026-11-24T23:54:20.407845+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:INDI:price-drop:2026-11-24"
+          ],
+          "dedupe_key": "INDI:price_drop:822c89c6c9238379",
+          "technical_score": 12.0,
+          "rsi14": 36.88,
+          "pct_vs_ema20": -19.29,
+          "pct_vs_ema200": -52.86,
+          "volume_ratio20": 0.17,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-INDI/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -8.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 1.485,
+        "current_price": 1.485,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "IREN",
+      "name": "IREN Limited",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -12.6% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-24T23:54:20.095782+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 12.7979,
+      "day_change_pct": -12.5827,
+      "relative_volume": 0.23,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:IREN:price-drop:2026-11-24",
+          "ticker": "IREN",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -12.6%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -12.6% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-24T23:54:20.095782+00:00",
+          "detected_at": "2026-11-24T23:54:20.095789+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:IREN:price-drop:2026-11-24"
+          ],
+          "dedupe_key": "IREN:price_drop:35cdc5b1f87046f8",
+          "technical_score": 9.0,
+          "rsi14": 31.07,
+          "pct_vs_ema20": -33.0,
+          "pct_vs_ema200": -67.03,
+          "volume_ratio20": 0.23,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-IREN/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -12.6% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 12.7979,
+        "current_price": 12.7979,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 107,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8"
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
+      "portfolio_status": "holding",
+      "role": "AI infrastructure",
+      "priority": "Risk",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved -10.9% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_drop",
+      "event_time": "2026-11-24T23:54:20.159614+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 87.165,
+      "day_change_pct": -10.8742,
+      "relative_volume": 0.21,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:NBIS:price-drop:2026-11-24",
+          "ticker": "NBIS",
+          "event_type": "technical",
+          "event_subtype": "price_drop",
+          "headline": "Price -10.9%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved -10.9% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-24T23:54:20.159614+00:00",
+          "detected_at": "2026-11-24T23:54:20.159619+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Risk",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:NBIS:price-drop:2026-11-24"
+          ],
+          "dedupe_key": "NBIS:price_drop:48031f16fb50a29d",
+          "technical_score": 19.0,
+          "rsi14": 34.05,
+          "pct_vs_ema20": -29.93,
+          "pct_vs_ema200": -46.56,
+          "volume_ratio20": 0.21,
+          "technical_signal": "AVOID / Turnaround only",
+          "technical_metrics_source": "canonical_technical_snapshot"
+        }
+      ],
+      "actions": {
+        "primary_source": "data/technical.json",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-NBIS/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "price_drop",
+      "signals": [
+        "The stock moved -10.9% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-24T23:56:53+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 87.165,
+        "current_price": 87.165,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -691,6 +990,62 @@
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "sec:GOOGL:0001193125-26-470750",
+      "ticker": "GOOGL",
+      "event_subtype": "capital_raise",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:BMNR:price-move:2026-11-24",
+      "ticker": "BMNR",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:ASTS:price-move:2026-11-24",
+      "ticker": "ASTS",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:BEAM:price-move:2026-11-24",
+      "ticker": "BEAM",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:CIFR:price-move:2026-11-24",
+      "ticker": "CIFR",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:HOOD:price-move:2026-11-24",
+      "ticker": "HOOD",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:IONQ:price-move:2026-11-24",
+      "ticker": "IONQ",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-24T23:56:53+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "company_ir:AMD:df5bb517e16f336f",
       "ticker": "AMD",
@@ -713,62 +1068,6 @@
       "event_subtype": "price_move",
       "priority": "Critical",
       "resolved_at": "2026-11-24T13:40:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:BMNR:price-move:2026-11-23",
-      "ticker": "BMNR",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-24T13:40:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-move:2026-11-23",
-      "ticker": "CIFR",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-24T13:40:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:HOOD:price-move:2026-11-23",
-      "ticker": "HOOD",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-24T13:40:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:price-move:2026-11-23",
-      "ticker": "IONQ",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-24T13:40:08+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-drop:2026-11-23",
-      "ticker": "ASTS",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-24T02:14:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:BMNR:price-drop:2026-11-23",
-      "ticker": "BMNR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-24T02:14:26+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:CIFR:price-drop:2026-11-23",
-      "ticker": "CIFR",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-24T02:14:26+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
