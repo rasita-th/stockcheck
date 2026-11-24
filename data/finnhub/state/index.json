@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "ADSK",
-            "ADYEY",
-            "AEHR",
-            "AEP",
-            "AFRM",
-            "AIQ",
-            "AIR",
-            "ALAB"
-          ],
-          "company_profile": [
-            "ARKX",
-            "ARM",
-            "ASML",
-            "ASTS"
-          ],
-          "recommendation_trends": [
-            "AVEX",
-            "AVGO",
-            "AXON",
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH",
-            "BE",
-            "BEAM",
-            "BILL",
-            "BKNG",
-            "BKR",
-            "BKSY",
-            "BLSH",
-            "BMNR",
-            "BRK-B",
-            "BTDR",
-            "BW",
-            "CACI",
-            "CAMT",
-            "CBRS",
-            "CCEP",
-            "CDNA",
-            "CDNS"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-20T07:44:17+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-20T07:43:31+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 1054,
@@ -2518,9 +2457,72 @@
       "mode": "analyst",
       "started_at": "2026-11-24T10:24:29+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 863,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-24T13:37:57+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "AMGN",
+            "AMPH",
+            "AMSC",
+            "AMZN",
+            "ANET",
+            "APLD",
+            "APP",
+            "ARKF",
+            "ARKG",
+            "ARKK",
+            "ARKQ",
+            "ARKW",
+            "ARKX",
+            "ARM",
+            "ASML",
+            "ASTS",
+            "AVAV",
+            "AVEX",
+            "AVGO",
+            "AXON"
+          ],
+          "sec_filings": [
+            "COST",
+            "BEAM",
+            "NOW",
+            "TE",
+            "NASA",
+            "INDI",
+            "RKLB",
+            "AMZN",
+            "HOOD",
+            "NVDA",
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-24T13:37:05+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-24T10:25:16+00:00"
+  "updated_at": "2026-11-24T13:37:58+00:00"
 }
