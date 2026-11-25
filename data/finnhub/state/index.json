@@ -1278,67 +1278,6 @@
   },
   "runs": [
     {
-      "analyst": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "recommendation_trends",
-          "company_profile",
-          "basic_financials"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "basic_financials": [
-            "APLD",
-            "APP",
-            "ARKF",
-            "ARKG",
-            "ARKK",
-            "ARKQ",
-            "ARKW",
-            "ARKX"
-          ],
-          "company_profile": [
-            "AXP",
-            "BA",
-            "BAC",
-            "BAH"
-          ],
-          "recommendation_trends": [
-            "CVX",
-            "CW",
-            "DASH",
-            "DDD",
-            "DDOG",
-            "DE",
-            "DELL",
-            "DKNG",
-            "DLO",
-            "DNA",
-            "DOCN",
-            "DRS",
-            "DXCM",
-            "EA",
-            "EADSY",
-            "EDIT",
-            "EH",
-            "ENPH",
-            "EOSE",
-            "EQT",
-            "ETN",
-            "EVTL",
-            "EXC",
-            "FANG"
-          ]
-        },
-        "role": "analyst"
-      },
-      "completed_at": "2026-11-21T07:41:48+00:00",
-      "mode": "analyst",
-      "started_at": "2026-11-21T07:41:02+00:00",
-      "universe_count": 305
-    },
-    {
       "calendar": {
         "calls_used": 1,
         "row_count": 902,
@@ -2518,9 +2457,72 @@
       "mode": "analyst",
       "started_at": "2026-11-25T09:06:17+00:00",
       "universe_count": 305
+    },
+    {
+      "calendar": {
+        "calls_used": 1,
+        "row_count": 787,
+        "status": "ok"
+      },
+      "completed_at": "2026-11-25T19:14:09+00:00",
+      "events": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "company_earnings",
+          "sec_filings"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "company_earnings": [
+            "CSCO",
+            "CSGP",
+            "CSX",
+            "CTAS",
+            "CTSH",
+            "CVX",
+            "CW",
+            "DASH",
+            "DDD",
+            "DDOG",
+            "DE",
+            "DELL",
+            "DKNG",
+            "DLO",
+            "DNA",
+            "DOCN",
+            "DRS",
+            "DXCM",
+            "EA",
+            "EADSY"
+          ],
+          "sec_filings": [
+            "IREN",
+            "ASTS",
+            "OKLO",
+            "TSLA",
+            "GOOGL",
+            "BMNR",
+            "NBIS",
+            "TEM",
+            "MP",
+            "IONQ",
+            "AMD",
+            "ORCL",
+            "EQT",
+            "TMDX",
+            "EOSE",
+            "PLTR"
+          ]
+        },
+        "role": "events"
+      },
+      "mode": "events",
+      "started_at": "2026-11-25T19:13:23+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-25T09:07:04+00:00"
+  "updated_at": "2026-11-25T19:14:10+00:00"
 }

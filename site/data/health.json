@@ -1,17 +1,17 @@
 {
   "schema_version": "1.3",
-  "generated_at": "2026-11-25T09:27:09.834434+00:00",
+  "generated_at": "2026-11-25T19:18:22.070517+00:00",
   "market_session": {
     "timezone": "America/New_York",
-    "phase": "pre-market",
-    "market_open": false,
+    "phase": "market-open",
+    "market_open": true,
     "local_date": "2026-11-25",
     "latest_completed_session": "2026-11-24"
   },
   "layers": {
     "quote": {
       "status": "stale",
-      "age_minutes": 1070.4,
+      "age_minutes": 1661.6,
       "stale_after_minutes": 30,
       "timestamp": "2026-11-24T15:36:44+00:00",
       "row_count": 406,
@@ -19,15 +19,15 @@
       "fallback_count": 0,
       "session": {
         "timezone": "America/New_York",
-        "phase": "pre-market",
-        "market_open": false,
+        "phase": "market-open",
+        "market_open": true,
         "local_date": "2026-11-25",
         "latest_completed_session": "2026-11-24"
       }
     },
     "technical": {
-      "status": "ok",
-      "age_minutes": 1070.4,
+      "status": "stale",
+      "age_minutes": 1661.6,
       "stale_after_minutes": 1440,
       "timestamp": "2026-11-24T15:36:46+00:00",
       "row_count": 405,
@@ -40,9 +40,9 @@
     },
     "attention": {
       "status": "partial",
-      "age_minutes": 59.1,
+      "age_minutes": 1.6,
       "stale_after_minutes": 90,
-      "timestamp": "2026-11-25T08:28:05+00:00",
+      "timestamp": "2026-11-25T19:16:49+00:00",
       "row_count": 0,
       "source": null,
       "coverage_status": "partial",
@@ -52,9 +52,9 @@
           "checked": 38,
           "applicable": 35,
           "not_applicable": 3,
-          "ok": 32,
+          "ok": 31,
           "partial": 0,
-          "errors": 3,
+          "errors": 4,
           "source": "SEC EDGAR",
           "identity": {
             "status": "complete",
@@ -63,8 +63,8 @@
           },
           "transport": {
             "status": "partial",
-            "ok": 32,
-            "errors": 3
+            "ok": 31,
+            "errors": 4
           }
         },
         "earnings": {
@@ -102,9 +102,9 @@
           "status": "partial",
           "source": "Company IR/RSS",
           "checked": 10,
-          "ok": 4,
+          "ok": 6,
           "partial": 0,
-          "errors": 6,
+          "errors": 4,
           "registry": {
             "applicable": 35,
             "configured": 35,
@@ -117,8 +117,8 @@
           "source": "GDELT DOC 2.0",
           "role": "discovery_only",
           "checked": 10,
-          "ok": 3,
-          "unavailable": 7,
+          "ok": 1,
+          "unavailable": 9,
           "note": "Optional secondary discovery does not downgrade verified-source coverage."
         },
         "regulators": {
@@ -134,15 +134,15 @@
     },
     "events": {
       "status": "ok",
-      "age_minutes": 59.1,
+      "age_minutes": 1.6,
       "stale_after_minutes": 90,
-      "timestamp": "2026-11-25T08:28:05+00:00",
-      "row_count": 16,
+      "timestamp": "2026-11-25T19:16:49+00:00",
+      "row_count": 19,
       "source": null
     },
     "consensus": {
       "status": "ok",
-      "age_minutes": 20.1,
+      "age_minutes": 611.3,
       "stale_after_minutes": 1440,
       "timestamp": "2026-11-25T09:07:02+00:00",
       "row_count": null,
@@ -150,7 +150,7 @@
     },
     "fundamental": {
       "status": "ok",
-      "age_minutes": 13.7,
+      "age_minutes": 604.9,
       "stale_after_minutes": 50400,
       "timestamp": "2026-11-25 09:13:29 UTC",
       "row_count": 406,
@@ -158,7 +158,7 @@
     },
     "market_pulse": {
       "status": "ok",
-      "age_minutes": 1.3,
+      "age_minutes": 592.5,
       "stale_after_minutes": 780,
       "timestamp": "2026-11-25T09:25:49.748524+00:00",
       "row_count": null,
