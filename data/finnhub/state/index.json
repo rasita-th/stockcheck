@@ -1280,69 +1280,6 @@
     {
       "calendar": {
         "calls_used": 1,
-        "row_count": 902,
-        "status": "ok"
-      },
-      "completed_at": "2026-11-21T10:57:17+00:00",
-      "events": {
-        "calls_used": 36,
-        "enabled_endpoints": [
-          "company_earnings",
-          "sec_filings"
-        ],
-        "errors": [],
-        "missing_key": false,
-        "refreshed": {
-          "company_earnings": [
-            "MARA",
-            "MCHP",
-            "MDB",
-            "MDLZ",
-            "MELI",
-            "META",
-            "MNDY",
-            "MNST",
-            "MP",
-            "MPWR",
-            "MRAM",
-            "MRCY",
-            "MRVL",
-            "MSFT",
-            "MSTR",
-            "MTLS",
-            "MU",
-            "NASA",
-            "NBIS",
-            "NFLX"
-          ],
-          "sec_filings": [
-            "EOSE",
-            "PLTR",
-            "UUUU",
-            "PSIX",
-            "CIFR",
-            "RXRX",
-            "JEPQ",
-            "SYM",
-            "TMC",
-            "OSCR",
-            "COPX",
-            "RR",
-            "ZETA",
-            "OPEN",
-            "COST",
-            "BEAM"
-          ]
-        },
-        "role": "events"
-      },
-      "mode": "events",
-      "started_at": "2026-11-21T10:56:29+00:00",
-      "universe_count": 305
-    },
-    {
-      "calendar": {
-        "calls_used": 1,
         "row_count": 900,
         "status": "ok"
       },
@@ -2520,9 +2457,70 @@
       "mode": "events",
       "started_at": "2026-11-25T19:13:23+00:00",
       "universe_count": 305
+    },
+    {
+      "analyst": {
+        "calls_used": 36,
+        "enabled_endpoints": [
+          "recommendation_trends",
+          "company_profile",
+          "basic_financials"
+        ],
+        "errors": [],
+        "missing_key": false,
+        "refreshed": {
+          "basic_financials": [
+            "DXCM",
+            "EA",
+            "EADSY",
+            "EDIT",
+            "EH",
+            "ENPH",
+            "EOSE",
+            "EQT"
+          ],
+          "company_profile": [
+            "CRM",
+            "CRSP",
+            "CRWD",
+            "CRWV"
+          ],
+          "recommendation_trends": [
+            "XYZ",
+            "Z",
+            "ZETA",
+            "ZS",
+            "AAOI",
+            "AAPL",
+            "ABBV",
+            "ABCL",
+            "ABNB",
+            "ACHR",
+            "ADBE",
+            "ADI",
+            "ADP",
+            "ADSK",
+            "ADYEY",
+            "AEHR",
+            "AEP",
+            "AFRM",
+            "AIQ",
+            "AIR",
+            "ALAB",
+            "ALNY",
+            "AMAT",
+            "AMD"
+          ]
+        },
+        "role": "analyst"
+      },
+      "completed_at": "2026-11-25T21:59:39+00:00",
+      "mode": "analyst",
+      "started_at": "2026-11-25T21:58:53+00:00",
+      "universe_count": 305
     }
   ],
   "schema_version": "2.0.0",
   "state_schema_version": "1.0.0",
-  "updated_at": "2026-11-25T19:14:10+00:00"
+  "updated_at": "2026-11-25T21:59:40+00:00"
 }
