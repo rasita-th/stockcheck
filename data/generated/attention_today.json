@@ -186,109 +186,9 @@
   "technical_summary": {
     "risk": 1,
     "setup": 0,
-    "total": 7
+    "total": 3
   },
   "technical_watch": [
-    {
-      "ticker": "ASTS",
-      "name": "AST SpaceMobile, Inc.",
-      "portfolio_status": "holding",
-      "role": "Space communications",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +10.2% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-27T12:09:34.621692+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 26.005,
-      "day_change_pct": 10.1907,
-      "relative_volume": 1.32,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:ASTS:price-move:2026-11-27",
-          "ticker": "ASTS",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +10.2%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +10.2% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-27T12:09:34.621692+00:00",
-          "detected_at": "2026-11-27T12:09:34.621696+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:ASTS:price-move:2026-11-27"
-          ],
-          "dedupe_key": "ASTS:price_move:386e4d3ac187a7c1",
-          "technical_score": 29.0,
-          "rsi14": 36.28,
-          "pct_vs_ema20": -17.13,
-          "pct_vs_ema200": -60.59,
-          "volume_ratio20": 1.32,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-ASTS/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +10.2% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-27T12:11:43+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 26.005,
-        "current_price": 26.005,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
     {
       "ticker": "TMC",
       "name": "TMC the metals company Inc.",
@@ -297,7 +197,7 @@
       "priority": "Critical",
       "priority_score": 99,
       "why_today": [
-        "The stock moved +18.0% today."
+        "The stock moved +9.3% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -310,9 +210,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 1.935,
-      "day_change_pct": 17.9878,
-      "relative_volume": 1.54,
+      "price": 2.12,
+      "day_change_pct": 9.2783,
+      "relative_volume": 0.89,
       "trigger_level": null,
       "events": [
         {
@@ -320,9 +220,9 @@
           "ticker": "TMC",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +18.0%",
+          "headline": "Price +9.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +18.0% today.",
+          "why_today": "The stock moved +9.3% today.",
           "materiality": "high",
           "urgency": "today",
           "event_time": "2026-11-27T12:09:34.769094+00:00",
@@ -352,11 +252,11 @@
             "technical:TMC:price-move:2026-11-27"
           ],
           "dedupe_key": "TMC:price_move:8c5ee3c7f26b9ac1",
-          "technical_score": 34.0,
-          "rsi14": 41.05,
-          "pct_vs_ema20": -8.29,
-          "pct_vs_ema200": -56.22,
-          "volume_ratio20": 1.54,
+          "technical_score": 43.0,
+          "rsi14": 46.08,
+          "pct_vs_ema20": 0.47,
+          "pct_vs_ema200": -51.82,
+          "volume_ratio20": 0.89,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -369,7 +269,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +18.0% today."
+        "The stock moved +9.3% today."
       ],
       "change": {
         "status": "new",
@@ -380,9 +280,9 @@
       },
       "impact": {
         "baseline_price": 1.935,
-        "current_price": 1.935,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 2.12,
+        "change_pct": 9.56,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 9.6%"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -397,7 +297,7 @@
       "priority": "Risk",
       "priority_score": 75,
       "why_today": [
-        "The stock moved +5.1% today."
+        "The stock moved +5.4% today."
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
@@ -410,9 +310,9 @@
         "url": "data/technical.json",
         "published_at": ""
       },
-      "price": 23.535,
-      "day_change_pct": 5.067,
-      "relative_volume": 0.95,
+      "price": 24.815,
+      "day_change_pct": 5.4163,
+      "relative_volume": 0.62,
       "trigger_level": null,
       "events": [
         {
@@ -420,9 +320,9 @@
           "ticker": "IONQ",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +5.1%",
+          "headline": "Price +5.4%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +5.1% today.",
+          "why_today": "The stock moved +5.4% today.",
           "materiality": "medium",
           "urgency": "today",
           "event_time": "2026-11-27T12:09:34.681695+00:00",
@@ -452,11 +352,11 @@
             "technical:IONQ:price-move:2026-11-27"
           ],
           "dedupe_key": "IONQ:price_move:c62da9a905425a3f",
-          "technical_score": 22.0,
-          "rsi14": 38.25,
-          "pct_vs_ema20": -13.85,
-          "pct_vs_ema200": -40.67,
-          "volume_ratio20": 0.95,
+          "technical_score": 27.0,
+          "rsi14": 42.02,
+          "pct_vs_ema20": -8.43,
+          "pct_vs_ema200": -37.24,
+          "volume_ratio20": 0.62,
           "technical_signal": "AVOID / Turnaround only",
           "technical_metrics_source": "canonical_technical_snapshot"
         }
@@ -469,7 +369,7 @@
       "severity": "high",
       "primary_trigger": "price_move",
       "signals": [
-        "The stock moved +5.1% today."
+        "The stock moved +5.4% today."
       ],
       "change": {
         "status": "new",
@@ -480,309 +380,9 @@
       },
       "impact": {
         "baseline_price": 23.535,
-        "current_price": 23.535,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "OPEN",
-      "name": "Opendoor Technologies Inc.",
-      "portfolio_status": "holding",
-      "role": "Proptech",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved +7.1% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-27T12:09:34.798128+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 1.2639,
-      "day_change_pct": 7.1102,
-      "relative_volume": 1.12,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:OPEN:price-move:2026-11-27",
-          "ticker": "OPEN",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +7.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +7.1% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-27T12:09:34.798128+00:00",
-          "detected_at": "2026-11-27T12:09:34.798132+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:OPEN:price-move:2026-11-27"
-          ],
-          "dedupe_key": "OPEN:price_move:73ab48b43f846dcb",
-          "technical_score": 21.0,
-          "rsi14": 37.58,
-          "pct_vs_ema20": -12.83,
-          "pct_vs_ema200": -66.02,
-          "volume_ratio20": 1.12,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-OPEN/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +7.1% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-27T12:11:43+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 1.2639,
-        "current_price": 1.2639,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "ORCL",
-      "name": "Oracle Corporation",
-      "portfolio_status": "holding",
-      "role": "Cloud infrastructure",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved -5.1% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_drop",
-      "event_time": "2026-11-27T12:09:34.696189+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 103.89,
-      "day_change_pct": -5.1233,
-      "relative_volume": 0.94,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:ORCL:price-drop:2026-11-27",
-          "ticker": "ORCL",
-          "event_type": "technical",
-          "event_subtype": "price_drop",
-          "headline": "Price -5.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved -5.1% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-27T12:09:34.696189+00:00",
-          "detected_at": "2026-11-27T12:09:34.696193+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:ORCL:price-drop:2026-11-27"
-          ],
-          "dedupe_key": "ORCL:price_drop:70b8a9f5a68bb591",
-          "technical_score": 12.0,
-          "rsi14": 37.74,
-          "pct_vs_ema20": -11.67,
-          "pct_vs_ema200": -31.55,
-          "volume_ratio20": 0.94,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-ORCL/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_drop",
-      "signals": [
-        "The stock moved -5.1% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-27T12:11:43+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 103.89,
-        "current_price": 103.89,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "PSIX",
-      "name": "Power Solutions International, Inc.",
-      "portfolio_status": "holding",
-      "role": "Industrial power",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved +6.4% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-27T12:09:34.740085+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 33.19,
-      "day_change_pct": 6.4123,
-      "relative_volume": 0.65,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:PSIX:price-move:2026-11-27",
-          "ticker": "PSIX",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +6.4%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.4% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-27T12:09:34.740085+00:00",
-          "detected_at": "2026-11-27T12:09:34.740089+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:PSIX:price-move:2026-11-27"
-          ],
-          "dedupe_key": "PSIX:price_move:f26f891b62ed5532",
-          "technical_score": 27.0,
-          "rsi14": 40.89,
-          "pct_vs_ema20": -9.44,
-          "pct_vs_ema200": -34.32,
-          "volume_ratio20": 0.65,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-PSIX/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +6.4% today."
-      ],
-      "change": {
-        "status": "new",
-        "label_th": "เพิ่มเข้ามาวันนี้",
-        "previous_priority": null,
-        "first_seen_at": "2026-11-27T12:11:43+00:00",
-        "active_days": 0
-      },
-      "impact": {
-        "baseline_price": 33.19,
-        "current_price": 33.19,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 24.815,
+        "change_pct": 5.44,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 5.4%"
       },
       "personal_priority_score": 83,
       "personalization_reasons": [
@@ -810,9 +410,9 @@
         "url": "data/technical.json",
         "published_at": "2026-11-25"
       },
-      "price": 5.205,
-      "day_change_pct": 1.462,
-      "relative_volume": 0.99,
+      "price": 5.66,
+      "day_change_pct": 8.6372,
+      "relative_volume": 0.89,
       "trigger_level": null,
       "events": [
         {
@@ -844,20 +444,21 @@
               "published_at": "2026-11-25"
             }
           ],
-          "technical_score": 9.0,
+          "technical_score": 22.0,
           "technical_signal": "AVOID / Turnaround only",
           "scan_age_days": 2,
-          "rsi14": 26.73,
-          "pct_vs_ema20": -18.42,
-          "pct_vs_ema200": -62.09,
-          "volume_ratio20": 0.99,
+          "rsi14": 35.75,
+          "pct_vs_ema20": -10.44,
+          "pct_vs_ema200": -58.63,
+          "volume_ratio20": 0.89,
           "secondary_source_count": 1,
           "related_event_ids": [
             "technical:UUUU:technical_risk:2026-11-25"
           ],
           "dedupe_key": "UUUU:technical_risk:444b91f92899a0d9",
           "priority_score": 48,
-          "priority": "Watch"
+          "priority": "Watch",
+          "technical_metrics_source": "canonical_technical_snapshot"
         }
       ],
       "actions": {
@@ -879,9 +480,9 @@
       },
       "impact": {
         "baseline_price": 5.205,
-        "current_price": 5.205,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+        "current_price": 5.66,
+        "change_pct": 8.74,
+        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 8.7%"
       },
       "personal_priority_score": 56,
       "personalization_reasons": [
