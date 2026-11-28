@@ -1,14 +1,14 @@
 {
   "schema_version": "2.0-p0",
-  "updated_at": "2026-11-28T03:20:46+00:00",
+  "updated_at": "2026-11-28T11:52:50+00:00",
   "market_timezone": "America/New_York",
   "display_timezone": "Asia/Bangkok",
   "stale_after_minutes": 90,
   "total_monitored": 38,
-  "total_events": 15,
+  "total_events": 21,
   "coverage_status": "partial",
   "summary": {
-    "Critical": 0,
+    "Critical": 2,
     "Risk": 0,
     "Action": 0,
     "Watch": 0,
@@ -20,9 +20,9 @@
       "checked": 38,
       "applicable": 35,
       "not_applicable": 3,
-      "ok": 31,
+      "ok": 30,
       "partial": 0,
-      "errors": 4,
+      "errors": 5,
       "source": "SEC EDGAR",
       "identity": {
         "status": "complete",
@@ -31,8 +31,8 @@
       },
       "transport": {
         "status": "partial",
-        "ok": 31,
-        "errors": 4
+        "ok": 30,
+        "errors": 5
       }
     },
     "earnings": {
@@ -61,18 +61,18 @@
       "source": "SEC company_tickers.json"
     },
     "news": {
-      "status": "partial",
+      "status": "ok",
       "source": "Verified company IR discovery",
       "checked": 10,
-      "accepted_events": 0
+      "accepted_events": 7
     },
     "ir": {
-      "status": "partial",
+      "status": "ok",
       "source": "Company IR/RSS",
       "checked": 10,
-      "ok": 3,
+      "ok": 10,
       "partial": 0,
-      "errors": 7,
+      "errors": 0,
       "registry": {
         "applicable": 35,
         "configured": 35,
@@ -90,158 +90,99 @@
       "note": "Optional secondary discovery does not downgrade verified-source coverage."
     },
     "regulators": {
-      "status": "ok",
+      "status": "partial",
       "source": "Official regulator pages",
       "checked": 4,
-      "ok": 4,
+      "ok": 3,
       "partial": 0,
-      "errors": 0,
+      "errors": 1,
       "accepted_events": 0
     }
   },
-  "items": [],
-  "errors": [
+  "items": [
     {
-      "source": "sec",
-      "ticker": "*",
-      "message": "SEC transport unavailable for 4 applicable tickers"
-    },
-    {
-      "source": "ir",
-      "ticker": "TMDX",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "EOSE",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "UUUU",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "PSIX",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "CIFR",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "RXRX",
-      "message": "Configured IR sources were unavailable"
-    },
-    {
-      "source": "ir",
-      "ticker": "SYM",
-      "message": "Configured IR sources were unavailable"
-    }
-  ],
-  "data_quality": {
-    "free_sources_only": true,
-    "sec_cursor": "accession-number based; multiple same-day filings are preserved",
-    "sec_transport_policy": "SEC EDGAR preferred; bounded Finnhub discovery accepted only for syntactically valid accession numbers with official sec.gov filing URLs",
-    "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency",
-    "technical_policy": "technical-only rows remain in technical_watch and never fill the main catalyst list",
-    "max_attention_items": 7,
-    "news_contract": "additive fields only; legacy P0 fields preserved",
-    "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
-    "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
-    "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
-    "newly_discovered_event_count": 0,
-    "active_discovered_event_count": 0,
-    "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
-    "attention_policy": "company catalysts remain above technical-only context",
-    "technical_fill_count": 1,
-    "technical_metric_repair_count": 7,
-    "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
-    "technical_watch_minimum": 3,
-    "technical_max_age_days": 3,
-    "earnings_contract_read": {
-      "phase": "P5",
-      "read_order": "canonical_only",
-      "policy_enforced": true,
-      "legacy_fallback_retired": true,
-      "rows": 278,
-      "canonical_rows": 278,
-      "legacy_fallback_rows": 0,
-      "policy_reject_rows": 277,
-      "allowed_rows": 1,
-      "rejected_rows": 277
-    },
-    "attention_policy_gate": {
-      "phase": "P5",
-      "owner": "scripts/contracts/attention_policy.py",
-      "policy_enforced": true,
-      "evaluated_events": 14,
-      "accepted_events": 14,
-      "rejected_events": 0,
-      "reject_reasons": []
-    }
-  },
-  "contract_version": "3.0-attention-workflow",
-  "features": {
-    "free_news_discovery": true,
-    "official_regulator_sources": true,
-    "discovered_event_retention": true,
-    "technical_watch": true,
-    "technical_scan_fill": true,
-    "technical_metric_hydration": true,
-    "thai_friendly_ui": true,
-    "what_changed": true,
-    "historical_impact": true,
-    "local_review_actions": true,
-    "personal_priority": true
-  },
-  "technical_summary": {
-    "risk": 0,
-    "setup": 0,
-    "total": 7
-  },
-  "technical_watch": [
-    {
-      "ticker": "EOSE",
-      "name": "Eos Energy Enterprises, Inc.",
+      "ticker": "TE",
+      "name": "T1 Energy Inc.",
       "portfolio_status": "holding",
-      "role": "Energy storage",
+      "role": "Energy technology",
       "priority": "Critical",
-      "priority_score": 99,
+      "priority_score": 100,
       "why_today": [
-        "The stock moved +8.7% today."
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved +17.3% today."
       ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.349668+00:00",
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-11-28T11:50:54+00:00",
       "verification_status": "confirmed",
-      "source_status": "internal",
+      "source_status": "primary",
       "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://ir.t1energy.com/news-releases/news-release-details/t1-energy-announces-third-quarter-2026-earnings-release-and",
+        "published_at": "2026-11-28T11:50:54+00:00",
+        "domain": "ir.t1energy.com"
       },
-      "price": 1.38,
-      "day_change_pct": 8.6614,
-      "relative_volume": 0.3,
+      "price": 1.29,
+      "day_change_pct": 17.2727,
+      "relative_volume": 0.45,
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:EOSE:price-move:2026-11-27",
-          "ticker": "EOSE",
+          "event_id": "company_ir:TE:c3bf8851ea7f86dc",
+          "ticker": "TE",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "T1 Energy Announces Third Quarter 2026 Earnings Release and Conference Call Schedule",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54+00:00",
+          "detected_at": "2026-11-28T11:50:54+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: T1 Energy",
+          "dedupe_key": "TE:earnings_reported:2026-11-28:f94f8c5f2819",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://ir.t1energy.com/news-releases/news-release-details/t1-energy-announces-third-quarter-2026-earnings-release-and",
+            "published_at": "2026-11-28T11:50:54+00:00",
+            "domain": "ir.t1energy.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://ir.t1energy.com/news-releases/news-release-details/t1-energy-announces-third-quarter-2026-earnings-release-and",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "ir.t1energy.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:TE:c3bf8851ea7f86dc"
+          ],
+          "priority_score": 100,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "technical:TE:price-move:2026-11-28",
+          "ticker": "TE",
           "event_type": "technical",
           "event_subtype": "price_move",
-          "headline": "Price +8.7%",
+          "headline": "Price +17.3%",
           "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +8.7% today.",
+          "why_today": "The stock moved +17.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.349668+00:00",
-          "detected_at": "2026-11-28T03:18:32.349673+00:00",
+          "event_time": "2026-11-28T11:50:54.743623+00:00",
+          "detected_at": "2026-11-28T11:50:54.743627+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -264,9 +205,424 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:EOSE:price-move:2026-11-27"
+            "technical:TE:price-move:2026-11-28"
           ],
-          "dedupe_key": "EOSE:price_move:8b37c451033c19ff",
+          "dedupe_key": "TE:price_move:412758a23ff4a596"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://ir.t1energy.com/news-releases/news-release-details/t1-energy-announces-third-quarter-2026-earnings-release-and",
+        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review.",
+        "The stock moved +17.3% today."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 1.29,
+        "current_price": 1.29,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 116,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    },
+    {
+      "ticker": "BEAM",
+      "name": "Beam Therapeutics Inc.",
+      "portfolio_status": "holding",
+      "role": "Biotech",
+      "priority": "Critical",
+      "priority_score": 97,
+      "why_today": [
+        "A earnings reported event was detected and requires source review.",
+        "A product event was detected and requires source review."
+      ],
+      "event_type": "earnings",
+      "event_subtype": "earnings_reported",
+      "event_time": "2026-11-28T11:50:54+00:00",
+      "verification_status": "confirmed",
+      "source_status": "primary",
+      "source": {
+        "type": "company_ir",
+        "quality": "primary",
+        "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-third-quarter-2026-financial-results",
+        "published_at": "2026-11-28T11:50:54+00:00",
+        "domain": "investors.beamtx.com"
+      },
+      "price": 24.09,
+      "day_change_pct": 1.0911,
+      "relative_volume": 0.41,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "company_ir:BEAM:83eb0154b4704816",
+          "ticker": "BEAM",
+          "event_type": "earnings",
+          "event_subtype": "earnings_reported",
+          "headline": "Beam Therapeutics Reports Third Quarter 2026 Financial Results and Highlights Clinical Progress Across Base Editing Portfolio",
+          "summary": "A earnings reported event was detected and requires source review.",
+          "why_today": "A earnings reported event was detected and requires source review.",
+          "materiality": "high",
+          "reported_materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54+00:00",
+          "detected_at": "2026-11-28T11:50:54+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Beam Therapeutics",
+          "dedupe_key": "BEAM:earnings_reported:2026-11-28:3d851c30c3d6",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-third-quarter-2026-financial-results",
+            "published_at": "2026-11-28T11:50:54+00:00",
+            "domain": "investors.beamtx.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-third-quarter-2026-financial-results",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:BEAM:83eb0154b4704816"
+          ],
+          "priority_score": 97,
+          "priority": "Critical"
+        },
+        {
+          "event_id": "company_ir:BEAM:20b1df2219014753",
+          "ticker": "BEAM",
+          "event_type": "corporate_event",
+          "event_subtype": "product",
+          "headline": "Beam Therapeutics Presents Updated Clinical Data from the Phase 1/2 Trial of BEAM-302 in Alpha-1 Antitrypsin Deficiency (AATD) at the European Respiratory Society (ERS) Congress 2026",
+          "summary": "A product event was detected and requires source review.",
+          "why_today": "A product event was detected and requires source review.",
+          "materiality": "low",
+          "reported_materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54+00:00",
+          "detected_at": "2026-11-28T11:50:54+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "confirmed_primary",
+          "verification_reason": "Matched a configured primary source.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Beam Therapeutics",
+          "dedupe_key": "BEAM:product:2026-11-28:5c4d69fe1e5b",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-presents-updated-clinical-data-phase-12-trial",
+            "published_at": "2026-11-28T11:50:54+00:00",
+            "domain": "investors.beamtx.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-presents-updated-clinical-data-phase-12-trial",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "company_ir:BEAM:20b1df2219014753"
+          ],
+          "priority_score": 64,
+          "priority": "Action"
+        },
+        {
+          "event_id": "event:BEAM:827ca589210aebd5",
+          "ticker": "BEAM",
+          "event_type": "corporate_event",
+          "event_subtype": "product",
+          "headline": "Beam Therapeutics Reports Initial Clinical Data from Phase 1/2 Trial of BEAM-301, Demonstrating Proof of Concept for Genetic Correction in Glycogen Storage Disease Type Ia (GSDIa) at ESGCT 33rd Annual Congress",
+          "summary": "A product event was detected and requires source review.",
+          "why_today": "A product event was detected and requires source review.",
+          "materiality": "low",
+          "reported_materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54+00:00",
+          "detected_at": "2026-11-28T11:50:54+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Beam Therapeutics",
+          "dedupe_key": "BEAM:product:2026-11-28:24d6554da46e",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-initial-clinical-data-phase-12-trial",
+            "published_at": "2026-11-28T11:50:54+00:00",
+            "domain": "investors.beamtx.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-initial-clinical-data-phase-12-trial",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-present-initial-data-phase-12-trial-beam-301",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:BEAM:827ca589210aebd5"
+          ],
+          "priority_score": 64,
+          "priority": "Action"
+        },
+        {
+          "event_id": "event:BEAM:df8b60f3c51a8b6c",
+          "ticker": "BEAM",
+          "event_type": "corporate_event",
+          "event_subtype": "product",
+          "headline": "Beam Therapeutics to Present Updated Clinical Data from BEACON Phase 1/2 Trial of Risto-cel in Sickle Cell Disease in an Oral Presentation at American Society of Hematology (ASH) Annual Meeting",
+          "summary": "A product event was detected and requires source review.",
+          "why_today": "A product event was detected and requires source review.",
+          "materiality": "low",
+          "reported_materiality": "low",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54+00:00",
+          "detected_at": "2026-11-28T11:50:54+00:00",
+          "verification_status": "confirmed",
+          "verification_level": "corroborated",
+          "verification_reason": "Matched a configured primary source and additional coverage.",
+          "entity_confidence": "high",
+          "entity_confidence_reason": "headline contains alias: Beam Therapeutics",
+          "dedupe_key": "BEAM:product:2026-11-28:24cd1ebec6eb",
+          "source": {
+            "type": "company_ir",
+            "quality": "primary",
+            "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-present-updated-clinical-data-beacon-phase-12",
+            "published_at": "2026-11-28T11:50:54+00:00",
+            "domain": "investors.beamtx.com"
+          },
+          "source_chain": [
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-present-updated-clinical-data-beacon-phase-12",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            },
+            {
+              "type": "company_ir",
+              "quality": "primary",
+              "url": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-announces-positive-topline-pivotal-data-beacon",
+              "published_at": "2026-11-28T11:50:54+00:00",
+              "domain": "investors.beamtx.com"
+            }
+          ],
+          "secondary_source_count": 0,
+          "attention_policy_decision": "allow",
+          "related_event_ids": [
+            "event:BEAM:df8b60f3c51a8b6c"
+          ],
+          "priority_score": 64,
+          "priority": "Action"
+        }
+      ],
+      "actions": {
+        "primary_source": "https://investors.beamtx.com/news-releases/news-release-details/beam-therapeutics-reports-third-quarter-2026-financial-results",
+        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-BEAM/",
+        "raw_data": "data/technical.json"
+      },
+      "severity": "high",
+      "primary_trigger": "earnings_reported",
+      "signals": [
+        "A earnings reported event was detected and requires source review.",
+        "A product event was detected and requires source review."
+      ],
+      "change": {
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
+      },
+      "impact": {
+        "baseline_price": 24.09,
+        "current_price": 24.09,
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
+      },
+      "personal_priority_score": 113,
+      "personalization_reasons": [
+        "หุ้นในพอร์ต +8",
+        "earnings +8"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "source": "sec",
+      "ticker": "*",
+      "message": "SEC transport unavailable for 5 applicable tickers"
+    },
+    {
+      "source": "regulator",
+      "ticker": "TEM,TMDX,RXRX,BEAM",
+      "message": "U.S. Food and Drug Administration source unavailable"
+    }
+  ],
+  "data_quality": {
+    "free_sources_only": true,
+    "sec_cursor": "accession-number based; multiple same-day filings are preserved",
+    "sec_transport_policy": "SEC EDGAR preferred; bounded Finnhub discovery accepted only for syntactically valid accession numbers with official sec.gov filing URLs",
+    "earnings_source": "confirmed/estimated curated primary-source calendar; no Finnhub dependency",
+    "technical_policy": "technical-only rows remain in technical_watch and never fill the main catalyst list",
+    "max_attention_items": 7,
+    "news_contract": "additive fields only; legacy P0 fields preserved",
+    "news_policy": "GDELT is discovery-only; unverified reports are capped at Watch",
+    "regulator_policy": "official regulator pages are primary discovery sources and still require confident company matching",
+    "discovered_event_retention": "active news and regulator events persist across refreshes until explicit resolution or event-type TTL expiry",
+    "newly_discovered_event_count": 7,
+    "active_discovered_event_count": 7,
+    "event_deduplication": "ticker + normalized subtype + time window + headline similarity",
+    "attention_policy": "company catalysts remain above technical-only context",
+    "technical_fill_count": 1,
+    "technical_metric_repair_count": 5,
+    "technical_metrics_source": "canonical technical.json row fills incomplete legacy Attention events",
+    "technical_watch_minimum": 3,
+    "technical_max_age_days": 3,
+    "earnings_contract_read": {
+      "phase": "P5",
+      "read_order": "canonical_only",
+      "policy_enforced": true,
+      "legacy_fallback_retired": true,
+      "rows": 278,
+      "canonical_rows": 278,
+      "legacy_fallback_rows": 0,
+      "policy_reject_rows": 277,
+      "allowed_rows": 1,
+      "rejected_rows": 277
+    },
+    "attention_policy_gate": {
+      "phase": "P5",
+      "owner": "scripts/contracts/attention_policy.py",
+      "policy_enforced": true,
+      "evaluated_events": 22,
+      "accepted_events": 22,
+      "rejected_events": 0,
+      "reject_reasons": []
+    }
+  },
+  "contract_version": "3.0-attention-workflow",
+  "features": {
+    "free_news_discovery": true,
+    "official_regulator_sources": true,
+    "discovered_event_retention": true,
+    "technical_watch": true,
+    "technical_scan_fill": true,
+    "technical_metric_hydration": true,
+    "thai_friendly_ui": true,
+    "what_changed": true,
+    "historical_impact": true,
+    "local_review_actions": true,
+    "personal_priority": true
+  },
+  "technical_summary": {
+    "risk": 0,
+    "setup": 0,
+    "total": 5
+  },
+  "technical_watch": [
+    {
+      "ticker": "EOSE",
+      "name": "Eos Energy Enterprises, Inc.",
+      "portfolio_status": "holding",
+      "role": "Energy storage",
+      "priority": "Critical",
+      "priority_score": 99,
+      "why_today": [
+        "The stock moved +8.7% today."
+      ],
+      "event_type": "technical",
+      "event_subtype": "price_move",
+      "event_time": "2026-11-28T11:50:54.627245+00:00",
+      "verification_status": "confirmed",
+      "source_status": "internal",
+      "source": {
+        "type": "technical_json",
+        "quality": "internal",
+        "url": "data/technical.json",
+        "published_at": ""
+      },
+      "price": 1.38,
+      "day_change_pct": 8.6614,
+      "relative_volume": 0.3,
+      "trigger_level": null,
+      "events": [
+        {
+          "event_id": "technical:EOSE:price-move:2026-11-28",
+          "ticker": "EOSE",
+          "event_type": "technical",
+          "event_subtype": "price_move",
+          "headline": "Price +8.7%",
+          "summary": "A large daily price move requires context from filings, earnings or other company events.",
+          "why_today": "The stock moved +8.7% today.",
+          "materiality": "high",
+          "urgency": "today",
+          "event_time": "2026-11-28T11:50:54.627245+00:00",
+          "detected_at": "2026-11-28T11:50:54.627250+00:00",
+          "verification_status": "confirmed",
+          "source": {
+            "type": "technical_json",
+            "quality": "internal",
+            "url": "data/technical.json",
+            "published_at": ""
+          },
+          "priority_score": 99,
+          "priority": "Critical",
+          "attention_policy_decision": "allow_internal_only",
+          "verification_level": "confirmed_internal",
+          "verification_reason": "Derived directly from the repository's latest technical.json row.",
+          "source_chain": [
+            {
+              "type": "technical_json",
+              "quality": "internal",
+              "url": "data/technical.json",
+              "published_at": ""
+            }
+          ],
+          "secondary_source_count": 1,
+          "related_event_ids": [
+            "technical:EOSE:price-move:2026-11-28"
+          ],
+          "dedupe_key": "EOSE:price_move:078b169aa21973f8",
           "technical_score": 22.0,
           "rsi14": 38.89,
           "pct_vs_ema20": -14.29,
@@ -287,11 +643,11 @@
         "The stock moved +8.7% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 1.38,
@@ -316,7 +672,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.141861+00:00",
+      "event_time": "2026-11-28T11:50:54.487003+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -331,7 +687,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:RKLB:price-move:2026-11-27",
+          "event_id": "technical:RKLB:price-move:2026-11-28",
           "ticker": "RKLB",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -340,8 +696,8 @@
           "why_today": "The stock moved +8.4% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.141861+00:00",
-          "detected_at": "2026-11-28T03:18:32.141881+00:00",
+          "event_time": "2026-11-28T11:50:54.487003+00:00",
+          "detected_at": "2026-11-28T11:50:54.487008+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -364,9 +720,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:RKLB:price-move:2026-11-27"
+            "technical:RKLB:price-move:2026-11-28"
           ],
-          "dedupe_key": "RKLB:price_move:2675619e7193efdc",
+          "dedupe_key": "RKLB:price_move:9fc51c97b6a29d9b",
           "technical_score": 33.0,
           "rsi14": 45.17,
           "pct_vs_ema20": -4.73,
@@ -388,11 +744,11 @@
         "The stock moved +8.4% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 50.95,
@@ -417,7 +773,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.450631+00:00",
+      "event_time": "2026-11-28T11:50:54.697168+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -432,7 +788,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:RR:price-move:2026-11-27",
+          "event_id": "technical:RR:price-move:2026-11-28",
           "ticker": "RR",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -441,8 +797,8 @@
           "why_today": "The stock moved +11.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.450631+00:00",
-          "detected_at": "2026-11-28T03:18:32.450637+00:00",
+          "event_time": "2026-11-28T11:50:54.697168+00:00",
+          "detected_at": "2026-11-28T11:50:54.697173+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -465,9 +821,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:RR:price-move:2026-11-27"
+            "technical:RR:price-move:2026-11-28"
           ],
-          "dedupe_key": "RR:price_move:07a00f8b4a60a39b",
+          "dedupe_key": "RR:price_move:3dee342bb8294d7a",
           "technical_score": 19.0,
           "rsi14": 32.18,
           "pct_vs_ema20": -17.01,
@@ -488,115 +844,15 @@
         "The stock moved +11.3% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 0.6556,
         "current_price": 0.6556,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 107,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
-    },
-    {
-      "ticker": "TE",
-      "name": "T1 Energy Inc.",
-      "portfolio_status": "holding",
-      "role": "Energy technology",
-      "priority": "Critical",
-      "priority_score": 99,
-      "why_today": [
-        "The stock moved +17.3% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.517103+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 1.29,
-      "day_change_pct": 17.2727,
-      "relative_volume": 0.45,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:TE:price-move:2026-11-27",
-          "ticker": "TE",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +17.3%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +17.3% today.",
-          "materiality": "high",
-          "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.517103+00:00",
-          "detected_at": "2026-11-28T03:18:32.517108+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 99,
-          "priority": "Critical",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:TE:price-move:2026-11-27"
-          ],
-          "dedupe_key": "TE:price_move:5c6babe43bb7545c",
-          "technical_score": 19.0,
-          "rsi14": 33.59,
-          "pct_vs_ema20": -25.86,
-          "pct_vs_ema200": -74.1,
-          "volume_ratio20": 0.45,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NYSE-TE/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +17.3% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 1.29,
-        "current_price": 1.29,
         "change_pct": 0.0,
         "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
@@ -617,7 +873,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.427655+00:00",
+      "event_time": "2026-11-28T11:50:54.681760+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -632,7 +888,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:TMC:price-move:2026-11-27",
+          "event_id": "technical:TMC:price-move:2026-11-28",
           "ticker": "TMC",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -641,8 +897,8 @@
           "why_today": "The stock moved +9.3% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.427655+00:00",
-          "detected_at": "2026-11-28T03:18:32.427660+00:00",
+          "event_time": "2026-11-28T11:50:54.681760+00:00",
+          "detected_at": "2026-11-28T11:50:54.681764+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -665,9 +921,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:TMC:price-move:2026-11-27"
+            "technical:TMC:price-move:2026-11-28"
           ],
-          "dedupe_key": "TMC:price_move:8c5ee3c7f26b9ac1",
+          "dedupe_key": "TMC:price_move:3062146206c9831c",
           "technical_score": 43.0,
           "rsi14": 46.08,
           "pct_vs_ema20": 0.47,
@@ -688,17 +944,17 @@
         "The stock moved +9.3% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T12:11:43+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
       },
       "impact": {
-        "baseline_price": 1.935,
+        "baseline_price": 2.12,
         "current_price": 2.12,
-        "change_pct": 9.56,
-        "label_th": "ราคาหลังเริ่มติดตามปรับขึ้น 9.6%"
+        "change_pct": 0.0,
+        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
       },
       "personal_priority_score": 107,
       "personalization_reasons": [
@@ -717,7 +973,7 @@
       ],
       "event_type": "technical",
       "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.372283+00:00",
+      "event_time": "2026-11-28T11:50:54.642700+00:00",
       "verification_status": "confirmed",
       "source_status": "internal",
       "source": {
@@ -732,7 +988,7 @@
       "trigger_level": null,
       "events": [
         {
-          "event_id": "technical:UUUU:price-move:2026-11-27",
+          "event_id": "technical:UUUU:price-move:2026-11-28",
           "ticker": "UUUU",
           "event_type": "technical",
           "event_subtype": "price_move",
@@ -741,8 +997,8 @@
           "why_today": "The stock moved +8.6% today.",
           "materiality": "high",
           "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.372283+00:00",
-          "detected_at": "2026-11-28T03:18:32.372289+00:00",
+          "event_time": "2026-11-28T11:50:54.642700+00:00",
+          "detected_at": "2026-11-28T11:50:54.642704+00:00",
           "verification_status": "confirmed",
           "source": {
             "type": "technical_json",
@@ -765,9 +1021,9 @@
           ],
           "secondary_source_count": 1,
           "related_event_ids": [
-            "technical:UUUU:price-move:2026-11-27"
+            "technical:UUUU:price-move:2026-11-28"
           ],
-          "dedupe_key": "UUUU:price_move:677d60a70ca8f939",
+          "dedupe_key": "UUUU:price_move:41cd184962e42c7b",
           "technical_score": 26.0,
           "rsi14": 35.75,
           "pct_vs_ema20": -10.44,
@@ -788,11 +1044,11 @@
         "The stock moved +8.6% today."
       ],
       "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Critical",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
+        "status": "new",
+        "label_th": "เพิ่มเข้ามาวันนี้",
+        "previous_priority": null,
+        "first_seen_at": "2026-11-28T11:52:50+00:00",
+        "active_days": 0
       },
       "impact": {
         "baseline_price": 5.66,
@@ -804,117 +1060,73 @@
       "personalization_reasons": [
         "หุ้นในพอร์ต +8"
       ]
-    },
-    {
-      "ticker": "INDI",
-      "name": "indie Semiconductor, Inc.",
-      "portfolio_status": "holding",
-      "role": "Automotive semiconductors",
-      "priority": "Risk",
-      "priority_score": 75,
-      "why_today": [
-        "The stock moved +6.1% today."
-      ],
-      "event_type": "technical",
-      "event_subtype": "price_move",
-      "event_time": "2026-11-28T03:18:32.528239+00:00",
-      "verification_status": "confirmed",
-      "source_status": "internal",
-      "source": {
-        "type": "technical_json",
-        "quality": "internal",
-        "url": "data/technical.json",
-        "published_at": ""
-      },
-      "price": 1.655,
-      "day_change_pct": 6.0897,
-      "relative_volume": 0.37,
-      "trigger_level": null,
-      "events": [
-        {
-          "event_id": "technical:INDI:price-move:2026-11-27",
-          "ticker": "INDI",
-          "event_type": "technical",
-          "event_subtype": "price_move",
-          "headline": "Price +6.1%",
-          "summary": "A large daily price move requires context from filings, earnings or other company events.",
-          "why_today": "The stock moved +6.1% today.",
-          "materiality": "medium",
-          "urgency": "today",
-          "event_time": "2026-11-28T03:18:32.528239+00:00",
-          "detected_at": "2026-11-28T03:18:32.528244+00:00",
-          "verification_status": "confirmed",
-          "source": {
-            "type": "technical_json",
-            "quality": "internal",
-            "url": "data/technical.json",
-            "published_at": ""
-          },
-          "priority_score": 75,
-          "priority": "Risk",
-          "attention_policy_decision": "allow_internal_only",
-          "verification_level": "confirmed_internal",
-          "verification_reason": "Derived directly from the repository's latest technical.json row.",
-          "source_chain": [
-            {
-              "type": "technical_json",
-              "quality": "internal",
-              "url": "data/technical.json",
-              "published_at": ""
-            }
-          ],
-          "secondary_source_count": 1,
-          "related_event_ids": [
-            "technical:INDI:price-move:2026-11-27"
-          ],
-          "dedupe_key": "INDI:price_move:4457264b12cac0a6",
-          "technical_score": 27.0,
-          "rsi14": 42.41,
-          "pct_vs_ema20": -8.06,
-          "pct_vs_ema200": -47.12,
-          "volume_ratio20": 0.37,
-          "technical_signal": "AVOID / Turnaround only",
-          "technical_metrics_source": "canonical_technical_snapshot"
-        }
-      ],
-      "actions": {
-        "primary_source": "data/technical.json",
-        "tradingview": "https://www.tradingview.com/symbols/NASDAQ-INDI/",
-        "raw_data": "data/technical.json"
-      },
-      "severity": "high",
-      "primary_trigger": "price_move",
-      "signals": [
-        "The stock moved +6.1% today."
-      ],
-      "change": {
-        "status": "ongoing",
-        "label_th": "ยังต้องติดตามต่อ",
-        "previous_priority": "Risk",
-        "first_seen_at": "2026-11-27T21:14:53+00:00",
-        "active_days": 1
-      },
-      "impact": {
-        "baseline_price": 1.655,
-        "current_price": 1.655,
-        "change_pct": 0.0,
-        "label_th": "ราคายังเปลี่ยนแปลงไม่มาก"
-      },
-      "personal_priority_score": 83,
-      "personalization_reasons": [
-        "หุ้นในพอร์ต +8"
-      ]
     }
   ],
   "changes_summary": {
-    "new": 0,
+    "new": 7,
     "escalated": 0,
     "updated": 0,
-    "ongoing": 7,
+    "ongoing": 0,
     "eased": 0,
     "resolved": 20
   },
   "recently_resolved": [
+    {
+      "history_key": "technical:EOSE:price-move:2026-11-27",
+      "ticker": "EOSE",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:RKLB:price-move:2026-11-27",
+      "ticker": "RKLB",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:RR:price-move:2026-11-27",
+      "ticker": "RR",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:TE:price-move:2026-11-27",
+      "ticker": "TE",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:TMC:price-move:2026-11-27",
+      "ticker": "TMC",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:UUUU:price-move:2026-11-27",
+      "ticker": "UUUU",
+      "event_subtype": "price_move",
+      "priority": "Critical",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
+    {
+      "history_key": "technical:INDI:price-move:2026-11-27",
+      "ticker": "INDI",
+      "event_subtype": "price_move",
+      "priority": "Risk",
+      "resolved_at": "2026-11-28T11:52:50+00:00",
+      "label_th": "ออกจากรายการแล้ว"
+    },
     {
       "history_key": "technical:ASTS:price-move:2026-11-27",
       "ticker": "ASTS",
@@ -937,62 +1149,6 @@
       "event_subtype": "price_move",
       "priority": "Risk",
       "resolved_at": "2026-11-27T21:14:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ORCL:price-drop:2026-11-27",
-      "ticker": "ORCL",
-      "event_subtype": "price_drop",
-      "priority": "Risk",
-      "resolved_at": "2026-11-27T21:14:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:PSIX:price-move:2026-11-27",
-      "ticker": "PSIX",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-27T21:14:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:UUUU:technical_risk:2026-11-25",
-      "ticker": "UUUU",
-      "event_subtype": "technical_risk",
-      "priority": "Watch",
-      "resolved_at": "2026-11-27T21:14:53+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:ASTS:price-move:2026-11-26",
-      "ticker": "ASTS",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-27T12:11:43+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:TMC:price-move:2026-11-26",
-      "ticker": "TMC",
-      "event_subtype": "price_move",
-      "priority": "Critical",
-      "resolved_at": "2026-11-27T12:11:43+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:IONQ:price-move:2026-11-26",
-      "ticker": "IONQ",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-27T12:11:43+00:00",
-      "label_th": "ออกจากรายการแล้ว"
-    },
-    {
-      "history_key": "technical:OPEN:price-move:2026-11-26",
-      "ticker": "OPEN",
-      "event_subtype": "price_move",
-      "priority": "Risk",
-      "resolved_at": "2026-11-27T12:11:43+00:00",
       "label_th": "ออกจากรายการแล้ว"
     }
   ],
